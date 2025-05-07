@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mayorana.ch Website
+
+A modern, responsive website for mayorana.ch built with Next.js and Tailwind CSS.
+
+## Features
+
+- Clean, modern interface with responsive design
+- Light and dark mode support
+- Configurable via YAML files
+- Pages for Services, About, and Contact
+- Blog with category filtering and markdown support
+- api0.ai solution showcase
+
+## Tech Stack
+
+- **Framework**: Next.js with TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Forms**: React Hook Form
+- **Icons**: React Icons
+- **Configuration**: js-yaml
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
+# Clone the repository
+git clone https://github.com/yourusername/mayorana-website.git
+
+# Navigate to project directory
+cd mayorana-website
+
+# Install dependencies
+yarn install
+
+# Start development server
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Folder Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+mayorana-website/
+├── config/           # YAML configuration files
+├── public/           # Static assets
+│   └── images/       # Image files
+├── src/
+│   ├── components/   # Reusable components
+│   │   ├── layout/   # Layout components
+│   │   └── ui/       # UI components
+│   ├── lib/          # Utility functions
+│   ├── pages/        # Page components
+│   └── styles/       # Global styles
+├── .gitignore
+├── next.config.js
+├── package.json
+├── README.md
+├── tailwind.config.js
+└── tsconfig.json
+```
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+The website uses YAML files for configuration located in the `config/` directory. The main configuration file is `site.yaml`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The website can be deployed to Vercel:
 
-## Deploy on Vercel
+```bash
+# Install Vercel CLI
+yarn global add vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Deploy to Vercel
+vercel
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT

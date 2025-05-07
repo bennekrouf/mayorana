@@ -1,0 +1,72 @@
+[
+  {
+    "id": "getting-started-with-rust",
+    "slug": "getting-started-with-rust",
+    "title": "Getting Started with Rust: A Guide for Beginners",
+    "date": "2025-04-15",
+    "excerpt": "An introduction to Rust for beginners, covering installation, basic syntax, and your first project.",
+    "content": "\n# Getting Started with Rust: A Guide for Beginners\n\nRust has been gaining significant traction among developers for its focus on performance, memory safety, and concurrency. If you're new to Rust, this guide will help you get started with the basics.\n\n## Setting Up Your Environment\n\nFirst, you'll need to install Rust on your system. The easiest way is to use rustup, the Rust toolchain installer:\n\n```bash\ncurl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\n```\n\nThis command will download a script and start the installation process. Follow the instructions on screen to complete the installation.\n\n## Your First Rust Program\n\nLet's create a simple \"Hello, World!\" program. Create a new file called `hello.rs` with the following content:\n\n```rust\nfn main() {\n    println!(\"Hello, World!\");\n}\n```\n\nTo compile and run this program, use the following commands:\n\n```bash\nrustc hello.rs\n./hello\n```\n\n## Understanding Cargo\n\nCargo is Rust's build system and package manager. It handles many tasks such as building your code, downloading libraries, and building those libraries.\n\nTo create a new project with Cargo:\n\n```bash\ncargo new hello_cargo\ncd hello_cargo\n```\n\nThis creates a new directory called `hello_cargo` with the following structure:\n\n```\nhello_cargo/\n├── Cargo.toml\n└── src/\n    └── main.rs\n```\n\nThe `Cargo.toml` file contains metadata about your project and its dependencies. The `src/main.rs` file contains your application code.\n\nTo build and run your project:\n\n```bash\ncargo build   # Compile the project\ncargo run     # Compile and run the project\n```\n\n## Key Concepts in Rust\n\n### Variables and Mutability\n\nBy default, variables in Rust are immutable:\n\n```rust\nlet x = 5;\n// x = 6; // This would cause an error\n```\n\nTo make a variable mutable, use the `mut` keyword:\n\n```rust\nlet mut y = 5;\ny = 6; // This works fine\n```\n\n### Ownership\n\nOwnership is Rust's most unique feature and enables memory safety without garbage collection. The main rules are:\n\n1. Each value in Rust has a variable that's its owner.\n2. There can only be one owner at a time.\n3. When the owner goes out of scope, the value will be dropped.\n\n```rust\nfn main() {\n    let s1 = String::from(\"hello\");\n    let s2 = s1; // s1 is moved to s2, s1 is no longer valid\n    \n    // println!(\"{}\", s1); // This would cause an error\n    println!(\"{}\", s2); // This works fine\n}\n```\n\n## Next Steps\n\nNow that you have the basics, try building a small project to practice your skills. The Rust documentation is an excellent resource for learning more:\n\n- [The Rust Book](https://doc.rust-lang.org/book/)\n- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)\n\nHappy coding with Rust!\n",
+    "contentHtml": "<h1>Getting Started with Rust: A Guide for Beginners</h1>\n<p>Rust has been gaining significant traction among developers for its focus on performance, memory safety, and concurrency. If you&#39;re new to Rust, this guide will help you get started with the basics.</p>\n<h2>Setting Up Your Environment</h2>\n<p>First, you&#39;ll need to install Rust on your system. The easiest way is to use rustup, the Rust toolchain installer:</p>\n<pre><code class=\"language-bash\">curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://sh.rustup.rs | sh\n</code></pre>\n<p>This command will download a script and start the installation process. Follow the instructions on screen to complete the installation.</p>\n<h2>Your First Rust Program</h2>\n<p>Let&#39;s create a simple &quot;Hello, World!&quot; program. Create a new file called <code>hello.rs</code> with the following content:</p>\n<pre><code class=\"language-rust\">fn main() {\n    println!(&quot;Hello, World!&quot;);\n}\n</code></pre>\n<p>To compile and run this program, use the following commands:</p>\n<pre><code class=\"language-bash\">rustc hello.rs\n./hello\n</code></pre>\n<h2>Understanding Cargo</h2>\n<p>Cargo is Rust&#39;s build system and package manager. It handles many tasks such as building your code, downloading libraries, and building those libraries.</p>\n<p>To create a new project with Cargo:</p>\n<pre><code class=\"language-bash\">cargo new hello_cargo\ncd hello_cargo\n</code></pre>\n<p>This creates a new directory called <code>hello_cargo</code> with the following structure:</p>\n<pre><code>hello_cargo/\n├── Cargo.toml\n└── src/\n    └── main.rs\n</code></pre>\n<p>The <code>Cargo.toml</code> file contains metadata about your project and its dependencies. The <code>src/main.rs</code> file contains your application code.</p>\n<p>To build and run your project:</p>\n<pre><code class=\"language-bash\">cargo build   # Compile the project\ncargo run     # Compile and run the project\n</code></pre>\n<h2>Key Concepts in Rust</h2>\n<h3>Variables and Mutability</h3>\n<p>By default, variables in Rust are immutable:</p>\n<pre><code class=\"language-rust\">let x = 5;\n// x = 6; // This would cause an error\n</code></pre>\n<p>To make a variable mutable, use the <code>mut</code> keyword:</p>\n<pre><code class=\"language-rust\">let mut y = 5;\ny = 6; // This works fine\n</code></pre>\n<h3>Ownership</h3>\n<p>Ownership is Rust&#39;s most unique feature and enables memory safety without garbage collection. The main rules are:</p>\n<ol>\n<li>Each value in Rust has a variable that&#39;s its owner.</li>\n<li>There can only be one owner at a time.</li>\n<li>When the owner goes out of scope, the value will be dropped.</li>\n</ol>\n<pre><code class=\"language-rust\">fn main() {\n    let s1 = String::from(&quot;hello&quot;);\n    let s2 = s1; // s1 is moved to s2, s1 is no longer valid\n    \n    // println!(&quot;{}&quot;, s1); // This would cause an error\n    println!(&quot;{}&quot;, s2); // This works fine\n}\n</code></pre>\n<h2>Next Steps</h2>\n<p>Now that you have the basics, try building a small project to practice your skills. The Rust documentation is an excellent resource for learning more:</p>\n<ul>\n<li><a href=\"https://doc.rust-lang.org/book/\">The Rust Book</a></li>\n<li><a href=\"https://doc.rust-lang.org/rust-by-example/\">Rust by Example</a></li>\n</ul>\n<p>Happy coding with Rust!</p>\n",
+    "author": "Mayorana",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "programming",
+      "beginners",
+      "tutorial"
+    ],
+    "readingTime": "3 min",
+    "seo": {
+      "title": "Getting Started with Rust: A Guide for Beginners",
+      "description": "An introduction to Rust for beginners, covering installation, basic syntax, and your first project.",
+      "keywords": [
+        "rust",
+        "programming",
+        "beginners",
+        "tutorial"
+      ]
+    },
+    "headings": [
+      {
+        "id": "getting-started-with-rust-a-guide-for-beginners",
+        "text": "Getting Started with Rust: A Guide for Beginners",
+        "level": 1
+      },
+      {
+        "id": "setting-up-your-environment",
+        "text": "Setting Up Your Environment",
+        "level": 2
+      },
+      {
+        "id": "your-first-rust-program",
+        "text": "Your First Rust Program",
+        "level": 2
+      },
+      {
+        "id": "understanding-cargo",
+        "text": "Understanding Cargo",
+        "level": 2
+      },
+      {
+        "id": "key-concepts-in-rust",
+        "text": "Key Concepts in Rust",
+        "level": 2
+      },
+      {
+        "id": "variables-and-mutability",
+        "text": "Variables and Mutability",
+        "level": 3
+      },
+      {
+        "id": "ownership",
+        "text": "Ownership",
+        "level": 3
+      },
+      {
+        "id": "next-steps",
+        "text": "Next Steps",
+        "level": 2
+      }
+    ]
+  }
+]

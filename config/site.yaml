@@ -1,0 +1,90 @@
+# Site Configuration
+site:
+  name: "Mayorana"
+  domain: "mayorana.ch"
+  description: "Empowering Innovation with Rust, AI, and API Solutions"
+  locale: "en"
+  logoText: "mayorana"
+  
+# Color theme based on your provided color palette
+colors:
+  primary: "#FF6B00"  # Orange from the color palette
+  background: 
+    light: "#FFFFFF"
+    dark: "#0F172A"
+  foreground:
+    light: "#1E293B"
+    dark: "#F8FAFC"
+  secondary:
+    light: "#F1F5F9"
+    dark: "#334155"
+  border:
+    light: "#E2E8F0"
+    dark: "#334155"
+  muted:
+    light: "#F1F5F9"
+    dark: "#334155"
+  mutedForeground:
+    light: "#6B7280"
+    dark: "#94A3B8"
+
+# Navigation
+navigation:
+  main:
+    - label: "Home"
+      path: "/"
+    - label: "Services"
+      path: "/services"
+    - label: "About"
+      path: "/about"
+    - label: "api0.ai"
+      path: "https://api0.ai"
+      external: true
+    - label: "Contact"
+      path: "/contact"
+
+# Services from your content plan
+services:
+  - title: "Rust Training"
+    description: "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization."
+    cta: "Schedule a Training Session"
+    ctaLink: "/contact?service=rust-training"
+    icon: "Code"
+  
+  - title: "LLM Integration"
+    description: "Seamlessly connect large language models (LLMs) to your applications for enhanced automation, chatbots, and data processing."
+    cta: "Get a Free Consultation"
+    ctaLink: "/contact?service=llm-integration"
+    icon: "Brain"
+  
+  - title: "AI Agent Development"
+    description: "Build intelligent AI agents for automation, decision-making, and process optimization."
+    cta: "Start Your Agent Project"
+    ctaLink: "/contact?service=ai-agent"
+    icon: "Robot"
+  
+  - title: "api0.ai Solutions"
+    description: "Cutting-edge platform that uses advanced NLP to match user inputs to API endpoints, simplifying integrations."
+    cta: "Try api0.ai Now"
+    ctaLink: "https://api0.ai"
+    icon: "Network"
+
+# Portfolio items
+portfolio:
+  - title: "Rust Training for Fintech Firm"
+    description: "Delivered a 2-week intensive Rust course for a Swiss fintech company, improving their system performance by 30%."
+    category: "Training"
+  
+  - title: "LLM-Powered Chatbot"
+    description: "Integrated an LLM into a client's customer service platform, reducing response times by 40%."
+    category: "Integration"
+  
+  - title: "api0.ai Implementation"
+    description: "Helped an e-commerce client map user queries to product APIs, cutting integration time by 50%."
+    category: "Development"
+
+# Settings for logging as per your preference
+logging:
+  level: "trace"
+  format: "json"
+  output: "console"
