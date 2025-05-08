@@ -83,15 +83,15 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
       <section className="py-20 md:py-32 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <motion.h1 
+            <motion.h1
               className="text-4xl md:text-6xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Empowering Innovation with Rust, AI, and API Solutions
+              Building Smarter Solutions with Rust, AI, and APIs
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl md:text-2xl text-muted-foreground mb-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -99,22 +99,22 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
             >
               Specialized in Rust training, LLM integration, and AI agent development for businesses across Switzerland and beyond.
             </motion.p>
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <Link 
-                href="https://api0.ai" 
-                target="_blank" 
+              <Link
+                href="https://api0.ai"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
               >
                 Discover api0.ai
               </Link>
-              <Link 
-                href="/contact?service=rust-training" 
+              <Link
+                href="/contact?service=rust-training"
                 className="inline-flex items-center px-8 py-4 rounded-lg bg-foreground text-background text-lg font-semibold hover:bg-foreground/90 transform transition duration-200 hover:-translate-y-1"
               >
                 Book a Rust Training
@@ -135,7 +135,7 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <motion.div 
+              <motion.div
                 key={service.title}
                 className="flex flex-col items-center text-center p-6 rounded-xl bg-secondary/50 border border-border"
                 initial={{ opacity: 0, y: 20 }}
@@ -238,7 +238,7 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {portfolio.map((item, index) => (
-              <motion.div 
+              <motion.div
                 key={item.title}
                 className="p-6 rounded-xl bg-secondary/50 border border-border"
                 initial={{ opacity: 0, y: 20 }}
@@ -275,7 +275,7 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="p-6 rounded-xl bg-background border border-border"
                 initial={{ opacity: 0, y: 20 }}

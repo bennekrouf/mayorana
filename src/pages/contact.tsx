@@ -17,37 +17,49 @@ interface FormData {
 const ContactPage: React.FC = () => {
   const router = useRouter();
   const { service } = router.query;
-  
-  const { 
-    register, 
-    handleSubmit, 
+
+  const {
+    register,
+    handleSubmit,
     setValue,
-    formState: { errors, isSubmitting } 
+    formState: { errors, isSubmitting }
   } = useForm<FormData>();
-  
+
   const [formSubmitted, setFormSubmitted] = useState(false);
-  
+  // const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Set the service field if it's provided in the query params
   useEffect(() => {
     if (service) {
       setValue('service', service as string);
     }
   }, [service, setValue]);
-  
+
   const onSubmit = async (data: FormData) => {
     try {
-      // In a real implementation, you would send this data to your backend
-      console.log('Form data:', data);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Send form data to your Rust backend API
+      const response = await fetch('https://your-rust-backend.com/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to submit form');
+      }
+
+      // Handle successful submission
       setFormSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
+      // You might want to display an error message to the user
+      alert('Failed to send message. Please try again later.');
     }
   };
-  
+
   const services = [
     { value: "rust-training", label: "Rust Training" },
     { value: "llm-integration", label: "LLM Integration" },
@@ -62,7 +74,7 @@ const ContactPage: React.FC = () => {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1 
+            <motion.h1
               className="text-4xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -70,7 +82,7 @@ const ContactPage: React.FC = () => {
             >
               Get in Touch
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl text-muted-foreground"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -131,9 +143,9 @@ const ContactPage: React.FC = () => {
                     <div>
                       <h3 className="font-medium">LinkedIn</h3>
                       <p className="text-muted-foreground">
-                        <a 
-                          href="https://linkedin.com/in/yourprofile" 
-                          target="_blank" 
+                        <a
+                          href="https://linkedin.com/in/yourprofile"
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="hover:text-primary"
                         >
@@ -174,12 +186,12 @@ const ContactPage: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <form 
-                  onSubmit={handleSubmit(onSubmit)} 
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
                   className="bg-secondary p-8 rounded-xl border border-border"
                 >
                   <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
-                  
+
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     {/* Name Field */}
                     <div className="space-y-2">

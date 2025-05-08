@@ -4,7 +4,7 @@ import { FiLinkedin, FiGithub, FiMail } from 'react-icons/fi';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  
+
   const footerNav = [
     { label: "Home", path: "/" },
     { label: "Services", path: "/services" },
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
             <h3 className="font-medium text-foreground mb-4">Connect</h3>
             <div className="flex space-x-4 mb-4">
               <a
-                href="https://linkedin.com/in/yourprofile"
+                href="https://linkedin.com/in/bennekrouf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
                 <FiLinkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/bennekrouf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
                 <FiGithub className="h-5 w-5" />
               </a>
               <a
-                href="mailto:contact@mayorana.ch"
+                href="mailto:cont /act@mayorana.ch"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Email"
               >

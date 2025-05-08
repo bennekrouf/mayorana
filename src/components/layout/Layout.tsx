@@ -10,13 +10,13 @@ interface LayoutProps {
   description?: string;
 }
 
-const Layout: React.FC<LayoutProps> = ({ 
-  children, 
+const Layout: React.FC<LayoutProps> = ({
+  children,
   title = "Mayorana | Rust, AI, and API Solutions",
-  description = "Empowering Innovation with Rust, AI, and API Solutions" 
+  description = "Building Smarter Solutions with Rust, AI, and APIs"
 }) => {
   // const { theme } = useTheme();
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
@@ -25,13 +25,13 @@ const Layout: React.FC<LayoutProps> = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <Navbar />
-      
+
       <main className="flex-grow">
         {children}
       </main>
-      
+
       <Footer />
     </div>
   );
