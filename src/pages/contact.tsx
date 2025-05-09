@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout';
 import { useForm } from 'react-hook-form';
 import { FiMail, FiMapPin, FiLinkedin } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { FaWhatsapp } from 'react-icons/fa';
 
 interface FormData {
   name: string;
@@ -17,6 +18,22 @@ interface FormData {
 const ContactPage: React.FC = () => {
   const router = useRouter();
   const { service } = router.query;
+
+  const whatsappNumber = "+41764837540"; // Replace with your actual WhatsApp number
+  const whatsappMessage = "Hello, I'd like to learn more about your services."; // Customize default message
+  const encodedMessage = encodeURIComponent(whatsappMessage);
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+const handleWhatsAppClick = () => {
+  // Track the WhatsApp button click with Plausible
+  if (typeof window !== 'undefined' && window.plausible) {
+    window.plausible('WhatsApp Contact', {
+      props: {
+        source: 'contact_page'
+      }
+    });
+  }
+};
 
   const {
     register,
@@ -93,6 +110,21 @@ const ContactPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+<div className="md:hidden mt-8 mb-4">
+  <p className="text-center text-muted-foreground text-sm mb-3">
+    For a faster response on mobile:
+  </p>
+    <a href={whatsappUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={handleWhatsAppClick}
+    className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+  >
+    <FaWhatsapp className="h-5 w-5" />
+    Contact via WhatsApp
+  </a>
+</div>
 
       {/* Contact Form Section */}
       <section className="py-16 bg-background">
