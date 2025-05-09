@@ -24,16 +24,16 @@ const ContactPage: React.FC = () => {
   const encodedMessage = encodeURIComponent(whatsappMessage);
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-const handleWhatsAppClick = () => {
-  // Track the WhatsApp button click with Plausible
-  if (typeof window !== 'undefined' && window.plausible) {
-    window.plausible('WhatsApp Contact', {
-      props: {
-        source: 'contact_page'
-      }
-    });
-  }
-};
+  const handleWhatsAppClick = () => {
+    // Track the WhatsApp button click with Plausible
+    if (typeof window !== 'undefined' && window.plausible) {
+      window.plausible('WhatsApp Contact', {
+        props: {
+          source: 'contact_page'
+        }
+      });
+    }
+  };
 
   const {
     register,
@@ -55,7 +55,7 @@ const handleWhatsAppClick = () => {
   const onSubmit = async (data: FormData) => {
     try {
       // Send form data to your Rust backend API
-      const response = await fetch('http://localhost:8080/api/contact', {
+      const response = await fetch('http://localhost:5005/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,20 +111,20 @@ const handleWhatsAppClick = () => {
         </div>
       </section>
 
-<div className="md:hidden mt-8 mb-4">
-  <p className="text-center text-muted-foreground text-sm mb-3">
-    For a faster response on mobile:
-  </p>
-    <a href={whatsappUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    onClick={handleWhatsAppClick}
-    className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
-  >
-    <FaWhatsapp className="h-5 w-5" />
-    Contact via WhatsApp
-  </a>
-</div>
+      <div className="md:hidden mt-8 mb-4">
+        <p className="text-center text-muted-foreground text-sm mb-3">
+          For a faster response on mobile:
+        </p>
+        <a href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleWhatsAppClick}
+          className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+        >
+          <FaWhatsapp className="h-5 w-5" />
+          Contact via WhatsApp
+        </a>
+      </div>
 
       {/* Contact Form Section */}
       <section className="py-16 bg-background">
