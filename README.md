@@ -24,10 +24,10 @@ A modern, responsive website for mayorana.ch built with Next.js and Tailwind CSS
 
 ```bash
 # Clone the repository
-git clone https://github.com/bennekrouf/mayorana-website.git
+git clone https://github.com/bennekrouf/mayorana.git
 
 # Navigate to project directory
-cd mayorana-website
+cd mayorana
 
 # Install dependencies
 yarn install
