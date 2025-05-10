@@ -61,8 +61,8 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
 
   const portfolio = [
     {
-      title: "Rust Training for Fintech Firm",
-      description: "Delivered a 2-week intensive Rust course for a Swiss fintech company, improving their system performance by 30%.",
+      title: "Rust Training for Java Developers",
+      description: "Delivering hands-on Rust training programs tailored for Java developers, enabling them to master Rust with the same fluency as Java.",
       category: "Training"
     },
     {
