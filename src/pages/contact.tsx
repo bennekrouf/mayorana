@@ -55,7 +55,7 @@ const ContactPage: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       // Send form data to your Rust backend API
-      const response = await fetch('http://localhost:5005/api/contact', {
+      const response = await fetch('http://localhost:5009/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
