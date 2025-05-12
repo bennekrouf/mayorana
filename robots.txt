@@ -1,0 +1,13 @@
+# robots.txt for api0.ai
+User-agent: *
+Allow: /
+
+# Allow all bots to access the site
+# Specify sitemap location
+Sitemap: https://mayorana.ch/sitemap.xml
+
+# Prevent bots from crawling dev/staging areas if they exist
+User-agent: *
+Disallow: /admin/
+Disallow: /dev/
+Disallow: /staging/
