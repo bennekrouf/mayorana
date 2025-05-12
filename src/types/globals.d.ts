@@ -1,10 +1,10 @@
-// src/types/globals.d.ts
-interface Window {
-  plausible?: {
-    (event: string, options?: { 
-      callback?: () => void; 
-      props?: Record<string, string | number | boolean> 
-    }): void;
-    q?: Array<unknown>;
+export {};
+
+declare global {
+  interface Window {
+    plausible?: {
+      (event: string, options?: { props?: Record<string, string> }): void;
+      q?: Array<unknown>;
+    };
   }
 }
