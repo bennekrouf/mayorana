@@ -1,5 +1,9 @@
+// Fix for blog page URL issues
+// src/pages/blog/index.tsx - updated with correct Link handling
+
 import React from 'react';
 import { GetStaticProps } from 'next';
+// import Link from 'next/link';
 import Layout from '../../components/layout/Layout';
 import BlogList from '../../components/blog/BlogList';
 import CategoryFilter from '../../components/blog/CategoryFilter';
@@ -18,7 +22,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ posts, categories }) => {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1 
+            <motion.h1
               className="text-4xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -26,7 +30,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ posts, categories }) => {
             >
               Blog
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl text-muted-foreground"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -43,7 +47,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ posts, categories }) => {
         <div className="container">
           <div className="grid md:grid-cols-12 gap-12">
             {/* Sidebar */}
-            <motion.div 
+            <motion.div
               className="md:col-span-3"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -51,7 +55,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ posts, categories }) => {
             >
               <CategoryFilter categories={categories} />
             </motion.div>
-            
+
             {/* Main Content */}
             <div className="md:col-span-9">
               <BlogList posts={posts} title="" description="" />
@@ -66,7 +70,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ posts, categories }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllPosts();
   const categories = getAllCategories();
-  
+
   return {
     props: {
       posts,

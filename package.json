@@ -3,15 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/generate-blog-data.js",
-    "predev": "node scripts/generate-blog-data.js",
-    "prestart": "node scripts/generate-blog-data.js",
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "generate-blog-data": "node scripts/generate-blog-data.js",
-    "generate-sitemap": "node ./scripts/generate-sitemap.js"
+    "dev": "node scripts/generate-blog-data.js && next dev",
+    "build": "node scripts/generate-blog-data.js && next build",
+    "start": "next start"
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.9",

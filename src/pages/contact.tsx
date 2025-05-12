@@ -55,7 +55,7 @@ const ContactPage: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       // Send form data to your Rust backend API
-      const response = await fetch('http://localhost:5009/api/contact', {
+      const response = await fetch('http://0.0.0.0:5009/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -176,12 +176,12 @@ const ContactPage: React.FC = () => {
                       <h3 className="font-medium">LinkedIn</h3>
                       <p className="text-muted-foreground">
                         <a
-                          href="https://linkedin.com/in/yourprofile"
+                          href="https://linkedin.com/in/bennekrouf"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:text-primary"
                         >
-                          linkedin.com/in/yourprofile
+                          linkedin.com/in/bennekrouf
                         </a>
                       </p>
                     </div>

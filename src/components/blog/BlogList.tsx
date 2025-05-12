@@ -1,3 +1,5 @@
+// src/components/blog/BlogList.tsx - updated with correct Link handling
+
 import React from 'react';
 import Link from 'next/link';
 import { BlogPost, formatDate } from '../../lib/blog';
@@ -9,10 +11,10 @@ interface BlogListProps {
   description?: string;
 }
 
-const BlogList: React.FC<BlogListProps> = ({ 
-  posts, 
-  title = "Blog", 
-  description = "Latest insights and articles" 
+const BlogList: React.FC<BlogListProps> = ({
+  posts,
+  title = "Blog",
+  description = "Latest insights and articles"
 }) => {
   return (
     <div className="w-full">
@@ -41,38 +43,40 @@ const BlogList: React.FC<BlogListProps> = ({
                   {formatDate(post.date)}
                 </span>
               </div>
-              
+
               <h3 className="text-xl font-semibold mb-3">
-                <Link 
+                <Link
                   href={`/blog/${post.slug}`}
                   className="hover:text-primary transition-colors"
+                  prefetch={false} // Disable prefetching to prevent unnecessary loads
                 >
                   {post.title}
                 </Link>
               </h3>
-              
+
               <p className="text-muted-foreground mb-6 flex-grow">
                 {post.excerpt}
               </p>
-              
+
               <div className="mt-auto">
-                <Link 
+                <Link
                   href={`/blog/${post.slug}`}
                   className="text-primary font-medium hover:underline inline-flex items-center"
+                  prefetch={false} // Disable prefetching to prevent unnecessary loads
                 >
                   Read More
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-4 w-4 ml-1" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M9 5l7 7-7 7" 
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
                     />
                   </svg>
                 </Link>

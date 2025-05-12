@@ -1,3 +1,4 @@
+// src/components/layout/Navbar.tsx - Updated with Link component fix
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -10,7 +11,7 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const router = useRouter();
-  
+
   // Navigation items from config
   const navItems = [
     { label: "Home", path: "/" },
@@ -25,9 +26,17 @@ const Navbar: React.FC = () => {
   useEffect(() => setMounted(true), []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  
+
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  // Helper function to check if a link is active
+  const isLinkActive = (path: string) => {
+    // Remove trailing slash from router.pathname for comparison
+    const currentPath = router.pathname.replace(/\/$/, '');
+    const normalizedPath = path.replace(/\/$/, '');
+    return currentPath === normalizedPath;
   };
 
   return (
@@ -36,11 +45,12 @@ const Navbar: React.FC = () => {
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
             <div className="relative h-8 w-8">
-              <Image 
-                src="/images/logo.png" 
-                alt="Mayorana Logo" 
-                fill 
-                className="object-contain" 
+              <Image
+                src="/images/logo.png"
+                alt="Mayorana Logo"
+                fill
+                className="object-contain"
+                unoptimized // Add unoptimized for static export
               />
             </div>
             <span className="font-bold text-xl text-foreground">mayorana</span>
@@ -55,14 +65,13 @@ const Navbar: React.FC = () => {
               href={item.path}
               target={item.external ? "_blank" : "_self"}
               rel={item.external ? "noopener noreferrer" : ""}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                router.pathname === item.path ? "text-primary" : "text-foreground"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-primary ${isLinkActive(item.path) ? "text-primary" : "text-foreground"
+                }`}
             >
               {item.label}
             </Link>
           ))}
-          
+
           <button
             onClick={toggleTheme}
             className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors"
@@ -74,7 +83,7 @@ const Navbar: React.FC = () => {
               <FiMoon className="h-5 w-5" />
             )}
           </button>
-          
+
           <Link
             href="/contact"
             className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition duration-200 hover:-translate-y-1 shadow-lg shadow-primary/20"
@@ -96,7 +105,7 @@ const Navbar: React.FC = () => {
               <FiMoon className="h-5 w-5" />
             )}
           </button>
-          
+
           <button
             onClick={toggleMenu}
             className="p-2 rounded-md text-foreground"
@@ -121,9 +130,8 @@ const Navbar: React.FC = () => {
                 href={item.path}
                 target={item.external ? "_blank" : "_self"}
                 rel={item.external ? "noopener noreferrer" : ""}
-                className={`block px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${
-                  router.pathname === item.path ? "text-primary" : "text-foreground"
-                }`}
+                className={`block px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${isLinkActive(item.path) ? "text-primary" : "text-foreground"
+                  }`}
                 onClick={toggleMenu}
               >
                 {item.label}
