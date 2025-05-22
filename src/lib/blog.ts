@@ -1,4 +1,4 @@
-// src/lib/blog.ts
+// src/lib/blog.ts - Server-side data fetching
 import blogPostsData from '../data/blog-posts.json';
 import blogCategoriesData from '../data/blog-categories.json';
 
@@ -36,9 +36,9 @@ export interface BlogCategory {
   description: string;
 }
 
-// Get all blog posts
+// Get all blog posts - since this is a synchronous operation, no need for async
 export function getAllPosts(): BlogPost[] {
-  return blogPostsData;
+  return blogPostsData; 
 }
 
 // Get all blog categories
@@ -80,5 +80,3 @@ export function formatDate(dateString: string): string {
     day: 'numeric'
   });
 }
-
-// No need for markdownToHtml function as we now store contentHtml directly in the JSON

@@ -1,10 +1,13 @@
-/* eslint-disable react/no-unescaped-entities */
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Layout from '../components/layout/Layout';
+// File: src/app/contact/page.tsx
+'use client';
+
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { useForm } from 'react-hook-form';
 import { FiMail, FiMapPin, FiLinkedin } from 'react-icons/fi';
-import { motion } from 'framer-motion';
+import { motion } from '@/components/ui/Motion';
 import { FaWhatsapp } from 'react-icons/fa';
 
 interface FormData {
@@ -15,17 +18,17 @@ interface FormData {
   message: string;
 }
 
-const ContactPage: React.FC = () => {
-  const router = useRouter();
-  const { service } = router.query;
+// Separate component that uses useSearchParams
+function ContactFormWithParams() {
+  const searchParams = useSearchParams();
+  const service = searchParams.get('service');
 
-  const whatsappNumber = "+41764837540"; // Replace with your actual WhatsApp number
-  const whatsappMessage = "Hello, I'd like to learn more about your services."; // Customize default message
+  const whatsappNumber = "+41764837540";
+  const whatsappMessage = "Hello, I'd like to learn more about your services.";
   const encodedMessage = encodeURIComponent(whatsappMessage);
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
   const handleWhatsAppClick = () => {
-    // Track the WhatsApp button click with Plausible
     if (typeof window !== 'undefined' && window.plausible) {
       window.plausible('WhatsApp Contact', {
         props: {
@@ -43,7 +46,6 @@ const ContactPage: React.FC = () => {
   } = useForm<FormData>();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
-  // const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Set the service field if it's provided in the query params
   useEffect(() => {
@@ -54,7 +56,6 @@ const ContactPage: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // Send form data to your Rust backend API
       const response = await fetch('http://0.0.0.0:5009/api/contact', {
         method: 'POST',
         headers: {
@@ -68,11 +69,9 @@ const ContactPage: React.FC = () => {
         throw new Error(errorData.message || 'Failed to submit form');
       }
 
-      // Handle successful submission
       setFormSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
-      // You might want to display an error message to the user
       alert('Failed to send message. Please try again later.');
     }
   };
@@ -86,7 +85,7 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <Layout title="Contact | Mayorana">
+    <>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
@@ -105,7 +104,7 @@ const ContactPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Ready to elevate your tech stack with Rust, AI, or api0.ai? Let's discuss how I can help your business succeed.
+              Ready to elevate your tech stack with Rust, AI, or api0.ai? Let&apos;s discuss how I can help your business succeed.
             </motion.p>
           </div>
         </div>
@@ -115,7 +114,8 @@ const ContactPage: React.FC = () => {
         <p className="text-center text-muted-foreground text-sm mb-3">
           For a faster response on mobile:
         </p>
-        <a href={whatsappUrl}
+        <Link 
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleWhatsAppClick}
@@ -123,7 +123,7 @@ const ContactPage: React.FC = () => {
         >
           <FaWhatsapp className="h-5 w-5" />
           Contact via WhatsApp
-        </a>
+        </Link>
       </div>
 
       {/* Contact Form Section */}
@@ -140,7 +140,7 @@ const ContactPage: React.FC = () => {
               <div>
                 <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
                 <p className="text-muted-foreground mb-8">
-                  Based in Switzerland, I'm here to help global and local clients succeed with cutting-edge solutions.
+                  Based in Switzerland, I&apos;m here to help global and local clients succeed with cutting-edge solutions.
                 </p>
 
                 <div className="space-y-6">
@@ -208,7 +208,7 @@ const ContactPage: React.FC = () => {
                   <div className="text-primary text-6xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold mb-4">Message Sent Successfully!</h3>
                   <p className="text-muted-foreground mb-6">
-                    Thank you for reaching out. I'll get back to you as soon as possible.
+                    Thank you for reaching out. I&apos;ll get back to you as soon as possible.
                   </p>
                   <button
                     onClick={() => setFormSubmitted(false)}
@@ -330,8 +330,31 @@ const ContactPage: React.FC = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
-};
+}
 
-export default ContactPage;
+// Fallback component to show while Suspense is loading
+function ContactFormFallback() {
+  return (
+    <div className="py-20 bg-gradient-to-b from-secondary to-background">
+      <div className="container">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl font-bold mb-6">Get in Touch</h1>
+          <p className="text-xl text-muted-foreground">Loading contact form...</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function ContactPage() {
+  return (
+    <LayoutTemplate>
+      <Suspense fallback={<ContactFormFallback />}>
+        <ContactFormWithParams />
+      </Suspense>
+    </LayoutTemplate>
+  );
+}

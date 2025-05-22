@@ -1,12 +1,12 @@
-/* eslint-disable react/no-unescaped-entities */
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-// import Image from 'next/image';
-import Layout from '../components/layout/Layout';
+import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { FiExternalLink } from 'react-icons/fi';
-import { motion } from 'framer-motion';
+import { motion } from '@/components/ui/Motion';
 
-const AboutPage: React.FC = () => {
+export default function AboutPage() {
   const skills = [
     { category: "Programming", items: ["Rust", "TypeScript", "Python", "WebAssembly"] },
     { category: "AI & ML", items: ["LLM Integration", "NLP", "AI Agent Development", "Prompt Engineering"] },
@@ -34,7 +34,7 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <Layout title="About | Mayorana">
+    <LayoutTemplate>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
@@ -187,7 +187,7 @@ const AboutPage: React.FC = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Work Together?</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Let's discuss how my expertise can help your business achieve its goals with innovative technology solutions.
+              Let&apos;s discuss how my expertise can help your business achieve its goals with innovative technology solutions.
             </p>
             <Link
               href="/contact"
@@ -198,8 +198,6 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </LayoutTemplate>
   );
-};
-
-export default AboutPage;
+}

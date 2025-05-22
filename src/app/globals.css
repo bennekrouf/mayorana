@@ -2,6 +2,226 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Blog styles from blog.css */
+.prose {
+  max-width: 65ch;
+  color: hsl(var(--foreground));
+}
+
+.prose a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.prose strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.prose ol > li::before {
+  color: hsl(var(--muted-foreground));
+}
+
+.prose ul > li::before {
+  background-color: hsl(var(--muted-foreground));
+}
+
+.prose hr {
+  border-color: hsl(var(--border));
+}
+
+.prose blockquote {
+  color: hsl(var(--muted-foreground));
+  border-left-color: hsl(var(--border));
+}
+
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: "";
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.prose h1 {
+  font-size: 2.25em;
+  line-height: 1.1111111;
+}
+
+.prose h2 {
+  font-size: 1.5em;
+  line-height: 1.3333333;
+}
+
+.prose h3 {
+  font-size: 1.25em;
+  line-height: 1.6;
+}
+
+.prose h4 {
+  font-size: 1.125em;
+  line-height: 1.5;
+}
+
+.prose figure figcaption {
+  color: hsl(var(--muted-foreground));
+}
+
+.prose code {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  background-color: hsl(var(--muted));
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+.prose pre {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--muted));
+  border-radius: 0.5rem;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  font-weight: inherit;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+}
+
+.prose table {
+  width: 100%;
+  table-layout: auto;
+  text-align: left;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-collapse: collapse;
+}
+
+.prose table thead {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  border-bottom-width: 1px;
+  border-bottom-color: hsl(var(--border));
+}
+
+.prose table thead th {
+  vertical-align: bottom;
+  padding: 0.5em;
+  padding-left: 0;
+}
+
+.prose table tbody tr {
+  border-bottom-width: 1px;
+  border-bottom-color: hsl(var(--border));
+}
+
+.prose table tbody td {
+  vertical-align: top;
+  padding: 0.5em;
+  padding-left: 0;
+}
+
+/* Code highlighting with Prism */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a8494;
+}
+
+.token.punctuation {
+  color: #a39e9b;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+  color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+  color: #e6db74;
+}
+
+.token.keyword {
+  color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+  color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* Dark mode adjustments */
+.dark .prose {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose code {
+  background-color: hsl(var(--secondary));
+}
+
+.dark .prose pre {
+  background-color: hsl(var(--secondary));
+}
+
+/* Base styles from both globals.css files */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -75,6 +295,29 @@
     transition-property: color, background-color, border-color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Custom logo styling */
+  .logo-zero {
+    @apply font-black text-primary inline-block transition-transform duration-300;
+    transform: rotate(-12deg);
+  }
+  
+  .logo-zero-line {
+    @apply absolute top-1/2 left-1/2 w-full h-0.5 -translate-x-1/2 -translate-y-1/2 rotate-45;
+  }
+  
+  .dark .logo-zero-line {
+    @apply bg-foreground;
+  }
+  
+  .light .logo-zero-line {
+    @apply bg-background;
+  }
+  
+  *:hover > .logo-zero {
+    transform: rotate(0deg);
   }
 }
 
@@ -92,8 +335,94 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .prose {
+    font-size: 0.95rem;
+  }
+  
+  .prose h1 {
+    font-size: 1.875em;
+  }
+  
+  .prose h2 {
+    font-size: 1.375em;
+  }
+  
+  .prose h3 {
+    font-size: 1.125em;
+  }
+  
+  .prose h4 {
+    font-size: 1em;
+  }
+}
+
+
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection for input fields, textareas, and other form elements */
+input,
+textarea,
+select,
+button,
+[contenteditable="true"],
+[contenteditable=""] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection specifically for blog content */
+.blog-content,
+.blog-content *,
+.prose,
+.prose * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection for code blocks */
+pre,
+code,
+pre *,
+code * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection for any element with selectable class */
+.selectable,
+.selectable * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Ensure links are still clickable but text isn't selectable unless specifically allowed */
+a {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow selection on links within blog content */
+.blog-content a,
+.prose a {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }

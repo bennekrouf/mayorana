@@ -1,11 +1,13 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import Layout from '../components/layout/Layout';
+import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { FaCode, FaBrain, FaRobot, FaArrowRight } from 'react-icons/fa';
 import { FaNetworkWired } from "react-icons/fa";
-import { motion } from 'framer-motion';
+import { motion } from '@/components/ui/Motion';
 
-const ServicesPage: React.FC = () => {
+export default function ServicesPage() {
   const services = [
     {
       id: "rust-training",
@@ -66,7 +68,7 @@ const ServicesPage: React.FC = () => {
   ];
 
   return (
-    <Layout title="Services | Mayorana">
+    <LayoutTemplate>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
@@ -160,8 +162,6 @@ const ServicesPage: React.FC = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </LayoutTemplate>
   );
-};
-
-export default ServicesPage;
+}

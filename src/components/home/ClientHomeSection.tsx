@@ -1,22 +1,11 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import Layout from '../components/layout/Layout';
-import BlogList from '../components/blog/BlogList';
-// Import only the specific icons you need
-import { FaBrain } from 'react-icons/fa';
-import { FaCode } from 'react-icons/fa';
-import { FaNetworkWired } from "react-icons/fa";
-import { FaRobot } from 'react-icons/fa';
+import { motion } from '@/components/ui/Motion';
+import { FaBrain, FaCode, FaNetworkWired, FaRobot } from 'react-icons/fa';
 
-import { motion } from 'framer-motion';
-import { getRecentPosts, BlogPost } from '../lib/blog';
-
-
-interface HomePageProps {
-  recentPosts?: BlogPost[];
-}
-
-const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) => {
+export default function ClientHomeSection() {
   const services = [
     {
       icon: <FaCode className="h-8 w-8 text-primary" />,
@@ -78,7 +67,7 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
   ];
 
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-b from-secondary to-background">
         <div className="container">
@@ -295,27 +284,6 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
         </div>
       </section>
 
-      {/* Blog Section */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Latest Insights</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Thoughts and tutorials on Rust, LLM integration, and AI agent development.
-            </p>
-          </div>
-          <BlogList posts={recentPosts} />
-          <div className="text-center mt-12">
-            <Link
-              href="/blog"
-              className="inline-flex items-center px-6 py-3 rounded-lg bg-secondary text-foreground font-medium hover:bg-secondary/80 transition-colors"
-            >
-              View All Articles
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-20 bg-background">
         <div className="container">
@@ -333,8 +301,6 @@ const HomePage: React.FC<HomePageProps> = ({ recentPosts = getRecentPosts(3) }) 
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
-};
-
-export default HomePage;
+}

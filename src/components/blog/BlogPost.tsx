@@ -1,7 +1,10 @@
+// Update your src/components/blog/BlogPost.tsx file
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { BlogPost as BlogPostType, formatDate, getCategoryBySlug } from '../../lib/blog';
-import { motion } from 'framer-motion';
+import { motion } from '@/components/ui/Motion';
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -11,7 +14,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   const category = getCategoryBySlug(post.category);
   
   return (
-    <article className="w-full max-w-3xl mx-auto">
+    <article className="w-full max-w-3xl mx-auto blog-content"> {/* Added blog-content class */}
       <motion.div
         className="mb-8"
         initial={{ opacity: 0, y: 20 }}

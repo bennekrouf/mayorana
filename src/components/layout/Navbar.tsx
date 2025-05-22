@@ -1,7 +1,8 @@
-// src/components/layout/Navbar.tsx - Updated with Link component fix
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
@@ -10,7 +11,7 @@ const Navbar: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
-  const router = useRouter();
+  const pathname = usePathname();
 
   // Navigation items from config
   const navItems = [
@@ -33,8 +34,8 @@ const Navbar: React.FC = () => {
 
   // Helper function to check if a link is active
   const isLinkActive = (path: string) => {
-    // Remove trailing slash from router.pathname for comparison
-    const currentPath = router.pathname.replace(/\/$/, '');
+    // Remove trailing slash from pathname for comparison
+    const currentPath = pathname.replace(/\/$/, '');
     const normalizedPath = path.replace(/\/$/, '');
     return currentPath === normalizedPath;
   };

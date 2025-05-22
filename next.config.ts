@@ -9,7 +9,6 @@ const nextConfig = {
   // Image optimization (fully enabled)
   images: {
     domains: ['mayorana.ch'],
-    // No need for unoptimized: true with server rendering
   },
 
   // Security headers for better performance and security

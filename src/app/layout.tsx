@@ -1,8 +1,8 @@
-// src/app/layout.tsx with fixed analytics script
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { ThemeProvider } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mayorana - Rust, AI, and API Solutions",
+  title: {
+    template: '%s | Mayorana',
+    default: 'Mayorana - Rust, AI, and API Solutions',
+  },
   description: "Empowering Innovation with Rust, AI, and API Solutions",
   icons: {
     icon: '/icon.svg', // SVG favicon
@@ -30,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Remove inline scripts - use Script component instead */}
       </head>
@@ -50,7 +53,9 @@ export default function RootLayout({
             }
           `}
         </Script>
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
