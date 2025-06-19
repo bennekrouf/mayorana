@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 
 const Navbar: React.FC = () => {
   const [mounted, setMounted] = useState(false);
@@ -45,15 +44,7 @@ const Navbar: React.FC = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="relative h-8 w-8">
-              <Image
-                src="/images/logo.png"
-                alt="Mayorana Logo"
-                fill
-                className="object-contain"
-                unoptimized // Add unoptimized for static export
-              />
-            </div>
+            {/* Simple text logo instead of image */}
             <span className="font-bold text-xl text-foreground">mayorana</span>
           </Link>
         </div>

@@ -3,40 +3,51 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogPost from '@/components/blog/BlogPost';
 import { getPostBySlug, getAllPosts } from '@/lib/blog';
 
-// Next.js 15: Both params and searchParams are now Promises
+// Next.js 15: params is now a Promise
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+// Generate static params for better performance
 export async function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  try {
+    const posts = getAllPosts();
+    return posts.map((post) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
 }
 
 export default async function PostPage({ params }: Props) {
-  // Await the params since they're now a Promise in Next.js 15
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  try {
+    // Await the params since they're now a Promise in Next.js 15
+    const { slug } = await params;
 
-  // Await searchParams as well (though we're not using them in this example)
-  // const queryParams = await searchParams;
-  // const debug = queryParams.debug === 'true';
+    // Validate slug
+    if (!slug || typeof slug !== 'string') {
+      notFound();
+    }
 
-  if (!post) {
+    const post = getPostBySlug(slug);
+
+    if (!post) {
+      notFound();
+    }
+
+    return (
+      <LayoutTemplate>
+        <section className="py-20 bg-background">
+          <div className="container">
+            <BlogPost post={post} />
+          </div>
+        </section>
+      </LayoutTemplate>
+    );
+  } catch (error) {
+    console.error('Error in PostPage:', error);
     notFound();
   }
-
-  return (
-    <LayoutTemplate>
-      {/* Post Content */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <BlogPost post={post} />
-        </div>
-      </section>
-    </LayoutTemplate>
-  );
 }
