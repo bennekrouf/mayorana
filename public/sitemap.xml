@@ -12,6 +12,31 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/function-vs-closure-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/vec-new-vs-with-capacity</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/memory-layout-optimization-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/string-vs-str-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/rust-traits-vs-interfaces</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/getting-started-with-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
