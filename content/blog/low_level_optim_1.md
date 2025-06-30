@@ -6,8 +6,6 @@ date: "2025-06-30"
 author: "mayo"
 excerpt: "Expert technical discussion on low-level memory optimization in Rust, covering repr attributes, cache efficiency, and performance trade-offs for lead developers."
 category: "rust"
-categoryName: "Rust"
-categoryDescription: "Articles about Rust programming language, best practices, and performance tips."
 tags:
   - "rust"
   - "optimization"

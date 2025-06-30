@@ -6,8 +6,6 @@ date: "2025-06-30"
 author: "mayo"
 excerpt: "Expert technical discussion on String vs str in Rust, covering memory management, ownership, and when to use each type."
 category: "rust"
-categoryName: "Rust"
-categoryDescription: "Articles about Rust programming language, best practices, and performance tips."
 tags:
   - "rust"
   - "string"

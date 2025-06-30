@@ -6,8 +6,6 @@ date: "2025-06-30"
 author: "mayo"
 excerpt: "An expert technical discussion on Vec allocation strategies in Rust, comparing Vec::new() and Vec::with_capacity() for optimal performance."
 category: "rust"
-categoryName: "Rust"
-categoryDescription: "Articles about Rust programming language, best practices, and performance tips."
 tags:
   - "rust"
   - "collections"

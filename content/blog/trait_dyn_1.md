@@ -6,8 +6,6 @@ date: "2025-06-30"
 author: "mayo"
 excerpt: "Expert technical discussion on Rust traits vs Java/C# interfaces, covering dispatch mechanisms, compile-time behavior, and performance optimizations in critical systems."
 category: "rust"
-categoryName: "Rust"
-categoryDescription: "Articles about Rust programming language, best practices, and performance tips."
 tags:
   - "rust"
   - "traits"

@@ -1,49 +1,47 @@
+// File: src/app/blog/tag/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
-import CategoryFilter from '@/components/blog/CategoryFilter';
+import TagFilter from '@/components/blog/TagFilter';
 import {
-  getAllCategories,
-  getPostsByCategory,
-  getCategoryBySlug,
+  getAllTags,
+  getPostsByTag,
+  getTagBySlug,
 } from '@/lib/blog';
 
-// Next.js 15: params is now a Promise
 type Props = {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static parameters for categories
+// Generate static parameters for tags
 export async function generateStaticParams() {
   try {
-    const categories = getAllCategories();
-    return categories.map((category) => ({
-      slug: category.slug,
+    const tags = getAllTags();
+    return tags.map((tag) => ({
+      slug: tag.toLowerCase().replace(/\s+/g, '-'),
     }));
   } catch (error) {
-    console.error('Error generating static params for categories:', error);
+    console.error('Error generating static params for tags:', error);
     return [];
   }
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function TagPage({ params }: Props) {
   try {
-    // Await the params since they're now a Promise in Next.js 15
     const { slug } = await params;
 
-    // Validate slug
     if (!slug || typeof slug !== 'string') {
       notFound();
     }
 
-    const currentCategory = getCategoryBySlug(slug);
+    const currentTag = getTagBySlug(slug);
 
-    if (!currentCategory) {
+    if (!currentTag) {
       notFound();
     }
 
-    const posts = getPostsByCategory(slug);
-    const categories = getAllCategories();
+    const posts = getPostsByTag(slug);
+    const tags = getAllTags();
 
     return (
       <LayoutTemplate>
@@ -52,10 +50,10 @@ export default async function CategoryPage({ params }: Props) {
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl font-bold mb-6">
-                {currentCategory.name}
+                #{currentTag}
               </h1>
               <p className="text-xl text-muted-foreground">
-                {currentCategory.description}
+                {posts.length} article{posts.length !== 1 ? 's' : ''} about {currentTag}
               </p>
             </div>
           </div>
@@ -67,9 +65,9 @@ export default async function CategoryPage({ params }: Props) {
             <div className="grid md:grid-cols-12 gap-12">
               {/* Sidebar */}
               <div className="md:col-span-3">
-                <CategoryFilter
-                  categories={categories}
-                  currentCategory={currentCategory.slug}
+                <TagFilter
+                  tags={tags}
+                  currentTag={currentTag}
                 />
               </div>
 
@@ -83,7 +81,7 @@ export default async function CategoryPage({ params }: Props) {
       </LayoutTemplate>
     );
   } catch (error) {
-    console.error('Error in CategoryPage:', error);
+    console.error('Error in TagPage:', error);
     notFound();
   }
 }

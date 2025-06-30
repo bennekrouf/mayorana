@@ -6,8 +6,6 @@ date: "2025-06-30"
 author: "mayo"
 excerpt: "Expert technical discussion on functions vs closures in Rust, covering ownership, traits, lifetimes, and performance implications."
 category: "rust"
-categoryName: "Rust"
-categoryDescription: "Articles about Rust programming language, best practices, and performance tips."
 tags:
   - "rust"
   - "functions"

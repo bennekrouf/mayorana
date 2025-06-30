@@ -1,9 +1,10 @@
-// Update your src/components/blog/BlogPost.tsx file
+// Clean BlogPost component without categories
+// File: src/components/blog/BlogPost.tsx
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
-import { BlogPost as BlogPostType, formatDate, getCategoryBySlug } from '../../lib/blog';
+import { BlogPost as BlogPostType, formatDate } from '../../lib/blog';
 import { motion } from '@/components/ui/Motion';
 
 interface BlogPostProps {
@@ -11,10 +12,8 @@ interface BlogPostProps {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
-  const category = getCategoryBySlug(post.category);
-  
   return (
-    <article className="w-full max-w-3xl mx-auto blog-content"> {/* Added blog-content class */}
+    <article className="w-full max-w-3xl mx-auto blog-content">
       <motion.div
         className="mb-8"
         initial={{ opacity: 0, y: 20 }}
@@ -22,24 +21,30 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
         transition={{ duration: 0.5 }}
       >
         <div className="mb-4">
-          <Link 
-            href={`/blog/category/${post.category}`}
-            className="text-sm font-medium text-primary hover:underline"
-          >
-            {category?.name || post.category}
-          </Link>
-          <span className="text-sm text-muted-foreground mx-2">•</span>
-          <span className="text-sm text-muted-foreground">
-            {formatDate(post.date)}
-          </span>
-          {post.readingTime && (
-            <>
-              <span className="text-sm text-muted-foreground mx-2">•</span>
-              <span className="text-sm text-muted-foreground">
-                {post.readingTime}
-              </span>
-            </>
+          {/* Show main tags instead of category */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {post.tags.slice(0, 3).map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-sm font-medium text-primary hover:underline"
+                >
+                  #{tag}
+                </Link>
+              ))}
+            </div>
           )}
+          
+          <div className="flex items-center text-sm text-muted-foreground">
+            <span>{formatDate(post.date)}</span>
+            {post.readingTime && (
+              <>
+                <span className="mx-2">•</span>
+                <span>{post.readingTime}</span>
+              </>
+            )}
+          </div>
         </div>
         
         <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
@@ -96,14 +101,16 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
+          <h3 className="text-lg font-medium mb-4">Tags</h3>
           <div className="flex flex-wrap gap-2">
             {post.tags.map(tag => (
-              <span 
+              <Link
                 key={tag}
-                className="bg-secondary px-3 py-1 rounded-full text-sm"
+                href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                className="bg-secondary px-3 py-1 rounded-full text-sm hover:bg-secondary/80 transition-colors"
               >
-                {tag}
-              </span>
+                #{tag}
+              </Link>
             ))}
           </div>
         </motion.div>

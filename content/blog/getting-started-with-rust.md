@@ -6,8 +6,6 @@ date: "2025-04-15"
 author: "Mayorana"
 excerpt: "An introduction to Rust for beginners, covering installation, basic syntax, and your first project."
 category: "rust"
-categoryName: "Rust"
-categoryDescription: "Articles about Rust programming language, best practices, and performance tips."
 tags:
   - "rust"
   - "programming"
