@@ -1,4 +1,5 @@
-// scripts/generate-blog-data.js
+// Updated blog data generation script - removes H1 titles from content
+// File: scripts/generate-blog-data.js
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
@@ -19,17 +20,30 @@ function generateSlug(title) {
   });
 }
 
-// Function to extract headings from markdown content
+// Function to remove H1 title from content (to avoid duplication)
+function removeH1Title(content) {
+  // Remove the first H1 heading (usually the title)
+  return content.replace(/^#\s+.*$/m, '').trim();
+}
+
+// Function to extract headings from markdown content (excluding the first H1)
 function extractHeadings(content) {
   const headings = [];
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   let match;
+  let isFirstH1 = true;
   
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
-    const id = slugify(text, { lower: true, strict: true });
     
+    // Skip the first H1 (usually the title)
+    if (level === 1 && isFirstH1) {
+      isFirstH1 = false;
+      continue;
+    }
+    
+    const id = slugify(text, { lower: true, strict: true });
     headings.push({ id, text, level });
   }
   
@@ -71,11 +85,14 @@ async function generateBlogData() {
       // Generate slug from title if not provided
       const slug = data.slug || generateSlug(data.title);
       
-      // Convert markdown to HTML for rendering
-      const contentHtml = marked(content);
+      // Remove the first H1 title from content to avoid duplication
+      const contentWithoutTitle = removeH1Title(content);
       
-      // Extract headings for table of contents
-      const headings = extractHeadings(content);
+      // Convert markdown to HTML for rendering
+      const contentHtml = marked(contentWithoutTitle);
+      
+      // Extract headings for table of contents (excluding the removed title)
+      const headings = extractHeadings(contentWithoutTitle);
       
       // Calculate reading time
       const timeStats = readingTime(content);
@@ -99,7 +116,7 @@ async function generateBlogData() {
         title: data.title,
         date: data.date,
         excerpt: data.excerpt,
-        content,
+        content: contentWithoutTitle, // Store content without title
         contentHtml,
         author: data.author,
         category: data.category,
@@ -132,6 +149,7 @@ async function generateBlogData() {
   );
   
   console.log(`✅ Generated blog data with ${postsData.length} posts and ${categories.length} categories`);
+  console.log(`📝 Removed H1 titles from content to avoid duplication`);
 }
 
 // Run the function

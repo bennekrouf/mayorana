@@ -2,13 +2,21 @@
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import TagFilter from '@/components/blog/TagFilter';
+import Pagination from '@/components/blog/Pagination';
 import { 
-  getAllPosts,
+  getPaginatedPosts,
   getAllTags,
 } from '@/lib/blog';
 
-export default async function BlogPage() {
-  const posts = getAllPosts();
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function BlogPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const page = parseInt(params.page as string) || 1;
+  
+  const paginatedData = getPaginatedPosts(page);
   const tags = getAllTags();
 
   return (
@@ -20,6 +28,9 @@ export default async function BlogPage() {
             <h1 className="text-4xl font-bold mb-6">Blog</h1>
             <p className="text-xl text-muted-foreground">
               Insights and articles about Rust, AI, and modern software development.
+            </p>
+            <p className="text-sm text-muted-foreground mt-4">
+              {paginatedData.totalPosts} articles total
             </p>
           </div>
         </div>
@@ -39,7 +50,22 @@ export default async function BlogPage() {
             
             {/* Main Content */}
             <div className="md:col-span-9">
-              <BlogList posts={posts} title="" description="" />
+              <div className="mb-6">
+                <p className="text-sm text-muted-foreground">
+                  Showing {paginatedData.posts.length} of {paginatedData.totalPosts} articles
+                  {paginatedData.totalPages > 1 && (
+                    <span> (Page {paginatedData.currentPage} of {paginatedData.totalPages})</span>
+                  )}
+                </p>
+              </div>
+              
+              <BlogList posts={paginatedData.posts} title="" description="" />
+              
+              <Pagination
+                currentPage={paginatedData.currentPage}
+                totalPages={paginatedData.totalPages}
+                baseUrl="/blog"
+              />
             </div>
           </div>
         </div>

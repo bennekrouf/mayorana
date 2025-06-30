@@ -1,4 +1,4 @@
-// Simplified blog library (tags only)
+// Enhanced blog library with pagination support
 // File: src/lib/blog.ts
 import blogPostsData from '../data/blog-posts.json';
 
@@ -10,8 +10,8 @@ export interface BlogPost {
   author: string;
   excerpt: string;
   content: string;
-  category: string;
   contentHtml: string;
+  category: string;
   tags: string[];
   image?: string;
   readingTime: string;
@@ -28,9 +28,41 @@ export interface BlogPost {
   }[];
 }
 
+export interface PaginatedPosts {
+  posts: BlogPost[];
+  currentPage: number;
+  totalPages: number;
+  totalPosts: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+const POSTS_PER_PAGE = 6; // Adjust as needed
+
 // Get all blog posts
 export function getAllPosts(): BlogPost[] {
   return blogPostsData; 
+}
+
+// Get paginated posts
+export function getPaginatedPosts(page: number = 1): PaginatedPosts {
+  const allPosts = getAllPosts();
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const currentPage = Math.max(1, Math.min(page, totalPages));
+  
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const posts = allPosts.slice(startIndex, endIndex);
+
+  return {
+    posts,
+    currentPage,
+    totalPages,
+    totalPosts,
+    hasNextPage: currentPage < totalPages,
+    hasPrevPage: currentPage > 1,
+  };
 }
 
 // Get all unique tags from all posts
@@ -51,13 +83,34 @@ export function getPostsByTag(tagSlug: string): BlogPost[] {
   );
 }
 
+// Get paginated posts by tag
+export function getPaginatedPostsByTag(tagSlug: string, page: number = 1): PaginatedPosts {
+  const allTagPosts = getPostsByTag(tagSlug);
+  const totalPosts = allTagPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const currentPage = Math.max(1, Math.min(page, totalPages));
+  
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const posts = allTagPosts.slice(startIndex, endIndex);
+
+  return {
+    posts,
+    currentPage,
+    totalPages,
+    totalPosts,
+    hasNextPage: currentPage < totalPages,
+    hasPrevPage: currentPage > 1,
+  };
+}
+
 // Get a single post by slug
 export function getPostBySlug(slug: string): BlogPost | null {
   const posts = getAllPosts();
   return posts.find(post => post.slug === slug) || null;
 }
 
-// Get recent posts
+// Get recent posts (for homepage, etc.)
 export function getRecentPosts(count: number = 3): BlogPost[] {
   const posts = getAllPosts();
   return posts.slice(0, count);
