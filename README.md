@@ -74,6 +74,92 @@ yarn global add vercel
 
 # Deploy to Vercel
 vercel
+
+
+## Server Publishing Setup
+
+### 🚀 Quick Setup (5 minutes)
+
+```bash
+# 1. Clone and install
+git clone https://github.com/bennekrouf/mayorana.git /path/to/mayorana
+cd /path/to/mayorana
+yarn install --frozen-lockfile
+
+# 2. Create content directories
+mkdir -p content/{drafts,queue,blog}
+
+# 3. Make scripts executable
+chmod +x scripts/*.sh
+
+# 4. Start with PM2
+pm2 start ecosystem.config.js
+pm2 save
+pm2 startup
+
+# 5. Add daily cron job
+echo "0 9 * * * cd ~/mayorana && ./scripts/daily-publish.sh" | crontab -
+
+# ✅ Done! System will publish one article daily at 9 AM
+```
+
+### 📝 Content Workflow
+
+```bash
+# Write articles locally
+vim content/drafts/my-article.md
+
+# Queue for publishing  
+node scripts/blog-cli.js queue add "my-article.md"
+
+# Commit and push
+git add content/ && git commit -m "Queue: New article" && git push
+
+# Server automatically publishes daily at 9 AM
+```
+
+### 🎛️ Optional Configuration
+
+```bash
+# Set Slack notifications (optional)
+export SLACK_WEBHOOK_URL="https://hooks.slack.com/..."
+
+# Change site URL in scripts/daily-publish.sh if needed
+# Default: https://mayorana.ch
+
+# Emergency controls
+touch .publishing-paused    # Pause all publishing
+touch .skip-today          # Skip today only
+rm .publishing-paused      # Resume publishing
+```
+
+### 📊 Monitoring
+
+```bash
+# Check status
+node scripts/blog-cli.js status
+
+# View logs  
+tail -f /var/log/blog-publishing.log
+
+# Preview schedule
+node scripts/blog-cli.js preview 14
+```
+
+### 🔧 Smart Defaults
+
+The system works out-of-the-box with these intelligent defaults:
+
+- **Publishing time**: 9 AM daily
+- **Preferred days**: Tuesday, Wednesday, Thursday  
+- **Skip weekends**: Yes
+- **Max per day**: 1 article
+- **Auto-backup**: Yes (keeps 3 days)
+- **Health checks**: Automatic
+- **SEO pings**: Google & Bing
+- **Error handling**: Graceful with logs
+
+No configuration files needed - just works!
 ```
 
 ## License

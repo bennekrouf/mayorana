@@ -1,17 +1,23 @@
 ---
-id: "vec-new-vs-with-capacity"
-title: "What is the difference between Vec::new() and Vec::with_capacity()? When would you use each?"
-slug: "vec-new-vs-with-capacity"
-date: "2025-06-30"
-author: "mayo"
-excerpt: "An expert technical discussion on Vec allocation strategies in Rust, comparing Vec::new() and Vec::with_capacity() for optimal performance."
-category: "rust"
+id: vec-new-vs-with-capacity
+title: >-
+  What is the difference between Vec::new() and Vec::with_capacity()? When would
+  you use each?
+slug: vec-new-vs-with-capacity
+date: '2025-06-30'
+author: mayo
+excerpt: >-
+  An expert technical discussion on Vec allocation strategies in Rust, comparing
+  Vec::new() and Vec::with_capacity() for optimal performance.
+category: rust
 tags:
-  - "rust"
-  - "collections"
-  - "performance"
-  - "vec"
-  - "iterators"
+  - rust
+  - collections
+  - performance
+  - vec
+  - iterators
+scheduledFor: '2025-07-03'
+scheduledAt: '2025-07-01T06:55:13.411Z'
 ---
 
 # What is the difference between Vec::new() and Vec::with_capacity()? When would you use each?

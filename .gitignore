@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# Generated blog data (auto-regenerated on deployment)
+src/data/blog-posts.json
+src/data/blog-categories.json
+
+# Generated sitemap
+public/sitemap.xml
+
+# Scheduling runtime files
+.last-publish
+.publishing-paused
+.skip-today
+.queue-state.json

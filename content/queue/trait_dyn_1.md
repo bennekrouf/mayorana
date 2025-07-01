@@ -1,17 +1,25 @@
 ---
-id: "rust-traits-vs-interfaces"
-title: "How do Rust traits differ from interfaces in languages like Java or C#, and how would you use them to define a shared behavior for types in a performance-critical library?"
-slug: "rust-traits-vs-interfaces"
-date: "2025-06-30"
-author: "mayo"
-excerpt: "Expert technical discussion on Rust traits vs Java/C# interfaces, covering dispatch mechanisms, compile-time behavior, and performance optimizations in critical systems."
-category: "rust"
+id: rust-traits-vs-interfaces
+title: >-
+  How do Rust traits differ from interfaces in languages like Java or C#, and
+  how would you use them to define a shared behavior for types in a
+  performance-critical library?
+slug: rust-traits-vs-interfaces
+date: '2025-06-30'
+author: mayo
+excerpt: >-
+  Expert technical discussion on Rust traits vs Java/C# interfaces, covering
+  dispatch mechanisms, compile-time behavior, and performance optimizations in
+  critical systems.
+category: rust
 tags:
-  - "rust"
-  - "traits"
-  - "performance"
-  - "interfaces"
-  - "dispatch"
+  - rust
+  - traits
+  - performance
+  - interfaces
+  - dispatch
+scheduledFor: '2025-07-17'
+scheduledAt: '2025-07-01T06:55:13.417Z'
 ---
 
 # How do Rust traits differ from interfaces in languages like Java or C#, and how would you use them to define a shared behavior for types in a performance-critical library?

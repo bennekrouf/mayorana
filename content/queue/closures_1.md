@@ -1,17 +1,21 @@
 ---
-id: "function-vs-closure-rust"
-title: "What is the difference between a function and a closure in Rust?"
-slug: "function-vs-closure-rust"
-date: "2025-06-30"
-author: "mayo"
-excerpt: "Expert technical discussion on functions vs closures in Rust, covering ownership, traits, lifetimes, and performance implications."
-category: "rust"
+id: function-vs-closure-rust
+title: What is the difference between a function and a closure in Rust?
+slug: function-vs-closure-rust
+date: '2025-06-30'
+author: mayo
+excerpt: >-
+  Expert technical discussion on functions vs closures in Rust, covering
+  ownership, traits, lifetimes, and performance implications.
+category: rust
 tags:
-  - "rust"
-  - "functions"
-  - "closures"
-  - "traits"
-  - "ownership"
+  - rust
+  - functions
+  - closures
+  - traits
+  - ownership
+scheduledFor: '2025-07-02'
+scheduledAt: '2025-07-01T06:55:13.405Z'
 ---
 
 # What is the difference between a function and a closure in Rust?

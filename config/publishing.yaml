@@ -1,0 +1,162 @@
+# Publishing Configuration
+# File: config/publishing.yaml
+
+# Publishing schedule settings
+publishing:
+  # Daily publishing time (24-hour format)
+  publishTime: "09:00"
+  
+  # Time zone for publishing
+  timezone: "Europe/Zurich"
+  
+  # Skip publishing on weekends
+  skipWeekends: true
+  
+  # Preferred publishing days (0=Sunday, 1=Monday, etc.)
+  preferredDays: [2, 3, 4]  # Tuesday, Wednesday, Thursday
+  
+  # Maximum articles per day
+  maxPerDay: 1
+  
+  # Minimum buffer (articles in queue + scheduled)
+  minBuffer: 5
+  
+  # Holiday dates to skip (YYYY-MM-DD format)
+  skipDates:
+    - "2025-12-25"  # Christmas
+    - "2025-01-01"  # New Year
+    - "2025-07-04"  # July 4th (if relevant)
+  
+# Content validation rules
+validation:
+  # Required frontmatter fields
+  requiredFields:
+    - "title"
+    - "slug"
+    - "author"
+    - "excerpt"
+    - "tags"
+  
+  # Content length limits
+  content:
+    minLength: 300      # Minimum characters
+    maxLength: 50000    # Maximum characters
+    warnShort: 500      # Warn if shorter than this
+    warnLong: 20000     # Warn if longer than this
+  
+  # Title and slug limits
+  title:
+    maxLength: 100
+    warnLength: 80
+  
+  slug:
+    maxLength: 60
+    warnLength: 50
+    pattern: "^[a-z0-9-]+$"
+  
+  # Tag limits
+  tags:
+    maxCount: 10
+    warnCount: 8
+    minCount: 1
+
+# Queue management
+queue:
+  # Auto-scheduling preferences
+  autoSchedule: true
+  
+  # Priority levels
+  priorities:
+    - "high"    # Jump to front of queue
+    - "normal"  # Standard queue order
+    - "low"     # Back of queue
+  
+  # Default priority for new articles
+  defaultPriority: "normal"
+  
+  # How far ahead to schedule (days)
+  scheduleAheadDays: 30
+  
+  # Buffer warnings
+  warnings:
+    lowBuffer: 5     # Warn when buffer < 5
+    criticalBuffer: 3 # Critical when buffer < 3
+
+# Notification settings
+notifications:
+  # Slack webhook for alerts (set via environment variable)
+  slack:
+    enabled: true
+    webhook: "${SLACK_WEBHOOK_URL}"
+    channel: "#blog-automation"
+  
+  # Email notifications (optional)
+  email:
+    enabled: false
+    smtp:
+      host: "smtp.gmail.com"
+      port: 587
+      secure: false
+      user: "${EMAIL_USER}"
+      pass: "${EMAIL_PASS}"
+    to: "your-email@example.com"
+    from: "blog-bot@mayorana.ch"
+
+# SEO optimization
+seo:
+  # Automatically ping search engines after publish
+  pingSearchEngines: true
+  
+  # Search engines to notify
+  searchEngines:
+    google: "https://www.google.com/ping?sitemap=https://mayorana.ch/sitemap.xml"
+    bing: "https://www.bing.com/ping?sitemap=https://mayorana.ch/sitemap.xml"
+  
+  # Generate social media preview images
+  generatePreviews: false
+  
+  # Sitemap settings
+  sitemap:
+    autoRegenerate: true
+    baseUrl: "https://mayorana.ch"
+
+# Logging configuration
+logging:
+  # Log level (trace, debug, info, warn, error)
+  level: "info"
+  
+  # Log file location
+  file: "/var/log/blog-publishing.log"
+  
+  # Rotate logs
+  rotate: true
+  maxFiles: 7
+  maxSize: "10MB"
+
+# Backup settings
+backup:
+  # Create backups before publishing
+  enabled: true
+  
+  # Backup location
+  directory: "/backups/blog-content"
+  
+  # Keep backups for (days)
+  retentionDays: 30
+  
+  # What to backup
+  include:
+    - "content/"
+    - "src/data/"
+    - "public/sitemap.xml"
+
+# Development settings
+development:
+  # Skip actual publishing (dry run mode)
+  dryRun: false
+  
+  # Verbose logging
+  verbose: false
+  
+  # Mock external services (search engine pings, etc.)
+  mockServices: false

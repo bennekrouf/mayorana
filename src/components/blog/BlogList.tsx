@@ -38,7 +38,7 @@ const BlogList: React.FC<BlogListProps> = ({
               <div className="p-6 flex flex-col h-full">
                 <div className="mb-2">
                   <span className="text-sm font-medium text-primary">
-                    {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
+                    {post.tags?.[0] || 'Article'}
                   </span>
                   <span className="text-sm text-muted-foreground ml-2">
                     {formatDate(post.date)}

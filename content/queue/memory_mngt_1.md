@@ -1,17 +1,23 @@
 ---
-id: "string-vs-str-rust"
-title: "What is the difference between String and str in Rust? When would you use each?"
-slug: "string-vs-str-rust"
-date: "2025-06-30"
-author: "mayo"
-excerpt: "Expert technical discussion on String vs str in Rust, covering memory management, ownership, and when to use each type."
-category: "rust"
+id: string-vs-str-rust
+title: >-
+  What is the difference between String and str in Rust? When would you use
+  each?
+slug: string-vs-str-rust
+date: '2025-06-30'
+author: mayo
+excerpt: >-
+  Expert technical discussion on String vs str in Rust, covering memory
+  management, ownership, and when to use each type.
+category: rust
 tags:
-  - "rust"
-  - "string"
-  - "memory"
-  - "ownership"
-  - "types"
+  - rust
+  - string
+  - memory
+  - ownership
+  - types
+scheduledFor: '2025-07-09'
+scheduledAt: '2025-07-01T06:55:13.413Z'
 ---
 
 # What is the difference between String and str in Rust? When would you use each?

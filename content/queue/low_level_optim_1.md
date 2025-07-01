@@ -1,17 +1,25 @@
 ---
-id: "memory-layout-optimization-rust"
-title: "Memory Layout Optimization: How would you use Rust's repr attribute to optimize the memory layout of a struct for cache efficiency, and what trade-offs might you consider when choosing between repr(C) and repr(packed)?"
-slug: "memory-layout-optimization-rust"
-date: "2025-06-30"
-author: "mayo"
-excerpt: "Expert technical discussion on low-level memory optimization in Rust, covering repr attributes, cache efficiency, and performance trade-offs for lead developers."
-category: "rust"
+id: memory-layout-optimization-rust
+title: >-
+  Memory Layout Optimization: How would you use Rust's repr attribute to
+  optimize the memory layout of a struct for cache efficiency, and what
+  trade-offs might you consider when choosing between repr(C) and repr(packed)?
+slug: memory-layout-optimization-rust
+date: '2025-06-30'
+author: mayo
+excerpt: >-
+  Expert technical discussion on low-level memory optimization in Rust, covering
+  repr attributes, cache efficiency, and performance trade-offs for lead
+  developers.
+category: rust
 tags:
-  - "rust"
-  - "optimization"
-  - "memory"
-  - "performance"
-  - "cache"
+  - rust
+  - optimization
+  - memory
+  - performance
+  - cache
+scheduledFor: '2025-07-08'
+scheduledAt: '2025-07-01T06:55:13.412Z'
 ---
 
 # Memory Layout Optimization: How would you use Rust's repr attribute to optimize the memory layout of a struct for cache efficiency?
