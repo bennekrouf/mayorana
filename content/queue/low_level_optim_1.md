@@ -5,7 +5,7 @@ title: >-
   optimize the memory layout of a struct for cache efficiency, and what
   trade-offs might you consider when choosing between repr(C) and repr(packed)?
 slug: memory-layout-optimization-rust
-date: '2025-06-30'
+date: '2025-06-26'
 author: mayo
 excerpt: >-
   Expert technical discussion on low-level memory optimization in Rust, covering

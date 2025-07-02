@@ -4,7 +4,7 @@ title: >-
   What is the difference between String and str in Rust? When would you use
   each?
 slug: string-vs-str-rust
-date: '2025-06-30'
+date: '2025-06-27'
 author: mayo
 excerpt: >-
   Expert technical discussion on String vs str in Rust, covering memory

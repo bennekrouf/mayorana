@@ -5,7 +5,7 @@ title: >-
   how would you use them to define a shared behavior for types in a
   performance-critical library?
 slug: rust-traits-vs-interfaces
-date: '2025-06-30'
+date: '2025-06-23'
 author: mayo
 excerpt: >-
   Expert technical discussion on Rust traits vs Java/C# interfaces, covering
