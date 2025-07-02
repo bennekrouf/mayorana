@@ -1,27 +1,75 @@
 [
   {
-    "id": "existing-published-article",
-    "slug": "existing-published-article",
-    "title": "Existing Published Article",
+    "id": "function-vs-closure-rust",
+    "slug": "function-vs-closure-rust",
+    "title": "What is the difference between a function and a closure in Rust?",
     "date": "2025-06-30",
-    "excerpt": "An article that's already published to test the system.",
-    "content": "This article is already published and should not be touched by the scheduling system.",
-    "contentHtml": "<p>This article is already published and should not be touched by the scheduling system.</p>\n",
+    "excerpt": "Expert technical discussion on functions vs closures in Rust, covering ownership, traits, lifetimes, and performance implications.",
+    "content": "Understanding the distinction between functions and closures is fundamental to mastering Rust's ownership system and performance characteristics.\n\n## Key Differences\n\n| Functions | Closures |\n|-----------|----------|\n| Defined at compile time with `fn` | Anonymous, created at runtime |\n| Static dispatch (no runtime overhead) | May involve dynamic dispatch (trait objects) |\n| Cannot capture environment variables | Can capture variables from enclosing scope |\n| Always have a known type | Type is unique and inferred (each closure has its own type) |\n\n## Underlying Mechanics\n\n### Closures Are Structs + Traits\n\nRust models closures as structs that:\n- Store captured variables (as fields)\n- Implement one of the closure traits (`Fn`, `FnMut`, or `FnOnce`)\n\nFor example, this closure:\n```rust\nlet x = 42;\nlet closure = |y| x + y;\n```\n\nIs desugared to something like:\n```rust\nstruct AnonymousClosure {\n    x: i32,  // Captured variable\n}\n\nimpl FnOnce<(i32,)> for AnonymousClosure {\n    type Output = i32;\n    fn call_once(self, y: i32) -> i32 {\n        self.x + y\n    }\n}\n```\n\n### Dynamic Dispatch (Vtables)\n\nWhen closures are trait objects (e.g., `Box<dyn Fn(i32) -> i32>`), Rust uses vtables for dynamic dispatch:\n- **Vtable**: A lookup table storing function pointers, enabling runtime polymorphism\n- **Overhead**: Indirect function calls (~2–3x slower than static dispatch)\n\n## When to Use Each\n\nUse **Functions** when:\n- You need zero-cost abstractions (e.g., mathematical operations)\n- No environment capture is required\n\n```rust\nfn add(a: i32, b: i32) -> i32 { a + b }\n```\n\nUse **Closures** when:\n- You need to capture state from the environment\n- Writing short, ad-hoc logic (e.g., callbacks, iterators)\n\n```rust\nlet threshold = 10;\nlet filter = |x: i32| x > threshold;  // Captures `threshold`\n```\n\n## Performance Considerations\n\n| Scenario | Static Dispatch (Closures) | Dynamic Dispatch (dyn Fn) |\n|----------|----------------------------|----------------------------|\n| Speed | Fast (inlined) | Slower (vtable lookup) |\n| Memory | No overhead | Vtable + fat pointer |\n| Use Case | Hot loops, embedded | Heterogeneous callbacks |\n\n## Example: Static vs. Dynamic Dispatch\n\n```rust\n// Static dispatch (compile-time)\nfn static_call<F: Fn(i32) -> i32>(f: F, x: i32) -> i32 {\n    f(x)  // Inlined\n}\n\n// Dynamic dispatch (runtime)\nfn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {\n    f(x)  // Vtable lookup\n}\n```\n\n## Key Takeaways\n\n✅ **Functions**: Predictable performance, no captures  \n✅ **Closures**: Flexible, capture environment, but may involve vtables  \n🚀 Prefer static dispatch (`impl Fn`) unless you need trait objects\n\n**Try This:** What happens if a closure captures a mutable reference and is called twice?  \n**Answer:** The borrow checker ensures exclusive access—it won't compile unless the first call completes!",
+    "contentHtml": "<p>Understanding the distinction between functions and closures is fundamental to mastering Rust&#39;s ownership system and performance characteristics.</p>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Functions</th>\n<th>Closures</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Defined at compile time with <code>fn</code></td>\n<td>Anonymous, created at runtime</td>\n</tr>\n<tr>\n<td>Static dispatch (no runtime overhead)</td>\n<td>May involve dynamic dispatch (trait objects)</td>\n</tr>\n<tr>\n<td>Cannot capture environment variables</td>\n<td>Can capture variables from enclosing scope</td>\n</tr>\n<tr>\n<td>Always have a known type</td>\n<td>Type is unique and inferred (each closure has its own type)</td>\n</tr>\n</tbody></table>\n<h2>Underlying Mechanics</h2>\n<h3>Closures Are Structs + Traits</h3>\n<p>Rust models closures as structs that:</p>\n<ul>\n<li>Store captured variables (as fields)</li>\n<li>Implement one of the closure traits (<code>Fn</code>, <code>FnMut</code>, or <code>FnOnce</code>)</li>\n</ul>\n<p>For example, this closure:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = |y| x + y;\n</code></pre>\n<p>Is desugared to something like:</p>\n<pre><code class=\"language-rust\">struct AnonymousClosure {\n    x: i32,  // Captured variable\n}\n\nimpl FnOnce&lt;(i32,)&gt; for AnonymousClosure {\n    type Output = i32;\n    fn call_once(self, y: i32) -&gt; i32 {\n        self.x + y\n    }\n}\n</code></pre>\n<h3>Dynamic Dispatch (Vtables)</h3>\n<p>When closures are trait objects (e.g., <code>Box&lt;dyn Fn(i32) -&gt; i32&gt;</code>), Rust uses vtables for dynamic dispatch:</p>\n<ul>\n<li><strong>Vtable</strong>: A lookup table storing function pointers, enabling runtime polymorphism</li>\n<li><strong>Overhead</strong>: Indirect function calls (~2–3x slower than static dispatch)</li>\n</ul>\n<h2>When to Use Each</h2>\n<p>Use <strong>Functions</strong> when:</p>\n<ul>\n<li>You need zero-cost abstractions (e.g., mathematical operations)</li>\n<li>No environment capture is required</li>\n</ul>\n<pre><code class=\"language-rust\">fn add(a: i32, b: i32) -&gt; i32 { a + b }\n</code></pre>\n<p>Use <strong>Closures</strong> when:</p>\n<ul>\n<li>You need to capture state from the environment</li>\n<li>Writing short, ad-hoc logic (e.g., callbacks, iterators)</li>\n</ul>\n<pre><code class=\"language-rust\">let threshold = 10;\nlet filter = |x: i32| x &gt; threshold;  // Captures `threshold`\n</code></pre>\n<h2>Performance Considerations</h2>\n<table>\n<thead>\n<tr>\n<th>Scenario</th>\n<th>Static Dispatch (Closures)</th>\n<th>Dynamic Dispatch (dyn Fn)</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Speed</td>\n<td>Fast (inlined)</td>\n<td>Slower (vtable lookup)</td>\n</tr>\n<tr>\n<td>Memory</td>\n<td>No overhead</td>\n<td>Vtable + fat pointer</td>\n</tr>\n<tr>\n<td>Use Case</td>\n<td>Hot loops, embedded</td>\n<td>Heterogeneous callbacks</td>\n</tr>\n</tbody></table>\n<h2>Example: Static vs. Dynamic Dispatch</h2>\n<pre><code class=\"language-rust\">// Static dispatch (compile-time)\nfn static_call&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32) -&gt; i32 {\n    f(x)  // Inlined\n}\n\n// Dynamic dispatch (runtime)\nfn dynamic_call(f: &amp;dyn Fn(i32) -&gt; i32, x: i32) -&gt; i32 {\n    f(x)  // Vtable lookup\n}\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Functions</strong>: Predictable performance, no captures<br>✅ <strong>Closures</strong>: Flexible, capture environment, but may involve vtables<br>🚀 Prefer static dispatch (<code>impl Fn</code>) unless you need trait objects</p>\n<p><strong>Try This:</strong> What happens if a closure captures a mutable reference and is called twice?<br><strong>Answer:</strong> The borrow checker ensures exclusive access—it won&#39;t compile unless the first call completes!</p>\n",
     "author": "mayo",
+    "category": "rust",
     "tags": [
       "rust",
-      "published"
+      "functions",
+      "closures",
+      "traits",
+      "ownership"
     ],
-    "readingTime": "1 min",
+    "readingTime": "3 min",
     "seo": {
-      "title": "Existing Published Article",
-      "description": "An article that's already published to test the system.",
+      "title": "What is the difference between a function and a closure in Rust?",
+      "description": "Expert technical discussion on functions vs closures in Rust, covering ownership, traits, lifetimes, and performance implications.",
       "keywords": [
         "rust",
-        "published"
+        "functions",
+        "closures",
+        "traits",
+        "ownership"
       ]
     },
-    "headings": []
+    "headings": [
+      {
+        "id": "key-differences",
+        "text": "Key Differences",
+        "level": 2
+      },
+      {
+        "id": "underlying-mechanics",
+        "text": "Underlying Mechanics",
+        "level": 2
+      },
+      {
+        "id": "closures-are-structs-traits",
+        "text": "Closures Are Structs + Traits",
+        "level": 3
+      },
+      {
+        "id": "dynamic-dispatch-vtables",
+        "text": "Dynamic Dispatch (Vtables)",
+        "level": 3
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "performance-considerations",
+        "text": "Performance Considerations",
+        "level": 2
+      },
+      {
+        "id": "example-static-vs-dynamic-dispatch",
+        "text": "Example: Static vs. Dynamic Dispatch",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
   },
   {
     "id": "getting-started-with-rust",
