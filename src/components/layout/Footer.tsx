@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
               <span className="font-bold text-xl text-foreground">mayorana</span>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Specialized in Rust training, LLM integration, and AI agent development.
+              Specialized in Rust, LLM integration, and AI agent development.
               Based in Switzerland, serving clients worldwide.
             </p>
           </div>
