@@ -32,6 +32,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/memory-layout-optimization-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/vec-new-vs-with-capacity</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/getting-started-with-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -58,6 +68,41 @@
   </url>
   <url>
     <loc>https://mayorana.ch/blog/tag/ownership</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/optimization</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/memory</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/performance</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/cache</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/collections</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/vec</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/iterators</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
