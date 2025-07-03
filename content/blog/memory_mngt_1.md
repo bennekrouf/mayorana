@@ -1,13 +1,12 @@
 ---
 id: string-vs-str-rust
-title: >-
-  String vs. &str – Which to Use and When?
+title: String vs. &str – Which to Use and When?
 slug: string-vs-str-rust
-date: '2025-06-27'
+date: '2025-07-03'
 author: mayo
 excerpt: >-
-  String vs str in Rust, covering memory
-  management, ownership, and when to use each type.
+  String vs str in Rust, covering memory management, ownership, and when to use
+  each type.
 category: rust
 tags:
   - rust
@@ -15,7 +14,6 @@ tags:
   - memory
   - ownership
   - types
-scheduledFor: '2025-07-09'
 scheduledAt: '2025-07-01T06:55:13.413Z'
 ---
 
