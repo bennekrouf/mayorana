@@ -1,17 +1,105 @@
-// Clean BlogPost component without categories
+// Enhanced BlogPost component with working social sharing
 // File: src/components/blog/BlogPost.tsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { BlogPost as BlogPostType, formatDate } from '../../lib/blog';
 import { motion } from '@/components/ui/Motion';
+import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
 
 interface BlogPostProps {
   post: BlogPostType;
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  // Generate the full URL for the post
+  const getPostUrl = () => {
+    if (typeof window !== 'undefined') {
+      return window.location.href;
+    }
+    return `https://mayorana.ch/blog/${post.slug}`;
+  };
+
+  // Share on X (Twitter)
+  const shareOnTwitter = () => {
+    const url = getPostUrl();
+    const text = `${post.title} by ${post.author}`;
+    const hashtags = post.tags?.slice(0, 3).join(',') || 'rust,programming';
+
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`;
+
+    // Track the share event
+    if (typeof window !== 'undefined' && window.plausible) {
+      window.plausible('Social Share', {
+        props: {
+          platform: 'twitter',
+          post: post.slug
+        }
+      });
+    }
+
+    window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  // Share on LinkedIn
+  const shareOnLinkedIn = () => {
+    const url = getPostUrl();
+    const title = post.title;
+    const summary = post.excerpt;
+
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`;
+
+    // Track the share event
+    if (typeof window !== 'undefined' && window.plausible) {
+      window.plausible('Social Share', {
+        props: {
+          platform: 'linkedin',
+          post: post.slug
+        }
+      });
+    }
+
+    window.open(linkedinUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  // Copy link to clipboard
+  const copyLink = async () => {
+    const url = getPostUrl();
+
+    try {
+      await navigator.clipboard.writeText(url);
+      setLinkCopied(true);
+
+      // Track the copy event
+      if (typeof window !== 'undefined' && window.plausible) {
+        window.plausible('Link Copy', {
+          props: {
+            post: post.slug
+          }
+        });
+      }
+
+      // Reset the copied state after 2 seconds
+      setTimeout(() => {
+        setLinkCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    }
+  };
+
   return (
     <article className="w-full max-w-3xl mx-auto blog-content">
       <motion.div
@@ -35,7 +123,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
               ))}
             </div>
           )}
-          
+
           <div className="flex items-center text-sm text-muted-foreground">
             <span>{formatDate(post.date)}</span>
             {post.readingTime && (
@@ -46,9 +134,9 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             )}
           </div>
         </div>
-        
+
         <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
-        
+
         <div className="flex items-center mb-8">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
             <span className="text-primary font-medium">{post.author.charAt(0)}</span>
@@ -56,7 +144,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           <span className="font-medium">{post.author}</span>
         </div>
       </motion.div>
-      
+
       {post.headings && post.headings.length > 0 && (
         <motion.div
           className="mb-8 p-4 bg-secondary rounded-lg"
@@ -68,12 +156,12 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           <nav>
             <ul className="space-y-2">
               {post.headings.map(heading => (
-                <li 
+                <li
                   key={heading.id}
                   className="ml-[calc(1rem*var(--level))]"
                   style={{ '--level': heading.level - 1 } as React.CSSProperties}
                 >
-                  <a 
+                  <a
                     href={`#${heading.id}`}
                     className="text-primary hover:underline"
                   >
@@ -85,7 +173,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           </nav>
         </motion.div>
       )}
-      
+
       <motion.div
         className="prose prose-lg dark:prose-invert max-w-none"
         initial={{ opacity: 0 }}
@@ -93,7 +181,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
-      
+
       {post.tags && post.tags.length > 0 && (
         <motion.div
           className="mt-12"
@@ -115,7 +203,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           </div>
         </motion.div>
       )}
-      
+
       <motion.div
         className="mt-12 pt-8 border-t border-border"
         initial={{ opacity: 0 }}
@@ -127,69 +215,78 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             href="/blog"
             className="mb-4 sm:mb-0 inline-flex items-center text-primary font-medium hover:underline"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4 mr-1" 
-              fill="none" 
-              viewBox="0 0 24 24" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 mr-1"
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M15 19l-7-7 7-7" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
               />
             </svg>
             Back to Blog
           </Link>
-          
-          <div className="flex space-x-4">
+
+          <div className="flex items-center space-x-3">
+            <span className="text-sm text-muted-foreground mr-2">Share:</span>
+
+            {/* X (Twitter) Share Button */}
             <button
-              className="p-2 rounded-full bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
-              aria-label="Share on Twitter"
+              onClick={shareOnTwitter}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+              aria-label="Share on X (Twitter)"
+              title="Share on X (Twitter)"
             >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" 
-                />
-              </svg>
+              <FaTwitter className="h-4 w-4" />
             </button>
-            
+
+            {/* LinkedIn Share Button */}
             <button
-              className="p-2 rounded-full bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
-              aria-label="Copy link"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                // You could add a toast notification here
-              }}
+              onClick={shareOnLinkedIn}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors"
+              aria-label="Share on LinkedIn"
+              title="Share on LinkedIn"
             >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" 
-                />
-              </svg>
+              <FaLinkedin className="h-4 w-4" />
+            </button>
+
+            {/* Copy Link Button */}
+            <button
+              onClick={copyLink}
+              className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${linkCopied
+                  ? 'bg-green-500 text-white'
+                  : 'bg-secondary text-foreground hover:bg-secondary/80'
+                }`}
+              aria-label="Copy link"
+              title={linkCopied ? 'Link copied!' : 'Copy link'}
+            >
+              {linkCopied ? (
+                <FaCheck className="h-4 w-4" />
+              ) : (
+                <FaLink className="h-4 w-4" />
+              )}
             </button>
           </div>
         </div>
+
+        {/* Success message for link copy */}
+        {linkCopied && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="mt-4 text-center"
+          >
+            <span className="text-sm text-green-600 dark:text-green-400">
+              ✓ Link copied to clipboard!
+            </span>
+          </motion.div>
+        )}
       </motion.div>
     </article>
   );
