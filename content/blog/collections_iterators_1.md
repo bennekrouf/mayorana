@@ -1,13 +1,12 @@
 ---
 id: vec-new-vs-with-capacity
 title: >-
-  What is the difference between Vec::new() and Vec::with_capacity()? When would
-  you use each?
+  Rust Vec::new() vs. with_capacity(): When to Use Each
 slug: vec-new-vs-with-capacity
 date: '2025-06-25'
 author: mayo
 excerpt: >-
-  An expert technical discussion on Vec allocation strategies in Rust, comparing
+  Vec allocation strategies in Rust, comparing
   Vec::new() and Vec::with_capacity() for optimal performance.
 category: rust
 tags:

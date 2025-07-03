@@ -1,13 +1,12 @@
 ---
 id: string-vs-str-rust
 title: >-
-  What is the difference between String and str in Rust? When would you use
-  each?
+  String vs. &str – Which to Use and When?
 slug: string-vs-str-rust
 date: '2025-06-27'
 author: mayo
 excerpt: >-
-  Expert technical discussion on String vs str in Rust, covering memory
+  String vs str in Rust, covering memory
   management, ownership, and when to use each type.
 category: rust
 tags:

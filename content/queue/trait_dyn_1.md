@@ -1,16 +1,13 @@
 ---
 id: rust-traits-vs-interfaces
 title: >-
-  How do Rust traits differ from interfaces in languages like Java or C#, and
-  how would you use them to define a shared behavior for types in a
-  performance-critical library?
+  Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right
 slug: rust-traits-vs-interfaces
 date: '2025-06-23'
 author: mayo
 excerpt: >-
-  Expert technical discussion on Rust traits vs Java/C# interfaces, covering
-  dispatch mechanisms, compile-time behavior, and performance optimizations in
-  critical systems.
+  Discussion on Rust traits vs Java/C# interfaces, covering
+  dispatch mechanisms, compile-time behavior, and performance optimizations.
 category: rust
 tags:
   - rust

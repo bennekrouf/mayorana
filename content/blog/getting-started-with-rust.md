@@ -4,7 +4,7 @@ title: "Getting Started with Rust: A Guide for Beginners"
 slug: "getting-started-with-rust"
 date: "2025-04-15"
 author: "Mayorana"
-excerpt: "An introduction to Rust for beginners, covering installation, basic syntax, and your first project."
+excerpt: "Introduction to Rust for beginners, covering installation, basic syntax, and your first project."
 category: "rust"
 tags:
   - "rust"
