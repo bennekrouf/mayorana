@@ -27,6 +27,16 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/rust-traits-vs-interfaces</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/string-vs-str-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/function-vs-closure-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -52,6 +62,46 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/tag/traits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/performance</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/interfaces</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/dispatch</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/string</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/memory</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/ownership</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/types</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/tag/functions</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -62,27 +112,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/traits</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://mayorana.ch/blog/tag/ownership</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://mayorana.ch/blog/tag/optimization</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://mayorana.ch/blog/tag/memory</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://mayorana.ch/blog/tag/performance</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

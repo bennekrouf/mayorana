@@ -1,5 +1,149 @@
 [
   {
+    "id": "rust-traits-vs-interfaces",
+    "slug": "rust-traits-vs-interfaces",
+    "title": "Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right",
+    "date": "2025-07-04",
+    "excerpt": "Discussion on Rust traits vs Java/C# interfaces, covering dispatch mechanisms, compile-time behavior, and performance optimizations.",
+    "content": "Rust traits and interfaces both define shared behavior, but differ fundamentally in design and execution, especially in performance-critical contexts.\n\n## Key Differences\n\n| Aspect | Rust Traits | Java/C# Interfaces |\n|--------|-------------|-------------------|\n| **Dispatch** | Static dispatch (generics) by default, opt-in dynamic (`dyn`) | Runtime polymorphism via vtables |\n| **Implementation** | Explicit via `impl Trait for Type` | Implicit (C#) or explicit (Java) |\n| **Compile-time** | Resolved at compile time via monomorphization | Runtime constructs with JIT optimization |\n| **Inheritance** | No inheritance; composition via supertraits | Interface inheritance with runtime checks |\n| **Performance** | Zero-cost abstraction, inlining enabled | 1-2 cycle dispatch cost, limited inlining |\n\n## Implementation and Dispatch\n\n**Rust Traits**: Support static dispatch via generics where the compiler monomorphizes code for each type, inlining calls for zero runtime overhead. Dynamic dispatch (`dyn Trait`) uses vtables but is opt-in.\n\n**Java/C# Interfaces**: Rely on runtime polymorphism via vtables, incurring dispatch costs and preventing inlining across type boundaries.\n\n## Example: Performance-Critical Networking Stack\n\nDefine a `PacketHandler` trait for efficient packet processing across different protocols:\n\n```rust\ntrait PacketHandler {\n    fn process(&mut self, data: &[u8]) -> usize; // Bytes processed\n    fn reset(&mut self); // Reset state\n}\n\nstruct TcpHandler { state: u32 }\nstruct UdpHandler { count: u16 }\n\nimpl PacketHandler for TcpHandler {\n    fn process(&mut self, data: &[u8]) -> usize {\n        self.state = data.iter().fold(self.state, |acc, &x| acc.wrapping_add(x as u32));\n        data.len()\n    }\n    fn reset(&mut self) { self.state = 0; }\n}\n\nimpl PacketHandler for UdpHandler {\n    fn process(&mut self, data: &[u8]) -> usize {\n        self.count = self.count.wrapping_add(1);\n        data.len()\n    }\n    fn reset(&mut self) { self.count = 0; }\n}\n\nfn process_packets<H: PacketHandler>(handler: &mut H, packets: &[&[u8]]) -> usize {\n    let mut total = 0;\n    for packet in packets {\n        total += handler.process(packet);\n    }\n    total\n}\n```\n\nUsage:\n```rust\nlet mut tcp = TcpHandler { state: 0 };\nlet packets = vec![&[1, 2, 3], &[4, 5, 6]];\nlet bytes = process_packets(&mut tcp, &packets); // Static dispatch\n```\n\n## How It Enhances Performance and Safety\n\n### Performance\n\n- **Static Dispatch**: `process_packets` monomorphizes for `TcpHandler` and `UdpHandler`, generating separate, inlined code paths. No vtable lookups, saving cycles in hot loops\n- **Inlining**: Compiler can inline `process` calls, fusing them with the loop, reducing branches and enabling SIMD optimizations\n- **Zero-Cost**: Trait abstraction adds no runtime overhead—equivalent to hand-writing `process_tcp` and `process_udp`\n\n### Safety\n\n- **Type Safety**: Trait bound `H: PacketHandler` ensures only compatible types are passed, checked at compile time—no runtime casts like Java's `instanceof`\n- **Encapsulation**: Each handler manages its state (`state` or `count`), with Rust's ownership enforcing mutation rules\n\n## Contrast with Java/C#\n\nJava equivalent:\n```java\ninterface PacketHandler {\n    int process(byte[] data);\n    void reset();\n}\n\nclass TcpHandler implements PacketHandler {\n    // vtable-based dispatch, no inlining across types\n}\n```\n\nEvery `process` call goes through a vtable, preventing loop fusion and adding indirection. Rust's static dispatch avoids this—critical for networking stacks handling millions of packets per second.\n\n## Advanced Considerations\n\n- **Associated Types**: Enable type-level constraints without runtime overhead\n- **Default Implementations**: Reduce boilerplate while maintaining zero-cost\n- **Supertraits**: Compose behavior without inheritance complexity\n- **Dynamic Dispatch**: Use `Box<dyn PacketHandler>` when type erasure is needed\n\n## Key Takeaways\n\n✅ **Rust traits**: Compile-time resolution, zero-cost abstraction, static dispatch by default  \n✅ **Java/C# interfaces**: Runtime polymorphism, vtable overhead, dynamic by nature  \n🚀 Use traits for performance-critical code where static dispatch eliminates overhead\n\n**Try This:** What happens if you use `&dyn PacketHandler` instead of generics?  \n**Answer:** You get dynamic dispatch with vtable overhead—measure the performance difference in your hot paths!",
+    "contentHtml": "<p>Rust traits and interfaces both define shared behavior, but differ fundamentally in design and execution, especially in performance-critical contexts.</p>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Aspect</th>\n<th>Rust Traits</th>\n<th>Java/C# Interfaces</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Dispatch</strong></td>\n<td>Static dispatch (generics) by default, opt-in dynamic (<code>dyn</code>)</td>\n<td>Runtime polymorphism via vtables</td>\n</tr>\n<tr>\n<td><strong>Implementation</strong></td>\n<td>Explicit via <code>impl Trait for Type</code></td>\n<td>Implicit (C#) or explicit (Java)</td>\n</tr>\n<tr>\n<td><strong>Compile-time</strong></td>\n<td>Resolved at compile time via monomorphization</td>\n<td>Runtime constructs with JIT optimization</td>\n</tr>\n<tr>\n<td><strong>Inheritance</strong></td>\n<td>No inheritance; composition via supertraits</td>\n<td>Interface inheritance with runtime checks</td>\n</tr>\n<tr>\n<td><strong>Performance</strong></td>\n<td>Zero-cost abstraction, inlining enabled</td>\n<td>1-2 cycle dispatch cost, limited inlining</td>\n</tr>\n</tbody></table>\n<h2>Implementation and Dispatch</h2>\n<p><strong>Rust Traits</strong>: Support static dispatch via generics where the compiler monomorphizes code for each type, inlining calls for zero runtime overhead. Dynamic dispatch (<code>dyn Trait</code>) uses vtables but is opt-in.</p>\n<p><strong>Java/C# Interfaces</strong>: Rely on runtime polymorphism via vtables, incurring dispatch costs and preventing inlining across type boundaries.</p>\n<h2>Example: Performance-Critical Networking Stack</h2>\n<p>Define a <code>PacketHandler</code> trait for efficient packet processing across different protocols:</p>\n<pre><code class=\"language-rust\">trait PacketHandler {\n    fn process(&amp;mut self, data: &amp;[u8]) -&gt; usize; // Bytes processed\n    fn reset(&amp;mut self); // Reset state\n}\n\nstruct TcpHandler { state: u32 }\nstruct UdpHandler { count: u16 }\n\nimpl PacketHandler for TcpHandler {\n    fn process(&amp;mut self, data: &amp;[u8]) -&gt; usize {\n        self.state = data.iter().fold(self.state, |acc, &amp;x| acc.wrapping_add(x as u32));\n        data.len()\n    }\n    fn reset(&amp;mut self) { self.state = 0; }\n}\n\nimpl PacketHandler for UdpHandler {\n    fn process(&amp;mut self, data: &amp;[u8]) -&gt; usize {\n        self.count = self.count.wrapping_add(1);\n        data.len()\n    }\n    fn reset(&amp;mut self) { self.count = 0; }\n}\n\nfn process_packets&lt;H: PacketHandler&gt;(handler: &amp;mut H, packets: &amp;[&amp;[u8]]) -&gt; usize {\n    let mut total = 0;\n    for packet in packets {\n        total += handler.process(packet);\n    }\n    total\n}\n</code></pre>\n<p>Usage:</p>\n<pre><code class=\"language-rust\">let mut tcp = TcpHandler { state: 0 };\nlet packets = vec![&amp;[1, 2, 3], &amp;[4, 5, 6]];\nlet bytes = process_packets(&amp;mut tcp, &amp;packets); // Static dispatch\n</code></pre>\n<h2>How It Enhances Performance and Safety</h2>\n<h3>Performance</h3>\n<ul>\n<li><strong>Static Dispatch</strong>: <code>process_packets</code> monomorphizes for <code>TcpHandler</code> and <code>UdpHandler</code>, generating separate, inlined code paths. No vtable lookups, saving cycles in hot loops</li>\n<li><strong>Inlining</strong>: Compiler can inline <code>process</code> calls, fusing them with the loop, reducing branches and enabling SIMD optimizations</li>\n<li><strong>Zero-Cost</strong>: Trait abstraction adds no runtime overhead—equivalent to hand-writing <code>process_tcp</code> and <code>process_udp</code></li>\n</ul>\n<h3>Safety</h3>\n<ul>\n<li><strong>Type Safety</strong>: Trait bound <code>H: PacketHandler</code> ensures only compatible types are passed, checked at compile time—no runtime casts like Java&#39;s <code>instanceof</code></li>\n<li><strong>Encapsulation</strong>: Each handler manages its state (<code>state</code> or <code>count</code>), with Rust&#39;s ownership enforcing mutation rules</li>\n</ul>\n<h2>Contrast with Java/C#</h2>\n<p>Java equivalent:</p>\n<pre><code class=\"language-java\">interface PacketHandler {\n    int process(byte[] data);\n    void reset();\n}\n\nclass TcpHandler implements PacketHandler {\n    // vtable-based dispatch, no inlining across types\n}\n</code></pre>\n<p>Every <code>process</code> call goes through a vtable, preventing loop fusion and adding indirection. Rust&#39;s static dispatch avoids this—critical for networking stacks handling millions of packets per second.</p>\n<h2>Advanced Considerations</h2>\n<ul>\n<li><strong>Associated Types</strong>: Enable type-level constraints without runtime overhead</li>\n<li><strong>Default Implementations</strong>: Reduce boilerplate while maintaining zero-cost</li>\n<li><strong>Supertraits</strong>: Compose behavior without inheritance complexity</li>\n<li><strong>Dynamic Dispatch</strong>: Use <code>Box&lt;dyn PacketHandler&gt;</code> when type erasure is needed</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Rust traits</strong>: Compile-time resolution, zero-cost abstraction, static dispatch by default<br>✅ <strong>Java/C# interfaces</strong>: Runtime polymorphism, vtable overhead, dynamic by nature<br>🚀 Use traits for performance-critical code where static dispatch eliminates overhead</p>\n<p><strong>Try This:</strong> What happens if you use <code>&amp;dyn PacketHandler</code> instead of generics?<br><strong>Answer:</strong> You get dynamic dispatch with vtable overhead—measure the performance difference in your hot paths!</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "traits",
+      "performance",
+      "interfaces",
+      "dispatch"
+    ],
+    "readingTime": "4 min",
+    "seo": {
+      "title": "Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right",
+      "description": "Discussion on Rust traits vs Java/C# interfaces, covering dispatch mechanisms, compile-time behavior, and performance optimizations.",
+      "keywords": [
+        "rust",
+        "traits",
+        "performance",
+        "interfaces",
+        "dispatch"
+      ]
+    },
+    "headings": [
+      {
+        "id": "key-differences",
+        "text": "Key Differences",
+        "level": 2
+      },
+      {
+        "id": "implementation-and-dispatch",
+        "text": "Implementation and Dispatch",
+        "level": 2
+      },
+      {
+        "id": "example-performance-critical-networking-stack",
+        "text": "Example: Performance-Critical Networking Stack",
+        "level": 2
+      },
+      {
+        "id": "how-it-enhances-performance-and-safety",
+        "text": "How It Enhances Performance and Safety",
+        "level": 2
+      },
+      {
+        "id": "performance",
+        "text": "Performance",
+        "level": 3
+      },
+      {
+        "id": "safety",
+        "text": "Safety",
+        "level": 3
+      },
+      {
+        "id": "contrast-with-javac",
+        "text": "Contrast with Java/C#",
+        "level": 2
+      },
+      {
+        "id": "advanced-considerations",
+        "text": "Advanced Considerations",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "string-vs-str-rust",
+    "slug": "string-vs-str-rust",
+    "title": "String vs. &str – Which to Use and When?",
+    "date": "2025-07-03",
+    "excerpt": "String vs str in Rust, covering memory management, ownership, and when to use each type.",
+    "content": "Understanding the distinction between `String` and `str` is fundamental to effective memory management and ownership in Rust.\n\n## Key Differences\n\n| `String` | `str` (usually `&str`) |\n|----------|------------------------|\n| Growable, heap-allocated UTF-8 string | Immutable, fixed-size view into UTF-8 string |\n| Owned type (manages its memory) | Borrowed type (does not own memory) |\n| Mutable (can modify content) | Immutable view |\n| Created using `String::from(\"...\")` or `\"...\".to_string()` | From string literals (`\"hello\"`) or borrowed from `String` (`&my_string`) |\n\n## Memory Layout\n\n**`String`**: Stores data on the heap with three components:\n- Pointer to heap buffer\n- Length (current size)\n- Capacity (allocated size)\n\n**`&str`**: A \"fat pointer\" containing:\n- Pointer to string data (heap, stack, or static memory)\n- Length of the slice\n\n## When to Use Each\n\nUse **`String`** when:\n- You need to modify or grow the string\n- You need ownership (e.g., returning from a function)\n- Building strings dynamically\n\n```rust\nlet mut owned = String::from(\"hello\");\nowned.push_str(\" world\");  // Mutation requires String\n```\n\nUse **`&str`** when:\n- You only need a read-only view of a string\n- Working with function parameters (avoids unnecessary allocations)\n- Handling string literals (stored in read-only memory)\n\n```rust\nfn process_str(s: &str) -> usize {\n    s.len()  // Read-only access\n}\n```\n\n## Example: Ownership vs Borrowing\n\n```rust\nfn process_string(s: String) { /* takes ownership */ }\nfn process_str(s: &str)      { /* borrows */ }\n\nfn main() {\n    let heap_str = String::from(\"hello\");\n    let static_str = \"world\";\n    \n    process_string(heap_str);  // Ownership moved\n    process_str(static_str);   // Borrowed\n    \n    // heap_str no longer accessible here\n    // static_str still accessible\n}\n```\n\n## Performance Considerations\n\n**Function Parameters**:\n```rust\n// Inefficient - forces allocation\nfn bad(s: String) -> usize { s.len() }\n\n// Efficient - accepts both String and &str\nfn good(s: &str) -> usize { s.len() }\n\n// Usage\nlet owned = String::from(\"test\");\ngood(&owned);  // Deref coercion: String -> &str\ngood(\"literal\");  // Direct &str\n```\n\n**Memory Allocation**:\n- `String` allocates on heap, requires deallocation\n- `&str` to literals points to program binary (zero allocation)\n- `&str` from `String` shares existing allocation\n\n## Common Patterns\n\n**Return Owned Data**:\n```rust\nfn build_message(name: &str) -> String {\n    format!(\"Hello, {}!\", name)  // Returns owned String\n}\n```\n\n**Accept Flexible Input**:\n```rust\nfn analyze(text: &str) -> Analysis {\n    // Works with both String and &str inputs\n    text.chars().count()\n}\n```\n\n**Avoid Unnecessary Clones**:\n```rust\n// Bad - unnecessary allocation\nfn process_bad(s: &str) -> String {\n    s.to_string()  // Only if you actually need owned data\n}\n\n// Good - work with borrowed data when possible\nfn process_good(s: &str) -> &str {\n    s.trim()  // Returns slice of original\n}\n```\n\n## Key Takeaways\n\n✅ **`String`**: Owned, mutable, heap-allocated  \n✅ **`str`**: Borrowed, immutable, flexible (heap/stack/static)  \n🚀 Prefer `&str` for function parameters unless you need ownership or mutation\n\n**Try This:** What happens when you call `.to_string()` on a string literal vs a `String`?  \n**Answer:** Literal creates new heap allocation; `String` creates a clone of existing heap data—both allocate, but the source differs!",
+    "contentHtml": "<p>Understanding the distinction between <code>String</code> and <code>str</code> is fundamental to effective memory management and ownership in Rust.</p>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th><code>String</code></th>\n<th><code>str</code> (usually <code>&amp;str</code>)</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Growable, heap-allocated UTF-8 string</td>\n<td>Immutable, fixed-size view into UTF-8 string</td>\n</tr>\n<tr>\n<td>Owned type (manages its memory)</td>\n<td>Borrowed type (does not own memory)</td>\n</tr>\n<tr>\n<td>Mutable (can modify content)</td>\n<td>Immutable view</td>\n</tr>\n<tr>\n<td>Created using <code>String::from(&quot;...&quot;)</code> or <code>&quot;...&quot;.to_string()</code></td>\n<td>From string literals (<code>&quot;hello&quot;</code>) or borrowed from <code>String</code> (<code>&amp;my_string</code>)</td>\n</tr>\n</tbody></table>\n<h2>Memory Layout</h2>\n<p><strong><code>String</code></strong>: Stores data on the heap with three components:</p>\n<ul>\n<li>Pointer to heap buffer</li>\n<li>Length (current size)</li>\n<li>Capacity (allocated size)</li>\n</ul>\n<p><strong><code>&amp;str</code></strong>: A &quot;fat pointer&quot; containing:</p>\n<ul>\n<li>Pointer to string data (heap, stack, or static memory)</li>\n<li>Length of the slice</li>\n</ul>\n<h2>When to Use Each</h2>\n<p>Use <strong><code>String</code></strong> when:</p>\n<ul>\n<li>You need to modify or grow the string</li>\n<li>You need ownership (e.g., returning from a function)</li>\n<li>Building strings dynamically</li>\n</ul>\n<pre><code class=\"language-rust\">let mut owned = String::from(&quot;hello&quot;);\nowned.push_str(&quot; world&quot;);  // Mutation requires String\n</code></pre>\n<p>Use <strong><code>&amp;str</code></strong> when:</p>\n<ul>\n<li>You only need a read-only view of a string</li>\n<li>Working with function parameters (avoids unnecessary allocations)</li>\n<li>Handling string literals (stored in read-only memory)</li>\n</ul>\n<pre><code class=\"language-rust\">fn process_str(s: &amp;str) -&gt; usize {\n    s.len()  // Read-only access\n}\n</code></pre>\n<h2>Example: Ownership vs Borrowing</h2>\n<pre><code class=\"language-rust\">fn process_string(s: String) { /* takes ownership */ }\nfn process_str(s: &amp;str)      { /* borrows */ }\n\nfn main() {\n    let heap_str = String::from(&quot;hello&quot;);\n    let static_str = &quot;world&quot;;\n    \n    process_string(heap_str);  // Ownership moved\n    process_str(static_str);   // Borrowed\n    \n    // heap_str no longer accessible here\n    // static_str still accessible\n}\n</code></pre>\n<h2>Performance Considerations</h2>\n<p><strong>Function Parameters</strong>:</p>\n<pre><code class=\"language-rust\">// Inefficient - forces allocation\nfn bad(s: String) -&gt; usize { s.len() }\n\n// Efficient - accepts both String and &amp;str\nfn good(s: &amp;str) -&gt; usize { s.len() }\n\n// Usage\nlet owned = String::from(&quot;test&quot;);\ngood(&amp;owned);  // Deref coercion: String -&gt; &amp;str\ngood(&quot;literal&quot;);  // Direct &amp;str\n</code></pre>\n<p><strong>Memory Allocation</strong>:</p>\n<ul>\n<li><code>String</code> allocates on heap, requires deallocation</li>\n<li><code>&amp;str</code> to literals points to program binary (zero allocation)</li>\n<li><code>&amp;str</code> from <code>String</code> shares existing allocation</li>\n</ul>\n<h2>Common Patterns</h2>\n<p><strong>Return Owned Data</strong>:</p>\n<pre><code class=\"language-rust\">fn build_message(name: &amp;str) -&gt; String {\n    format!(&quot;Hello, {}!&quot;, name)  // Returns owned String\n}\n</code></pre>\n<p><strong>Accept Flexible Input</strong>:</p>\n<pre><code class=\"language-rust\">fn analyze(text: &amp;str) -&gt; Analysis {\n    // Works with both String and &amp;str inputs\n    text.chars().count()\n}\n</code></pre>\n<p><strong>Avoid Unnecessary Clones</strong>:</p>\n<pre><code class=\"language-rust\">// Bad - unnecessary allocation\nfn process_bad(s: &amp;str) -&gt; String {\n    s.to_string()  // Only if you actually need owned data\n}\n\n// Good - work with borrowed data when possible\nfn process_good(s: &amp;str) -&gt; &amp;str {\n    s.trim()  // Returns slice of original\n}\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong><code>String</code></strong>: Owned, mutable, heap-allocated<br>✅ <strong><code>str</code></strong>: Borrowed, immutable, flexible (heap/stack/static)<br>🚀 Prefer <code>&amp;str</code> for function parameters unless you need ownership or mutation</p>\n<p><strong>Try This:</strong> What happens when you call <code>.to_string()</code> on a string literal vs a <code>String</code>?<br><strong>Answer:</strong> Literal creates new heap allocation; <code>String</code> creates a clone of existing heap data—both allocate, but the source differs!</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "string",
+      "memory",
+      "ownership",
+      "types"
+    ],
+    "readingTime": "3 min",
+    "seo": {
+      "title": "String vs. &str – Which to Use and When?",
+      "description": "String vs str in Rust, covering memory management, ownership, and when to use each type.",
+      "keywords": [
+        "rust",
+        "string",
+        "memory",
+        "ownership",
+        "types"
+      ]
+    },
+    "headings": [
+      {
+        "id": "key-differences",
+        "text": "Key Differences",
+        "level": 2
+      },
+      {
+        "id": "memory-layout",
+        "text": "Memory Layout",
+        "level": 2
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "example-ownership-vs-borrowing",
+        "text": "Example: Ownership vs Borrowing",
+        "level": 2
+      },
+      {
+        "id": "performance-considerations",
+        "text": "Performance Considerations",
+        "level": 2
+      },
+      {
+        "id": "common-patterns",
+        "text": "Common Patterns",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "function-vs-closure-rust",
     "slug": "function-vs-closure-rust",
     "title": "Functions or Closures in Rust? Know the Difference!",
