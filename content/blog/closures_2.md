@@ -1,13 +1,10 @@
 ---
 id: fn-traits-rust
-title: "What are the differences between Fn, FnMut, and FnOnce?"
+title: 'What are the differences between Fn, FnMut, and FnOnce?'
 slug: fn-traits-rust
 date: '2025-07-07'
 author: mayo
-excerpt: >-
-  Functions and closures in Rust, covering ownership, traits, lifetimes
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
 category: rust
 tags:
   - rust
