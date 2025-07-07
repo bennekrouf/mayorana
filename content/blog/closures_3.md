@@ -1,13 +1,10 @@
 ---
 id: closure-parameter-rust
-title: "How do you specify a closure as a function parameter or return type?"
+title: How do you specify a closure as a function parameter or return type?
 slug: closure-parameter-rust
 date: '2025-07-07'
 author: mayo
-excerpt: >-
-  Functions and closures in Rust, covering ownership, traits, lifetimes
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
 category: rust
 tags:
   - rust
@@ -15,8 +12,6 @@ tags:
   - traits
   - ownership
   - lifetimes
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # How do you specify a closure as a function parameter or return type?
