@@ -1,5 +1,87 @@
 [
   {
+    "id": "closure-parameter-rust",
+    "slug": "closure-parameter-rust",
+    "title": "How do you specify a closure as a function parameter or return type?",
+    "date": "2025-07-07",
+    "excerpt": "Functions and closures in Rust, covering ownership, traits, lifetimes",
+    "content": "Closures in Rust are anonymous types, so you must use trait bounds (`Fn`, `FnMut`, `FnOnce`) to define their signatures. Here’s how to work with them as parameters and return types.\n\n## Closure as a Function Parameter\n\nUse generic type parameters with trait bounds to accept closures.\n\n### Example: `Fn` (Immutable Borrow)\n\n```rust\n// Accepts a closure that takes `i32` and returns `i32` (read-only).\nfn apply<F: Fn(i32) -> i32>(f: F, x: i32) -> i32 {\n    f(x)\n}\n\nfn main() {\n    let add_five = |x| x + 5; // Implements `Fn`\n    println!(\"{}\", apply(add_five, 10)); // 15\n}\n```\n\n### Example: `FnMut` (Mutable Borrow)\n\n```rust\n// Accepts a closure that mutates its environment.\nfn apply_mut<F: FnMut(i32) -> i32>(mut f: F, x: i32) -> i32 {\n    f(x)\n}\n\nfn main() {\n    let mut count = 0;\n    let mut increment_and_add = |x| {\n        count += 1; // Mutates `count` → `FnMut`\n        x + count\n    };\n    println!(\"{}\", apply_mut(increment_and_add, 10)); // 11\n}\n```\n\n## Closure as a Return Type\n\nUse `impl Trait` for static dispatch (zero-cost) or `Box<dyn Trait>` for dynamic dispatch (flexible).\n\n### Example: Return `impl Fn` (Static Dispatch)\n\n```rust\n// Returns a closure that adds a fixed value (immutable capture).\nfn make_adder(a: i32) -> impl Fn(i32) -> i32 {\n    move |b| a + b // `move` forces ownership (still `Fn` since `a` is read-only)\n}\n\nfn main() {\n    let add_ten = make_adder(10);\n    println!(\"{}\", add_ten(5)); // 15\n}\n```\n\n### Example: Return `Box<dyn Fn>` (Dynamic Dispatch)\n\n```rust\n// Returns a trait object for heterogeneous closures.\nfn create_closure(is_add: bool) -> Box<dyn Fn(i32) -> i32> {\n    if is_add {\n        Box::new(|x| x + 1) // Heap-allocated closure\n    } else {\n        Box::new(|x| x - 1)\n    }\n}\n\nfn main() {\n    let add = create_closure(true);\n    let sub = create_closure(false);\n    println!(\"{} {}\", add(5), sub(5)); // 6 4\n}\n```\n\n## Key Differences\n\n| Approach            | `impl Fn` (Static)         | `Box<dyn Fn>` (Dynamic)    |\n|---------------------|----------------------------|----------------------------|\n| **Dispatch**        | Monomorphized (zero-cost)  | Vtable lookup (runtime cost) |\n| **Use Case**        | Single closure type        | Multiple closure types     |\n| **Memory**          | Stack-allocated            | Heap-allocated (trait object) |\n| **Flexibility**     | Less (fixed type)          | More (any `dyn Fn` closure) |\n\n## When to Use Each\n\n- **`impl Fn`**:\n  - When returning a single type of closure (e.g., from a factory function).\n  - For performance-critical code (no heap allocation).\n\n- **`Box<dyn Fn>`**:\n  - When returning different closure types (e.g., conditionally).\n  - For dynamic behavior (e.g., plugin systems, callbacks).\n\n## Pitfalls\n\n- **`FnMut` in Structs**: Store mutable closures with `FnMut` and annotate `mut`:\n  ```rust\n  struct Processor<F: FnMut(i32) -> i32> {\n      op: F,\n  }\n  ```\n\n- **Lifetimes**: Closures capturing references may require explicit lifetimes:\n  ```rust\n  fn capture_ref<'a>(s: &'a str) -> impl Fn() -> &'a str {\n      move || s // Closure captures `s` with lifetime `'a`\n  }\n  ```\n\n## Key Takeaways\n\n✅ **Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  \n✅ **Return Type**:  \n- `impl Fn` for static dispatch (fast, fixed type).  \n- `Box<dyn Fn>` for dynamic dispatch (flexible, multiple types).  \n🚀 Prefer `impl Fn` unless you need runtime polymorphism.\n\n**Try This**: What happens if you return a `FnOnce` closure?  \n**Answer**: It’s allowed, but the caller can only invoke it once!",
+    "contentHtml": "<p>Closures in Rust are anonymous types, so you must use trait bounds (<code>Fn</code>, <code>FnMut</code>, <code>FnOnce</code>) to define their signatures. Here’s how to work with them as parameters and return types.</p>\n<h2>Closure as a Function Parameter</h2>\n<p>Use generic type parameters with trait bounds to accept closures.</p>\n<h3>Example: <code>Fn</code> (Immutable Borrow)</h3>\n<pre><code class=\"language-rust\">// Accepts a closure that takes `i32` and returns `i32` (read-only).\nfn apply&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32) -&gt; i32 {\n    f(x)\n}\n\nfn main() {\n    let add_five = |x| x + 5; // Implements `Fn`\n    println!(&quot;{}&quot;, apply(add_five, 10)); // 15\n}\n</code></pre>\n<h3>Example: <code>FnMut</code> (Mutable Borrow)</h3>\n<pre><code class=\"language-rust\">// Accepts a closure that mutates its environment.\nfn apply_mut&lt;F: FnMut(i32) -&gt; i32&gt;(mut f: F, x: i32) -&gt; i32 {\n    f(x)\n}\n\nfn main() {\n    let mut count = 0;\n    let mut increment_and_add = |x| {\n        count += 1; // Mutates `count` → `FnMut`\n        x + count\n    };\n    println!(&quot;{}&quot;, apply_mut(increment_and_add, 10)); // 11\n}\n</code></pre>\n<h2>Closure as a Return Type</h2>\n<p>Use <code>impl Trait</code> for static dispatch (zero-cost) or <code>Box&lt;dyn Trait&gt;</code> for dynamic dispatch (flexible).</p>\n<h3>Example: Return <code>impl Fn</code> (Static Dispatch)</h3>\n<pre><code class=\"language-rust\">// Returns a closure that adds a fixed value (immutable capture).\nfn make_adder(a: i32) -&gt; impl Fn(i32) -&gt; i32 {\n    move |b| a + b // `move` forces ownership (still `Fn` since `a` is read-only)\n}\n\nfn main() {\n    let add_ten = make_adder(10);\n    println!(&quot;{}&quot;, add_ten(5)); // 15\n}\n</code></pre>\n<h3>Example: Return <code>Box&lt;dyn Fn&gt;</code> (Dynamic Dispatch)</h3>\n<pre><code class=\"language-rust\">// Returns a trait object for heterogeneous closures.\nfn create_closure(is_add: bool) -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {\n    if is_add {\n        Box::new(|x| x + 1) // Heap-allocated closure\n    } else {\n        Box::new(|x| x - 1)\n    }\n}\n\nfn main() {\n    let add = create_closure(true);\n    let sub = create_closure(false);\n    println!(&quot;{} {}&quot;, add(5), sub(5)); // 6 4\n}\n</code></pre>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Approach</th>\n<th><code>impl Fn</code> (Static)</th>\n<th><code>Box&lt;dyn Fn&gt;</code> (Dynamic)</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Dispatch</strong></td>\n<td>Monomorphized (zero-cost)</td>\n<td>Vtable lookup (runtime cost)</td>\n</tr>\n<tr>\n<td><strong>Use Case</strong></td>\n<td>Single closure type</td>\n<td>Multiple closure types</td>\n</tr>\n<tr>\n<td><strong>Memory</strong></td>\n<td>Stack-allocated</td>\n<td>Heap-allocated (trait object)</td>\n</tr>\n<tr>\n<td><strong>Flexibility</strong></td>\n<td>Less (fixed type)</td>\n<td>More (any <code>dyn Fn</code> closure)</td>\n</tr>\n</tbody></table>\n<h2>When to Use Each</h2>\n<ul>\n<li><p><strong><code>impl Fn</code></strong>:</p>\n<ul>\n<li>When returning a single type of closure (e.g., from a factory function).</li>\n<li>For performance-critical code (no heap allocation).</li>\n</ul>\n</li>\n<li><p><strong><code>Box&lt;dyn Fn&gt;</code></strong>:</p>\n<ul>\n<li>When returning different closure types (e.g., conditionally).</li>\n<li>For dynamic behavior (e.g., plugin systems, callbacks).</li>\n</ul>\n</li>\n</ul>\n<h2>Pitfalls</h2>\n<ul>\n<li><p><strong><code>FnMut</code> in Structs</strong>: Store mutable closures with <code>FnMut</code> and annotate <code>mut</code>:</p>\n<pre><code class=\"language-rust\">struct Processor&lt;F: FnMut(i32) -&gt; i32&gt; {\n    op: F,\n}\n</code></pre>\n</li>\n<li><p><strong>Lifetimes</strong>: Closures capturing references may require explicit lifetimes:</p>\n<pre><code class=\"language-rust\">fn capture_ref&lt;&#39;a&gt;(s: &amp;&#39;a str) -&gt; impl Fn() -&gt; &amp;&#39;a str {\n    move || s // Closure captures `s` with lifetime `&#39;a`\n}\n</code></pre>\n</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Parameter</strong>: Use generics (<code>F: Fn(...)</code>) for flexibility and performance.<br>✅ <strong>Return Type</strong>:  </p>\n<ul>\n<li><code>impl Fn</code> for static dispatch (fast, fixed type).  </li>\n<li><code>Box&lt;dyn Fn&gt;</code> for dynamic dispatch (flexible, multiple types).<br>🚀 Prefer <code>impl Fn</code> unless you need runtime polymorphism.</li>\n</ul>\n<p><strong>Try This</strong>: What happens if you return a <code>FnOnce</code> closure?<br><strong>Answer</strong>: It’s allowed, but the caller can only invoke it once!</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "closures",
+      "traits",
+      "ownership",
+      "lifetimes"
+    ],
+    "readingTime": "3 min",
+    "seo": {
+      "title": "How do you specify a closure as a function parameter or return type?",
+      "description": "Functions and closures in Rust, covering ownership, traits, lifetimes",
+      "keywords": [
+        "rust",
+        "closures",
+        "traits",
+        "ownership",
+        "lifetimes"
+      ]
+    },
+    "headings": [
+      {
+        "id": "closure-as-a-function-parameter",
+        "text": "Closure as a Function Parameter",
+        "level": 2
+      },
+      {
+        "id": "example-fn-immutable-borrow",
+        "text": "Example: `Fn` (Immutable Borrow)",
+        "level": 3
+      },
+      {
+        "id": "example-fnmut-mutable-borrow",
+        "text": "Example: `FnMut` (Mutable Borrow)",
+        "level": 3
+      },
+      {
+        "id": "closure-as-a-return-type",
+        "text": "Closure as a Return Type",
+        "level": 2
+      },
+      {
+        "id": "example-return-impl-fn-static-dispatch",
+        "text": "Example: Return `impl Fn` (Static Dispatch)",
+        "level": 3
+      },
+      {
+        "id": "example-return-boxlessdyn-fngreater-dynamic-dispatch",
+        "text": "Example: Return `Box<dyn Fn>` (Dynamic Dispatch)",
+        "level": 3
+      },
+      {
+        "id": "key-differences",
+        "text": "Key Differences",
+        "level": 2
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "pitfalls",
+        "text": "Pitfalls",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "rust-traits-vs-interfaces",
     "slug": "rust-traits-vs-interfaces",
     "title": "Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right",

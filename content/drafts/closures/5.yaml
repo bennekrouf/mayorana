@@ -1,0 +1,105 @@
+content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
+technical_level: "Expert technical discussion"
+title: "How would you pass a closure to a function that needs to call it multiple times while maintaining state between calls?"
+author: "mayo"
+tags:
+  - ""
+  - ""
+
+# Multi-line research notes using block scalar
+research_context: |
+  To maintain state between calls, the closure must mutate its captured environment, which requires it to implement the FnMut trait. Here’s how to design this:
+  Solution: Use FnMut and Mutable Closure
+
+      Define a closure that captures mutable state (e.g., a counter).
+
+      Pass it to a function as &mut impl FnMut(...) to allow mutation across calls.
+
+  Example
+  rust
+
+  // Function that calls a stateful closure multiple times
+  fn call_repeatedly<F: FnMut() -> i32>(mut f: F) {
+      println!("First call: {}", f());  // 1
+      println!("Second call: {}", f()); // 2
+  }
+
+  fn main() {
+      let mut counter = 0; // State stored outside the closure
+      let mut closure = || {
+          counter += 1; // Mutates captured state → `FnMut`
+          counter
+      };
+      
+      // Pass as `&mut closure` to retain ownership
+      call_repeatedly(&mut closure);
+      // closure can still be used here
+  }
+
+  Key Mechanics
+
+      Mutable State:
+
+          The closure captures counter via a mutable borrow (&mut i32).
+
+          The closure itself must be declared mut to allow mutation.
+
+      Function Signature:
+
+          fn call_repeatedly<F: FnMut() -> i32>(mut f: F) allows the closure to be called multiple times while retaining mutable access.
+
+      Lifetime Safety:
+
+          The closure borrows counter, so it cannot outlive counter.
+
+  Alternative: Encapsulate State in a Struct
+
+  For complex state, use a struct with explicit FnMut implementation:
+  rust
+
+  struct Counter {
+      count: i32,
+  }
+
+  impl Counter {
+      fn new() -> Self {
+          Counter { count: 0 }
+      }
+      
+      // Implement `FnMut` manually (advanced)
+      fn call(&mut self) -> i32 {
+          self.count += 1;
+          self.count
+      }
+  }
+
+  fn main() {
+      let mut counter = Counter::new();
+      call_repeatedly(|| counter.call()); // Closure captures `counter`
+  }
+
+  Why Not FnOnce or Fn?
+
+      FnOnce: Can only be called once (consumes itself).
+
+      Fn: Immutable borrows prevent state mutation.
+
+  Pitfalls
+
+      Forgetting mut:
+      rust
+
+      let closure = || { /* ... */ }; // Not `mut` → compile error
+      call_repeatedly(&mut closure);
+
+      Dangling References:
+      Ensure the closure’s captured variables live long enough.
+
+  Key Takeaways
+
+  ✅ Use FnMut for closures that mutate state.
+  ✅ Mark closures and parameters as mut to allow mutation.
+  ✅ Prefer simple closures for state; use structs for complex cases.
+
+  Try This: What happens if you pass a non-mut closure to call_repeatedly?
+  Answer: Compiler error! The closure must be mutable to implement FnMut.

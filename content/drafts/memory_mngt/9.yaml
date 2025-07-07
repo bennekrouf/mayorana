@@ -1,0 +1,101 @@
+content_focus: "rust memory and string"
+technical_level: "Expert technical discussion"
+title: "What are the rules for borrowing in Rust? Explain mutable vs. immutable borrows."
+author: "mayo"
+tags:
+  - ""
+  - ""
+
+# Multi-line research notes using block scalar
+research_context: |
+  The Borrowing Rules (Compiler-Enforced)
+
+  Rust's borrow checker enforces these compile-time rules to prevent data races and memory unsafety:
+
+      Either One Mutable Borrow (&mut T) OR Multiple Immutable Borrows (&T)
+
+          You can have:
+
+              One mutable reference or
+
+              Any number of immutable references.
+
+          Never both at the same time for the same data.
+
+      References Must Always Be Valid (No Dangling Pointers)
+
+          Borrowed references cannot outlive the data they point to (enforced by lifetimes).
+
+  Immutable Borrows (&T)
+
+      Read-only access: Cannot modify the data.
+
+      Multiple allowed: Safe for concurrent reads.
+
+  Example:
+  rust
+
+  let x = 42;
+  let r1 = &x;  // OK: Immutable borrow
+  let r2 = &x;  // OK: Another immutable borrow
+  println!("{}, {}", r1, r2);  // Works fine
+
+  Mutable Borrows (&mut T)
+
+      Exclusive access: Can modify the data.
+
+      No other borrows allowed: No &T or &mut T can coexist.
+
+  Example:
+  rust
+
+  let mut x = 42;
+  let r1 = &mut x;  // OK: Mutable borrow
+  *r1 += 1;         // Can modify
+  // let r2 = &x;   // ERROR: Cannot borrow `x` as immutable while mutable borrow exists
+
+  Compiler Rejects These Scenarios
+  1. Mutable + Immutable Overlap
+  rust
+
+  let mut data = 10;
+  let r1 = &data;      // Immutable borrow
+  let r2 = &mut data;  // ERROR: Cannot borrow as mutable while borrowed as immutable
+
+  2. Multiple Mutable Borrows
+  rust
+
+  let mut s = String::new();
+  let r1 = &mut s;
+  let r2 = &mut s;  // ERROR: Second mutable borrow
+
+  3. Dangling References
+  rust
+
+  fn dangling() -> &String {
+      let s = String::from("oops");
+      &s  // ERROR: `s` dies here, reference would dangle
+  }
+
+  Why These Rules Matter
+
+      Prevents Data Races: No concurrent mutable access (thread-safe by default).
+
+      Ensures Memory Safety: No dangling pointers or iterator invalidation.
+
+  Key Takeaways
+
+  ✅ Immutable borrows (&T):
+
+      Many allowed, but no mutation.
+      ✅ Mutable borrows (&mut T):
+
+      Only one allowed, exclusive access.
+      🚫 Violations caught at compile time (no runtime overhead).
+
+  Real-World Impact:
+
+      These rules enable fearless concurrency (e.g., Rayon for parallel iteration).
+
+  Experiment: Try creating a function that takes &mut T and call it twice. What happens?
+  Hint: The borrow checker won’t allow it unless the first borrow ends first!

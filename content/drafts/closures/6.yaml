@@ -1,0 +1,92 @@
+content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
+technical_level: "Expert technical discussion"
+title: "Explain the concept of higher-order functions in Rust. Provide an example where a function returns another function or closure."
+author: "mayo"
+tags:
+  - ""
+  - ""
+
+# Multi-line research notes using block scalar
+research_context: |
+  Higher-Order Functions (HOFs)
+
+  A higher-order function is a function that either:
+
+      Accepts one or more functions/closures as arguments, or
+
+      Returns a function/closure.
+
+  Rust supports HOFs using closures and trait bounds (Fn, FnMut, FnOnce), enabling patterns like callbacks, decorators, and functional programming workflows.
+  Example: Function Returning a Closure
+
+  Here’s a function that returns a closure to create configurable "adder" functions:
+  rust
+
+  fn make_adder(x: i32) -> impl Fn(i32) -> i32 {
+      // `move` transfers ownership of `x` into the closure
+      move |y| x + y
+  }
+
+  fn main() {
+      let add_five = make_adder(5); // Returns a closure that adds 5
+      println!("{}", add_five(3));  // 8
+  }
+
+  Key Mechanics
+
+      Closure Capture:
+
+          The closure move |y| x + y owns x (due to move), ensuring it lives as long as the closure.
+
+          Without move, the closure would borrow x, which would be invalid after make_adder exits.
+
+      Return Type:
+
+          impl Fn(i32) -> i32 specifies that the return value is a closure implementing the Fn trait.
+
+          Each closure has a unique anonymous type, so impl Trait is required.
+
+  Advanced Example: Conditional Closure Return
+
+  For dynamic behavior (e.g., returning different closures), use Box<dyn Fn>:
+  rust
+
+  fn math_op(op: &str) -> Box<dyn Fn(i32, i32) -> i32> {
+      match op {
+          "add" => Box::new(|x, y| x + y),
+          "mul" => Box::new(|x, y| x * y),
+          _ => panic!("Unsupported operation"),
+      }
+  }
+
+  fn main() {
+      let add = math_op("add");
+      println!("{}", add(2, 3)); // 5
+  }
+
+  Use Cases for HOFs
+
+      Iterator Adaptors:
+
+          map, filter, and fold take closures to define element processing.
+      rust
+
+      let doubled: Vec<_> = vec![1, 2, 3].iter().map(|x| x * 2).collect(); // [2, 4, 6]
+
+      Decorators:
+
+          Wrap functions with additional logic (e.g., logging, retries).
+
+      Stateful Logic:
+
+          Closures capturing mutable state (via FnMut).
+
+  Key Takeaways
+
+  ✅ HOFs enable flexible, reusable patterns by treating functions as values.
+  ✅ impl Fn for static dispatch (zero-cost).
+  ✅ Box<dyn Fn> for dynamic behavior (heap allocation).
+  🚀 Use move to ensure closures own captured data when necessary.
+
+  Try This: Modify make_adder to return a closure that multiplies instead. How does the compiler handle the type change?
+  Answer: It works seamlessly because both closures implement Fn(i32) -> i32!
