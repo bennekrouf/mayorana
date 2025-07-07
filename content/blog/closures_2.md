@@ -1,3 +1,6 @@
+---
+date: '2025-07-07'
+---
 
 ---
 id: fn-traits-rust
