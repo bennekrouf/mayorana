@@ -14,7 +14,6 @@ tags:
   - memory
   - ownership
   - types
-scheduledAt: '2025-07-01T06:55:13.413Z'
 ---
 
 # What is the difference between String and str in Rust? When would you use each?

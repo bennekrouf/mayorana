@@ -15,8 +15,6 @@ tags:
   - trait-bounds
   - monomorphization
   - performance
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # Trait Bounds

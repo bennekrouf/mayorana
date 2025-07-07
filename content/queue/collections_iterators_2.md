@@ -14,8 +14,6 @@ tags:
   - iterators
   - collections
   - ownership
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # How do into_iter(), iter(), and iter_mut() differ?

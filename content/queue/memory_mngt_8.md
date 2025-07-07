@@ -15,8 +15,6 @@ tags:
   - string
   - str
   - allocation
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # How does Rust handle string literals (&str) in terms of memory allocation? Where do they live?

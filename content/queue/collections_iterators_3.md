@@ -14,8 +14,6 @@ tags:
   - iterators
   - collections
   - ownership
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # How does collect() work in Rust? Show how to convert an iterator into a Vec, HashMap, or String.

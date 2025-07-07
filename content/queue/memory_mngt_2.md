@@ -15,8 +15,6 @@ tags:
   - ownership
   - borrowing
   - lifetimes
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # How does Rust ensure memory safety without a garbage collector?

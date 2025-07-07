@@ -15,8 +15,6 @@ tags:
   - stack
   - heap
   - allocation
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # What is the difference between stack and heap allocation in Rust? How does Rust decide where to allocate data?

@@ -14,7 +14,6 @@ tags:
   - performance
   - interfaces
   - dispatch
-scheduledAt: '2025-07-01T06:55:13.417Z'
 ---
 
 # How do Rust traits differ from interfaces in languages like Java or C#, and how would you use them to define a shared behavior for types in a performance-critical library?

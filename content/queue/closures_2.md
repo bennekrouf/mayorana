@@ -1,8 +1,4 @@
 ---
-date: '2025-07-07'
----
-
----
 id: fn-traits-rust
 title: "What are the differences between Fn, FnMut, and FnOnce?"
 slug: fn-traits-rust
@@ -19,8 +15,6 @@ tags:
   - traits
   - ownership
   - lifetimes
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # What are the differences between Fn, FnMut, and FnOnce?

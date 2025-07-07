@@ -15,8 +15,6 @@ tags:
   - performance
   - vec
   - iterators
-scheduledFor: '2025-07-03'
-scheduledAt: '2025-07-01T06:55:13.411Z'
 ---
 
 # What is the difference between Vec::new() and Vec::with_capacity()? When would you use each?

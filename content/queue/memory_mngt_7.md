@@ -15,8 +15,6 @@ tags:
   - box
   - heap
   - ownership
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # What is the purpose of Box<T> in Rust? When would you use it?

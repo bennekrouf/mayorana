@@ -15,8 +15,6 @@ tags:
   - ownership
   - traits
   - lifetimes
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # What are move closures (move || { ... })? When are they necessary, and how do they interact with ownership?

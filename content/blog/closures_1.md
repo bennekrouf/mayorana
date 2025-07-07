@@ -14,8 +14,6 @@ tags:
   - closures
   - traits
   - ownership
-scheduledFor: '2025-07-02'
-scheduledAt: '2025-07-01T06:55:13.405Z'
 ---
 
 # What is the difference between a function and a closure in Rust?

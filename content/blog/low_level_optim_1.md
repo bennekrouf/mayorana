@@ -15,8 +15,6 @@ tags:
   - memory
   - performance
   - cache
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-01T06:55:13.412Z'
 ---
 
 # Memory Layout Optimization: How would you use Rust's repr attribute to optimize the memory layout of a struct for cache efficiency?
