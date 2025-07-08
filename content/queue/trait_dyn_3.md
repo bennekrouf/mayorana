@@ -1,6 +1,6 @@
 ---
 id: dispatch-performance-rust
-title: "What’s the performance trade-off between using a generic function with a trait bound (e.g., fn process<T: MyTrait>(x: T)) versus using dyn MyTrait for dynamic dispatch, and in what scenarios would you prefer one over the other?"
+title: "fn process<T: MyTrait>(x: T)) VS using dyn MyTrait for dynamic dispatch."
 slug: dispatch-performance-rust
 date: '2025-07-07'
 author: mayo

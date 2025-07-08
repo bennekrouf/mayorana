@@ -1,4 +1,4 @@
-content_focus: "low-level optimization in Rust, tailored for a lead developer"
+content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
 title: "Instruction-Level Optimization: How can you use Rust’s #[inline(always)] attribute effectively, and what are the risks of overusing it in terms of code size and compile time?s (perf stat -e iTLB-load-misses) to ensure no regression.
     Measure Code Size:
@@ -23,7 +23,7 @@ Verification
 
 Conclusion
 
-I’d use #[inline(always)] for small, hot functions like extract_bits in tight loops, ensuring call overhead vanishes and optimizations kick in. Overuse risks bloated binaries and slow compiles, so I’d profile to justify it, fallback to #[inline] elsewhere, and monitor I-cache effects. As a lead developer, this balances performance gains with maintainability and scalability in a Rust codebase."
+I’d use #[inline(always)] for small, hot functions like extract_bits in tight loops, ensuring call overhead vanishes and optimizations kick in. Overuse risks bloated binaries and slow compiles, so I’d profile to justify it, fallback to #[inline] elsewhere, and monitor I-cache effects. This balances performance gains with maintainability and scalability in a Rust codebase."
 author: "mayo"
 tags:
   - ""

@@ -1,6 +1,6 @@
 ---
 id: box-pointer-rust
-title: "What is the purpose of Box<T> in Rust? When would you use it?"
+title: "What is the purpose of Box<T> in Rust?"
 slug: box-pointer-rust
 date: '2025-07-07'
 author: mayo

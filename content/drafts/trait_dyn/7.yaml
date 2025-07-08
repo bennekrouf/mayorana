@@ -158,4 +158,4 @@ research_context: |
 
   Conclusion
 
-  Box<dyn Trait> uses a fat pointer with a vtable, doubling memory and adding indirection vs. Box<T>’s single pointer. In a game engine, I’d optimize by favoring static dispatch for known types, batching dyn calls, and using enums for core components, as shown. As a lead developer, this balances plugin flexibility with performance, minimizing vtable costs in critical paths.
+  Box<dyn Trait> uses a fat pointer with a vtable, doubling memory and adding indirection vs. Box<T>’s single pointer. In a game engine, I’d optimize by favoring static dispatch for known types, batching dyn calls, and using enums for core components, as shown. This balances plugin flexibility with performance, minimizing vtable costs in critical paths.

@@ -146,4 +146,4 @@ research_context: |
 
   Conclusion
 
-  I’d use associated types in IoDriver to fix Input and Output per driver, as with UartDriver, ensuring type safety and a clear API over generics’ over-flexibility. This avoids monomorphization bloat and runtime conversions, delivering efficient, inlined code for an embedded I/O system. As a lead developer, this design balances usability and performance, leveraging Rust’s type system for robust drivers.
+  I’d use associated types in IoDriver to fix Input and Output per driver, as with UartDriver, ensuring type safety and a clear API over generics’ over-flexibility. This avoids monomorphization bloat and runtime conversions, delivering efficient, inlined code for an embedded I/O system. This design balances usability and performance, leveraging Rust’s type system for robust drivers.

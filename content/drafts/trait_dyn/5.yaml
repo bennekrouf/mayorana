@@ -150,4 +150,4 @@ research_context: |
 
   Conclusion
 
-  I’d implement Allocator for a BumpAllocator, exposing allocation via a trait with #[inline] methods and static dispatch, as shown. This minimizes overhead—inlineable pointer ops, no runtime checks—while integrating with GlobalAlloc for ecosystem use. As a lead developer, this ensures an embedded app gets fast, predictable memory management, with Rust’s type system enforcing correct usage.
+  I’d implement Allocator for a BumpAllocator, exposing allocation via a trait with #[inline] methods and static dispatch, as shown. This minimizes overhead—inlineable pointer ops, no runtime checks—while integrating with GlobalAlloc for ecosystem use. This ensures an embedded app gets fast, predictable memory management, with Rust’s type system enforcing correct usage.

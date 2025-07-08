@@ -134,4 +134,4 @@ research_context: |
 
   Conclusion
 
-  I’d use a blanket impl<T: Summable> Stats for T to give mean to all Summable types, as shown, slashing duplication in a utility library. Coherence pitfalls—overlaps, downstream errors—are mitigated with sealed traits and clear bounds. As a lead developer, this delivers a concise, safe API with minimal performance cost, leveraging Rust’s type system for maintainability and scalability.
+  I’d use a blanket impl<T: Summable> Stats for T to give mean to all Summable types, as shown, slashing duplication in a utility library. Coherence pitfalls—overlaps, downstream errors—are mitigated with sealed traits and clear bounds. This delivers a concise, safe API with minimal performance cost, leveraging Rust’s type system for maintainability and scalability.
