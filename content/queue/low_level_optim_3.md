@@ -5,7 +5,7 @@ slug: simd-matrix-mult-rust
 date: '2025-07-07'
 author: mayo
 excerpt: >-
-  Leveraging Rust’s SIMD support for accelerating matrix multiplication, with considerations for portability and correctness
+  Leveraging Rust’s SIMD support for accelerating matrix multiplication with considerations for portability and correctness
 content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
 category: rust
