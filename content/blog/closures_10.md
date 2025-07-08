@@ -1,12 +1,11 @@
 ---
 id: closure-dispatch-rust
-title: "impl Fn() vs. Box<dyn Fn()>: Rust's Closure Dispatch Showdown"
+title: 'impl Fn() vs. Box<dyn Fn()>: Rust''s Closure Dispatch Showdown'
 slug: closure-dispatch-rust
 author: mayo
 excerpt: >-
-  Comparing static and dynamic dispatch for closures in Rust, focusing on performance and use cases
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+  Comparing static and dynamic dispatch for closures in Rust, focusing on
+  performance and use cases
 category: rust
 tags:
   - rust
@@ -14,6 +13,7 @@ tags:
   - dispatch
   - performance
   - traits
+date: '2025-07-08'
 ---
 
 # impl Fn() vs. Box<dyn Fn()>: Rust's Closure Dispatch Showdown
