@@ -2,7 +2,6 @@
 id: memory-safety-rust
 title: "How does Rust ensure memory safety without a garbage collector?"
 slug: memory-safety-rust
-date: '2025-07-07'
 author: mayo
 excerpt: >-
   Rust memory and string

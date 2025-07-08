@@ -1,4 +1,4 @@
-content_focus: "low-level optimization in Rust, tailored for a lead developer"
+content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
 title: "Lock-Free Programming: How would you implement a lock-free data structure, like a ring buffer, in Rust using std::sync::atomic? What pitfalls should you watch out for regarding memory ordering?"
 author: "mayo"
@@ -141,4 +141,4 @@ research_context: |
 
   Conclusion
 
-  I’d implement a lock-free SPSC ring buffer with AtomicUsize for head and tail, using Acquire/Release to synchronize safely and efficiently. Pitfalls like reordering or races are avoided with precise ordering and Rust’s type safety. For a lead developer, this balances performance and correctness, with testing ensuring reliability in a concurrent system.
+  I’d implement a lock-free SPSC ring buffer with AtomicUsize for head and tail, using Acquire/Release to synchronize safely and efficiently. Pitfalls like reordering or races are avoided with precise ordering and Rust’s type safety. This balances performance and correctness, with testing ensuring reliability in a concurrent system.

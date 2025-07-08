@@ -128,4 +128,4 @@ research_context: |
 
   Conclusion
 
-  Rust demands object safety for dyn Trait because vtables need fixed, instance-based methods. I’d refactor a non-object-safe Transformer by removing generics and static methods, as shown, enabling a plugin system with dynamic dispatch. As a lead developer, this ensures runtime extensibility while maintaining Rust’s safety, with factories bridging the gap for instantiation.
+  Rust demands object safety for dyn Trait because vtables need fixed, instance-based methods. I’d refactor a non-object-safe Transformer by removing generics and static methods, as shown, enabling a plugin system with dynamic dispatch. This ensures runtime extensibility while maintaining Rust’s safety, with factories bridging the gap for instantiation.

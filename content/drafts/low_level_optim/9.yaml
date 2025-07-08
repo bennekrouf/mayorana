@@ -1,4 +1,4 @@
-content_focus: "low-level optimization in Rust, tailored for a lead developer"
+content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
 title: "Cache Line Awareness: Suppose you’re optimizing a multi-threaded Rust application that processes large datasets. How would you align data structures to cache lines, and what Rust features or techniques would you use to minimize false sharing?d_local! {
         static MY_COUNTER: AtomicU64 = AtomicU64::new(0);
@@ -30,7 +30,7 @@ Verification
 
 Conclusion
 
-I’d align data with #[repr(align(64))] and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust’s type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. For a lead developer, this eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor."
+I’d align data with #[repr(align(64))] and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust’s type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. This eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor."
 author: "mayo"
 tags:
   - ""

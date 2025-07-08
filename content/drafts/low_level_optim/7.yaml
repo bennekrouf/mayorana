@@ -1,4 +1,4 @@
-content_focus: "low-level optimization in Rust, tailored for a lead developer"
+content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
 title: "Allocation Avoidance: In a real-time system, heap allocations can introduce latency. How would you use Rust’s stack-based features (e.g., fixed-size arrays or Option) to avoid allocations in a performance-critical path?"
 author: "mayo"
@@ -113,4 +113,4 @@ research_context: |
 
   Conclusion
 
-  I’d replace heap allocations with stack-based arrays and indices, as in this audio processor, ensuring zero-latency overhead in a real-time path. Rust’s type system and compile-time sizing guarantee safety, while tight loops and cache-friendly access maintain performance. For a lead developer, this approach delivers deterministic behavior critical for real-time applications, with profiling validating the win.
+  I’d replace heap allocations with stack-based arrays and indices, as in this audio processor, ensuring zero-latency overhead in a real-time path. Rust’s type system and compile-time sizing guarantee safety, while tight loops and cache-friendly access maintain performance. This approach delivers deterministic behavior critical for real-time applications, with profiling validating the win.

@@ -1,6 +1,6 @@
 ---
 id: string-str-mismatch-rust
-title: "Why can’t you pass a &str directly to a function expecting a &String? How would you handle such a scenario?"
+title: "Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!"
 slug: string-str-mismatch-rust
 date: '2025-07-07'
 author: mayo

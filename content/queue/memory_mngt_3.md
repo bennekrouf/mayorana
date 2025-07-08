@@ -1,6 +1,6 @@
 ---
 id: stack-heap-allocation-rust
-title: "What is the difference between stack and heap allocation in Rust? How does Rust decide where to allocate data?"
+title: "Stack vs. Heap in Rust: Where Does Your Data Live?"
 slug: stack-heap-allocation-rust
 date: '2025-07-07'
 author: mayo
