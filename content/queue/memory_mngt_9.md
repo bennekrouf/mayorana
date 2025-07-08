@@ -1,6 +1,6 @@
 ---
 id: borrowing-rules-rust
-title: "What are the rules for borrowing in Rust? Explain mutable vs. immutable borrows."
+title: "mutable vs. immutable borrows."
 slug: borrowing-rules-rust
 date: '2025-07-07'
 author: mayo

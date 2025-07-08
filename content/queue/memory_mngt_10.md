@@ -1,6 +1,6 @@
 ---
 id: cow-copy-on-write-rust
-title: "How does Cow<'a, B> (Copy-on-Write) work in Rust? When would you use it for strings or other data?"
+title: "How does Cow<'a, B> (Copy-on-Write) work in Rust? When use it ?"
 slug: cow-copy-on-write-rust
 date: '2025-07-07'
 author: mayo
