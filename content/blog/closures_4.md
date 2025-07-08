@@ -1,13 +1,12 @@
 ---
 id: move-closures-rust
-title: "What are move closures (move || { ... })? When are they necessary, and how do they interact with ownership?"
+title: >-
+  What are move closures (move || { ... })? When are they necessary, and how do
+  they interact with ownership?
 slug: move-closures-rust
-date: '2025-07-07'
+date: '2025-07-08'
 author: mayo
-excerpt: >-
-  Functions and closures in Rust, covering ownership, traits, lifetimes
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
 category: rust
 tags:
   - rust
