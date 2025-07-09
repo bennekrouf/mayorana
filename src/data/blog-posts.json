@@ -1,5 +1,316 @@
 [
   {
+    "id": "closure-dispatch-rust",
+    "slug": "closure-dispatch-rust",
+    "title": "impl Fn() vs. Box<dyn Fn()>: Rust's Closure Dispatch Showdown",
+    "date": "2025-07-08",
+    "excerpt": "Comparing static and dynamic dispatch for closures in Rust, focusing on performance and use cases",
+    "content": "Rust’s closure system offers two ways to handle function-like behavior: `impl Fn()` for static dispatch and `Box<dyn Fn()>` for dynamic dispatch. Each has distinct performance and flexibility characteristics, driven by Rust’s ownership, traits, and lifetimes. I’ll compare them and explain when to choose one over the other.\n\n## Key Differences\n\n| **Aspect** | **impl Fn() (Static Dispatch)** | **Box<dyn Fn()> (Dynamic Dispatch)** |\n|------------|--------------------------------|--------------------------------------|\n| **Dispatch Mechanism** | Monomorphized at compile time (zero-cost) | Uses vtables (runtime lookup) |\n| **Performance** | Faster (~1–2 ns, direct call) | Slower (~5–10 ns, vtable lookup) |\n| **Flexibility** | Single concrete type per instance | Can store heterogeneous closures |\n| **Memory** | Stack-allocated (unless moved) | Heap-allocated (fat pointer + heap data) |\n| **Use Case** | Fixed closure type, performance-critical | Dynamic behavior, multiple closure types |\n\n## When to Use Each\n\n### 1. impl Fn() (Static Dispatch)\n- **Use When**:\n  - The closure type is fixed and known at compile time.\n  - Performance is critical (e.g., hot loops, embedded systems).\n  - Zero-cost abstractions are desired.\n- **Why**: The compiler generates a unique function for each closure type via monomorphization, enabling inlining and no runtime overhead.\n\n**Example**:\n```rust\nfn make_adder(x: i32) -> impl Fn(i32) -> i32 {\n    move |y| x + y\n}\n\nfn main() {\n    let add_five = make_adder(5); // Type: closure(5)\n    println!(\"{}\", add_five(3)); // 8\n}\n```\n\nNo heap allocation, direct function calls, and optimal performance.\n\n### 2. Box<dyn Fn()> (Dynamic Dispatch)\n- **Use When**:\n  - You need to store different closures in the same collection (e.g., callbacks).\n  - Closure types vary at runtime (e.g., plugin systems).\n  - Flexibility outweighs performance costs.\n- **Why**: `dyn Fn()` uses a vtable for runtime method resolution, allowing heterogeneous closures at the cost of heap allocation and lookup overhead.\n\n**Example**:\n```rust\nfn create_op(is_add: bool) -> Box<dyn Fn(i32, i32) -> i32> {\n    if is_add {\n        Box::new(|x, y| x + y)\n    } else {\n        Box::new(|x, y| x * y)\n    }\n}\n\nfn main() {\n    let add = create_op(true);\n    let mul = create_op(false);\n    println!(\"{} {}\", add(2, 3), mul(2, 3)); // 5 6\n}\n```\n\nSupports dynamic behavior, ideal for event handlers or plugins.\n\n## Lifetime Considerations\n\n- **Box<dyn Fn()>**: Requires explicit lifetimes if the closure captures references:\n  ```rust\n  struct Handler<'a> {\n      callback: Box<dyn Fn() -> &'a str + 'a>,\n  }\n  ```\n- **impl Fn()**: Lifetimes are typically inferred unless references are captured, simplifying usage.\n\n## Performance Trade-offs\n\n| **Scenario** | **impl Fn()** | **Box<dyn Fn()>** |\n|--------------|---------------|-------------------|\n| **Call Speed** | ~1–2 ns (direct call) | ~5–10 ns (vtable lookup) |\n| **Memory Overhead** | None (stack-allocated) | 16–24 bytes (fat pointer + heap data) |\n| **Code Bloat** | Possible (monomorphization) | Minimal (single vtable) |\n\n## Key Takeaways\n\n✅ **Choose `impl Fn()` for**:\n- Performance-sensitive code (e.g., iterator chains).\n- Single closure type (e.g., factory functions).\n\n✅ **Choose `Box<dyn Fn()>` for**:\n- Dynamic behavior (e.g., event handlers, plugins).\n- Storing mixed closure types (e.g., `Vec<Box<dyn Fn()>>`).\n\n**Real-World Examples**:\n- `impl Fn()`: Used in iterator adapters like `map` and `filter` for zero-cost performance.\n- `Box<dyn Fn()>`: Common in GUI frameworks for event callbacks where flexibility is key.\n\n## Verification\n\nTo quantify the performance difference, benchmark with `criterion`:\n\n```rust\nuse criterion::{black_box, Criterion};\nfn bench(c: &mut Criterion) {\n    let impl_fn = |x: i32| x + 5;\n    let dyn_fn: Box<dyn Fn(i32) -> i32> = Box::new(|x| x + 5);\n    c.bench_function(\"impl_fn\", |b| b.iter(|| impl_fn(black_box(3))));\n    c.bench_function(\"dyn_fn\", |b| b.iter(|| dyn_fn(black_box(3))));\n}\n```\n\nExpect `impl Fn()` to be faster and use less memory, confirming its suitability for performance-critical code.\n\n## Conclusion\n\nUse `impl Fn()` for zero-cost, static dispatch in performance-critical scenarios with known closure types. Opt for `Box<dyn Fn()>` when flexibility is needed, such as in plugin systems or event-driven applications requiring runtime polymorphism. Rust’s ownership and trait system ensure both approaches are safe, with the choice depending on the balance of performance versus dynamic requirements.",
+    "contentHtml": "<p>Rust’s closure system offers two ways to handle function-like behavior: <code>impl Fn()</code> for static dispatch and <code>Box&lt;dyn Fn()&gt;</code> for dynamic dispatch. Each has distinct performance and flexibility characteristics, driven by Rust’s ownership, traits, and lifetimes. I’ll compare them and explain when to choose one over the other.</p>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Aspect</strong></th>\n<th><strong>impl Fn() (Static Dispatch)</strong></th>\n<th><strong>Box&lt;dyn Fn()&gt; (Dynamic Dispatch)</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Dispatch Mechanism</strong></td>\n<td>Monomorphized at compile time (zero-cost)</td>\n<td>Uses vtables (runtime lookup)</td>\n</tr>\n<tr>\n<td><strong>Performance</strong></td>\n<td>Faster (~1–2 ns, direct call)</td>\n<td>Slower (~5–10 ns, vtable lookup)</td>\n</tr>\n<tr>\n<td><strong>Flexibility</strong></td>\n<td>Single concrete type per instance</td>\n<td>Can store heterogeneous closures</td>\n</tr>\n<tr>\n<td><strong>Memory</strong></td>\n<td>Stack-allocated (unless moved)</td>\n<td>Heap-allocated (fat pointer + heap data)</td>\n</tr>\n<tr>\n<td><strong>Use Case</strong></td>\n<td>Fixed closure type, performance-critical</td>\n<td>Dynamic behavior, multiple closure types</td>\n</tr>\n</tbody></table>\n<h2>When to Use Each</h2>\n<h3>1. impl Fn() (Static Dispatch)</h3>\n<ul>\n<li><strong>Use When</strong>:<ul>\n<li>The closure type is fixed and known at compile time.</li>\n<li>Performance is critical (e.g., hot loops, embedded systems).</li>\n<li>Zero-cost abstractions are desired.</li>\n</ul>\n</li>\n<li><strong>Why</strong>: The compiler generates a unique function for each closure type via monomorphization, enabling inlining and no runtime overhead.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn make_adder(x: i32) -&gt; impl Fn(i32) -&gt; i32 {\n    move |y| x + y\n}\n\nfn main() {\n    let add_five = make_adder(5); // Type: closure(5)\n    println!(&quot;{}&quot;, add_five(3)); // 8\n}\n</code></pre>\n<p>No heap allocation, direct function calls, and optimal performance.</p>\n<h3>2. Box&lt;dyn Fn()&gt; (Dynamic Dispatch)</h3>\n<ul>\n<li><strong>Use When</strong>:<ul>\n<li>You need to store different closures in the same collection (e.g., callbacks).</li>\n<li>Closure types vary at runtime (e.g., plugin systems).</li>\n<li>Flexibility outweighs performance costs.</li>\n</ul>\n</li>\n<li><strong>Why</strong>: <code>dyn Fn()</code> uses a vtable for runtime method resolution, allowing heterogeneous closures at the cost of heap allocation and lookup overhead.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn create_op(is_add: bool) -&gt; Box&lt;dyn Fn(i32, i32) -&gt; i32&gt; {\n    if is_add {\n        Box::new(|x, y| x + y)\n    } else {\n        Box::new(|x, y| x * y)\n    }\n}\n\nfn main() {\n    let add = create_op(true);\n    let mul = create_op(false);\n    println!(&quot;{} {}&quot;, add(2, 3), mul(2, 3)); // 5 6\n}\n</code></pre>\n<p>Supports dynamic behavior, ideal for event handlers or plugins.</p>\n<h2>Lifetime Considerations</h2>\n<ul>\n<li><strong>Box&lt;dyn Fn()&gt;</strong>: Requires explicit lifetimes if the closure captures references:<pre><code class=\"language-rust\">struct Handler&lt;&#39;a&gt; {\n    callback: Box&lt;dyn Fn() -&gt; &amp;&#39;a str + &#39;a&gt;,\n}\n</code></pre>\n</li>\n<li><strong>impl Fn()</strong>: Lifetimes are typically inferred unless references are captured, simplifying usage.</li>\n</ul>\n<h2>Performance Trade-offs</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Scenario</strong></th>\n<th><strong>impl Fn()</strong></th>\n<th><strong>Box&lt;dyn Fn()&gt;</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Call Speed</strong></td>\n<td>~1–2 ns (direct call)</td>\n<td>~5–10 ns (vtable lookup)</td>\n</tr>\n<tr>\n<td><strong>Memory Overhead</strong></td>\n<td>None (stack-allocated)</td>\n<td>16–24 bytes (fat pointer + heap data)</td>\n</tr>\n<tr>\n<td><strong>Code Bloat</strong></td>\n<td>Possible (monomorphization)</td>\n<td>Minimal (single vtable)</td>\n</tr>\n</tbody></table>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Choose <code>impl Fn()</code> for</strong>:</p>\n<ul>\n<li>Performance-sensitive code (e.g., iterator chains).</li>\n<li>Single closure type (e.g., factory functions).</li>\n</ul>\n<p>✅ <strong>Choose <code>Box&lt;dyn Fn()&gt;</code> for</strong>:</p>\n<ul>\n<li>Dynamic behavior (e.g., event handlers, plugins).</li>\n<li>Storing mixed closure types (e.g., <code>Vec&lt;Box&lt;dyn Fn()&gt;&gt;</code>).</li>\n</ul>\n<p><strong>Real-World Examples</strong>:</p>\n<ul>\n<li><code>impl Fn()</code>: Used in iterator adapters like <code>map</code> and <code>filter</code> for zero-cost performance.</li>\n<li><code>Box&lt;dyn Fn()&gt;</code>: Common in GUI frameworks for event callbacks where flexibility is key.</li>\n</ul>\n<h2>Verification</h2>\n<p>To quantify the performance difference, benchmark with <code>criterion</code>:</p>\n<pre><code class=\"language-rust\">use criterion::{black_box, Criterion};\nfn bench(c: &amp;mut Criterion) {\n    let impl_fn = |x: i32| x + 5;\n    let dyn_fn: Box&lt;dyn Fn(i32) -&gt; i32&gt; = Box::new(|x| x + 5);\n    c.bench_function(&quot;impl_fn&quot;, |b| b.iter(|| impl_fn(black_box(3))));\n    c.bench_function(&quot;dyn_fn&quot;, |b| b.iter(|| dyn_fn(black_box(3))));\n}\n</code></pre>\n<p>Expect <code>impl Fn()</code> to be faster and use less memory, confirming its suitability for performance-critical code.</p>\n<h2>Conclusion</h2>\n<p>Use <code>impl Fn()</code> for zero-cost, static dispatch in performance-critical scenarios with known closure types. Opt for <code>Box&lt;dyn Fn()&gt;</code> when flexibility is needed, such as in plugin systems or event-driven applications requiring runtime polymorphism. Rust’s ownership and trait system ensure both approaches are safe, with the choice depending on the balance of performance versus dynamic requirements.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "closures",
+      "dispatch",
+      "performance",
+      "traits"
+    ],
+    "readingTime": "4 min",
+    "seo": {
+      "title": "impl Fn() vs. Box<dyn Fn()>: Rust's Closure Dispatch Showdown",
+      "description": "Comparing static and dynamic dispatch for closures in Rust, focusing on performance and use cases",
+      "keywords": [
+        "rust",
+        "closures",
+        "dispatch",
+        "performance",
+        "traits"
+      ]
+    },
+    "headings": [
+      {
+        "id": "key-differences",
+        "text": "Key Differences",
+        "level": 2
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "1-impl-fn-static-dispatch",
+        "text": "1. impl Fn() (Static Dispatch)",
+        "level": 3
+      },
+      {
+        "id": "2-boxlessdyn-fngreater-dynamic-dispatch",
+        "text": "2. Box<dyn Fn()> (Dynamic Dispatch)",
+        "level": 3
+      },
+      {
+        "id": "lifetime-considerations",
+        "text": "Lifetime Considerations",
+        "level": 2
+      },
+      {
+        "id": "performance-trade-offs",
+        "text": "Performance Trade-offs",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      },
+      {
+        "id": "verification",
+        "text": "Verification",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "text": "Conclusion",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "move-closures-rust",
+    "slug": "move-closures-rust",
+    "title": "What are move closures (move || { ... })? When are they necessary, and how do they interact with ownership?",
+    "date": "2025-07-08",
+    "excerpt": "Functions and closures in Rust, covering ownership, traits, lifetimes",
+    "content": "A `move` closure (defined with the `move` keyword) forces the closure to take ownership of variables it captures from the environment. Unlike regular closures, which capture variables by reference (immutable or mutable) when possible, `move` closures move or copy the variables into the closure itself.\n\n## Key Mechanics\n\n### 1. Ownership Transfer\n\n- For **non-Copy** types (e.g., `String`, `Vec`), the closure takes ownership of the variable:\n  ```rust\n  let s = String::from(\"hello\");\n  let closure = move || println!(\"{}\", s); // `s` is moved into the closure\n  // println!(\"{}\", s); // ERROR: `s` was moved\n  ```\n\n- For **Copy** types (e.g., `i32`, `bool`), the closure copies the value:\n  ```rust\n  let x = 42;\n  let closure = move || println!(\"{}\", x); // `x` is copied\n  println!(\"{}\", x); // OK: `x` is still valid\n  ```\n\n### 2. Interaction with Closure Traits\n\nA `move` closure’s trait (`Fn`, `FnMut`, `FnOnce`) depends on how the captured variables are used:\n\n- **`Fn`**: Read-only access to captured variables.\n- **`FnMut`**: Mutates captured variables.\n- **`FnOnce`**: Consumes captured variables (e.g., `drop`).\n\n## When Are Move Closures Necessary?\n\n### 1. Closures Outliving Their Environment\n\nWhen a closure is used in a different scope (e.g., a thread or async task), it must own its data to avoid dangling references:\n```rust\nuse std::thread;\n\nlet data = String::from(\"thread-safe\");\nthread::spawn(move || { // `move` forces ownership of `data`\n    println!(\"{}\", data); // Safe: `data` lives in the closure\n}).join().unwrap();\n```\n\n### 2. Breaking Reference Cycles\n\nIf a closure needs to capture a value that’s also borrowed elsewhere, `move` ensures ownership is transferred:\n```rust\nlet mut vec = vec![1, 2, 3];\nlet closure = move || { // Takes ownership of `vec`\n    // vec.push(4); // ERROR: `vec` is moved (can’t mutate)\n};\n// vec.push(4); // ERROR: `vec` is moved into closure\n```\n\n### 3. Explicit Ownership Control\n\nWhen you want to avoid accidental borrows or force a copy:\n```rust\nlet x = 42;\nlet closure = || println!(\"{}\", x); // Borrows `x`\nlet move_closure = move || println!(\"{}\", x); // Copies `x` (since `i32` is `Copy`)\n```\n\n## Examples\n\n### 1. Non-Copy Type (Ownership Moved)\n```rust\nlet s = String::from(\"hello\");\nlet closure = move || println!(\"{}\", s);\nclosure(); // Works: closure owns `s`\n// closure(); // ERROR if `s` is consumed (e.g., `FnOnce`)\n```\n\n### 2. Copy Type (Value Copied)\n```rust\nlet x = 42;\nlet closure = move || x + 1; // Copies `x`\nprintln!(\"{}\", x); // OK: `x` is `Copy`\n```\n\n### 3. Mixing `move` and Mutation\n```rust\nlet mut count = 0;\nlet mut closure = move || { // `count` is copied (since `i32` is `Copy`)\n    count += 1; // Operates on the copied `count`\n    count\n};\nprintln!(\"{}\", closure()); // 1\nprintln!(\"{}\", closure()); // 2\nprintln!(\"{}\", count); // 0 (original unchanged)\n```\n\n## Pitfalls\n\n- **Unintended Moves**:\n  ```rust\n  let s = String::from(\"hello\");\n  let _ = move || println!(\"{}\", s); // `s` moved here\n  // println!(\"{}\", s); // ERROR: `s` is gone\n  ```\n\n- **Overusing `move`**:\n  Unnecessary copies/moves can hurt performance or cause compile errors.\n\n## Key Takeaways\n\n✅ **Use `move` closures when**:\n- The closure outlives its environment (e.g., threads).\n- You need explicit ownership to avoid borrow checker issues.\n\n✅ **Avoid `move` for**:\n- Local, short-lived closures that don’t escape their scope.\n- `Copy` types where borrowing is sufficient.\n\n**Try This**: What happens if you use `move` with a closure that captures a mutable reference (`&mut T`)?  \n**Answer**: The reference itself is moved (but the data it points to isn’t owned). This is rarely useful and may lead to lifetime errors!",
+    "contentHtml": "<p>A <code>move</code> closure (defined with the <code>move</code> keyword) forces the closure to take ownership of variables it captures from the environment. Unlike regular closures, which capture variables by reference (immutable or mutable) when possible, <code>move</code> closures move or copy the variables into the closure itself.</p>\n<h2>Key Mechanics</h2>\n<h3>1. Ownership Transfer</h3>\n<ul>\n<li><p>For <strong>non-Copy</strong> types (e.g., <code>String</code>, <code>Vec</code>), the closure takes ownership of the variable:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet closure = move || println!(&quot;{}&quot;, s); // `s` is moved into the closure\n// println!(&quot;{}&quot;, s); // ERROR: `s` was moved\n</code></pre>\n</li>\n<li><p>For <strong>Copy</strong> types (e.g., <code>i32</code>, <code>bool</code>), the closure copies the value:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = move || println!(&quot;{}&quot;, x); // `x` is copied\nprintln!(&quot;{}&quot;, x); // OK: `x` is still valid\n</code></pre>\n</li>\n</ul>\n<h3>2. Interaction with Closure Traits</h3>\n<p>A <code>move</code> closure’s trait (<code>Fn</code>, <code>FnMut</code>, <code>FnOnce</code>) depends on how the captured variables are used:</p>\n<ul>\n<li><strong><code>Fn</code></strong>: Read-only access to captured variables.</li>\n<li><strong><code>FnMut</code></strong>: Mutates captured variables.</li>\n<li><strong><code>FnOnce</code></strong>: Consumes captured variables (e.g., <code>drop</code>).</li>\n</ul>\n<h2>When Are Move Closures Necessary?</h2>\n<h3>1. Closures Outliving Their Environment</h3>\n<p>When a closure is used in a different scope (e.g., a thread or async task), it must own its data to avoid dangling references:</p>\n<pre><code class=\"language-rust\">use std::thread;\n\nlet data = String::from(&quot;thread-safe&quot;);\nthread::spawn(move || { // `move` forces ownership of `data`\n    println!(&quot;{}&quot;, data); // Safe: `data` lives in the closure\n}).join().unwrap();\n</code></pre>\n<h3>2. Breaking Reference Cycles</h3>\n<p>If a closure needs to capture a value that’s also borrowed elsewhere, <code>move</code> ensures ownership is transferred:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3];\nlet closure = move || { // Takes ownership of `vec`\n    // vec.push(4); // ERROR: `vec` is moved (can’t mutate)\n};\n// vec.push(4); // ERROR: `vec` is moved into closure\n</code></pre>\n<h3>3. Explicit Ownership Control</h3>\n<p>When you want to avoid accidental borrows or force a copy:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = || println!(&quot;{}&quot;, x); // Borrows `x`\nlet move_closure = move || println!(&quot;{}&quot;, x); // Copies `x` (since `i32` is `Copy`)\n</code></pre>\n<h2>Examples</h2>\n<h3>1. Non-Copy Type (Ownership Moved)</h3>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet closure = move || println!(&quot;{}&quot;, s);\nclosure(); // Works: closure owns `s`\n// closure(); // ERROR if `s` is consumed (e.g., `FnOnce`)\n</code></pre>\n<h3>2. Copy Type (Value Copied)</h3>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = move || x + 1; // Copies `x`\nprintln!(&quot;{}&quot;, x); // OK: `x` is `Copy`\n</code></pre>\n<h3>3. Mixing <code>move</code> and Mutation</h3>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet mut closure = move || { // `count` is copied (since `i32` is `Copy`)\n    count += 1; // Operates on the copied `count`\n    count\n};\nprintln!(&quot;{}&quot;, closure()); // 1\nprintln!(&quot;{}&quot;, closure()); // 2\nprintln!(&quot;{}&quot;, count); // 0 (original unchanged)\n</code></pre>\n<h2>Pitfalls</h2>\n<ul>\n<li><p><strong>Unintended Moves</strong>:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet _ = move || println!(&quot;{}&quot;, s); // `s` moved here\n// println!(&quot;{}&quot;, s); // ERROR: `s` is gone\n</code></pre>\n</li>\n<li><p><strong>Overusing <code>move</code></strong>:\nUnnecessary copies/moves can hurt performance or cause compile errors.</p>\n</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Use <code>move</code> closures when</strong>:</p>\n<ul>\n<li>The closure outlives its environment (e.g., threads).</li>\n<li>You need explicit ownership to avoid borrow checker issues.</li>\n</ul>\n<p>✅ <strong>Avoid <code>move</code> for</strong>:</p>\n<ul>\n<li>Local, short-lived closures that don’t escape their scope.</li>\n<li><code>Copy</code> types where borrowing is sufficient.</li>\n</ul>\n<p><strong>Try This</strong>: What happens if you use <code>move</code> with a closure that captures a mutable reference (<code>&amp;mut T</code>)?<br><strong>Answer</strong>: The reference itself is moved (but the data it points to isn’t owned). This is rarely useful and may lead to lifetime errors!</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "closures",
+      "ownership",
+      "traits",
+      "lifetimes"
+    ],
+    "readingTime": "4 min",
+    "seo": {
+      "title": "What are move closures (move || { ... })? When are they necessary, and how do they interact with ownership?",
+      "description": "Functions and closures in Rust, covering ownership, traits, lifetimes",
+      "keywords": [
+        "rust",
+        "closures",
+        "ownership",
+        "traits",
+        "lifetimes"
+      ]
+    },
+    "headings": [
+      {
+        "id": "key-mechanics",
+        "text": "Key Mechanics",
+        "level": 2
+      },
+      {
+        "id": "1-ownership-transfer",
+        "text": "1. Ownership Transfer",
+        "level": 3
+      },
+      {
+        "id": "2-interaction-with-closure-traits",
+        "text": "2. Interaction with Closure Traits",
+        "level": 3
+      },
+      {
+        "id": "when-are-move-closures-necessary",
+        "text": "When Are Move Closures Necessary?",
+        "level": 2
+      },
+      {
+        "id": "1-closures-outliving-their-environment",
+        "text": "1. Closures Outliving Their Environment",
+        "level": 3
+      },
+      {
+        "id": "2-breaking-reference-cycles",
+        "text": "2. Breaking Reference Cycles",
+        "level": 3
+      },
+      {
+        "id": "3-explicit-ownership-control",
+        "text": "3. Explicit Ownership Control",
+        "level": 3
+      },
+      {
+        "id": "examples",
+        "text": "Examples",
+        "level": 2
+      },
+      {
+        "id": "1-non-copy-type-ownership-moved",
+        "text": "1. Non-Copy Type (Ownership Moved)",
+        "level": 3
+      },
+      {
+        "id": "2-copy-type-value-copied",
+        "text": "2. Copy Type (Value Copied)",
+        "level": 3
+      },
+      {
+        "id": "3-mixing-move-and-mutation",
+        "text": "3. Mixing `move` and Mutation",
+        "level": 3
+      },
+      {
+        "id": "pitfalls",
+        "text": "Pitfalls",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "iter-methods-rust",
+    "slug": "iter-methods-rust",
+    "title": "How do into_iter(), iter(), and iter_mut() differ?",
+    "date": "2025-07-08",
+    "excerpt": "Collections (like Vec), iterators (into_iter, collect), and related concepts",
+    "content": "These three methods are fundamental for working with collections in Rust, each serving distinct ownership and mutability use cases.\n\n## 1. `into_iter()` - Ownership-Consuming Iterator\n\n- **Takes ownership** of the collection (`self`).\n- **Produces** owned values (`T`) when iterating.\n- **Destroys** the original collection (can't be used afterward).\n\n```rust\nlet vec = vec![\"a\".to_string(), \"b\".to_string()];\nfor s in vec.into_iter() {  // `vec` is moved here\n    println!(\"{}\", s);      // `s` is a String (owned)\n}\n// println!(\"{:?}\", vec);  // ERROR: `vec` was consumed\n```\n\n**When to use**:\n- When you need to transform or consume the collection permanently.\n- For chaining iterator adapters that need ownership (e.g., `.filter().collect()`).\n\n## 2. `iter()` - Immutable Borrow Iterator\n\n- **Borrows** the collection immutably (`&self`).\n- **Produces** references (`&T`).\n- **Leaves** the collection intact.\n\n```rust\nlet vec = vec![\"a\", \"b\", \"c\"];\nfor s in vec.iter() {       // Borrows `vec`\n    println!(\"{}\", s);      // `s` is &&str (reference)\n}\nprintln!(\"{:?}\", vec);      // OK: `vec` still valid\n```\n\n**When to use**:\n- When you only need read-only access to elements.\n- For operations like searching (`.find()`) or inspection.\n\n## 3. `iter_mut()` - Mutable Borrow Iterator\n\n- **Borrows** the collection mutably (`&mut self`).\n- **Produces** mutable references (`&mut T`).\n- **Allows** in-place modification.\n\n```rust\nlet mut vec = vec![1, 2, 3];\nfor num in vec.iter_mut() {  // Mutable borrow\n    *num *= 2;               // Modify in place\n}\nprintln!(\"{:?}\", vec);       // [2, 4, 6]\n```\n\n**When to use**:\n- When you need to modify elements without reallocating.\n- For bulk updates (e.g., applying transformations).\n\n## Key Differences Summary\n\n| Method        | Ownership     | Yields     | Modifies Original? | Reuse Original? |\n|---------------|---------------|------------|--------------------|-----------------|\n| `into_iter()` | Consumes      | `T`        | ❌ (destroyed)      | ❌              |\n| `iter()`      | Borrows       | `&T`       | ❌                 | ✅              |\n| `iter_mut()`  | Mut borrow    | `&mut T`   | ✅                 | ✅              |\n\n## Common Pitfalls\n\n- **Accidental moves with `into_iter()`**:\n  ```rust\n  let vec = vec![1, 2];\n  let _ = vec.into_iter();  // `vec` moved here\n  // println!(\"{:?}\", vec); // ERROR!\n  ```\n\n- **Simultaneous mutable access**:\n  ```rust\n  let mut vec = vec![1, 2];\n  let iter = vec.iter_mut();\n  // vec.push(3);           // ERROR: Cannot borrow `vec` while iterator exists\n  ```\n\n## Real-World Examples\n\n- **`iter()` for read-only processing**:\n  ```rust\n  let words = vec![\"hello\", \"world\"];\n  let lengths: Vec<_> = words.iter().map(|s| s.len()).collect();  // [5, 5]\n  ```\n\n- **`iter_mut()` for in-place updates**:\n  ```rust\n  let mut scores = vec![85, 92, 78];\n  scores.iter_mut().for_each(|s| *s += 5);  // [90, 97, 83]\n  ```\n\n- **`into_iter()` for ownership transfer**:\n  ```rust\n  let matrix = vec![vec![1, 2], vec![3, 4]];\n  let flattened: Vec<_> = matrix.into_iter().flatten().collect();  // [1, 2, 3, 4]\n  ```\n\n## Performance Notes\n\n- `iter()` and `iter_mut()` are zero-cost (just pointers).\n- `into_iter()` may involve moves (but optimized for primitives like `i32`).\n\n**Try This**: What happens if you call `iter_mut()` on a `Vec<T>` where `T` doesn’t implement `Copy`, then try to modify the elements?  \n**Answer**: It works! The iterator yields `&mut T`, allowing direct mutation (e.g., `*item = new_value`).",
+    "contentHtml": "<p>These three methods are fundamental for working with collections in Rust, each serving distinct ownership and mutability use cases.</p>\n<h2>1. <code>into_iter()</code> - Ownership-Consuming Iterator</h2>\n<ul>\n<li><strong>Takes ownership</strong> of the collection (<code>self</code>).</li>\n<li><strong>Produces</strong> owned values (<code>T</code>) when iterating.</li>\n<li><strong>Destroys</strong> the original collection (can&#39;t be used afterward).</li>\n</ul>\n<pre><code class=\"language-rust\">let vec = vec![&quot;a&quot;.to_string(), &quot;b&quot;.to_string()];\nfor s in vec.into_iter() {  // `vec` is moved here\n    println!(&quot;{}&quot;, s);      // `s` is a String (owned)\n}\n// println!(&quot;{:?}&quot;, vec);  // ERROR: `vec` was consumed\n</code></pre>\n<p><strong>When to use</strong>:</p>\n<ul>\n<li>When you need to transform or consume the collection permanently.</li>\n<li>For chaining iterator adapters that need ownership (e.g., <code>.filter().collect()</code>).</li>\n</ul>\n<h2>2. <code>iter()</code> - Immutable Borrow Iterator</h2>\n<ul>\n<li><strong>Borrows</strong> the collection immutably (<code>&amp;self</code>).</li>\n<li><strong>Produces</strong> references (<code>&amp;T</code>).</li>\n<li><strong>Leaves</strong> the collection intact.</li>\n</ul>\n<pre><code class=\"language-rust\">let vec = vec![&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];\nfor s in vec.iter() {       // Borrows `vec`\n    println!(&quot;{}&quot;, s);      // `s` is &amp;&amp;str (reference)\n}\nprintln!(&quot;{:?}&quot;, vec);      // OK: `vec` still valid\n</code></pre>\n<p><strong>When to use</strong>:</p>\n<ul>\n<li>When you only need read-only access to elements.</li>\n<li>For operations like searching (<code>.find()</code>) or inspection.</li>\n</ul>\n<h2>3. <code>iter_mut()</code> - Mutable Borrow Iterator</h2>\n<ul>\n<li><strong>Borrows</strong> the collection mutably (<code>&amp;mut self</code>).</li>\n<li><strong>Produces</strong> mutable references (<code>&amp;mut T</code>).</li>\n<li><strong>Allows</strong> in-place modification.</li>\n</ul>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3];\nfor num in vec.iter_mut() {  // Mutable borrow\n    *num *= 2;               // Modify in place\n}\nprintln!(&quot;{:?}&quot;, vec);       // [2, 4, 6]\n</code></pre>\n<p><strong>When to use</strong>:</p>\n<ul>\n<li>When you need to modify elements without reallocating.</li>\n<li>For bulk updates (e.g., applying transformations).</li>\n</ul>\n<h2>Key Differences Summary</h2>\n<table>\n<thead>\n<tr>\n<th>Method</th>\n<th>Ownership</th>\n<th>Yields</th>\n<th>Modifies Original?</th>\n<th>Reuse Original?</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>into_iter()</code></td>\n<td>Consumes</td>\n<td><code>T</code></td>\n<td>❌ (destroyed)</td>\n<td>❌</td>\n</tr>\n<tr>\n<td><code>iter()</code></td>\n<td>Borrows</td>\n<td><code>&amp;T</code></td>\n<td>❌</td>\n<td>✅</td>\n</tr>\n<tr>\n<td><code>iter_mut()</code></td>\n<td>Mut borrow</td>\n<td><code>&amp;mut T</code></td>\n<td>✅</td>\n<td>✅</td>\n</tr>\n</tbody></table>\n<h2>Common Pitfalls</h2>\n<ul>\n<li><p><strong>Accidental moves with <code>into_iter()</code></strong>:</p>\n<pre><code class=\"language-rust\">let vec = vec![1, 2];\nlet _ = vec.into_iter();  // `vec` moved here\n// println!(&quot;{:?}&quot;, vec); // ERROR!\n</code></pre>\n</li>\n<li><p><strong>Simultaneous mutable access</strong>:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2];\nlet iter = vec.iter_mut();\n// vec.push(3);           // ERROR: Cannot borrow `vec` while iterator exists\n</code></pre>\n</li>\n</ul>\n<h2>Real-World Examples</h2>\n<ul>\n<li><p><strong><code>iter()</code> for read-only processing</strong>:</p>\n<pre><code class=\"language-rust\">let words = vec![&quot;hello&quot;, &quot;world&quot;];\nlet lengths: Vec&lt;_&gt; = words.iter().map(|s| s.len()).collect();  // [5, 5]\n</code></pre>\n</li>\n<li><p><strong><code>iter_mut()</code> for in-place updates</strong>:</p>\n<pre><code class=\"language-rust\">let mut scores = vec![85, 92, 78];\nscores.iter_mut().for_each(|s| *s += 5);  // [90, 97, 83]\n</code></pre>\n</li>\n<li><p><strong><code>into_iter()</code> for ownership transfer</strong>:</p>\n<pre><code class=\"language-rust\">let matrix = vec![vec![1, 2], vec![3, 4]];\nlet flattened: Vec&lt;_&gt; = matrix.into_iter().flatten().collect();  // [1, 2, 3, 4]\n</code></pre>\n</li>\n</ul>\n<h2>Performance Notes</h2>\n<ul>\n<li><code>iter()</code> and <code>iter_mut()</code> are zero-cost (just pointers).</li>\n<li><code>into_iter()</code> may involve moves (but optimized for primitives like <code>i32</code>).</li>\n</ul>\n<p><strong>Try This</strong>: What happens if you call <code>iter_mut()</code> on a <code>Vec&lt;T&gt;</code> where <code>T</code> doesn’t implement <code>Copy</code>, then try to modify the elements?<br><strong>Answer</strong>: It works! The iterator yields <code>&amp;mut T</code>, allowing direct mutation (e.g., <code>*item = new_value</code>).</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "iterators",
+      "collections",
+      "ownership"
+    ],
+    "readingTime": "3 min",
+    "seo": {
+      "title": "How do into_iter(), iter(), and iter_mut() differ?",
+      "description": "Collections (like Vec), iterators (into_iter, collect), and related concepts",
+      "keywords": [
+        "rust",
+        "iterators",
+        "collections",
+        "ownership"
+      ]
+    },
+    "headings": [
+      {
+        "id": "1-intoiter-ownership-consuming-iterator",
+        "text": "1. `into_iter()` - Ownership-Consuming Iterator",
+        "level": 2
+      },
+      {
+        "id": "2-iter-immutable-borrow-iterator",
+        "text": "2. `iter()` - Immutable Borrow Iterator",
+        "level": 2
+      },
+      {
+        "id": "3-itermut-mutable-borrow-iterator",
+        "text": "3. `iter_mut()` - Mutable Borrow Iterator",
+        "level": 2
+      },
+      {
+        "id": "key-differences-summary",
+        "text": "Key Differences Summary",
+        "level": 2
+      },
+      {
+        "id": "common-pitfalls",
+        "text": "Common Pitfalls",
+        "level": 2
+      },
+      {
+        "id": "real-world-examples",
+        "text": "Real-World Examples",
+        "level": 2
+      },
+      {
+        "id": "performance-notes",
+        "text": "Performance Notes",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "fn-traits-rust",
+    "slug": "fn-traits-rust",
+    "title": "What are the differences between Fn, FnMut, and FnOnce?",
+    "date": "2025-07-07",
+    "excerpt": "Functions and closures in Rust, covering ownership, traits, lifetimes",
+    "content": "Understanding the distinction between `Fn`, `FnMut`, and `FnOnce` traits is crucial for mastering Rust's closure system, ownership, and performance characteristics.\n\n## Closure Capturing\n\nClosures in Rust capture variables from their environment in one of three ways, depending on how the variables are used:\n\n- **Immutable Borrow (`&T`)**: If the closure only reads a variable.\n- **Mutable Borrow (`&mut T`)**: If the closure modifies a variable.\n- **Ownership (`T`)**: If the closure takes ownership (e.g., via `move` or by consuming the variable).\n\nThe compiler automatically infers the least restrictive capture mode needed. The `move` keyword forces ownership capture, but the closure’s trait (`Fn`, `FnMut`, or `FnOnce`) depends on how the captured variables are used.\n\n## Closure Traits\n\nRust closures implement one or more of these traits:\n\n| Trait   | Captures Variables Via | Call Semantics | Call Count |\n|---------|------------------------|----------------|------------|\n| `Fn`    | Immutable borrow (`&T`) | `&self`        | Multiple   |\n| `FnMut` | Mutable borrow (`&mut T`) | `&mut self` | Multiple   |\n| `FnOnce`| Ownership (`T`)        | `self` (consumes closure) | Once |\n\n### Key Differences\n\n- **`Fn`**:\n  - Can be called repeatedly.\n  - Captures variables immutably.\n  - Example:\n    ```rust\n    let x = 42;\n    let closure = || println!(\"{}\", x); // Fn (captures `x` by &T)\n    ```\n\n- **`FnMut`**:\n  - Can mutate captured variables.\n  - Requires `mut` keyword if stored.\n  - Example:\n    ```rust\n    let mut x = 42;\n    let mut closure = || { x += 1; }; // FnMut (captures `x` by &mut T)\n    ```\n\n- **`FnOnce`**:\n  - Takes ownership of captured variables.\n  - Can only be called once.\n  - Example:\n    ```rust\n    let x = String::from(\"hello\");\n    let closure = || { drop(x); }; // FnOnce (moves `x` into closure)\n    ```\n\n## Trait Hierarchy\n\n- **`Fn`**: Also implements `FnMut` and `FnOnce`.\n- **`FnMut`**: Also implements `FnOnce`.\n- A closure that implements `Fn` can be used where `FnMut` or `FnOnce` is required.\n- A closure that implements `FnMut` can be used as `FnOnce`.\n\n## `move` Keyword\n\nForces the closure to take ownership of captured variables, even if they’re only read:\n```rust\nlet s = String::from(\"hello\");\nlet closure = move || println!(\"{}\", s); // `s` is moved into the closure\n```\n\n- **Trait Impact**:\n  - If the closure doesn’t mutate or consume `s`, it still implements `Fn` (since `s` is owned but not modified).\n  - If the closure consumes `s` (e.g., `drop(s)`), it becomes `FnOnce`.\n\n## Examples\n\n1. **Immutable Capture (`Fn`)**:\n   ```rust\n   let x = 5;\n   let print_x = || println!(\"{}\", x); // Fn\n   print_x(); // OK\n   print_x(); // Still valid\n   ```\n\n2. **Mutable Capture (`FnMut`)**:\n   ```rust\n   let mut x = 5;\n   let mut add_one = || x += 1; // FnMut\n   add_one(); // x = 6\n   add_one(); // x = 7\n   ```\n\n3. **Ownership Capture (`FnOnce`)**:\n   ```rust\n   let x = String::from(\"hello\");\n   let consume_x = || { drop(x); }; // FnOnce\n   consume_x(); // OK\n   // consume_x(); // ERROR: closure called after being moved\n   ```\n\n## Performance & Use Cases\n\n| Trait   | Overhead      | Use Case                        |\n|---------|---------------|---------------------------------|\n| `Fn`    | Zero-cost     | Read-only callbacks, iterators  |\n| `FnMut` | Zero-cost     | Stateful transformations       |\n| `FnOnce`| May allocate  | One-time operations (e.g., spawning threads) |\n\n## Key Takeaways\n\n✅ **`Fn`**: Read-only, reusable.  \n✅ **`FnMut`**: Mutable, reusable.  \n✅ **`FnOnce`**: Owned, single-use.  \n🚀 `move` forces ownership but doesn’t change the trait—usage determines the trait.\n\n**Try This:** What happens if a closure captures a mutable reference but doesn’t mutate it?  \n**Answer:** It still implements `FnMut` (since it *could* mutate), but you can pass it to a function expecting `FnMut`.",
+    "contentHtml": "<p>Understanding the distinction between <code>Fn</code>, <code>FnMut</code>, and <code>FnOnce</code> traits is crucial for mastering Rust&#39;s closure system, ownership, and performance characteristics.</p>\n<h2>Closure Capturing</h2>\n<p>Closures in Rust capture variables from their environment in one of three ways, depending on how the variables are used:</p>\n<ul>\n<li><strong>Immutable Borrow (<code>&amp;T</code>)</strong>: If the closure only reads a variable.</li>\n<li><strong>Mutable Borrow (<code>&amp;mut T</code>)</strong>: If the closure modifies a variable.</li>\n<li><strong>Ownership (<code>T</code>)</strong>: If the closure takes ownership (e.g., via <code>move</code> or by consuming the variable).</li>\n</ul>\n<p>The compiler automatically infers the least restrictive capture mode needed. The <code>move</code> keyword forces ownership capture, but the closure’s trait (<code>Fn</code>, <code>FnMut</code>, or <code>FnOnce</code>) depends on how the captured variables are used.</p>\n<h2>Closure Traits</h2>\n<p>Rust closures implement one or more of these traits:</p>\n<table>\n<thead>\n<tr>\n<th>Trait</th>\n<th>Captures Variables Via</th>\n<th>Call Semantics</th>\n<th>Call Count</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>Fn</code></td>\n<td>Immutable borrow (<code>&amp;T</code>)</td>\n<td><code>&amp;self</code></td>\n<td>Multiple</td>\n</tr>\n<tr>\n<td><code>FnMut</code></td>\n<td>Mutable borrow (<code>&amp;mut T</code>)</td>\n<td><code>&amp;mut self</code></td>\n<td>Multiple</td>\n</tr>\n<tr>\n<td><code>FnOnce</code></td>\n<td>Ownership (<code>T</code>)</td>\n<td><code>self</code> (consumes closure)</td>\n<td>Once</td>\n</tr>\n</tbody></table>\n<h3>Key Differences</h3>\n<ul>\n<li><p><strong><code>Fn</code></strong>:</p>\n<ul>\n<li>Can be called repeatedly.</li>\n<li>Captures variables immutably.</li>\n<li>Example:<pre><code class=\"language-rust\">let x = 42;\nlet closure = || println!(&quot;{}&quot;, x); // Fn (captures `x` by &amp;T)\n</code></pre>\n</li>\n</ul>\n</li>\n<li><p><strong><code>FnMut</code></strong>:</p>\n<ul>\n<li>Can mutate captured variables.</li>\n<li>Requires <code>mut</code> keyword if stored.</li>\n<li>Example:<pre><code class=\"language-rust\">let mut x = 42;\nlet mut closure = || { x += 1; }; // FnMut (captures `x` by &amp;mut T)\n</code></pre>\n</li>\n</ul>\n</li>\n<li><p><strong><code>FnOnce</code></strong>:</p>\n<ul>\n<li>Takes ownership of captured variables.</li>\n<li>Can only be called once.</li>\n<li>Example:<pre><code class=\"language-rust\">let x = String::from(&quot;hello&quot;);\nlet closure = || { drop(x); }; // FnOnce (moves `x` into closure)\n</code></pre>\n</li>\n</ul>\n</li>\n</ul>\n<h2>Trait Hierarchy</h2>\n<ul>\n<li><strong><code>Fn</code></strong>: Also implements <code>FnMut</code> and <code>FnOnce</code>.</li>\n<li><strong><code>FnMut</code></strong>: Also implements <code>FnOnce</code>.</li>\n<li>A closure that implements <code>Fn</code> can be used where <code>FnMut</code> or <code>FnOnce</code> is required.</li>\n<li>A closure that implements <code>FnMut</code> can be used as <code>FnOnce</code>.</li>\n</ul>\n<h2><code>move</code> Keyword</h2>\n<p>Forces the closure to take ownership of captured variables, even if they’re only read:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet closure = move || println!(&quot;{}&quot;, s); // `s` is moved into the closure\n</code></pre>\n<ul>\n<li><strong>Trait Impact</strong>:<ul>\n<li>If the closure doesn’t mutate or consume <code>s</code>, it still implements <code>Fn</code> (since <code>s</code> is owned but not modified).</li>\n<li>If the closure consumes <code>s</code> (e.g., <code>drop(s)</code>), it becomes <code>FnOnce</code>.</li>\n</ul>\n</li>\n</ul>\n<h2>Examples</h2>\n<ol>\n<li><p><strong>Immutable Capture (<code>Fn</code>)</strong>:</p>\n<pre><code class=\"language-rust\">let x = 5;\nlet print_x = || println!(&quot;{}&quot;, x); // Fn\nprint_x(); // OK\nprint_x(); // Still valid\n</code></pre>\n</li>\n<li><p><strong>Mutable Capture (<code>FnMut</code>)</strong>:</p>\n<pre><code class=\"language-rust\">let mut x = 5;\nlet mut add_one = || x += 1; // FnMut\nadd_one(); // x = 6\nadd_one(); // x = 7\n</code></pre>\n</li>\n<li><p><strong>Ownership Capture (<code>FnOnce</code>)</strong>:</p>\n<pre><code class=\"language-rust\">let x = String::from(&quot;hello&quot;);\nlet consume_x = || { drop(x); }; // FnOnce\nconsume_x(); // OK\n// consume_x(); // ERROR: closure called after being moved\n</code></pre>\n</li>\n</ol>\n<h2>Performance &amp; Use Cases</h2>\n<table>\n<thead>\n<tr>\n<th>Trait</th>\n<th>Overhead</th>\n<th>Use Case</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>Fn</code></td>\n<td>Zero-cost</td>\n<td>Read-only callbacks, iterators</td>\n</tr>\n<tr>\n<td><code>FnMut</code></td>\n<td>Zero-cost</td>\n<td>Stateful transformations</td>\n</tr>\n<tr>\n<td><code>FnOnce</code></td>\n<td>May allocate</td>\n<td>One-time operations (e.g., spawning threads)</td>\n</tr>\n</tbody></table>\n<h2>Key Takeaways</h2>\n<p>✅ <strong><code>Fn</code></strong>: Read-only, reusable.<br>✅ <strong><code>FnMut</code></strong>: Mutable, reusable.<br>✅ <strong><code>FnOnce</code></strong>: Owned, single-use.<br>🚀 <code>move</code> forces ownership but doesn’t change the trait—usage determines the trait.</p>\n<p><strong>Try This:</strong> What happens if a closure captures a mutable reference but doesn’t mutate it?<br><strong>Answer:</strong> It still implements <code>FnMut</code> (since it <em>could</em> mutate), but you can pass it to a function expecting <code>FnMut</code>.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "closures",
+      "traits",
+      "ownership",
+      "lifetimes"
+    ],
+    "readingTime": "3 min",
+    "seo": {
+      "title": "What are the differences between Fn, FnMut, and FnOnce?",
+      "description": "Functions and closures in Rust, covering ownership, traits, lifetimes",
+      "keywords": [
+        "rust",
+        "closures",
+        "traits",
+        "ownership",
+        "lifetimes"
+      ]
+    },
+    "headings": [
+      {
+        "id": "closure-capturing",
+        "text": "Closure Capturing",
+        "level": 2
+      },
+      {
+        "id": "closure-traits",
+        "text": "Closure Traits",
+        "level": 2
+      },
+      {
+        "id": "key-differences",
+        "text": "Key Differences",
+        "level": 3
+      },
+      {
+        "id": "trait-hierarchy",
+        "text": "Trait Hierarchy",
+        "level": 2
+      },
+      {
+        "id": "move-keyword",
+        "text": "`move` Keyword",
+        "level": 2
+      },
+      {
+        "id": "examples",
+        "text": "Examples",
+        "level": 2
+      },
+      {
+        "id": "performance-and-use-cases",
+        "text": "Performance & Use Cases",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "closure-parameter-rust",
     "slug": "closure-parameter-rust",
     "title": "How do you specify a closure as a function parameter or return type?",

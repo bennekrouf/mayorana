@@ -89,7 +89,7 @@ main() {
       log "✅ Content committed to git"
 
       # Try to push (ignore failures in case of network issues)
-      if git push origin main 2>/dev/null; then
+      if git push origin master 2>/dev/null; then
         log "✅ Changes pushed to repository"
       else
         log "⚠️ Git push failed (continuing)"
@@ -105,6 +105,7 @@ main() {
     # Build the site
     log "🏗️ Building site..."
     yarn build || handle_error "Build failed"
+    sleep 20
 
     # Restart PM2 if it's running
     if command -v pm2 >/dev/null 2>&1; then
