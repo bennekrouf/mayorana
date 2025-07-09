@@ -13,7 +13,7 @@ tags:
   - dispatch
   - performance
   - traits
-date: '2025-07-08'
+date: '2025-07-09'
 ---
 
 # impl Fn() vs. Box<dyn Fn()>: Rust's Closure Dispatch Showdown
