@@ -1,12 +1,9 @@
 ---
 id: stateful-closures-rust
-title: "Rust's Stateful Closures: Passing and Mutating Across Multiple Calls"
+title: 'Rust''s Stateful Closures: Passing and Mutating Across Multiple Calls'
 slug: stateful-closures-rust
 author: mayo
-excerpt: >-
-  Managing stateful closures in Rust for repeated function calls
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+excerpt: Managing stateful closures in Rust for repeated function calls
 category: rust
 tags:
   - rust
@@ -14,6 +11,7 @@ tags:
   - state
   - fnmut
   - lifetimes
+date: '2025-07-10'
 ---
 
 # Rust's Stateful Closures: Passing and Mutating Across Multiple Calls
