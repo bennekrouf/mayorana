@@ -1,12 +1,9 @@
 ---
 id: higher-order-functions-rust
-title: "Rust's Higher-Order Functions: Powering Flexible Closures"
+title: 'Rust''s Higher-Order Functions: Powering Flexible Closures'
 slug: higher-order-functions-rust
 author: mayo
-excerpt: >-
-  Exploring higher-order functions in Rust for functional programming patterns
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+excerpt: Exploring higher-order functions in Rust for functional programming patterns
 category: rust
 tags:
   - rust
@@ -14,6 +11,7 @@ tags:
   - higher-order-functions
   - traits
   - lifetimes
+date: '2025-07-12'
 ---
 
 # Rust's Higher-Order Functions: Powering Flexible Closures
