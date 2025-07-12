@@ -1,12 +1,14 @@
 ---
 id: handling-lifetimes-returning-closures
-title: "How do you handle lifetimes when returning a closure that captures variables from its environment?"
+title: >-
+  How do you handle lifetimes when returning a closure that captures variables
+  from its environment?
 slug: handling-lifetimes-returning-closures
 author: mayo
 excerpt: >-
-  Managing lifetimes when returning closures that capture variables, covering ownership transfer, lifetime annotations, and avoiding dangling references in Rust
-content_focus: "functions and closures in Rust, covering ownership, traits, lifetimes"
-technical_level: "Expert technical discussion"
+  Managing lifetimes when returning closures that capture variables, covering
+  ownership transfer, lifetime annotations, and avoiding dangling references in
+  Rust
 category: rust
 tags:
   - rust
@@ -15,6 +17,7 @@ tags:
   - ownership
   - move
   - references
+date: '2025-07-12'
 ---
 
 # How do you handle lifetimes when returning a closure that captures variables from its environment?
