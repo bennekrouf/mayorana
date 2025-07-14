@@ -1,12 +1,11 @@
 ---
 id: into-iter-vs-iter-ownership
-title: "Implications of iterating over a Vec with .into_iter() instead of .iter()"
+title: Implications of iterating over a Vec with .into_iter() instead of .iter()
 slug: into-iter-vs-iter-ownership
 author: mayo
 excerpt: >-
-  Understanding the differences between .into_iter() and .iter() when iterating over Vec, covering ownership implications and performance considerations
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Understanding the differences between .into_iter() and .iter() when iterating
+  over Vec, covering ownership implications and performance considerations
 category: rust
 tags:
   - rust
@@ -15,6 +14,7 @@ tags:
   - vec
   - into-iter
   - collections
+date: '2025-07-14'
 ---
 
 # When iterating over a Vec, why might you use .into_iter() instead of .iter()? What ownership implications does this have?
