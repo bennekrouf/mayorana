@@ -1,8 +1,7 @@
 ---
 id: closure-performance-overhead-rust
 title: >-
-  What is the performance overhead of using closures versus regular functions in
-  Rust? When might closures be less efficient?
+  Using closures versus regular functions ?
 slug: closure-performance-overhead-rust
 author: mayo
 excerpt: >-

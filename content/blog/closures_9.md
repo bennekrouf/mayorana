@@ -1,8 +1,7 @@
 ---
 id: storing-closures-in-structs
 title: >-
-  How can you store a closure in a struct? What trait bounds and lifetime
-  annotations are required?
+  How storing a closure in a struct?
 slug: storing-closures-in-structs
 author: mayo
 excerpt: >-
