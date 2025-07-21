@@ -1,12 +1,11 @@
 ---
 id: efficient-duplicate-removal-vec
-title: "How removing duplicates from a Vec<T> where T: Eq + Hash?"
+title: 'How removing duplicates from a Vec<T> where T: Eq + Hash?'
 slug: efficient-duplicate-removal-vec
 author: mayo
 excerpt: >-
-  Efficient approaches to remove duplicates from Vec<T> where T: Eq + Hash, comparing HashSet-based and sort-based methods with performance analysis
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Efficient approaches to remove duplicates from Vec<T> where T: Eq + Hash,
+  comparing HashSet-based and sort-based methods with performance analysis
 category: rust
 tags:
   - rust
@@ -15,6 +14,7 @@ tags:
   - hashset
   - performance
   - collections
+date: '2025-07-21'
 ---
 
 # How would you efficiently remove duplicates from a Vec<T> where T: Eq + Hash?
