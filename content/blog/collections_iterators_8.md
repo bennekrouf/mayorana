@@ -1,12 +1,11 @@
 ---
 id: vec-retain-vs-filter-collect
-title: "Vec::retain() Vs filtering with iter().filter().collect()?"
+title: 'Vec::retain() Vs filtering with iter().filter().collect()?'
 slug: vec-retain-vs-filter-collect
 author: mayo
 excerpt: >-
-  Comparing Vec::retain() in-place filtering with iter().filter().collect() for different filtering scenarios and performance implications
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Comparing Vec::retain() in-place filtering with iter().filter().collect() for
+  different filtering scenarios and performance implications
 category: rust
 tags:
   - rust
@@ -15,6 +14,7 @@ tags:
   - filter
   - iterators
   - performance
+date: '2025-07-23'
 ---
 
 # What is the purpose of Vec::retain()? How does it compare to filtering with iter().filter().collect()?
