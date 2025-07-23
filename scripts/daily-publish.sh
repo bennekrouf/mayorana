@@ -104,7 +104,8 @@ main() {
 
     # Build the site
     log "🏗️ Building site..."
-    if ! yarn build 2>&1 | tee -a "$LOG_FILE"; then
+
+    if ! $(which yarn) build 2>&1 | tee -a "$LOG_FILE"; then
       handle_error "Build failed - check logs above"
     fi
     sleep 20
