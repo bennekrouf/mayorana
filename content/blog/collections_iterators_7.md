@@ -1,12 +1,11 @@
 ---
 id: vec-drain-vs-truncate-clear
-title: "Vec::drain() Vs Vec::truncate() or Vec::clear()?"
+title: 'Vec::drain() Vs Vec::truncate() or Vec::clear()?'
 slug: vec-drain-vs-truncate-clear
 author: mayo
 excerpt: >-
-  Understanding Vec::drain() functionality and comparing it with Vec::truncate() and Vec::clear() for different element removal scenarios
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Understanding Vec::drain() functionality and comparing it with Vec::truncate()
+  and Vec::clear() for different element removal scenarios
 category: rust
 tags:
   - rust
@@ -15,6 +14,7 @@ tags:
   - truncate
   - clear
   - collections
+date: '2025-07-23'
 ---
 
 # How does Vec::drain() work, and when is it useful compared to Vec::truncate() or Vec::clear()?
