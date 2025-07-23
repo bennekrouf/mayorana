@@ -102,12 +102,20 @@ main() {
     log "⏳ Waiting for file system to sync..."
     sleep 5
 
-    # Build the site
-    log "🏗️ Building site..."
-    if ! yarn build 2>&1 | tee -a "$LOG_FILE"; then
-      handle_error "Build failed - check logs above"
+# Build the site (skip if .skip-build exists)
+    if [ -f ".skip-build" ]; then
+      log "⏭️ Skipping build (.skip-build file exists)"
+    else
+      log "🏗️ Building site..."
+      if NODE_OPTIONS="--max-old-space-size=4096" yarn build 2>&1 | tee -a "$LOG_FILE"; then
+        log "✅ Build completed successfully"
+      else
+        log "⚠️ Build failed, but continuing with publish process"
+        # Don't exit - the published content is already committed
+        # You can manually build later or investigate the issue
+      fi
     fi
-    sleep 20
+
 
     # Restart PM2 if it's running
     if command -v pm2 >/dev/null 2>&1; then
