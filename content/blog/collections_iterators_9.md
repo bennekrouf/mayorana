@@ -1,12 +1,11 @@
 ---
 id: flatten-vec-iterators-performance
-title: "Flatten a Vec<Vec<T>> into a Vec<T> using iterators"
+title: Flatten a Vec<Vec<T>> into a Vec<T> using iterators
 slug: flatten-vec-iterators-performance
 author: mayo
 excerpt: >-
-  Flattening Vec<Vec<T>> using iterators compared to manual concatenation, analyzing performance implications and optimization strategies
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Flattening Vec<Vec<T>> using iterators compared to manual concatenation,
+  analyzing performance implications and optimization strategies
 category: rust
 tags:
   - rust
@@ -15,6 +14,7 @@ tags:
   - iterators
   - performance
   - collections
+date: '2025-07-23'
 ---
 
 # How would you flatten a Vec<Vec<T>> into a Vec<T> using iterators? Compare performance with manual concatenation.
