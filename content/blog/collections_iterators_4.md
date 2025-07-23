@@ -1,12 +1,14 @@
 ---
 id: vec-push-vs-with-capacity-performance-duplicate
-title: "What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?"
+title: >-
+  What is the performance impact of using Vec::push() in a loop vs.
+  pre-allocating with Vec::with_capacity()?
 slug: vec-push-vs-with-capacity-performance-duplicate
 author: mayo
 excerpt: >-
-  Analyzing performance differences between Vec::push() in loops versus pre-allocating with Vec::with_capacity(), covering memory reallocation costs and optimization strategies
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Analyzing performance differences between Vec::push() in loops versus
+  pre-allocating with Vec::with_capacity(), covering memory reallocation costs
+  and optimization strategies
 category: rust
 tags:
   - rust
@@ -15,6 +17,7 @@ tags:
   - memory-allocation
   - optimization
   - collections
+date: '2025-07-19'
 ---
 
 # What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?

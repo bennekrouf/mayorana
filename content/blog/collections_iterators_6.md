@@ -1,12 +1,11 @@
 ---
 id: box-slice-vs-vec-differences
-title: "What is the difference between Box<[T]> and Vec<T>?"
+title: 'What is the difference between Box<[T]> and Vec<T>?'
 slug: box-slice-vs-vec-differences
 author: mayo
 excerpt: >-
-  Comparing Box<[T]> and Vec<T> differences in mutability, memory overhead, and performance implications for different use cases
-content_focus: "collections (like Vec), iterators (into_iter, collect), and related concepts"
-technical_level: "Expert technical discussion"
+  Comparing Box<[T]> and Vec<T> differences in mutability, memory overhead, and
+  performance implications for different use cases
 category: rust
 tags:
   - rust
@@ -15,6 +14,7 @@ tags:
   - collections
   - memory
   - performance
+date: '2025-07-23'
 ---
 
 # What is the difference between Box<[T]> and Vec<T>?
