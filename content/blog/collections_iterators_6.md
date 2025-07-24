@@ -14,7 +14,7 @@ tags:
   - collections
   - memory
   - performance
-date: '2025-07-23'
+date: '2025-07-24'
 ---
 
 # What is the difference between Box<[T]> and Vec<T>?
