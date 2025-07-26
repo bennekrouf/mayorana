@@ -10,21 +10,6 @@ import { motion } from '@/components/ui/Motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 
-function DebugLocale() {
-  const locale = useLocale();
-  const t = useTranslations('contact');
-
-  console.log('Current locale:', locale);
-  console.log('Pathname:', window.location.pathname);
-  console.log('Translation test:', t('hero_title'));
-
-  return (
-    <div className="fixed top-0 right-0 bg-red-500 text-white p-2 z-50">
-      Locale: {locale} | Test: {t('hero_title')}
-    </div>
-  );
-}
-
 interface FormData {
   name: string;
   email: string;
@@ -107,7 +92,6 @@ function ContactFormWithParams() {
 
   return (
     <>
-      <DebugLocale />
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">

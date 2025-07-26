@@ -5,31 +5,35 @@ import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { FiExternalLink } from 'react-icons/fi';
 import { motion } from '@/components/ui/Motion';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function AboutPage() {
+  const t = useTranslations('about');
+  const locale = useLocale();
+
   const skills = [
-    { category: "Programming", items: ["Rust", "TypeScript", "Python", "WebAssembly"] },
-    { category: "AI & ML", items: ["LLM Integration", "NLP", "AI Agent Development", "Prompt Engineering"] },
-    { category: "Infrastructure", items: ["AWS", "Docker", "Kubernetes", "gRPC"] },
-    { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "WebSockets"] }
+    { category: t('programming'), items: ["Rust", "TypeScript", "Python", "WebAssembly"] },
+    { category: t('ai_ml'), items: ["LLM Integration", "NLP", "AI Agent Development", "Prompt Engineering"] },
+    { category: t('infrastructure'), items: ["AWS", "Docker", "Kubernetes", "gRPC"] },
+    { category: t('frontend'), items: ["React", "Next.js", "Tailwind CSS", "WebSockets"] }
   ];
 
   const values = [
     {
-      title: "Technical Excellence",
-      description: "Building robust, performant, and maintainable systems that stand the test of time."
+      title: t('technical_excellence.title'),
+      description: t('technical_excellence.description')
     },
     {
-      title: "Continuous Learning",
-      description: "Staying at the forefront of technology to deliver cutting-edge solutions."
+      title: t('continuous_learning.title'),
+      description: t('continuous_learning.description')
     },
     {
-      title: "Client Success",
-      description: "Focusing on outcomes that drive real business value and innovation."
+      title: t('client_success.title'),
+      description: t('client_success.description')
     },
     {
-      title: "Simplicity",
-      description: "Creating elegant solutions that reduce complexity and are easy to understand."
+      title: t('simplicity.title'),
+      description: t('simplicity.description')
     }
   ];
 
@@ -39,21 +43,21 @@ export default function AboutPage() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1 
+            <motion.h1
               className="text-4xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              About Me
+              {t('hero_title')}
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl text-muted-foreground"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Bringing expertise in Rust, AI agents, and API solutions to clients worldwide
+              {t('hero_subtitle')}
             </motion.p>
           </div>
         </div>
@@ -74,26 +78,18 @@ export default function AboutPage() {
                 <span className="text-4xl font-bold text-foreground">Mayorana</span>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h2 className="text-3xl font-bold mb-6">Who I Am</h2>
+              <h2 className="text-3xl font-bold mb-6">{t('who_i_am')}</h2>
               <div className="space-y-4 text-lg">
-                <p>
-                  As a solopreneur based in Switzerland, I specialize in delivering cutting-edge solutions in Rust programming, AI agent development, and seamless LLM integrations.
-                </p>
-                <p>
-                  With a passion for simplifying complex systems, I empower businesses through tailored Rust training and innovative tools like api0.ai, my NLP-driven API-matching solution.
-                </p>
-                <p>
-                  My work blends technical expertise with a commitment to driving efficiency and innovation for enterprises worldwide.
-                </p>
-                <p className="font-medium text-foreground">
-                  Proudly operating from the heart of Switzerland, I bring precision and reliability to every project.
-                </p>
+                <p>{t('description1')}</p>
+                <p>{t('description2')}</p>
+                <p>{t('description3')}</p>
+                <p className="font-medium text-foreground">{t('description4')}</p>
               </div>
             </motion.div>
           </div>
@@ -105,10 +101,10 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h2 className="text-3xl font-bold mb-10 text-center">Skills & Expertise</h2>
+            <h2 className="text-3xl font-bold mb-10 text-center">{t('skills_expertise')}</h2>
             <div className="grid md:grid-cols-4 gap-6">
               {skills.map((skillGroup) => (
-                <div 
+                <div
                   key={skillGroup.category}
                   className="p-6 bg-secondary rounded-xl border border-border"
                 >
@@ -132,10 +128,10 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <h2 className="text-3xl font-bold mb-10 text-center">Core Values</h2>
+            <h2 className="text-3xl font-bold mb-10 text-center">{t('core_values')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((value) => (
-                <div 
+                <div
                   key={value.title}
                   className="p-6 rounded-xl bg-secondary/50 border border-border"
                 >
@@ -153,19 +149,15 @@ export default function AboutPage() {
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Featured Project: api0.ai</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('featured_project')}</h2>
               <p className="text-lg text-muted-foreground">
-                My flagship innovation, streamlining API integrations through advanced NLP
+                {t('project_subtitle')}
               </p>
             </div>
-            
+
             <div className="bg-background p-8 rounded-xl border border-border mb-10">
-              <p className="mb-6">
-                api0.ai represents the culmination of my work in AI and API integration, providing a solution that intelligently matches natural language inputs to the right API endpoints.
-              </p>
-              <p className="mb-6">
-                Using advanced natural language processing, api0.ai simplifies the integration process for businesses, reducing development time and complexity while providing robust security features.
-              </p>
+              <p className="mb-6">{t('project_description1')}</p>
+              <p className="mb-6">{t('project_description2')}</p>
               <div className="flex justify-center">
                 <Link
                   href="https://api0.ai"
@@ -173,7 +165,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
                 >
-                  Visit api0.ai <FiExternalLink className="ml-2" />
+                  {t('visit_api0')} <FiExternalLink className="ml-2" />
                 </Link>
               </div>
             </div>
@@ -185,15 +177,15 @@ export default function AboutPage() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Work Together?</h2>
+            <h2 className="text-3xl font-bold mb-6">{t('ready_work_together')}</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Let&apos;s discuss how my expertise can help your business achieve its goals with innovative technology solutions.
+              {t('cta_description')}
             </p>
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
             >
-              Get in Touch
+              {t('common.get_in_touch')}
             </Link>
           </div>
         </div>

@@ -6,63 +6,68 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { FaCode, FaBrain, FaRobot, FaArrowRight } from 'react-icons/fa';
 import { FaNetworkWired } from "react-icons/fa";
 import { motion } from '@/components/ui/Motion';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function ServicesPage() {
+  const t = useTranslations('services');
+  const tHome = useTranslations('home');
+  const locale = useLocale();
+
   const services = [
     {
       id: "rust-training",
       icon: <FaCode className="h-8 w-8 text-primary" />,
-      title: "Rust Training",
-      description: "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization. Tailored courses for beginners to advanced developers, with real-world applications in fintech, systems programming, and more.",
+      title: t('rust_training.title'),
+      description: t('rust_training.description'),
       benefits: [
-        "Master Rust's ownership system and memory safety features",
-        "Learn concurrent programming patterns with Rust's guarantees",
-        "Understand performance optimization techniques",
-        "Apply Rust to real-world problems in your domain"
+        t('rust_training.benefit1'),
+        t('rust_training.benefit2'),
+        t('rust_training.benefit3'),
+        t('rust_training.benefit4')
       ],
-      cta: "Schedule a Training Session",
-      link: "/contact?service=rust-training"
+      cta: t('rust_training.cta'),
+      link: `/${locale}/contact?service=rust-training`
     },
     {
       id: "llm-integration",
       icon: <FaBrain className="h-8 w-8 text-primary" />,
-      title: "LLM Integration",
-      description: "Seamlessly connect large language models (LLMs) to your applications for enhanced automation, chatbots, and data processing. Custom solutions designed to integrate with your existing systems, ensuring scalability and performance.",
+      title: t('llm_integration.title'),
+      description: t('llm_integration.description'),
       benefits: [
-        "Integrate leading LLMs into your existing products",
-        "Build custom knowledge bases for domain-specific applications",
-        "Implement scalable prompt engineering frameworks",
-        "Create robust evaluation systems for LLM outputs"
+        t('llm_integration.benefit1'),
+        t('llm_integration.benefit2'),
+        t('llm_integration.benefit3'),
+        t('llm_integration.benefit4')
       ],
-      cta: "Get a Free Consultation",
-      link: "/contact?service=llm-integration"
+      cta: t('llm_integration.cta'),
+      link: `/${locale}/contact?service=llm-integration`
     },
     {
       id: "ai-agent",
       icon: <FaRobot className="h-8 w-8 text-primary" />,
-      title: "AI Agent Development",
-      description: "Build intelligent AI agents for automation, decision-making, and process optimization. From concept to deployment, I create agents that leverage NLP and gRPC for enterprise-grade performance.",
+      title: t('ai_agent.title'),
+      description: t('ai_agent.description'),
       benefits: [
-        "Automate complex workflows with intelligent agents",
-        "Create agents that can reason about your domain",
-        "Connect to multiple data sources and APIs",
-        "Build self-improving systems with feedback loops"
+        t('ai_agent.benefit1'),
+        t('ai_agent.benefit2'),
+        t('ai_agent.benefit3'),
+        t('ai_agent.benefit4')
       ],
-      cta: "Start Your Agent Project",
-      link: "/contact?service=ai-agent"
+      cta: t('ai_agent.cta'),
+      link: `/${locale}/contact?service=ai-agent`
     },
     {
       id: "api0",
       icon: <FaNetworkWired className="h-8 w-8 text-primary" />,
-      title: "api0.ai Solutions",
-      description: "Promote api0.ai, my cutting-edge platform that uses advanced NLP to match user inputs to API endpoints, simplifying integrations for enterprises. Easy-to-use, secure, and designed for minimal setup.",
+      title: t('api0.title'),
+      description: t('api0.description'),
       benefits: [
-        "Match natural language inputs to the right API endpoints",
-        "Reduce integration time and complexity",
-        "Secure API key management with domain restrictions",
-        "Scale seamlessly for enterprise-level traffic"
+        t('api0.benefit1'),
+        t('api0.benefit2'),
+        t('api0.benefit3'),
+        t('api0.benefit4')
       ],
-      cta: "Try api0.ai Now",
+      cta: t('api0.cta'),
       link: "https://api0.ai"
     }
   ];
@@ -73,21 +78,21 @@ export default function ServicesPage() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1 
+            <motion.h1
               className="text-4xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              What I Offer
+              {tHome('what_i_offer')}
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl text-muted-foreground"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Specialized services that help businesses innovate and transform through modern technology solutions.
+              {tHome('services_subtitle')}
             </motion.p>
           </div>
         </div>
@@ -98,12 +103,12 @@ export default function ServicesPage() {
         <div className="container">
           <div className="space-y-24">
             {services.map((service, index) => (
-              <div 
+              <div
                 key={service.id}
                 id={service.id}
                 className="scroll-mt-20"
               >
-                <motion.div 
+                <motion.div
                   className="grid md:grid-cols-2 gap-12 items-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -124,10 +129,10 @@ export default function ServicesPage() {
                       {service.cta} <FaArrowRight className="ml-2" />
                     </Link>
                   </div>
-                  
+
                   <div className={index % 2 === 0 ? "order-2" : "order-2 md:order-1"}>
                     <div className="bg-secondary p-8 rounded-xl border border-border">
-                      <h3 className="font-semibold mb-4">Key Benefits</h3>
+                      <h3 className="font-semibold mb-4">{t('key_benefits')}</h3>
                       <ul className="space-y-4">
                         {service.benefits.map((benefit, i) => (
                           <li key={i} className="flex items-start">
@@ -149,15 +154,15 @@ export default function ServicesPage() {
       <section className="py-20 bg-secondary">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
+            <h2 className="text-3xl font-bold mb-6">{t('ready_get_started')}</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Contact me to discuss your specific needs and how my services can help your business innovate and grow.
+              {t('contact_description')}
             </p>
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
             >
-              Get in Touch
+              {tHome('get_in_touch')}
             </Link>
           </div>
         </div>
