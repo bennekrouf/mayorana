@@ -9,7 +9,7 @@ export default function HomePage() {
   // Fetch data directly in the server component
   const recentPosts = getRecentPosts(3);
   const t = useTranslations('home');
-
+  debugger
   return (
     <LayoutTemplate>
       {/* Hero Section */}
