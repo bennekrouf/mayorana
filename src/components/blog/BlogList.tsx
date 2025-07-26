@@ -26,16 +26,15 @@ const BlogList: React.FC<BlogListProps> = ({
     return `/${locale}${path}`;
   };
 
-  // Use provided title/description or fall back to translations
-  const displayTitle = title || t('hero_title');
-  const displayDescription = description || t('hero_subtitle');
+  // Only show title/description if explicitly provided
+  const showHeader = title || description;
 
   return (
     <div className="w-full">
-      {(displayTitle || displayDescription) && (
+      {showHeader && (
         <div className="mb-12 text-center">
-          {displayTitle && <h2 className="text-3xl font-bold mb-4">{displayTitle}</h2>}
-          {displayDescription && <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{displayDescription}</p>}
+          {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
+          {description && <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>}
         </div>
       )}
 

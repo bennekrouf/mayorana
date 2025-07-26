@@ -91,8 +91,8 @@ Vec::with_capacity(): 0.3ms  // 4x faster
 
 ## Key Takeaways
 
-✅ Default to `Vec::new()` for simplicity.  
-✅ Use `with_capacity(n)` when:
+- ✅ Default to `Vec::new()` for simplicity.  
+- ✅ Use `with_capacity(n)` when:
 - You know the size upfront
 - Performance is critical (e.g., hot loops)
 

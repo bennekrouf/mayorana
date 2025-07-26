@@ -1,10 +1,19 @@
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-// Static metadata for the blog section - no params needed
-export const metadata: Metadata = {
-  title: 'Blog - Mayorana',
-  description: 'Insights and articles about Rust, AI, and modern software development.',
+type Props = {
+  params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  return {
+    title: t('blog_title'),
+    description: t('blog_description'),
+  };
+}
 
 export default function BlogLayout({
   children,

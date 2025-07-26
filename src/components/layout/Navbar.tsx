@@ -26,10 +26,10 @@ const Navbar: React.FC = () => {
     { label: t('contact'), path: "/contact" }
   ];
 
-  // Language options
+  // Language options - using language codes instead of flags
   const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' }
+    { code: 'en', name: 'English' },
+    { code: 'fr', name: 'Français' }
   ];
 
   // After mounting, we can safely access the theme
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
               aria-label="Change Language"
             >
               <FiGlobe className="h-5 w-5 mr-1" />
-              <span className="text-sm">{currentLang.flag}</span>
+              <span className="text-sm font-medium">{currentLang.code.toUpperCase()}</span>
             </button>
 
             {showLangMenu && (
@@ -96,12 +96,12 @@ const Navbar: React.FC = () => {
                 {languages.map((lang) => (
                   <Link
                     key={lang.code}
-                    href={pathname.replace(/^\/[a-z]{2}/, lang.code === 'en' ? '' : `/${lang.code}`)}
+                    href={pathname.replace(/^\/[a-z]{2}/, `/${lang.code}`)}
                     className={`flex items-center px-3 py-2 text-sm hover:bg-secondary transition-colors ${locale === lang.code ? 'bg-secondary text-primary' : 'text-foreground'
                       }`}
                     onClick={() => setShowLangMenu(false)}
                   >
-                    <span className="mr-2">{lang.flag}</span>
+                    <span className="mr-2 text-xs font-mono">{lang.code.toUpperCase()}</span>
                     {lang.name}
                   </Link>
                 ))}
@@ -135,10 +135,11 @@ const Navbar: React.FC = () => {
           <div className="relative">
             <button
               onClick={toggleLangMenu}
-              className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors"
+              className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors flex items-center"
               aria-label="Change Language"
             >
-              <span className="text-sm">{currentLang.flag}</span>
+              <FiGlobe className="h-5 w-5 mr-1" />
+              <span className="text-xs font-medium">{currentLang.code.toUpperCase()}</span>
             </button>
 
             {showLangMenu && (
@@ -146,12 +147,12 @@ const Navbar: React.FC = () => {
                 {languages.map((lang) => (
                   <Link
                     key={lang.code}
-                    href={pathname.replace(/^\/[a-z]{2}/, lang.code === 'en' ? '' : `/${lang.code}`)}
+                    href={pathname.replace(/^\/[a-z]{2}/, `/${lang.code}`)}
                     className={`flex items-center px-3 py-2 text-sm hover:bg-secondary transition-colors ${locale === lang.code ? 'bg-secondary text-primary' : 'text-foreground'
                       }`}
                     onClick={() => setShowLangMenu(false)}
                   >
-                    <span className="mr-2">{lang.flag}</span>
+                    <span className="mr-2 text-xs font-mono">{lang.code.toUpperCase()}</span>
                     {lang.name}
                   </Link>
                 ))}

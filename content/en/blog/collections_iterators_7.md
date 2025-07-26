@@ -95,9 +95,9 @@ assert_eq!(vec, ["fresh", "new", "old"]);
 
 ## Key Takeaways
 
-✅ **drain()**: Use when you need to process removed elements or batch-delete.
-✅ **truncate()/clear()**: Use for fast bulk removal without processing.
-🚀 **All preserve capacity**: No reallocation overhead for future ops.
+ ✅ **drain()**: Use when you need to process removed elements or batch-delete.
+ ✅ **truncate()/clear()**: Use for fast bulk removal without processing.
+ 🚀 **All preserve capacity**: No reallocation overhead for future ops.
 
 ## Real-World Example
 

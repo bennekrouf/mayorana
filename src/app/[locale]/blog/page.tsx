@@ -1,4 +1,4 @@
-// File: src/app/blog/page.tsx
+// File: src/app/[locale]/blog/page.tsx
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import TagFilter from '@/components/blog/TagFilter';
@@ -7,17 +7,21 @@ import {
   getPaginatedPosts,
   getAllTags,
 } from '@/lib/blog';
+import { getTranslations } from 'next-intl/server';
 
 type Props = {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function BlogPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const page = parseInt(params.page as string) || 1;
+export default async function BlogPage({ params, searchParams }: Props) {
+  const { locale } = await params;
+  const searchParamsData = await searchParams;
+  const page = parseInt(searchParamsData.page as string) || 1;
 
-  const paginatedData = getPaginatedPosts(page);
-  const tags = getAllTags();
+  const paginatedData = getPaginatedPosts(page, locale);
+  const tags = getAllTags(locale);
+  const t = await getTranslations('blog');
 
   return (
     <LayoutTemplate>
@@ -25,9 +29,9 @@ export default async function BlogPage({ searchParams }: Props) {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-6">Blog</h1>
+            <h1 className="text-4xl font-bold mb-6">{t('hero_title')}</h1>
             <p className="text-xl text-muted-foreground">
-              Insights and articles about Rust, AI, and modern software development.
+              {t('hero_subtitle')}
             </p>
           </div>
         </div>
@@ -49,19 +53,29 @@ export default async function BlogPage({ searchParams }: Props) {
             <div className="md:col-span-9">
               <div className="mb-6">
                 <p className="text-sm text-muted-foreground">
-                  {/* Showing {paginatedData.posts.length} of {paginatedData.totalPosts} articles */}
-                  {paginatedData.totalPages > 1 && (
-                    <span> (Page {paginatedData.currentPage} of {paginatedData.totalPages})</span>
+                  {paginatedData.totalPosts > 0 ? (
+                    <>
+                      Showing {paginatedData.posts.length} of {paginatedData.totalPosts} {paginatedData.totalPosts === 1 ? t('article') : 'articles'}
+                      {paginatedData.totalPages > 1 && (
+                        <span> • Page {paginatedData.currentPage} of {paginatedData.totalPages}</span>
+                      )}
+                    </>
+                  ) : (
+                    <span>{t('no_posts')}</span>
                   )}
                 </p>
               </div>
 
-              <BlogList posts={paginatedData.posts} title="" description="" />
+              <BlogList
+                posts={paginatedData.posts}
+                title=""
+                description=""
+              />
 
               <Pagination
                 currentPage={paginatedData.currentPage}
                 totalPages={paginatedData.totalPages}
-                baseUrl="/blog"
+                baseUrl={`/${locale}/blog`}
               />
             </div>
           </div>

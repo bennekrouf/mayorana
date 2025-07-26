@@ -22,11 +22,11 @@
     "toggle_menu": "Basculer le menu"
   },
   "home": {
-    "hero_title": "Construire des solutions plus intelligentes avec Rust, l'IA et les API",
+    "hero_title": "Des solutions plus intelligentes avec Rust et l'IA",
     "hero_subtitle": "Spécialisé dans la formation Rust, l'intégration LLM et le développement d'agents IA pour les entreprises en Suisse et au-delà.",
     "discover_api0": "Découvrir api0.ai",
     "book_rust_training": "Réserver une formation Rust",
-    "what_i_offer": "Ce que j'offre",
+    "what_i_offer": "Mon offre",
     "services_subtitle": "Services spécialisés qui aident les entreprises à innover et se transformer grâce à des solutions technologiques modernes.",
     "latest_insights": "Derniers insights",
     "insights_subtitle": "Réflexions et tutoriels sur Rust, l'intégration LLM et le développement d'agents IA.",
@@ -38,13 +38,13 @@
     "api0_feature3": "Évolutif pour les besoins d'entreprise",
     "explore_api0": "Explorer api0.ai",
     "my_work": "Mon travail",
-    "work_subtitle": "Présentation de projets réussis et collaborations à travers la Suisse et au-delà.",
+    "work_subtitle": "Présentation de projets réussis et collaborations à travers la Suisse.",
     "contact_custom_solutions": "Me contacter pour des solutions personnalisées",
     "what_clients_say": "Ce que disent les clients",
     "testimonials_subtitle": "Les expériences de ceux qui ont bénéficié de mes services.",
     "ready_elevate": "Prêt à améliorer votre stack technique ?",
-    "cta_description": "Contactez-moi pour la formation Rust, l'intégration LLM ou des solutions personnalisées qui stimulent l'innovation et l'efficacité.",
-    "get_in_touch": "Entrer en contact"
+    "cta_description": "Contactez-moi pour des solutions personnalisées qui exploitent l'innovation.",
+    "get_in_touch": "Prise de contact"
   },
   "services": {
     "rust_training": {
@@ -52,7 +52,7 @@
       "description": "Formation Rust dirigée par des experts pour les professionnels et équipes, couvrant la sécurité mémoire, la concurrence et l'optimisation des performances. Cours adaptés des débutants aux développeurs avancés, avec des applications réelles en fintech, programmation système et plus.",
       "cta": "Planifier une session de formation",
       "benefit1": "Maîtriser le système de propriété et les fonctionnalités de sécurité mémoire de Rust",
-      "benefit2": "Apprendre les patterns de programmation concurrente avec les garanties de Rust",
+      "benefit2": "Apprendre la programmation concurrente avec les garanties de Rust",
       "benefit3": "Comprendre les techniques d'optimisation des performances",
       "benefit4": "Appliquer Rust aux problèmes réels de votre domaine"
     },
@@ -212,12 +212,12 @@
   },
   "testimonials": {
     "fintech_lead": {
-      "quote": "La formation Rust a été transformatrice pour notre équipe. Claire, pratique et parfaitement adaptée à nos besoins.",
-      "author": "Responsable Fintech, Zurich"
+      "quote": "La formation Rust a été transformatrice pour notre équipe de dev. Claire, pratique et parfaitement adaptée à nos besoins.",
+      "author": "Gérant d'une Fintech à Zurich"
     },
     "ecommerce_cto": {
       "quote": "api0.ai a rendu nos intégrations API sans effort. C'est un game-changer pour notre plateforme.",
-      "author": "CTO E-commerce"
+      "author": "CTO d'une solution E-commerce"
     }
   }
 }
