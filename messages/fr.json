@@ -90,7 +90,7 @@
   "about": {
     "hero_title": "À propos de moi",
     "hero_subtitle": "Apporter une expertise en Rust, agents IA et solutions API aux clients du monde entier",
-    "who_i_am": "Qui je suis",
+    "who_i_am": "A propos de moi",
     "description1": "En tant qu'entrepreneur individuel basé en Suisse, je me spécialise dans la livraison de solutions de pointe en programmation Rust, développement d'agents IA et intégrations LLM transparentes.",
     "description2": "Avec une passion pour simplifier les systèmes complexes, j'aide les entreprises grâce à une formation Rust sur mesure et des outils innovants comme api0.ai, ma solution de correspondance API pilotée par NLP.",
     "description3": "Mon travail allie expertise technique et engagement à stimuler l'efficacité et l'innovation pour les entreprises du monde entier.",
@@ -103,7 +103,7 @@
     "core_values": "Valeurs fondamentales",
     "technical_excellence": {
       "title": "Excellence technique",
-      "description": "Construire des systèmes robustes, performants et maintenables qui résistent à l'épreuve du temps."
+      "description": "Construire des systèmes robustes, performants et maintenables."
     },
     "continuous_learning": {
       "title": "Apprentissage continu",
@@ -111,11 +111,11 @@
     },
     "client_success": {
       "title": "Succès client",
-      "description": "Se concentrer sur les résultats qui génèrent une vraie valeur commerciale et de l'innovation."
+      "description": "Se concentrer sur les résultats qui génèrent une vraie valeur."
     },
     "simplicity": {
       "title": "Simplicité",
-      "description": "Créer des solutions élégantes qui réduisent la complexité et sont faciles à comprendre."
+      "description": "Créer des solutions qui réduisent la complexité et sont faciles à comprendre."
     },
     "featured_project": "Projet vedette : api0.ai",
     "project_subtitle": "Mon innovation phare, rationalisant les intégrations API grâce au NLP avancé",
@@ -123,20 +123,20 @@
     "project_description2": "Utilisant le traitement de langage naturel avancé, api0.ai simplifie le processus d'intégration pour les entreprises, réduisant le temps de développement et la complexité tout en fournissant des fonctionnalités de sécurité robustes.",
     "visit_api0": "Visiter api0.ai",
     "ready_work_together": "Prêt à travailler ensemble ?",
-    "cta_description": "Discutons de comment mon expertise peut aider votre entreprise à atteindre ses objectifs avec des solutions technologiques innovantes."
+    "cta_description": "Discutons de comment je peux aider vous à atteindre vos objectifs avec des solutions technologiques innovantes."
   },
   "contact": {
     "hero_title": "Entrer en contact",
     "hero_subtitle": "Prêt à améliorer votre stack technique avec Rust, l'IA ou api0.ai ? Discutons de comment je peux aider votre entreprise à réussir.",
     "faster_response": "Pour une réponse plus rapide sur mobile :",
-    "contact_via_whatsapp": "Contacter via WhatsApp",
+    "contact_via_whatsapp": "Contacter moi via WhatsApp",
     "contact_information": "Informations de contact",
-    "location_description": "Basé en Suisse, je suis là pour aider les clients globaux et locaux à réussir avec des solutions de pointe.",
+    "location_description": "Basé en Suisse, je suis là pour aider les clients globaux et locaux.",
     "email": "Email",
     "location": "Localisation",
     "linkedin": "LinkedIn",
     "response_time": "Temps de réponse",
-    "response_description": "Je réponds généralement aux demandes dans les 24 heures pendant les jours ouvrables.",
+    "response_description": "Je réponds généralement aux demandes dans les 4 heures.",
     "send_message": "Envoyer un message",
     "name": "Nom",
     "company_optional": "Entreprise (Optionnel)",
