@@ -8,6 +8,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { locales } from '../../../i18n';
 import { notFound } from 'next/navigation';
 
+import CanonicalMeta from '@/components/seo/CanonicalMeta';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -73,6 +74,7 @@ export default async function LocaleLayout({
         </Script>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <CanonicalMeta />
             {children}
           </ThemeProvider>
         </NextIntlClientProvider>

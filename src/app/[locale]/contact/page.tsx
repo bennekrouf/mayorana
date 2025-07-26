@@ -187,7 +187,7 @@ function ContactFormWithParams() {
                           rel="noopener noreferrer"
                           className="hover:text-primary"
                         >
-                          linkedin.com/compnay/mayorana
+                          linkedin.com/company/mayorana
                         </a>
                       </p>
                     </div>
