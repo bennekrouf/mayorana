@@ -14,7 +14,7 @@ tags:
   - truncate
   - clear
   - collections
-date: '2025-07-23'
+date: '2025-07-26'
 ---
 
 # How does Vec::drain() work, and when is it useful compared to Vec::truncate() or Vec::clear()?
