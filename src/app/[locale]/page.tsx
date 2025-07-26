@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
-// Import icons on the client side components where needed
 import { getRecentPosts } from '@/lib/blog';
 import ClientHomeSection from '@/components/home/ClientHomeSection';
+import { useTranslations } from 'next-intl';
 
 export default function HomePage() {
   // Fetch data directly in the server component
   const recentPosts = getRecentPosts(3);
+  const t = useTranslations('home');
 
   return (
     <LayoutTemplate>
@@ -18,9 +19,9 @@ export default function HomePage() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Latest Insights</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('latest_insights')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Thoughts and tutorials on Rust, LLM integration, and AI agent development.
+              {t('insights_subtitle')}
             </p>
           </div>
           <BlogList posts={recentPosts} />
@@ -29,7 +30,7 @@ export default function HomePage() {
               href="/blog"
               className="inline-flex items-center px-6 py-3 rounded-lg bg-secondary text-foreground font-medium hover:bg-secondary/80 transition-colors"
             >
-              View All Articles
+              {t('view_all_articles')}
             </Link>
           </div>
         </div>

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BlogPost, formatDate } from '../../lib/blog';
 import { motion } from '@/components/ui/Motion';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -13,15 +14,28 @@ interface BlogListProps {
 
 const BlogList: React.FC<BlogListProps> = ({
   posts,
-  title = "Blog",
-  description = "Latest insights and articles"
+  title,
+  description
 }) => {
+  const t = useTranslations('blog');
+  const locale = useLocale();
+
+  // Helper function to get localized path
+  const getLocalizedPath = (path: string) => {
+    if (locale === 'en') return path;
+    return `/${locale}${path}`;
+  };
+
+  // Use provided title/description or fall back to translations
+  const displayTitle = title || t('hero_title');
+  const displayDescription = description || t('hero_subtitle');
+
   return (
     <div className="w-full">
-      {(title || description) && (
+      {(displayTitle || displayDescription) && (
         <div className="mb-12 text-center">
-          {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
-          {description && <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>}
+          {displayTitle && <h2 className="text-3xl font-bold mb-4">{displayTitle}</h2>}
+          {displayDescription && <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{displayDescription}</p>}
         </div>
       )}
 
@@ -38,7 +52,7 @@ const BlogList: React.FC<BlogListProps> = ({
               <div className="p-6 flex flex-col h-full">
                 <div className="mb-2">
                   <span className="text-sm font-medium text-primary">
-                    {post.tags?.[0] || 'Article'}
+                    {post.tags?.[0] || t('article')}
                   </span>
                   <span className="text-sm text-muted-foreground ml-2">
                     {formatDate(post.date)}
@@ -47,7 +61,7 @@ const BlogList: React.FC<BlogListProps> = ({
 
                 <h3 className="text-xl font-semibold mb-3">
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={getLocalizedPath(`/blog/${post.slug}`)}
                     className="hover:text-primary transition-colors"
                     prefetch={false} // Disable prefetching to prevent unnecessary loads
                   >
@@ -61,11 +75,11 @@ const BlogList: React.FC<BlogListProps> = ({
 
                 <div className="mt-auto">
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={getLocalizedPath(`/blog/${post.slug}`)}
                     className="text-primary font-medium hover:underline inline-flex items-center"
                     prefetch={false} // Disable prefetching to prevent unnecessary loads
                   >
-                    Read More
+                    {t('read_more')}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 ml-1"
@@ -88,7 +102,7 @@ const BlogList: React.FC<BlogListProps> = ({
         </div>
       ) : (
         <div className="text-center py-12 border border-border rounded-xl bg-secondary/50">
-          <p className="text-lg text-muted-foreground">No posts found</p>
+          <p className="text-lg text-muted-foreground">{t('no_posts')}</p>
         </div>
       )}
     </div>

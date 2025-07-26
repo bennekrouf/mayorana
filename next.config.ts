@@ -1,3 +1,7 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Common configuration
@@ -8,7 +12,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'mayorana.ch',
         port: '',
         pathname: '/**',
@@ -47,4 +51,4 @@ const nextConfig = {
   compress: true,
 };
 
-module.exports = nextConfig;
+export default withNextIntl(nextConfig);

@@ -4,65 +4,78 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from '@/components/ui/Motion';
 import { FaBrain, FaCode, FaNetworkWired, FaRobot } from 'react-icons/fa';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function ClientHomeSection() {
+  const t = useTranslations('home');
+  const tServices = useTranslations('services');
+  const tTestimonials = useTranslations('testimonials');
+  const tPortfolio = useTranslations('portfolio');
+  const locale = useLocale();
+
+  // Helper function to get localized path
+  const getLocalizedPath = (path: string) => {
+    if (locale === 'en') return path;
+    return `/${locale}${path}`;
+  };
+
   const services = [
     {
       icon: <FaCode className="h-8 w-8 text-primary" />,
-      title: "Rust Training",
-      description: "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization.",
-      cta: "Schedule a Training Session",
-      link: "/contact?service=rust-training"
+      title: tServices('rust_training.title'),
+      description: tServices('rust_training.description'),
+      cta: tServices('rust_training.cta'),
+      link: getLocalizedPath("/contact?service=rust-training")
     },
     {
       icon: <FaBrain className="h-8 w-8 text-primary" />,
-      title: "LLM Integration",
-      description: "Seamlessly connect large language models (LLMs) to your applications for enhanced automation, chatbots, and data processing.",
-      cta: "Get a Free Consultation",
-      link: "/contact?service=llm-integration"
+      title: tServices('llm_integration.title'),
+      description: tServices('llm_integration.description'),
+      cta: tServices('llm_integration.cta'),
+      link: getLocalizedPath("/contact?service=llm-integration")
     },
     {
       icon: <FaRobot className="h-8 w-8 text-primary" />,
-      title: "AI Agent Development",
-      description: "Build intelligent AI agents for automation, decision-making, and process optimization.",
-      cta: "Start Your Agent Project",
-      link: "/contact?service=ai-agent"
+      title: tServices('ai_agent.title'),
+      description: tServices('ai_agent.description'),
+      cta: tServices('ai_agent.cta'),
+      link: getLocalizedPath("/contact?service=ai-agent")
     },
     {
       icon: <FaNetworkWired className="h-8 w-8 text-primary" />,
-      title: "api0.ai Solutions",
-      description: "Cutting-edge platform that uses advanced NLP to match user inputs to API endpoints, simplifying integrations.",
-      cta: "Try api0.ai Now",
+      title: tServices('api0.title'),
+      description: tServices('api0.description'),
+      cta: tServices('api0.cta'),
       link: "https://api0.ai"
     }
   ];
 
   const testimonials = [
     {
-      quote: "The Rust training was transformative for our team. Clear, practical, and perfectly tailored to our needs.",
-      author: "Fintech Lead, Zurich"
+      quote: tTestimonials('fintech_lead.quote'),
+      author: tTestimonials('fintech_lead.author')
     },
     {
-      quote: "api0.ai made our API integrations effortless. It's a game-changer for our platform.",
-      author: "E-commerce CTO"
+      quote: tTestimonials('ecommerce_cto.quote'),
+      author: tTestimonials('ecommerce_cto.author')
     }
   ];
 
   const portfolio = [
     {
-      title: "Rust Training for Java Developers",
-      description: "Delivering hands-on Rust training programs tailored for Java developers, enabling them to master Rust with the same fluency as Java.",
-      category: "Training"
+      title: tPortfolio('rust_training_java.title'),
+      description: tPortfolio('rust_training_java.description'),
+      category: tPortfolio('rust_training_java.category')
     },
     {
-      title: "LLM-Powered Chatbot",
-      description: "Integrated an LLM into a client's customer service platform, reducing response times by 40%.",
-      category: "Integration"
+      title: tPortfolio('llm_chatbot.title'),
+      description: tPortfolio('llm_chatbot.description'),
+      category: tPortfolio('llm_chatbot.category')
     },
     {
-      title: "api0.ai Implementation",
-      description: "Helped an e-commerce client map user queries to product APIs, cutting integration time by 50%.",
-      category: "Development"
+      title: tPortfolio('api0_implementation.title'),
+      description: tPortfolio('api0_implementation.description'),
+      category: tPortfolio('api0_implementation.category')
     }
   ];
 
@@ -78,7 +91,7 @@ export default function ClientHomeSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Building Smarter Solutions with Rust, AI, and APIs
+              {t('hero_title')}
             </motion.h1>
             <motion.p
               className="text-xl md:text-2xl text-muted-foreground mb-10"
@@ -86,7 +99,7 @@ export default function ClientHomeSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Specialized in Rust training, LLM integration, and AI agent development for businesses across Switzerland and beyond.
+              {t('hero_subtitle')}
             </motion.p>
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -100,13 +113,13 @@ export default function ClientHomeSection() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
               >
-                Discover api0.ai
+                {t('discover_api0')}
               </Link>
               <Link
-                href="/contact?service=rust-training"
+                href={getLocalizedPath("/contact?service=rust-training")}
                 className="inline-flex items-center px-8 py-4 rounded-lg bg-foreground text-background text-lg font-semibold hover:bg-foreground/90 transform transition duration-200 hover:-translate-y-1"
               >
-                Book a Rust Training
+                {t('book_rust_training')}
               </Link>
             </motion.div>
           </div>
@@ -117,9 +130,9 @@ export default function ClientHomeSection() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">What I Offer</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('what_i_offer')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Specialized services that help businesses innovate and transform through modern technology solutions.
+              {t('services_subtitle')}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -157,22 +170,22 @@ export default function ClientHomeSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold mb-6">Discover api0.ai</h2>
+              <h2 className="text-3xl font-bold mb-6">{t('discover_api0_title')}</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                api0.ai is my flagship solution for enterprises looking to streamline API integrations. Using advanced NLP, it intelligently matches user sentences to the right API endpoints, reducing development time and complexity.
+                {t('api0_description')}
               </p>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start">
                   <div className="mr-3 text-primary">✓</div>
-                  <span>Minimal setup with JavaScript SDK</span>
+                  <span>{t('api0_feature1')}</span>
                 </li>
                 <li className="flex items-start">
                   <div className="mr-3 text-primary">✓</div>
-                  <span>Secure API key management</span>
+                  <span>{t('api0_feature2')}</span>
                 </li>
                 <li className="flex items-start">
                   <div className="mr-3 text-primary">✓</div>
-                  <span>Scalable for enterprise needs</span>
+                  <span>{t('api0_feature3')}</span>
                 </li>
               </ul>
               <Link
@@ -181,7 +194,7 @@ export default function ClientHomeSection() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-lg shadow-primary/20"
               >
-                Explore api0.ai
+                {t('explore_api0')}
               </Link>
             </motion.div>
             <motion.div
@@ -220,9 +233,9 @@ export default function ClientHomeSection() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">My Work</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('my_work')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Showcasing successful projects and collaborations across Switzerland and beyond.
+              {t('work_subtitle')}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -244,10 +257,10 @@ export default function ClientHomeSection() {
           </div>
           <div className="text-center mt-12">
             <Link
-              href="/contact"
+              href={getLocalizedPath("/contact")}
               className="inline-flex items-center px-6 py-3 rounded-lg bg-secondary text-foreground font-medium hover:bg-secondary/80 transition-colors"
             >
-              Contact Me for Custom Solutions
+              {t('contact_custom_solutions')}
             </Link>
           </div>
         </div>
@@ -257,9 +270,9 @@ export default function ClientHomeSection() {
       <section className="py-20 bg-secondary">
         <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">What Clients Say</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('what_clients_say')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The experiences of those who have benefited from my services.
+              {t('testimonials_subtitle')}
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -288,15 +301,15 @@ export default function ClientHomeSection() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Elevate Your Tech Stack?</h2>
+            <h2 className="text-3xl font-bold mb-6">{t('ready_elevate')}</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Contact me for Rust training, LLM integration, or custom solutions that drive innovation and efficiency.
+              {t('cta_description')}
             </p>
             <Link
-              href="/contact"
+              href={getLocalizedPath("/contact")}
               className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
             >
-              Get in Touch
+              {t('get_in_touch')}
             </Link>
           </div>
         </div>

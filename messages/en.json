@@ -1,0 +1,223 @@
+{
+  "metadata": {
+    "site_title": "Mayorana - Rust, AI, and API Solutions",
+    "site_description": "Empowering Innovation with Rust, AI, and API Solutions",
+    "about_title": "About",
+    "about_description": "Learn about Mayorana and specialized services in Rust, AI agents, and API solutions.",
+    "blog_title": "Blog - Mayorana",
+    "blog_description": "Insights and articles about Rust, AI, and modern software development.",
+    "contact_title": "Contact",
+    "contact_description": "Get in touch for Rust training, LLM integration, AI agent development, and api0.ai solutions.",
+    "services_title": "Services",
+    "services_description": "Expert services in Rust training, LLM integration, AI agent development, and api0.ai solutions."
+  },
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "blog": "Blog", 
+    "about": "About",
+    "contact": "Contact",
+    "get_started": "Get Started",
+    "toggle_theme": "Toggle Theme",
+    "toggle_menu": "Toggle Menu"
+  },
+  "home": {
+    "hero_title": "Building Smarter Solutions with Rust, AI, and APIs",
+    "hero_subtitle": "Specialized in Rust training, LLM integration, and AI agent development for businesses across Switzerland and beyond.",
+    "discover_api0": "Discover api0.ai",
+    "book_rust_training": "Book a Rust Training",
+    "what_i_offer": "What I Offer",
+    "services_subtitle": "Specialized services that help businesses innovate and transform through modern technology solutions.",
+    "latest_insights": "Latest Insights",
+    "insights_subtitle": "Thoughts and tutorials on Rust, LLM integration, and AI agent development.",
+    "view_all_articles": "View All Articles",
+    "discover_api0_title": "Discover api0.ai",
+    "api0_description": "api0.ai is my flagship solution for enterprises looking to streamline API integrations. Using advanced NLP, it intelligently matches user sentences to the right API endpoints, reducing development time and complexity.",
+    "api0_feature1": "Minimal setup with JavaScript SDK",
+    "api0_feature2": "Secure API key management", 
+    "api0_feature3": "Scalable for enterprise needs",
+    "explore_api0": "Explore api0.ai",
+    "my_work": "My Work",
+    "work_subtitle": "Showcasing successful projects and collaborations across Switzerland and beyond.",
+    "contact_custom_solutions": "Contact Me for Custom Solutions",
+    "what_clients_say": "What Clients Say",
+    "testimonials_subtitle": "The experiences of those who have benefited from my services.",
+    "ready_elevate": "Ready to Elevate Your Tech Stack?",
+    "cta_description": "Contact me for Rust training, LLM integration, or custom solutions that drive innovation and efficiency.",
+    "get_in_touch": "Get in Touch"
+  },
+  "services": {
+    "rust_training": {
+      "title": "Rust Training",
+      "description": "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization. Tailored courses for beginners to advanced developers, with real-world applications in fintech, systems programming, and more.",
+      "cta": "Schedule a Training Session",
+      "benefit1": "Master Rust's ownership system and memory safety features",
+      "benefit2": "Learn concurrent programming patterns with Rust's guarantees", 
+      "benefit3": "Understand performance optimization techniques",
+      "benefit4": "Apply Rust to real-world problems in your domain"
+    },
+    "llm_integration": {
+      "title": "LLM Integration",
+      "description": "Seamlessly connect large language models (LLMs) to your applications for enhanced automation, chatbots, and data processing. Custom solutions designed to integrate with your existing systems, ensuring scalability and performance.",
+      "cta": "Get a Free Consultation",
+      "benefit1": "Integrate leading LLMs into your existing products",
+      "benefit2": "Build custom knowledge bases for domain-specific applications",
+      "benefit3": "Implement scalable prompt engineering frameworks",
+      "benefit4": "Create robust evaluation systems for LLM outputs"
+    },
+    "ai_agent": {
+      "title": "AI Agent Development", 
+      "description": "Build intelligent AI agents for automation, decision-making, and process optimization. From concept to deployment, I create agents that leverage NLP and gRPC for enterprise-grade performance.",
+      "cta": "Start Your Agent Project",
+      "benefit1": "Automate complex workflows with intelligent agents",
+      "benefit2": "Create agents that can reason about your domain",
+      "benefit3": "Connect to multiple data sources and APIs",
+      "benefit4": "Build self-improving systems with feedback loops"
+    },
+    "api0": {
+      "title": "api0.ai Solutions",
+      "description": "Promote api0.ai, my cutting-edge platform that uses advanced NLP to match user inputs to API endpoints, simplifying integrations for enterprises. Easy-to-use, secure, and designed for minimal setup.",
+      "cta": "Try api0.ai Now",
+      "benefit1": "Match natural language inputs to the right API endpoints",
+      "benefit2": "Reduce integration time and complexity",
+      "benefit3": "Secure API key management with domain restrictions", 
+      "benefit4": "Scale seamlessly for enterprise-level traffic"
+    },
+    "key_benefits": "Key Benefits",
+    "ready_get_started": "Ready to Get Started?",
+    "contact_description": "Contact me to discuss your specific needs and how my services can help your business innovate and grow."
+  },
+  "about": {
+    "hero_title": "About Me",
+    "hero_subtitle": "Bringing expertise in Rust, AI agents, and API solutions to clients worldwide",
+    "who_i_am": "Who I Am",
+    "description1": "As a solopreneur based in Switzerland, I specialize in delivering cutting-edge solutions in Rust programming, AI agent development, and seamless LLM integrations.",
+    "description2": "With a passion for simplifying complex systems, I empower businesses through tailored Rust training and innovative tools like api0.ai, my NLP-driven API-matching solution.",
+    "description3": "My work blends technical expertise with a commitment to driving efficiency and innovation for enterprises worldwide.",
+    "description4": "Proudly operating from the heart of Switzerland, I bring precision and reliability to every project.",
+    "skills_expertise": "Skills & Expertise",
+    "programming": "Programming",
+    "ai_ml": "AI & ML",
+    "infrastructure": "Infrastructure", 
+    "frontend": "Frontend",
+    "core_values": "Core Values",
+    "technical_excellence": {
+      "title": "Technical Excellence",
+      "description": "Building robust, performant, and maintainable systems that stand the test of time."
+    },
+    "continuous_learning": {
+      "title": "Continuous Learning", 
+      "description": "Staying at the forefront of technology to deliver cutting-edge solutions."
+    },
+    "client_success": {
+      "title": "Client Success",
+      "description": "Focusing on outcomes that drive real business value and innovation."
+    },
+    "simplicity": {
+      "title": "Simplicity",
+      "description": "Creating elegant solutions that reduce complexity and are easy to understand."
+    },
+    "featured_project": "Featured Project: api0.ai",
+    "project_subtitle": "My flagship innovation, streamlining API integrations through advanced NLP",
+    "project_description1": "api0.ai represents the culmination of my work in AI and API integration, providing a solution that intelligently matches natural language inputs to the right API endpoints.",
+    "project_description2": "Using advanced natural language processing, api0.ai simplifies the integration process for businesses, reducing development time and complexity while providing robust security features.",
+    "visit_api0": "Visit api0.ai",
+    "ready_work_together": "Ready to Work Together?",
+    "cta_description": "Let's discuss how my expertise can help your business achieve its goals with innovative technology solutions."
+  },
+  "contact": {
+    "hero_title": "Get in Touch",
+    "hero_subtitle": "Ready to elevate your tech stack with Rust, AI, or api0.ai? Let's discuss how I can help your business succeed.",
+    "faster_response": "For a faster response on mobile:",
+    "contact_via_whatsapp": "Contact via WhatsApp",
+    "contact_information": "Contact Information",
+    "location_description": "Based in Switzerland, I'm here to help global and local clients succeed with cutting-edge solutions.",
+    "email": "Email",
+    "location": "Location",
+    "linkedin": "LinkedIn",
+    "response_time": "Response Time",
+    "response_description": "I typically respond to inquiries within 24 hours during business days.",
+    "send_message": "Send a Message",
+    "name": "Name",
+    "company_optional": "Company (Optional)",
+    "service_interest": "Service of Interest",
+    "select_service": "Select a service",
+    "message": "Message",
+    "message_placeholder": "How can I help you?",
+    "sending": "Sending...",
+    "send_message_button": "Send Message",
+    "message_sent_title": "Message Sent Successfully!",
+    "message_sent_description": "Thank you for reaching out. I'll get back to you as soon as possible.",
+    "send_another": "Send Another Message",
+    "required_field": "Required field",
+    "name_required": "Name is required",
+    "email_required": "Email is required", 
+    "invalid_email": "Invalid email address",
+    "service_required": "Please select a service",
+    "message_required": "Message is required"
+  },
+  "blog": {
+    "hero_title": "Blog",
+    "hero_subtitle": "Insights and articles about Rust, AI, and modern software development.",
+    "filter_by_topic": "Filter by Topic",
+    "all": "All",
+    "no_posts": "No posts found",
+    "read_more": "Read More",
+    "back_to_blog": "Back to Blog",
+    "share": "Share:",
+    "share_twitter": "Share on X (Twitter)",
+    "share_linkedin": "Share on LinkedIn", 
+    "copy_link": "Copy link",
+    "link_copied": "Link copied!",
+    "table_contents": "Table of Contents",
+    "tags": "Tags",
+    "previous": "Previous",
+    "next": "Next",
+    "article": "Article",
+    "articles_about": "articles about"
+  },
+  "footer": {
+    "description": "Specialized in Rust, LLM integration, and AI agent development. Based in Switzerland, serving clients worldwide.",
+    "quick_links": "Quick Links",
+    "services": "Services",
+    "connect": "Connect",
+    "email_label": "Email:",
+    "copyright": "All rights reserved.",
+    "tagline": "Based in Switzerland, Serving the World"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "page_not_found": "Page Not Found",
+    "not_found_description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "return_home": "Return to Home",
+    "switzerland": "Switzerland"
+  },
+  "portfolio": {
+    "rust_training_java": {
+      "title": "Rust Training for Java Developers",
+      "description": "Delivering hands-on Rust training programs tailored for Java developers, enabling them to master Rust with the same fluency as Java.",
+      "category": "Training"
+    },
+    "llm_chatbot": {
+      "title": "LLM-Powered Chatbot", 
+      "description": "Integrated an LLM into a client's customer service platform, reducing response times by 40%.",
+      "category": "Integration"
+    },
+    "api0_implementation": {
+      "title": "api0.ai Implementation",
+      "description": "Helped an e-commerce client map user queries to product APIs, cutting integration time by 50%.",
+      "category": "Development"
+    }
+  },
+  "testimonials": {
+    "fintech_lead": {
+      "quote": "The Rust training was transformative for our team. Clear, practical, and perfectly tailored to our needs.",
+      "author": "Fintech Lead, Zurich"
+    },
+    "ecommerce_cto": {
+      "quote": "api0.ai made our API integrations effortless. It's a game-changer for our platform.",
+      "author": "E-commerce CTO"
+    }
+  }
+}

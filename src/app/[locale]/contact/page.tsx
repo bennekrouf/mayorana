@@ -1,4 +1,3 @@
-// File: src/app/contact/page.tsx
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
@@ -9,6 +8,22 @@ import { useForm } from 'react-hook-form';
 import { FiMail, FiMapPin, FiLinkedin } from 'react-icons/fi';
 import { motion } from '@/components/ui/Motion';
 import { FaWhatsapp } from 'react-icons/fa';
+import { useTranslations, useLocale } from 'next-intl';
+
+function DebugLocale() {
+  const locale = useLocale();
+  const t = useTranslations('contact');
+
+  console.log('Current locale:', locale);
+  console.log('Pathname:', window.location.pathname);
+  console.log('Translation test:', t('hero_title'));
+
+  return (
+    <div className="fixed top-0 right-0 bg-red-500 text-white p-2 z-50">
+      Locale: {locale} | Test: {t('hero_title')}
+    </div>
+  );
+}
 
 interface FormData {
   name: string;
@@ -22,9 +37,15 @@ interface FormData {
 function ContactFormWithParams() {
   const searchParams = useSearchParams();
   const service = searchParams.get('service');
+  const t = useTranslations('contact');
+  const tServices = useTranslations('services');
+  const tCommon = useTranslations('common');
+  const locale = useLocale();
 
   const whatsappNumber = "+41764837540";
-  const whatsappMessage = "Hello, I'd like to learn more about your services.";
+  const whatsappMessage = locale === 'en'
+    ? "Hello, I'd like to learn more about your services."
+    : "Bonjour, j'aimerais en savoir plus sur vos services.";
   const encodedMessage = encodeURIComponent(whatsappMessage);
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
@@ -77,15 +98,16 @@ function ContactFormWithParams() {
   };
 
   const services = [
-    { value: "rust-training", label: "Rust Training" },
-    { value: "llm-integration", label: "LLM Integration" },
-    { value: "ai-agent", label: "AI Agent Development" },
-    { value: "api0", label: "api0.ai Solutions" },
+    { value: "rust-training", label: tServices('rust_training.title') },
+    { value: "llm-integration", label: tServices('llm_integration.title') },
+    { value: "ai-agent", label: tServices('ai_agent.title') },
+    { value: "api0", label: tServices('api0.title') },
     { value: "other", label: "Other" }
   ];
 
   return (
     <>
+      <DebugLocale />
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
@@ -96,7 +118,7 @@ function ContactFormWithParams() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Get in Touch
+              {t('hero_title')}
             </motion.h1>
             <motion.p
               className="text-xl text-muted-foreground"
@@ -104,7 +126,7 @@ function ContactFormWithParams() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Ready to elevate your tech stack with Rust, AI, or api0.ai? Let&apos;s discuss how I can help your business succeed.
+              {t('hero_subtitle')}
             </motion.p>
           </div>
         </div>
@@ -112,9 +134,9 @@ function ContactFormWithParams() {
 
       <div className="md:hidden mt-8 mb-4">
         <p className="text-center text-muted-foreground text-sm mb-3">
-          For a faster response on mobile:
+          {t('faster_response')}
         </p>
-        <Link 
+        <Link
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -122,7 +144,7 @@ function ContactFormWithParams() {
           className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
         >
           <FaWhatsapp className="h-5 w-5" />
-          Contact via WhatsApp
+          {t('contact_via_whatsapp')}
         </Link>
       </div>
 
@@ -138,9 +160,9 @@ function ContactFormWithParams() {
               transition={{ duration: 0.5 }}
             >
               <div>
-                <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
+                <h2 className="text-2xl font-bold mb-6">{t('contact_information')}</h2>
                 <p className="text-muted-foreground mb-8">
-                  Based in Switzerland, I&apos;m here to help global and local clients succeed with cutting-edge solutions.
+                  {t('location_description')}
                 </p>
 
                 <div className="space-y-6">
@@ -149,7 +171,7 @@ function ContactFormWithParams() {
                       <FiMail className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-medium">Email</h3>
+                      <h3 className="font-medium">{t('email')}</h3>
                       <p className="text-muted-foreground">
                         <a href="mailto:contact@mayorana.ch" className="hover:text-primary">
                           contact@mayorana.ch
@@ -163,8 +185,8 @@ function ContactFormWithParams() {
                       <FiMapPin className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-medium">Location</h3>
-                      <p className="text-muted-foreground">Switzerland</p>
+                      <h3 className="font-medium">{t('location')}</h3>
+                      <p className="text-muted-foreground">{tCommon('switzerland')}</p>
                     </div>
                   </div>
 
@@ -173,15 +195,15 @@ function ContactFormWithParams() {
                       <FiLinkedin className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-medium">LinkedIn</h3>
+                      <h3 className="font-medium">{t('linkedin')}</h3>
                       <p className="text-muted-foreground">
                         <a
-                          href="https://linkedin.com/in/bennekrouf"
+                          href="https://linkedin.com/company/mayorana"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:text-primary"
                         >
-                          linkedin.com/in/bennekrouf
+                          linkedin.com/compnay/mayorana
                         </a>
                       </p>
                     </div>
@@ -190,9 +212,9 @@ function ContactFormWithParams() {
               </div>
 
               <div className="p-6 bg-secondary rounded-xl border border-border">
-                <h3 className="font-medium mb-2">Response Time</h3>
+                <h3 className="font-medium mb-2">{t('response_time')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  I typically respond to inquiries within 24 hours during business days.
+                  {t('response_description')}
                 </p>
               </div>
             </motion.div>
@@ -206,15 +228,15 @@ function ContactFormWithParams() {
               {formSubmitted ? (
                 <div className="bg-secondary p-8 rounded-xl border border-border text-center">
                   <div className="text-primary text-6xl mb-4">✓</div>
-                  <h3 className="text-2xl font-bold mb-4">Message Sent Successfully!</h3>
+                  <h3 className="text-2xl font-bold mb-4">{t('message_sent_title')}</h3>
                   <p className="text-muted-foreground mb-6">
-                    Thank you for reaching out. I&apos;ll get back to you as soon as possible.
+                    {t('message_sent_description')}
                   </p>
                   <button
                     onClick={() => setFormSubmitted(false)}
                     className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
                   >
-                    Send Another Message
+                    {t('send_another')}
                   </button>
                 </div>
               ) : (
@@ -222,19 +244,19 @@ function ContactFormWithParams() {
                   onSubmit={handleSubmit(onSubmit)}
                   className="bg-secondary p-8 rounded-xl border border-border"
                 >
-                  <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
+                  <h2 className="text-2xl font-bold mb-6">{t('send_message')}</h2>
 
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     {/* Name Field */}
                     <div className="space-y-2">
                       <label htmlFor="name" className="font-medium">
-                        Name <span className="text-primary">*</span>
+                        {t('name')} <span className="text-primary">*</span>
                       </label>
                       <input
                         id="name"
                         className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                        placeholder="Your name"
-                        {...register('name', { required: 'Name is required' })}
+                        placeholder={t('name')}
+                        {...register('name', { required: t('name_required') })}
                       />
                       {errors.name && (
                         <p className="text-sm text-primary">{errors.name.message}</p>
@@ -244,18 +266,18 @@ function ContactFormWithParams() {
                     {/* Email Field */}
                     <div className="space-y-2">
                       <label htmlFor="email" className="font-medium">
-                        Email <span className="text-primary">*</span>
+                        {t('email')} <span className="text-primary">*</span>
                       </label>
                       <input
                         id="email"
                         type="email"
                         className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                        placeholder="Your email"
+                        placeholder={t('email')}
                         {...register('email', {
-                          required: 'Email is required',
+                          required: t('email_required'),
                           pattern: {
                             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: 'Invalid email address',
+                            message: t('invalid_email'),
                           },
                         })}
                       />
@@ -268,12 +290,12 @@ function ContactFormWithParams() {
                   {/* Company Field */}
                   <div className="space-y-2 mb-4">
                     <label htmlFor="company" className="font-medium">
-                      Company (Optional)
+                      {t('company_optional')}
                     </label>
                     <input
                       id="company"
                       className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                      placeholder="Your company"
+                      placeholder={t('company_optional')}
                       {...register('company')}
                     />
                   </div>
@@ -281,14 +303,14 @@ function ContactFormWithParams() {
                   {/* Service Field */}
                   <div className="space-y-2 mb-4">
                     <label htmlFor="service" className="font-medium">
-                      Service of Interest <span className="text-primary">*</span>
+                      {t('service_interest')} <span className="text-primary">*</span>
                     </label>
                     <select
                       id="service"
                       className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                      {...register('service', { required: 'Please select a service' })}
+                      {...register('service', { required: t('service_required') })}
                     >
-                      <option value="">Select a service</option>
+                      <option value="">{t('select_service')}</option>
                       {services.map((service) => (
                         <option key={service.value} value={service.value}>
                           {service.label}
@@ -303,14 +325,14 @@ function ContactFormWithParams() {
                   {/* Message Field */}
                   <div className="space-y-2 mb-6">
                     <label htmlFor="message" className="font-medium">
-                      Message <span className="text-primary">*</span>
+                      {t('message')} <span className="text-primary">*</span>
                     </label>
                     <textarea
                       id="message"
                       rows={5}
                       className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                      placeholder="How can I help you?"
-                      {...register('message', { required: 'Message is required' })}
+                      placeholder={t('message_placeholder')}
+                      {...register('message', { required: t('message_required') })}
                     />
                     {errors.message && (
                       <p className="text-sm text-primary">{errors.message.message}</p>
@@ -322,7 +344,7 @@ function ContactFormWithParams() {
                     disabled={isSubmitting}
                     className="w-full p-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors disabled:opacity-70"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? t('sending') : t('send_message_button')}
                   </button>
                 </form>
               )}
@@ -336,12 +358,15 @@ function ContactFormWithParams() {
 
 // Fallback component to show while Suspense is loading
 function ContactFormFallback() {
+  const t = useTranslations('contact');
+  const tCommon = useTranslations('common');
+
   return (
     <div className="py-20 bg-gradient-to-b from-secondary to-background">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-6">Get in Touch</h1>
-          <p className="text-xl text-muted-foreground">Loading contact form...</p>
+          <h1 className="text-4xl font-bold mb-6">{t('hero_title')}</h1>
+          <p className="text-xl text-muted-foreground">{tCommon('loading')}</p>
         </div>
       </div>
     </div>

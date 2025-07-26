@@ -1,16 +1,29 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { FiLinkedin, FiGithub, FiMail } from 'react-icons/fi';
+import { useTranslations, useLocale } from 'next-intl';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const t = useTranslations('footer');
+  const tNav = useTranslations('navigation');
+  const tServices = useTranslations('services');
+  const locale = useLocale();
+
+  // Helper function to get localized path
+  const getLocalizedPath = (path: string) => {
+    if (locale === 'en') return path;
+    return `/${locale}${path}`;
+  };
 
   const footerNav = [
-    { label: "Home", path: "/" },
-    { label: "Services", path: "/services" },
-    { label: "About", path: "/about" },
+    { label: tNav('home'), path: "/" },
+    { label: tNav('services'), path: "/services" },
+    { label: tNav('about'), path: "/about" },
     { label: "api0.ai", path: "https://api0.ai", external: true },
-    { label: "Contact", path: "/contact" },
+    { label: tNav('contact'), path: "/contact" },
     { label: "Privacy Policy", path: "/privacy" },
     { label: "Terms of Service", path: "/terms" }
   ];
@@ -21,23 +34,22 @@ const Footer: React.FC = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1: Logo & Company Description */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href={getLocalizedPath("/")} className="flex items-center space-x-2">
               <span className="font-bold text-xl text-foreground">mayorana</span>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Specialized in Rust, LLM integration, and AI agent development.
-              Based in Switzerland, serving clients worldwide.
+              {t('description')}
             </p>
           </div>
 
           {/* Column 2: Quick Links */}
           <div>
-            <h3 className="font-medium text-foreground mb-4">Quick Links</h3>
+            <h3 className="font-medium text-foreground mb-4">{t('quick_links')}</h3>
             <ul className="space-y-2">
               {footerNav.slice(0, 5).map((item) => (
                 <li key={item.label}>
                   <Link
-                    href={item.path}
+                    href={item.external ? item.path : getLocalizedPath(item.path)}
                     target={item.external ? "_blank" : "_self"}
                     rel={item.external ? "noopener noreferrer" : ""}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -51,30 +63,30 @@ const Footer: React.FC = () => {
 
           {/* Column 3: Services */}
           <div>
-            <h3 className="font-medium text-foreground mb-4">Services</h3>
+            <h3 className="font-medium text-foreground mb-4">{t('services')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/services#rust-training"
+                  href={getLocalizedPath("/services#rust-training")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Rust Training
+                  {tServices('rust_training.title')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services#llm-integration"
+                  href={getLocalizedPath("/services#llm-integration")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  LLM Integration
+                  {tServices('llm_integration.title')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services#ai-agent"
+                  href={getLocalizedPath("/services#ai-agent")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  AI Agent Development
+                  {tServices('ai_agent.title')}
                 </Link>
               </li>
               <li>
@@ -84,7 +96,7 @@ const Footer: React.FC = () => {
                   rel="noopener noreferrer"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  api0.ai Solutions
+                  {tServices('api0.title')}
                 </Link>
               </li>
             </ul>
@@ -92,10 +104,10 @@ const Footer: React.FC = () => {
 
           {/* Column 4: Connect */}
           <div>
-            <h3 className="font-medium text-foreground mb-4">Connect</h3>
+            <h3 className="font-medium text-foreground mb-4">{t('connect')}</h3>
             <div className="flex space-x-4 mb-4">
               <a
-                href="https://linkedin.com/in/bennekrouf"
+                href="https://linkedin.com/company/mayorana"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -113,7 +125,7 @@ const Footer: React.FC = () => {
                 <FiGithub className="h-5 w-5" />
               </a>
               <a
-                href="mailto:cont /act@mayorana.ch"
+                href="mailto:contact@mayorana.ch"
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Email"
               >
@@ -121,17 +133,17 @@ const Footer: React.FC = () => {
               </a>
             </div>
             <p className="text-sm text-muted-foreground">
-              Email: contact@mayorana.ch
+              {t('email_label')} contact@mayorana.ch
             </p>
           </div>
         </div>
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row md:justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} Mayorana.ch. All rights reserved.
+            &copy; {currentYear} Mayorana.ch. {t('copyright')}
           </p>
           <p className="text-sm text-muted-foreground mt-2 md:mt-0">
-            Based in Switzerland, Serving the World
+            {t('tagline')}
           </p>
         </div>
       </div>

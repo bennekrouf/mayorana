@@ -1,7 +1,15 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest, NextResponse } from 'next/server';
+import { locales, defaultLocale } from './i18n';
 
-export function middleware(request: NextRequest) {
+const intlMiddleware = createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: 'always', // Always use locale prefix
+  localeDetection: true // Enable automatic locale detection from browser
+});
+
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip processing for static files and Next.js internals
@@ -14,6 +22,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Special handling for root path - redirect to browser language or default
+  if (pathname === '/') {
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    const userLocale = acceptLanguage.includes('fr') ? 'fr' : defaultLocale;
+
+    return NextResponse.redirect(
+      new URL(`/${userLocale}`, request.url),
+      { status: 302 }
+    );
+  }
+
   // Handle trailing slashes (except for the root path)
   if (pathname !== '/' && pathname.endsWith('/')) {
     return NextResponse.redirect(
@@ -22,16 +41,16 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  return NextResponse.next();
+  // Apply i18n middleware for all other paths
+  return intlMiddleware(request);
 }
 
-// Updated matcher to be more specific and avoid conflicts
 export const config = {
   matcher: [
     /*
      * Match all request paths except for:
      * - _next/static (static files)
-     * - _next/image (image optimization files)
+     * - _next/image (image optimization files)  
      * - favicon.ico (favicon file)
      * - Any file with an extension
      */
