@@ -17,32 +17,37 @@ export default function middleware(request: NextRequest) {
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
     pathname.includes('.') || // Skip files with extensions
-    pathname === '/favicon.ico'
+    pathname === '/favicon.ico' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml'
   ) {
     return NextResponse.next();
   }
 
+  // Debug logging for production
+  console.log('Middleware processing:', pathname);
+
   // Special handling for root path - redirect to browser language or default
   if (pathname === '/') {
     const acceptLanguage = request.headers.get('accept-language') || '';
-    const userLocale = acceptLanguage.includes('fr') ? 'fr' : defaultLocale;
+    const userLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : defaultLocale;
 
-    return NextResponse.redirect(
-      new URL(`/${userLocale}`, request.url),
-      { status: 302 }
-    );
+    const redirectUrl = new URL(`/${userLocale}`, request.url);
+    console.log('Root redirect:', pathname, '->', redirectUrl.pathname);
+
+    return NextResponse.redirect(redirectUrl, { status: 302 });
   }
 
   // Handle trailing slashes (except for the root path)
   if (pathname !== '/' && pathname.endsWith('/')) {
-    return NextResponse.redirect(
-      new URL(pathname.slice(0, -1), request.url),
-      { status: 301 }
-    );
+    const redirectUrl = new URL(pathname.slice(0, -1), request.url);
+    return NextResponse.redirect(redirectUrl, { status: 301 });
   }
 
   // Apply i18n middleware for all other paths
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+  console.log('Middleware result for:', pathname, response?.status);
+  return response;
 }
 
 export const config = {
@@ -52,8 +57,9 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)  
      * - favicon.ico (favicon file)
+     * - robots.txt, sitemap.xml
      * - Any file with an extension
      */
-    '/((?!_next/static|_next/image|favicon\\.ico|.*\\.).*)',
+    '/((?!_next/static|_next/image|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\.).*)',
   ],
 };
