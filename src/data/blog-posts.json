@@ -1,9 +1,98 @@
 [
   {
+    "id": "vec-drain-vs-truncate-clear",
+    "slug": "vec-drain-vs-truncate-clear",
+    "title": "Vec::drain() Vs Vec::truncate() or Vec::clear()?",
+    "date": "2025-07-26",
+    "excerpt": "Understanding Vec::drain() functionality and comparing it with Vec::truncate() and Vec::clear() for different element removal scenarios",
+    "content": "## What is Vec::drain()?\n\n`drain()` removes a range of elements from a Vec while yielding ownership of them through an iterator. Unlike `truncate()` or `clear()`, it allows you to process the removed elements before they're dropped.\n\n### Signature\n```rust\npub fn drain<R>(&mut self, range: R) -> Drain<'_, T>\nwhere\n    R: RangeBounds<usize>,\n```\n\n## Key Features\n\n| Method | Removes Elements | Yields Ownership | Preserves Capacity | Time Complexity |\n|--------|------------------|------------------|-------------------|-----------------|\n| `drain(..)` | Yes | ✅ Yes (via iterator) | ✅ Yes | O(n) |\n| `truncate()` | Yes (from index) | ❌ No | ✅ Yes | O(1) |\n| `clear()` | All | ❌ No | ✅ Yes | O(1) |\n\n## When to Use Each\n\n### 1. Vec::drain()\n\n**Use Case**: Process removed elements (e.g., filter, transform, or batch-delete).\n\n**Example**:\n```rust\nlet mut vec = vec!['a', 'b', 'c', 'd'];\nfor ch in vec.drain(1..3) {  // Removes 'b' and 'c'\n    println!(\"Removed: {}\", ch);  // Prints 'b', then 'c'\n}\nassert_eq!(vec, ['a', 'd']);  // Keeps remaining elements\n```\n\n**Performance**: Avoids extra allocations if reusing the iterator.\n\n### 2. Vec::truncate()\n\n**Use Case**: Quickly remove elements from the end without processing them.\n\n**Example**:\n```rust\nlet mut vec = vec![1, 2, 3, 4];\nvec.truncate(2);  // Drops 3 and 4 (no iterator)\nassert_eq!(vec, [1, 2]);\n```\n\n### 3. Vec::clear()\n\n**Use Case**: Remove all elements (faster than `drain(..)` if you don't need them).\n\n**Example**:\n```rust\nlet mut vec = vec![1, 2, 3];\nvec.clear();  // Drops all elements\nassert!(vec.is_empty());\n```\n\n## Memory Behavior\n\n- All three methods retain the Vec's capacity (no reallocation if elements are re-added).\n- `drain()` is lazy: Elements are only dropped when the iterator is consumed.\n\n## Advanced Use: Reuse Storage\n\n`drain()` is ideal for replacing a subset of elements efficiently:\n\n```rust\nlet mut vec = vec![\"old\", \"old\", \"new\", \"old\"];\nvec.drain(0..2).for_each(drop);  // Remove first two\nvec.insert(0, \"fresh\");\nassert_eq!(vec, [\"fresh\", \"new\", \"old\"]);\n```\n\n## Key Takeaways\n\n✅ **drain()**: Use when you need to process removed elements or batch-delete.\n✅ **truncate()/clear()**: Use for fast bulk removal without processing.\n🚀 **All preserve capacity**: No reallocation overhead for future ops.\n\n## Real-World Example\n\nIn a game engine, `drain()` could efficiently remove expired entities while allowing cleanup logic (e.g., saving state).\n\n**Try This**: What happens if you `drain()` but don't consume the iterator?\n\n**Answer**: The elements are still removed when the Drain iterator is dropped (due to its Drop impl).",
+    "contentHtml": "<h2>What is Vec::drain()?</h2>\n<p><code>drain()</code> removes a range of elements from a Vec while yielding ownership of them through an iterator. Unlike <code>truncate()</code> or <code>clear()</code>, it allows you to process the removed elements before they&#39;re dropped.</p>\n<h3>Signature</h3>\n<pre><code class=\"language-rust\">pub fn drain&lt;R&gt;(&amp;mut self, range: R) -&gt; Drain&lt;&#39;_, T&gt;\nwhere\n    R: RangeBounds&lt;usize&gt;,\n</code></pre>\n<h2>Key Features</h2>\n<table>\n<thead>\n<tr>\n<th>Method</th>\n<th>Removes Elements</th>\n<th>Yields Ownership</th>\n<th>Preserves Capacity</th>\n<th>Time Complexity</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>drain(..)</code></td>\n<td>Yes</td>\n<td>✅ Yes (via iterator)</td>\n<td>✅ Yes</td>\n<td>O(n)</td>\n</tr>\n<tr>\n<td><code>truncate()</code></td>\n<td>Yes (from index)</td>\n<td>❌ No</td>\n<td>✅ Yes</td>\n<td>O(1)</td>\n</tr>\n<tr>\n<td><code>clear()</code></td>\n<td>All</td>\n<td>❌ No</td>\n<td>✅ Yes</td>\n<td>O(1)</td>\n</tr>\n</tbody></table>\n<h2>When to Use Each</h2>\n<h3>1. Vec::drain()</h3>\n<p><strong>Use Case</strong>: Process removed elements (e.g., filter, transform, or batch-delete).</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;];\nfor ch in vec.drain(1..3) {  // Removes &#39;b&#39; and &#39;c&#39;\n    println!(&quot;Removed: {}&quot;, ch);  // Prints &#39;b&#39;, then &#39;c&#39;\n}\nassert_eq!(vec, [&#39;a&#39;, &#39;d&#39;]);  // Keeps remaining elements\n</code></pre>\n<p><strong>Performance</strong>: Avoids extra allocations if reusing the iterator.</p>\n<h3>2. Vec::truncate()</h3>\n<p><strong>Use Case</strong>: Quickly remove elements from the end without processing them.</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3, 4];\nvec.truncate(2);  // Drops 3 and 4 (no iterator)\nassert_eq!(vec, [1, 2]);\n</code></pre>\n<h3>3. Vec::clear()</h3>\n<p><strong>Use Case</strong>: Remove all elements (faster than <code>drain(..)</code> if you don&#39;t need them).</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3];\nvec.clear();  // Drops all elements\nassert!(vec.is_empty());\n</code></pre>\n<h2>Memory Behavior</h2>\n<ul>\n<li>All three methods retain the Vec&#39;s capacity (no reallocation if elements are re-added).</li>\n<li><code>drain()</code> is lazy: Elements are only dropped when the iterator is consumed.</li>\n</ul>\n<h2>Advanced Use: Reuse Storage</h2>\n<p><code>drain()</code> is ideal for replacing a subset of elements efficiently:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![&quot;old&quot;, &quot;old&quot;, &quot;new&quot;, &quot;old&quot;];\nvec.drain(0..2).for_each(drop);  // Remove first two\nvec.insert(0, &quot;fresh&quot;);\nassert_eq!(vec, [&quot;fresh&quot;, &quot;new&quot;, &quot;old&quot;]);\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>drain()</strong>: Use when you need to process removed elements or batch-delete.\n✅ <strong>truncate()/clear()</strong>: Use for fast bulk removal without processing.\n🚀 <strong>All preserve capacity</strong>: No reallocation overhead for future ops.</p>\n<h2>Real-World Example</h2>\n<p>In a game engine, <code>drain()</code> could efficiently remove expired entities while allowing cleanup logic (e.g., saving state).</p>\n<p><strong>Try This</strong>: What happens if you <code>drain()</code> but don&#39;t consume the iterator?</p>\n<p><strong>Answer</strong>: The elements are still removed when the Drain iterator is dropped (due to its Drop impl).</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "vec",
+      "drain",
+      "truncate",
+      "clear",
+      "collections"
+    ],
+    "readingTime": "3 min",
+    "seo": {
+      "title": "Vec::drain() Vs Vec::truncate() or Vec::clear()?",
+      "description": "Understanding Vec::drain() functionality and comparing it with Vec::truncate() and Vec::clear() for different element removal scenarios",
+      "keywords": [
+        "rust",
+        "vec",
+        "drain",
+        "truncate",
+        "clear",
+        "collections"
+      ]
+    },
+    "headings": [
+      {
+        "id": "what-is-vecdrain",
+        "text": "What is Vec::drain()?",
+        "level": 2
+      },
+      {
+        "id": "signature",
+        "text": "Signature",
+        "level": 3
+      },
+      {
+        "id": "key-features",
+        "text": "Key Features",
+        "level": 2
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "1-vecdrain",
+        "text": "1. Vec::drain()",
+        "level": 3
+      },
+      {
+        "id": "2-vectruncate",
+        "text": "2. Vec::truncate()",
+        "level": 3
+      },
+      {
+        "id": "3-vecclear",
+        "text": "3. Vec::clear()",
+        "level": 3
+      },
+      {
+        "id": "memory-behavior",
+        "text": "Memory Behavior",
+        "level": 2
+      },
+      {
+        "id": "advanced-use-reuse-storage",
+        "text": "Advanced Use: Reuse Storage",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      },
+      {
+        "id": "real-world-example",
+        "text": "Real-World Example",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "box-slice-vs-vec-differences",
     "slug": "box-slice-vs-vec-differences",
     "title": "What is the difference between Box<[T]> and Vec<T>?",
-    "date": "2025-07-23",
+    "date": "2025-07-24",
     "excerpt": "Comparing Box<[T]> and Vec<T> differences in mutability, memory overhead, and performance implications for different use cases",
     "content": "## Key Differences\n\n| Feature | Vec<T> | Box<[T]> |\n|---------|--------|----------|\n| Size Mutability | Growable/shrinkable (push, pop) | Fixed-size (immutable after creation) |\n| Storage | Heap-allocated + capacity field | Pure heap slice (no extra metadata) |\n| Memory Overhead | 3 usizes (ptr, len, capacity) | 2 usizes (ptr, len) |\n| Conversion Cost | O(1) to Box<[T]> (shrink-to-fit) | O(n) to Vec (must reallocate) |\n\n## When to Use Each\n\n### Prefer Vec<T> When:\n\nYou need dynamic resizing:\n\n```rust\nlet mut vec = vec![1, 2, 3];\nvec.push(4);  // Works\n```\n\nYou frequently modify the collection (e.g., appending/removing elements).\n\n### Prefer Box<[T]> When:\n\nYou want a fixed-size, immutable collection:\n\n```rust\nlet boxed_slice: Box<[i32]> = vec![1, 2, 3].into_boxed_slice();\n// boxed_slice.push(4);  // ERROR: No `push` method\n```\n\nMemory efficiency matters (e.g., embedded systems):\n- Saves 1 usize (no unused capacity).\n\nInterfacing with APIs requiring owned slices:\n\n```rust\nfn process(data: Box<[i32]>) { /* ... */ }\n```\n\n## Conversion Between Them\n\n| Direction | Code | Cost |\n|-----------|------|------|\n| Vec → Box<[T]> | `vec.into_boxed_slice()` | O(1) |\n| Box<[T]> → Vec | `Vec::from(boxed_slice)` | O(n) |\n\n### Example:\n\n```rust\nlet vec = vec![1, 2, 3];\nlet boxed: Box<[i32]> = vec.into_boxed_slice();  // No reallocation\nlet vec_again = Vec::from(boxed);                // Copies data\n```\n\n## Performance Implications\n\n- **Iteration**: Identical (both are contiguous heap arrays).\n- **Memory**: Box<[T]> avoids unused capacity overhead.\n- **Flexibility**: Vec supports in-place growth; Box<[T]> does not.\n\n## Real-World Use Cases\n\n- **Vec**: Buffers for dynamic data (e.g., HTTP request bodies).\n- **Box<[T]>**:\n  - Configurations loaded once and never modified.\n  - Storing large immutable datasets (e.g., game assets).\n\n## Key Takeaways\n\n✅ Use Vec for mutable, growable sequences.\n✅ Use Box<[T]> for immutable, memory-efficient storage.\n⚡ Convert cheaply from Vec to Box<[T]> when done modifying.\n\n**Try This**: What happens if you convert a Vec with spare capacity to Box<[T]>?\n\n**Answer**: `into_boxed_slice()` shrinks the allocation to exact size (no unused capacity).",
     "contentHtml": "<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Feature</th>\n<th>Vec<T></th>\n<th>Box&lt;[T]&gt;</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Size Mutability</td>\n<td>Growable/shrinkable (push, pop)</td>\n<td>Fixed-size (immutable after creation)</td>\n</tr>\n<tr>\n<td>Storage</td>\n<td>Heap-allocated + capacity field</td>\n<td>Pure heap slice (no extra metadata)</td>\n</tr>\n<tr>\n<td>Memory Overhead</td>\n<td>3 usizes (ptr, len, capacity)</td>\n<td>2 usizes (ptr, len)</td>\n</tr>\n<tr>\n<td>Conversion Cost</td>\n<td>O(1) to Box&lt;[T]&gt; (shrink-to-fit)</td>\n<td>O(n) to Vec (must reallocate)</td>\n</tr>\n</tbody></table>\n<h2>When to Use Each</h2>\n<h3>Prefer Vec<T> When:</h3>\n<p>You need dynamic resizing:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3];\nvec.push(4);  // Works\n</code></pre>\n<p>You frequently modify the collection (e.g., appending/removing elements).</p>\n<h3>Prefer Box&lt;[T]&gt; When:</h3>\n<p>You want a fixed-size, immutable collection:</p>\n<pre><code class=\"language-rust\">let boxed_slice: Box&lt;[i32]&gt; = vec![1, 2, 3].into_boxed_slice();\n// boxed_slice.push(4);  // ERROR: No `push` method\n</code></pre>\n<p>Memory efficiency matters (e.g., embedded systems):</p>\n<ul>\n<li>Saves 1 usize (no unused capacity).</li>\n</ul>\n<p>Interfacing with APIs requiring owned slices:</p>\n<pre><code class=\"language-rust\">fn process(data: Box&lt;[i32]&gt;) { /* ... */ }\n</code></pre>\n<h2>Conversion Between Them</h2>\n<table>\n<thead>\n<tr>\n<th>Direction</th>\n<th>Code</th>\n<th>Cost</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Vec → Box&lt;[T]&gt;</td>\n<td><code>vec.into_boxed_slice()</code></td>\n<td>O(1)</td>\n</tr>\n<tr>\n<td>Box&lt;[T]&gt; → Vec</td>\n<td><code>Vec::from(boxed_slice)</code></td>\n<td>O(n)</td>\n</tr>\n</tbody></table>\n<h3>Example:</h3>\n<pre><code class=\"language-rust\">let vec = vec![1, 2, 3];\nlet boxed: Box&lt;[i32]&gt; = vec.into_boxed_slice();  // No reallocation\nlet vec_again = Vec::from(boxed);                // Copies data\n</code></pre>\n<h2>Performance Implications</h2>\n<ul>\n<li><strong>Iteration</strong>: Identical (both are contiguous heap arrays).</li>\n<li><strong>Memory</strong>: Box&lt;[T]&gt; avoids unused capacity overhead.</li>\n<li><strong>Flexibility</strong>: Vec supports in-place growth; Box&lt;[T]&gt; does not.</li>\n</ul>\n<h2>Real-World Use Cases</h2>\n<ul>\n<li><strong>Vec</strong>: Buffers for dynamic data (e.g., HTTP request bodies).</li>\n<li><strong>Box&lt;[T]&gt;</strong>:<ul>\n<li>Configurations loaded once and never modified.</li>\n<li>Storing large immutable datasets (e.g., game assets).</li>\n</ul>\n</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ Use Vec for mutable, growable sequences.\n✅ Use Box&lt;[T]&gt; for immutable, memory-efficient storage.\n⚡ Convert cheaply from Vec to Box&lt;[T]&gt; when done modifying.</p>\n<p><strong>Try This</strong>: What happens if you convert a Vec with spare capacity to Box&lt;[T]&gt;?</p>\n<p><strong>Answer</strong>: <code>into_boxed_slice()</code> shrinks the allocation to exact size (no unused capacity).</p>\n",

@@ -27,6 +27,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/vec-drain-vs-truncate-clear</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/box-slice-vs-vec-differences</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -137,17 +142,32 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/box</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://mayorana.ch/blog/tag/vec</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/tag/drain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/truncate</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/clear</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/tag/collections</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/box</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
