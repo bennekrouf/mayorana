@@ -3,6 +3,7 @@ id: storing-closures-in-structs
 title: >-
   How storing a closure in a struct?
 slug: storing-closures-in-structs
+locale: "en"
 author: mayo
 excerpt: >-
   Storing closures in structs using generic parameters, trait objects, and

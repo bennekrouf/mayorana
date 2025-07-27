@@ -2,6 +2,7 @@
 id: dispatch-performance-rust
 title: "fn process<T: MyTrait>(x: T)) VS using dyn MyTrait for dynamic dispatch."
 slug: dispatch-performance-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

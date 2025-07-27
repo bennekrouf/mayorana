@@ -2,6 +2,7 @@
 id: string-literals-memory-rust
 title: "How does Rust handle string literals (&str) in terms of memory allocation? Where do they live?"
 slug: string-literals-memory-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

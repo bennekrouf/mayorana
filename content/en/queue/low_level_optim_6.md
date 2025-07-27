@@ -2,6 +2,7 @@
 id: vec-push-vs-with-capacity-performance
 title: "Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?"
 slug: vec-push-vs-with-capacity-performance
+locale: "en"
 author: mayo
 excerpt: >-
   Comparing performance of Vec::push() in loops versus pre-allocating with Vec::with_capacity(), analyzing memory reallocation costs and optimization strategies

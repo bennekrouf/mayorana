@@ -4,6 +4,7 @@ title: >-
   What are move closures (move || { ... })? When are they necessary, and how do
   they interact with ownership?
 slug: move-closures-rust
+locale: "en"
 date: '2025-07-08'
 author: mayo
 excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'

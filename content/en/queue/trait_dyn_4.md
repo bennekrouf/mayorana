@@ -2,6 +2,7 @@
 id: object-safety-rust
 title: "Making Traits Object-Safe for Rust's dyn Trait in Plugin Systems"
 slug: object-safety-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

@@ -3,6 +3,7 @@ id: vec-new-vs-with-capacity
 title: >-
   Rust Vec::new() vs. with_capacity(): When to Use Each
 slug: vec-new-vs-with-capacity
+locale: "en"
 date: '2025-06-25'
 author: mayo
 excerpt: >-

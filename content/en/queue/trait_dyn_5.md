@@ -2,6 +2,7 @@
 id: supertraits-bounds-optimization
 title: "Use supertraits to enforce a hierarchy of behaviors"
 slug: supertraits-bounds-optimization
+locale: "en"
 author: mayo
 excerpt: >-
   Leveraging supertraits to establish behavior hierarchies and combining them with where clauses to optimize complex generic algorithms for performance and type safety

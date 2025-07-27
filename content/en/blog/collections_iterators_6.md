@@ -2,6 +2,7 @@
 id: box-slice-vs-vec-differences
 title: 'What is the difference between Box<[T]> and Vec<T>?'
 slug: box-slice-vs-vec-differences
+locale: "en"
 author: mayo
 excerpt: >-
   Comparing Box<[T]> and Vec<T> differences in mutability, memory overhead, and

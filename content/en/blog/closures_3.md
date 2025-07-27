@@ -1,6 +1,7 @@
 ---
 id: closure-parameter-rust
 title: How do you specify a closure as a function parameter or return type?
+locale: "en"
 slug: closure-parameter-rust
 date: '2025-07-07'
 author: mayo

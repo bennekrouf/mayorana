@@ -1,6 +1,7 @@
 ---
 id: vec-retain-vs-filter-collect
 title: 'Vec::retain() Vs filtering with iter().filter().collect()?'
+locale: "en"
 slug: vec-retain-vs-filter-collect
 author: mayo
 excerpt: >-

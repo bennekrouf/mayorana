@@ -2,6 +2,7 @@
 id: into-iter-vs-iter-ownership
 title: Implications of iterating over a Vec with .into_iter() instead of .iter()
 slug: into-iter-vs-iter-ownership
+locale: "en"
 author: mayo
 excerpt: >-
   Understanding the differences between .into_iter() and .iter() when iterating

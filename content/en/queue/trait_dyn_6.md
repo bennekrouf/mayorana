@@ -2,6 +2,7 @@
 id: sized-unsized-bounds-flexibility
 title: "Write a function that accepts both sized types (e.g., [u8; 16]) and unsized types (e.g., [u8] or dyn Trait) with ?Sized bound"
 slug: sized-unsized-bounds-flexibility
+locale: "en"
 author: mayo
 excerpt: >-
   Understanding the role of ?Sized bounds in Rust trait definitions and leveraging them to create flexible functions that work with both sized and unsized types efficiently

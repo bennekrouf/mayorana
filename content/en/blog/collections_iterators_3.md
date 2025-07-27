@@ -2,6 +2,7 @@
 id: collect-method-rust
 title: 'Rust''s collect() Magic: Turning Iterators into Vecs, HashMaps, and Strings!'
 slug: collect-method-rust
+locale: "en"
 author: mayo
 excerpt: 'Collections (like Vec), iterators (into_iter, collect), and related concepts'
 category: rust

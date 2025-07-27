@@ -1,6 +1,7 @@
 ---
 id: rust-traits-vs-interfaces
 title: 'Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right'
+locale: "en"
 slug: rust-traits-vs-interfaces
 date: '2025-07-04'
 author: mayo

@@ -1,6 +1,7 @@
 ---
 id: function-vs-closure-rust
 title: "Functions or Closures in Rust? Know the Difference!"
+locale: "en"
 slug: function-vs-closure-rust
 date: '2025-06-30'
 author: mayo

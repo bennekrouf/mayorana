@@ -2,6 +2,7 @@
 id: stateful-closures-rust
 title: 'Rust''s Stateful Closures: Passing and Mutating Across Multiple Calls'
 slug: stateful-closures-rust
+locale: "en"
 author: mayo
 excerpt: Managing stateful closures in Rust for repeated function calls
 category: rust

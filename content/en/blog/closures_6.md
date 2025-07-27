@@ -2,6 +2,7 @@
 id: higher-order-functions-rust
 title: 'Rust''s Higher-Order Functions: Powering Flexible Closures'
 slug: higher-order-functions-rust
+locale: "en"
 author: mayo
 excerpt: Exploring higher-order functions in Rust for functional programming patterns
 category: rust

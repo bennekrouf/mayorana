@@ -2,6 +2,7 @@
 id: drop-trait-rust
 title: "Understanding the Drop Trait in Rust"
 slug: drop-trait-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

@@ -4,6 +4,7 @@ title: >-
   How do you handle lifetimes when returning a closure that captures variables
   from its environment?
 slug: handling-lifetimes-returning-closures
+locale: "en"
 author: mayo
 excerpt: >-
   Managing lifetimes when returning closures that capture variables, covering

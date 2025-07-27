@@ -1,6 +1,7 @@
 ---
 id: closure-dispatch-rust
 title: 'impl Fn() vs. Box<dyn Fn()>: Rust''s Closure Dispatch Showdown'
+locale: "en"
 slug: closure-dispatch-rust
 author: mayo
 excerpt: >-

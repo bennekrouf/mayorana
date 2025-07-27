@@ -3,6 +3,7 @@ id: closure-performance-overhead-rust
 title: >-
   Using closures versus regular functions ?
 slug: closure-performance-overhead-rust
+locale: "en"
 author: mayo
 excerpt: >-
   Analyzing performance overhead of closures versus regular functions in Rust,

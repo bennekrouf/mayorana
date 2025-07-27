@@ -2,6 +2,7 @@
 id: stack-heap-allocation-rust
 title: "Stack vs. Heap in Rust: Where Does Your Data Live?"
 slug: stack-heap-allocation-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

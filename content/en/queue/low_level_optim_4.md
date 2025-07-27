@@ -2,6 +2,7 @@
 id: branch-prediction-rust
 title: "Boosting Rust Hot Loops: Slashing Branch Mispredictions"
 slug: branch-prediction-rust
+locale: "en"
 author: mayo
 excerpt: >-
   Low-level optimization in Rust, focusing on minimizing branch mispredictions in performance-critical loops

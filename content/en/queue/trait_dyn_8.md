@@ -3,6 +3,7 @@ id: associated-types-io-driver-api
 title: "Design a flexible, type-safe API for a low-level I/O driver with associated type not generic"
 slug: associated-types-io-driver-api
 author: mayo
+locale: "en"
 excerpt: >-
   Utilizing associated types in Rust traits to design flexible, type-safe APIs for low-level I/O drivers and comparing advantages over generic type parameters
 content_focus: "Associated Types"

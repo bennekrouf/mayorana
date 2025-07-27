@@ -2,6 +2,7 @@
 id: zero-cost-abstractions-rust
 title: "Zero-Cost Abstractions: How Rust Optimizes Iterator Chains"
 slug: zero-cost-abstractions-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

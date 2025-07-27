@@ -2,6 +2,7 @@
 id: box-pointer-rust
 title: "What is the purpose of Box<T> in Rust?"
 slug: box-pointer-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

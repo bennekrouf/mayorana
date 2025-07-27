@@ -3,6 +3,7 @@ id: memory-layout-optimization-rust
 title: >-
   Rust's repr: Optimize Struct Memory for Cache Efficiency
 slug: memory-layout-optimization-rust
+locale: "en"
 date: '2025-06-26'
 author: mayo
 excerpt: >-

@@ -2,6 +2,7 @@
 id: dangling-pointer-rust
 title: "What is a dangling pointer, and how does Rust prevent it at compile time?"
 slug: dangling-pointer-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

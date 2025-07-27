@@ -3,6 +3,7 @@ id: blanket-implementations-coherence
 title: "How can you use a blanket implementation (e.g., impl<T: SomeTrait> AnotherTrait for T) to reduce code duplication ?"
 slug: blanket-implementations-coherence
 author: mayo
+locale: "en"
 excerpt: >-
   Employing blanket implementations in Rust to minimize code duplication while addressing trait coherence pitfalls for robust and maintainable library design
 content_focus: "Blanket Implementations"

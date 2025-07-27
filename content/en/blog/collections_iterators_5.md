@@ -2,6 +2,7 @@
 id: efficient-duplicate-removal-vec
 title: 'How removing duplicates from a Vec<T> where T: Eq + Hash?'
 slug: efficient-duplicate-removal-vec
+locale: "en"
 author: mayo
 excerpt: >-
   Efficient approaches to remove duplicates from Vec<T> where T: Eq + Hash,

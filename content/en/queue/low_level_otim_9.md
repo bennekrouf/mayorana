@@ -2,6 +2,7 @@
 id: cache-line-awareness-optimization
 title: "Align data structures to cache lines"
 slug: cache-line-awareness-optimization
+locale: "en"
 author: mayo
 excerpt: >-
   Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing

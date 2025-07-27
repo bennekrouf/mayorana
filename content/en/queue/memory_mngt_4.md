@@ -2,6 +2,7 @@
 id: ownership-safety-rust
 title: "How does ownership prevent memory leaks and data races?"
 slug: ownership-safety-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

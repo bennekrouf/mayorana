@@ -1,6 +1,7 @@
 ---
 id: flatten-vec-iterators-performance
 title: Flatten a Vec<Vec<T>> into a Vec<T> using iterators
+locale: "en"
 slug: flatten-vec-iterators-performance
 author: mayo
 excerpt: >-

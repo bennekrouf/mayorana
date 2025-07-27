@@ -1,6 +1,7 @@
 ---
 id: fn-traits-rust
 title: 'What are the differences between Fn, FnMut, and FnOnce?'
+locale: "en"
 slug: fn-traits-rust
 date: '2025-07-07'
 author: mayo

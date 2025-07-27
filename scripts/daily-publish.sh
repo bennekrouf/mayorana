@@ -1,9 +1,9 @@
 #!/bin/bash
-# Daily Publishing Script
+# Daily Publishing Script with i18n support
 # File: scripts/daily-publish.sh
 #
 # This script runs daily at 9 AM to automatically publish queued content
-# No configuration needed - smart defaults for everything
+# Now supports content/en and content/fr structure
 
 set -e # Exit on any error
 
@@ -78,12 +78,21 @@ main() {
     log "🗺️ Regenerating sitemap..."
     node scripts/generate-sitemap.js || handle_error "Sitemap generation failed"
 
-    # Commit the new content
+    # Commit the new content - updated for i18n structure
     log "📝 Committing published content..."
-    git add content/blog/ content/queue/ || log "⚠️ Git add failed (continuing)"
+    git add content/en/blog/ content/fr/blog/ content/queue/ src/data/ public/sitemap.xml || log "⚠️ Git add failed (continuing)"
 
-    # Get the published article name for commit message
-    PUBLISHED_ARTICLE=$(ls content/blog/*.md 2>/dev/null | tail -1 | xargs basename 2>/dev/null || echo "article")
+    # Get the published article name for commit message - check both locales
+    PUBLISHED_ARTICLE=""
+    if [ -d "content/en/blog" ]; then
+      PUBLISHED_ARTICLE=$(ls content/en/blog/*.md 2>/dev/null | tail -1 | xargs basename 2>/dev/null || echo "")
+    fi
+    if [ -z "$PUBLISHED_ARTICLE" ] && [ -d "content/fr/blog" ]; then
+      PUBLISHED_ARTICLE=$(ls content/fr/blog/*.md 2>/dev/null | tail -1 | xargs basename 2>/dev/null || echo "")
+    fi
+    if [ -z "$PUBLISHED_ARTICLE" ]; then
+      PUBLISHED_ARTICLE="article"
+    fi
 
     if git commit -m "Auto-publish: ${PUBLISHED_ARTICLE%.md} - $(date '+%Y-%m-%d %H:%M')" 2>/dev/null; then
       log "✅ Content committed to git"
@@ -118,12 +127,18 @@ main() {
     # Wait a moment for restart
     sleep 5
 
-    # Basic health check
+    # Basic health check - test both locales
     log "🔍 Health check..."
-    if curl -sf "$SITE_URL/blog" >/dev/null 2>&1; then
-      log "✅ Site is responding"
+    if curl -sf "$SITE_URL/en/blog" >/dev/null 2>&1; then
+      log "✅ English site is responding"
     else
-      log "⚠️ Site health check failed"
+      log "⚠️ English site health check failed"
+    fi
+
+    if curl -sf "$SITE_URL/fr/blog" >/dev/null 2>&1; then
+      log "✅ French site is responding"
+    else
+      log "⚠️ French site health check failed"
     fi
 
     # Ping search engines (ignore failures)

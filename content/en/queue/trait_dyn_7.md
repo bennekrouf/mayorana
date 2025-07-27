@@ -3,6 +3,7 @@ id: trait-objects-memory-optimization
 title: "How does the memory layout of a Box<dyn Trait> differ from a Box<T> where T: Trait, and how would you optimize a system that heavily uses trait objects to minimize indirection costs?"
 slug: trait-objects-memory-optimization
 author: mayo
+locale: "en"
 excerpt: >-
   Comparing memory layouts of Box<dyn Trait> vs Box<T> and optimization strategies for systems heavily using trait objects to minimize indirection costs
 content_focus: "Trait Objects and Memory"

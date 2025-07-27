@@ -2,6 +2,7 @@
 id: simd-matrix-mult-rust
 title: "SIMD in Rust: Optimizing Matrix Multiplication"
 slug: simd-matrix-mult-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

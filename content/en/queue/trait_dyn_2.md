@@ -2,6 +2,7 @@
 id: trait-bounds-rust
 title: "Trait Bounds"
 slug: trait-bounds-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

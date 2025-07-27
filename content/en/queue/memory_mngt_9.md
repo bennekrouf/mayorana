@@ -2,6 +2,8 @@
 id: borrowing-rules-rust
 title: "mutable vs. immutable borrows."
 slug: borrowing-rules-rust
+locale: "en"
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

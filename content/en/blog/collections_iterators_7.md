@@ -2,6 +2,7 @@
 id: vec-drain-vs-truncate-clear
 title: 'Vec::drain() Vs Vec::truncate() or Vec::clear()?'
 slug: vec-drain-vs-truncate-clear
+locale: "en"
 author: mayo
 excerpt: >-
   Understanding Vec::drain() functionality and comparing it with Vec::truncate()

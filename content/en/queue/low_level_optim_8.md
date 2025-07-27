@@ -2,6 +2,7 @@
 id: instruction-level-optimization-inline-always
 title: "Instruction-Level Optimization: #[inline(always)]"
 slug: instruction-level-optimization-inline-always
+locale: "en"
 author: mayo
 excerpt: >-
   Strategic application of Rust's #[inline(always)] attribute for instruction-level optimization, covering effective usage patterns and risks of overuse

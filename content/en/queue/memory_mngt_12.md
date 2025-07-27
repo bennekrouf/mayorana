@@ -2,6 +2,7 @@
 id: concurrency-rust
 title: "How Rust's Ownership and Borrowing Ensure Safe Concurrency"
 slug: concurrency-rust
+locale: "en"
 date: '2025-07-07'
 author: mayo
 excerpt: >-

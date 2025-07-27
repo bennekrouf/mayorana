@@ -2,6 +2,7 @@
 id: string-vs-str-rust
 title: String vs. &str – Which to Use and When?
 slug: string-vs-str-rust
+locale: "en"
 date: '2025-07-03'
 author: mayo
 excerpt: >-
