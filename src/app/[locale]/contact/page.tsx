@@ -238,8 +238,8 @@ function ContactFormWithParams() {
                       </label>
                       <input
                         id="name"
-                        className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                        placeholder={t('name')}
+                        className="w-full p-3 rounded-lg border-2 border-muted-foreground/20 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                        placeholder="John Doe" // Specific example
                         {...register('name', { required: t('name_required') })}
                       />
                       {errors.name && (
@@ -255,8 +255,8 @@ function ContactFormWithParams() {
                       <input
                         id="email"
                         type="email"
-                        className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
-                        placeholder={t('email')}
+                        className="w-full p-3 rounded-lg border-2 border-muted-foreground/20 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
+                        placeholder="john@company.com" // Specific example
                         {...register('email', {
                           required: t('email_required'),
                           pattern: {
@@ -278,7 +278,7 @@ function ContactFormWithParams() {
                     </label>
                     <input
                       id="company"
-                      className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
+                      className="w-full p-3 rounded-lg border-2 border-muted-foreground/20 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                       placeholder={t('company_optional')}
                       {...register('company')}
                     />
@@ -291,7 +291,7 @@ function ContactFormWithParams() {
                     </label>
                     <select
                       id="service"
-                      className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
+                      className="w-full p-3 rounded-lg border-2 border-muted-foreground/20 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                       {...register('service', { required: t('service_required') })}
                     >
                       <option value="">{t('select_service')}</option>
@@ -314,7 +314,7 @@ function ContactFormWithParams() {
                     <textarea
                       id="message"
                       rows={5}
-                      className="w-full p-3 rounded-lg border border-border bg-background text-foreground"
+                      className="w-full p-3 rounded-lg border-2 border-muted-foreground/20 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
                       placeholder={t('message_placeholder')}
                       {...register('message', { required: t('message_required') })}
                     />
