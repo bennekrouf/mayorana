@@ -10,16 +10,26 @@ import {
 } from '@/lib/blog';
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>; // Add locale to type
 }
 
 // Generate static parameters for tags
 export async function generateStaticParams() {
   try {
-    const tags = getAllTags();
-    return tags.map((tag) => ({
-      slug: tag.toLowerCase().replace(/\s+/g, '-'),
-    }));
+    const locales = ['en', 'fr']; // Your supported locales
+    const params = [];
+
+    for (const locale of locales) {
+      const tags = getAllTags(locale);
+      for (const tag of tags) {
+        params.push({
+          locale,
+          slug: tag.toLowerCase().replace(/\s+/g, '-')
+        });
+      }
+    }
+
+    return params;
   } catch (error) {
     console.error('Error generating static params for tags:', error);
     return [];
@@ -29,19 +39,20 @@ export async function generateStaticParams() {
 export default async function TagPage({ params }: Props) {
   try {
     const { slug } = await params;
+    const locale = await params.then(p => p.locale); // Get locale from params
 
     if (!slug || typeof slug !== 'string') {
       notFound();
     }
 
-    const currentTag = getTagBySlug(slug);
+    const currentTag = getTagBySlug(slug, locale); // Add locale
 
     if (!currentTag) {
       notFound();
     }
 
-    const posts = getPostsByTag(slug);
-    const tags = getAllTags();
+    const posts = getPostsByTag(slug, locale); // Add locale
+    const tags = getAllTags(locale); // Add locale
 
     return (
       <LayoutTemplate>
