@@ -65,9 +65,9 @@ let s2 = s1; // Moves ownership (heap data not copied)
 
 ## Key Takeaways
 
-✅ **Stack**: Fast, fixed-size, automatic.  
-✅ **Heap**: Flexible, dynamic, manual (via smart pointers).  
-✅ Rust defaults to stack but uses heap for growable/unknown-size data.
+- ✅ **Stack**: Fast, fixed-size, automatic.  
+- ✅ **Heap**: Flexible, dynamic, manual (via smart pointers).  
+- ✅ Rust defaults to stack but uses heap for growable/unknown-size data.
 
 **Follow-Up**: When would you force heap allocation?  
 - For large structs (avoid stack overflow).  
