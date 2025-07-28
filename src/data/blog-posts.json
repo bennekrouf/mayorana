@@ -1,5 +1,125 @@
 [
   {
+    "id": "vec-retain-vs-filter-collect",
+    "slug": "vec-retain-vs-filter-collect",
+    "title": "Vec::retain() Vs filtering with iter().filter().collect()?",
+    "date": "2025-07-28",
+    "excerpt": "Comparing Vec::retain() in-place filtering with iter().filter().collect() for different filtering scenarios and performance implications",
+    "content": "## Vec::retain(): In-Place Filtering\n\n**Purpose**: Removes elements from a Vec in-place based on a predicate, preserving the order of retained elements.\n\n**Signature**:\n```rust\npub fn retain<F>(&mut self, f: F)\nwhere\n    F: FnMut(&T) -> bool,\n```\n\n## Key Features\n\n| Aspect | retain() | iter().filter().collect() |\n|--------|----------|---------------------------|\n| Mutates Original | ✅ Yes (in-place) | ❌ No (allocates new Vec) |\n| Preserves Order | ✅ Yes | ✅ Yes |\n| Memory Efficiency | ✅ O(1) extra space | ❌ O(n) extra space |\n| Performance | Faster (no reallocation) | Slower (allocates/copies) |\n| Use Case | Filtering without allocation | Creating a new filtered collection |\n\n## Example: Filtering Even Numbers\n\n### Using retain() (In-Place)\n```rust\nlet mut vec = vec![1, 2, 3, 4];\nvec.retain(|x| x % 2 == 0);  // Keeps evens\nassert_eq!(vec, [2, 4]);      // Original `vec` modified\n```\n\n### Using filter().collect() (New Allocation)\n```rust\nlet vec = vec![1, 2, 3, 4];\nlet filtered: Vec<_> = vec.iter().filter(|x| *x % 2 == 0).copied().collect();\nassert_eq!(filtered, [2, 4]);  // New `Vec` created\n// `vec` remains unchanged: [1, 2, 3, 4]\n```\n\n## Performance Comparison\n\n### retain():\n- **Time**: O(n) (single pass, shifts elements left in-place).\n- **Space**: O(1) (no extra allocations).\n\n### filter().collect():\n- **Time**: O(n) (but requires copying to a new allocation).\n- **Space**: O(n) (new Vec allocated).\n\n### Benchmark Suggestion:\n```rust\nlet mut big_vec = (0..1_000_000).collect::<Vec<_>>();\n// Measure `retain`\nlet start = std::time::Instant::now();\nbig_vec.retain(|x| x % 2 == 0);\nprintln!(\"retain: {:?}\", start.elapsed());\n\n// Measure `filter().collect()`\nlet big_vec = (0..1_000_000).collect::<Vec<_>>();\nlet start = std::time::Instant::now();\nlet filtered = big_vec.iter().filter(|x| *x % 2 == 0).collect::<Vec<_>>();\nprintln!(\"filter.collect: {:?}\", start.elapsed());\n```\n\n**Typical Result**: `retain()` is 2–3x faster due to no allocations.\n\n## When to Use Each\n\n### Prefer retain() When:\n- You want to modify the Vec in-place.\n- Memory efficiency is critical (e.g., large Vecs).\n- Order of elements must be preserved.\n\n### Prefer filter().collect() When:\n- You need the original Vec to remain intact.\n- Chaining multiple iterator adapters (e.g., `.filter().map()`).\n- Working with non-Vec iterators (e.g., ranges, slices).\n\n## Advanced Notes\n\n### retain_mut():\nRust also provides `retain_mut()` for predicates that need mutable access to elements:\n\n```rust\nlet mut vec = vec![1, 2, 3];\nvec.retain_mut(|x| {\n    *x += 1;           // Modify in-place\n    *x % 2 == 0        // Keep if even after increment\n});\nassert_eq!(vec, [2, 4]);\n```\n\n### Stability:\nBoth methods preserve the relative order of retained elements (stable filtering).\n\n## Key Takeaways\n\n✅ **retain()**: Faster, memory-efficient, and in-place. Ideal for bulk modifications.\n✅ **filter().collect()**: Flexible, non-destructive. Ideal for iterator pipelines.\n\n## Real-World Use Case:\n- **retain()**: Cleaning up expired sessions in a server's session pool.\n- **filter().collect()**: Transforming API response data into a filtered subset.\n\n**Try This**: What happens if you `retain()` with a predicate that keeps all elements?\n\n**Answer**: No-op (no elements removed, no reallocations).",
+    "contentHtml": "<h2>Vec::retain(): In-Place Filtering</h2>\n<p><strong>Purpose</strong>: Removes elements from a Vec in-place based on a predicate, preserving the order of retained elements.</p>\n<p><strong>Signature</strong>:</p>\n<pre><code class=\"language-rust\">pub fn retain&lt;F&gt;(&amp;mut self, f: F)\nwhere\n    F: FnMut(&amp;T) -&gt; bool,\n</code></pre>\n<h2>Key Features</h2>\n<table>\n<thead>\n<tr>\n<th>Aspect</th>\n<th>retain()</th>\n<th>iter().filter().collect()</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Mutates Original</td>\n<td>✅ Yes (in-place)</td>\n<td>❌ No (allocates new Vec)</td>\n</tr>\n<tr>\n<td>Preserves Order</td>\n<td>✅ Yes</td>\n<td>✅ Yes</td>\n</tr>\n<tr>\n<td>Memory Efficiency</td>\n<td>✅ O(1) extra space</td>\n<td>❌ O(n) extra space</td>\n</tr>\n<tr>\n<td>Performance</td>\n<td>Faster (no reallocation)</td>\n<td>Slower (allocates/copies)</td>\n</tr>\n<tr>\n<td>Use Case</td>\n<td>Filtering without allocation</td>\n<td>Creating a new filtered collection</td>\n</tr>\n</tbody></table>\n<h2>Example: Filtering Even Numbers</h2>\n<h3>Using retain() (In-Place)</h3>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3, 4];\nvec.retain(|x| x % 2 == 0);  // Keeps evens\nassert_eq!(vec, [2, 4]);      // Original `vec` modified\n</code></pre>\n<h3>Using filter().collect() (New Allocation)</h3>\n<pre><code class=\"language-rust\">let vec = vec![1, 2, 3, 4];\nlet filtered: Vec&lt;_&gt; = vec.iter().filter(|x| *x % 2 == 0).copied().collect();\nassert_eq!(filtered, [2, 4]);  // New `Vec` created\n// `vec` remains unchanged: [1, 2, 3, 4]\n</code></pre>\n<h2>Performance Comparison</h2>\n<h3>retain():</h3>\n<ul>\n<li><strong>Time</strong>: O(n) (single pass, shifts elements left in-place).</li>\n<li><strong>Space</strong>: O(1) (no extra allocations).</li>\n</ul>\n<h3>filter().collect():</h3>\n<ul>\n<li><strong>Time</strong>: O(n) (but requires copying to a new allocation).</li>\n<li><strong>Space</strong>: O(n) (new Vec allocated).</li>\n</ul>\n<h3>Benchmark Suggestion:</h3>\n<pre><code class=\"language-rust\">let mut big_vec = (0..1_000_000).collect::&lt;Vec&lt;_&gt;&gt;();\n// Measure `retain`\nlet start = std::time::Instant::now();\nbig_vec.retain(|x| x % 2 == 0);\nprintln!(&quot;retain: {:?}&quot;, start.elapsed());\n\n// Measure `filter().collect()`\nlet big_vec = (0..1_000_000).collect::&lt;Vec&lt;_&gt;&gt;();\nlet start = std::time::Instant::now();\nlet filtered = big_vec.iter().filter(|x| *x % 2 == 0).collect::&lt;Vec&lt;_&gt;&gt;();\nprintln!(&quot;filter.collect: {:?}&quot;, start.elapsed());\n</code></pre>\n<p><strong>Typical Result</strong>: <code>retain()</code> is 2–3x faster due to no allocations.</p>\n<h2>When to Use Each</h2>\n<h3>Prefer retain() When:</h3>\n<ul>\n<li>You want to modify the Vec in-place.</li>\n<li>Memory efficiency is critical (e.g., large Vecs).</li>\n<li>Order of elements must be preserved.</li>\n</ul>\n<h3>Prefer filter().collect() When:</h3>\n<ul>\n<li>You need the original Vec to remain intact.</li>\n<li>Chaining multiple iterator adapters (e.g., <code>.filter().map()</code>).</li>\n<li>Working with non-Vec iterators (e.g., ranges, slices).</li>\n</ul>\n<h2>Advanced Notes</h2>\n<h3>retain_mut():</h3>\n<p>Rust also provides <code>retain_mut()</code> for predicates that need mutable access to elements:</p>\n<pre><code class=\"language-rust\">let mut vec = vec![1, 2, 3];\nvec.retain_mut(|x| {\n    *x += 1;           // Modify in-place\n    *x % 2 == 0        // Keep if even after increment\n});\nassert_eq!(vec, [2, 4]);\n</code></pre>\n<h3>Stability:</h3>\n<p>Both methods preserve the relative order of retained elements (stable filtering).</p>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>retain()</strong>: Faster, memory-efficient, and in-place. Ideal for bulk modifications.\n✅ <strong>filter().collect()</strong>: Flexible, non-destructive. Ideal for iterator pipelines.</p>\n<h2>Real-World Use Case:</h2>\n<ul>\n<li><strong>retain()</strong>: Cleaning up expired sessions in a server&#39;s session pool.</li>\n<li><strong>filter().collect()</strong>: Transforming API response data into a filtered subset.</li>\n</ul>\n<p><strong>Try This</strong>: What happens if you <code>retain()</code> with a predicate that keeps all elements?</p>\n<p><strong>Answer</strong>: No-op (no elements removed, no reallocations).</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "vec",
+      "retain",
+      "filter",
+      "iterators",
+      "performance"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "Vec::retain() Vs filtering with iter().filter().collect()?",
+      "description": "Comparing Vec::retain() in-place filtering with iter().filter().collect() for different filtering scenarios and performance implications",
+      "keywords": [
+        "rust",
+        "vec",
+        "retain",
+        "filter",
+        "iterators",
+        "performance"
+      ]
+    },
+    "headings": [
+      {
+        "id": "vecretain-in-place-filtering",
+        "text": "Vec::retain(): In-Place Filtering",
+        "level": 2
+      },
+      {
+        "id": "key-features",
+        "text": "Key Features",
+        "level": 2
+      },
+      {
+        "id": "example-filtering-even-numbers",
+        "text": "Example: Filtering Even Numbers",
+        "level": 2
+      },
+      {
+        "id": "using-retain-in-place",
+        "text": "Using retain() (In-Place)",
+        "level": 3
+      },
+      {
+        "id": "using-filtercollect-new-allocation",
+        "text": "Using filter().collect() (New Allocation)",
+        "level": 3
+      },
+      {
+        "id": "performance-comparison",
+        "text": "Performance Comparison",
+        "level": 2
+      },
+      {
+        "id": "retain",
+        "text": "retain():",
+        "level": 3
+      },
+      {
+        "id": "filtercollect",
+        "text": "filter().collect():",
+        "level": 3
+      },
+      {
+        "id": "benchmark-suggestion",
+        "text": "Benchmark Suggestion:",
+        "level": 3
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "prefer-retain-when",
+        "text": "Prefer retain() When:",
+        "level": 3
+      },
+      {
+        "id": "prefer-filtercollect-when",
+        "text": "Prefer filter().collect() When:",
+        "level": 3
+      },
+      {
+        "id": "advanced-notes",
+        "text": "Advanced Notes",
+        "level": 2
+      },
+      {
+        "id": "retainmut",
+        "text": "retain_mut():",
+        "level": 3
+      },
+      {
+        "id": "stability",
+        "text": "Stability:",
+        "level": 3
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      },
+      {
+        "id": "real-world-use-case",
+        "text": "Real-World Use Case:",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "vec-drain-vs-truncate-clear",
     "slug": "vec-drain-vs-truncate-clear",
     "title": "Vec::drain() Vs Vec::truncate() or Vec::clear()?",

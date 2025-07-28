@@ -22,7 +22,6 @@ const BlogList: React.FC<BlogListProps> = ({
 
   // Helper function to get localized path
   const getLocalizedPath = (path: string) => {
-    if (locale === 'en') return path;
     return `/${locale}${path}`;
   };
 
