@@ -1,14 +1,17 @@
+// Fixed locale layout for Next.js 15
+// File: src/app/[locale]/layout.tsx
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Script from "next/script";
 import { ThemeProvider } from "../providers";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { locales } from '../../../i18n';
 import { notFound } from 'next/navigation';
-
 import CanonicalMeta from '@/components/seo/CanonicalMeta';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,6 +29,10 @@ type Props = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+
+  // DEBUG: Log locale in metadata generation
+  console.log('🔍 Metadata generation - locale:', locale);
+
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
   return {
@@ -38,6 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export function generateStaticParams() {
+  console.log('🔍 generateStaticParams called with locales:', locales);
   return locales.map((locale) => ({ locale }));
 }
 
@@ -47,19 +55,34 @@ export default async function LocaleLayout({
 }: Props) {
   const { locale } = await params;
 
-  // Validate that the incoming locale is valid
+  console.log('🔍 LocaleLayout - received locale:', locale);
+
+  // Validate locale
   if (!locales.includes(locale as (typeof locales)[number])) {
+    console.log('❌ LocaleLayout - Invalid locale');
     notFound();
   }
 
-  // Get messages for the specific locale
-  const messages = await getMessages({ locale });
+  console.log('✅ LocaleLayout - Valid locale confirmed:', locale);
+
+  // MANUAL: Load messages for the specific locale from the route
+  let messages;
+  try {
+    if (locale === 'fr') {
+      messages = (await import('../../../messages/fr.json')).default;
+    } else {
+      messages = (await import('../../../messages/en.json')).default;
+    }
+    console.log('✅ LocaleLayout - Messages loaded manually for:', locale);
+  } catch (error) {
+    console.error('❌ Error loading messages manually:', error);
+    // Fallback to English
+    messages = (await import('../../../messages/en.json')).default;
+  }
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Script
           src="https://plausible.io/js/script.outbound-links.js"
           data-domain="mayorana.ch"
@@ -72,6 +95,7 @@ export default async function LocaleLayout({
             }
           `}
         </Script>
+        {/* MANUAL: Pass the route locale directly */}
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <CanonicalMeta />

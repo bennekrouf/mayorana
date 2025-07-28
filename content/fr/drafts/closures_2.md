@@ -381,7 +381,7 @@ fn analyze_closure_trait() {
 4. **`move`** : Change le mode de capture, pas nécessairement le trait
 5. **Performance** : Tous les traits sont zero-cost quand possible
 
-**Essayez Ceci :** Que se passe-t-il si une closure capture une mutable reference mais ne la mute pas ?  
+**Essaie Ceci :** Que se passe-t-il si une closure capture une mutable reference mais ne la mute pas ?  
 **Réponse :** Elle implémente toujours `FnMut` (puisqu'elle *pourrait* muter), mais Tu peux la passer à une fonction attendant `FnMut`.
 
 ## Exemples de Débogage Courants

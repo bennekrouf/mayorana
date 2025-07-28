@@ -7,7 +7,7 @@ date: '2025-08-05'
 author: mayo
 excerpt: >-
   Rust te donne la performance de C avec la memory safety appliquée au moment de la compilation.
-  Apprenez comment ownership et borrowing éliminent des classes entières de bugs.
+  Apprends comment ownership et borrowing éliminent des classes entières de bugs.
 category: rust
 tags:
 - rust
@@ -319,5 +319,5 @@ Compiler intelligent → Système ownership → Code rapide + sûr
 
 ---
 
-**Prêt à éliminer des classes entières de bugs de votre code ?** 
-**→ Commencez à apprendre Rust aujourd'hui.**
+**Prêt à éliminer des classes entières de bugs de ton code ?** 
+**→ Commence à apprendre Rust aujourd'hui.**

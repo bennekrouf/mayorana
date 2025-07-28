@@ -7,7 +7,7 @@ date: '2025-08-01'
 author: mayo
 excerpt: >-
   C évite le garbage collection et donne un contrôle manuel de la mémoire, mais ouvre la porte 
-  à des bugs dangereux. Explorez les vrais problèmes mémoire et pourquoi ils comptent.
+  à des bugs dangereux. Explore les vrais problèmes mémoire et pourquoi ils comptent.
 category: rust
 tags:
 - rust
@@ -64,7 +64,7 @@ sprintf(log_buffer, "User: %s", user_input); // Buffer overflow possible
 ```
 
 **Le Problème :** Pas de bounds checking automatique signifie que les attaquants peuvent :
-- Crasher votre programme
+- Crasher ton programme
 - Exécuter du code arbitraire
 - Voler des données sensibles
 

@@ -473,12 +473,12 @@ fn closure_sizes() {
 
 ## Points Clés
 
-✅ **Utilisez `move` closures quand** :
+✅ **Utilise `move` closures quand** :
 - La closure survit à son environnement (ex : threads).
 - Tu as besoin d'ownership explicite pour éviter les problèmes du borrow checker.
 - Tu veux découpler la closure de son environnement d'origine.
 
-✅ **Évitez `move` pour** :
+✅ **Evite `move` pour** :
 - Closures locales et courtes qui n'échappent pas leur scope.
 - Types `Copy` où l'emprunt est suffisant.
 - Quand tu as encore besoin des valeurs originales après.
@@ -491,7 +491,7 @@ fn closure_sizes() {
 4. **Éviter borrow checker conflicts** → `move` peut aider
 5. **Performance critique** → Éviter `move` inutile
 
-**Essayez Ceci** : Que se passe-t-il si tu utilises `move` avec une closure qui capture une mutable reference (`&mut T`) ?  
+**Essaie Ceci** : Que se passe-t-il si tu utilises `move` avec une closure qui capture une mutable reference (`&mut T`) ?  
 **Réponse** : La référence elle-même est moved (mais pas les données qu'elle pointe). C'est rarement utile et peut mener à des erreurs de lifetime !
 
 ## Exemple Pratique Complet
@@ -540,4 +540,4 @@ fn worker_system_example() {
 
 ---
 
-**Conclusion :** Les `move` closures sont essentielles pour la concurrence et les situations où tu dois transférer l'ownership. Utilisez-les judicieusement pour écrire du code Rust sûr et efficace !
+**Conclusion :** Les `move` closures sont essentielles pour la concurrence et les situations où tu dois transférer l'ownership. Utilise-les judicieusement pour écrire du code Rust sûr et efficace !

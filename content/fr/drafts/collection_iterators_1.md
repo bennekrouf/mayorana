@@ -32,7 +32,7 @@ Comprendre les stratégies d'allocation Vec est crucial pour écrire du code Rus
 
 ## Quand Utiliser Chacune
 
-Utilisez `Vec::new()` quand :
+Utilise `Vec::new()` quand :
 - Le nombre d'éléments est inconnu ou petit
 - Tu veux la simplicité (ex : vecteurs courte durée)
 
@@ -41,7 +41,7 @@ let mut v = Vec::new(); // Bon pour usage ad-hoc
 v.push(1);
 ```
 
-Utilisez `Vec::with_capacity(n)` quand :
+Utilise `Vec::with_capacity(n)` quand :
 - tu connais le nombre exact ou maximum d'éléments à l'avance
 - Optimisation pour la performance (évite les réallocations)
 
@@ -94,9 +94,9 @@ Vec::with_capacity(): 0.3ms  // 4x plus rapide
 ## Points Clés
 
 - ✅ Par défaut `Vec::new()` pour la simplicité.  
-- ✅ Utilisez `with_capacity(n)` quand :
+- ✅ Utilise `with_capacity(n)` quand :
   - tu connais la taille à l'avance
   - La performance est critique (ex : boucles chaudes)
 
-**Essayez Ceci :** Que se passe-t-il si tu ajoutes des éléments au-delà de la capacité pré-allouée ?  
+**Essaie Ceci :** Que se passe-t-il si tu ajoutes des éléments au-delà de la capacité pré-allouée ?  
 **Réponse :** Le Vec grandit automatiquement (comme `Vec::new()`), mais seulement après avoir dépassé n.

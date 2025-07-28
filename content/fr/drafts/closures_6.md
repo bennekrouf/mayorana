@@ -50,7 +50,7 @@ fn main() {
 
 ## Exemple Avancé : Retour de Closure Conditionnel
 
-Pour un comportement dynamique, retournez un `Box<dyn Fn>` pour supporter différentes closures au runtime :
+Pour un comportement dynamique, retourne un `Box<dyn Fn>` pour supporter différentes closures au runtime :
 
 ```rust
 fn math_op(op: &str) -> Box<dyn Fn(i32, i32) -> i32> {
@@ -513,9 +513,9 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 ## Points Clés
 
 ✅ **Les HOFs permettent des patterns flexibles et réutilisables** en traitant les functions comme des valeurs de première classe.  
-✅ **Utilisez `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
-✅ **Utilisez `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
-🚀 **Utilisez `move`** pour assurer que les closures possèdent les données capturées quand retournées.
+✅ **Utilise `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
+✅ **Utilise `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
+🚀 **Utilise `move`** pour assurer que les closures possèdent les données capturées quand retournées.
 
 ### Règles de Décision
 
@@ -527,7 +527,7 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 
 **Exemple Réel** : Les HOFs sont centrales à l'API iterator de Rust (`map`, `filter`) et aux frameworks async comme `tokio`, où les closures définissent le comportement des tâches.
 
-**Expérimentez** : Modifiez `make_adder` pour retourner une closure qui multiplie au lieu d'additionner.  
+**Expérimente** : Modifie `make_adder` pour retourner une closure qui multiplie au lieu d'additionner.  
 **Réponse** : Le compilateur l'accepte parfaitement, car les deux closures implémentent `Fn(i32) -> i32`, maintenant la cohérence de type.
 
 ## Exemple Pratique Complet
@@ -671,4 +671,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Les higher-order functions en Rust offrent une puissance énorme pour créer des abstractions flexibles et réutilisables. Maîtrisez-les pour écrire du code fonctionnel expressif et performant !
+**Conclusion :** Les higher-order functions en Rust offrent une puissance énorme pour créer des abstractions flexibles et réutilisables. Maîtrise-les pour écrire du code fonctionnel expressif et performant !

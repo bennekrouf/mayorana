@@ -34,7 +34,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 ## Quand Utiliser Chacune
 
 ### 1. impl Fn() (Static Dispatch)
-- **Utilisez Quand** :
+- **Utilise Quand** :
   - Le type de closure est fixe et connu au moment de la compilation.
   - La performance est critique (ex : hot loops, systèmes embarqués).
   - Les zero-cost abstractions sont désirées.
@@ -55,7 +55,7 @@ fn main() {
 Pas d'allocation heap, appels de fonction directs, et performance optimale.
 
 ### 2. Box&lt;dyn Fn()&gt; (Dynamic Dispatch)
-- **Utilisez Quand** :
+- **Utilise Quand** :
   - Tu dois stocker différentes closures dans la même collection (ex : callbacks).
   - Les types de closures varient au runtime (ex : systèmes de plugins).
   - La flexibilité l'emporte sur les coûts de performance.
@@ -318,12 +318,12 @@ fn analyze_dynamic() {
 
 ## Points Clés
 
-✅ **Choisissez `impl Fn()` pour** :
+✅ **Choisis `impl Fn()` pour** :
 - Code sensible aux performances (ex : chaînes d'iterators).
 - Type de closure unique (ex : factory functions).
 - Zero-cost abstractions.
 
-✅ **Choisissez `Box<dyn Fn()>` pour** :
+✅ **Choisis `Box<dyn Fn()>` pour** :
 - Comportement dynamique (ex : event handlers, plugins).
 - Stockage de types de closures mixtes (ex : `Vec<Box<dyn Fn()>>`).
 - Flexibilité runtime.
@@ -352,4 +352,4 @@ fn bench(c: &mut Criterion) {
 
 ## Conclusion
 
-Utilisez `impl Fn()` pour un dispatch static zero-cost dans les scénarios critiques en performance avec des types de closures connus. Optez pour `Box<dyn Fn()>` quand la flexibilité est nécessaire, comme dans les systèmes de plugins ou applications event-driven nécessitant du polymorphisme runtime. Le système d'ownership et de traits de Rust assure que les deux approches sont sûres, le choix dépendant de l'équilibre entre performance et exigences dynamiques.
+Utilise `impl Fn()` pour un dispatch static zero-cost dans les scénarios critiques en performance avec des types de closures connus. Opte pour `Box<dyn Fn()>` quand la flexibilité est nécessaire, comme dans les systèmes de plugins ou applications event-driven nécessitant du polymorphisme runtime. Le système d'ownership et de traits de Rust assure que les deux approches sont sûres, le choix dépendant de l'équilibre entre performance et exigences dynamiques.

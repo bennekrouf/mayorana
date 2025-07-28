@@ -1,45 +1,37 @@
+// Simplified i18n - bypass automatic detection, handle manually
+// File: i18n.ts
+
 import { getRequestConfig } from 'next-intl/server';
 
-// Can be imported from a shared config
 export const locales = ['en', 'fr'] as const;
 export const defaultLocale = 'en' as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  // Ensure that the incoming `locale` is valid
+  // Since we don't have middleware, requestLocale will always be undefined
+  // We'll handle locale detection manually in our components
   let locale = await requestLocale;
 
-  // Debug logging for production
-  // console.log('i18n config - requested locale:', locale);
+  console.log('🌍 i18n - requestLocale (will be undefined):', locale);
 
-  if (!locale || !locales.includes(locale as any)) {
-    console.log('Invalid locale, using default:', defaultLocale);
-    locale = defaultLocale;
-  }
+  // Always default to English for i18n config
+  // The actual locale will be handled by our components directly
+  locale = defaultLocale;
+
+  console.log('🔄 Using default locale for i18n config:', locale);
 
   try {
     const messages = (await import(`./messages/${locale}.json`)).default;
-    // console.log('Loaded messages for locale:', locale);
+    console.log('✅ Messages loaded for default locale:', locale);
 
     return {
       locale,
       messages
     };
   } catch (error) {
-    console.error('Error loading messages for locale:', locale, error);
-
-    // Fallback to English if the requested locale messages don't exist
-    try {
-      const fallbackMessages = (await import(`./messages/en.json`)).default;
-      return {
-        locale: 'en',
-        messages: fallbackMessages
-      };
-    } catch (fallbackError) {
-      console.error('Error loading fallback messages:', fallbackError);
-      return {
-        locale: 'en',
-        messages: {}
-      };
-    }
+    console.error('❌ Error loading messages:', error);
+    return {
+      locale: 'en',
+      messages: {}
+    };
   }
 });

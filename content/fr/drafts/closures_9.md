@@ -25,7 +25,7 @@ Stocker une closure dans une struct nécessite de spécifier des trait bounds (`
 
 ## 1. Struct Générique (Static Dispatch)
 
-Utilisez un paramètre de type générique avec des bounds `Fn`/`FnMut`/`FnOnce`. Idéal pour des types de closures fixes.
+Utilise un paramètre de type générique avec des bounds `Fn`/`FnMut`/`FnOnce`. Idéal pour des types de closures fixes.
 
 ### Exemple : Trait Fn
 
@@ -62,7 +62,7 @@ fn main() {
 
 ## 2. Trait Object (Dynamic Dispatch)
 
-Utilisez `Box<dyn Fn...>` pour stocker des closures hétérogènes. Nécessite une allocation heap.
+Utilise `Box<dyn Fn...>` pour stocker des closures hétérogènes. Nécessite une allocation heap.
 
 ### Exemple : Box&lt;dyn Fn&gt;
 
@@ -582,7 +582,7 @@ fn cache_example() {
 ```rust
 // Guide de décision pour stocker des closures
 fn decision_guide() {
-    // ✅ Utilisez Generic quand:
+    // ✅ Utilise Generic quand:
     // - Performance critique
     // - Type de closure connu au moment de la compilation
     // - Pas besoin de changer la closure après construction
@@ -591,7 +591,7 @@ fn decision_guide() {
         op: F,
     }
     
-    // ✅ Utilisez Trait Object quand:
+    // ✅ Utilise Trait Object quand:
     // - Besoin de flexibilité runtime
     // - Multiple types de closures possibles
     // - Configuration dynamique
@@ -600,7 +600,7 @@ fn decision_guide() {
         op: Box<dyn Fn(i32) -> i32>,
     }
     
-    // ✅ Utilisez Lifetimes quand:
+    // ✅ Utilise Lifetimes quand:
     // - Closure capture des références
     // - Données empruntées depuis l'extérieur
     // - Éviter les allocations inutiles
@@ -691,7 +691,7 @@ fn mutable_example() {
 ## Points Clés
 
 ✅ **Structs génériques : Meilleures pour performance et static dispatch.**  
-✅ **Trait objects : Utilisez quand tu stockes des closures hétérogènes.**  
+✅ **Trait objects : Utilise quand tu stockes des closures hétérogènes.**  
 ✅ **Lifetimes : Requis si la closure capture des références.**
 
 ### Règles Pratiques
@@ -702,7 +702,7 @@ fn mutable_example() {
 4. **Mutable state** → FnMut avec &mut self
 5. **One-time use** → FnOnce avec Option<F>
 
-**Essayez Ceci** : Que se passe-t-il si une closure capture une référence `&mut` et est stockée dans une struct ?  
+**Essaie Ceci** : Que se passe-t-il si une closure capture une référence `&mut` et est stockée dans une struct ?  
 **Réponse** : La struct doit être `mut`, et la closure doit implémenter `FnMut` !
 
 ## Exemple Pratique Complet
@@ -806,4 +806,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Stocker des closures dans des structs offre une flexibilité énorme pour créer des architectures modulaires et expressives. Choisissez l'approche selon vos besoins de performance, flexibilité et sécurité des lifetimes !
+**Conclusion :** Stocker des closures dans des structs offre une flexibilité énorme pour créer des architectures modulaires et expressives. Choisis l'approche selon vos besoins de performance, flexibilité et sécurité des lifetimes !

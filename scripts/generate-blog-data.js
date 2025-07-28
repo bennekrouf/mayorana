@@ -65,7 +65,6 @@ function extractHeadings(content) {
 async function generateBlogDataForLocale(locale) {
   const postsDirectory = path.join(process.cwd(), `content/${locale}/blog/`);
   const outputPath = path.join(process.cwd(), `src/data/blog-posts-${locale}.json`);
-  const categoriesOutputPath = path.join(process.cwd(), `src/data/blog-categories-${locale}.json`);
 
   console.log(`📖 Reading ${locale.toUpperCase()} posts from ${postsDirectory}`);
 
@@ -76,76 +75,46 @@ async function generateBlogDataForLocale(locale) {
 
     // Create empty data files for missing locales
     fs.writeFileSync(outputPath, JSON.stringify([], null, 2));
-    fs.writeFileSync(categoriesOutputPath, JSON.stringify([], null, 2));
     console.log(`📝 Created empty data files for ${locale}`);
     return { posts: 0, categories: 0 };
   }
 
-  // Read all markdown files in the posts directory
   const fileNames = fs.readdirSync(postsDirectory);
-
-  // Track categories for the categories file
-  const categoriesMap = new Map();
-
   const postsData = fileNames
     .filter(fileName => fileName.endsWith('.md'))
     .map(fileName => {
       try {
-        // Read file content
         const fullPath = path.join(postsDirectory, fileName);
         const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-        // Parse frontmatter
         const { data, content } = matter(fileContents);
 
-        // Validate required fields
         if (!data.title) {
           console.error(`❌ Missing title in ${fileName}, skipping...`);
           return null;
         }
 
-        // Generate slug from title if not provided
         const slug = data.slug || generateSlug(data.title);
-
-        // Remove the first H1 title from content to avoid duplication
         const contentWithoutTitle = removeH1Title(content);
-
-        // Convert markdown to HTML for rendering
         const contentHtml = marked(contentWithoutTitle);
-
-        // Extract headings for table of contents (excluding the removed title)
         const headings = extractHeadings(contentWithoutTitle);
-
-        // Calculate reading time
         const timeStats = readingTime(content);
         const readingTimeText = `${Math.ceil(timeStats.minutes)} min`;
 
-        // Track category for categories file
-        if (data.category) {
-          if (!categoriesMap.has(data.category)) {
-            categoriesMap.set(data.category, {
-              slug: data.category,
-              name: data.categoryName || data.category.charAt(0).toUpperCase() + data.category.slice(1),
-              description: data.categoryDescription || `Articles about ${data.category}`
-            });
-          }
-        }
-
-        // Return structured data
+        // **KEY FIX**: Always ensure locale matches the directory we're processing
         return {
           id: data.id || slug,
           slug,
           title: data.title,
           date: data.date || new Date().toISOString().split('T')[0],
           excerpt: data.excerpt || '',
-          content: contentWithoutTitle, // Store content without title
+          content: contentWithoutTitle,
           contentHtml,
           author: data.author || 'Anonymous',
           category: data.category || 'uncategorized',
           tags: Array.isArray(data.tags) ? data.tags : [],
           image: data.image,
           readingTime: readingTimeText,
-          locale, // Add locale information
+          locale: locale, // **FORCE** locale to match directory, ignore frontmatter
           seo: {
             title: data.seo_title || data.title,
             description: data.meta_description || data.excerpt || '',
@@ -159,28 +128,23 @@ async function generateBlogDataForLocale(locale) {
         return null;
       }
     })
-    .filter(post => post !== null) // Remove failed posts
-    // Sort by date (newest first)
+    .filter(post => post !== null)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Write the posts data to a JSON file
-  fs.writeFileSync(
-    outputPath,
-    JSON.stringify(postsData, null, 2)
-  );
+  // Write the posts data
+  fs.writeFileSync(outputPath, JSON.stringify(postsData, null, 2));
 
-  // Convert categories map to array and write to file
-  const categories = Array.from(categoriesMap.values());
-  fs.writeFileSync(
-    categoriesOutputPath,
-    JSON.stringify(categories, null, 2)
-  );
+  console.log(`✅ Generated ${locale.toUpperCase()} blog data: ${postsData.length} posts`);
 
-  console.log(`✅ Generated ${locale.toUpperCase()} blog data: ${postsData.length} posts, ${categories.length} categories`);
+  // **VERIFICATION**: Log locale distribution
+  const localeCheck = postsData.reduce((acc, post) => {
+    acc[post.locale] = (acc[post.locale] || 0) + 1;
+    return acc;
+  }, {});
+  console.log(`🔍 Locale verification for ${locale}:`, localeCheck);
 
-  return { posts: postsData.length, categories: categories.length };
+  return { posts: postsData.length, categories: 0 };
 }
-
 // Main function to generate blog data for all locales
 async function generateBlogData() {
   console.log('🚀 Starting i18n blog data generation...\n');

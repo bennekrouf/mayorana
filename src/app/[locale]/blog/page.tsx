@@ -1,4 +1,6 @@
+// SIMPLEST FIX: Update your blog page to pass locale directly
 // File: src/app/[locale]/blog/page.tsx
+
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import TagFilter from '@/components/blog/TagFilter';
@@ -19,9 +21,28 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const searchParamsData = await searchParams;
   const page = parseInt(searchParamsData.page as string) || 1;
 
+  // DEBUG: What we're getting
+  console.log('🔍 BlogPage Debug:');
+  console.log('   - Received locale:', locale);
+  console.log('   - Page:', page);
+
+  // DIRECT LOCALE USAGE: Pass locale directly to functions
   const paginatedData = getPaginatedPosts(page, locale);
   const tags = getAllTags(locale);
-  const t = await getTranslations('blog');
+
+  // Use the locale directly with getTranslations
+  const t = await getTranslations({ locale, namespace: 'blog' });
+
+  // DEBUG: Blog data
+  console.log('📊 Blog Data:');
+  console.log('   - Posts found:', paginatedData.posts.length);
+  console.log('   - Total posts:', paginatedData.totalPosts);
+  console.log('   - Tags:', tags.length);
+
+  if (paginatedData.posts.length > 0) {
+    console.log('   - First post locale:', paginatedData.posts[0].locale);
+    console.log('   - First post title:', paginatedData.posts[0].title);
+  }
 
   return (
     <LayoutTemplate>

@@ -21,7 +21,7 @@ Les closures en Rust sont des types anonymes, donc tu dois utiliser des trait bo
 
 ## Closure comme Paramètre de Function
 
-Utilisez des paramètres de type générique avec trait bounds pour accepter des closures.
+Utilise des paramètres de type générique avec trait bounds pour accepter des closures.
 
 ### Exemple : `Fn` (Immutable Borrow)
 
@@ -96,7 +96,7 @@ fn main() {
 
 ## Closure comme Type de Retour
 
-Utilisez `impl Trait` pour le static dispatch (zero-cost) ou `Box<dyn Trait>` pour le dynamic dispatch (flexible).
+Utilise `impl Trait` pour le static dispatch (zero-cost) ou `Box<dyn Trait>` pour le dynamic dispatch (flexible).
 
 ### Exemple : Retourner `impl Fn` (Static Dispatch)
 
@@ -313,7 +313,7 @@ impl EventSystem {
 
 ### `FnMut` dans les Structs
 
-Stockez des closures mutables avec `FnMut` et annotez `mut` :
+Stocke des closures mutables avec `FnMut` et annote `mut` :
 
 ```rust
 struct Processor<F: FnMut(i32) -> i32> {
@@ -431,11 +431,11 @@ fn benchmark_dispatch() {
 
 ## Points Clés
 
-✅ **Paramètre** : Utilisez les generics (`F: Fn(...)`) pour flexibilité et performance.  
+✅ **Paramètre** : Utilise les generics (`F: Fn(...)`) pour flexibilité et performance.  
 ✅ **Type de Retour** :  
 - `impl Fn` pour static dispatch (rapide, type fixe).  
 - `Box<dyn Fn>` pour dynamic dispatch (flexible, types multiples).  
-🚀 Préférez `impl Fn` sauf si tu as besoin de polymorphisme runtime.
+🚀 Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
 ### Règles de Décision
 
@@ -445,7 +445,7 @@ fn benchmark_dispatch() {
 4. **Flexibilité dynamique** → `Box<dyn Fn>`
 5. **Storage dans collections** → `Box<dyn Fn>`
 
-**Essayez Ceci** : Que se passe-t-il si tu retournes une closure `FnOnce` ?  
+**Essaie Ceci** : Que se passe-t-il si tu retournes une closure `FnOnce` ?  
 **Réponse** : C'est permis, mais l'appelant ne peut l'invoquer qu'une fois !
 
 ## Exemple Pratique Complet
@@ -490,4 +490,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Maîtriser les closures comme paramètres et types de retour te donne une flexibilité énorme pour créer des APIs expressives et performantes en Rust. Choisissez `impl Fn` pour la performance, `Box<dyn Fn>` pour la flexibilité !
+**Conclusion :** Maîtriser les closures comme paramètres et types de retour te donne une flexibilité énorme pour créer des APIs expressives et performantes en Rust. Choisis `impl Fn` pour la performance, `Box<dyn Fn>` pour la flexibilité !

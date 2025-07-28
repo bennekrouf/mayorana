@@ -1,11 +1,11 @@
 ---
 id: "getting-started-with-rust-fr"
-title: "Débuter avec Rust: Un Guide pour Débutants"
+title: "Débuter avec Rust"
 slug: "getting-started-with-rust-fr"
 locale: "fr"
 date: "2025-04-15"
 author: "Mayorana"  
-excerpt: "Introduction à Rust pour débutants, couvrant l'installation, la syntaxe de base, et votre premier projet."
+excerpt: "Introduction à Rust, couvrant l'installation, la syntaxe de base, et ton premier projet."
 category: "rust"
 tags:
   - "rust"
@@ -18,19 +18,19 @@ tags:
 
 Rust gagne considérablement en popularité parmi les développeurs pour son focus sur la performance, la memory safety, et la concurrence. Si tu es nouveau à Rust, ce guide t'aidera à débuter avec les bases.
 
-## Configuration de Votre Environnement
+## Configuration de Ton Environnement
 
-D'abord, tu dois installer Rust sur votre système. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
+D'abord, tu dois installer Rust sur ton système. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-Cette commande téléchargera un script et démarrera le processus d'installation. Suivez les instructions à l'écran pour compléter l'installation.
+Cette commande téléchargera un script et démarrera le processus d'installation.
 
 ### Vérification de l'Installation
 
-Une fois l'installation terminée, vérifiez que tout fonctionne correctement :
+Une fois l'installation terminée, vérifie que tout fonctionne correctement :
 
 ```bash
 rustc --version
@@ -41,21 +41,21 @@ Tu dois voir les numéros de version de Rust et Cargo s'afficher.
 
 ### Configuration de l'Éditeur
 
-Pour une meilleure expérience de développement, configurez votre éditeur préféré :
+Pour une meilleure expérience de développement, configure ton éditeur préféré :
 
 **VS Code :**
-- Installez l'extension "rust-analyzer"
-- Installez l'extension "CodeLLDB" pour le debugging
+- Installe l'extension "rust-analyzer"
+- Installe l'extension "CodeLLDB" pour le debugging
 
 **IntelliJ/CLion :**
-- Installez le plugin "Rust"
+- Installe le plugin "Rust"
 
 **Vim/Neovim :**
-- Utilisez rust.vim et coc-rust-analyzer
+- Utilise rust.vim et coc-rust-analyzer
 
-## Votre Premier Programme Rust
+## Ton Premier Programme Rust
 
-Créons un simple programme "Hello, World!". Créez un nouveau fichier appelé `hello.rs` avec le contenu suivant :
+Créons un simple programme "Hello, World!". Créé un nouveau fichier appelé `hello.rs` avec le contenu suivant :
 
 ```rust
 fn main() {
@@ -63,7 +63,7 @@ fn main() {
 }
 ```
 
-Pour compilateur et exécuter ce programme, utilisez les commandes suivantes :
+Pour compiler et exécuter ce programme, utilise les commandes suivantes :
 
 ```bash
 rustc hello.rs
@@ -84,12 +84,12 @@ fn main() {           // Fonction principale - point d'entrée du programme
 
 **Points importants :**
 - `fn main()` est la fonction principale, exécutée en premier
-- `println!` est une **macro** (notez le `!`) qui imprime du texte
+- `println!` est une **macro** (note le `!`) qui imprime du texte
 - Les déclarations se terminent par un point-virgule `;`
 
 ## Comprendre Cargo
 
-Cargo est le système de build et gestionnaire de packages de Rust. Il gère de nombreuses tâches comme compilateur votre code, télécharger des libraries, et compilateur ces libraries.
+Cargo est le système de build et gestionnaire de packages de Rust. Il gère de nombreuses tâches comme compilateur ton code, télécharger des libraries, et compilateur ces libraries.
 
 ### Créer un Nouveau Projet
 
@@ -113,7 +113,7 @@ hello_cargo/
 
 ### Le Fichier Cargo.toml
 
-Le fichier `Cargo.toml` contient les métadonnées de votre projet :
+Le fichier `Cargo.toml` contient les métadonnées de ton projet :
 
 ```toml
 [package]
@@ -164,7 +164,7 @@ fn main() {
 }
 ```
 
-Exécutez avec `cargo run` - Cargo téléchargera et compilera automatiquement la dépendance `rand`.
+Exécute avec `cargo run` - Cargo téléchargera et compilera automatiquement la dépendance `rand`.
 
 ## Concepts Clés de Rust
 
@@ -181,7 +181,7 @@ fn main() {
 }
 ```
 
-Pour rendre une variable mutable, utilisez le mot-clé `mut` :
+Pour rendre une variable mutable, utilise le mot-clé `mut` :
 
 ```rust
 fn main() {
@@ -358,7 +358,7 @@ fn makes_copy(some_integer: i32) { // some_integer entre dans le scope
 
 ### Références et Emprunts
 
-Pour utiliser une valeur sans prendre l'ownership, utilisez les **références** :
+Pour utiliser une valeur sans prendre l'ownership, utilise les **références** :
 
 ```rust
 fn main() {
@@ -559,12 +559,12 @@ use std::cmp::Ordering;
 use std::io;
 
 fn main() {
-    println!("Devinez le nombre !");
+    println!("Devine le nombre !");
     
     let secret_number = rand::thread_rng().gen_range(1..=100);
     
     loop {
-        println!("Veuillez entrer votre supposition.");
+        println!("Saisie quelque chose.");
         
         let mut guess = String::new();
         
@@ -575,7 +575,7 @@ fn main() {
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
-                println!("Veuillez entrer un nombre valide !");
+                println!("Entre un nombre valide !");
                 continue;
             }
         };
@@ -594,7 +594,7 @@ fn main() {
 }
 ```
 
-Pour ce projet, ajoutez dans votre `Cargo.toml` :
+Pour ce projet, ajoute dans ton `Cargo.toml` :
 
 ```toml
 [dependencies]
@@ -606,13 +606,13 @@ rand = "0.8"
 ### Formatage du Code
 
 ```bash
-cargo fmt  # Formate automatiquement votre code
+cargo fmt  # Formate automatiquement ton code
 ```
 
 ### Linting
 
 ```bash
-cargo clippy  # Analyse statique pour améliorer votre code
+cargo clippy  # Analyse statique pour améliorer ton code
 ```
 
 ### Tests
@@ -636,11 +636,11 @@ mod tests {
 }
 ```
 
-Exécutez avec `cargo test`.
+Exécute avec `cargo test`.
 
 ## Prochaines Étapes
 
-Maintenant que tu as les bases, essayez de construire un petit projet pour pratiquer vos compétences. Voici quelques suggestions :
+Maintenant que tu as les bases, Essaie de construire un petit projet pour pratiquer vos compétences. Voici quelques suggestions :
 
 ### Projets Débutants
 1. **Calculatrice en ligne de commande**
@@ -679,4 +679,4 @@ Bon codage avec Rust ! 🦀
 
 ---
 
-**Astuce :** N'hésitez pas à expérimenter avec le code. Rust a un excellent compilateur qui te guidera avec des messages d'erreur très informatifs. Chaque erreur est une opportunité d'apprentissage !
+**Astuce :** N'hésite pas à expérimenter avec le code. Rust a un excellent compilateur qui te guidera avec des messages d'erreur très informatifs. Chaque erreur est une opportunité d'apprentissage !

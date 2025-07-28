@@ -7,7 +7,7 @@ date: '2025-07-28'
 author: mayo
 excerpt: >-
   Java, Python et JavaScript offrent de la commodité, mais le garbage collection introduit une latence 
-  imprévisible. Explorez comment la gestion mémoire runtime affecte les performances des systèmes réels.
+  imprévisible. Explore comment la gestion mémoire runtime affecte les performances des systèmes réels.
 category: rust
 tags:
 - rust
@@ -37,7 +37,7 @@ Cela crée un objet sur le heap. Mais finalement, cette mémoire doit être réc
 [Full GC (Ergonomics) 8192K->512K(19456K), 0.0234 secs]
 ```
 
-Le GC de Java s'exécute en background threads, mettant votre application en pause de manière imprévisible. Même les GC modernes comme G1 peuvent faire des pauses de millisecondes.
+Le GC de Java s'exécute en background threads, mettant ton application en pause de manière imprévisible. Même les GC modernes comme G1 peuvent faire des pauses de millisecondes.
 
 ### Python: Reference Counting + Cycles
 ```python
@@ -74,7 +74,7 @@ Pendant pause GC: 2000ms (40x plus lent!)
 
 ## Comparaison GC
 
-| Langage    | Type GC           | Votre Contrôle | Prévisibilité  |
+| Langage    | Type GC           | Ton Contrôle | Prévisibilité  |
 |------------|-------------------|----------------|----------------|
 | Java       | Generational      | Flags JVM      | Faible         |
 | Python     | Reference + Cycle | Module `gc`    | Très Faible    |

@@ -52,7 +52,7 @@ fn main() {
 
 ## Alternative: Encapsuler l'État dans une Struct
 
-Pour un état complexe, encapsulez-le dans une struct avec une implémentation `FnMut` explicite :
+Pour un état complexe, encapsule-le dans une struct avec une implémentation `FnMut` explicite :
 
 ```rust
 struct Counter {
@@ -513,9 +513,9 @@ fn performance_considerations() {
 
 ## Points Clés
 
-✅ **Utilisez `FnMut`** pour les closures qui mutent l'état à travers plusieurs appels.  
-✅ **Marquez les closures et paramètres comme `mut`** pour permettre la mutation.  
-✅ **Préférez les closures simples** pour l'état basique ; utilisez les structs pour la gestion d'état complexe.
+✅ **Utilise `FnMut`** pour les closures qui mutent l'état à travers plusieurs appels.  
+✅ **Marque les closures et paramètres comme `mut`** pour permettre la mutation.  
+✅ **Préfére les closures simples** pour l'état basique ; utilise les structs pour la gestion d'état complexe.
 
 ### Règles de Décision
 
@@ -527,7 +527,7 @@ fn performance_considerations() {
 
 **Exemple Réel** : Les closures stateful sont communes dans les event loops ou tâches async (ex : `tokio`) où une closure maintient des compteurs ou buffers à travers les itérations.
 
-**Expérimentez** : Essayez de passer une closure non-`mut` à `call_repeatedly`.  
+**Expérimente** : Essaie de passer une closure non-`mut` à `call_repeatedly`.  
 **Réponse** : Erreur de compilation ! La closure doit être mutable pour implémenter `FnMut`.
 
 ## Exemple Pratique Complet
@@ -579,4 +579,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Les closures stateful avec `FnMut` offrent un moyen puissant et ergonomique de maintenir l'état à travers plusieurs appels de fonction. Maîtrisez ces patterns pour écrire du code Rust expressif et performant !
+**Conclusion :** Les closures stateful avec `FnMut` offrent un moyen puissant et ergonomique de maintenir l'état à travers plusieurs appels de fonction. Maîtrise ces patterns pour écrire du code Rust expressif et performant !

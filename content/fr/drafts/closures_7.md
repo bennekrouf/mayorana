@@ -36,9 +36,9 @@ fn create_closure() -> impl Fn() -> String {
 }
 ```
 
-### Annotez les Lifetimes pour les Références Capturées
+### Annote les Lifetimes pour les Références Capturées
 
-Si tu captures des références, liez explicitement le lifetime de la closure aux données d'entrée :
+Si tu captures des références, lie explicitement le lifetime de la closure aux données d'entrée :
 
 ```rust
 fn capture_ref<'a>(s: &'a str) -> impl Fn() -> &'a str + 'a {
@@ -46,7 +46,7 @@ fn capture_ref<'a>(s: &'a str) -> impl Fn() -> &'a str + 'a {
 }
 ```
 
-### Évitez de Retourner des Closures Capturant des Références Courtes
+### Evite de Retourner des Closures Capturant des Références Courtes
 
 Les closures capturant des références à des variables locales ne peuvent pas échapper à leur scope :
 
@@ -406,7 +406,7 @@ fn demonstrate_pitfalls() {
 
 ### Ambiguïté d'Elision
 
-Utilisez des lifetimes explicites quand le compilateur ne peut pas inférer les relations :
+Utilise des lifetimes explicites quand le compilateur ne peut pas inférer les relations :
 
 ```rust
 // Annotations explicites pour clarifier les relations
@@ -543,9 +543,9 @@ fn config_example() {
 
 ## Points Clés
 
-✅ **Utilisez move pour transférer l'ownership des variables capturées.**  
-✅ **Annotez les lifetimes quand les closures capturent des références.**  
-🚫 **Évitez de retourner des closures qui capturent des références courtes.**
+✅ **Utilise move pour transférer l'ownership des variables capturées.**  
+✅ **Annote les lifetimes quand les closures capturent des références.**  
+🚫 **Evite de retourner des closures qui capturent des références courtes.**
 
 ### Règles de Décision
 
@@ -559,7 +559,7 @@ fn config_example() {
 
 Dans les frameworks web comme actix-web, les handlers retournent souvent des closures capturant des données de requête avec des lifetimes explicitement gérés.
 
-**Essayez Ceci** : Que se passe-t-il si tu retires `move` de `capture_with_lifetime` ?  
+**Essaie Ceci** : Que se passe-t-il si tu retires `move` de `capture_with_lifetime` ?  
 **Réponse** : Erreur du compilateur ! La closure essaierait d'emprunter `s`, qui ne vit pas assez longtemps.
 
 ## Exemple Pratique Complet
@@ -660,4 +660,4 @@ fn main() {
 
 ---
 
-**Conclusion :** La gestion des lifetimes avec les closures requiert une compréhension claire de l'ownership et des annotations de lifetime. Utilisez `move` pour transférer l'ownership, annotez les lifetimes pour les références, et évitez les dangling references pour écrire du code Rust sûr et expressif !
+**Conclusion :** La gestion des lifetimes avec les closures requiert une compréhension claire de l'ownership et des annotations de lifetime. Utilise `move` pour transférer l'ownership, annote les lifetimes pour les références, et Evite les dangling references pour écrire du code Rust sûr et expressif !

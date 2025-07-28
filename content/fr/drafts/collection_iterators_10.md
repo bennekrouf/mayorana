@@ -113,15 +113,15 @@ let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 
 ## Points Clés
 
-✅ **Utilisez .into_iter() pour** :
+✅ **Utilise .into_iter() pour** :
 - Sortir des éléments d'un Vec.
 - Optimiser la performance avec des données owned.
 - Transformer destructivement des collections.
 
-🚫 **Évitez si tu dois** :
+🚫 **Evite si tu dois** :
 - Réutiliser le Vec après itération.
 - Partager des références entre threads (`&T` est Sync; `T` pourrait ne pas l'être).
 
-**Essayez Ceci** : Que se passe-t-il si tu appelles `.into_iter()` sur un Vec et ensuite essayez d'utiliser le Vec original dans un iterateur parallèle (ex : rayon::iter) ?
+**Essaie Ceci** : Que se passe-t-il si tu appelles `.into_iter()` sur un Vec et ensuite Essaie d'utiliser le Vec original dans un iterateur parallèle (ex : rayon::iter) ?
 
-**Réponse** : Erreur au moment de la compilation ! Le Vec est déjà consommé. Utilisez `.par_iter()` à la place pour un accès parallèle read-only.
+**Réponse** : Erreur au moment de la compilation ! Le Vec est déjà consommé. Utilise `.par_iter()` à la place pour un accès parallèle read-only.

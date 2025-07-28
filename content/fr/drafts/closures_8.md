@@ -476,17 +476,17 @@ fn memory_profiling() {
 
 ## Points Clés
 
-✅ **Utilisez `impl Fn` pour un static dispatch zero-cost.**  
-🚫 **Évitez `Box<dyn Fn>` dans le code critique en performance.**  
-⚠️ **Optimisez les captures volumineuses : Préférez l'emprunt ou minimisez les données capturées.**
+✅ **Utilise `impl Fn` pour un static dispatch zero-cost.**  
+🚫 **Evite `Box<dyn Fn>` dans le code critique en performance.**  
+⚠️ **Optimise les captures volumineuses : Préfére le borrowing ou minimise les données capturées.**
 
 ### Règles d'Optimisation
 
 1. **Hot paths** → Static dispatch uniquement
-2. **Grosses captures** → Minimize ou utilisez des références
-3. **Collections de closures** → Considérez enum dispatch
-4. **Profiling** → Mesurez avant d'optimiser
-5. **Binary size matters** → Évitez excessive monomorphization
+2. **Grosses captures** → Minimize ou utilise des références
+3. **Collections de closures** → Considére enum dispatch
+4. **Profiling** → Mesure avant d'optimiser
+5. **Binary size matters** → Evite excessive monomorphization
 
 ## Impact Réel
 
@@ -494,7 +494,7 @@ fn memory_profiling() {
 - **Les frameworks GUI** comme iced exploitent les closures pour les event handlers efficacement.
 - **serde** utilise les closures pour la sérialisation zero-cost.
 
-**Essayez Ceci** : Comparez la sortie assembly d'une closure et d'une fonction avec `cargo rustc -- --emit asm` !
+**Essaie Ceci** : Compare la sortie assembly d'une closure et d'une fonction avec `cargo rustc -- --emit asm` !
 
 ## Exemple Pratique Complet
 
@@ -579,4 +579,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Les closures en Rust sont généralement aussi performantes que les functions régulières grâce au static dispatch et aux optimisations du compilateur. Les problèmes de performance surviennent principalement avec le dynamic dispatch et les captures volumineuses. Mesurez toujours avant d'optimiser !
+**Conclusion :** Les closures en Rust sont généralement aussi performantes que les functions régulières grâce au static dispatch et aux optimisations du compilateur. Les problèmes de performance surviennent principalement avec le dynamic dispatch et les captures volumineuses. Mesure toujours avant d'optimiser !
