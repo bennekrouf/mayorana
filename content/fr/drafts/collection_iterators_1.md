@@ -18,7 +18,7 @@ tags:
   - iterators
 ---
 
-# Quelle est la différence entre Vec::new() et Vec::with_capacity() ? Quand utiliseriez-vous chacune ?
+# Quelle est la différence entre Vec::new() et Vec::with_capacity() ?
 
 Comprendre les stratégies d'allocation Vec est crucial pour écrire du code Rust performant, surtout quand on traite avec des collections et iterators.
 
@@ -34,7 +34,7 @@ Comprendre les stratégies d'allocation Vec est crucial pour écrire du code Rus
 
 Utilisez `Vec::new()` quand :
 - Le nombre d'éléments est inconnu ou petit
-- Vous voulez la simplicité (ex : vecteurs courte durée)
+- Tu veux la simplicité (ex : vecteurs courte durée)
 
 ```rust
 let mut v = Vec::new(); // Bon pour usage ad-hoc
@@ -42,7 +42,7 @@ v.push(1);
 ```
 
 Utilisez `Vec::with_capacity(n)` quand :
-- Vous connaissez le nombre exact ou maximum d'éléments à l'avance
+- tu connais le nombre exact ou maximum d'éléments à l'avance
 - Optimisation pour la performance (évite les réallocations)
 
 ```rust
@@ -95,8 +95,8 @@ Vec::with_capacity(): 0.3ms  // 4x plus rapide
 
 - ✅ Par défaut `Vec::new()` pour la simplicité.  
 - ✅ Utilisez `with_capacity(n)` quand :
-  - Vous connaissez la taille à l'avance
+  - tu connais la taille à l'avance
   - La performance est critique (ex : boucles chaudes)
 
-**Essayez Ceci :** Que se passe-t-il si vous push au-delà de la capacité pré-allouée ?  
+**Essayez Ceci :** Que se passe-t-il si tu ajoutes des éléments au-delà de la capacité pré-allouée ?  
 **Réponse :** Le Vec grandit automatiquement (comme `Vec::new()`), mais seulement après avoir dépassé n.

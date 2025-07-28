@@ -36,7 +36,7 @@ for s in vec.into_iter() {  // `vec` est moved ici
 - Quand tu as besoin de transformer ou consommer la collection de façon permanente.
 - Pour chaîner des adaptateurs d'iterator qui ont besoin d'ownership (ex : `.filter().collect()`).
 
-## 2. `iter()` - Iterator d'Emprunt Immutable
+## 2. `iter()` - Iterator avec borrowing immutable
 
 - **Emprunte** la collection immutablement (`&self`).
 - **Produit** des références (`&T`).

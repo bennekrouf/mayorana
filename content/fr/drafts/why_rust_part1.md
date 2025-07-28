@@ -21,7 +21,7 @@ tags:
 
 Les langages de haut niveau comme Java, Python et JavaScript gèrent la mémoire automatiquement—mais cela vient avec des compromis.
 
-## Que Se Passe-t-il Quand Vous Écrivez Ceci ?
+## Que se passe-t-il avec ce code ?
 
 ```java
 String message = "hello";

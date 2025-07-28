@@ -27,7 +27,7 @@ Les closures en Rust capturent les variables de leur environnement de trois faç
 - **Mutable Borrow (`&mut T`)** : Si la closure modifie une variable.
 - **Ownership (`T`)** : Si la closure prend ownership (ex : via `move` ou en consommant la variable).
 
-Le compiler infère automatiquement le mode de capture le moins restrictif nécessaire. Le mot-clé `move` force la capture par ownership, mais le trait de la closure (`Fn`, `FnMut`, ou `FnOnce`) dépend de comment les variables capturées sont utilisées.
+Le compilateur infère automatiquement le mode de capture le moins restrictif nécessaire. Le mot-clé `move` force la capture par ownership, mais le trait de la closure (`Fn`, `FnMut`, ou `FnOnce`) dépend de comment les variables capturées sont utilisées.
 
 ## Traits de Closure
 
@@ -377,12 +377,12 @@ fn analyze_closure_trait() {
 
 1. **Hiérarchie** : `Fn` ⊂ `FnMut` ⊂ `FnOnce`
 2. **Capture** : Le mode de capture détermine le trait minimum
-3. **Usage** : Comment vous utilisez les variables capturées détermine le trait final
+3. **Usage** : Comment tu utilises les variables capturées détermine le trait final
 4. **`move`** : Change le mode de capture, pas nécessairement le trait
 5. **Performance** : Tous les traits sont zero-cost quand possible
 
 **Essayez Ceci :** Que se passe-t-il si une closure capture une mutable reference mais ne la mute pas ?  
-**Réponse :** Elle implémente toujours `FnMut` (puisqu'elle *pourrait* muter), mais vous pouvez la passer à une fonction attendant `FnMut`.
+**Réponse :** Elle implémente toujours `FnMut` (puisqu'elle *pourrait* muter), mais Tu peux la passer à une fonction attendant `FnMut`.
 
 ## Exemples de Débogage Courants
 
@@ -427,4 +427,4 @@ fn move_fixed() {
 
 ---
 
-**Conclusion :** Maîtriser `Fn`, `FnMut`, et `FnOnce` vous permet d'écrire des closures efficaces et expressives. Le système de traits de Rust garantit la memory safety tout en offrant des abstractions zero-cost quand possible !
+**Conclusion :** Maîtriser `Fn`, `FnMut`, et `FnOnce` te permet d'écrire des closures efficaces et expressives. Le système de traits de Rust garantit la memory safety tout en offrant des abstractions zero-cost quand possible !

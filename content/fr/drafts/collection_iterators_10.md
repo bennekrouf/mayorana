@@ -18,7 +18,7 @@ tags:
 date: '2025-07-14'
 ---
 
-# Lors de l'itération sur un Vec, pourquoi pourriez-vous utiliser .into_iter() au lieu de .iter() ? Quelles implications d'ownership cela a-t-il ?
+# Lors de l'itération sur un Vec, pourquoi utiliser .into_iter() au lieu de .iter() ?
 
 ## Différences Clés
 
@@ -32,7 +32,7 @@ date: '2025-07-14'
 
 ### Besoin d'Ownership des Éléments
 
-Utile quand vous voulez sortir des éléments du Vec (ex : transférer vers une autre collection) :
+Utile quand tu veux sortir des éléments du Vec (ex : transférer vers une autre collection) :
 
 ```rust
 let vec = vec![String::from("a"), String::from("b")];
@@ -118,10 +118,10 @@ let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 - Optimiser la performance avec des données owned.
 - Transformer destructivement des collections.
 
-🚫 **Évitez si vous devez** :
+🚫 **Évitez si tu dois** :
 - Réutiliser le Vec après itération.
 - Partager des références entre threads (`&T` est Sync; `T` pourrait ne pas l'être).
 
-**Essayez Ceci** : Que se passe-t-il si vous appelez `.into_iter()` sur un Vec et ensuite essayez d'utiliser le Vec original dans un iterateur parallèle (ex : rayon::iter) ?
+**Essayez Ceci** : Que se passe-t-il si tu appelles `.into_iter()` sur un Vec et ensuite essayez d'utiliser le Vec original dans un iterateur parallèle (ex : rayon::iter) ?
 
-**Réponse** : Erreur au compile-time ! Le Vec est déjà consommé. Utilisez `.par_iter()` à la place pour un accès parallèle read-only.
+**Réponse** : Erreur au moment de la compilation ! Le Vec est déjà consommé. Utilisez `.par_iter()` à la place pour un accès parallèle read-only.

@@ -528,7 +528,7 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 **Exemple Réel** : Les HOFs sont centrales à l'API iterator de Rust (`map`, `filter`) et aux frameworks async comme `tokio`, où les closures définissent le comportement des tâches.
 
 **Expérimentez** : Modifiez `make_adder` pour retourner une closure qui multiplie au lieu d'additionner.  
-**Réponse** : Le compiler l'accepte parfaitement, car les deux closures implémentent `Fn(i32) -> i32`, maintenant la cohérence de type.
+**Réponse** : Le compilateur l'accepte parfaitement, car les deux closures implémentent `Fn(i32) -> i32`, maintenant la cohérence de type.
 
 ## Exemple Pratique Complet
 

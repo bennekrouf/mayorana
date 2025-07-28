@@ -17,7 +17,7 @@ tags:
 
 # Comment spécifier une closure comme paramètre de function ou type de retour ?
 
-Les closures en Rust sont des types anonymes, donc vous devez utiliser des trait bounds (`Fn`, `FnMut`, `FnOnce`) pour définir leurs signatures. Voici comment travailler avec elles comme paramètres et types de retour.
+Les closures en Rust sont des types anonymes, donc tu dois utiliser des trait bounds (`Fn`, `FnMut`, `FnOnce`) pour définir leurs signatures. Voici comment travailler avec elles comme paramètres et types de retour.
 
 ## Closure comme Paramètre de Function
 
@@ -256,7 +256,7 @@ fn main() {
 ### `impl Fn` - Recommandé pour :
 - Retourner un type unique de closure (ex : factory functions).
 - Code critique en performance (pas d'allocation heap).
-- APIs où le type de closure est connu au compile time.
+- APIs où le type de closure est connu au moment de la compilation.
 
 ```rust
 // Pattern courant : builder avec closures
@@ -435,7 +435,7 @@ fn benchmark_dispatch() {
 ✅ **Type de Retour** :  
 - `impl Fn` pour static dispatch (rapide, type fixe).  
 - `Box<dyn Fn>` pour dynamic dispatch (flexible, types multiples).  
-🚀 Préférez `impl Fn` sauf si vous avez besoin de polymorphisme runtime.
+🚀 Préférez `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
 ### Règles de Décision
 
@@ -445,7 +445,7 @@ fn benchmark_dispatch() {
 4. **Flexibilité dynamique** → `Box<dyn Fn>`
 5. **Storage dans collections** → `Box<dyn Fn>`
 
-**Essayez Ceci** : Que se passe-t-il si vous retournez une closure `FnOnce` ?  
+**Essayez Ceci** : Que se passe-t-il si tu retournes une closure `FnOnce` ?  
 **Réponse** : C'est permis, mais l'appelant ne peut l'invoquer qu'une fois !
 
 ## Exemple Pratique Complet
@@ -490,4 +490,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Maîtriser les closures comme paramètres et types de retour vous donne une flexibilité énorme pour créer des APIs expressives et performantes en Rust. Choisissez `impl Fn` pour la performance, `Box<dyn Fn>` pour la flexibilité !
+**Conclusion :** Maîtriser les closures comme paramètres et types de retour te donne une flexibilité énorme pour créer des APIs expressives et performantes en Rust. Choisissez `impl Fn` pour la performance, `Box<dyn Fn>` pour la flexibilité !

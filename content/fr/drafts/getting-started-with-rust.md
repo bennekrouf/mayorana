@@ -16,11 +16,11 @@ tags:
 
 # Débuter avec Rust: Un Guide pour Débutants
 
-Rust gagne considérablement en popularité parmi les développeurs pour son focus sur la performance, la memory safety, et la concurrence. Si vous êtes nouveau à Rust, ce guide vous aidera à débuter avec les bases.
+Rust gagne considérablement en popularité parmi les développeurs pour son focus sur la performance, la memory safety, et la concurrence. Si tu es nouveau à Rust, ce guide t'aidera à débuter avec les bases.
 
 ## Configuration de Votre Environnement
 
-D'abord, vous devez installer Rust sur votre système. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
+D'abord, tu dois installer Rust sur votre système. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -37,7 +37,7 @@ rustc --version
 cargo --version
 ```
 
-Vous devriez voir les numéros de version de Rust et Cargo s'afficher.
+Tu dois voir les numéros de version de Rust et Cargo s'afficher.
 
 ### Configuration de l'Éditeur
 
@@ -63,7 +63,7 @@ fn main() {
 }
 ```
 
-Pour compiler et exécuter ce programme, utilisez les commandes suivantes :
+Pour compilateur et exécuter ce programme, utilisez les commandes suivantes :
 
 ```bash
 rustc hello.rs
@@ -89,7 +89,7 @@ fn main() {           // Fonction principale - point d'entrée du programme
 
 ## Comprendre Cargo
 
-Cargo est le système de build et gestionnaire de packages de Rust. Il gère de nombreuses tâches comme compiler votre code, télécharger des libraries, et compiler ces libraries.
+Cargo est le système de build et gestionnaire de packages de Rust. Il gère de nombreuses tâches comme compilateur votre code, télécharger des libraries, et compilateur ces libraries.
 
 ### Créer un Nouveau Projet
 
@@ -580,13 +580,13 @@ fn main() {
             }
         };
         
-        println!("Vous avez deviné : {}", guess);
+        println!("Tu as deviné : {}", guess);
         
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Trop petit !"),
             Ordering::Greater => println!("Trop grand !"),
             Ordering::Equal => {
-                println!("Vous avez gagné !");
+                println!("Tu as gagné !");
                 break;
             }
         }
@@ -640,7 +640,7 @@ Exécutez avec `cargo test`.
 
 ## Prochaines Étapes
 
-Maintenant que vous avez les bases, essayez de construire un petit projet pour pratiquer vos compétences. Voici quelques suggestions :
+Maintenant que tu as les bases, essayez de construire un petit projet pour pratiquer vos compétences. Voici quelques suggestions :
 
 ### Projets Débutants
 1. **Calculatrice en ligne de commande**
@@ -679,4 +679,4 @@ Bon codage avec Rust ! 🦀
 
 ---
 
-**Astuce :** N'hésitez pas à expérimenter avec le code. Rust a un excellent compilateur qui vous guidera avec des messages d'erreur très informatifs. Chaque erreur est une opportunité d'apprentissage !
+**Astuce :** N'hésitez pas à expérimenter avec le code. Rust a un excellent compilateur qui te guidera avec des messages d'erreur très informatifs. Chaque erreur est une opportunité d'apprentissage !

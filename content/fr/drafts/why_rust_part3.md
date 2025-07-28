@@ -6,7 +6,7 @@ slug: why-rust-memory-safe-fr
 date: '2025-08-05'
 author: mayo
 excerpt: >-
-  Rust vous donne la performance de C avec la memory safety appliquée au compile time.
+  Rust te donne la performance de C avec la memory safety appliquée au moment de la compilation.
   Apprenez comment ownership et borrowing éliminent des classes entières de bugs.
 category: rust
 tags:
@@ -55,7 +55,7 @@ fn main() {
 }
 ```
 
-**Message du compiler :**
+**Message du compilateur :**
 ```
 error[E0597]: `s` does not live long enough
   --> src/main.rs:5:13
@@ -66,7 +66,7 @@ error[E0597]: `s` does not live long enough
    |     - `s` dropped here while still borrowed
 ```
 
-Le bug est **attrapé au compile time**, pas au runtime.
+Le bug est **attrapé au moment de la compilation**, pas au runtime.
 
 ## Borrowing: References Sans Danger
 
@@ -98,7 +98,7 @@ fn main() {
 ```
 
 **Les règles de borrowing de Rust préviennent :**
-- Data races au compile time
+- Data races au moment de la compilation
 - Dangling pointers
 - Iterator invalidation
 - Problèmes de thread safety
@@ -224,7 +224,7 @@ fn main() {
 }
 ```
 
-**Pas de data races possibles** - appliqué au compile time.
+**Pas de data races possibles** - appliqué au moment de la compilation.
 
 ## Comparaison des Features
 
@@ -253,7 +253,7 @@ fn main() {
 ✅ **Data races** - règles de borrowing  
 ✅ **Iterator invalidation** - vérifications compile-time  
 
-### Ce que Vous Obtenez
+### Ce que tu obtiens
 🚀 **Performance niveau C**  
 🛡️ **Memory safety**  
 ⚡ **Zero runtime overhead**  
@@ -294,10 +294,10 @@ Compiler intelligent → Système ownership → Code rapide + sûr
 
 ## Points Clés
 
-🦀 **Rust vous donne le meilleur des deux mondes :**
+🦀 **Rust te donne le meilleur des deux mondes :**
 
 ✅ **Performance prévisible** - pas de pauses GC, pas d'overhead runtime  
-✅ **Memory safety** - classes entières de bugs éliminées au compile time  
+✅ **Memory safety** - classes entières de bugs éliminées au moment de la compilation  
 ✅ **Concurrence sans peur** - data races préventées par le type system  
 ✅ **Systems programming** - contrôle bas niveau quand nécessaire  
 ✅ **Ergonomie moderne** - type system puissant, gestion de packages  
@@ -313,7 +313,7 @@ Compiler intelligent → Système ownership → Code rapide + sûr
 
 **Rust n'est pas "C plus sûr".** C'est un contrat fondamentalement différent :
 
-> "Vous n'avez pas besoin d'un runtime pour être sûr—juste d'un compiler intelligent."
+> "Tu n'as pas besoin d'un runtime pour être sûr—juste d'un compilateur intelligent."
 
 **Le Résultat :** Memory safety zero-cost. Le saint graal du systems programming.
 

@@ -25,7 +25,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 
 | **Aspect** | **impl Fn() (Static Dispatch)** | **Box&lt;dyn Fn()&gt; (Dynamic Dispatch)** |
 |------------|--------------------------------|--------------------------------------|
-| **Mécanisme de Dispatch** | Monomorphized au compile time (zero-cost) | Utilise des vtables (runtime lookup) |
+| **Mécanisme de Dispatch** | Monomorphized au moment de la compilation (zero-cost) | Utilise des vtables (runtime lookup) |
 | **Performance** | Plus rapide (~1–2 ns, appel direct) | Plus lent (~5–10 ns, vtable lookup) |
 | **Flexibilité** | Type concret unique par instance | Peut stocker des closures hétérogènes |
 | **Mémoire** | Stack-allocated (sauf si moved) | Heap-allocated (fat pointer + heap data) |
@@ -35,10 +35,10 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 
 ### 1. impl Fn() (Static Dispatch)
 - **Utilisez Quand** :
-  - Le type de closure est fixe et connu au compile time.
+  - Le type de closure est fixe et connu au moment de la compilation.
   - La performance est critique (ex : hot loops, systèmes embarqués).
   - Les zero-cost abstractions sont désirées.
-- **Pourquoi** : Le compiler génère une fonction unique pour chaque type de closure via monomorphization, permettant l'inlining et aucun overhead runtime.
+- **Pourquoi** : Le compilateur génère une fonction unique pour chaque type de closure via monomorphization, permettant l'inlining et aucun overhead runtime.
 
 **Exemple** :
 ```rust
@@ -56,7 +56,7 @@ Pas d'allocation heap, appels de fonction directs, et performance optimale.
 
 ### 2. Box&lt;dyn Fn()&gt; (Dynamic Dispatch)
 - **Utilisez Quand** :
-  - Vous devez stocker différentes closures dans la même collection (ex : callbacks).
+  - Tu dois stocker différentes closures dans la même collection (ex : callbacks).
   - Les types de closures varient au runtime (ex : systèmes de plugins).
   - La flexibilité l'emporte sur les coûts de performance.
 - **Pourquoi** : `dyn Fn()` utilise une vtable pour la résolution de méthode au runtime, permettant des closures hétérogènes au coût d'allocation heap et d'overhead de lookup.
@@ -348,7 +348,7 @@ fn bench(c: &mut Criterion) {
 }
 ```
 
-Attendez-vous à ce que `impl Fn()` soit plus rapide et utilise moins de mémoire, confirmant sa pertinence pour le code critique en performance.
+`impl Fn()` est plus rapide et utilise moins de mémoire.
 
 ## Conclusion
 

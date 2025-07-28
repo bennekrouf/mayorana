@@ -23,7 +23,7 @@ date: '2025-07-12'
 
 ## Overhead de Performance
 
-Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâce au static dispatch et aux optimisations du compiler. Cependant, des scénarios spécifiques peuvent introduire des coûts :
+Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâce au static dispatch et aux optimisations du compilateur. Cependant, des scénarios spécifiques peuvent introduire des coûts :
 
 | Aspect | Closures | Functions Régulières |
 |--------|----------|-------------------|
@@ -213,7 +213,7 @@ fn performance_comparison() {
 
 ```rust
 fn inlining_example() {
-    // Le compiler inline cette closure complètement
+    // Le compilateur inline cette closure complètement
     let x = 5;
     let closure = || x * 2; // Inlined → pas d'appel de fonction
     println!("{}", closure()); // ASM: `mov eax, 10`
@@ -579,4 +579,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Les closures en Rust sont généralement aussi performantes que les functions régulières grâce au static dispatch et aux optimisations du compiler. Les problèmes de performance surviennent principalement avec le dynamic dispatch et les captures volumineuses. Mesurez toujours avant d'optimiser !
+**Conclusion :** Les closures en Rust sont généralement aussi performantes que les functions régulières grâce au static dispatch et aux optimisations du compilateur. Les problèmes de performance surviennent principalement avec le dynamic dispatch et les captures volumineuses. Mesurez toujours avant d'optimiser !

@@ -1,6 +1,6 @@
 ---
 id: dangling-pointer-rust
-title: "What is a dangling pointer, and how does Rust prevent it at compile time?"
+title: "How does Rust prevent dangling pointer at compile time?"
 slug: dangling-pointer-rust
 locale: "en"
 date: '2025-07-07'

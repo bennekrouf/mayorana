@@ -1,6 +1,6 @@
 ---
 id: c-low-level-cost-fr
-title: "C Vous Donne le Contrôle, Mais à Quel Prix ?"
+title: "C te donne le Contrôle, mais à Quel Prix ?"
 locale: "fr"
 slug: c-low-level-cost-fr
 date: '2025-08-01'
@@ -39,7 +39,7 @@ printf("%s", msg); // ❌ Use after free
 
 ## Modèle de Mémoire Manuelle
 
-Vous devez :
+Tu dois :
 - Allouer la mémoire
 - Tracker la ownership  
 - La libérer manuellement
@@ -120,7 +120,7 @@ $ valgrind ./my_program
 ==12345==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
 ```
 
-**Le problème :** Bugs trouvés au runtime, pas au compile time.
+**Le problème :** Bugs trouvés au runtime, pas au moment de la compilation.
 
 ## Trade-off Performance vs Sécurité
 
@@ -187,7 +187,7 @@ $ ./a.out
 
 ## Le Problème Fondamental
 
-C vous donne deux mauvais choix :
+C te donne deux mauvais choix :
 
 **Option 1 : Manual Memory Management**
 ```c
@@ -220,6 +220,6 @@ free(data);  // Facile d'oublier ou de double-free
 
 **Le Défi :** Nous voulons la performance de C sans son danger.
 
-**La Question :** Et si le compiler pouvait prévenir les bugs mémoire au compile time ?
+**La Question :** Et si le compilateur pouvait prévenir les bugs mémoire au moment de la compilation ?
 
 **➡️ Suivant :** "Ownership de Rust : Memory Safety Sans Garbage Collection"

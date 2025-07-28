@@ -25,7 +25,7 @@ Comprendre la distinction entre functions et closures est fondamental pour maît
 
 | Functions | Closures |
 |-----------|----------|
-| Définies au compile time avec `fn` | Anonymes, créées au runtime |
+| Définies au moment de la compilation avec `fn` | Anonymes, créées au runtime |
 | Static dispatch (pas d'overhead runtime) | Peut impliquer du dynamic dispatch (trait objects) |
 | Ne peuvent pas capturer les variables d'environnement | Peuvent capturer les variables du scope englobant |
 | Ont toujours un type connu | Type unique et inféré (chaque closure a son propre type) |
@@ -67,7 +67,7 @@ Quand les closures sont des trait objects (ex: `Box<dyn Fn(i32) -> i32>`), Rust 
 ## Quand Utiliser Chacune
 
 Utilisez les **Functions** quand :
-- Vous avez besoin de zero-cost abstractions (ex : opérations mathématiques)
+- Tu as besoin de zero-cost abstractions (ex : opérations mathématiques)
 - Aucune capture d'environnement n'est requise
 
 ```rust
@@ -75,7 +75,7 @@ fn add(a: i32, b: i32) -> i32 { a + b }
 ```
 
 Utilisez les **Closures** quand :
-- Vous devez capturer l'état de l'environnement
+- Tu dois capturer l'état de l'environnement
 - Écriture de logique courte et ad-hoc (ex : callbacks, iterators)
 
 ```rust
@@ -109,7 +109,7 @@ fn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {
 
 ✅ **Functions** : Performance prévisible, pas de captures  
 ✅ **Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
-🚀 Préférez le static dispatch (`impl Fn`) sauf si vous avez besoin de trait objects
+🚀 Préférez le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
 
 **Essayez Ceci :** Que se passe-t-il si une closure capture une mutable reference et est appelée deux fois ?  
 **Réponse :** Le borrow checker assure un accès exclusif—ça ne compilera pas sauf si le premier appel se termine !
@@ -172,7 +172,7 @@ fn demonstrate_closure_traits() {
     
     let y = 42;
     
-    // Fn - emprunte immutablement
+    // Fn - borrow immutable
     let borrow = || {
         println!("{}", y); // y peut être utilisé plusieurs fois
     };
@@ -343,4 +343,4 @@ fn efficient_capture() {
 
 ---
 
-**Conclusion :** Maîtriser les functions et closures en Rust vous permet d'écrire du code à la fois expressif et performant. Choisissez functions pour la prévisibilité, closures pour la flexibilité, et static dispatch quand c'est possible !
+**Conclusion :** Maîtriser les functions et closures en Rust te permet d'écrire du code à la fois expressif et performant. Choisissez functions pour la prévisibilité, closures pour la flexibilité, et static dispatch quand c'est possible !

@@ -21,7 +21,7 @@ date: '2025-07-12'
 
 # Comment gérer les lifetimes lors du retour d'une closure qui capture des variables de son environnement ?
 
-Quand on retourne une closure qui capture des variables (spécialement des références), vous devez assurer que les données capturées survivent à la closure. Rust applique ceci à travers les annotations de lifetime et les règles d'ownership. Voici comment le gérer :
+Quand on retourne une closure qui capture des variables (spécialement des références), tu dois assurer que les données capturées survivent à la closure. Rust applique ceci à travers les annotations de lifetime et les règles d'ownership. Voici comment le gérer :
 
 ## Stratégies Clés
 
@@ -38,7 +38,7 @@ fn create_closure() -> impl Fn() -> String {
 
 ### Annotez les Lifetimes pour les Références Capturées
 
-Si vous capturez des références, liez explicitement le lifetime de la closure aux données d'entrée :
+Si tu captures des références, liez explicitement le lifetime de la closure aux données d'entrée :
 
 ```rust
 fn capture_ref<'a>(s: &'a str) -> impl Fn() -> &'a str + 'a {
@@ -406,7 +406,7 @@ fn demonstrate_pitfalls() {
 
 ### Ambiguïté d'Elision
 
-Utilisez des lifetimes explicites quand le compiler ne peut pas inférer les relations :
+Utilisez des lifetimes explicites quand le compilateur ne peut pas inférer les relations :
 
 ```rust
 // Annotations explicites pour clarifier les relations
@@ -559,8 +559,8 @@ fn config_example() {
 
 Dans les frameworks web comme actix-web, les handlers retournent souvent des closures capturant des données de requête avec des lifetimes explicitement gérés.
 
-**Essayez Ceci** : Que se passe-t-il si vous retirez `move` de `capture_with_lifetime` ?  
-**Réponse** : Erreur du compiler ! La closure essaierait d'emprunter `s`, qui ne vit pas assez longtemps.
+**Essayez Ceci** : Que se passe-t-il si tu retires `move` de `capture_with_lifetime` ?  
+**Réponse** : Erreur du compilateur ! La closure essaierait d'emprunter `s`, qui ne vit pas assez longtemps.
 
 ## Exemple Pratique Complet
 

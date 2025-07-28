@@ -584,7 +584,7 @@ fn cache_example() {
 fn decision_guide() {
     // ✅ Utilisez Generic quand:
     // - Performance critique
-    // - Type de closure connu au compile time
+    // - Type de closure connu au moment de la compilation
     // - Pas besoin de changer la closure après construction
     
     struct FastProcessor<F: Fn(i32) -> i32> {
@@ -691,7 +691,7 @@ fn mutable_example() {
 ## Points Clés
 
 ✅ **Structs génériques : Meilleures pour performance et static dispatch.**  
-✅ **Trait objects : Utilisez quand vous stockez des closures hétérogènes.**  
+✅ **Trait objects : Utilisez quand tu stockes des closures hétérogènes.**  
 ✅ **Lifetimes : Requis si la closure capture des références.**
 
 ### Règles Pratiques
