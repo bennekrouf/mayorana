@@ -9,7 +9,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
 
   // Debug logging for production
-  console.log('i18n config - requested locale:', locale);
+  // console.log('i18n config - requested locale:', locale);
 
   if (!locale || !locales.includes(locale as any)) {
     console.log('Invalid locale, using default:', defaultLocale);
@@ -18,7 +18,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   try {
     const messages = (await import(`./messages/${locale}.json`)).default;
-    console.log('Loaded messages for locale:', locale);
+    // console.log('Loaded messages for locale:', locale);
 
     return {
       locale,
