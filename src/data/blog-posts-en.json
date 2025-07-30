@@ -166,6 +166,79 @@
     ]
   },
   {
+    "id": "concurrency-rust",
+    "slug": "concurrency-rust",
+    "title": "How Rust's Ownership and Borrowing Ensure Safe Concurrency",
+    "date": "2025-07-30",
+    "excerpt": "Rust memory and string",
+    "content": "Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating data races without requiring a garbage collector. This approach ensures safe, high-performance parallelism with minimal runtime overhead.\n\n## Rust’s Concurrency Model\n\nRust uses the following mechanisms to manage concurrency:\n- **Ownership**: Ensures exclusive mutable access to data.\n- **Borrowing**: Governs how data is accessed via references.\n- **Lifetimes**: Prevent dangling references across threads.\n- **Send/Sync Traits**: Define which types are safe for threading.\n\n## How Ownership and Borrowing Prevent Data Races\n\nA **data race** occurs when:\n- Two threads access the same data concurrently.\n- At least one access is a write.\n- There’s no synchronization.\n\nRust’s rules make data races impossible in safe code:\n\n### 1. Exclusive Mutability (`&mut T`)\n- Only one mutable reference (`&mut T`) can exist at a time, enforced by the borrow checker.\n- This prevents multiple threads from writing to the same data simultaneously.\n\n**Example**:\n```rust\nlet mut data = 0;\nlet r1 = &mut data;  // OK: Mutable borrow\n// let r2 = &mut data;  // ERROR: Cannot borrow `data` as mutable more than once\n```\n\n### 2. No Shared Mutability Without Synchronization\n- Shared references (`&T`) are read-only, safe for concurrent access.\n- To mutate shared data, synchronization primitives like `Mutex` are required:\n\n**Example**:\n```rust\nuse std::sync::Mutex;\n\nlet shared = Mutex::new(42);\nlet guard = shared.lock().unwrap();  // Exclusive access\n*guard += 1;  // Safe mutation\n```\n\n## Thread-Safe Types: Send and Sync\n\n- **Send**: A type can be safely transferred across threads (e.g., `String`, `Mutex<T>`).\n- **Sync**: A type can be safely shared between threads via references (e.g., `&i32`, `Arc<T>`).\n\n**Example: Spawning Threads**:\n```rust\nuse std::thread;\n\nlet value = String::from(\"hello\");  // `String` is `Send`\nthread::spawn(move || {             // `move` transfers ownership\n    println!(\"{}\", value);          // Safe: no other thread can access `value`\n}).join().unwrap();\n```\n\n## Common Concurrency Tools\n\n| **Tool** | **Purpose** | **Thread Safety Mechanism** |\n|----------|-------------|-----------------------------|\n| `Mutex<T>` | Mutual exclusion | Locks for exclusive access |\n| `Arc<T>` | Atomic reference counting | Shared ownership across threads |\n| `RwLock<T>` | Read-write lock | Multiple readers or one writer |\n| `mpsc channels` | Message passing | Transfers ownership between threads |\n\n**Example: Shared State with Arc + Mutex**:\n```rust\nuse std::sync::{Arc, Mutex};\nuse std::thread;\n\nlet counter = Arc::new(Mutex::new(0));\nlet mut handles = vec![];\n\nfor _ in 0..10 {\n    let counter = Arc::clone(&counter);\n    handles.push(thread::spawn(move || {\n        let mut num = counter.lock().unwrap();\n        *num += 1;  // Mutex ensures exclusive access\n    }));\n}\n\nfor handle in handles {\n    handle.join().unwrap();\n}\nprintln!(\"Result: {}\", *counter.lock().unwrap());  // Outputs 10\n```\n\n## Why This Matters\n\n- **No runtime overhead**: Safety checks occur at compile time.\n- **No garbage collector**: Safe concurrency without GC pauses.\n- **Fearless parallelism**: The compiler rejects unsafe patterns, enabling confident concurrent programming.\n\n## Key Takeaways\n\n✅ **Ownership rules prevent**:\n- Concurrent mutable access (no data races).\n- Dangling references (via lifetimes).\n\n✅ **Send/Sync enforce** thread safety at compile time.\n\n🚀 **Use `Mutex`, `Arc`, or channels** for safe shared state.\n\n**Real-World Impact**: Crates like `rayon` (parallel iterators) and `tokio` (async runtime) rely on these guarantees for robust concurrency.\n\n**Experiment**: What happens if you try to share an `Rc<T>` across threads?  \n**Answer**: Compile error! `Rc<T>` is not `Send` (not thread-safe). Use `Arc<T>` instead.",
+    "contentHtml": "<p>Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating data races without requiring a garbage collector. This approach ensures safe, high-performance parallelism with minimal runtime overhead.</p>\n<h2>Rust’s Concurrency Model</h2>\n<p>Rust uses the following mechanisms to manage concurrency:</p>\n<ul>\n<li><strong>Ownership</strong>: Ensures exclusive mutable access to data.</li>\n<li><strong>Borrowing</strong>: Governs how data is accessed via references.</li>\n<li><strong>Lifetimes</strong>: Prevent dangling references across threads.</li>\n<li><strong>Send/Sync Traits</strong>: Define which types are safe for threading.</li>\n</ul>\n<h2>How Ownership and Borrowing Prevent Data Races</h2>\n<p>A <strong>data race</strong> occurs when:</p>\n<ul>\n<li>Two threads access the same data concurrently.</li>\n<li>At least one access is a write.</li>\n<li>There’s no synchronization.</li>\n</ul>\n<p>Rust’s rules make data races impossible in safe code:</p>\n<h3>1. Exclusive Mutability (<code>&amp;mut T</code>)</h3>\n<ul>\n<li>Only one mutable reference (<code>&amp;mut T</code>) can exist at a time, enforced by the borrow checker.</li>\n<li>This prevents multiple threads from writing to the same data simultaneously.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let mut data = 0;\nlet r1 = &amp;mut data;  // OK: Mutable borrow\n// let r2 = &amp;mut data;  // ERROR: Cannot borrow `data` as mutable more than once\n</code></pre>\n<h3>2. No Shared Mutability Without Synchronization</h3>\n<ul>\n<li>Shared references (<code>&amp;T</code>) are read-only, safe for concurrent access.</li>\n<li>To mutate shared data, synchronization primitives like <code>Mutex</code> are required:</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">use std::sync::Mutex;\n\nlet shared = Mutex::new(42);\nlet guard = shared.lock().unwrap();  // Exclusive access\n*guard += 1;  // Safe mutation\n</code></pre>\n<h2>Thread-Safe Types: Send and Sync</h2>\n<ul>\n<li><strong>Send</strong>: A type can be safely transferred across threads (e.g., <code>String</code>, <code>Mutex&lt;T&gt;</code>).</li>\n<li><strong>Sync</strong>: A type can be safely shared between threads via references (e.g., <code>&amp;i32</code>, <code>Arc&lt;T&gt;</code>).</li>\n</ul>\n<p><strong>Example: Spawning Threads</strong>:</p>\n<pre><code class=\"language-rust\">use std::thread;\n\nlet value = String::from(&quot;hello&quot;);  // `String` is `Send`\nthread::spawn(move || {             // `move` transfers ownership\n    println!(&quot;{}&quot;, value);          // Safe: no other thread can access `value`\n}).join().unwrap();\n</code></pre>\n<h2>Common Concurrency Tools</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Tool</strong></th>\n<th><strong>Purpose</strong></th>\n<th><strong>Thread Safety Mechanism</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>Mutex&lt;T&gt;</code></td>\n<td>Mutual exclusion</td>\n<td>Locks for exclusive access</td>\n</tr>\n<tr>\n<td><code>Arc&lt;T&gt;</code></td>\n<td>Atomic reference counting</td>\n<td>Shared ownership across threads</td>\n</tr>\n<tr>\n<td><code>RwLock&lt;T&gt;</code></td>\n<td>Read-write lock</td>\n<td>Multiple readers or one writer</td>\n</tr>\n<tr>\n<td><code>mpsc channels</code></td>\n<td>Message passing</td>\n<td>Transfers ownership between threads</td>\n</tr>\n</tbody></table>\n<p><strong>Example: Shared State with Arc + Mutex</strong>:</p>\n<pre><code class=\"language-rust\">use std::sync::{Arc, Mutex};\nuse std::thread;\n\nlet counter = Arc::new(Mutex::new(0));\nlet mut handles = vec![];\n\nfor _ in 0..10 {\n    let counter = Arc::clone(&amp;counter);\n    handles.push(thread::spawn(move || {\n        let mut num = counter.lock().unwrap();\n        *num += 1;  // Mutex ensures exclusive access\n    }));\n}\n\nfor handle in handles {\n    handle.join().unwrap();\n}\nprintln!(&quot;Result: {}&quot;, *counter.lock().unwrap());  // Outputs 10\n</code></pre>\n<h2>Why This Matters</h2>\n<ul>\n<li><strong>No runtime overhead</strong>: Safety checks occur at compile time.</li>\n<li><strong>No garbage collector</strong>: Safe concurrency without GC pauses.</li>\n<li><strong>Fearless parallelism</strong>: The compiler rejects unsafe patterns, enabling confident concurrent programming.</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Ownership rules prevent</strong>:</p>\n<ul>\n<li>Concurrent mutable access (no data races).</li>\n<li>Dangling references (via lifetimes).</li>\n</ul>\n<p>✅ <strong>Send/Sync enforce</strong> thread safety at compile time.</p>\n<p>🚀 <strong>Use <code>Mutex</code>, <code>Arc</code>, or channels</strong> for safe shared state.</p>\n<p><strong>Real-World Impact</strong>: Crates like <code>rayon</code> (parallel iterators) and <code>tokio</code> (async runtime) rely on these guarantees for robust concurrency.</p>\n<p><strong>Experiment</strong>: What happens if you try to share an <code>Rc&lt;T&gt;</code> across threads?<br><strong>Answer</strong>: Compile error! <code>Rc&lt;T&gt;</code> is not <code>Send</code> (not thread-safe). Use <code>Arc&lt;T&gt;</code> instead.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "concurrency",
+      "ownership",
+      "borrowing"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "How Rust's Ownership and Borrowing Ensure Safe Concurrency",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "concurrency",
+        "ownership",
+        "borrowing"
+      ]
+    },
+    "headings": [
+      {
+        "id": "rusts-concurrency-model",
+        "text": "Rust’s Concurrency Model",
+        "level": 2
+      },
+      {
+        "id": "how-ownership-and-borrowing-prevent-data-races",
+        "text": "How Ownership and Borrowing Prevent Data Races",
+        "level": 2
+      },
+      {
+        "id": "1-exclusive-mutability-andmut-t",
+        "text": "1. Exclusive Mutability (`&mut T`)",
+        "level": 3
+      },
+      {
+        "id": "2-no-shared-mutability-without-synchronization",
+        "text": "2. No Shared Mutability Without Synchronization",
+        "level": 3
+      },
+      {
+        "id": "thread-safe-types-send-and-sync",
+        "text": "Thread-Safe Types: Send and Sync",
+        "level": 2
+      },
+      {
+        "id": "common-concurrency-tools",
+        "text": "Common Concurrency Tools",
+        "level": 2
+      },
+      {
+        "id": "why-this-matters",
+        "text": "Why This Matters",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "flatten-vec-iterators-performance",
     "slug": "flatten-vec-iterators-performance",
     "title": "Flatten a Vec<Vec<T>> into a Vec<T> using iterators",
