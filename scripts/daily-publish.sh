@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily Publishing Script with Alternating Locales (FR/EN)
+# Daily Publishing Script with Fixed Detection Logic
 # File: scripts/daily-publish.sh
 
 set -e
@@ -51,14 +51,17 @@ send_success_notification() {
   local target_locale="$2"
   local article_name="$3"
 
+  local published_upper=$(echo "$published_locale" | tr '[:lower:]' '[:upper:]')
+  local target_upper=$(echo "$target_locale" | tr '[:lower:]' '[:upper:]')
+
   local locale_status=""
   if [ "$published_locale" = "$target_locale" ]; then
     locale_status="🎯 on schedule"
   else
-    locale_status="🔄 fallback (target was ${target_locale^^})"
+    locale_status="🔄 fallback (target was $target_upper)"
   fi
 
-  local message="✅ Daily blog published! 📝 ${published_locale^^} article: \"$article_name\" ($locale_status)"
+  local message="✅ Daily blog published! 📝 $published_upper article: \"$article_name\" ($locale_status)"
 
   if [ -n "$SLACK_WEBHOOK_URL" ]; then
     curl -s -X POST -H 'Content-type: application/json' \
@@ -69,10 +72,23 @@ send_success_notification() {
   log "$message"
 }
 
+# Count queue files before publishing
+count_queue_files() {
+  local locale="$1"
+  local queue_dir="content/${locale}/queue"
+
+  if [ -d "$queue_dir" ]; then
+    find "$queue_dir" -name "*.md" | wc -l
+  else
+    echo "0"
+  fi
+}
+
 main() {
   local target_locale=$(get_target_locale)
+  local target_locale_upper=$(echo "$target_locale" | tr '[:lower:]' '[:upper:]')
   log "🚀 Starting daily publishing check..."
-  log "📅 Day $(date +%j) of year - Target locale: ${target_locale^^}"
+  log "📅 Day $(date +%j) of year - Target locale: $target_locale_upper"
 
   # Validate environment
   if [ ! -f "package.json" ] || [ ! -d "content" ]; then
@@ -86,85 +102,97 @@ main() {
   fi
 
   # Pull latest changes
-  log "📥 Checking for new content..."
-  git pull origin master 2>/dev/null || log "⚠️  Git pull failed (continuing)"
+  log "📥 Pulling latest changes..."
+  if git pull origin master 2>/dev/null; then
+    log "✅ Git pull successful"
+  else
+    log "⚠️  Git pull failed (continuing)"
+  fi
 
-  # Check status with locale awareness
-  log "🔍 Checking publishing status..."
-  if ! node scripts/blog-cli.js status --quiet >/dev/null 2>&1; then
-    log "⚠️  CLI not working, skipping publish"
+  # Count queue files BEFORE publishing
+  local en_queue_before=$(count_queue_files "en")
+  local fr_queue_before=$(count_queue_files "fr")
+
+  log "🔍 Queue status before publishing:"
+  log "   EN queue: $en_queue_before files"
+  log "   FR queue: $fr_queue_before files"
+
+  # Check if we have anything to publish
+  if [ "$en_queue_before" -eq 0 ] && [ "$fr_queue_before" -eq 0 ]; then
+    log "📭 No content to publish (queues are empty)"
     exit 0
   fi
 
-  # Show today's publishing plan
   log "🎯 Publishing plan:"
-  log "   Target: ${target_locale^^}"
-
-  # Check available content in target locale
-  local target_queue_dir="content/${target_locale}/queue"
-  local fallback_locale="en"
-  if [ "$target_locale" = "en" ]; then
-    fallback_locale="fr"
-  fi
-  local fallback_queue_dir="content/${fallback_locale}/queue"
-
-  local target_count=0
-  local fallback_count=0
-
-  if [ -d "$target_queue_dir" ]; then
-    target_count=$(find "$target_queue_dir" -name "*.md" | wc -l)
-  fi
-
-  if [ -d "$fallback_queue_dir" ]; then
-    fallback_count=$(find "$fallback_queue_dir" -name "*.md" | wc -l)
-  fi
-
-  log "   Available: ${target_locale^^}=$target_count, ${fallback_locale^^}=$fallback_count"
+  log "   Target: $target_locale_upper"
 
   # Attempt to publish
   log "📝 Attempting to publish..."
 
+  # Run the publish script and capture its success/failure
   if node scripts/schedule-publish.js --publish 2>&1 | tee -a "$LOG_FILE"; then
-    # Determine what was actually published
-    local published_article=""
+    log "✅ Publish script completed successfully"
+
+    # Count queue files AFTER publishing to detect what was moved
+    local en_queue_after=$(count_queue_files "en")
+    local fr_queue_after=$(count_queue_files "fr")
+
+    log "📊 Queue status after publishing:"
+    log "   EN queue: $en_queue_after files (was $en_queue_before)"
+    log "   FR queue: $fr_queue_after files (was $fr_queue_before)"
+
     local published_locale=""
+    local published_article=""
 
-    # Check which locale got new content
-    if [ -d "content/en/blog" ]; then
-      local en_latest=$(ls -t content/en/blog/*.md 2>/dev/null | head -1 || echo "")
-      if [ -n "$en_latest" ] && [ "$en_latest" -nt "$LOG_FILE" ]; then
-        published_locale="en"
-        published_article=$(basename "$en_latest" .md)
+    # Detect which locale had a file moved
+    if [ "$en_queue_after" -lt "$en_queue_before" ]; then
+      published_locale="en"
+      # Get the most recently added file in EN blog
+      if [ -d "content/en/blog" ]; then
+        published_article=$(ls -t content/en/blog/*.md 2>/dev/null | head -1 | xargs basename 2>/dev/null | sed 's/\.md$//' || echo "unknown")
       fi
-    fi
-
-    if [ -d "content/fr/blog" ] && [ -z "$published_locale" ]; then
-      local fr_latest=$(ls -t content/fr/blog/*.md 2>/dev/null | head -1 || echo "")
-      if [ -n "$fr_latest" ] && [ "$fr_latest" -nt "$LOG_FILE" ]; then
-        published_locale="fr"
-        published_article=$(basename "$fr_latest" .md)
+    elif [ "$fr_queue_after" -lt "$fr_queue_before" ]; then
+      published_locale="fr"
+      # Get the most recently added file in FR blog
+      if [ -d "content/fr/blog" ]; then
+        published_article=$(ls -t content/fr/blog/*.md 2>/dev/null | head -1 | xargs basename 2>/dev/null | sed 's/\.md$//' || echo "unknown")
       fi
     fi
 
     if [ -n "$published_locale" ]; then
+      local published_locale_upper=$(echo "$published_locale" | tr '[:lower:]' '[:upper:]')
       log "✅ Article published successfully!"
-      log "📝 Published: $published_article (${published_locale^^})"
+      log "📝 Published: $published_article ($published_locale_upper)"
 
       # Regenerate data
       log "🔄 Regenerating blog data..."
-      node scripts/generate-blog-data.js || handle_error "Blog data generation failed"
+      if node scripts/generate-blog-data.js 2>&1 | tee -a "$LOG_FILE"; then
+        log "✅ Blog data regenerated"
+      else
+        handle_error "Blog data generation failed"
+      fi
 
       log "🗺️  Regenerating sitemap..."
-      node scripts/generate-sitemap.js || handle_error "Sitemap generation failed"
+      if node scripts/generate-sitemap.js 2>&1 | tee -a "$LOG_FILE"; then
+        log "✅ Sitemap regenerated"
+      else
+        handle_error "Sitemap generation failed"
+      fi
 
       # Commit changes
       log "📝 Committing published content..."
-      git add content/ src/data/ public/sitemap.xml || log "⚠️  Git add failed (continuing)"
+      git add content/ src/data/ public/sitemap.xml 2>/dev/null || log "⚠️  Git add failed (continuing)"
 
-      local commit_msg="Auto-publish: ${published_article} (${published_locale^^}) - $(date '+%Y-%m-%d %H:%M')"
+      local commit_msg="Auto-publish: ${published_article} ($published_locale_upper) - $(date '+%Y-%m-%d %H:%M')"
       if git commit -m "$commit_msg" 2>/dev/null; then
         log "✅ Content committed to git"
-        git push origin master 2>/dev/null || log "⚠️  Git push failed (continuing)"
+        if git push origin master 2>/dev/null; then
+          log "✅ Changes pushed to repository"
+        else
+          log "⚠️  Git push failed (continuing)"
+        fi
+      else
+        log "⚠️  Git commit failed (continuing)"
       fi
 
       # Build and restart
@@ -172,16 +200,27 @@ main() {
       sleep 5
 
       log "🏗️  Building site..."
-      if ! /usr/local/bin/yarn build 2>&1 | tee -a "$LOG_FILE"; then
+      if /usr/local/bin/yarn build 2>&1 | tee -a "$LOG_FILE"; then
+        log "✅ Site built successfully"
+      else
         handle_error "Build failed"
       fi
-      sleep 20
 
+      # Wait for build to complete
+      sleep 10
+
+      # Restart PM2 if available
       if command -v pm2 >/dev/null 2>&1; then
         log "🔄 Restarting application..."
-        pm2 restart mayorana 2>/dev/null || pm2 start ecosystem.config.js 2>/dev/null || log "⚠️  PM2 restart failed"
+        if pm2 restart mayorana 2>/dev/null || pm2 start ecosystem.config.js 2>/dev/null; then
+          log "✅ Application restarted"
+        else
+          log "⚠️  PM2 restart failed"
+        fi
       fi
-      sleep 5
+
+      # Wait for restart
+      sleep 10
 
       # Health checks for both locales
       log "🔍 Health check..."
@@ -201,19 +240,22 @@ main() {
       log "🔔 Notifying search engines..."
       curl -s "https://www.google.com/ping?sitemap=$SITE_URL/sitemap.xml" >/dev/null 2>&1 || true
       curl -s "https://www.bing.com/ping?sitemap=$SITE_URL/sitemap.xml" >/dev/null 2>&1 || true
+      log "✅ Search engines notified"
 
       # Success notification with locale info
       send_success_notification "$published_locale" "$target_locale" "$published_article"
 
       log "🎉 Daily publishing completed successfully!"
     else
-      log "⚠️  Publish script ran but no new content detected"
+      log "⚠️  Publish script ran but no queue reduction detected"
+      log "🔍 Debug: EN queue $en_queue_before->$en_queue_after, FR queue $fr_queue_before->$fr_queue_after"
     fi
   else
-    log "📭 No content to publish today (no articles in any locale)"
+    log "❌ Publish script failed"
+    exit 1
   fi
 
-  # Cleanup
+  # Cleanup old backups
   find "$BACKUP_DIR" -name "content-*" -type d -mtime +3 -exec rm -rf {} + 2>/dev/null || true
   log "✅ Daily publishing check completed"
 }
