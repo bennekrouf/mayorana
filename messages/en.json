@@ -14,7 +14,7 @@
   "navigation": {
     "home": "Home",
     "services": "Services",
-    "blog": "Blog", 
+    "blog": "Blog",
     "about": "About",
     "contact": "Contact",
     "get_started": "Get Started",
@@ -22,10 +22,10 @@
     "toggle_menu": "Toggle Menu"
   },
   "home": {
-    "hero_title": "Building Smarter Solutions with Rust, AI, and APIs",
-    "hero_subtitle": "Specialized in Rust training, LLM integration, and AI agent development for businesses across Switzerland and beyond.",
+    "hero_title": "Transform Your Applications with Rust, AI, and Smart APIs",
+    "hero_subtitle": "Specialized in Rust adoption, LLM integration, and AI agent development for companies ready to build faster, safer applications.",
+    "book_rust_training": "Start Your Rust Adoption",
     "discover_api0": "Discover api0.ai",
-    "book_rust_training": "Book a Rust Training",
     "what_i_offer": "What I Offer",
     "services_subtitle": "Specialized services that help businesses innovate and transform through modern technology solutions.",
     "latest_insights": "Latest Insights",
@@ -34,7 +34,7 @@
     "discover_api0_title": "Discover api0.ai",
     "api0_description": "api0.ai is my flagship solution for enterprises looking to streamline API integrations. Using advanced NLP, it intelligently matches user sentences to the right API endpoints, reducing development time and complexity.",
     "api0_feature1": "Minimal setup with JavaScript SDK",
-    "api0_feature2": "Secure API key management", 
+    "api0_feature2": "Secure API key management",
     "api0_feature3": "Scalable for enterprise needs",
     "explore_api0": "Explore api0.ai",
     "my_work": "My Work",
@@ -48,13 +48,13 @@
   },
   "services": {
     "rust_training": {
-      "title": "Rust Training",
-      "description": "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization. Tailored courses for beginners to advanced developers, with real-world applications in fintech, systems programming, and more.",
-      "cta": "Schedule a Training Session",
-      "benefit1": "Master Rust's ownership system and memory safety features",
-      "benefit2": "Learn concurrent programming patterns with Rust's guarantees", 
-      "benefit3": "Understand performance optimization techniques",
-      "benefit4": "Apply Rust to real-world problems in your domain"
+      "title": "Rust Adoption & Training",
+      "description": "Help your team adopt Rust for new applications or migrate existing systems. From initial assessment to hands-on training, I guide companies through their entire Rust transformation journey.",
+      "cta": "Start Your Rust Journey",
+      "benefit1": "Assess which projects benefit most from Rust adoption",
+      "benefit2": "Plan migration strategies for existing applications",
+      "benefit3": "Train your team with hands-on, project-specific guidance",
+      "benefit4": "Build production-ready Rust applications with confidence"
     },
     "llm_integration": {
       "title": "LLM Integration",
@@ -66,7 +66,7 @@
       "benefit4": "Create robust evaluation systems for LLM outputs"
     },
     "ai_agent": {
-      "title": "AI Agent Development", 
+      "title": "AI Agent Development",
       "description": "Build intelligent AI agents for automation, decision-making, and process optimization. From concept to deployment, I create agents that leverage NLP and gRPC for enterprise-grade performance.",
       "cta": "Start Your Agent Project",
       "benefit1": "Automate complex workflows with intelligent agents",
@@ -80,7 +80,7 @@
       "cta": "Try api0.ai Now",
       "benefit1": "Match natural language inputs to the right API endpoints",
       "benefit2": "Reduce integration time and complexity",
-      "benefit3": "Secure API key management with domain restrictions", 
+      "benefit3": "Secure API key management with domain restrictions",
       "benefit4": "Scale seamlessly for enterprise-level traffic"
     },
     "key_benefits": "Key Benefits",
@@ -98,7 +98,7 @@
     "skills_expertise": "Skills & Expertise",
     "programming": "Programming",
     "ai_ml": "AI & ML",
-    "infrastructure": "Infrastructure", 
+    "infrastructure": "Infrastructure",
     "frontend": "Frontend",
     "core_values": "Core Values",
     "technical_excellence": {
@@ -106,7 +106,7 @@
       "description": "Building robust, performant, and maintainable systems that stand the test of time."
     },
     "continuous_learning": {
-      "title": "Continuous Learning", 
+      "title": "Continuous Learning",
       "description": "Staying at the forefront of technology to deliver cutting-edge solutions."
     },
     "client_success": {
@@ -151,7 +151,7 @@
     "send_another": "Send Another Message",
     "required_field": "Required field",
     "name_required": "Name is required",
-    "email_required": "Email is required", 
+    "email_required": "Email is required",
     "invalid_email": "Invalid email address",
     "service_required": "Please select a service",
     "message_required": "Message is required"
@@ -166,7 +166,7 @@
     "back_to_blog": "Back to Blog",
     "share": "Share:",
     "share_twitter": "Share on X (Twitter)",
-    "share_linkedin": "Share on LinkedIn", 
+    "share_linkedin": "Share on LinkedIn",
     "copy_link": "Copy link",
     "link_copied": "Link copied!",
     "table_contents": "Table of Contents",
@@ -200,7 +200,7 @@
       "category": "Training"
     },
     "llm_chatbot": {
-      "title": "LLM-Powered Chatbot", 
+      "title": "LLM-Powered Chatbot",
       "description": "Integrated an LLM into a client's customer service platform, reducing response times by 40%.",
       "category": "Integration"
     },

@@ -17,11 +17,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
   // The actual locale will be handled by our components directly
   locale = defaultLocale;
 
-  console.log('🔄 Using default locale for i18n config:', locale);
+  // console.log('🔄 Using default locale for i18n config:', locale);
 
   try {
     const messages = (await import(`./messages/${locale}.json`)).default;
-    console.log('✅ Messages loaded for default locale:', locale);
+    // console.log('✅ Messages loaded for default locale:', locale);
 
     return {
       locale,

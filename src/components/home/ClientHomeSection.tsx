@@ -15,7 +15,6 @@ export default function ClientHomeSection() {
 
   // Helper function to get localized path
   const getLocalizedPath = (path: string) => {
-    if (locale === 'en') return path;
     return `/${locale}${path}`;
   };
 
@@ -25,7 +24,7 @@ export default function ClientHomeSection() {
       title: tServices('rust_training.title'),
       description: tServices('rust_training.description'),
       cta: tServices('rust_training.cta'),
-      link: getLocalizedPath("/contact?service=rust-training")
+      link: `${getLocalizedPath("/contact")}?service=rust-training`
     },
     {
       icon: <FaBrain className="h-8 w-8 text-primary" />,

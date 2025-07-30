@@ -22,10 +22,10 @@
     "toggle_menu": "Basculer le menu"
   },
   "home": {
-    "hero_title": "Des solutions plus intelligentes avec Rust et l'IA",
-    "hero_subtitle": "Spécialisé dans la formation Rust, l'intégration LLM et le développement d'agents IA pour les entreprises en Suisse et au-delà.",
+    "hero_title": "Transformez vos applications avec Rust, l'IA et des APIs intelligentes",
+    "hero_subtitle": "Spécialisé dans l'adoption de Rust, l'intégration LLM et le développement d'agents IA pour les entreprises prêtes à construire des applications plus rapides et sûres.",
+    "book_rust_training": "Démarrer votre adoption Rust",
     "discover_api0": "Découvrir api0.ai",
-    "book_rust_training": "Réserver une formation Rust",
     "what_i_offer": "Mon offre",
     "services_subtitle": "Services spécialisés qui aident les entreprises à innover et se transformer grâce à des solutions technologiques modernes.",
     "latest_insights": "Derniers insights",
@@ -48,13 +48,13 @@
   },
   "services": {
     "rust_training": {
-      "title": "Formation Rust",
-      "description": "Formation Rust dirigée par des experts pour les professionnels et équipes, couvrant la sécurité mémoire, la concurrence et l'optimisation des performances. Cours adaptés des débutants aux développeurs avancés, avec des applications réelles en fintech, programmation système et plus.",
-      "cta": "Planifier une session de formation",
-      "benefit1": "Maîtriser le système de propriété et les fonctionnalités de sécurité mémoire de Rust",
-      "benefit2": "Apprendre la programmation concurrente avec les garanties de Rust",
-      "benefit3": "Comprendre les techniques d'optimisation des performances",
-      "benefit4": "Appliquer Rust aux problèmes réels de votre domaine"
+      "title": "Adoption Rust & Formation",
+      "description": "J'aide votre équipe à adopter Rust pour de nouvelles applications ou migrer des systèmes existants. De l'évaluation initiale à la formation pratique, j'accompagne les entreprises dans leur transformation Rust complète.",
+      "cta": "Démarrer votre transition Rust",
+      "benefit1": "Évaluer quels projets bénéficient le plus de l'adoption de Rust",
+      "benefit2": "Planifier les stratégies de migration d'applications existantes",
+      "benefit3": "Former votre équipe avec un accompagnement pratique et spécifique",
+      "benefit4": "Construire des applications Rust prêtes pour la production"
     },
     "llm_integration": {
       "title": "Intégration LLM",
@@ -126,8 +126,8 @@
     "cta_description": "Discutons de comment je peux aider vous à atteindre vos objectifs avec des solutions technologiques innovantes."
   },
   "contact": {
-    "hero_title": "Entrer en contact",
-    "hero_subtitle": "Prêt à améliorer votre stack technique avec Rust, l'IA ou api0.ai ? Discutons de comment je peux aider votre entreprise à réussir.",
+    "hero_title": "Contactez-moi",
+    "hero_subtitle": "Prêt à améliorer votre stack technique avec Rust ou l'IA ? Discutons de comment je peux aider votre entreprise.",
     "faster_response": "Pour une réponse plus rapide sur mobile :",
     "contact_via_whatsapp": "Contacter moi via WhatsApp",
     "contact_information": "Informations de contact",

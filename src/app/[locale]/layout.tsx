@@ -73,7 +73,7 @@ export default async function LocaleLayout({
     } else {
       messages = (await import('../../../messages/en.json')).default;
     }
-    console.log('✅ LocaleLayout - Messages loaded manually for:', locale);
+    // console.log('✅ LocaleLayout - Messages loaded manually for:', locale);
   } catch (error) {
     console.error('❌ Error loading messages manually:', error);
     // Fallback to English
