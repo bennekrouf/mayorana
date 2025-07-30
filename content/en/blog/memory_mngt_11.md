@@ -1,14 +1,11 @@
 ---
 id: drop-trait-rust
-title: "Understanding the Drop Trait in Rust"
+title: Understanding the Drop Trait in Rust
 slug: drop-trait-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-07-30'
 author: mayo
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+excerpt: Rust memory and string
 category: rust
 tags:
   - rust
@@ -16,8 +13,6 @@ tags:
   - drop
   - ownership
   - resource-management
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # Understanding the Drop Trait in Rust
