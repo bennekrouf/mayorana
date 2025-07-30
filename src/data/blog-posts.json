@@ -1,5 +1,168 @@
 [
   {
+    "id": "cow-copy-on-write-rust",
+    "slug": "cow-copy-on-write-rust",
+    "title": "How does Cow<'a, B> (Copy-on-Write) work in Rust? When use it ?",
+    "date": "2025-07-30",
+    "excerpt": "Rust memory and string",
+    "content": "`Cow<'a, B>` (Copy-on-Write) is a smart pointer in Rust’s `std::borrow` module that provides a clone-free abstraction over borrowed and owned data. It enables efficient handling of data that may or may not need modification, minimizing allocations while maintaining flexibility.\n\n## What is Cow?\n\n`Cow` (short for Copy-on-Write) can represent:\n- **Borrowed data** (`&'a B`): A reference to existing data, avoiding allocations.\n- **Owned data** (`<B as ToOwned>::Owned`): A fully owned copy, allocated only when mutation is required.\n\n**Definition** (from `std::borrow`):\n```rust\npub enum Cow<'a, B>\nwhere\n    B: 'a + ToOwned + ?Sized,\n{\n    Borrowed(&'a B),  // Immutable reference (no allocation)\n    Owned(<B as ToOwned>::Owned),  // Owned data (allocated when needed)\n}\n```\n\n**How It Works**:\n- Initially wraps a reference (`Borrowed`), which is zero-cost.\n- Converts to owned data (`Owned`) lazily, only when modification is needed.\n\n## Example with Cow<str> (Strings)\n\n```rust\nuse std::borrow::Cow;\n\nfn process(input: &str) -> Cow<str> {\n    if input.contains(\"error\") {\n        Cow::Owned(input.replace(\"error\", \"\"))  // Allocates new String\n    } else {\n        Cow::Borrowed(input)  // No allocation\n    }\n}\n\nfn main() {\n    let msg1 = \"hello world\";  // No allocation\n    let msg2 = \"error: foo\";   // Will allocate when processed\n\n    println!(\"{}\", process(msg1)); // \"hello world\" (borrowed)\n    println!(\"{}\", process(msg2)); // \": foo\" (owned)\n}\n```\n\n## Key Use Cases\n\n### 1. Optimizing String Operations\nAvoid allocations when modifying strings conditionally:\n\n```rust\nfn to_uppercase(input: &str) -> Cow<str> {\n    if input.chars().any(|c| c.is_lowercase()) {\n        Cow::Owned(input.to_uppercase())  // Allocates only if needed\n    } else {\n        Cow::Borrowed(input)\n    }\n}\n```\n\n**Extended Example** (checking for digits):\n```rust\nfn to_uppercase_no_digits(input: &str) -> Cow<str> {\n    if input.chars().any(|c| c.is_lowercase() || c.is_digit(10)) {\n        Cow::Owned(input.to_uppercase().replace(|c: char| c.is_digit(10), \"\"))\n    } else {\n        Cow::Borrowed(input)\n    }\n}\n```\n\n`Cow` ensures no allocation if the input is already uppercase and digit-free, optimizing read-only paths.\n\n### 2. API Flexibility\nAccept both borrowed and owned data without forcing clones:\n\n```rust\nfn print(data: Cow<str>) {\n    println!(\"{}\", data);\n}\n\nfn main() {\n    let my_string = String::from(\"world\");\n    print(Cow::Borrowed(\"hello\"));  // No allocation\n    print(Cow::Owned(my_string));   // Works too\n}\n```\n\nThis supports `&str`, `String`, or other types implementing `ToOwned`.\n\n### 3. Zero-Copy Parsing\nCommon in parsers (e.g., `serde`), where fields are often unmodified:\n\n```rust\nstruct JsonValue<'a> {\n    data: Cow<'a, str>,  // Borrows from input unless modified\n}\n```\n\n## When to Avoid Cow\n\n- **Always-mutated data**: Use `String` or `Vec` directly to avoid `Cow` overhead.\n- **Thread-safety**: `Cow` is not thread-safe; use `Arc` + `Mutex` for concurrent access.\n\n## Performance Implications\n\n| **Scenario** | **Behavior** | **Allocation Cost** |\n|--------------|--------------|---------------------|\n| No modification | Stays as `Borrowed` | Zero |\n| Modification | Converts to `Owned` | One allocation |\n\n## Key Takeaways\n\n✅ **Use `Cow` when**:\n- You need to conditionally modify borrowed data.\n- You want to avoid allocations for read-only paths.\n- Your API should accept both `&str` and `String` efficiently.\n\n🚀 **Real-world uses**:\n- `regex::Match` (borrows input strings).\n- `serde` deserialization.\n- Path manipulation (`PathBuf` vs. `&Path`).\n\n**Note**: `Cow` works with any `ToOwned` type (e.g., `[u8]` → `Vec<u8]`, `Path` → `PathBuf`).\n\n**Experiment**: Modifying the `to_uppercase` example to handle digits (as shown above) demonstrates how `Cow` avoids allocations unless both lowercase letters *and* digits are present, optimizing performance.",
+    "contentHtml": "<p><code>Cow&lt;&#39;a, B&gt;</code> (Copy-on-Write) is a smart pointer in Rust’s <code>std::borrow</code> module that provides a clone-free abstraction over borrowed and owned data. It enables efficient handling of data that may or may not need modification, minimizing allocations while maintaining flexibility.</p>\n<h2>What is Cow?</h2>\n<p><code>Cow</code> (short for Copy-on-Write) can represent:</p>\n<ul>\n<li><strong>Borrowed data</strong> (<code>&amp;&#39;a B</code>): A reference to existing data, avoiding allocations.</li>\n<li><strong>Owned data</strong> (<code>&lt;B as ToOwned&gt;::Owned</code>): A fully owned copy, allocated only when mutation is required.</li>\n</ul>\n<p><strong>Definition</strong> (from <code>std::borrow</code>):</p>\n<pre><code class=\"language-rust\">pub enum Cow&lt;&#39;a, B&gt;\nwhere\n    B: &#39;a + ToOwned + ?Sized,\n{\n    Borrowed(&amp;&#39;a B),  // Immutable reference (no allocation)\n    Owned(&lt;B as ToOwned&gt;::Owned),  // Owned data (allocated when needed)\n}\n</code></pre>\n<p><strong>How It Works</strong>:</p>\n<ul>\n<li>Initially wraps a reference (<code>Borrowed</code>), which is zero-cost.</li>\n<li>Converts to owned data (<code>Owned</code>) lazily, only when modification is needed.</li>\n</ul>\n<h2>Example with Cow<str> (Strings)</h2>\n<pre><code class=\"language-rust\">use std::borrow::Cow;\n\nfn process(input: &amp;str) -&gt; Cow&lt;str&gt; {\n    if input.contains(&quot;error&quot;) {\n        Cow::Owned(input.replace(&quot;error&quot;, &quot;&quot;))  // Allocates new String\n    } else {\n        Cow::Borrowed(input)  // No allocation\n    }\n}\n\nfn main() {\n    let msg1 = &quot;hello world&quot;;  // No allocation\n    let msg2 = &quot;error: foo&quot;;   // Will allocate when processed\n\n    println!(&quot;{}&quot;, process(msg1)); // &quot;hello world&quot; (borrowed)\n    println!(&quot;{}&quot;, process(msg2)); // &quot;: foo&quot; (owned)\n}\n</code></pre>\n<h2>Key Use Cases</h2>\n<h3>1. Optimizing String Operations</h3>\n<p>Avoid allocations when modifying strings conditionally:</p>\n<pre><code class=\"language-rust\">fn to_uppercase(input: &amp;str) -&gt; Cow&lt;str&gt; {\n    if input.chars().any(|c| c.is_lowercase()) {\n        Cow::Owned(input.to_uppercase())  // Allocates only if needed\n    } else {\n        Cow::Borrowed(input)\n    }\n}\n</code></pre>\n<p><strong>Extended Example</strong> (checking for digits):</p>\n<pre><code class=\"language-rust\">fn to_uppercase_no_digits(input: &amp;str) -&gt; Cow&lt;str&gt; {\n    if input.chars().any(|c| c.is_lowercase() || c.is_digit(10)) {\n        Cow::Owned(input.to_uppercase().replace(|c: char| c.is_digit(10), &quot;&quot;))\n    } else {\n        Cow::Borrowed(input)\n    }\n}\n</code></pre>\n<p><code>Cow</code> ensures no allocation if the input is already uppercase and digit-free, optimizing read-only paths.</p>\n<h3>2. API Flexibility</h3>\n<p>Accept both borrowed and owned data without forcing clones:</p>\n<pre><code class=\"language-rust\">fn print(data: Cow&lt;str&gt;) {\n    println!(&quot;{}&quot;, data);\n}\n\nfn main() {\n    let my_string = String::from(&quot;world&quot;);\n    print(Cow::Borrowed(&quot;hello&quot;));  // No allocation\n    print(Cow::Owned(my_string));   // Works too\n}\n</code></pre>\n<p>This supports <code>&amp;str</code>, <code>String</code>, or other types implementing <code>ToOwned</code>.</p>\n<h3>3. Zero-Copy Parsing</h3>\n<p>Common in parsers (e.g., <code>serde</code>), where fields are often unmodified:</p>\n<pre><code class=\"language-rust\">struct JsonValue&lt;&#39;a&gt; {\n    data: Cow&lt;&#39;a, str&gt;,  // Borrows from input unless modified\n}\n</code></pre>\n<h2>When to Avoid Cow</h2>\n<ul>\n<li><strong>Always-mutated data</strong>: Use <code>String</code> or <code>Vec</code> directly to avoid <code>Cow</code> overhead.</li>\n<li><strong>Thread-safety</strong>: <code>Cow</code> is not thread-safe; use <code>Arc</code> + <code>Mutex</code> for concurrent access.</li>\n</ul>\n<h2>Performance Implications</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Scenario</strong></th>\n<th><strong>Behavior</strong></th>\n<th><strong>Allocation Cost</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td>No modification</td>\n<td>Stays as <code>Borrowed</code></td>\n<td>Zero</td>\n</tr>\n<tr>\n<td>Modification</td>\n<td>Converts to <code>Owned</code></td>\n<td>One allocation</td>\n</tr>\n</tbody></table>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Use <code>Cow</code> when</strong>:</p>\n<ul>\n<li>You need to conditionally modify borrowed data.</li>\n<li>You want to avoid allocations for read-only paths.</li>\n<li>Your API should accept both <code>&amp;str</code> and <code>String</code> efficiently.</li>\n</ul>\n<p>🚀 <strong>Real-world uses</strong>:</p>\n<ul>\n<li><code>regex::Match</code> (borrows input strings).</li>\n<li><code>serde</code> deserialization.</li>\n<li>Path manipulation (<code>PathBuf</code> vs. <code>&amp;Path</code>).</li>\n</ul>\n<p><strong>Note</strong>: <code>Cow</code> works with any <code>ToOwned</code> type (e.g., <code>[u8]</code> → <code>Vec&lt;u8]</code>, <code>Path</code> → <code>PathBuf</code>).</p>\n<p><strong>Experiment</strong>: Modifying the <code>to_uppercase</code> example to handle digits (as shown above) demonstrates how <code>Cow</code> avoids allocations unless both lowercase letters <em>and</em> digits are present, optimizing performance.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "cow",
+      "string",
+      "copy-on-write"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "How does Cow<'a, B> (Copy-on-Write) work in Rust? When use it ?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "cow",
+        "string",
+        "copy-on-write"
+      ]
+    },
+    "headings": [
+      {
+        "id": "what-is-cow",
+        "text": "What is Cow?",
+        "level": 2
+      },
+      {
+        "id": "example-with-cowlessstrgreater-strings",
+        "text": "Example with Cow<str> (Strings)",
+        "level": 2
+      },
+      {
+        "id": "key-use-cases",
+        "text": "Key Use Cases",
+        "level": 2
+      },
+      {
+        "id": "1-optimizing-string-operations",
+        "text": "1. Optimizing String Operations",
+        "level": 3
+      },
+      {
+        "id": "2-api-flexibility",
+        "text": "2. API Flexibility",
+        "level": 3
+      },
+      {
+        "id": "3-zero-copy-parsing",
+        "text": "3. Zero-Copy Parsing",
+        "level": 3
+      },
+      {
+        "id": "when-to-avoid-cow",
+        "text": "When to Avoid Cow",
+        "level": 2
+      },
+      {
+        "id": "performance-implications",
+        "text": "Performance Implications",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "flatten-vec-iterators-performance",
+    "slug": "flatten-vec-iterators-performance",
+    "title": "Flatten a Vec<Vec<T>> into a Vec<T> using iterators",
+    "date": "2025-07-29",
+    "excerpt": "Flattening Vec<Vec<T>> using iterators compared to manual concatenation, analyzing performance implications and optimization strategies",
+    "content": "## Flattening with Iterators\n\nThe most idiomatic way is to use `.flatten()` or `.flat_map()`:\n\n```rust\nlet nested = vec![vec![1, 2], vec![3], vec![4, 5, 6]];\n\n// Method 1: flatten() (for Vec<Iterables>)\nlet flat: Vec<_> = nested.iter().flatten().copied().collect();\n\n// Method 2: flat_map() (for custom transformations)\nlet flat: Vec<_> = nested.into_iter().flat_map(|v| v).collect();\n```\n\n**Output**: `[1, 2, 3, 4, 5, 6]`\n\n## Manual Concatenation\n\nFor comparison, here's how you might do it manually:\n\n```rust\nlet mut flat = Vec::new();\nfor subvec in nested {\n    flat.extend(subvec);  // or append() if subvec is no longer needed\n}\n```\n\n## Performance Comparison\n\n| Method | Time Complexity | Space Complexity | Allocations | Optimizations |\n|--------|-----------------|------------------|-------------|---------------|\n| Iterator (flatten) | O(n) | O(1) iterator | 1 (result) | May fuse iterators |\n| Manual (extend) | O(n) | O(1) temp space | 1 (result) | Pre-allocation possible |\n\n## Key Insights\n\n### Pre-allocation Advantage (Manual)\n\nYou can pre-allocate the target Vec if total size is known:\n\n```rust\nlet total_len: usize = nested.iter().map(|v| v.len()).sum();\nlet mut flat = Vec::with_capacity(total_len);  // Critical for large datasets\nflat.extend(nested.into_iter().flatten());\n```\n\n### Iterator Laziness\n\n- `.flatten()` is lazy, but `.collect()` still needs to allocate the result.\n- Chained iterators (e.g., `.filter().flatten()`) may optimize better than manual loops.\n\n## Benchmark Example\n\n```rust\nlet nested: Vec<Vec<i32>> = (0..1_000).map(|i| vec![i; 100]).collect();\n\n// Iterator approach\nlet start = std::time::Instant::now();\nlet flat = nested.iter().flatten().copied().collect::<Vec<_>>();\nprintln!(\"flatten: {:?}\", start.elapsed());\n\n// Manual approach with pre-allocation\nlet start = std::time::Instant::now();\nlet total_len = nested.iter().map(|v| v.len()).sum();\nlet mut flat = Vec::with_capacity(total_len);\nflat.extend(nested.into_iter().flatten());\nprintln!(\"manual: {:?}\", start.elapsed());\n```\n\n**Typical Result**:\n- Manual with pre-allocation is ~10–20% faster for large Vecs.\n- Iterator version is more concise and equally fast for small data.\n\n## When to Use Each\n\n| Approach | Best For | Pitfalls |\n|----------|----------|----------|\n| Iterator | Readability, chaining operations | Slightly slower without pre-allocation |\n| Manual | Maximum performance, large data | Verbose; requires length calculation |\n\n## Advanced: Zero-Copy Flattening\n\nIf you have `Vec<&[T]>` instead of `Vec<Vec<T>>`, use `.flatten().copied()` to avoid cloning:\n\n```rust\nlet slices: Vec<&[i32]> = vec![&[1, 2], &[3, 4]];\nlet flat: Vec<i32> = slices.iter().flatten().copied().collect();\n```\n\n## Key Takeaways\n\n✅ **Use .flatten() for**:\n- Clean, idiomatic code.\n- Chaining with other iterator adapters (e.g., `.filter()`).\n\n✅ **Use manual extend for**:\n- Large datasets where pre-allocation matters.\n- Cases where you already know the total length.\n\n🚀 **Always pre-allocate for manual concatenation of large collections!**\n\n**Try This**: How would you flatten a `Vec<Vec<T>>` while removing duplicates?\n\n**Answer**: Combine `.flatten()` with `.collect::<HashSet<_>>()`.",
+    "contentHtml": "<h2>Flattening with Iterators</h2>\n<p>The most idiomatic way is to use <code>.flatten()</code> or <code>.flat_map()</code>:</p>\n<pre><code class=\"language-rust\">let nested = vec![vec![1, 2], vec![3], vec![4, 5, 6]];\n\n// Method 1: flatten() (for Vec&lt;Iterables&gt;)\nlet flat: Vec&lt;_&gt; = nested.iter().flatten().copied().collect();\n\n// Method 2: flat_map() (for custom transformations)\nlet flat: Vec&lt;_&gt; = nested.into_iter().flat_map(|v| v).collect();\n</code></pre>\n<p><strong>Output</strong>: <code>[1, 2, 3, 4, 5, 6]</code></p>\n<h2>Manual Concatenation</h2>\n<p>For comparison, here&#39;s how you might do it manually:</p>\n<pre><code class=\"language-rust\">let mut flat = Vec::new();\nfor subvec in nested {\n    flat.extend(subvec);  // or append() if subvec is no longer needed\n}\n</code></pre>\n<h2>Performance Comparison</h2>\n<table>\n<thead>\n<tr>\n<th>Method</th>\n<th>Time Complexity</th>\n<th>Space Complexity</th>\n<th>Allocations</th>\n<th>Optimizations</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Iterator (flatten)</td>\n<td>O(n)</td>\n<td>O(1) iterator</td>\n<td>1 (result)</td>\n<td>May fuse iterators</td>\n</tr>\n<tr>\n<td>Manual (extend)</td>\n<td>O(n)</td>\n<td>O(1) temp space</td>\n<td>1 (result)</td>\n<td>Pre-allocation possible</td>\n</tr>\n</tbody></table>\n<h2>Key Insights</h2>\n<h3>Pre-allocation Advantage (Manual)</h3>\n<p>You can pre-allocate the target Vec if total size is known:</p>\n<pre><code class=\"language-rust\">let total_len: usize = nested.iter().map(|v| v.len()).sum();\nlet mut flat = Vec::with_capacity(total_len);  // Critical for large datasets\nflat.extend(nested.into_iter().flatten());\n</code></pre>\n<h3>Iterator Laziness</h3>\n<ul>\n<li><code>.flatten()</code> is lazy, but <code>.collect()</code> still needs to allocate the result.</li>\n<li>Chained iterators (e.g., <code>.filter().flatten()</code>) may optimize better than manual loops.</li>\n</ul>\n<h2>Benchmark Example</h2>\n<pre><code class=\"language-rust\">let nested: Vec&lt;Vec&lt;i32&gt;&gt; = (0..1_000).map(|i| vec![i; 100]).collect();\n\n// Iterator approach\nlet start = std::time::Instant::now();\nlet flat = nested.iter().flatten().copied().collect::&lt;Vec&lt;_&gt;&gt;();\nprintln!(&quot;flatten: {:?}&quot;, start.elapsed());\n\n// Manual approach with pre-allocation\nlet start = std::time::Instant::now();\nlet total_len = nested.iter().map(|v| v.len()).sum();\nlet mut flat = Vec::with_capacity(total_len);\nflat.extend(nested.into_iter().flatten());\nprintln!(&quot;manual: {:?}&quot;, start.elapsed());\n</code></pre>\n<p><strong>Typical Result</strong>:</p>\n<ul>\n<li>Manual with pre-allocation is ~10–20% faster for large Vecs.</li>\n<li>Iterator version is more concise and equally fast for small data.</li>\n</ul>\n<h2>When to Use Each</h2>\n<table>\n<thead>\n<tr>\n<th>Approach</th>\n<th>Best For</th>\n<th>Pitfalls</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Iterator</td>\n<td>Readability, chaining operations</td>\n<td>Slightly slower without pre-allocation</td>\n</tr>\n<tr>\n<td>Manual</td>\n<td>Maximum performance, large data</td>\n<td>Verbose; requires length calculation</td>\n</tr>\n</tbody></table>\n<h2>Advanced: Zero-Copy Flattening</h2>\n<p>If you have <code>Vec&lt;&amp;[T]&gt;</code> instead of <code>Vec&lt;Vec&lt;T&gt;&gt;</code>, use <code>.flatten().copied()</code> to avoid cloning:</p>\n<pre><code class=\"language-rust\">let slices: Vec&lt;&amp;[i32]&gt; = vec![&amp;[1, 2], &amp;[3, 4]];\nlet flat: Vec&lt;i32&gt; = slices.iter().flatten().copied().collect();\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Use .flatten() for</strong>:</p>\n<ul>\n<li>Clean, idiomatic code.</li>\n<li>Chaining with other iterator adapters (e.g., <code>.filter()</code>).</li>\n</ul>\n<p>✅ <strong>Use manual extend for</strong>:</p>\n<ul>\n<li>Large datasets where pre-allocation matters.</li>\n<li>Cases where you already know the total length.</li>\n</ul>\n<p>🚀 <strong>Always pre-allocate for manual concatenation of large collections!</strong></p>\n<p><strong>Try This</strong>: How would you flatten a <code>Vec&lt;Vec&lt;T&gt;&gt;</code> while removing duplicates?</p>\n<p><strong>Answer</strong>: Combine <code>.flatten()</code> with <code>.collect::&lt;HashSet&lt;_&gt;&gt;()</code>.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "vec",
+      "flatten",
+      "iterators",
+      "performance",
+      "collections"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "Flatten a Vec<Vec<T>> into a Vec<T> using iterators",
+      "description": "Flattening Vec<Vec<T>> using iterators compared to manual concatenation, analyzing performance implications and optimization strategies",
+      "keywords": [
+        "rust",
+        "vec",
+        "flatten",
+        "iterators",
+        "performance",
+        "collections"
+      ]
+    },
+    "headings": [
+      {
+        "id": "flattening-with-iterators",
+        "text": "Flattening with Iterators",
+        "level": 2
+      },
+      {
+        "id": "manual-concatenation",
+        "text": "Manual Concatenation",
+        "level": 2
+      },
+      {
+        "id": "performance-comparison",
+        "text": "Performance Comparison",
+        "level": 2
+      },
+      {
+        "id": "key-insights",
+        "text": "Key Insights",
+        "level": 2
+      },
+      {
+        "id": "pre-allocation-advantage-manual",
+        "text": "Pre-allocation Advantage (Manual)",
+        "level": 3
+      },
+      {
+        "id": "iterator-laziness",
+        "text": "Iterator Laziness",
+        "level": 3
+      },
+      {
+        "id": "benchmark-example",
+        "text": "Benchmark Example",
+        "level": 2
+      },
+      {
+        "id": "when-to-use-each",
+        "text": "When to Use Each",
+        "level": 2
+      },
+      {
+        "id": "advanced-zero-copy-flattening",
+        "text": "Advanced: Zero-Copy Flattening",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "vec-retain-vs-filter-collect",
     "slug": "vec-retain-vs-filter-collect",
     "title": "Vec::retain() Vs filtering with iter().filter().collect()?",

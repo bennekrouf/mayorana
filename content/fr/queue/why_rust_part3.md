@@ -97,7 +97,7 @@ fn main() {
 }
 ```
 
-**Les règles de borrowing de Rust préviennent :**
+**Les règles de borrowing préviennent :**
 - Data races au moment de la compilation
 - Dangling pointers
 - Iterator invalidation

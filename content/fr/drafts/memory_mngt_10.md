@@ -12,6 +12,7 @@ technical_level: "Discussion technique expert"
 category: rust
 tags:
   - rust
+  - beginner
   - memory
   - cow
   - string

@@ -11,6 +11,7 @@ excerpt: >-
 category: rust
 tags:
   - rust
+  - beginner
   - string
   - memory
   - ownership

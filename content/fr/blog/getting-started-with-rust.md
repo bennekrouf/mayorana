@@ -14,13 +14,13 @@ tags:
   - "tutorial"
 ---
 
-# Débuter avec Rust: Un Guide pour Débutants
+# Débuter avec Rust
 
 Rust gagne considérablement en popularité parmi les développeurs pour son focus sur la performance, la memory safety, et la concurrence. Si tu es nouveau à Rust, ce guide t'aidera à débuter avec les bases.
 
 ## Configuration de Ton Environnement
 
-D'abord, tu dois installer Rust sur ton système. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
+D'abord, tu dois installer Rust. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
