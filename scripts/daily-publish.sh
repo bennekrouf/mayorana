@@ -129,35 +129,48 @@ main() {
   # Attempt to publish
   log "📝 Attempting to publish..."
 
-  # Run the publish script and capture its success/failure
-  if node scripts/schedule-publish.js --publish 2>&1 | tee -a "$LOG_FILE"; then
+  # Run the publish script and capture its output to detect what was published
+  local publish_output
+  publish_output=$(node scripts/schedule-publish.js --publish 2>&1)
+  local publish_exit_code=$?
+
+  # Log the output
+  echo "$publish_output" | tee -a "$LOG_FILE"
+
+  if [ $publish_exit_code -eq 0 ]; then
     log "✅ Publish script completed successfully"
 
-    # Count queue files AFTER publishing to detect what was moved
+    # Parse the publish output to detect what was published
+    local published_locale=""
+    local published_article=""
+
+    # Look for the success messages in the output
+    if echo "$publish_output" | grep -q "Successfully published:"; then
+      # Extract the filename from the output
+      published_article=$(echo "$publish_output" | grep "Successfully published:" | sed 's/.*Successfully published: \([^[:space:]]*\).*/\1/' | sed 's/\.md$//')
+
+      # Extract the locale from the "Published to locale:" line
+      if echo "$publish_output" | grep -q "Published to locale:"; then
+        published_locale=$(echo "$publish_output" | grep "Published to locale:" | sed 's/.*Published to locale: \([^[:space:]]*\).*/\1/')
+      fi
+
+      # Fallback: detect from moved file paths
+      if [ -z "$published_locale" ]; then
+        if echo "$publish_output" | grep -q "content/en/blog/"; then
+          published_locale="en"
+        elif echo "$publish_output" | grep -q "content/fr/blog/"; then
+          published_locale="fr"
+        fi
+      fi
+    fi
+
+    # Count queue files AFTER publishing for verification
     local en_queue_after=$(count_queue_files "en")
     local fr_queue_after=$(count_queue_files "fr")
 
     log "📊 Queue status after publishing:"
     log "   EN queue: $en_queue_after files (was $en_queue_before)"
     log "   FR queue: $fr_queue_after files (was $fr_queue_before)"
-
-    local published_locale=""
-    local published_article=""
-
-    # Detect which locale had a file moved
-    if [ "$en_queue_after" -lt "$en_queue_before" ]; then
-      published_locale="en"
-      # Get the most recently added file in EN blog
-      if [ -d "content/en/blog" ]; then
-        published_article=$(ls -t content/en/blog/*.md 2>/dev/null | head -1 | xargs basename 2>/dev/null | sed 's/\.md$//' || echo "unknown")
-      fi
-    elif [ "$fr_queue_after" -lt "$fr_queue_before" ]; then
-      published_locale="fr"
-      # Get the most recently added file in FR blog
-      if [ -d "content/fr/blog" ]; then
-        published_article=$(ls -t content/fr/blog/*.md 2>/dev/null | head -1 | xargs basename 2>/dev/null | sed 's/\.md$//' || echo "unknown")
-      fi
-    fi
 
     if [ -n "$published_locale" ]; then
       local published_locale_upper=$(echo "$published_locale" | tr '[:lower:]' '[:upper:]')
@@ -247,11 +260,23 @@ main() {
 
       log "🎉 Daily publishing completed successfully!"
     else
-      log "⚠️  Publish script ran but no queue reduction detected"
-      log "🔍 Debug: EN queue $en_queue_before->$en_queue_after, FR queue $fr_queue_before->$fr_queue_after"
+      log "⚠️  Publish script succeeded but no content publication detected"
+      log "🔍 Debug info:"
+      log "   - Queue changes: EN $en_queue_before->$en_queue_after, FR $fr_queue_before->$fr_queue_after"
+      log "   - Detected locale: '$published_locale'"
+      log "   - Detected article: '$published_article'"
+      log "   - Publish output contained 'Successfully published': $(echo "$publish_output" | grep -c "Successfully published:" || echo "0")"
+
+      # Check if files were actually moved by looking at the output
+      if echo "$publish_output" | grep -q "Moved from.*queue.*Moved to.*blog"; then
+        log "   - Files were moved according to output, but detection failed"
+        log "   - This might be a detection logic issue"
+      else
+        log "   - No file movement detected in publish output"
+      fi
     fi
   else
-    log "❌ Publish script failed"
+    log "❌ Publish script failed with exit code: $publish_exit_code"
     exit 1
   fi
 
