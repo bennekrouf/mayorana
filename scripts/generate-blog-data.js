@@ -66,7 +66,7 @@ async function generateBlogDataForLocale(locale) {
   const postsDirectory = path.join(process.cwd(), `content/${locale}/blog/`);
   const outputPath = path.join(process.cwd(), `src/data/blog-posts-${locale}.json`);
 
-  console.log(`📖 Reading ${locale.toUpperCase()} posts from ${postsDirectory}`);
+  // console.log(`📖 Reading ${locale.toUpperCase()} posts from ${postsDirectory}`);
 
   // Create content directory if it doesn't exist
   if (!fs.existsSync(postsDirectory)) {
@@ -141,7 +141,7 @@ async function generateBlogDataForLocale(locale) {
     acc[post.locale] = (acc[post.locale] || 0) + 1;
     return acc;
   }, {});
-  console.log(`🔍 Locale verification for ${locale}:`, localeCheck);
+  // console.log(`🔍 Locale verification for ${locale}:`, localeCheck);
 
   return { posts: postsData.length, categories: 0 };
 }

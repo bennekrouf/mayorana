@@ -58,7 +58,7 @@ echo ""
 # 5. Expected debug output
 echo "5️⃣ Expected debug output for French:"
 echo "Expected in console:"
-echo "   🔍 LocaleLayout - received locale: fr"
+# echo "   🔍 LocaleLayout - received locale: fr"
 echo "   🔍 BlogPage Debug: - Received locale: fr"
 echo "   📊 Blog Data: - Posts found: 1 (or more)"
 echo "   📊 Blog Data: - First post locale: fr"
