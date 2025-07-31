@@ -63,7 +63,7 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  console.log('✅ LocaleLayout - Valid locale confirmed:', locale);
+  // console.log('✅ LocaleLayout - Valid locale confirmed:', locale);
 
   // MANUAL: Load messages for the specific locale from the route
   let messages;
