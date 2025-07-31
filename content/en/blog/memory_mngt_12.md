@@ -9,10 +9,7 @@ excerpt: Rust memory and string
 category: rust
 tags:
   - rust
-  - memory
   - concurrency
-  - ownership
-  - borrowing
 ---
 
 # Explain Rust's approach to concurrency. How do ownership and borrowing prevent data races?

@@ -10,11 +10,7 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - vec
   - retain
-  - filter
-  - iterators
-  - performance
 date: '2025-07-28'
 ---
 

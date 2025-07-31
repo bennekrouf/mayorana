@@ -11,9 +11,6 @@ category: rust
 tags:
   - rust
   - closures
-  - dispatch
-  - performance
-  - traits
 date: '2025-07-09'
 ---
 

@@ -12,10 +12,6 @@ category: rust
 tags:
   - rust
   - closures
-  - structs
-  - trait-bounds
-  - lifetimes
-  - generic-types
 date: '2025-07-14'
 ---
 

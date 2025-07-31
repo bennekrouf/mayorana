@@ -12,9 +12,6 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - optimization
-  - memory
-  - performance
   - cache
 ---
 

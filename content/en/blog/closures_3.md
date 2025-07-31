@@ -10,9 +10,6 @@ category: rust
 tags:
   - rust
   - closures
-  - traits
-  - ownership
-  - lifetimes
 ---
 
 # How do you specify a closure as a function parameter or return type?

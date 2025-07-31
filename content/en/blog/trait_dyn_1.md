@@ -12,9 +12,6 @@ category: rust
 tags:
   - rust
   - traits
-  - performance
-  - interfaces
-  - dispatch
 ---
 
 # How do Rust traits differ from interfaces in languages like Java or C#, and how would you use them to define a shared behavior for types in a performance-critical library?

@@ -10,10 +10,6 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - vec
-  - deduplication
-  - hashset
-  - performance
   - collections
 date: '2025-07-21'
 ---

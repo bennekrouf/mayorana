@@ -9,10 +9,7 @@ excerpt: Rust memory and string
 category: rust
 tags:
   - rust
-  - memory
   - drop
-  - ownership
-  - resource-management
 ---
 
 # Understanding the Drop Trait in Rust

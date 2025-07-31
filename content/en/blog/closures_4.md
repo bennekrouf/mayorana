@@ -12,9 +12,6 @@ category: rust
 tags:
   - rust
   - closures
-  - ownership
-  - traits
-  - lifetimes
 ---
 
 # What are move closures (move || { ... })? When are they necessary, and how do they interact with ownership?

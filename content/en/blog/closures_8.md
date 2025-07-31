@@ -12,10 +12,6 @@ category: rust
 tags:
   - rust
   - closures
-  - performance
-  - optimization
-  - static-dispatch
-  - heap-allocation
 date: '2025-07-12'
 ---
 

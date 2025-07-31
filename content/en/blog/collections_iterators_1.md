@@ -13,8 +13,6 @@ category: rust
 tags:
   - rust
   - collections
-  - performance
-  - vec
   - iterators
 ---
 

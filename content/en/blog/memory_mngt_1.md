@@ -12,9 +12,6 @@ category: rust
 tags:
   - rust
   - string
-  - memory
-  - ownership
-  - types
 ---
 
 # What is the difference between String and str in Rust? When would you use each?

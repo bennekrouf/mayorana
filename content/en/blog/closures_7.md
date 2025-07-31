@@ -14,10 +14,6 @@ category: rust
 tags:
   - rust
   - closures
-  - lifetimes
-  - ownership
-  - move
-  - references
 date: '2025-07-12'
 ---
 

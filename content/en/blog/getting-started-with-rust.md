@@ -8,10 +8,8 @@ author: "Mayorana"
 excerpt: "Introduction to Rust for beginners, covering installation, basic syntax, and your first project."
 category: "rust"
 tags:
-  - "rust"
-  - "programming"
-  - "beginners"
-  - "tutorial"
+  - rust
+  - beginners
 ---
 
 # Getting Started with Rust: A Guide for Beginners

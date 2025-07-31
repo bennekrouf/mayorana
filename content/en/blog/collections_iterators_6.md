@@ -10,11 +10,7 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - box
-  - vec
   - collections
-  - memory
-  - performance
 date: '2025-07-24'
 ---
 

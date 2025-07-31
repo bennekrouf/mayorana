@@ -11,9 +11,6 @@ category: rust
 tags:
   - rust
   - iterators
-  - ownership
-  - vec
-  - into-iter
   - collections
 date: '2025-07-14'
 ---

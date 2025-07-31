@@ -9,10 +9,7 @@ excerpt: Rust memory and string
 category: rust
 tags:
   - rust
-  - memory
-  - cow
   - string
-  - copy-on-write
 ---
 
 # How does Cow<'a, B> (Copy-on-Write) work in Rust? When would you use it for strings or other data?

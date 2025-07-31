@@ -10,11 +10,7 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - vec
   - drain
-  - truncate
-  - clear
-  - collections
 date: '2025-07-26'
 ---
 

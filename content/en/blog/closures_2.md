@@ -10,9 +10,6 @@ category: rust
 tags:
   - rust
   - closures
-  - traits
-  - ownership
-  - lifetimes
 ---
 
 # What are the differences between Fn, FnMut, and FnOnce?

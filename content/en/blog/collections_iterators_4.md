@@ -13,10 +13,6 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - vec
-  - performance
-  - memory-allocation
-  - optimization
   - collections
 date: '2025-07-19'
 ---

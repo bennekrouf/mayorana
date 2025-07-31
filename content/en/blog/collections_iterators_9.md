@@ -11,10 +11,6 @@ category: rust
 tags:
   - rust
   - vec
-  - flatten
-  - iterators
-  - performance
-  - collections
 date: '2025-07-29'
 ---
 

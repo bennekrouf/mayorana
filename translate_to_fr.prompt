@@ -1,0 +1,12 @@
+Prompt for Natural French Translation:
+"Translate this technical content to French with a natural, conversational tone. Avoid formal/academic language and AI-sounding adjectives. Use:
+
+Direct, casual phrasing (ça, pas de, etc.)
+Natural contractions and everyday expressions
+Keep technical terms in English when they're standard in the French tech community (ownership, borrowing, garbage collector)
+Translate code comments naturally but keep short expressions like 'OK', 'Safe' as-is
+Use 'tu' form when addressing the reader implicitly
+Keep the same structure and formatting
+Sound like a French developer explaining to another French developer
+
+Avoid: overly formal translations, literal word-for-word conversion, pompous adjectives, academic terminology when simpler words work."

@@ -11,10 +11,7 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - functions
   - closures
-  - traits
-  - ownership
 ---
 
 # What is the difference between a function and a closure in Rust?

@@ -9,9 +9,7 @@ category: rust
 tags:
   - rust
   - closures
-  - state
   - fnmut
-  - lifetimes
 date: '2025-07-10'
 ---
 

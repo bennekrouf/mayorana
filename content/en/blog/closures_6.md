@@ -10,8 +10,6 @@ tags:
   - rust
   - closures
   - higher-order-functions
-  - traits
-  - lifetimes
 date: '2025-07-12'
 ---
 
