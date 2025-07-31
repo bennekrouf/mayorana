@@ -1,5 +1,63 @@
 [
   {
+    "id": "memory-safety-rust",
+    "slug": "memory-safety-rust",
+    "title": "How does Rust ensure memory safety without a garbage collector?",
+    "date": "2025-07-31",
+    "excerpt": "Rust memory and string",
+    "content": "Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.\n\n## 1. Ownership Rules\n\n- Each value in Rust has a **single owner**.\n- When the owner goes out of scope, the value is **dropped** (memory freed).\n- Prevents **double frees** and **memory leaks**.\n\n**Example**:\n```rust\nfn main() {\n    let s = String::from(\"hello\"); // `s` owns the string\n    takes_ownership(s);            // Ownership moved → `s` is invalid here\n    // println!(\"{}\", s); // ERROR: borrow of moved value\n}\n\nfn takes_ownership(s: String) { \n    println!(\"{}\", s); \n} // `s` is dropped here\n```\n\n## 2. Borrowing & References\n\n- Allows **immutable** (`&T`) or **mutable** (`&mut T`) borrows.\n- Enforced rules:\n  - Either **one mutable reference** or **multiple immutable references** (no data races).\n  - References must always be **valid** (no dangling pointers).\n\n**Example**:\n```rust\nfn main() {\n    let mut s = String::from(\"hello\");\n    let r1 = &s;     // OK: Immutable borrow\n    let r2 = &s;     // OK: Another immutable borrow\n    // let r3 = &mut s; // ERROR: Cannot borrow as mutable while borrowed as immutable\n    println!(\"{}, {}\", r1, r2);\n}\n```\n\n## 3. Lifetimes\n\n- Ensures references **never outlive** the data they point to.\n- Prevents **dangling references**.\n\n**Example**:\n```rust\nfn longest<'a>(x: &'a str, y: &'a str) -> &'a str {\n    if x.len() > y.len() { x } else { y }\n}\n\nfn main() {\n    let s1 = String::from(\"hello\");\n    let result;\n    {\n        let s2 = String::from(\"world\");\n        result = longest(&s1, &s2); // ERROR: `s2` doesn't live long enough\n    }\n    // println!(\"{}\", result); // `result` would be invalid here\n}\n```\n\n## Why No Garbage Collector (GC)?\n\n- **Zero-cost abstractions**: No runtime overhead.\n- **Predictable performance**: Memory is freed deterministically.\n- **No runtime pauses**: Unlike GC-based languages (Java, Go).\n\n## Key Takeaways\n\n✅ **Ownership**: Prevents memory leaks.  \n✅ **Borrowing**: Prevents data races.  \n✅ **Lifetimes**: Prevents dangling pointers.\n\nRust’s model ensures memory safety without runtime checks, making it both safe and fast.",
+    "contentHtml": "<p>Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.</p>\n<h2>1. Ownership Rules</h2>\n<ul>\n<li>Each value in Rust has a <strong>single owner</strong>.</li>\n<li>When the owner goes out of scope, the value is <strong>dropped</strong> (memory freed).</li>\n<li>Prevents <strong>double frees</strong> and <strong>memory leaks</strong>.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn main() {\n    let s = String::from(&quot;hello&quot;); // `s` owns the string\n    takes_ownership(s);            // Ownership moved → `s` is invalid here\n    // println!(&quot;{}&quot;, s); // ERROR: borrow of moved value\n}\n\nfn takes_ownership(s: String) { \n    println!(&quot;{}&quot;, s); \n} // `s` is dropped here\n</code></pre>\n<h2>2. Borrowing &amp; References</h2>\n<ul>\n<li>Allows <strong>immutable</strong> (<code>&amp;T</code>) or <strong>mutable</strong> (<code>&amp;mut T</code>) borrows.</li>\n<li>Enforced rules:<ul>\n<li>Either <strong>one mutable reference</strong> or <strong>multiple immutable references</strong> (no data races).</li>\n<li>References must always be <strong>valid</strong> (no dangling pointers).</li>\n</ul>\n</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn main() {\n    let mut s = String::from(&quot;hello&quot;);\n    let r1 = &amp;s;     // OK: Immutable borrow\n    let r2 = &amp;s;     // OK: Another immutable borrow\n    // let r3 = &amp;mut s; // ERROR: Cannot borrow as mutable while borrowed as immutable\n    println!(&quot;{}, {}&quot;, r1, r2);\n}\n</code></pre>\n<h2>3. Lifetimes</h2>\n<ul>\n<li>Ensures references <strong>never outlive</strong> the data they point to.</li>\n<li>Prevents <strong>dangling references</strong>.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt; &amp;&#39;a str {\n    if x.len() &gt; y.len() { x } else { y }\n}\n\nfn main() {\n    let s1 = String::from(&quot;hello&quot;);\n    let result;\n    {\n        let s2 = String::from(&quot;world&quot;);\n        result = longest(&amp;s1, &amp;s2); // ERROR: `s2` doesn&#39;t live long enough\n    }\n    // println!(&quot;{}&quot;, result); // `result` would be invalid here\n}\n</code></pre>\n<h2>Why No Garbage Collector (GC)?</h2>\n<ul>\n<li><strong>Zero-cost abstractions</strong>: No runtime overhead.</li>\n<li><strong>Predictable performance</strong>: Memory is freed deterministically.</li>\n<li><strong>No runtime pauses</strong>: Unlike GC-based languages (Java, Go).</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Ownership</strong>: Prevents memory leaks.<br>✅ <strong>Borrowing</strong>: Prevents data races.<br>✅ <strong>Lifetimes</strong>: Prevents dangling pointers.</p>\n<p>Rust’s model ensures memory safety without runtime checks, making it both safe and fast.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "ownership",
+      "borrowing",
+      "lifetimes"
+    ],
+    "readingTime": "2 min",
+    "locale": "en",
+    "seo": {
+      "title": "How does Rust ensure memory safety without a garbage collector?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "ownership",
+        "borrowing",
+        "lifetimes"
+      ]
+    },
+    "headings": [
+      {
+        "id": "1-ownership-rules",
+        "text": "1. Ownership Rules",
+        "level": 2
+      },
+      {
+        "id": "2-borrowing-and-references",
+        "text": "2. Borrowing & References",
+        "level": 2
+      },
+      {
+        "id": "3-lifetimes",
+        "text": "3. Lifetimes",
+        "level": 2
+      },
+      {
+        "id": "why-no-garbage-collector-gc",
+        "text": "Why No Garbage Collector (GC)?",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "cow-copy-on-write-rust",
     "slug": "cow-copy-on-write-rust",
     "title": "How does Cow<'a, B> (Copy-on-Write) work in Rust? When use it ?",

@@ -1,13 +1,10 @@
 ---
 id: memory-safety-rust
-title: "How does Rust ensure memory safety without a garbage collector?"
+title: How does Rust ensure memory safety without a garbage collector?
 slug: memory-safety-rust
 author: mayo
-locale: "en"
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+locale: en
+excerpt: Rust memory and string
 category: rust
 tags:
   - rust
@@ -15,6 +12,7 @@ tags:
   - ownership
   - borrowing
   - lifetimes
+date: '2025-07-31'
 ---
 
 # How does Rust ensure memory safety without a garbage collector?
