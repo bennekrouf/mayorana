@@ -7,13 +7,7 @@ locale: en
 excerpt: Understanding why elliptic curve cryptography uses prime fields instead of real numbers
 category: blockchain
 tags:
-  - crypto
   - blockchain
-  - beginner
-  - solana
-  - elliptic-curves
-  - prime-fields
-date: '2025-07-31'
 ---
 # Blockchain Fundamentals Part 4: Why Prime Fields in ECC
 

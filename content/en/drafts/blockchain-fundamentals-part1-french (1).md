@@ -7,13 +7,8 @@ locale: fr
 excerpt: Comprendre les scalaires et l'arithmétique modulaire dans la cryptographie à courbes elliptiques
 category: blockchain
 tags:
-  - crypto
   - blockchain
-  - beginner
-  - solana
-  - elliptic-curves
   - cryptography
-date: '2025-07-31'
 ---
 # Fondamentaux Blockchain Partie 1 : Foundation — Scalaires et arithmétique modulaire
 

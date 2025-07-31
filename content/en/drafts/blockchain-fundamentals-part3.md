@@ -7,13 +7,7 @@ locale: en
 excerpt: Understanding why modular multiplication is essential in elliptic curve cryptography
 category: blockchain
 tags:
-  - crypto
   - blockchain
-  - beginner
-  - solana
-  - elliptic-curves
-  - modular-arithmetic
-date: '2025-07-31'
 ---
 # Blockchain Fundamentals Part 3: Modular Multiplication in ECC
 

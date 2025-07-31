@@ -7,13 +7,8 @@ locale: en
 excerpt: Understanding scalars and modular arithmetic in elliptic curve cryptography
 category: blockchain
 tags:
-  - crypto
   - blockchain
-  - beginner
-  - solana
-  - elliptic-curves
   - cryptography
-date: '2025-07-31'
 ---
 # Blockchain Fundamentals Part 1: Foundation — Scalars and Modular Arithmetic
 

@@ -3,7 +3,6 @@ id: string-vs-str-rust-fr
 title: String vs. &str – Lequel Utiliser et Quand ?
 slug: string-vs-str-rust-fr
 locale: "fr"
-date: '2025-07-03'
 author: mayo
 excerpt: >-
   String vs str en Rust, couvrant gestion mémoire, ownership, et quand utiliser
@@ -11,16 +10,12 @@ excerpt: >-
 category: rust
 tags:
   - rust
-  - beginner
   - string
-  - memory
-  - ownership
-  - types
 ---
 
-# Quelle est la différence entre String et str en Rust ? Quand utiliserais-tu chacun ?
+# Quelle est la différence entre String et str ?
 
-Comprendre la distinction entre `String` et `str` est fondamental pour une gestion efficace de la mémoire et de l'ownership en Rust.
+Comprendre la distinction entre `String` et `str` est fondamental pour une gestion efficace de la mémoire.
 
 ## Différences Clés
 
@@ -42,7 +37,7 @@ Comprendre la distinction entre `String` et `str` est fondamental pour une gesti
 - Pointeur vers données string (heap, stack, ou mémoire static)
 - Length de la slice
 
-## Quand Utiliser Chacun
+## Cas d'usages
 
 Utilise **`String`** quand :
 - Tu as besoin de modifier ou faire grandir la string

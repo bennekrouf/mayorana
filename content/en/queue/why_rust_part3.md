@@ -12,8 +12,6 @@ category: rust
 tags:
 - rust
 - ownership
-- memory-safety
-- systems-programming
 ---
 
 # Rust: Safety Without Sacrifice

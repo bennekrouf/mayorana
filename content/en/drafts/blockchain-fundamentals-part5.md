@@ -7,13 +7,7 @@ locale: en
 excerpt: Understanding quadratic residues and their role in finding valid elliptic curve points
 category: blockchain
 tags:
-  - crypto
   - blockchain
-  - beginner
-  - solana
-  - elliptic-curves
-  - quadratic-residues
-date: '2025-07-31'
 ---
 # Blockchain Fundamentals Part 5: Quadratic Residues in ECC
 

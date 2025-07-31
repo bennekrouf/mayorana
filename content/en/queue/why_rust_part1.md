@@ -11,10 +11,7 @@ excerpt: >-
 category: rust
 tags:
 - rust
-- java
-- python
 - gc
-- memory
 ---
 
 ## Garbage Collectors: Convenient but Costly

@@ -12,9 +12,6 @@ category: rust
 tags:
 - rust
 - c
-- memory
-- dangling-pointer
-- undefined-behavior
 ---
 
 # C: Power Without Protection
