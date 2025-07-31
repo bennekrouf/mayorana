@@ -72,11 +72,11 @@ export default async function PostPage({ params }: Props) {
     }
 
     // Debug: Show all available posts for this locale
-    const allPosts = getAllPosts(locale);
-    console.log(`📋 All available posts in ${locale}:`);
-    allPosts.forEach((p, index) => {
-      console.log(`   ${index + 1}. "${p.title}" (slug: ${p.slug}, locale: ${p.locale})`);
-    });
+    // const allPosts = getAllPosts(locale);
+    // console.log(`📋 All available posts in ${locale}:`);
+    // allPosts.forEach((p, index) => {
+    //   console.log(`   ${index + 1}. "${p.title}" (slug: ${p.slug}, locale: ${p.locale})`);
+    // });
 
     if (!post) {
       console.log('❌ Post not found, calling notFound()');
