@@ -1,14 +1,11 @@
 ---
 id: string-str-mismatch-rust
-title: "Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!"
+title: 'Why &str Won''t Fit &String in Rust: Fun Fixes for String Mismatches!'
 slug: string-str-mismatch-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-04'
 author: mayo
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+excerpt: Rust memory and string
 category: rust
 tags:
   - rust
