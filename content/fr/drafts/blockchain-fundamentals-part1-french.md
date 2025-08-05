@@ -46,7 +46,7 @@ class Point {
 const point = new Point(2, 5);
 ```
 
-## 2. C'est quoi l'arithmétique modulaire et pourquoi c'est essentiel pour les opérations cryptographiques ?
+## 2. C'est quoi l'arithmétique modulaire ?
 
 **Contexte** : L'arithmétique modulaire c'est "l'arithmétique d'horloge" - quand tu arrives à un certain nombre (le modulus), tu repartes à zéro.
 

@@ -9,16 +9,19 @@ category: blockchain
 tags:
   - blockchain
 ---
+
 # Blockchain Fundamentals Part 5: Quadratic Residues in ECC
 
 ## Given `x = 4`, test whether `x` is a quadratic residue modulo `17`, and explain how this relates to finding valid points on a curve.
 
 **What is a Quadratic Residue?** A number `y` such that `y² ≡ x mod p` has a solution.
 
-**Test for `x = 4`:** We check if there exists a `y` where `y² ≡ 4 mod 17`.
-* `5² = 25 ≡ 8 mod 17` → Not 4.
-* `6² = 36 ≡ 2 mod 17` → Not 4.
-* `2² = 4 ≡ 4 mod 17` → **Yes!** (Also, `15² = 225 ≡ 4 mod 17`).
+**Test for `x = 4`:** We need to check if there's a `y` where `y² ≡ 4 mod 17`.
+
+Let's try some values:
+* `5² = 25 ≡ 8 mod 17` → Nope, not 4.
+* `6² = 36 ≡ 2 mod 17` → Still not 4.
+* `2² = 4 ≡ 4 mod 17` → **Bingo!** (And `15² = 225 ≡ 4 mod 17` works too).
 
 **Code Example**:
 ```javascript
@@ -46,9 +49,9 @@ const solutions = findQuadraticResidues(4, 17);
 console.log(`Solutions for y² ≡ 4 mod 17: ${solutions}`); // [2, 15]
 ```
 
-**Relation to ECC:**
-* In ECC, a point `(x, y)` is valid only if `y² ≡ x³ + ax + b mod p`.
-* So, `x³ + ax + b` must be a quadratic residue (otherwise, `y` doesn't exist).
+**How this connects to ECC:**
+* In elliptic curve cryptography, a point `(x, y)` is valid only if `y² ≡ x³ + ax + b mod p`.
+* This means `x³ + ax + b` has to be a quadratic residue. If it's not, then `y` doesn't exist.
 
 **Practical Example**:
 ```javascript
@@ -75,9 +78,10 @@ console.log(`Total valid points: ${points.length}`);
 ```
 
 **Why This Matters**:
-* Not every `x` coordinate has a corresponding `y` coordinate on the curve.
-* Quadratic residue test determines if a point exists for a given `x`.
-* This affects key generation and point validation in cryptographic protocols.
+* Not every `x` coordinate has a matching `y` coordinate on the curve.
+* The quadratic residue test tells us if a point exists for a given `x`.
+* This impacts key generation and point validation in crypto protocols.
 
 ## Key Takeaway
-✅ **Quadratic residues**: Determine which `x` coordinates have valid `y` coordinates on elliptic curves.
+
+✅ **Quadratic residues**: They determine which `x` coordinates have valid `y` coordinates on elliptic curves.

@@ -1,14 +1,11 @@
 ---
 id: dangling-pointer-rust
-title: "How does Rust prevent dangling pointer at compile time?"
+title: How does Rust prevent dangling pointer at compile time?
 slug: dangling-pointer-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-03'
 author: mayo
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+excerpt: Rust memory and string
 category: rust
 tags:
   - rust

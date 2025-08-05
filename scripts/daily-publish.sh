@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily Publishing Script with Fixed Detection Logic
+# Simplified Daily Publishing Script - Multi-language support
 # File: scripts/daily-publish.sh
 
 set -e
@@ -10,29 +10,19 @@ LOG_FILE="/var/log/blog-publishing.log"
 BACKUP_DIR="/tmp/blog-backup"
 SITE_URL="https://mayorana.ch"
 
-# Colors
+# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# Logging with locale awareness
+# Logging function
 log() {
   echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
 }
 
-# Get today's target locale
-get_target_locale() {
-  local day_of_year=$(date +%j)
-  if [ $((day_of_year % 2)) -eq 0 ]; then
-    echo "en"
-  else
-    echo "fr"
-  fi
-}
-
-# Error handling
+# Error handling function
 handle_error() {
   local error_msg="$1"
   log "❌ ERROR: $error_msg"
@@ -45,23 +35,12 @@ handle_error() {
   exit 1
 }
 
-# Enhanced notification with locale info
+# Success notification function
 send_success_notification() {
-  local published_locale="$1"
-  local target_locale="$2"
-  local article_name="$3"
+  local published_count="$1"
+  local published_summary="$2"
 
-  local published_upper=$(echo "$published_locale" | tr '[:lower:]' '[:upper:]')
-  local target_upper=$(echo "$target_locale" | tr '[:lower:]' '[:upper:]')
-
-  local locale_status=""
-  if [ "$published_locale" = "$target_locale" ]; then
-    locale_status="🎯 on schedule"
-  else
-    locale_status="🔄 fallback (target was $target_upper)"
-  fi
-
-  local message="✅ Daily blog published! 📝 $published_upper article: \"$article_name\" ($locale_status)"
+  local message="✅ Daily blog publishing completed! 📝 Published $published_count articles: $published_summary"
 
   if [ -n "$SLACK_WEBHOOK_URL" ]; then
     curl -s -X POST -H 'Content-type: application/json' \
@@ -72,30 +51,26 @@ send_success_notification() {
   log "$message"
 }
 
-# Count queue files before publishing
-count_queue_files() {
-  local locale="$1"
-  local queue_dir="content/${locale}/queue"
-
-  if [ -d "$queue_dir" ]; then
-    find "$queue_dir" -name "*.md" | wc -l
-  else
-    echo "0"
-  fi
-}
-
 main() {
-  local target_locale=$(get_target_locale)
-  local target_locale_upper=$(echo "$target_locale" | tr '[:lower:]' '[:upper:]')
-  log "🚀 Starting daily publishing check..."
-  log "📅 Day $(date +%j) of year - Target locale: $target_locale_upper"
+  log "🚀 Starting multi-language daily publishing..."
+  log "📅 $(date '+%A, %B %d, %Y')"
 
   # Validate environment
   if [ ! -f "package.json" ] || [ ! -d "content" ]; then
     handle_error "Not in mayorana project directory"
   fi
 
-  # Backup
+  # Check for multi-language publisher
+  if [ ! -f "scripts/multi-lang-publisher.js" ]; then
+    handle_error "Multi-language publisher script not found"
+  fi
+
+  # Check for publishing config
+  if [ ! -f "config/publishing.yaml" ]; then
+    log "⚠️  Publishing config not found, using defaults"
+  fi
+
+  # Backup content
   if [ -d "content" ]; then
     mkdir -p "$BACKUP_DIR"
     cp -r content/ "$BACKUP_DIR/content-$(date +%Y%m%d_%H%M%S)/" || log "⚠️  Backup failed (continuing)"
@@ -109,75 +84,41 @@ main() {
     log "⚠️  Git pull failed (continuing)"
   fi
 
-  # Count queue files BEFORE publishing
-  local en_queue_before=$(count_queue_files "en")
-  local fr_queue_before=$(count_queue_files "fr")
+  # Show status before publishing
+  log "🔍 Pre-publishing status:"
+  node scripts/multi-lang-publisher.js status | tee -a "$LOG_FILE"
 
-  log "🔍 Queue status before publishing:"
-  log "   EN queue: $en_queue_before files"
-  log "   FR queue: $fr_queue_before files"
-
-  # Check if we have anything to publish
-  if [ "$en_queue_before" -eq 0 ] && [ "$fr_queue_before" -eq 0 ]; then
-    log "📭 No content to publish (queues are empty)"
-    exit 0
-  fi
-
-  log "🎯 Publishing plan:"
-  log "   Target: $target_locale_upper"
-
-  # Attempt to publish
-  log "📝 Attempting to publish..."
-
-  # Run the publish script and capture its output to detect what was published
+  # Attempt to publish articles
+  log "📝 Running multi-language publisher..."
+  
   local publish_output
-  publish_output=$(node scripts/schedule-publish.js --publish 2>&1)
+  publish_output=$(node scripts/multi-lang-publisher.js publish 2>&1)
   local publish_exit_code=$?
 
-  # Log the output
+  # Log the publisher output
   echo "$publish_output" | tee -a "$LOG_FILE"
 
   if [ $publish_exit_code -eq 0 ]; then
-    log "✅ Publish script completed successfully"
+    log "✅ Multi-language publisher completed successfully"
 
-    # Parse the publish output to detect what was published
-    local published_locale=""
-    local published_article=""
-
-    # Look for the success messages in the output
+    # Parse results from output
+    local published_count=0
+    local published_summary=""
+    
     if echo "$publish_output" | grep -q "Successfully published:"; then
-      # Extract the filename from the output
-      published_article=$(echo "$publish_output" | grep "Successfully published:" | sed 's/.*Successfully published: \([^[:space:]]*\).*/\1/' | sed 's/\.md$//')
-
-      # Extract the locale from the "Published to locale:" line
-      if echo "$publish_output" | grep -q "Published to locale:"; then
-        published_locale=$(echo "$publish_output" | grep "Published to locale:" | sed 's/.*Published to locale: \([^[:space:]]*\).*/\1/')
-      fi
-
-      # Fallback: detect from moved file paths
-      if [ -z "$published_locale" ]; then
-        if echo "$publish_output" | grep -q "content/en/blog/"; then
-          published_locale="en"
-        elif echo "$publish_output" | grep -q "content/fr/blog/"; then
-          published_locale="fr"
-        fi
+      published_count=$(echo "$publish_output" | grep "Successfully published:" | sed 's/.*Successfully published: \([0-9]*\).*/\1/')
+      
+      # Extract the published articles summary
+      if echo "$publish_output" | grep -q "Published articles:"; then
+        published_summary=$(echo "$publish_output" | sed -n '/Published articles:/,/^$/p' | grep "   -" | sed 's/   - //' | tr '\n' ', ' | sed 's/, $//')
       fi
     fi
 
-    # Count queue files AFTER publishing for verification
-    local en_queue_after=$(count_queue_files "en")
-    local fr_queue_after=$(count_queue_files "fr")
-
-    log "📊 Queue status after publishing:"
-    log "   EN queue: $en_queue_after files (was $en_queue_before)"
-    log "   FR queue: $fr_queue_after files (was $fr_queue_before)"
-
-    if [ -n "$published_locale" ]; then
-      local published_locale_upper=$(echo "$published_locale" | tr '[:lower:]' '[:upper:]')
-      log "✅ Article published successfully!"
-      log "📝 Published: $published_article ($published_locale_upper)"
-
-      # Regenerate data
+    # Check if anything was actually published
+    if [ "$published_count" -gt 0 ]; then
+      log "✅ Published $published_count articles"
+      
+      # Regenerate blog data
       log "🔄 Regenerating blog data..."
       if node scripts/generate-blog-data.js 2>&1 | tee -a "$LOG_FILE"; then
         log "✅ Blog data regenerated"
@@ -185,6 +126,7 @@ main() {
         handle_error "Blog data generation failed"
       fi
 
+      # Regenerate sitemap
       log "🗺️  Regenerating sitemap..."
       if node scripts/generate-sitemap.js 2>&1 | tee -a "$LOG_FILE"; then
         log "✅ Sitemap regenerated"
@@ -196,7 +138,7 @@ main() {
       log "📝 Committing published content..."
       git add content/ src/data/ public/sitemap.xml 2>/dev/null || log "⚠️  Git add failed (continuing)"
 
-      local commit_msg="Auto-publish: ${published_article} ($published_locale_upper) - $(date '+%Y-%m-%d %H:%M')"
+      local commit_msg="Auto-publish: $published_count articles - $(date '+%Y-%m-%d %H:%M')"
       if git commit -m "$commit_msg" 2>/dev/null; then
         log "✅ Content committed to git"
         if git push origin master 2>/dev/null; then
@@ -205,7 +147,7 @@ main() {
           log "⚠️  Git push failed (continuing)"
         fi
       else
-        log "⚠️  Git commit failed (continuing)"
+        log "⚠️  Git commit failed (no changes to commit)"
       fi
 
       # Build and restart
@@ -213,7 +155,7 @@ main() {
       sleep 5
 
       log "🏗️  Building site..."
-      if /usr/local/bin/yarn build 2>&1 | tee -a "$LOG_FILE"; then
+      if yarn build 2>&1 | tee -a "$LOG_FILE"; then
         log "✅ Site built successfully"
       else
         handle_error "Build failed"
@@ -235,18 +177,12 @@ main() {
       # Wait for restart
       sleep 10
 
-      # Health checks for both locales
+      # Health check
       log "🔍 Health check..."
       if curl -sf "$SITE_URL/en/blog" >/dev/null 2>&1; then
-        log "✅ EN site responding"
+        log "✅ Site responding"
       else
-        log "⚠️  EN site health check failed"
-      fi
-
-      if curl -sf "$SITE_URL/fr/blog" >/dev/null 2>&1; then
-        log "✅ FR site responding"
-      else
-        log "⚠️  FR site health check failed"
+        log "⚠️  Site health check failed"
       fi
 
       # Ping search engines
@@ -255,28 +191,15 @@ main() {
       curl -s "https://www.bing.com/ping?sitemap=$SITE_URL/sitemap.xml" >/dev/null 2>&1 || true
       log "✅ Search engines notified"
 
-      # Success notification with locale info
-      send_success_notification "$published_locale" "$target_locale" "$published_article"
-
+      # Send success notification
+      send_success_notification "$published_count" "$published_summary"
+      
       log "🎉 Daily publishing completed successfully!"
     else
-      log "⚠️  Publish script succeeded but no content publication detected"
-      log "🔍 Debug info:"
-      log "   - Queue changes: EN $en_queue_before->$en_queue_after, FR $fr_queue_before->$fr_queue_after"
-      log "   - Detected locale: '$published_locale'"
-      log "   - Detected article: '$published_article'"
-      log "   - Publish output contained 'Successfully published': $(echo "$publish_output" | grep -c "Successfully published:" || echo "0")"
-
-      # Check if files were actually moved by looking at the output
-      if echo "$publish_output" | grep -q "Moved from.*queue.*Moved to.*blog"; then
-        log "   - Files were moved according to output, but detection failed"
-        log "   - This might be a detection logic issue"
-      else
-        log "   - No file movement detected in publish output"
-      fi
+      log "📭 No articles were published (all queues empty or failed)"
     fi
   else
-    log "❌ Publish script failed with exit code: $publish_exit_code"
+    log "❌ Multi-language publisher failed with exit code: $publish_exit_code"
     exit 1
   fi
 

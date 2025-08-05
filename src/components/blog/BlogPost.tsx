@@ -1,5 +1,3 @@
-// Enhanced BlogPost component with working social sharing
-// File: src/components/blog/BlogPost.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -7,6 +5,7 @@ import Link from 'next/link';
 import { BlogPost as BlogPostType, formatDate } from '../../lib/blog';
 import { motion } from '@/components/ui/Motion';
 import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -14,13 +13,15 @@ interface BlogPostProps {
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   const [linkCopied, setLinkCopied] = useState(false);
+  const t = useTranslations('blog');
+  const locale = useLocale();
 
   // Generate the full URL for the post
   const getPostUrl = () => {
     if (typeof window !== 'undefined') {
       return window.location.href;
     }
-    return `https://mayorana.ch/blog/${post.slug}`;
+    return `https://mayorana.ch/${locale}/blog/${post.slug}`;
   };
 
   // Share on X (Twitter)
@@ -115,7 +116,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
               {post.tags.slice(0, 3).map((tag) => (
                 <Link
                   key={tag}
-                  href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`/${locale}/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
                   className="text-sm font-medium text-primary hover:underline"
                 >
                   #{tag}
@@ -152,7 +153,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h2 className="text-lg font-medium mb-3">Table of Contents</h2>
+          <h2 className="text-lg font-medium mb-3">{t('table_contents')}</h2>
           <nav>
             <ul className="space-y-2">
               {post.headings.map(heading => (
@@ -189,12 +190,12 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h3 className="text-lg font-medium mb-4">Tags</h3>
+          <h3 className="text-lg font-medium mb-4">{t('tags')}</h3>
           <div className="flex flex-wrap gap-2">
             {post.tags.map(tag => (
               <Link
                 key={tag}
-                href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                href={`/${locale}/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
                 className="bg-secondary px-3 py-1 rounded-full text-sm hover:bg-secondary/80 transition-colors"
               >
                 #{tag}
@@ -211,8 +212,9 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
         transition={{ duration: 0.5, delay: 0.4 }}
       >
         <div className="flex flex-col sm:flex-row sm:justify-between items-center">
+          {/* FIXED: Use locale-aware back to blog link */}
           <Link
-            href="/blog"
+            href={`/${locale}/blog`}
             className="mb-4 sm:mb-0 inline-flex items-center text-primary font-medium hover:underline"
           >
             <svg
@@ -229,18 +231,18 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Back to Blog
+            {t('back_to_blog')}
           </Link>
 
           <div className="flex items-center space-x-3">
-            <span className="text-sm text-muted-foreground mr-2">Share:</span>
+            <span className="text-sm text-muted-foreground mr-2">{t('share')}:</span>
 
             {/* X (Twitter) Share Button */}
             <button
               onClick={shareOnTwitter}
               className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
-              aria-label="Share on X (Twitter)"
-              title="Share on X (Twitter)"
+              aria-label={t('share_twitter')}
+              title={t('share_twitter')}
             >
               <FaTwitter className="h-4 w-4" />
             </button>
@@ -249,8 +251,8 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             <button
               onClick={shareOnLinkedIn}
               className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors"
-              aria-label="Share on LinkedIn"
-              title="Share on LinkedIn"
+              aria-label={t('share_linkedin')}
+              title={t('share_linkedin')}
             >
               <FaLinkedin className="h-4 w-4" />
             </button>
@@ -262,8 +264,8 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
                   ? 'bg-green-500 text-white'
                   : 'bg-secondary text-foreground hover:bg-secondary/80'
                 }`}
-              aria-label="Copy link"
-              title={linkCopied ? 'Link copied!' : 'Copy link'}
+              aria-label={linkCopied ? t('link_copied') : t('copy_link')}
+              title={linkCopied ? t('link_copied') : t('copy_link')}
             >
               {linkCopied ? (
                 <FaCheck className="h-4 w-4" />
@@ -283,7 +285,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             className="mt-4 text-center"
           >
             <span className="text-sm text-green-600 dark:text-green-400">
-              ✓ Link copied to clipboard!
+              ✓ {t('link_copied')}
             </span>
           </motion.div>
         )}

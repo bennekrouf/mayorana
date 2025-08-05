@@ -58,18 +58,18 @@ export default async function PostPage({ params }: Props) {
       notFound();
     }
 
-    console.log('✅ Valid slug and locale, looking for post...');
+    // console.log('✅ Valid slug and locale, looking for post...');
 
     // Try to get the post with explicit locale
     const post = getPostBySlug(slug, locale);
 
-    console.log('📊 Post lookup result:');
-    console.log('   - Post found:', !!post);
-    if (post) {
-      console.log('   - Post title:', post.title);
-      console.log('   - Post locale:', post.locale);
-      console.log('   - Post slug:', post.slug);
-    }
+    // console.log('📊 Post lookup result:');
+    // console.log('   - Post found:', !!post);
+    // if (post) {
+    //   console.log('   - Post title:', post.title);
+    //   console.log('   - Post locale:', post.locale);
+    //   console.log('   - Post slug:', post.slug);
+    // }
 
     // Debug: Show all available posts for this locale
     // const allPosts = getAllPosts(locale);

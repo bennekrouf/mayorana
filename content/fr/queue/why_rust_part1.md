@@ -100,7 +100,7 @@ Pendant pause GC: 2000ms (40x plus lent!)
 ## Quand le GC Devient un Problème
 
 ### High-Frequency Trading
-**Exigence:** <1ms temps de réponse  
+**Exigence:** <1ms temps de réponse
 **Réalité:** N'importe quelle pause GC tue les performances
 
 ### Systèmes Temps Réel  

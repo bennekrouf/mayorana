@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
 
   // DEBUG: Log locale in metadata generation
-  console.log('🔍 Metadata generation - locale:', locale);
+  // console.log('🔍 Metadata generation - locale:', locale);
 
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
