@@ -101,14 +101,14 @@ good("literal");  // &str direct
 
 ## Patterns Courants
 
-**Retourner Données Owned** :
+**Renvoyer des "Owned"** :
 ```rust
 fn build_message(name: &str) -> String {
     format!("Hello, {}!", name)  // Retourne String owned
 }
 ```
 
-**Accepter Input Flexible** :
+**Paramètre d'entrée flexible** :
 ```rust
 fn analyze(text: &str) -> usize {
     // Fonctionne avec inputs String et &str
@@ -131,10 +131,10 @@ fn process_good(s: &str) -> &str {
 
 ## Points Clés
 
-✅ **`String`** : Owned, mutable, heap-allocated  
-✅ **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
-🚀 Préfère `&str` pour paramètres de fonction sauf si tu as besoin d'ownership ou mutation
+- ✅ **`String`** : Owned, mutable, heap-allocated  
+- ✅ **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
+🚀 Préfère `&str` pour les paramètres de fonction sauf si tu as besoin d'ownership ou mutation
 
 **Essaie Ceci :** Que se passe-t-il quand tu appelles `.to_string()` sur un string literal vs un `String` ?
 
-**Réponse :** Literal crée nouvelle allocation heap ; `String` crée un clone des données heap existantes—les deux allouent, mais la source diffère !
+**Réponse :** Literal crée une nouvelle allocation heap ; `String` crée un clone des données de la heap existantes. Donc les deux allouent, mais la source diffère !

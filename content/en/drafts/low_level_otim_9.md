@@ -12,10 +12,7 @@ category: rust
 tags:
   - rust
   - optimization
-  - cache-alignment
-  - false-sharing
-  - multi-threading
-  - performance
+  - advanced
 ---
 
 # Cache Line Awareness: Suppose you're optimizing a multi-threaded Rust application that processes large datasets. How would you align data structures to cache lines, and what Rust features or techniques would you use to minimize false sharing?

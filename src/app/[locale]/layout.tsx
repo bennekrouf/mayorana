@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export function generateStaticParams() {
-  console.log('🔍 generateStaticParams called with locales:', locales);
+  // console.log('🔍 generateStaticParams called with locales:', locales);
   return locales.map((locale) => ({ locale }));
 }
 
@@ -55,7 +55,7 @@ export default async function LocaleLayout({
 }: Props) {
   const { locale } = await params;
 
-  console.log('🔍 LocaleLayout - received locale:', locale);
+  // console.log('🔍 LocaleLayout - received locale:', locale);
 
   // Validate locale
   if (!locales.includes(locale as (typeof locales)[number])) {

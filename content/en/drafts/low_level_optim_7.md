@@ -11,11 +11,7 @@ technical_level: "Expert technical discussion"
 category: rust
 tags:
   - rust
-  - real-time
   - performance
-  - stack-allocation
-  - heap-allocation
-  - optimization
 ---
 
 # Allocation Avoidance: In a real-time system, heap allocations can introduce latency. How would you use Rust's stack-based features (e.g., fixed-size arrays or Option) to avoid allocations in a performance-critical path?

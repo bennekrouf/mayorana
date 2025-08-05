@@ -43,9 +43,9 @@ export default async function PostPage({ params }: Props) {
   try {
     const { slug, locale } = await params;
 
-    console.log('🔍 PostPage Debug:');
-    console.log('   - Requested slug:', slug);
-    console.log('   - Requested locale:', locale);
+    // console.log('🔍 PostPage Debug:');
+    // console.log('   - Requested slug:', slug);
+    // console.log('   - Requested locale:', locale);
 
     // Validate slug and locale
     if (!slug || typeof slug !== 'string') {
@@ -83,7 +83,7 @@ export default async function PostPage({ params }: Props) {
       notFound();
     }
 
-    console.log('✅ Post found, rendering...');
+    // console.log('✅ Post found, rendering...');
 
     return (
       <LayoutTemplate>

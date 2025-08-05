@@ -12,9 +12,7 @@ category: rust
 tags:
   - rust
   - optimization
-  - branch-prediction
-  - performance
-  - profiling
+  - advanced
 ---
 
 # Boosting Rust Hot Loops: Slashing Branch Mispredictions

@@ -11,11 +11,8 @@ technical_level: "Expert technical discussion"
 category: rust
 tags:
   - rust
-  - vec
   - performance
-  - memory-allocation
-  - optimization
-  - collections
+  - advanced
 ---
 
 # What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?

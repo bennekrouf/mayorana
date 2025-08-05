@@ -11,10 +11,9 @@ technical_level: "Expert technical discussion"
 category: rust
 tags:
   - rust
-  - profiling
+  - advanced
   - optimization
   - cache
-  - performance
 ---
 
 # Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion

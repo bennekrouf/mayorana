@@ -12,10 +12,7 @@ category: rust
 tags:
   - rust
   - optimization
-  - inline
-  - performance
-  - instruction-level
-  - compiler
+  - advanced
 ---
 
 # Instruction-Level Optimization: How can you use Rust's #[inline(always)] attribute effectively, and what are the risks of overusing it in terms of code size and compile time?

@@ -1,12 +1,352 @@
 [
   {
+    "id": "box-pointer-rust",
+    "slug": "box-pointer-rust",
+    "title": "What is the purpose of Box<T> in Rust?",
+    "date": "2025-08-05",
+    "excerpt": "Rust memory and string",
+    "content": "`Box<T>` is a smart pointer in Rust that provides heap allocation for a value of type `T`. It is the simplest way to store data on the heap, offering ownership and memory safety guarantees without runtime overhead.\n\n## What is Box<T>?\n\n- **Heap Allocation**: Moves data from the stack to the heap.\n  ```rust\n  let x = Box::new(42); // `42` is stored on the heap\n  ```\n- **Ownership**: `Box<T>` owns the data and ensures it is dropped when the `Box` goes out of scope.\n- **Fixed Size**: The `Box` itself is a pointer (`usize`) with a known stack size, even if `T` is dynamically sized (e.g., `Box<dyn Trait>`).\n\n## When to Use Box<T>\n\n### 1. Recursive Types (e.g., Linked Lists)\nRust requires compile-time-known sizes, but recursive types (like trees or lists) would be infinitely sized without indirection.\n\n```rust\nenum List {\n    Cons(i32, Box<List>), // Without `Box`, this would be invalid\n    Nil,\n}\n```\n\n### 2. Large Data (Avoid Stack Overflow)\nMoving large structs (e.g., a 1MB buffer) to the heap prevents stack overflows.\n\n```rust\nlet big_data = Box::new([0u8; 1_000_000]); // Heap-allocated array\n```\n\n### 3. Trait Objects (dyn Trait)\nStoring heterogeneous types behind a trait interface for dynamic dispatch.\n\n```rust\ntrait Animal { fn speak(&self); }\nstruct Cat;\nimpl Animal for Cat { fn speak(&self) { println!(\"Meow\"); } }\n\nlet animals: Vec<Box<dyn Animal>> = vec![Box::new(Cat)]; // Dynamic dispatch\n```\n\n### 4. Transferring Ownership Across Threads\n`Box` can be used with `std::thread::spawn` to move owned data to another thread.\n\n```rust\nlet x = Box::new(42);\nstd::thread::spawn(move || {\n    println!(\"{}\", x); // `x` is moved into the thread\n});\n```\n\n## How Box<T> Differs from Other Pointers\n\n| **Type** | **Ownership** | **Use Case** |\n|----------|---------------|--------------|\n| `Box<T>` | Owned (unique) | Heap allocation, recursive types |\n| `&T`/`&mut T` | Borrowed | Temporary references |\n| `Rc<T>` | Shared (reference-counted) | Multiple owners in single-threaded code |\n| `Arc<T>` | Shared (atomic refcount) | Thread-safe multiple owners |\n\n## Memory Safety Guarantees\n\n- **No manual `free()`**: Automatically deallocates when `Box` goes out of scope.\n- **No null pointers**: `Box` cannot be null (unlike raw pointers).\n- **No leaks**: Compiler enforces ownership rules.\n\n## Example: Box vs Stack Allocation\n\n```rust\n// Stack (fails if too large)\n// let arr = [0u8; 10_000_000]; // Likely stack overflow\n\n// Heap (works)\nlet arr = Box::new([0u8; 10_000_000]); // Safe\n```\n\n## Key Takeaways\n\n✅ **Use `Box<T>` when you need**:\n- Heap allocation for large or recursive data.\n- Trait objects (`dyn Trait`).\n- Explicit ownership with a fixed-size pointer.\n\n🚫 **Avoid if**:\n- You only need a reference (`&T`).\n- You need shared ownership (use `Rc` or `Arc` instead).\n\n**Thought Experiment**: What happens if you try to `Box` a value already on the heap?  \n**Answer**: It’s fine—just adds another pointer indirection, as the `Box` will point to the new heap allocation.",
+    "contentHtml": "<p><code>Box&lt;T&gt;</code> is a smart pointer in Rust that provides heap allocation for a value of type <code>T</code>. It is the simplest way to store data on the heap, offering ownership and memory safety guarantees without runtime overhead.</p>\n<h2>What is Box<T>?</h2>\n<ul>\n<li><strong>Heap Allocation</strong>: Moves data from the stack to the heap.<pre><code class=\"language-rust\">let x = Box::new(42); // `42` is stored on the heap\n</code></pre>\n</li>\n<li><strong>Ownership</strong>: <code>Box&lt;T&gt;</code> owns the data and ensures it is dropped when the <code>Box</code> goes out of scope.</li>\n<li><strong>Fixed Size</strong>: The <code>Box</code> itself is a pointer (<code>usize</code>) with a known stack size, even if <code>T</code> is dynamically sized (e.g., <code>Box&lt;dyn Trait&gt;</code>).</li>\n</ul>\n<h2>When to Use Box<T></h2>\n<h3>1. Recursive Types (e.g., Linked Lists)</h3>\n<p>Rust requires compile-time-known sizes, but recursive types (like trees or lists) would be infinitely sized without indirection.</p>\n<pre><code class=\"language-rust\">enum List {\n    Cons(i32, Box&lt;List&gt;), // Without `Box`, this would be invalid\n    Nil,\n}\n</code></pre>\n<h3>2. Large Data (Avoid Stack Overflow)</h3>\n<p>Moving large structs (e.g., a 1MB buffer) to the heap prevents stack overflows.</p>\n<pre><code class=\"language-rust\">let big_data = Box::new([0u8; 1_000_000]); // Heap-allocated array\n</code></pre>\n<h3>3. Trait Objects (dyn Trait)</h3>\n<p>Storing heterogeneous types behind a trait interface for dynamic dispatch.</p>\n<pre><code class=\"language-rust\">trait Animal { fn speak(&amp;self); }\nstruct Cat;\nimpl Animal for Cat { fn speak(&amp;self) { println!(&quot;Meow&quot;); } }\n\nlet animals: Vec&lt;Box&lt;dyn Animal&gt;&gt; = vec![Box::new(Cat)]; // Dynamic dispatch\n</code></pre>\n<h3>4. Transferring Ownership Across Threads</h3>\n<p><code>Box</code> can be used with <code>std::thread::spawn</code> to move owned data to another thread.</p>\n<pre><code class=\"language-rust\">let x = Box::new(42);\nstd::thread::spawn(move || {\n    println!(&quot;{}&quot;, x); // `x` is moved into the thread\n});\n</code></pre>\n<h2>How Box<T> Differs from Other Pointers</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Type</strong></th>\n<th><strong>Ownership</strong></th>\n<th><strong>Use Case</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>Box&lt;T&gt;</code></td>\n<td>Owned (unique)</td>\n<td>Heap allocation, recursive types</td>\n</tr>\n<tr>\n<td><code>&amp;T</code>/<code>&amp;mut T</code></td>\n<td>Borrowed</td>\n<td>Temporary references</td>\n</tr>\n<tr>\n<td><code>Rc&lt;T&gt;</code></td>\n<td>Shared (reference-counted)</td>\n<td>Multiple owners in single-threaded code</td>\n</tr>\n<tr>\n<td><code>Arc&lt;T&gt;</code></td>\n<td>Shared (atomic refcount)</td>\n<td>Thread-safe multiple owners</td>\n</tr>\n</tbody></table>\n<h2>Memory Safety Guarantees</h2>\n<ul>\n<li><strong>No manual <code>free()</code></strong>: Automatically deallocates when <code>Box</code> goes out of scope.</li>\n<li><strong>No null pointers</strong>: <code>Box</code> cannot be null (unlike raw pointers).</li>\n<li><strong>No leaks</strong>: Compiler enforces ownership rules.</li>\n</ul>\n<h2>Example: Box vs Stack Allocation</h2>\n<pre><code class=\"language-rust\">// Stack (fails if too large)\n// let arr = [0u8; 10_000_000]; // Likely stack overflow\n\n// Heap (works)\nlet arr = Box::new([0u8; 10_000_000]); // Safe\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Use <code>Box&lt;T&gt;</code> when you need</strong>:</p>\n<ul>\n<li>Heap allocation for large or recursive data.</li>\n<li>Trait objects (<code>dyn Trait</code>).</li>\n<li>Explicit ownership with a fixed-size pointer.</li>\n</ul>\n<p>🚫 <strong>Avoid if</strong>:</p>\n<ul>\n<li>You only need a reference (<code>&amp;T</code>).</li>\n<li>You need shared ownership (use <code>Rc</code> or <code>Arc</code> instead).</li>\n</ul>\n<p><strong>Thought Experiment</strong>: What happens if you try to <code>Box</code> a value already on the heap?<br><strong>Answer</strong>: It’s fine—just adds another pointer indirection, as the <code>Box</code> will point to the new heap allocation.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "box",
+      "heap",
+      "ownership"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "What is the purpose of Box<T> in Rust?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "box",
+        "heap",
+        "ownership"
+      ]
+    },
+    "headings": [
+      {
+        "id": "what-is-boxlesstgreater",
+        "text": "What is Box<T>?",
+        "level": 2
+      },
+      {
+        "id": "when-to-use-boxlesstgreater",
+        "text": "When to Use Box<T>",
+        "level": 2
+      },
+      {
+        "id": "1-recursive-types-eg-linked-lists",
+        "text": "1. Recursive Types (e.g., Linked Lists)",
+        "level": 3
+      },
+      {
+        "id": "2-large-data-avoid-stack-overflow",
+        "text": "2. Large Data (Avoid Stack Overflow)",
+        "level": 3
+      },
+      {
+        "id": "3-trait-objects-dyn-trait",
+        "text": "3. Trait Objects (dyn Trait)",
+        "level": 3
+      },
+      {
+        "id": "4-transferring-ownership-across-threads",
+        "text": "4. Transferring Ownership Across Threads",
+        "level": 3
+      },
+      {
+        "id": "how-boxlesstgreater-differs-from-other-pointers",
+        "text": "How Box<T> Differs from Other Pointers",
+        "level": 2
+      },
+      {
+        "id": "memory-safety-guarantees",
+        "text": "Memory Safety Guarantees",
+        "level": 2
+      },
+      {
+        "id": "example-box-vs-stack-allocation",
+        "text": "Example: Box vs Stack Allocation",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "string-str-mismatch-rust",
+    "slug": "string-str-mismatch-rust",
+    "title": "Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!",
+    "date": "2025-08-04",
+    "excerpt": "Rust memory and string",
+    "content": "In Rust, you cannot pass a `&str` directly to a function expecting a `&String` due to their distinct types, which ensures type safety and prevents assumptions about memory ownership. Below, I explain why this mismatch occurs and how to handle it effectively.\n\n## The Core Issue: Type Mismatch\n\n- **`&String`**: A reference to a heap-allocated, growable `String`.\n- **`&str`**: A string slice that can point to heap, stack, or static memory.\n- They are **different types**, so Rust rejects implicit conversions for safety.\n\n**Example: The Problem**:\n```rust\nfn print_string(s: &String) {\n    println!(\"{}\", s);\n}\n\nfn main() {\n    let my_str = \"hello\";  // Type: `&'static str`\n    print_string(my_str);  // ERROR: expected `&String`, found `&str`\n}\n```\n\n## Solutions to Bridge &str and &String\n\n### 1. Deref Coercion (Automatic Conversion)\n\nRust automatically converts `&String` to `&str` via the `Deref` trait, but not the reverse. The best fix is to change the function to accept `&str` for greater flexibility.\n\n```rust\nfn print_str(s: &str) {  // Now accepts both `&str` and `&String`\n    println!(\"{}\", s);\n}\n\nfn main() {\n    let my_string = String::from(\"hello\");\n    let my_str = \"world\";\n    print_str(&my_string);  // Works: `&String` coerces to `&str`\n    print_str(my_str);      // Works directly\n}\n```\n\n**Why this works**: `String` implements `Deref<Target=str>`, allowing `&String` to coerce to `&str`.\n\n### 2. Explicit Conversion (When You Need &String)\n\nIf the function must take `&String`, convert `&str` to a `String` first:\n\n```rust\nfn print_string(s: &String) {\n    println!(\"{}\", s);\n}\n\nfn main() {\n    let my_str = \"hello\";\n    print_string(&my_str.to_string());  // Allocates a new `String`\n}\n```\n\n**Drawback**: This allocates a new heap buffer, which should be avoided if possible due to performance costs.\n\n### 3. Use `AsRef<str>` for Maximum Flexibility\n\nFor functions that should work with any string-like type:\n\n```rust\nfn print_as_str<S: AsRef<str>>(s: S) {\n    println!(\"{}\", s.as_ref());\n}\n\nfn main() {\n    let my_string = String::from(\"hello\");\n    let my_str = \"world\";\n    print_as_str(&my_string);  // Works\n    print_as_str(my_str);      // Works\n}\n```\n\n**Bonus**: Also accepts `Cow<str>`, `Box<str>`, etc.\n\n## Key Takeaways\n\n✅ **Preferred**: Use `&str` in function arguments (flexible and zero-cost).  \n✅ **If stuck with `&String`**: Convert `&str` to `String` (allocates).  \n✅ **For APIs**: Use `AsRef<str>` or `impl Deref<Target=str>` for maximum compatibility.\n\n**Why Rust Enforces This**:\n- Prevents accidental allocations or assumptions about memory ownership.\n- Encourages efficient, borrow-friendly APIs.\n\n**Try This**: What happens if you pass a `String` to `print_str` without `&`?  \n**Answer**: It moves ownership, causing a compile error since `print_str` expects a reference (`&str`), not an owned `String`.",
+    "contentHtml": "<p>In Rust, you cannot pass a <code>&amp;str</code> directly to a function expecting a <code>&amp;String</code> due to their distinct types, which ensures type safety and prevents assumptions about memory ownership. Below, I explain why this mismatch occurs and how to handle it effectively.</p>\n<h2>The Core Issue: Type Mismatch</h2>\n<ul>\n<li><strong><code>&amp;String</code></strong>: A reference to a heap-allocated, growable <code>String</code>.</li>\n<li><strong><code>&amp;str</code></strong>: A string slice that can point to heap, stack, or static memory.</li>\n<li>They are <strong>different types</strong>, so Rust rejects implicit conversions for safety.</li>\n</ul>\n<p><strong>Example: The Problem</strong>:</p>\n<pre><code class=\"language-rust\">fn print_string(s: &amp;String) {\n    println!(&quot;{}&quot;, s);\n}\n\nfn main() {\n    let my_str = &quot;hello&quot;;  // Type: `&amp;&#39;static str`\n    print_string(my_str);  // ERROR: expected `&amp;String`, found `&amp;str`\n}\n</code></pre>\n<h2>Solutions to Bridge &amp;str and &amp;String</h2>\n<h3>1. Deref Coercion (Automatic Conversion)</h3>\n<p>Rust automatically converts <code>&amp;String</code> to <code>&amp;str</code> via the <code>Deref</code> trait, but not the reverse. The best fix is to change the function to accept <code>&amp;str</code> for greater flexibility.</p>\n<pre><code class=\"language-rust\">fn print_str(s: &amp;str) {  // Now accepts both `&amp;str` and `&amp;String`\n    println!(&quot;{}&quot;, s);\n}\n\nfn main() {\n    let my_string = String::from(&quot;hello&quot;);\n    let my_str = &quot;world&quot;;\n    print_str(&amp;my_string);  // Works: `&amp;String` coerces to `&amp;str`\n    print_str(my_str);      // Works directly\n}\n</code></pre>\n<p><strong>Why this works</strong>: <code>String</code> implements <code>Deref&lt;Target=str&gt;</code>, allowing <code>&amp;String</code> to coerce to <code>&amp;str</code>.</p>\n<h3>2. Explicit Conversion (When You Need &amp;String)</h3>\n<p>If the function must take <code>&amp;String</code>, convert <code>&amp;str</code> to a <code>String</code> first:</p>\n<pre><code class=\"language-rust\">fn print_string(s: &amp;String) {\n    println!(&quot;{}&quot;, s);\n}\n\nfn main() {\n    let my_str = &quot;hello&quot;;\n    print_string(&amp;my_str.to_string());  // Allocates a new `String`\n}\n</code></pre>\n<p><strong>Drawback</strong>: This allocates a new heap buffer, which should be avoided if possible due to performance costs.</p>\n<h3>3. Use <code>AsRef&lt;str&gt;</code> for Maximum Flexibility</h3>\n<p>For functions that should work with any string-like type:</p>\n<pre><code class=\"language-rust\">fn print_as_str&lt;S: AsRef&lt;str&gt;&gt;(s: S) {\n    println!(&quot;{}&quot;, s.as_ref());\n}\n\nfn main() {\n    let my_string = String::from(&quot;hello&quot;);\n    let my_str = &quot;world&quot;;\n    print_as_str(&amp;my_string);  // Works\n    print_as_str(my_str);      // Works\n}\n</code></pre>\n<p><strong>Bonus</strong>: Also accepts <code>Cow&lt;str&gt;</code>, <code>Box&lt;str&gt;</code>, etc.</p>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Preferred</strong>: Use <code>&amp;str</code> in function arguments (flexible and zero-cost).<br>✅ <strong>If stuck with <code>&amp;String</code></strong>: Convert <code>&amp;str</code> to <code>String</code> (allocates).<br>✅ <strong>For APIs</strong>: Use <code>AsRef&lt;str&gt;</code> or <code>impl Deref&lt;Target=str&gt;</code> for maximum compatibility.</p>\n<p><strong>Why Rust Enforces This</strong>:</p>\n<ul>\n<li>Prevents accidental allocations or assumptions about memory ownership.</li>\n<li>Encourages efficient, borrow-friendly APIs.</li>\n</ul>\n<p><strong>Try This</strong>: What happens if you pass a <code>String</code> to <code>print_str</code> without <code>&amp;</code>?<br><strong>Answer</strong>: It moves ownership, causing a compile error since <code>print_str</code> expects a reference (<code>&amp;str</code>), not an owned <code>String</code>.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "string",
+      "str",
+      "ownership"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "string",
+        "str",
+        "ownership"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-core-issue-type-mismatch",
+        "text": "The Core Issue: Type Mismatch",
+        "level": 2
+      },
+      {
+        "id": "solutions-to-bridge-andstr-and-andstring",
+        "text": "Solutions to Bridge &str and &String",
+        "level": 2
+      },
+      {
+        "id": "1-deref-coercion-automatic-conversion",
+        "text": "1. Deref Coercion (Automatic Conversion)",
+        "level": 3
+      },
+      {
+        "id": "2-explicit-conversion-when-you-need-andstring",
+        "text": "2. Explicit Conversion (When You Need &String)",
+        "level": 3
+      },
+      {
+        "id": "3-use-asreflessstrgreater-for-maximum-flexibility",
+        "text": "3. Use `AsRef<str>` for Maximum Flexibility",
+        "level": 3
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "dangling-pointer-rust",
+    "slug": "dangling-pointer-rust",
+    "title": "How does Rust prevent dangling pointer at compile time?",
+    "date": "2025-08-03",
+    "excerpt": "Rust memory and string",
+    "content": "A **dangling pointer** occurs when a pointer references memory that has already been freed, leading to undefined behavior like crashes or security vulnerabilities. In languages like C/C++, this is a common issue:\n\n```c\nint* create_int() {\n    int x = 5;  // `x` lives on the stack\n    return &x;  // Returns a pointer to `x`...\n}  // `x` is destroyed here (dangling pointer returned!)\n```\n\nRust eliminates dangling pointers at compile time using its ownership model and lifetime system, ensuring memory safety without runtime overhead.\n\n## How Rust Prevents Dangling Pointers\n\nRust uses two key mechanisms to prevent dangling pointers:\n\n### 1. Ownership + Borrowing Rules\n\n- **Rule**: References (`&T` or `&mut T`) must not outlive the data they point to.\n- **Enforced by**: The borrow checker, which tracks variable scopes and ensures references remain valid.\n\n**Example: Rejected at Compile Time**:\n```rust\nfn dangling() -> &String {  // Missing lifetime specifier!\n    let s = String::from(\"hello\");\n    &s  // ERROR: `s` dies at end of function\n}       // Compiler: \"returns a reference to dropped data\"\n```\n\n**Fixed with Lifetimes** (Explicit Guarantee):\n```rust\nfn valid_reference<'a>(s: &'a String) -> &'a String {\n    s  // OK: Returned reference tied to input's lifetime\n}\n```\n\n### 2. Lifetime Annotations\n\n- Rust requires **explicit lifetime declarations** (`'a`) when references cross scope boundaries.\n- The compiler ensures all references obey their assigned lifetimes, preventing references to freed memory.\n\n**Example: Struct with Reference**:\n```rust\nstruct Book<'a> {  // Must declare lifetime\n    title: &'a str  // Reference must live as long as `Book`\n}\n\nfn main() {\n    let title = String::from(\"Rust\");\n    let book = Book { title: &title };\n    // `book.title` cannot outlive `title`\n}\n```\n\n## Why This Matters\n\n| **Language** | **Dangling Pointer Risk** | **Safety Mechanism** |\n|--------------|---------------------------|----------------------|\n| C/C++        | High (manual memory mgmt) | None (programmer's responsibility) |\n| Rust         | Zero                      | Compile-time checks (ownership + lifetimes) |\n\n## Key Takeaways\n\n✅ Rust’s compiler guarantees:\n- No references to freed memory.\n- No undefined behavior from dangling pointers.\n- Safety without runtime overhead.\n\n**Real-World Impact**: Crates like `hyper` (HTTP) and `tokio` (async) rely on these guarantees for secure, performant code.",
+    "contentHtml": "<p>A <strong>dangling pointer</strong> occurs when a pointer references memory that has already been freed, leading to undefined behavior like crashes or security vulnerabilities. In languages like C/C++, this is a common issue:</p>\n<pre><code class=\"language-c\">int* create_int() {\n    int x = 5;  // `x` lives on the stack\n    return &amp;x;  // Returns a pointer to `x`...\n}  // `x` is destroyed here (dangling pointer returned!)\n</code></pre>\n<p>Rust eliminates dangling pointers at compile time using its ownership model and lifetime system, ensuring memory safety without runtime overhead.</p>\n<h2>How Rust Prevents Dangling Pointers</h2>\n<p>Rust uses two key mechanisms to prevent dangling pointers:</p>\n<h3>1. Ownership + Borrowing Rules</h3>\n<ul>\n<li><strong>Rule</strong>: References (<code>&amp;T</code> or <code>&amp;mut T</code>) must not outlive the data they point to.</li>\n<li><strong>Enforced by</strong>: The borrow checker, which tracks variable scopes and ensures references remain valid.</li>\n</ul>\n<p><strong>Example: Rejected at Compile Time</strong>:</p>\n<pre><code class=\"language-rust\">fn dangling() -&gt; &amp;String {  // Missing lifetime specifier!\n    let s = String::from(&quot;hello&quot;);\n    &amp;s  // ERROR: `s` dies at end of function\n}       // Compiler: &quot;returns a reference to dropped data&quot;\n</code></pre>\n<p><strong>Fixed with Lifetimes</strong> (Explicit Guarantee):</p>\n<pre><code class=\"language-rust\">fn valid_reference&lt;&#39;a&gt;(s: &amp;&#39;a String) -&gt; &amp;&#39;a String {\n    s  // OK: Returned reference tied to input&#39;s lifetime\n}\n</code></pre>\n<h3>2. Lifetime Annotations</h3>\n<ul>\n<li>Rust requires <strong>explicit lifetime declarations</strong> (<code>&#39;a</code>) when references cross scope boundaries.</li>\n<li>The compiler ensures all references obey their assigned lifetimes, preventing references to freed memory.</li>\n</ul>\n<p><strong>Example: Struct with Reference</strong>:</p>\n<pre><code class=\"language-rust\">struct Book&lt;&#39;a&gt; {  // Must declare lifetime\n    title: &amp;&#39;a str  // Reference must live as long as `Book`\n}\n\nfn main() {\n    let title = String::from(&quot;Rust&quot;);\n    let book = Book { title: &amp;title };\n    // `book.title` cannot outlive `title`\n}\n</code></pre>\n<h2>Why This Matters</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Language</strong></th>\n<th><strong>Dangling Pointer Risk</strong></th>\n<th><strong>Safety Mechanism</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td>C/C++</td>\n<td>High (manual memory mgmt)</td>\n<td>None (programmer&#39;s responsibility)</td>\n</tr>\n<tr>\n<td>Rust</td>\n<td>Zero</td>\n<td>Compile-time checks (ownership + lifetimes)</td>\n</tr>\n</tbody></table>\n<h2>Key Takeaways</h2>\n<p>✅ Rust’s compiler guarantees:</p>\n<ul>\n<li>No references to freed memory.</li>\n<li>No undefined behavior from dangling pointers.</li>\n<li>Safety without runtime overhead.</li>\n</ul>\n<p><strong>Real-World Impact</strong>: Crates like <code>hyper</code> (HTTP) and <code>tokio</code> (async) rely on these guarantees for secure, performant code.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "dangling-pointer",
+      "ownership",
+      "lifetimes"
+    ],
+    "readingTime": "2 min",
+    "locale": "en",
+    "seo": {
+      "title": "How does Rust prevent dangling pointer at compile time?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "dangling-pointer",
+        "ownership",
+        "lifetimes"
+      ]
+    },
+    "headings": [
+      {
+        "id": "how-rust-prevents-dangling-pointers",
+        "text": "How Rust Prevents Dangling Pointers",
+        "level": 2
+      },
+      {
+        "id": "1-ownership-borrowing-rules",
+        "text": "1. Ownership + Borrowing Rules",
+        "level": 3
+      },
+      {
+        "id": "2-lifetime-annotations",
+        "text": "2. Lifetime Annotations",
+        "level": 3
+      },
+      {
+        "id": "why-this-matters",
+        "text": "Why This Matters",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "ownership-safety-rust",
+    "slug": "ownership-safety-rust",
+    "title": "How does ownership prevent memory leaks and data races?",
+    "date": "2025-08-02",
+    "excerpt": "Rust memory and string",
+    "content": "Ownership is Rust's core memory management system, enforcing strict rules at compile time to ensure safety without a garbage collector. It prevents memory leaks and data races through a combination of ownership rules, move semantics, and borrowing.\n\n## Ownership in Rust\n\n- Each value has a **single owner** (variable).\n- When the owner goes out of scope, the value is **dropped** (`Drop` trait called).\n- Ownership can be **transferred** (moved), making the original variable invalid.\n\n## Key Rules\n\n### Move Semantics\n\nAssigning a heap-allocated value (e.g., `String`) to another variable transfers ownership, invalidating the original.\n\n**Example**:\n```rust\nlet s1 = String::from(\"hello\");\nlet s2 = s1; // Ownership moved to s2\n// println!(\"{}\", s1); // Compile error: value borrowed after move\n```\n\n### Copy vs. Move\n\n- Types with **known size** (`i32`, `bool`) implement `Copy` and are cloned automatically.\n- Heap-allocated types (`String`, `Vec`) do not implement `Copy` and are moved.\n\n### Function Calls\n\nPassing a value to a function moves or copies it, following the same rules.\n\n**Example**:\n```rust\nfn take_ownership(s: String) { /* ... */ }\n\nlet s = String::from(\"hello\");\ntake_ownership(s); // Ownership moved into the function\n// println!(\"{}\", s); // Error: s is invalid\n```\n\n## How Ownership Prevents Memory Leaks\n\n- **Automatic Cleanup**: When the owner goes out of scope, Rust calls `drop` to free memory (no manual `free()` needed).\n- **No Double Frees**: Since only one owner exists, the value is dropped exactly once.\n\n## How Ownership Prevents Data Races\n\n- **Borrowing Rules**:\n  - **Immutable borrows** (`&T`): Multiple allowed, but no mutable borrows can coexist.\n  - **Mutable borrows** (`&mut T`): Only one allowed, and no other borrows can exist.\n- **Compile-Time Enforcement**: The compiler rejects code that could lead to data races.\n\n**Example: Data Race Prevention**:\n```rust\nlet mut data = vec![1, 2, 3];\n\nlet r1 = &data; // Immutable borrow OK\nlet r2 = &data; // Another immutable borrow OK\n// let r3 = &mut data; // ERROR: Cannot borrow as mutable while immutable borrows exist\n\nprintln!(\"{:?}, {:?}\", r1, r2);\n```\n\n## Key Takeaways\n\n✅ **Ownership ensures**:\n- No dangling pointers (via lifetimes).\n- No memory leaks (via `Drop`).\n- No data races (via borrowing rules).\n\nRust’s ownership model guarantees memory safety and concurrency safety at compile time, delivering performance and reliability.",
+    "contentHtml": "<p>Ownership is Rust&#39;s core memory management system, enforcing strict rules at compile time to ensure safety without a garbage collector. It prevents memory leaks and data races through a combination of ownership rules, move semantics, and borrowing.</p>\n<h2>Ownership in Rust</h2>\n<ul>\n<li>Each value has a <strong>single owner</strong> (variable).</li>\n<li>When the owner goes out of scope, the value is <strong>dropped</strong> (<code>Drop</code> trait called).</li>\n<li>Ownership can be <strong>transferred</strong> (moved), making the original variable invalid.</li>\n</ul>\n<h2>Key Rules</h2>\n<h3>Move Semantics</h3>\n<p>Assigning a heap-allocated value (e.g., <code>String</code>) to another variable transfers ownership, invalidating the original.</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let s1 = String::from(&quot;hello&quot;);\nlet s2 = s1; // Ownership moved to s2\n// println!(&quot;{}&quot;, s1); // Compile error: value borrowed after move\n</code></pre>\n<h3>Copy vs. Move</h3>\n<ul>\n<li>Types with <strong>known size</strong> (<code>i32</code>, <code>bool</code>) implement <code>Copy</code> and are cloned automatically.</li>\n<li>Heap-allocated types (<code>String</code>, <code>Vec</code>) do not implement <code>Copy</code> and are moved.</li>\n</ul>\n<h3>Function Calls</h3>\n<p>Passing a value to a function moves or copies it, following the same rules.</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn take_ownership(s: String) { /* ... */ }\n\nlet s = String::from(&quot;hello&quot;);\ntake_ownership(s); // Ownership moved into the function\n// println!(&quot;{}&quot;, s); // Error: s is invalid\n</code></pre>\n<h2>How Ownership Prevents Memory Leaks</h2>\n<ul>\n<li><strong>Automatic Cleanup</strong>: When the owner goes out of scope, Rust calls <code>drop</code> to free memory (no manual <code>free()</code> needed).</li>\n<li><strong>No Double Frees</strong>: Since only one owner exists, the value is dropped exactly once.</li>\n</ul>\n<h2>How Ownership Prevents Data Races</h2>\n<ul>\n<li><strong>Borrowing Rules</strong>:<ul>\n<li><strong>Immutable borrows</strong> (<code>&amp;T</code>): Multiple allowed, but no mutable borrows can coexist.</li>\n<li><strong>Mutable borrows</strong> (<code>&amp;mut T</code>): Only one allowed, and no other borrows can exist.</li>\n</ul>\n</li>\n<li><strong>Compile-Time Enforcement</strong>: The compiler rejects code that could lead to data races.</li>\n</ul>\n<p><strong>Example: Data Race Prevention</strong>:</p>\n<pre><code class=\"language-rust\">let mut data = vec![1, 2, 3];\n\nlet r1 = &amp;data; // Immutable borrow OK\nlet r2 = &amp;data; // Another immutable borrow OK\n// let r3 = &amp;mut data; // ERROR: Cannot borrow as mutable while immutable borrows exist\n\nprintln!(&quot;{:?}, {:?}&quot;, r1, r2);\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Ownership ensures</strong>:</p>\n<ul>\n<li>No dangling pointers (via lifetimes).</li>\n<li>No memory leaks (via <code>Drop</code>).</li>\n<li>No data races (via borrowing rules).</li>\n</ul>\n<p>Rust’s ownership model guarantees memory safety and concurrency safety at compile time, delivering performance and reliability.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "ownership",
+      "borrowing",
+      "data-races"
+    ],
+    "readingTime": "2 min",
+    "locale": "en",
+    "seo": {
+      "title": "How does ownership prevent memory leaks and data races?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "ownership",
+        "borrowing",
+        "data-races"
+      ]
+    },
+    "headings": [
+      {
+        "id": "ownership-in-rust",
+        "text": "Ownership in Rust",
+        "level": 2
+      },
+      {
+        "id": "key-rules",
+        "text": "Key Rules",
+        "level": 2
+      },
+      {
+        "id": "move-semantics",
+        "text": "Move Semantics",
+        "level": 3
+      },
+      {
+        "id": "copy-vs-move",
+        "text": "Copy vs. Move",
+        "level": 3
+      },
+      {
+        "id": "function-calls",
+        "text": "Function Calls",
+        "level": 3
+      },
+      {
+        "id": "how-ownership-prevents-memory-leaks",
+        "text": "How Ownership Prevents Memory Leaks",
+        "level": 2
+      },
+      {
+        "id": "how-ownership-prevents-data-races",
+        "text": "How Ownership Prevents Data Races",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "stack-heap-allocation-rust",
+    "slug": "stack-heap-allocation-rust",
+    "title": "Stack vs. Heap in Rust: Where Does Your Data Live?",
+    "date": "2025-08-01",
+    "excerpt": "Rust memory and string",
+    "content": "Rust uses stack and heap allocation to manage memory, with distinct characteristics for each. Understanding their differences and how Rust decides where to allocate data is key to writing efficient and safe code.\n\n## Stack vs. Heap in Rust\n\n| **Stack** | **Heap** |\n|-----------|----------|\n| Fast allocation/deallocation (LIFO). | Slower allocation (dynamic). |\n| Fixed, known size at compile time. | Size can grow (e.g., `String`, `Vec`). |\n| Automatic cleanup (no `free()` needed). | Manual management (via `Drop` trait). |\n| Used for primitive types (`i32`, `bool`), small structs. | Used for large, dynamic data (`String`, `Box<T>`). |\n\n## How Rust Decides Where to Allocate\n\n### By Default → Stack\n\nIf a type has a **fixed size** (e.g., `i32`, arrays, structs with no `String`/`Vec`), it is allocated on the **stack**.\n\n**Example**:\n```rust\nlet x = 5; // Stack (i32 is fixed-size)\n```\n\n### Explicit Heap Allocation\n\nUse types like `Box<T>`, `String`, `Vec`, etc., to allocate on the **heap**.\n\n**Example**:\n```rust\nlet s = String::from(\"heap\"); // Heap (growable UTF-8 string)\nlet boxed = Box::new(42);     // Heap (Box<T>)\n```\n\n## Move Semantics\n\nWhen a value is **moved**, its heap data is transferred, not copied, ensuring efficient memory management.\n\n**Example**:\n```rust\nlet s1 = String::from(\"hello\"); // Heap-allocated\nlet s2 = s1; // Moves ownership (heap data not copied)\n// println!(\"{}\", s1); // ERROR: s1 is invalidated\n```\n\n## Key Takeaways\n\n✅ **Stack**: Fast, fixed-size, automatic.  \n✅ **Heap**: Flexible, dynamic, manual (via smart pointers).  \n✅ Rust defaults to stack but uses heap for growable/unknown-size data.\n\n**Follow-Up**: When would you force heap allocation?  \n- For large structs (avoid stack overflow).  \n- When you need dynamic dispatch (e.g., `Box<dyn Trait>`).  \n- To share ownership across threads (`Arc<T>`).",
+    "contentHtml": "<p>Rust uses stack and heap allocation to manage memory, with distinct characteristics for each. Understanding their differences and how Rust decides where to allocate data is key to writing efficient and safe code.</p>\n<h2>Stack vs. Heap in Rust</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Stack</strong></th>\n<th><strong>Heap</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Fast allocation/deallocation (LIFO).</td>\n<td>Slower allocation (dynamic).</td>\n</tr>\n<tr>\n<td>Fixed, known size at compile time.</td>\n<td>Size can grow (e.g., <code>String</code>, <code>Vec</code>).</td>\n</tr>\n<tr>\n<td>Automatic cleanup (no <code>free()</code> needed).</td>\n<td>Manual management (via <code>Drop</code> trait).</td>\n</tr>\n<tr>\n<td>Used for primitive types (<code>i32</code>, <code>bool</code>), small structs.</td>\n<td>Used for large, dynamic data (<code>String</code>, <code>Box&lt;T&gt;</code>).</td>\n</tr>\n</tbody></table>\n<h2>How Rust Decides Where to Allocate</h2>\n<h3>By Default → Stack</h3>\n<p>If a type has a <strong>fixed size</strong> (e.g., <code>i32</code>, arrays, structs with no <code>String</code>/<code>Vec</code>), it is allocated on the <strong>stack</strong>.</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let x = 5; // Stack (i32 is fixed-size)\n</code></pre>\n<h3>Explicit Heap Allocation</h3>\n<p>Use types like <code>Box&lt;T&gt;</code>, <code>String</code>, <code>Vec</code>, etc., to allocate on the <strong>heap</strong>.</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;heap&quot;); // Heap (growable UTF-8 string)\nlet boxed = Box::new(42);     // Heap (Box&lt;T&gt;)\n</code></pre>\n<h2>Move Semantics</h2>\n<p>When a value is <strong>moved</strong>, its heap data is transferred, not copied, ensuring efficient memory management.</p>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let s1 = String::from(&quot;hello&quot;); // Heap-allocated\nlet s2 = s1; // Moves ownership (heap data not copied)\n// println!(&quot;{}&quot;, s1); // ERROR: s1 is invalidated\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Stack</strong>: Fast, fixed-size, automatic.<br>✅ <strong>Heap</strong>: Flexible, dynamic, manual (via smart pointers).<br>✅ Rust defaults to stack but uses heap for growable/unknown-size data.</p>\n<p><strong>Follow-Up</strong>: When would you force heap allocation?  </p>\n<ul>\n<li>For large structs (avoid stack overflow).  </li>\n<li>When you need dynamic dispatch (e.g., <code>Box&lt;dyn Trait&gt;</code>).  </li>\n<li>To share ownership across threads (<code>Arc&lt;T&gt;</code>).</li>\n</ul>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "stack",
+      "heap",
+      "allocation"
+    ],
+    "readingTime": "2 min",
+    "locale": "en",
+    "seo": {
+      "title": "Stack vs. Heap in Rust: Where Does Your Data Live?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "stack",
+        "heap",
+        "allocation"
+      ]
+    },
+    "headings": [
+      {
+        "id": "stack-vs-heap-in-rust",
+        "text": "Stack vs. Heap in Rust",
+        "level": 2
+      },
+      {
+        "id": "how-rust-decides-where-to-allocate",
+        "text": "How Rust Decides Where to Allocate",
+        "level": 2
+      },
+      {
+        "id": "by-default-stack",
+        "text": "By Default → Stack",
+        "level": 3
+      },
+      {
+        "id": "explicit-heap-allocation",
+        "text": "Explicit Heap Allocation",
+        "level": 3
+      },
+      {
+        "id": "move-semantics",
+        "text": "Move Semantics",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "memory-safety-rust",
     "slug": "memory-safety-rust",
     "title": "How does Rust ensure memory safety without a garbage collector?",
     "date": "2025-07-31",
     "excerpt": "Rust memory and string",
-    "content": "Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.\n\n## 1. Ownership Rules\n\n- Each value in Rust has a **single owner**.\n- When the owner goes out of scope, the value is **dropped** (memory freed).\n- Prevents **double frees** and **memory leaks**.\n\n**Example**:\n```rust\nfn main() {\n    let s = String::from(\"hello\"); // `s` owns the string\n    takes_ownership(s);            // Ownership moved → `s` is invalid here\n    // println!(\"{}\", s); // ERROR: borrow of moved value\n}\n\nfn takes_ownership(s: String) { \n    println!(\"{}\", s); \n} // `s` is dropped here\n```\n\n## 2. Borrowing & References\n\n- Allows **immutable** (`&T`) or **mutable** (`&mut T`) borrows.\n- Enforced rules:\n  - Either **one mutable reference** or **multiple immutable references** (no data races).\n  - References must always be **valid** (no dangling pointers).\n\n**Example**:\n```rust\nfn main() {\n    let mut s = String::from(\"hello\");\n    let r1 = &s;     // OK: Immutable borrow\n    let r2 = &s;     // OK: Another immutable borrow\n    // let r3 = &mut s; // ERROR: Cannot borrow as mutable while borrowed as immutable\n    println!(\"{}, {}\", r1, r2);\n}\n```\n\n## 3. Lifetimes\n\n- Ensures references **never outlive** the data they point to.\n- Prevents **dangling references**.\n\n**Example**:\n```rust\nfn longest<'a>(x: &'a str, y: &'a str) -> &'a str {\n    if x.len() > y.len() { x } else { y }\n}\n\nfn main() {\n    let s1 = String::from(\"hello\");\n    let result;\n    {\n        let s2 = String::from(\"world\");\n        result = longest(&s1, &s2); // ERROR: `s2` doesn't live long enough\n    }\n    // println!(\"{}\", result); // `result` would be invalid here\n}\n```\n\n## Why No Garbage Collector (GC)?\n\n- **Zero-cost abstractions**: No runtime overhead.\n- **Predictable performance**: Memory is freed deterministically.\n- **No runtime pauses**: Unlike GC-based languages (Java, Go).\n\n## Key Takeaways\n\n✅ **Ownership**: Prevents memory leaks.  \n✅ **Borrowing**: Prevents data races.  \n✅ **Lifetimes**: Prevents dangling pointers.\n\nRust’s model ensures memory safety without runtime checks, making it both safe and fast.",
-    "contentHtml": "<p>Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.</p>\n<h2>1. Ownership Rules</h2>\n<ul>\n<li>Each value in Rust has a <strong>single owner</strong>.</li>\n<li>When the owner goes out of scope, the value is <strong>dropped</strong> (memory freed).</li>\n<li>Prevents <strong>double frees</strong> and <strong>memory leaks</strong>.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn main() {\n    let s = String::from(&quot;hello&quot;); // `s` owns the string\n    takes_ownership(s);            // Ownership moved → `s` is invalid here\n    // println!(&quot;{}&quot;, s); // ERROR: borrow of moved value\n}\n\nfn takes_ownership(s: String) { \n    println!(&quot;{}&quot;, s); \n} // `s` is dropped here\n</code></pre>\n<h2>2. Borrowing &amp; References</h2>\n<ul>\n<li>Allows <strong>immutable</strong> (<code>&amp;T</code>) or <strong>mutable</strong> (<code>&amp;mut T</code>) borrows.</li>\n<li>Enforced rules:<ul>\n<li>Either <strong>one mutable reference</strong> or <strong>multiple immutable references</strong> (no data races).</li>\n<li>References must always be <strong>valid</strong> (no dangling pointers).</li>\n</ul>\n</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn main() {\n    let mut s = String::from(&quot;hello&quot;);\n    let r1 = &amp;s;     // OK: Immutable borrow\n    let r2 = &amp;s;     // OK: Another immutable borrow\n    // let r3 = &amp;mut s; // ERROR: Cannot borrow as mutable while borrowed as immutable\n    println!(&quot;{}, {}&quot;, r1, r2);\n}\n</code></pre>\n<h2>3. Lifetimes</h2>\n<ul>\n<li>Ensures references <strong>never outlive</strong> the data they point to.</li>\n<li>Prevents <strong>dangling references</strong>.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt; &amp;&#39;a str {\n    if x.len() &gt; y.len() { x } else { y }\n}\n\nfn main() {\n    let s1 = String::from(&quot;hello&quot;);\n    let result;\n    {\n        let s2 = String::from(&quot;world&quot;);\n        result = longest(&amp;s1, &amp;s2); // ERROR: `s2` doesn&#39;t live long enough\n    }\n    // println!(&quot;{}&quot;, result); // `result` would be invalid here\n}\n</code></pre>\n<h2>Why No Garbage Collector (GC)?</h2>\n<ul>\n<li><strong>Zero-cost abstractions</strong>: No runtime overhead.</li>\n<li><strong>Predictable performance</strong>: Memory is freed deterministically.</li>\n<li><strong>No runtime pauses</strong>: Unlike GC-based languages (Java, Go).</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Ownership</strong>: Prevents memory leaks.<br>✅ <strong>Borrowing</strong>: Prevents data races.<br>✅ <strong>Lifetimes</strong>: Prevents dangling pointers.</p>\n<p>Rust’s model ensures memory safety without runtime checks, making it both safe and fast.</p>\n",
+    "content": "Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.\n\n## The C/C++ Problem\nC and C++ give developers complete control over memory, but this leads to critical safety issues:\n\n**Dangling Pointers**:\n```c\nchar* get_string() {\n    char buffer[100] = \"hello\"; // Stack allocated\n    return buffer;              // Returns pointer to freed memory\n} // ERROR: buffer is destroyed here\n\nint* ptr = malloc(sizeof(int));\nfree(ptr);\n*ptr = 42; // ERROR: Use after free\n```\n\n**Memory Leaks**:\n```cpp\nvoid leak_memory() {\n    int* data = new int[1000]; // Heap allocation\n    if (some_condition) {\n        return; // ERROR: Memory never freed\n    }\n    delete[] data; // Only freed on normal path\n}\n```\n\n**Double Free**:\n```c\nint* ptr = malloc(sizeof(int));\nfree(ptr);\nfree(ptr); // ERROR: Double free causes undefined behavior\n```\n\n## Java's Garbage Collection Approach\nJava solves these issues with automatic memory management:\n\n**✅ Pros**:\n- No dangling pointers (references become null when objects are collected)\n- No memory leaks for reachable objects\n- No double free errors\n\n**❌ Cons**:\n- **Runtime overhead**: GC pauses can cause unpredictable latency\n- **Memory overhead**: Additional metadata for tracking objects\n- **No deterministic cleanup**: Objects freed at GC's discretion, not immediately\n\n```java\n// Java - memory managed automatically\nString createString() {\n    String s = new String(\"hello\"); // Heap allocated\n    return s; // Safe: GC will clean up when no longer referenced\n} // No explicit cleanup needed\n```\n\n## 1. Ownership Rules\n- Each value in Rust has a **single owner**.\n- When the owner goes out of scope, the value is **dropped** (memory freed).\n- Prevents **double frees** and **memory leaks**.\n\n**Example**:\n```rust\nfn main() {\n    let s = String::from(\"hello\"); // `s` owns the string\n    takes_ownership(s);            // Ownership moved → `s` is invalid here\n    // println!(\"{}\", s); // ERROR: borrow of moved value\n}\n\nfn takes_ownership(s: String) { \n    println!(\"{}\", s); \n} // `s` is dropped here\n```\n\n## 2. Borrowing & References\n- Allows **immutable** (`&T`) or **mutable** (`&mut T`) borrows.\n- Enforced rules:\n  - Either **one mutable reference** or **multiple immutable references** (no data races).\n  - References must always be **valid** (no dangling pointers).\n\n**Example**:\n```rust\nfn main() {\n    let mut s = String::from(\"hello\");\n    let r1 = &s;     // OK: Immutable borrow\n    let r2 = &s;     // OK: Another immutable borrow\n    // let r3 = &mut s; // ERROR: Cannot borrow as mutable while borrowed as immutable\n    println!(\"{}, {}\", r1, r2);\n}\n```\n\n## 3. Lifetimes\n- Ensures references **never outlive** the data they point to.\n- Prevents **dangling references**.\n\n**Example**:\n```rust\nfn longest<'a>(x: &'a str, y: &'a str) -> &'a str {\n    if x.len() > y.len() { x } else { y }\n}\n\nfn main() {\n    let s1 = String::from(\"hello\");\n    let result;\n    {\n        let s2 = String::from(\"world\");\n        result = longest(&s1, &s2); // ERROR: `s2` doesn't live long enough\n    }\n    // println!(\"{}\", result); // `result` would be invalid here\n}\n```\n\n## Why No Garbage Collector (GC)?\n- **Zero-cost abstractions**: No runtime overhead.\n- **Predictable performance**: Memory is freed deterministically.\n- **No runtime pauses**: Unlike GC-based languages (Java, Go).\n\n## Key Takeaways\n✅ **Ownership**: Prevents memory leaks.  \n✅ **Borrowing**: Prevents data races.  \n✅ **Lifetimes**: Prevents dangling pointers.\n\nRust's model ensures memory safety without runtime checks, making it both safe and fast.",
+    "contentHtml": "<p>Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.</p>\n<h2>The C/C++ Problem</h2>\n<p>C and C++ give developers complete control over memory, but this leads to critical safety issues:</p>\n<p><strong>Dangling Pointers</strong>:</p>\n<pre><code class=\"language-c\">char* get_string() {\n    char buffer[100] = &quot;hello&quot;; // Stack allocated\n    return buffer;              // Returns pointer to freed memory\n} // ERROR: buffer is destroyed here\n\nint* ptr = malloc(sizeof(int));\nfree(ptr);\n*ptr = 42; // ERROR: Use after free\n</code></pre>\n<p><strong>Memory Leaks</strong>:</p>\n<pre><code class=\"language-cpp\">void leak_memory() {\n    int* data = new int[1000]; // Heap allocation\n    if (some_condition) {\n        return; // ERROR: Memory never freed\n    }\n    delete[] data; // Only freed on normal path\n}\n</code></pre>\n<p><strong>Double Free</strong>:</p>\n<pre><code class=\"language-c\">int* ptr = malloc(sizeof(int));\nfree(ptr);\nfree(ptr); // ERROR: Double free causes undefined behavior\n</code></pre>\n<h2>Java&#39;s Garbage Collection Approach</h2>\n<p>Java solves these issues with automatic memory management:</p>\n<p><strong>✅ Pros</strong>:</p>\n<ul>\n<li>No dangling pointers (references become null when objects are collected)</li>\n<li>No memory leaks for reachable objects</li>\n<li>No double free errors</li>\n</ul>\n<p><strong>❌ Cons</strong>:</p>\n<ul>\n<li><strong>Runtime overhead</strong>: GC pauses can cause unpredictable latency</li>\n<li><strong>Memory overhead</strong>: Additional metadata for tracking objects</li>\n<li><strong>No deterministic cleanup</strong>: Objects freed at GC&#39;s discretion, not immediately</li>\n</ul>\n<pre><code class=\"language-java\">// Java - memory managed automatically\nString createString() {\n    String s = new String(&quot;hello&quot;); // Heap allocated\n    return s; // Safe: GC will clean up when no longer referenced\n} // No explicit cleanup needed\n</code></pre>\n<h2>1. Ownership Rules</h2>\n<ul>\n<li>Each value in Rust has a <strong>single owner</strong>.</li>\n<li>When the owner goes out of scope, the value is <strong>dropped</strong> (memory freed).</li>\n<li>Prevents <strong>double frees</strong> and <strong>memory leaks</strong>.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn main() {\n    let s = String::from(&quot;hello&quot;); // `s` owns the string\n    takes_ownership(s);            // Ownership moved → `s` is invalid here\n    // println!(&quot;{}&quot;, s); // ERROR: borrow of moved value\n}\n\nfn takes_ownership(s: String) { \n    println!(&quot;{}&quot;, s); \n} // `s` is dropped here\n</code></pre>\n<h2>2. Borrowing &amp; References</h2>\n<ul>\n<li>Allows <strong>immutable</strong> (<code>&amp;T</code>) or <strong>mutable</strong> (<code>&amp;mut T</code>) borrows.</li>\n<li>Enforced rules:<ul>\n<li>Either <strong>one mutable reference</strong> or <strong>multiple immutable references</strong> (no data races).</li>\n<li>References must always be <strong>valid</strong> (no dangling pointers).</li>\n</ul>\n</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn main() {\n    let mut s = String::from(&quot;hello&quot;);\n    let r1 = &amp;s;     // OK: Immutable borrow\n    let r2 = &amp;s;     // OK: Another immutable borrow\n    // let r3 = &amp;mut s; // ERROR: Cannot borrow as mutable while borrowed as immutable\n    println!(&quot;{}, {}&quot;, r1, r2);\n}\n</code></pre>\n<h2>3. Lifetimes</h2>\n<ul>\n<li>Ensures references <strong>never outlive</strong> the data they point to.</li>\n<li>Prevents <strong>dangling references</strong>.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">fn longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt; &amp;&#39;a str {\n    if x.len() &gt; y.len() { x } else { y }\n}\n\nfn main() {\n    let s1 = String::from(&quot;hello&quot;);\n    let result;\n    {\n        let s2 = String::from(&quot;world&quot;);\n        result = longest(&amp;s1, &amp;s2); // ERROR: `s2` doesn&#39;t live long enough\n    }\n    // println!(&quot;{}&quot;, result); // `result` would be invalid here\n}\n</code></pre>\n<h2>Why No Garbage Collector (GC)?</h2>\n<ul>\n<li><strong>Zero-cost abstractions</strong>: No runtime overhead.</li>\n<li><strong>Predictable performance</strong>: Memory is freed deterministically.</li>\n<li><strong>No runtime pauses</strong>: Unlike GC-based languages (Java, Go).</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Ownership</strong>: Prevents memory leaks.<br>✅ <strong>Borrowing</strong>: Prevents data races.<br>✅ <strong>Lifetimes</strong>: Prevents dangling pointers.</p>\n<p>Rust&#39;s model ensures memory safety without runtime checks, making it both safe and fast.</p>\n",
     "author": "mayo",
     "category": "rust",
     "tags": [
@@ -16,7 +356,7 @@
       "borrowing",
       "lifetimes"
     ],
-    "readingTime": "2 min",
+    "readingTime": "3 min",
     "locale": "en",
     "seo": {
       "title": "How does Rust ensure memory safety without a garbage collector?",
@@ -30,6 +370,16 @@
       ]
     },
     "headings": [
+      {
+        "id": "the-cc-problem",
+        "text": "The C/C++ Problem",
+        "level": 2
+      },
+      {
+        "id": "javas-garbage-collection-approach",
+        "text": "Java's Garbage Collection Approach",
+        "level": 2
+      },
       {
         "id": "1-ownership-rules",
         "text": "1. Ownership Rules",
@@ -69,10 +419,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "memory",
-      "cow",
-      "string",
-      "copy-on-write"
+      "string"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -81,10 +428,7 @@
       "description": "Rust memory and string",
       "keywords": [
         "rust",
-        "memory",
-        "cow",
-        "string",
-        "copy-on-write"
+        "string"
       ]
     },
     "headings": [
@@ -147,10 +491,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "memory",
-      "drop",
-      "ownership",
-      "resource-management"
+      "drop"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -159,10 +500,7 @@
       "description": "Rust memory and string",
       "keywords": [
         "rust",
-        "memory",
-        "drop",
-        "ownership",
-        "resource-management"
+        "drop"
       ]
     },
     "headings": [
@@ -235,10 +573,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "memory",
-      "concurrency",
-      "ownership",
-      "borrowing"
+      "concurrency"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -247,10 +582,7 @@
       "description": "Rust memory and string",
       "keywords": [
         "rust",
-        "memory",
-        "concurrency",
-        "ownership",
-        "borrowing"
+        "concurrency"
       ]
     },
     "headings": [
@@ -308,11 +640,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "vec",
-      "flatten",
-      "iterators",
-      "performance",
-      "collections"
+      "vec"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -321,11 +649,7 @@
       "description": "Flattening Vec<Vec<T>> using iterators compared to manual concatenation, analyzing performance implications and optimization strategies",
       "keywords": [
         "rust",
-        "vec",
-        "flatten",
-        "iterators",
-        "performance",
-        "collections"
+        "vec"
       ]
     },
     "headings": [
@@ -393,11 +717,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "vec",
-      "retain",
-      "filter",
-      "iterators",
-      "performance"
+      "retain"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -406,11 +726,7 @@
       "description": "Comparing Vec::retain() in-place filtering with iter().filter().collect() for different filtering scenarios and performance implications",
       "keywords": [
         "rust",
-        "vec",
-        "retain",
-        "filter",
-        "iterators",
-        "performance"
+        "retain"
       ]
     },
     "headings": [
@@ -513,11 +829,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "vec",
-      "drain",
-      "truncate",
-      "clear",
-      "collections"
+      "drain"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -526,11 +838,7 @@
       "description": "Understanding Vec::drain() functionality and comparing it with Vec::truncate() and Vec::clear() for different element removal scenarios",
       "keywords": [
         "rust",
-        "vec",
-        "drain",
-        "truncate",
-        "clear",
-        "collections"
+        "drain"
       ]
     },
     "headings": [
@@ -603,11 +911,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "box",
-      "vec",
-      "collections",
-      "memory",
-      "performance"
+      "collections"
     ],
     "readingTime": "2 min",
     "locale": "en",
@@ -616,11 +920,7 @@
       "description": "Comparing Box<[T]> and Vec<T> differences in mutability, memory overhead, and performance implications for different use cases",
       "keywords": [
         "rust",
-        "box",
-        "vec",
-        "collections",
-        "memory",
-        "performance"
+        "collections"
       ]
     },
     "headings": [
@@ -683,10 +983,6 @@
     "category": "rust",
     "tags": [
       "rust",
-      "vec",
-      "deduplication",
-      "hashset",
-      "performance",
       "collections"
     ],
     "readingTime": "2 min",
@@ -696,10 +992,6 @@
       "description": "Efficient approaches to remove duplicates from Vec<T> where T: Eq + Hash, comparing HashSet-based and sort-based methods with performance analysis",
       "keywords": [
         "rust",
-        "vec",
-        "deduplication",
-        "hashset",
-        "performance",
         "collections"
       ]
     },
@@ -788,10 +1080,6 @@
     "category": "rust",
     "tags": [
       "rust",
-      "vec",
-      "performance",
-      "memory-allocation",
-      "optimization",
       "collections"
     ],
     "readingTime": "2 min",
@@ -801,10 +1089,6 @@
       "description": "Analyzing performance differences between Vec::push() in loops versus pre-allocating with Vec::with_capacity(), covering memory reallocation costs and optimization strategies",
       "keywords": [
         "rust",
-        "vec",
-        "performance",
-        "memory-allocation",
-        "optimization",
         "collections"
       ]
     },
@@ -879,8 +1163,7 @@
     "tags": [
       "rust",
       "iterators",
-      "collections",
-      "ownership"
+      "collections"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -890,8 +1173,7 @@
       "keywords": [
         "rust",
         "iterators",
-        "collections",
-        "ownership"
+        "collections"
       ]
     },
     "headings": [
@@ -969,11 +1251,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "structs",
-      "trait-bounds",
-      "lifetimes",
-      "generic-types"
+      "closures"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -982,11 +1260,7 @@
       "description": "Storing closures in structs using generic parameters, trait objects, and lifetime annotations with Fn, FnMut, and FnOnce bounds",
       "keywords": [
         "rust",
-        "closures",
-        "structs",
-        "trait-bounds",
-        "lifetimes",
-        "generic-types"
+        "closures"
       ]
     },
     "headings": [
@@ -1050,9 +1324,6 @@
     "tags": [
       "rust",
       "iterators",
-      "ownership",
-      "vec",
-      "into-iter",
       "collections"
     ],
     "readingTime": "3 min",
@@ -1063,9 +1334,6 @@
       "keywords": [
         "rust",
         "iterators",
-        "ownership",
-        "vec",
-        "into-iter",
         "collections"
       ]
     },
@@ -1155,9 +1423,7 @@
     "tags": [
       "rust",
       "closures",
-      "higher-order-functions",
-      "traits",
-      "lifetimes"
+      "higher-order-functions"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1167,9 +1433,7 @@
       "keywords": [
         "rust",
         "closures",
-        "higher-order-functions",
-        "traits",
-        "lifetimes"
+        "higher-order-functions"
       ]
     },
     "headings": [
@@ -1217,11 +1481,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "lifetimes",
-      "ownership",
-      "move",
-      "references"
+      "closures"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1230,11 +1490,7 @@
       "description": "Managing lifetimes when returning closures that capture variables, covering ownership transfer, lifetime annotations, and avoiding dangling references in Rust",
       "keywords": [
         "rust",
-        "closures",
-        "lifetimes",
-        "ownership",
-        "move",
-        "references"
+        "closures"
       ]
     },
     "headings": [
@@ -1302,11 +1558,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "performance",
-      "optimization",
-      "static-dispatch",
-      "heap-allocation"
+      "closures"
     ],
     "readingTime": "2 min",
     "locale": "en",
@@ -1315,11 +1567,7 @@
       "description": "Analyzing performance overhead of closures versus regular functions in Rust, covering static dispatch, heap allocation, and optimization scenarios",
       "keywords": [
         "rust",
-        "closures",
-        "performance",
-        "optimization",
-        "static-dispatch",
-        "heap-allocation"
+        "closures"
       ]
     },
     "headings": [
@@ -1388,9 +1636,7 @@
     "tags": [
       "rust",
       "closures",
-      "state",
-      "fnmut",
-      "lifetimes"
+      "fnmut"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1400,9 +1646,7 @@
       "keywords": [
         "rust",
         "closures",
-        "state",
-        "fnmut",
-        "lifetimes"
+        "fnmut"
       ]
     },
     "headings": [
@@ -1450,10 +1694,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "dispatch",
-      "performance",
-      "traits"
+      "closures"
     ],
     "readingTime": "4 min",
     "locale": "en",
@@ -1462,10 +1703,7 @@
       "description": "Comparing static and dynamic dispatch for closures in Rust, focusing on performance and use cases",
       "keywords": [
         "rust",
-        "closures",
-        "dispatch",
-        "performance",
-        "traits"
+        "closures"
       ]
     },
     "headings": [
@@ -1528,10 +1766,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "ownership",
-      "traits",
-      "lifetimes"
+      "closures"
     ],
     "readingTime": "4 min",
     "locale": "en",
@@ -1540,10 +1775,7 @@
       "description": "Functions and closures in Rust, covering ownership, traits, lifetimes",
       "keywords": [
         "rust",
-        "closures",
-        "ownership",
-        "traits",
-        "lifetimes"
+        "closures"
       ]
     },
     "headings": [
@@ -1627,8 +1859,7 @@
     "tags": [
       "rust",
       "iterators",
-      "collections",
-      "ownership"
+      "collections"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1638,8 +1869,7 @@
       "keywords": [
         "rust",
         "iterators",
-        "collections",
-        "ownership"
+        "collections"
       ]
     },
     "headings": [
@@ -1692,10 +1922,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "traits",
-      "ownership",
-      "lifetimes"
+      "closures"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1704,10 +1931,7 @@
       "description": "Functions and closures in Rust, covering ownership, traits, lifetimes",
       "keywords": [
         "rust",
-        "closures",
-        "traits",
-        "ownership",
-        "lifetimes"
+        "closures"
       ]
     },
     "headings": [
@@ -1765,10 +1989,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "closures",
-      "traits",
-      "ownership",
-      "lifetimes"
+      "closures"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1777,10 +1998,7 @@
       "description": "Functions and closures in Rust, covering ownership, traits, lifetimes",
       "keywords": [
         "rust",
-        "closures",
-        "traits",
-        "ownership",
-        "lifetimes"
+        "closures"
       ]
     },
     "headings": [
@@ -1848,10 +2066,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "traits",
-      "performance",
-      "interfaces",
-      "dispatch"
+      "traits"
     ],
     "readingTime": "4 min",
     "locale": "en",
@@ -1860,10 +2075,7 @@
       "description": "Discussion on Rust traits vs Java/C# interfaces, covering dispatch mechanisms, compile-time behavior, and performance optimizations.",
       "keywords": [
         "rust",
-        "traits",
-        "performance",
-        "interfaces",
-        "dispatch"
+        "traits"
       ]
     },
     "headings": [
@@ -1926,10 +2138,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "string",
-      "memory",
-      "ownership",
-      "types"
+      "string"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -1938,10 +2147,7 @@
       "description": "String vs str in Rust, covering memory management, ownership, and when to use each type.",
       "keywords": [
         "rust",
-        "string",
-        "memory",
-        "ownership",
-        "types"
+        "string"
       ]
     },
     "headings": [
@@ -1988,16 +2194,13 @@
     "title": "Functions or Closures in Rust? Know the Difference!",
     "date": "2025-06-30",
     "excerpt": "Functions vs closures in Rust, covering ownership, traits, lifetimes, and performance implications.",
-    "content": "Understanding the distinction between functions and closures is fundamental to mastering Rust's ownership system and performance characteristics.\n\n## Key Differences\n\n| Functions | Closures |\n|-----------|----------|\n| Defined at compile time with `fn` | Anonymous, created at runtime |\n| Static dispatch (no runtime overhead) | May involve dynamic dispatch (trait objects) |\n| Cannot capture environment variables | Can capture variables from enclosing scope |\n| Always have a known type | Type is unique and inferred (each closure has its own type) |\n\n## Underlying Mechanics\n\n### Closures Are Structs + Traits\n\nRust models closures as structs that:\n- Store captured variables (as fields)\n- Implement one of the closure traits (`Fn`, `FnMut`, or `FnOnce`)\n\nFor example, this closure:\n```rust\nlet x = 42;\nlet closure = |y| x + y;\n```\n\nIs desugared to something like:\n```rust\nstruct AnonymousClosure {\n    x: i32,  // Captured variable\n}\n\nimpl FnOnce<(i32,)> for AnonymousClosure {\n    type Output = i32;\n    fn call_once(self, y: i32) -> i32 {\n        self.x + y\n    }\n}\n```\n\n### Dynamic Dispatch (Vtables)\n\nWhen closures are trait objects (e.g., `Box<dyn Fn(i32) -> i32>`), Rust uses vtables for dynamic dispatch:\n- **Vtable**: A lookup table storing function pointers, enabling runtime polymorphism\n- **Overhead**: Indirect function calls (~2–3x slower than static dispatch)\n\n## When to Use Each\n\nUse **Functions** when:\n- You need zero-cost abstractions (e.g., mathematical operations)\n- No environment capture is required\n\n```rust\nfn add(a: i32, b: i32) -> i32 { a + b }\n```\n\nUse **Closures** when:\n- You need to capture state from the environment\n- Writing short, ad-hoc logic (e.g., callbacks, iterators)\n\n```rust\nlet threshold = 10;\nlet filter = |x: i32| x > threshold;  // Captures `threshold`\n```\n\n## Performance Considerations\n\n| Scenario | Static Dispatch (Closures) | Dynamic Dispatch (dyn Fn) |\n|----------|----------------------------|----------------------------|\n| Speed | Fast (inlined) | Slower (vtable lookup) |\n| Memory | No overhead | Vtable + fat pointer |\n| Use Case | Hot loops, embedded | Heterogeneous callbacks |\n\n## Example: Static vs. Dynamic Dispatch\n\n```rust\n// Static dispatch (compile-time)\nfn static_call<F: Fn(i32) -> i32>(f: F, x: i32) -> i32 {\n    f(x)  // Inlined\n}\n\n// Dynamic dispatch (runtime)\nfn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {\n    f(x)  // Vtable lookup\n}\n```\n\n## Key Takeaways\n\n✅ **Functions**: Predictable performance, no captures  \n✅ **Closures**: Flexible, capture environment, but may involve vtables  \n🚀 Prefer static dispatch (`impl Fn`) unless you need trait objects\n\n**Try This:** What happens if a closure captures a mutable reference and is called twice?  \n**Answer:** The borrow checker ensures exclusive access—it won't compile unless the first call completes!",
-    "contentHtml": "<p>Understanding the distinction between functions and closures is fundamental to mastering Rust&#39;s ownership system and performance characteristics.</p>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Functions</th>\n<th>Closures</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Defined at compile time with <code>fn</code></td>\n<td>Anonymous, created at runtime</td>\n</tr>\n<tr>\n<td>Static dispatch (no runtime overhead)</td>\n<td>May involve dynamic dispatch (trait objects)</td>\n</tr>\n<tr>\n<td>Cannot capture environment variables</td>\n<td>Can capture variables from enclosing scope</td>\n</tr>\n<tr>\n<td>Always have a known type</td>\n<td>Type is unique and inferred (each closure has its own type)</td>\n</tr>\n</tbody></table>\n<h2>Underlying Mechanics</h2>\n<h3>Closures Are Structs + Traits</h3>\n<p>Rust models closures as structs that:</p>\n<ul>\n<li>Store captured variables (as fields)</li>\n<li>Implement one of the closure traits (<code>Fn</code>, <code>FnMut</code>, or <code>FnOnce</code>)</li>\n</ul>\n<p>For example, this closure:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = |y| x + y;\n</code></pre>\n<p>Is desugared to something like:</p>\n<pre><code class=\"language-rust\">struct AnonymousClosure {\n    x: i32,  // Captured variable\n}\n\nimpl FnOnce&lt;(i32,)&gt; for AnonymousClosure {\n    type Output = i32;\n    fn call_once(self, y: i32) -&gt; i32 {\n        self.x + y\n    }\n}\n</code></pre>\n<h3>Dynamic Dispatch (Vtables)</h3>\n<p>When closures are trait objects (e.g., <code>Box&lt;dyn Fn(i32) -&gt; i32&gt;</code>), Rust uses vtables for dynamic dispatch:</p>\n<ul>\n<li><strong>Vtable</strong>: A lookup table storing function pointers, enabling runtime polymorphism</li>\n<li><strong>Overhead</strong>: Indirect function calls (~2–3x slower than static dispatch)</li>\n</ul>\n<h2>When to Use Each</h2>\n<p>Use <strong>Functions</strong> when:</p>\n<ul>\n<li>You need zero-cost abstractions (e.g., mathematical operations)</li>\n<li>No environment capture is required</li>\n</ul>\n<pre><code class=\"language-rust\">fn add(a: i32, b: i32) -&gt; i32 { a + b }\n</code></pre>\n<p>Use <strong>Closures</strong> when:</p>\n<ul>\n<li>You need to capture state from the environment</li>\n<li>Writing short, ad-hoc logic (e.g., callbacks, iterators)</li>\n</ul>\n<pre><code class=\"language-rust\">let threshold = 10;\nlet filter = |x: i32| x &gt; threshold;  // Captures `threshold`\n</code></pre>\n<h2>Performance Considerations</h2>\n<table>\n<thead>\n<tr>\n<th>Scenario</th>\n<th>Static Dispatch (Closures)</th>\n<th>Dynamic Dispatch (dyn Fn)</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Speed</td>\n<td>Fast (inlined)</td>\n<td>Slower (vtable lookup)</td>\n</tr>\n<tr>\n<td>Memory</td>\n<td>No overhead</td>\n<td>Vtable + fat pointer</td>\n</tr>\n<tr>\n<td>Use Case</td>\n<td>Hot loops, embedded</td>\n<td>Heterogeneous callbacks</td>\n</tr>\n</tbody></table>\n<h2>Example: Static vs. Dynamic Dispatch</h2>\n<pre><code class=\"language-rust\">// Static dispatch (compile-time)\nfn static_call&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32) -&gt; i32 {\n    f(x)  // Inlined\n}\n\n// Dynamic dispatch (runtime)\nfn dynamic_call(f: &amp;dyn Fn(i32) -&gt; i32, x: i32) -&gt; i32 {\n    f(x)  // Vtable lookup\n}\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Functions</strong>: Predictable performance, no captures<br>✅ <strong>Closures</strong>: Flexible, capture environment, but may involve vtables<br>🚀 Prefer static dispatch (<code>impl Fn</code>) unless you need trait objects</p>\n<p><strong>Try This:</strong> What happens if a closure captures a mutable reference and is called twice?<br><strong>Answer:</strong> The borrow checker ensures exclusive access—it won&#39;t compile unless the first call completes!</p>\n",
+    "content": "Understanding the distinction between functions and closures is fundamental to mastering Rust's ownership system and performance characteristics.\n\n## Key Differences\n\n| Functions | Closures |\n|-----------|----------|\n| Defined at compile time with `fn` | Anonymous, created at runtime |\n| Static dispatch (no runtime overhead) | May involve dynamic dispatch (trait objects) |\n| Cannot capture environment variables | Can capture variables from enclosing scope |\n| Always have a known type | Type is unique and inferred (each closure has its own type) |\n\n## Underlying Mechanics\n\n### Closures Are Structs + Traits\n\nRust models closures as structs that:\n- Store captured variables (as fields)\n- Implement one of the closure traits (`Fn`, `FnMut`, or `FnOnce`)\n\nFor example, this closure:\n```rust\nlet x = 42;\nlet closure = |y| x + y;\n```\n\nIt expands to something like:\n```rust\nstruct AnonymousClosure {\n    x: i32,  // Captured variable\n}\n\nimpl FnOnce<(i32,)> for AnonymousClosure {\n    type Output = i32;\n    fn call_once(self, y: i32) -> i32 {\n        self.x + y\n    }\n}\n```\n\n### Dynamic Dispatch (Vtables)\n\nWhen closures are trait objects (e.g., `Box<dyn Fn(i32) -> i32>`), Rust uses vtables for dynamic dispatch:\n- **Vtable**: A lookup table storing function pointers, enabling runtime polymorphism\n- **Overhead**: Indirect function calls (~2–3x slower than static dispatch)\n\n## When to Use Each\n\nUse **Functions** when:\n- You need zero-cost abstractions (e.g., mathematical operations)\n- No environment capture is required\n\n```rust\nfn add(a: i32, b: i32) -> i32 { a + b }\n```\n\nUse **Closures** when:\n- You need to capture state from the environment\n- Writing short, ad-hoc logic (e.g., callbacks, iterators)\n\n```rust\nlet threshold = 10;\nlet filter = |x: i32| x > threshold;  // Captures `threshold`\n```\n\n## Performance Considerations\n\n| Scenario | Static Dispatch (Closures) | Dynamic Dispatch (dyn Fn) |\n|----------|----------------------------|----------------------------|\n| Speed | Fast (inlined) | Slower (vtable lookup) |\n| Memory | No overhead | Vtable + fat pointer |\n| Use Case | Hot loops, embedded | Heterogeneous callbacks |\n\n## Example: Static vs. Dynamic Dispatch\n\n```rust\n// Static dispatch (compile-time)\nfn static_call<F: Fn(i32) -> i32>(f: F, x: i32) -> i32 {\n    f(x)  // Inlined\n}\n\n// Dynamic dispatch (runtime)\nfn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {\n    f(x)  // Vtable lookup\n}\n```\n\n## Key Takeaways\n\n✅ **Functions**: Predictable performance, no captures  \n✅ **Closures**: Flexible, capture environment, but may involve vtables  \n🚀 Prefer static dispatch (`impl Fn`) unless you need trait objects\n\n**Try This:** What happens if a closure captures a mutable reference and is called twice?  \n**Answer:** The borrow checker ensures exclusive access—it won't compile unless the first call completes!",
+    "contentHtml": "<p>Understanding the distinction between functions and closures is fundamental to mastering Rust&#39;s ownership system and performance characteristics.</p>\n<h2>Key Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Functions</th>\n<th>Closures</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Defined at compile time with <code>fn</code></td>\n<td>Anonymous, created at runtime</td>\n</tr>\n<tr>\n<td>Static dispatch (no runtime overhead)</td>\n<td>May involve dynamic dispatch (trait objects)</td>\n</tr>\n<tr>\n<td>Cannot capture environment variables</td>\n<td>Can capture variables from enclosing scope</td>\n</tr>\n<tr>\n<td>Always have a known type</td>\n<td>Type is unique and inferred (each closure has its own type)</td>\n</tr>\n</tbody></table>\n<h2>Underlying Mechanics</h2>\n<h3>Closures Are Structs + Traits</h3>\n<p>Rust models closures as structs that:</p>\n<ul>\n<li>Store captured variables (as fields)</li>\n<li>Implement one of the closure traits (<code>Fn</code>, <code>FnMut</code>, or <code>FnOnce</code>)</li>\n</ul>\n<p>For example, this closure:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = |y| x + y;\n</code></pre>\n<p>It expands to something like:</p>\n<pre><code class=\"language-rust\">struct AnonymousClosure {\n    x: i32,  // Captured variable\n}\n\nimpl FnOnce&lt;(i32,)&gt; for AnonymousClosure {\n    type Output = i32;\n    fn call_once(self, y: i32) -&gt; i32 {\n        self.x + y\n    }\n}\n</code></pre>\n<h3>Dynamic Dispatch (Vtables)</h3>\n<p>When closures are trait objects (e.g., <code>Box&lt;dyn Fn(i32) -&gt; i32&gt;</code>), Rust uses vtables for dynamic dispatch:</p>\n<ul>\n<li><strong>Vtable</strong>: A lookup table storing function pointers, enabling runtime polymorphism</li>\n<li><strong>Overhead</strong>: Indirect function calls (~2–3x slower than static dispatch)</li>\n</ul>\n<h2>When to Use Each</h2>\n<p>Use <strong>Functions</strong> when:</p>\n<ul>\n<li>You need zero-cost abstractions (e.g., mathematical operations)</li>\n<li>No environment capture is required</li>\n</ul>\n<pre><code class=\"language-rust\">fn add(a: i32, b: i32) -&gt; i32 { a + b }\n</code></pre>\n<p>Use <strong>Closures</strong> when:</p>\n<ul>\n<li>You need to capture state from the environment</li>\n<li>Writing short, ad-hoc logic (e.g., callbacks, iterators)</li>\n</ul>\n<pre><code class=\"language-rust\">let threshold = 10;\nlet filter = |x: i32| x &gt; threshold;  // Captures `threshold`\n</code></pre>\n<h2>Performance Considerations</h2>\n<table>\n<thead>\n<tr>\n<th>Scenario</th>\n<th>Static Dispatch (Closures)</th>\n<th>Dynamic Dispatch (dyn Fn)</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Speed</td>\n<td>Fast (inlined)</td>\n<td>Slower (vtable lookup)</td>\n</tr>\n<tr>\n<td>Memory</td>\n<td>No overhead</td>\n<td>Vtable + fat pointer</td>\n</tr>\n<tr>\n<td>Use Case</td>\n<td>Hot loops, embedded</td>\n<td>Heterogeneous callbacks</td>\n</tr>\n</tbody></table>\n<h2>Example: Static vs. Dynamic Dispatch</h2>\n<pre><code class=\"language-rust\">// Static dispatch (compile-time)\nfn static_call&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32) -&gt; i32 {\n    f(x)  // Inlined\n}\n\n// Dynamic dispatch (runtime)\nfn dynamic_call(f: &amp;dyn Fn(i32) -&gt; i32, x: i32) -&gt; i32 {\n    f(x)  // Vtable lookup\n}\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Functions</strong>: Predictable performance, no captures<br>✅ <strong>Closures</strong>: Flexible, capture environment, but may involve vtables<br>🚀 Prefer static dispatch (<code>impl Fn</code>) unless you need trait objects</p>\n<p><strong>Try This:</strong> What happens if a closure captures a mutable reference and is called twice?<br><strong>Answer:</strong> The borrow checker ensures exclusive access—it won&#39;t compile unless the first call completes!</p>\n",
     "author": "mayo",
     "category": "rust",
     "tags": [
       "rust",
-      "functions",
-      "closures",
-      "traits",
-      "ownership"
+      "closures"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -2006,10 +2209,7 @@
       "description": "Functions vs closures in Rust, covering ownership, traits, lifetimes, and performance implications.",
       "keywords": [
         "rust",
-        "functions",
-        "closures",
-        "traits",
-        "ownership"
+        "closures"
       ]
     },
     "headings": [
@@ -2067,9 +2267,6 @@
     "category": "rust",
     "tags": [
       "rust",
-      "optimization",
-      "memory",
-      "performance",
       "cache"
     ],
     "readingTime": "3 min",
@@ -2079,9 +2276,6 @@
       "description": "Low-level memory optimization in Rust, covering repr attributes, cache efficiency, and performance trade-offs",
       "keywords": [
         "rust",
-        "optimization",
-        "memory",
-        "performance",
         "cache"
       ]
     },
@@ -2131,8 +2325,6 @@
     "tags": [
       "rust",
       "collections",
-      "performance",
-      "vec",
       "iterators"
     ],
     "readingTime": "2 min",
@@ -2143,8 +2335,6 @@
       "keywords": [
         "rust",
         "collections",
-        "performance",
-        "vec",
         "iterators"
       ]
     },
@@ -2193,9 +2383,7 @@
     "category": "rust",
     "tags": [
       "rust",
-      "programming",
-      "beginners",
-      "tutorial"
+      "beginners"
     ],
     "readingTime": "3 min",
     "locale": "en",
@@ -2204,9 +2392,7 @@
       "description": "Introduction to Rust for beginners, covering installation, basic syntax, and your first project.",
       "keywords": [
         "rust",
-        "programming",
-        "beginners",
-        "tutorial"
+        "beginners"
       ]
     },
     "headings": [
