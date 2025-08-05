@@ -1,14 +1,11 @@
 ---
 id: box-pointer-rust
-title: "What is the purpose of Box<T> in Rust?"
+title: What is the purpose of Box<T> in Rust?
 slug: box-pointer-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-05'
 author: mayo
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+excerpt: Rust memory and string
 category: rust
 tags:
   - rust
