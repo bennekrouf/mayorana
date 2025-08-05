@@ -120,26 +120,8 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'File not found or not a markdown file' }, { status: 404 });
     }
 
-    // Create backup before saving
-    const backupPath = `${fullPath}.backup.${Date.now()}`;
-    fs.copyFileSync(fullPath, backupPath);
-
     // Write the new content
     fs.writeFileSync(fullPath, content, 'utf8');
-
-    // Clean up old backups (keep only the 5 most recent)
-    const dir = path.dirname(fullPath);
-    const filename = path.basename(fullPath);
-    const backupFiles = fs.readdirSync(dir)
-      .filter(f => f.startsWith(filename + '.backup.'))
-      .sort()
-      .reverse();
-    
-    if (backupFiles.length > 5) {
-      for (const backup of backupFiles.slice(5)) {
-        fs.unlinkSync(path.join(dir, backup));
-      }
-    }
 
     return NextResponse.json({ 
       success: true, 
