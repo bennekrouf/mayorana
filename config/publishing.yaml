@@ -1,8 +1,31 @@
-# Publishing Configuration
+# Publishing Configuration - Multi-language support
 # File: config/publishing.yaml
 
-# Publishing schedule settings
+# Supported languages configuration
+languages:
+  # Primary languages (always attempt to publish)
+  primary:
+    - code: "en"
+      name: "English"
+      priority: 1
+    - code: "fr" 
+      name: "Français"
+      priority: 1
+  
+  # Secondary languages (publish if content available)
+  secondary:
+    - code: "de"
+      name: "Deutsch"
+      priority: 2
+    - code: "es"
+      name: "Español" 
+      priority: 2
+
+# Publishing behavior
 publishing:
+  # Strategy: "all" = publish from all languages daily, "primary" = only primary languages
+  strategy: "all"
+  
   # Daily publishing time (24-hour format)
   publishTime: "09:00"
   
@@ -15,19 +38,22 @@ publishing:
   # Preferred publishing days (0=Sunday, 1=Monday, etc.)
   preferredDays: [2, 3, 4]  # Tuesday, Wednesday, Thursday
   
-  # Maximum articles per day
-  maxPerDay: 1
+  # Maximum articles per language per day
+  maxPerLanguagePerDay: 1
   
-  # Minimum buffer (articles in queue + scheduled)
-  minBuffer: 5
+  # Minimum buffer per language (warn when below this)
+  minBufferPerLanguage: 3
+  
+  # Critical buffer per language (alert when below this)
+  criticalBufferPerLanguage: 1
   
   # Holiday dates to skip (YYYY-MM-DD format)
   skipDates:
     - "2025-12-25"  # Christmas
     - "2025-01-01"  # New Year
     - "2025-07-04"  # July 4th (if relevant)
-  
-# Content validation rules
+
+# Content validation rules (applied to all languages)
 validation:
   # Required frontmatter fields
   requiredFields:
@@ -36,13 +62,14 @@ validation:
     - "author"
     - "excerpt"
     - "tags"
+    - "locale"  # Important: locale must match directory
   
   # Content length limits
   content:
-    minLength: 300      # Minimum characters
-    maxLength: 50000    # Maximum characters
-    warnShort: 500      # Warn if shorter than this
-    warnLong: 20000     # Warn if longer than this
+    minLength: 300
+    maxLength: 50000
+    warnShort: 500
+    warnLong: 20000
   
   # Title and slug limits
   title:
@@ -60,7 +87,7 @@ validation:
     warnCount: 8
     minCount: 1
 
-# Queue management
+# Queue management (applied to all languages)
 queue:
   # Auto-scheduling preferences
   autoSchedule: true
@@ -76,33 +103,19 @@ queue:
   
   # How far ahead to schedule (days)
   scheduleAheadDays: 30
-  
-  # Buffer warnings
-  warnings:
-    lowBuffer: 5     # Warn when buffer < 5
-    criticalBuffer: 3 # Critical when buffer < 3
 
 # Notification settings
 notifications:
-  # Slack webhook for alerts (set via environment variable)
+  # Slack webhook for alerts
   slack:
     enabled: true
     webhook: "${SLACK_WEBHOOK_URL}"
     channel: "#blog-automation"
   
-  # Email notifications (optional)
-  email:
-    enabled: false
-    smtp:
-      host: "smtp.gmail.com"
-      port: 587
-      secure: false
-      user: "${EMAIL_USER}"
-      pass: "${EMAIL_PASS}"
-    to: "your-email@example.com"
-    from: "blog-bot@mayorana.ch"
+  # Include language breakdown in notifications
+  includeLanguageBreakdown: true
 
-# SEO optimization
+# SEO optimization (applied to all languages)
 seo:
   # Automatically ping search engines after publish
   pingSearchEngines: true
@@ -133,23 +146,6 @@ logging:
   maxFiles: 7
   maxSize: "10MB"
 
-# Backup settings
-backup:
-  # Create backups before publishing
-  enabled: true
-  
-  # Backup location
-  directory: "/backups/blog-content"
-  
-  # Keep backups for (days)
-  retentionDays: 30
-  
-  # What to backup
-  include:
-    - "content/"
-    - "src/data/"
-    - "public/sitemap.xml"
-
 # Development settings
 development:
   # Skip actual publishing (dry run mode)
@@ -158,5 +154,5 @@ development:
   # Verbose logging
   verbose: false
   
-  # Mock external services (search engine pings, etc.)
+  # Mock external services
   mockServices: false
