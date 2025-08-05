@@ -11,7 +11,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   // We'll handle locale detection manually in our components
   let locale = await requestLocale;
 
-  console.log('🌍 i18n - requestLocale (will be undefined):', locale);
+  // console.log('🌍 i18n - requestLocale (will be undefined):', locale);
 
   // Always default to English for i18n config
   // The actual locale will be handled by our components directly
