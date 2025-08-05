@@ -41,7 +41,7 @@ let x = 42;
 let closure = |y| x + y;
 ```
 
-Is desugared to something like:
+It expands to something like:
 ```rust
 struct AnonymousClosure {
     x: i32,  // Captured variable
