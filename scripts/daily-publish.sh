@@ -90,7 +90,7 @@ main() {
 
   # Attempt to publish articles
   log "📝 Running multi-language publisher..."
-  
+
   local publish_output
   publish_output=$(node scripts/multi-lang-publisher.js publish 2>&1)
   local publish_exit_code=$?
@@ -104,10 +104,10 @@ main() {
     # Parse results from output
     local published_count=0
     local published_summary=""
-    
+
     if echo "$publish_output" | grep -q "Successfully published:"; then
       published_count=$(echo "$publish_output" | grep "Successfully published:" | sed 's/.*Successfully published: \([0-9]*\).*/\1/')
-      
+
       # Extract the published articles summary
       if echo "$publish_output" | grep -q "Published articles:"; then
         published_summary=$(echo "$publish_output" | sed -n '/Published articles:/,/^$/p' | grep "   -" | sed 's/   - //' | tr '\n' ', ' | sed 's/, $//')
@@ -117,7 +117,7 @@ main() {
     # Check if anything was actually published
     if [ "$published_count" -gt 0 ]; then
       log "✅ Published $published_count articles"
-      
+
       # Regenerate blog data
       log "🔄 Regenerating blog data..."
       if node scripts/generate-blog-data.js 2>&1 | tee -a "$LOG_FILE"; then
@@ -155,7 +155,7 @@ main() {
       sleep 5
 
       log "🏗️  Building site..."
-      if yarn build 2>&1 | tee -a "$LOG_FILE"; then
+      if /usr/local/bin/yarn build 2>&1 | tee -a "$LOG_FILE"; then
         log "✅ Site built successfully"
       else
         handle_error "Build failed"
@@ -193,7 +193,7 @@ main() {
 
       # Send success notification
       send_success_notification "$published_count" "$published_summary"
-      
+
       log "🎉 Daily publishing completed successfully!"
     else
       log "📭 No articles were published (all queues empty or failed)"
