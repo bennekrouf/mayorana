@@ -1,14 +1,13 @@
 ---
 id: string-literals-memory-rust
-title: "Where do string literals (&str) live?"
+title: Where do string literals (&str) live?
 slug: string-literals-memory-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-06'
 author: mayo
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+excerpt: Rust memory and string
+content_focus: rust memory and string
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust

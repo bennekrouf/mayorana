@@ -2,7 +2,7 @@
 id: string-vs-str-rust-fr
 title: String vs. &str – Lequel Utiliser et Quand ?
 slug: string-vs-str-rust-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
   String vs str en Rust, couvrant gestion mémoire, ownership, et quand utiliser
@@ -11,6 +11,7 @@ category: rust
 tags:
   - rust
   - string
+date: '2025-08-06'
 ---
 
 # Quelle est la différence entre String et str ?
