@@ -1,12 +1,13 @@
 ---
 id: rust-operateurs-iterateurs
-title: "Opérateurs & Itérateurs Rust : Référence Rapide"
-locale: "fr"
+title: 'Opérateurs & Itérateurs Rust : Référence Rapide'
+locale: fr
 slug: rust-operateurs-iterateurs
-date: '2025-08-04'
+date: '2025-08-07'
 author: mayo
 excerpt: >-
-  Opérateurs Rust essentiels, différences d'itérateurs et gestion Unicode à connaître.
+  Opérateurs Rust essentiels, différences d'itérateurs et gestion Unicode à
+  connaître.
 category: rust
 tags:
   - rust
