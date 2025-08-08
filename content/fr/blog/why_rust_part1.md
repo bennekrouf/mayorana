@@ -7,7 +7,7 @@ date: '2025-08-08'
 author: mayo
 excerpt: >-
   Java, Python et JavaScript offrent de la commodité, mais le garbage collection
-  introduit une latence  imprévisible. Explore comment la gestion mémoire
+  introduit une latence  imprévisible. Nous allons voir comment la gestion mémoire
   runtime affecte les performances des systèmes réels.
 category: rust
 tags:
@@ -20,7 +20,7 @@ tags:
 
 # Garbage Collectors: Pratiques mais Coûteux
 
-Les langages de haut niveau comme Java, Python et JavaScript gèrent la mémoire automatiquement—mais cela vient avec des compromis.
+Les langages de haut niveau comme Java, Python et JavaScript gèrent la mémoire automatiquement. Mais cela vient avec des compromis.
 
 ## Que se passe-t-il avec ce code ?
 
@@ -28,17 +28,19 @@ Les langages de haut niveau comme Java, Python et JavaScript gèrent la mémoire
 String message = "hello";
 ```
 
-Cela crée un objet sur le heap. Mais finalement, cette mémoire doit être récupérée. Voici le Garbage Collector (GC).
+Cela crée un objet sur en mémoire (heap). Mais finalement, cette mémoire doit être récupérée. Et c'est là qu'intervient le Garbage Collector (GC).
 
 ## Comment Chaque Langage Gère la Mémoire
 
 ### Java: Collections Stop-the-World
+Le runtime de Java a plusieurs mécanismes de garbage collection ou générationnel. La plupart ne sont pas bloquant. Mais à un moment donné il lui est nécessaire de s'exécuter en bloquant tous les autres thread ("Stop-the-world"). Et cela créé des blocages, ou latences non prévisibles. C'est pour cette raison que typiquement on n'utilisera jamais Java pour un système de freinage d'urgence mais plutôt un language système (C/C++ ou Rust) car n'a pas d'indisponibilité imprévisible. La trace "Full GC" suivante met en évidence cet évennement.
+
 ```
 [GC (Allocation Failure) 8192K->1024K(10240K), 0.0057 secs]
 [Full GC (Ergonomics) 8192K->512K(19456K), 0.0234 secs]
 ```
 
-Le GC de Java s'exécute en background threads, mettant ton application en pause de manière imprévisible. Même les GC modernes comme G1 peuvent faire des pauses de millisecondes.
+Le GC de Java s'exécute en background, mettant ton application en pause de manière imprévisible. Même les GC modernes comme G1 peuvent faire des pauses de millisecondes.
 
 ### Python: Reference Counting + Cycles
 ```python
@@ -59,7 +61,9 @@ V8 gère la mémoire automatiquement sans contrôle développeur. Les pauses arr
 
 ## L'Impact Réel
 
-### Cauchemar d'Indexation Elasticsearch
+Concrétement, voici quelques expériences mettant en évidence ce problème.
+
+### Une Indexation Elasticsearch qui prend des dixaines d'heures en entreprise:
 ```
 Exécution initiale:  200GB corpus → 2 heures
 Après pression mémoire: Mêmes données → 12 heures
@@ -67,7 +71,7 @@ Après pression mémoire: Mêmes données → 12 heures
 Cause: GC a passé 70% du temps à nettoyer
 ```
 
-### Pics de Latence Service Web
+### Pics de Latence Service Web : le CPU est sans arrêt occupé par le GC et introduit des latences dans les réponses aux appelles d'API
 ```
 Réponse normale: 50ms
 Pendant pause GC: 2000ms (40x plus lent!)
@@ -100,11 +104,11 @@ Pendant pause GC: 2000ms (40x plus lent!)
 
 ## Quand le GC Devient un Problème
 
-### High-Frequency Trading
+### Les systèmes de trading
 **Exigence:** <1ms temps de réponse
 **Réalité:** N'importe quelle pause GC tue les performances
 
-### Systèmes Temps Réel  
+### Les systèmes Temps Réel (automobile, automatismes..etc)
 **Exigence:** Budget constant de 16ms (60fps)  
 **Réalité:** Frame drops pendant la collection
 
@@ -122,6 +126,6 @@ Pendant pause GC: 2000ms (40x plus lent!)
 
 ---
 
-**La Question:** Et si on pouvait avoir la memory safety *sans* garbage collection ?
+**La Question:** Quelles sont les alternatives si on ne veut pas de Garbabe collection ?
 
-**➡️ Suivant:** "Gestion Manuelle de la Mémoire: Pourquoi C/C++ N'est Pas la Réponse"
+**➡️ Voir mon autre post:** "Gestion Manuelle de la Mémoire: Pourquoi C/C++ N'est Pas la Réponse"

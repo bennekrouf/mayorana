@@ -1,6 +1,6 @@
 ---
 id: rust-operateurs-iterateurs
-title: 'Opérateurs & Itérateurs Rust : Référence Rapide'
+title: 'Opérateurs & Itérateurs Rust'
 locale: fr
 slug: rust-operateurs-iterateurs
 date: '2025-08-07'
@@ -17,11 +17,11 @@ tags:
 
 # Opérateurs & Itérateurs Rust : Ce Qu'il Faut Savoir
 
-Référence rapide pour les pièges courants et patterns Rust.
+Voici quelques points d'attention autour de Rust, surtout qu'on vient avec des habitudes d'un autre language de programmation.
 
 ## Opérateurs de Comparaison
 
-Rust reste simple :
+Rust est en mode keep it simple pour les opérateurs :
 ```rust
 x == y    // Égal
 x != y    // Différent
@@ -33,7 +33,7 @@ x > y     // Supérieur
 
 ## Itérateur vs Collection
 
-Savoir ce qui est itérable :
+Au final qu'est-ce qui est itérable :
 ```rust
 3..10                    // ✅ Itérateur
 ["a", "b"]              // ❌ Array (utiliser .iter())
@@ -45,11 +45,11 @@ vec!["x", "y"]          // ❌ Vec (utiliser .iter() ou .into_iter())
 ```rust
 let arr = ["a", "b", "c"];
 
-arr.iter()        // &&str (référence vers référence)
-arr.into_iter()   // &str (plus propre, préféré)
+arr.iter()        // Renvoit des &&str (référence vers référence)
+arr.into_iter()   // Renvoit des &str (plus propre, préféré)
 ```
 
-Utiliser `into_iter()` pour les arrays - un niveau de référence en moins.
+Utilise `into_iter()` pour les arrays - un niveau de référence en moins.
 
 ## Unicode depuis un Char
 
@@ -83,4 +83,4 @@ Objectifs différents :
 vec![1,2,3].into_iter()  // Crée un itérateur
 ```
 
-**Rappel** : `into()` convertit les types, `into_iter()` crée des itérateurs.
+**Rappel** : `into()` convertit les types, `into_iter()` crée des itérateurs. Donc rien à voir les deux !!

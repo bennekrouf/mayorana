@@ -29,7 +29,7 @@ Comprendre la distinction entre `String` et `str` est fondamental pour une gesti
 
 ## Layout Mémoire
 
-**`String`** : Stocke les données sur le heap avec trois composants :
+**`String`** : Stocke les données sur la heap avec trois composants :
 - Pointeur vers buffer heap
 - Length (taille actuelle)
 - Capacity (taille allouée)
@@ -83,13 +83,13 @@ fn main() {
 
 **Paramètres de Fonction** :
 ```rust
-// Inefficace - force allocation
+// Inefficace - force l'allocation
 fn bad(s: String) -> usize { s.len() }
 
 // Efficace - accepte String et &str
 fn good(s: &str) -> usize { s.len() }
 
-// Usage
+// Exemple:
 let owned = String::from("test");
 good(&owned);     // Deref coercion: String -> &str
 good("literal");  // &str direct
@@ -97,8 +97,8 @@ good("literal");  // &str direct
 
 **Allocation Mémoire** :
 - `String` alloue sur heap, nécessite désallocation
-- `&str` vers literals pointe vers binaire programme (zero allocation)
-- `&str` depuis `String` partage allocation existante
+- `&str` vers literals pointe vers le binaire du programme (zero allocation) 
+- `&str` depuis `String` partage l'allocation existante
 
 ## Patterns Courants
 
@@ -138,4 +138,4 @@ fn process_good(s: &str) -> &str {
 
 **Essaie Ceci :** Que se passe-t-il quand tu appelles `.to_string()` sur un string literal vs un `String` ?
 
-**Réponse :** Literal crée une nouvelle allocation heap ; `String` crée un clone des données de la heap existantes. Donc les deux allouent, mais la source diffère !
+**Réponse :** Literal crée une nouvelle allocation heap ; `String` crée un clone des données de la heap existante. Donc les deux allouentde la mémoire, mais la source diffère !

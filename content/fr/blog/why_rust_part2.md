@@ -1,20 +1,21 @@
 ---
 id: c-low-level-cost-fr
-title: "C te donne le Contrôle, mais à Quel Prix ?"
-locale: "fr"
+title: 'C te donne le Contrôle, mais à Quel Prix ?'
+locale: fr
 slug: c-low-level-cost-fr
-date: '2025-08-01'
+date: '2025-08-08'
 author: mayo
 excerpt: >-
-  C évite le garbage collection et donne un contrôle manuel de la mémoire, mais ouvre la porte 
-  à des bugs dangereux. Explore les vrais problèmes mémoire et pourquoi ils comptent.
+  C évite le garbage collection et donne un contrôle manuel de la mémoire, mais
+  ouvre la porte  à des bugs dangereux. Explore les vrais problèmes mémoire et
+  pourquoi ils comptent.
 category: rust
 tags:
-- rust
-- c
-- memory
-- dangling-pointer
-- undefined-behavior
+  - rust
+  - c
+  - memory
+  - dangling-pointer
+  - undefined-behavior
 ---
 
 # C: La Puissance Sans Protection
