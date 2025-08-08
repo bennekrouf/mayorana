@@ -1,20 +1,21 @@
 ---
 id: why-garbage-collector-fr
-title: "GC Pauses et Latence: Le Coût Caché des Langages de Haut Niveau"
-locale: "fr"
+title: 'GC Pauses et Latence: Le Coût Caché des Langages de Haut Niveau'
+locale: fr
 slug: why-garbage-collector-fr
-date: '2025-07-28'
+date: '2025-08-08'
 author: mayo
 excerpt: >-
-  Java, Python et JavaScript offrent de la commodité, mais le garbage collection introduit une latence 
-  imprévisible. Explore comment la gestion mémoire runtime affecte les performances des systèmes réels.
+  Java, Python et JavaScript offrent de la commodité, mais le garbage collection
+  introduit une latence  imprévisible. Explore comment la gestion mémoire
+  runtime affecte les performances des systèmes réels.
 category: rust
 tags:
-- rust
-- java
-- python
-- gc
-- memory
+  - rust
+  - java
+  - python
+  - gc
+  - memory
 ---
 
 # Garbage Collectors: Pratiques mais Coûteux
