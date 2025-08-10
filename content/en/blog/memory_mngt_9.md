@@ -1,14 +1,13 @@
 ---
 id: borrowing-rules-rust
-title: "mutable vs. immutable borrows."
+title: mutable vs. immutable borrows.
 slug: borrowing-rules-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-10'
 author: mayo
-excerpt: >-
-  Rust memory and string
-content_focus: "rust memory and string"
-technical_level: "Expert technical discussion"
+excerpt: Rust memory and string
+content_focus: rust memory and string
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust
@@ -16,8 +15,6 @@ tags:
   - borrowing
   - ownership
   - safety
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # What are the rules for borrowing in Rust? Explain mutable vs. immutable borrows.
