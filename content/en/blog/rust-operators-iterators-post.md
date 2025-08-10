@@ -1,12 +1,13 @@
 ---
 id: rust-comparison-operators-iterators
-title: "Rust Operators & Iterators: Quick Reference"
-locale: "en"
+title: 'Rust Operators & Iterators: Quick Reference'
+locale: en
 slug: rust-comparison-operators-iterators
-date: '2025-08-04'
+date: '2025-08-10'
 author: mayo
 excerpt: >-
-  Essential Rust operators, iterator differences, and Unicode handling you need to know.
+  Essential Rust operators, iterator differences, and Unicode handling you need
+  to know.
 category: rust
 tags:
   - rust
