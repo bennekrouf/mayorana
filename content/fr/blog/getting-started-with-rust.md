@@ -5,7 +5,7 @@ slug: "getting-started-with-rust-fr"
 locale: "fr"
 date: "2025-04-15"
 author: "Mayorana"  
-excerpt: "Introduction à Rust, couvrant l'installation, la syntaxe de base, et ton premier projet."
+excerpt: "Introduction à Rust, couvrant l'installation, la syntaxe de base, et un premier projet."
 category: "rust"
 tags:
   - "rust"

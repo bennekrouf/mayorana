@@ -1,6 +1,6 @@
 ---
 id: why-rust-memory-safe-fr
-title: 'Rust: Memory Safety Sans Garbage Collection'
+title: 'Partie 3 : Rust: Memory Safety Sans Garbage Collection'
 locale: fr
 slug: why-rust-memory-safe-fr
 date: '2025-08-09'

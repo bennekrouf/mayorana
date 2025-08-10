@@ -1,7 +1,7 @@
 ---
 id: vec-new-vs-with-capacity-fr
 title: >-
-  Rust Vec::new() vs. with_capacity(): Quand Utiliser Chacune
+  Rust Vec::new() vs. with_capacity()
 slug: vec-new-vs-with-capacity-fr
 locale: "fr"
 date: '2025-06-25'
@@ -88,7 +88,7 @@ Vec::with_capacity(): 0.3ms  // 4x plus rapide
 
 ## Notes Avancées
 
-- `shrink_to_fit()` : Réduit la capacité excédentaire (ex : après suppression d'éléments)
+- `shrink_to_fit()` : Réduit le petit excédent de capacité (ex : après suppression d'éléments)
 - Macro `vec![]` : Utilise with_capacity implicitement pour les littéraux (ex : vec![1, 2, 3])
 
 ## Points Clés

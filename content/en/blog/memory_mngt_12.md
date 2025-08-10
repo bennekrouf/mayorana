@@ -12,7 +12,7 @@ tags:
   - concurrency
 ---
 
-# Explain Rust's approach to concurrency. How do ownership and borrowing prevent data races?
+# How do ownership and borrowing prevent data races?
 
 Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating data races without requiring a garbage collector. This approach ensures safe, high-performance parallelism with minimal runtime overhead.
 

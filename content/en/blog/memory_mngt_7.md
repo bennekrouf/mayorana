@@ -15,7 +15,7 @@ tags:
   - ownership
 ---
 
-# What is the purpose of Box<T> in Rust? When would you use it?
+# What is the purpose of Box<T> in Rust?
 
 `Box<T>` is a smart pointer in Rust that provides heap allocation for a value of type `T`. It is the simplest way to store data on the heap, offering ownership and memory safety guarantees without runtime overhead.
 

@@ -1,8 +1,7 @@
 ---
 id: vec-push-vs-with-capacity-performance-duplicate-fr
 title: >-
-  Quel est l'impact performance d'utiliser Vec::push() dans une boucle vs.
-  pré-allouer avec Vec::with_capacity() ?
+  Quel est l'impact en terme de performance d'utiliser Vec::push() sans initialiser avec Vec::with_capacity() ?
 slug: vec-push-vs-with-capacity-performance-duplicate-fr
 locale: "fr"
 author: mayo
@@ -21,7 +20,7 @@ tags:
 date: '2025-07-19'
 ---
 
-# Quel est l'impact performance d'utiliser Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
+# Quel est l'impact en terme de performance d'utiliser Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
 
 ## Différences de Performance Clés
 
@@ -46,7 +45,7 @@ date: '2025-07-19'
 - **push() avec Vec::new()** : 4 réallocations (capacité 0 → 4 → 8 → 16).
 - **push() avec with_capacity(10)** : 0 réallocation.
 
-## Comparaison de Benchmark
+## Benchmark
 
 ```rust
 use std::time::Instant;
@@ -83,8 +82,8 @@ Vec::with_capacity(): 0.4ms  // 4.5x plus rapide
 ## Quand Pré-Allouer
 
 - **Taille Connue** : Utilise with_capacity(n) si tu connais le nombre exact/maximum d'éléments.
-- **Code Critique en Performance** : Évite les réallocations dans les hot loops.
-- **Gros Données** : Prévient le stack overflow pour d'énormes collections.
+- **Si les performance sont critiques** : Évite les réallocations dans les hot loops.
+- **Gros volumes de données** : Prévient le stack overflow pour d'énormes collections.
 
 ## Quand Vec::new() est Acceptable
 
@@ -93,7 +92,7 @@ Vec::with_capacity(): 0.4ms  // 4.5x plus rapide
 
 ## Optimisation Avancée : extend()
 
-Si tu as un iterator, extend() est souvent plus rapide qu'une boucle avec push() :
+Si tu as un iterateur, extend() est souvent plus rapide qu'une boucle avec push() :
 
 ```rust
 let mut v = Vec::with_capacity(n);
@@ -109,11 +108,11 @@ v.extend(0..n);  // Optimisé pour les iterators (évite les bounds checks)
 ✅ **Utilise Vec::new() pour** :
 - Tailles petites/inconnues ou prototypage.
 
-🚀 **Évite les réallocations inutiles**—elles dominent le runtime pour de gros Vecs.
+🚀 **Évite les réallocations inutiles**—elles dominent le runtime pour des Vecs.
 
 ## Impact Réel
 
-Dans la crate regex, la pré-allocation est utilisée pour les capture groups pour éviter les réallocations pendant le pattern matching.
+Dans le crate regex, la pré-allocation est utilisée pour les capture groups pour éviter les réallocations pendant le pattern matching.
 
 **Essaie Ceci** : Que se passe-t-il si tu pré-alloues trop (ex : with_capacity(1000) mais utilises seulement 10 éléments) ?
 

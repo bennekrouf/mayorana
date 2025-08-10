@@ -13,8 +13,6 @@ tags:
   - rust
   - memory
   - string
-  - str
-  - allocation
 ---
 
 # How does Rust handle string literals (&str) in terms of memory allocation? Where do they live?

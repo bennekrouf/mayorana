@@ -1,6 +1,6 @@
 ---
 id: collect-method-rust-fr
-title: 'La Magie de collect() en Rust: Transformer les Iterators en Vecs, HashMaps, et Strings !'
+title: 'collect() : Transformer les Iterators en Vecs, HashMaps, et Strings !'
 slug: collect-method-rust-fr
 locale: "fr"
 author: mayo
@@ -14,13 +14,13 @@ tags:
 date: '2025-07-16'
 ---
 
-# Comment fonctionne collect() en Rust ? Montre comment convertir un iterator en Vec, HashMap, ou String.
+# Comment fonctionne collect() en Rust ?
 
 `collect()` est une méthode qui convertit un iterator en collection. Elle s'appuie sur le trait `FromIterator` de Rust, qui définit comment construire un type à partir d'un iterator.
 
 ## Mécaniques Clés
 
-- **Lazy Evaluation** : Les iterators sont lazy—`collect()` déclenche la consommation.
+- **Lazy Evaluation** : Les iterators sont lazy — `collect()` déclenche la consommation.
 - **Type Inference** : Le type de collection cible doit être spécifié (ou inférable).
 - **Flexibilité** : Fonctionne avec tout type implémentant `FromIterator`.
 
@@ -65,7 +65,7 @@ let words = vec!["Hello", " ", "World"].into_iter();
 let s: String = words.collect(); // "Hello World"
 ```
 
-## Comment `collect()` Fonctionne Internement
+## Comment `collect()` fonctionne
 
 - **Trait `FromIterator`** :
   Les collections implémentent ceci pour définir leur logique de construction :
@@ -77,7 +77,7 @@ let s: String = words.collect(); // "Hello World"
   }
   ```
 
-- **Magie du Compiler** : Rust infère le type cible basé sur le contexte ou les annotations.
+- **Magie du Compilateur** : Rust infère le type cible basé sur le contexte ou les annotations.
 
 ## Utilisations Avancées
 
@@ -110,7 +110,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
 - **Collections Pré-allouées** : Utilise `with_capacity` + `extend()` si la taille est connue :
   ```rust
   let mut vec = Vec::with_capacity(100);
-  vec.extend(1..=100);  // Plus rapide que collect() pour de gros iterables
+  vec.extend(1..=100);  // Plus rapide que collect() pour des grandes collections
   ```
 
 - **Zero-Cost Abstractions** : `collect()` est optimisé (ex : `Vec` depuis ranges évite les bounds checks).
@@ -140,7 +140,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
 
 🚀 Optimise avec `with_capacity` pour de grandes collections.
 
-**Exemple Réel** :
+**Exemple concret** :
 
 `serde_json::from_str` s'enchaîne souvent avec `collect()` pour construire des structures complexes :
 
