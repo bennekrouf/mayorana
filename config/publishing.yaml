@@ -1,158 +1,19 @@
-# Publishing Configuration - Multi-language support
+# Simplified Publishing Configuration
 # File: config/publishing.yaml
 
-# Supported languages configuration
+# Just a simple list of languages to publish
 languages:
-  # Primary languages (always attempt to publish)
-  primary:
-    - code: "en"
-      name: "English"
-      priority: 1
-    - code: "fr" 
-      name: "Français"
-      priority: 1
-  
-  # Secondary languages (publish if content available)
-  secondary:
-    - code: "de"
-      name: "Deutsch"
-      priority: 2
-    - code: "es"
-      name: "Español" 
-      priority: 2
+  - en
+  - fr
 
-# Publishing behavior
+# Basic publishing settings
 publishing:
-  # Strategy: "all" = publish from all languages daily, "primary" = only primary languages
-  strategy: "all"
-  
-  # Daily publishing time (24-hour format)
   publishTime: "09:00"
-  
-  # Time zone for publishing
   timezone: "Europe/Zurich"
-  
-  # Skip publishing on weekends
   skipWeekends: true
-  
-  # Preferred publishing days (0=Sunday, 1=Monday, etc.)
-  preferredDays: [2, 3, 4]  # Tuesday, Wednesday, Thursday
-  
-  # Maximum articles per language per day
-  maxPerLanguagePerDay: 1
-  
-  # Minimum buffer per language (warn when below this)
-  minBufferPerLanguage: 3
-  
-  # Critical buffer per language (alert when below this)
-  criticalBufferPerLanguage: 1
-  
-  # Holiday dates to skip (YYYY-MM-DD format)
-  skipDates:
-    - "2025-12-25"  # Christmas
-    - "2025-01-01"  # New Year
-    - "2025-07-04"  # July 4th (if relevant)
+  maxPerDay: 1  # Total articles per day across all languages
 
-# Content validation rules (applied to all languages)
-validation:
-  # Required frontmatter fields
-  requiredFields:
-    - "title"
-    - "slug"
-    - "author"
-    - "excerpt"
-    - "tags"
-    - "locale"  # Important: locale must match directory
-  
-  # Content length limits
-  content:
-    minLength: 300
-    maxLength: 50000
-    warnShort: 500
-    warnLong: 20000
-  
-  # Title and slug limits
-  title:
-    maxLength: 100
-    warnLength: 80
-  
-  slug:
-    maxLength: 60
-    warnLength: 50
-    pattern: "^[a-z0-9-]+$"
-  
-  # Tag limits
-  tags:
-    maxCount: 10
-    warnCount: 8
-    minCount: 1
-
-# Queue management (applied to all languages)
-queue:
-  # Auto-scheduling preferences
-  autoSchedule: true
-  
-  # Priority levels
-  priorities:
-    - "high"    # Jump to front of queue
-    - "normal"  # Standard queue order
-    - "low"     # Back of queue
-  
-  # Default priority for new articles
-  defaultPriority: "normal"
-  
-  # How far ahead to schedule (days)
-  scheduleAheadDays: 30
-
-# Notification settings
-notifications:
-  # Slack webhook for alerts
-  slack:
-    enabled: true
-    webhook: "${SLACK_WEBHOOK_URL}"
-    channel: "#blog-automation"
-  
-  # Include language breakdown in notifications
-  includeLanguageBreakdown: true
-
-# SEO optimization (applied to all languages)
-seo:
-  # Automatically ping search engines after publish
-  pingSearchEngines: true
-  
-  # Search engines to notify
-  searchEngines:
-    google: "https://www.google.com/ping?sitemap=https://mayorana.ch/sitemap.xml"
-    bing: "https://www.bing.com/ping?sitemap=https://mayorana.ch/sitemap.xml"
-  
-  # Generate social media preview images
-  generatePreviews: false
-  
-  # Sitemap settings
-  sitemap:
-    autoRegenerate: true
-    baseUrl: "https://mayorana.ch"
-
-# Logging configuration
+# Logging
 logging:
-  # Log level (trace, debug, info, warn, error)
   level: "info"
-  
-  # Log file location
   file: "/var/log/blog-publishing.log"
-  
-  # Rotate logs
-  rotate: true
-  maxFiles: 7
-  maxSize: "10MB"
-
-# Development settings
-development:
-  # Skip actual publishing (dry run mode)
-  dryRun: false
-  
-  # Verbose logging
-  verbose: false
-  
-  # Mock external services
-  mockServices: false
