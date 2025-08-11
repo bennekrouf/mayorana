@@ -1,14 +1,15 @@
 ---
 id: trait-bounds-rust
-title: "Trait Bounds"
+title: Trait Bounds
 slug: trait-bounds-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-11'
 author: mayo
 excerpt: >-
-  Using trait bounds in Rust for type safety and performance in mathematical computations
-content_focus: "trait bounds, generics, monomorphization"
-technical_level: "Expert technical discussion"
+  Using trait bounds in Rust for type safety and performance in mathematical
+  computations
+content_focus: 'trait bounds, generics, monomorphization'
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust
