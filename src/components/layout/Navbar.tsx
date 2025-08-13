@@ -61,6 +61,14 @@ const Navbar: React.FC = () => {
             href={`/${locale}`}
             className="flex items-center space-x-2"
           >
+            {/* Logo + mayorana text */}
+            <img
+              src="/android-chrome-192x192.png"
+              alt="Mayorana"
+              width="28"
+              height="28"
+              className="rounded-md"
+            />
             <span className="font-bold text-xl text-foreground">mayorana</span>
           </Link>
         </div>
@@ -190,6 +198,7 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="container py-4 space-y-3">
+            {/* CHANGED: Include all nav items including blog for mobile */}
             {navItems.map((item) => (
               <Link
                 key={item.label}
