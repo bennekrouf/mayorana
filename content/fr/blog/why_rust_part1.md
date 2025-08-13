@@ -1,6 +1,6 @@
 ---
 id: why-garbage-collector-fr
-title: 'Partie 1 : GC Pauses et Latence: Le Coût Caché des Langages de Haut Niveau'
+title: 'Partie 1 : GC Pauses et Latence: Le coût caché des langages de haut niveau'
 locale: fr
 slug: why-garbage-collector-fr
 date: '2025-08-08'

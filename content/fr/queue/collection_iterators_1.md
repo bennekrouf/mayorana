@@ -20,7 +20,7 @@ tags:
 
 # Quelle est la différence entre Vec::new() et Vec::with_capacity() ?
 
-Comprendre les stratégies d'allocation Vec est crucial pour écrire du code Rust performant, surtout quand on traite avec des collections et iterators.
+Comprendre les stratégies d'allocation Vec est crucial pour écrire du code Rust performant, surtout quand on manipule des collections et iterators.
 
 ## Différences Clés
 

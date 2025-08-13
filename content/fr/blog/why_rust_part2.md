@@ -70,7 +70,7 @@ sprintf(log_buffer, "User: %s", user_input); // Buffer overflow possible
 - Exécuter du code arbitraire
 - Voler des données sensibles
 
-## Statistiques Memory Safety
+## Sécurité de la mémoire niveau statique (dans le code statique, avant l'exécution / runtime)
 
 **Vulnérabilités de sécurité par catégorie :**
 - **70%** des bugs sécurité Microsoft : problèmes de memory safety
@@ -108,7 +108,7 @@ void destroy_buffer(Buffer* buf) {
 }
 ```
 
-**Overhead mental :** Chaque fonction doit considérer :
+**Saturation mental :** Chaque fonction doit considérer :
 - Qui possède ce pointer ?
 - Quand doit-il être liberé ?
 - Est-il encore valide ?
@@ -172,12 +172,12 @@ $ ./a.out
 
 ### La Limitation
 - **Outils static :** Ratent les cas complexes, faux positifs
-- **Outils runtime :** N'attrapent que les bugs qui s'exécutent pendant les tests
+- **Outils runtime :** Ne détectent les bugs qui s'exécutent que pendant les tests
 - **Code review :** Erreur humaine, chronophage
 
 ## Pourquoi C est toujours utilisé malgré les risques
 
-### Exigences de Systems Programming
+### Exigences de programmation système
 - **Systèmes d'exploitation :** Besoin d'accès direct au hardware
 - **Systèmes embarqués :** Contraintes mémoire, pas de place pour un runtime
 - **Code critique en performance :** Chaque nanoseconde compte
@@ -191,36 +191,36 @@ $ ./a.out
 
 C te donne deux mauvais choix :
 
-**Option 1 : Manual Memory Management**
+**Option 1 : Gestion manuelle de la mémoire**
 ```c
 char* data = malloc(size);
 // ... logique complexe ...
 if (error) {
-    free(data);  // Il faut se rappeler du cleanup dans TOUS les chemins
+    free(data);  // Il faut se souvenir du cleanup dans TOUS les chemins
     return -1;
 }
 // ... plus de logique ...
 free(data);  // Facile d'oublier ou de double-free
 ```
 
-**Option 2 : Garbage Collection**
+**Option 2 : Garbage collector**
 - Ajouter une librairie GC comme Boehm GC
 - Perdre la prévisibilité des performances
-- Toujours possible d'avoir des memory leaks
+- Toujours possible d'avoir des fuites mémoires
 
 ## Points Clés
 
 ✅ **Performance prévisible - pas de pauses GC**  
-✅ **Contrôle complet du memory layout**  
+✅ **Contrôle complet de l'emprunte mémoire**  
 ✅ **Overhead runtime minimal**  
 ❌ **Unsafe par défaut - une erreur = vulnérabilité**  
-❌ **Fardeau mental élevé pour les développeurs**  
+❌ **Responsabilité élevé pour les développeurs**  
 ❌ **La plupart des bugs sécurité viennent des problèmes mémoire**  
-❌ **Les outils attrapent les bugs après qu'ils soient écrits, pas avant**
+❌ **Les outils détectent les bugs après qu'ils soient écrits, pas avant**
 
 ---
 
-**Le Défi :** Nous voulons la performance de C sans ses inconvénients.
+**Le Défi :** Nous voulons la performance de C/C++ sans ses inconvénients.
 
 **La Question :** Et si le compilateur pouvait prévenir les bugs mémoire au moment de la compilation ?
 
