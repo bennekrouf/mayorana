@@ -1,13 +1,13 @@
 ---
 id: deadlocks-c-vs-rust
-title: "Deadlocks in C vs Rust: What Does Rust Really Prevent?"
-locale: "en"
+title: 'Deadlocks in C vs Rust: What Does Rust Really Prevent?'
+locale: en
 slug: deadlocks-c-vs-rust
-date: '2025-08-07'
+date: '2025-08-15'
 author: mayo
 excerpt: >-
-  Deadlocks aren't prevented by compilers—but Rust adds safety guarantees
-  that make writing deadlock-prone code harder. Here's how it compares to C.
+  Deadlocks aren't prevented by compilers—but Rust adds safety guarantees that
+  make writing deadlock-prone code harder. Here's how it compares to C.
 category: rust
 tags:
   - rust
