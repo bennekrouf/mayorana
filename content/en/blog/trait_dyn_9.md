@@ -1,13 +1,16 @@
 ---
 id: blanket-implementations-coherence
-title: "How can you use a blanket implementation (e.g., impl<T: SomeTrait> AnotherTrait for T) to reduce code duplication ?"
+title: >-
+  How can you use a blanket implementation (e.g., impl<T: SomeTrait>
+  AnotherTrait for T) to reduce code duplication ?
 slug: blanket-implementations-coherence
 author: mayo
-locale: "en"
+locale: en
 excerpt: >-
-  Employing blanket implementations in Rust to minimize code duplication while addressing trait coherence pitfalls for robust and maintainable library design
-content_focus: "Blanket Implementations"
-technical_level: "Expert technical discussion"
+  Employing blanket implementations in Rust to minimize code duplication while
+  addressing trait coherence pitfalls for robust and maintainable library design
+content_focus: Blanket Implementations
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust
@@ -16,6 +19,7 @@ tags:
   - code-duplication
   - traits
   - library-design
+date: '2025-08-17'
 ---
 
 # How can you use a blanket implementation (e.g., impl<T: SomeTrait> AnotherTrait for T) to reduce code duplication in a library, and what pitfalls should you watch for regarding trait coherence?
