@@ -1,17 +1,17 @@
 ---
 id: why-rust-memory-safe
-title: "Rust: Memory Safety Without Garbage Collection"
-locale: "en"
+title: 'Rust: Memory Safety Without Garbage Collection'
+locale: en
 slug: why-rust-memory-safe
-date: '2025-08-05'
+date: '2025-08-19'
 author: mayo
 excerpt: >-
-  Rust gives you the performance of C with memory safety enforced at compile time.
-  Learn how ownership and borrowing eliminate entire bug classes.
+  Rust gives you the performance of C with memory safety enforced at compile
+  time. Learn how ownership and borrowing eliminate entire bug classes.
 category: rust
 tags:
-- rust
-- ownership
+  - rust
+  - ownership
 ---
 
 # Rust: Safety Without Sacrifice
