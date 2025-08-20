@@ -1,14 +1,13 @@
 ---
 id: vec-new-vs-with-capacity-fr
-title: >-
-  Rust Vec::new() vs. with_capacity()
+title: 'Rust Vec::new() vs. with_capacity()'
 slug: vec-new-vs-with-capacity-fr
-locale: "fr"
-date: '2025-06-25'
+locale: fr
+date: '2025-08-20'
 author: mayo
 excerpt: >-
-  Stratégies d'allocation Vec en Rust, comparant
-  Vec::new() et Vec::with_capacity() pour une performance optimale.
+  Stratégies d'allocation Vec en Rust, comparant Vec::new() et
+  Vec::with_capacity() pour une performance optimale.
 category: rust
 tags:
   - rust
