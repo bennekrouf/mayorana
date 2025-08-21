@@ -2,11 +2,12 @@
 id: into-iter-vs-iter-ownership-fr
 title: Implications d'itérer sur un Vec avec .into_iter() au lieu de .iter()
 slug: into-iter-vs-iter-ownership-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
   Comprendre les différences entre .into_iter() et .iter() lors de l'itération
-  sur Vec, couvrant les implications d'ownership et considérations de performance
+  sur Vec, couvrant les implications d'ownership et considérations de
+  performance
 category: rust
 tags:
   - rust
@@ -15,7 +16,7 @@ tags:
   - vec
   - into-iter
   - collections
-date: '2025-07-14'
+date: '2025-08-21'
 ---
 
 # Lors de l'itération sur un Vec, pourquoi utiliser .into_iter() au lieu de .iter() ?
