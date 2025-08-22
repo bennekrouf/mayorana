@@ -2,8 +2,8 @@
 id: iter-methods-rust-fr
 title: 'Différences entre into_iter(), iter(), et iter_mut()'
 slug: iter-methods-rust-fr
-locale: "fr"
-date: '2025-07-08'
+locale: fr
+date: '2025-08-22'
 author: mayo
 excerpt: 'Collections (comme Vec), iterators (into_iter, collect), et concepts associés'
 category: rust

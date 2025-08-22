@@ -3,7 +3,7 @@ id: why-garbage-collector
 title: 'GC Pauses and Latency: The Hidden Cost of High-Level Languages'
 locale: en
 slug: why-garbage-collector
-date: '2025-08-18'
+date: '2025-04-10'
 author: mayo
 excerpt: >-
   Java, Python, and JavaScript offer convenience, but garbage collection

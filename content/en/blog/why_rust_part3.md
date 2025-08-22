@@ -3,7 +3,7 @@ id: why-rust-memory-safe
 title: 'Rust: Memory Safety Without Garbage Collection'
 locale: en
 slug: why-rust-memory-safe
-date: '2025-08-19'
+date: '2025-04-12'
 author: mayo
 excerpt: >-
   Rust gives you the performance of C with memory safety enforced at compile

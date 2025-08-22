@@ -3,7 +3,7 @@ id: c-low-level-cost
 title: 'C Gives You Control, But at What Cost?'
 locale: en
 slug: c-low-level-cost
-date: '2025-08-19'
+date: '2025-04-11'
 author: mayo
 excerpt: >-
   C avoids garbage collection and gives manual memory control, but opens the
