@@ -1,14 +1,15 @@
 ---
 id: vec-push-vs-with-capacity-performance-duplicate-fr
 title: >-
-  Quel est l'impact en terme de performance d'utiliser Vec::push() sans initialiser avec Vec::with_capacity() ?
+  Quel est l'impact en terme de performance d'utiliser Vec::push() sans
+  initialiser avec Vec::with_capacity() ?
 slug: vec-push-vs-with-capacity-performance-duplicate-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Analyser les différences de performance entre Vec::push() dans des boucles versus
-  pré-allouer avec Vec::with_capacity(), couvrant les coûts de réallocation mémoire
-  et stratégies d'optimisation
+  Analyser les différences de performance entre Vec::push() dans des boucles
+  versus pré-allouer avec Vec::with_capacity(), couvrant les coûts de
+  réallocation mémoire et stratégies d'optimisation
 category: rust
 tags:
   - rust
@@ -17,7 +18,7 @@ tags:
   - memory-allocation
   - optimization
   - collections
-date: '2025-07-19'
+date: '2025-08-23'
 ---
 
 # Quel est l'impact en terme de performance d'utiliser Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
