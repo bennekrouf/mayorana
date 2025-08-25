@@ -1,14 +1,15 @@
 ---
 id: dangling-pointer-rust-fr
-title: "Qu'est-ce qu'un dangling pointer, et comment Rust le prévient-il au moment de la compilation ?"
+title: >-
+  Qu'est-ce qu'un dangling pointer, et comment Rust le prévient-il au moment de
+  la compilation ?
 slug: dangling-pointer-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-08-25'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 category: rust
 tags:
   - rust
