@@ -1,13 +1,14 @@
 ---
 id: deadlocks-c-vs-rust
-title: "Deadlocks en C vs Rust : Que garantit vraiment Rust ?"
-locale: "fr"
+title: 'Deadlocks en C vs Rust : Que garantit vraiment Rust ?'
+locale: fr
 slug: deadlocks-c-vs-rust
-date: '2025-08-07'
+date: '2025-08-25'
 author: mayo
 excerpt: >-
-  Les deadlocks ne sont pas évités par le compilateur, mais Rust offre des garanties
-  de sécurité qui rendent leur apparition plus difficile qu'en C. Comparaison détaillée.
+  Les deadlocks ne sont pas évités par le compilateur, mais Rust offre des
+  garanties de sécurité qui rendent leur apparition plus difficile qu'en C.
+  Comparaison détaillée.
 category: rust
 tags:
   - rust
