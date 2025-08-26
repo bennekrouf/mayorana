@@ -1,14 +1,15 @@
 ---
 id: string-str-mismatch-rust-fr
-title: "Pourquoi &str Ne Rentre Pas dans &String en Rust: Fixes Sympas pour les String Mismatches !"
+title: >-
+  Pourquoi &str Ne Rentre Pas dans &String en Rust: Fixes Sympas pour les String
+  Mismatches !
 slug: string-str-mismatch-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-08-26'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 category: rust
 tags:
   - rust
