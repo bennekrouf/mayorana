@@ -1,3 +1,4 @@
+// File: src/components/layout/Footer.tsx (updated with legal links)
 'use client';
 
 import React from 'react';
@@ -23,7 +24,10 @@ const Footer: React.FC = () => {
     { label: tNav('services'), path: "/services" },
     { label: tNav('about'), path: "/about" },
     { label: "api0.ai", path: "https://api0.ai", external: true },
-    { label: tNav('contact'), path: "/contact" },
+    { label: tNav('contact'), path: "/contact" }
+  ];
+
+  const legalLinks = [
     { label: "Privacy Policy", path: "/privacy" },
     { label: "Terms of Service", path: "/terms" }
   ];
@@ -46,7 +50,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-medium text-foreground mb-4">{t('quick_links')}</h3>
             <ul className="space-y-2">
-              {footerNav.slice(0, 5).map((item) => (
+              {footerNav.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.external ? item.path : getLocalizedPath(item.path)}
@@ -58,6 +62,20 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
               ))}
+
+              {/* Legal Links */}
+              <li className="pt-2 border-t border-border mt-4">
+                {legalLinks.map((item) => (
+                  <div key={item.label} className="mb-2">
+                    <Link
+                      href={getLocalizedPath(item.path)}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  </div>
+                ))}
+              </li>
             </ul>
           </div>
 
@@ -139,9 +157,19 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row md:justify-between items-center">
-          <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} Mayorana.ch. {t('copyright')}
-          </p>
+          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+            <p className="text-sm text-muted-foreground">
+              &copy; {currentYear} Mayorana.ch. {t('copyright')}
+            </p>
+            <div className="flex space-x-4 text-xs text-muted-foreground">
+              <Link href={getLocalizedPath("/privacy")} className="hover:text-primary transition-colors">
+                Privacy
+              </Link>
+              <Link href={getLocalizedPath("/terms")} className="hover:text-primary transition-colors">
+                Terms
+              </Link>
+            </div>
+          </div>
           <p className="text-sm text-muted-foreground mt-2 md:mt-0">
             {t('tagline')}
           </p>

@@ -1,5 +1,181 @@
 [
   {
+    "id": "borrowing-rules-rust",
+    "slug": "borrowing-rules-rust",
+    "title": "mutable vs. immutable borrows.",
+    "date": "2025-08-10",
+    "excerpt": "Rust memory and string",
+    "content": "Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure memory safety and prevent data races without runtime overhead. These rules govern how data can be accessed via references, distinguishing between mutable (`&mut T`) and immutable (`&T`) borrows.\n\n## The Borrowing Rules (Compiler-Enforced)\n\n1. **Either One Mutable Borrow (`&mut T`) OR Multiple Immutable Borrows (`&T`)**:\n   - You can have:\n     - **One mutable reference** (`&mut T`), OR\n     - **Any number of immutable references** (`&T`).\n   - Never both at the same time for the same data.\n2. **References Must Always Be Valid (No Dangling Pointers)**:\n   - Borrowed references cannot outlive the data they point to, enforced by Rust’s lifetime system.\n\n## Immutable Borrows (`&T`)\n\n- **Read-only access**: Cannot modify the data.\n- **Multiple allowed**: Safe for concurrent reads, as no modifications can occur.\n\n**Example**:\n```rust\nlet x = 42;\nlet r1 = &x;  // OK: Immutable borrow\nlet r2 = &x;  // OK: Another immutable borrow\nprintln!(\"{}, {}\", r1, r2);  // Works fine\n```\n\n## Mutable Borrows (`&mut T`)\n\n- **Exclusive access**: Allows modification of the data.\n- **No other borrows allowed**: No `&T` or additional `&mut T` can coexist for the same data.\n\n**Example**:\n```rust\nlet mut x = 42;\nlet r1 = &mut x;  // OK: Mutable borrow\n*r1 += 1;         // Can modify\n// let r2 = &x;   // ERROR: Cannot borrow `x` as immutable while mutable borrow exists\n```\n\n## Compiler Rejects These Scenarios\n\n1. **Mutable + Immutable Overlap**:\n   ```rust\n   let mut data = 10;\n   let r1 = &data;      // Immutable borrow\n   let r2 = &mut data;  // ERROR: Cannot borrow as mutable while borrowed as immutable\n   ```\n\n2. **Multiple Mutable Borrows**:\n   ```rust\n   let mut s = String::new();\n   let r1 = &mut s;\n   let r2 = &mut s;  // ERROR: Second mutable borrow\n   ```\n\n3. **Dangling References**:\n   ```rust\n   fn dangling() -> &String {\n       let s = String::from(\"oops\");\n       &s  // ERROR: `s` dies here, reference would dangle\n   }\n   ```\n\n## Why These Rules Matter\n\n- **Prevents Data Races**: By disallowing concurrent mutable access, Rust ensures thread safety by default.\n- **Ensures Memory Safety**: No dangling pointers or iterator invalidation, as the borrow checker enforces valid references.\n\n## Key Takeaways\n\n✅ **Immutable borrows (`&T`)**:\n- Many allowed, but no mutation.\n✅ **Mutable borrows (`&mut T`)**:\n- Only one allowed, exclusive access.\n🚫 **Violations caught at compile time**: No runtime overhead.\n\n**Real-World Impact**: These rules enable fearless concurrency, as seen in crates like `Rayon` for parallel iteration.\n\n**Experiment**: Try creating a function that takes `&mut T` and call it twice with the same data.  \n**Answer**: The borrow checker won’t allow it unless the first borrow’s scope ends, preventing overlapping mutable borrows.",
+    "contentHtml": "<p>Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure memory safety and prevent data races without runtime overhead. These rules govern how data can be accessed via references, distinguishing between mutable (<code>&amp;mut T</code>) and immutable (<code>&amp;T</code>) borrows.</p>\n<h2>The Borrowing Rules (Compiler-Enforced)</h2>\n<ol>\n<li><strong>Either One Mutable Borrow (<code>&amp;mut T</code>) OR Multiple Immutable Borrows (<code>&amp;T</code>)</strong>:<ul>\n<li>You can have:<ul>\n<li><strong>One mutable reference</strong> (<code>&amp;mut T</code>), OR</li>\n<li><strong>Any number of immutable references</strong> (<code>&amp;T</code>).</li>\n</ul>\n</li>\n<li>Never both at the same time for the same data.</li>\n</ul>\n</li>\n<li><strong>References Must Always Be Valid (No Dangling Pointers)</strong>:<ul>\n<li>Borrowed references cannot outlive the data they point to, enforced by Rust’s lifetime system.</li>\n</ul>\n</li>\n</ol>\n<h2>Immutable Borrows (<code>&amp;T</code>)</h2>\n<ul>\n<li><strong>Read-only access</strong>: Cannot modify the data.</li>\n<li><strong>Multiple allowed</strong>: Safe for concurrent reads, as no modifications can occur.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet r1 = &amp;x;  // OK: Immutable borrow\nlet r2 = &amp;x;  // OK: Another immutable borrow\nprintln!(&quot;{}, {}&quot;, r1, r2);  // Works fine\n</code></pre>\n<h2>Mutable Borrows (<code>&amp;mut T</code>)</h2>\n<ul>\n<li><strong>Exclusive access</strong>: Allows modification of the data.</li>\n<li><strong>No other borrows allowed</strong>: No <code>&amp;T</code> or additional <code>&amp;mut T</code> can coexist for the same data.</li>\n</ul>\n<p><strong>Example</strong>:</p>\n<pre><code class=\"language-rust\">let mut x = 42;\nlet r1 = &amp;mut x;  // OK: Mutable borrow\n*r1 += 1;         // Can modify\n// let r2 = &amp;x;   // ERROR: Cannot borrow `x` as immutable while mutable borrow exists\n</code></pre>\n<h2>Compiler Rejects These Scenarios</h2>\n<ol>\n<li><p><strong>Mutable + Immutable Overlap</strong>:</p>\n<pre><code class=\"language-rust\">let mut data = 10;\nlet r1 = &amp;data;      // Immutable borrow\nlet r2 = &amp;mut data;  // ERROR: Cannot borrow as mutable while borrowed as immutable\n</code></pre>\n</li>\n<li><p><strong>Multiple Mutable Borrows</strong>:</p>\n<pre><code class=\"language-rust\">let mut s = String::new();\nlet r1 = &amp;mut s;\nlet r2 = &amp;mut s;  // ERROR: Second mutable borrow\n</code></pre>\n</li>\n<li><p><strong>Dangling References</strong>:</p>\n<pre><code class=\"language-rust\">fn dangling() -&gt; &amp;String {\n    let s = String::from(&quot;oops&quot;);\n    &amp;s  // ERROR: `s` dies here, reference would dangle\n}\n</code></pre>\n</li>\n</ol>\n<h2>Why These Rules Matter</h2>\n<ul>\n<li><strong>Prevents Data Races</strong>: By disallowing concurrent mutable access, Rust ensures thread safety by default.</li>\n<li><strong>Ensures Memory Safety</strong>: No dangling pointers or iterator invalidation, as the borrow checker enforces valid references.</li>\n</ul>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Immutable borrows (<code>&amp;T</code>)</strong>:</p>\n<ul>\n<li>Many allowed, but no mutation.\n✅ <strong>Mutable borrows (<code>&amp;mut T</code>)</strong>:</li>\n<li>Only one allowed, exclusive access.\n🚫 <strong>Violations caught at compile time</strong>: No runtime overhead.</li>\n</ul>\n<p><strong>Real-World Impact</strong>: These rules enable fearless concurrency, as seen in crates like <code>Rayon</code> for parallel iteration.</p>\n<p><strong>Experiment</strong>: Try creating a function that takes <code>&amp;mut T</code> and call it twice with the same data.<br><strong>Answer</strong>: The borrow checker won’t allow it unless the first borrow’s scope ends, preventing overlapping mutable borrows.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "borrowing",
+      "ownership",
+      "safety"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "mutable vs. immutable borrows.",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "borrowing",
+        "ownership",
+        "safety"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-borrowing-rules-compiler-enforced",
+        "text": "The Borrowing Rules (Compiler-Enforced)",
+        "level": 2
+      },
+      {
+        "id": "immutable-borrows-andt",
+        "text": "Immutable Borrows (`&T`)",
+        "level": 2
+      },
+      {
+        "id": "mutable-borrows-andmut-t",
+        "text": "Mutable Borrows (`&mut T`)",
+        "level": 2
+      },
+      {
+        "id": "compiler-rejects-these-scenarios",
+        "text": "Compiler Rejects These Scenarios",
+        "level": 2
+      },
+      {
+        "id": "why-these-rules-matter",
+        "text": "Why These Rules Matter",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "string-literals-memory-rust",
+    "slug": "string-literals-memory-rust",
+    "title": "Where do string literals (&str) live?",
+    "date": "2025-08-06",
+    "excerpt": "Rust memory and string",
+    "content": "String literals (`&str`) in Rust are handled efficiently, with distinct memory characteristics compared to heap-allocated `String` types. Understanding their allocation and lifetime is key to writing performant and safe Rust code.\n\n## String Literals (&str) in Memory\n\n### Storage Location\n\n- String literals (e.g., `\"hello\"`) are stored in the **read-only data segment** (`.rodata`) of the compiled binary, not on the heap or stack.\n- They are embedded directly in the executable and loaded into memory at program startup.\n- Memory is **static**, meaning it lives for the entire program duration.\n\n### Type Inference\n\n- The type of `\"hello\"` is `&'static str`:\n  - `&str`: An immutable string slice.\n  - `'static`: A lifetime lasting the entire program.\n\n**Example: Memory Layout**:\n```rust\nlet s: &'static str = \"hello\"; // Points to static memory\n```\n\n- **Binary Representation**:\n  - Executable Memory: `\"hello\"` stored in `.rodata` section, e.g., at address `0x1000`.\n  - Variable `s`: A pointer (`0x1000`) + length (`5`), stored on the stack.\n\n## Key Properties\n\n| **Property** | **Explanation** |\n|--------------|-----------------|\n| **Immutable** | Cannot modify the literal (e.g., `\"hello\"[0] = 'H'` is forbidden). |\n| **Zero-Cost** | No runtime allocation (already in memory). |\n| **Lifetime** | Always `'static` (valid for the whole program). |\n\n## Comparison with `String`\n\n| **Feature** | **&'static str (literal)** | **String** |\n|-------------|----------------------------|------------|\n| **Memory Location** | Read-only data segment | Heap |\n| **Mutability** | Immutable | Mutable |\n| **Lifetime** | `'static` | Scoped to owner |\n| **Allocation Cost** | None (compile-time) | Runtime allocation |\n\n## Common Use Cases\n\n### Constants\n```rust\nconst GREETING: &str = \"hello\"; // No allocation\n```\n\n### Function Arguments\nPrefer `&str` over `&String` to accept literals without allocation:\n```rust\nfn print(s: &str) { /* ... */ }\nprint(\"world\"); // No conversion needed\n```\n\n## Why Not Always Use &'static str?\n\n- Limited to **compile-time-known strings**.\n- Cannot dynamically create or modify them (unlike `String`).\n\n**Example: Dynamic Strings Require `String`**:\n```rust\nlet name = \"Alice\".to_string(); // Heap-allocated copy\nname.push_str(\" and Bob\");      // Mutability possible\n```\n\n## The Problem: Dangling Pointer Risk\n\nReturning a reference (`&str`) to a local `String` creates a dangling pointer, as the `String` is dropped when the function ends.\n\n**Example: Code That Fails to Compile**:\n```rust\nfn return_str() -> &str {         // ERROR: Missing lifetime specifier!\n    let s = String::from(\"hello\");\n    &s                            // Returns a reference to `s`...\n}                                 // `s` is dropped here (dangling pointer!)\n```\n\n**Compiler Error**:\n```\nerror[E0106]: missing lifetime specifier\n --> src/main.rs:1:17\n  |\n1 | fn return_str() -> &str {\n  |                   ^ expected named lifetime parameter\n  |\n  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from\n```\n\n### Why Rust Rejects This\n\n- **Ownership Rules**: `String` (`s`) is owned by the function and dropped when the scope ends. Returning `&s` would create a reference to freed memory.\n- **Lifetime Enforcement**: Rust requires explicit lifetimes to ensure references are always valid. Here, the reference (`&str`) has no owner to borrow from after the function exits.\n\n### How to Fix It\n\n#### Option 1: Return an Owned `String` (No Reference)\n```rust\nfn return_owned() -> String {  // Transfer ownership to caller\n    String::from(\"hello\")      // No reference, no lifetime issue\n}\n```\n\n#### Option 2: Return a `&'static str` (String Literal)\n```rust\nfn return_static() -> &'static str {  // Lives forever in binary\n    \"hello\"                          // Static memory (not heap)\n}\n```\n\n#### Option 3: Use `Cow<str>` for Flexibility\n```rust\nuse std::borrow::Cow;\n\nfn return_cow(is_heap: bool) -> Cow<'static, str> {\n    if is_heap {\n        Cow::Owned(String::from(\"hello\"))  // Heap-allocated\n    } else {\n        Cow::Borrowed(\"hello\")             // Static memory\n    }\n}\n```\n\n## Key Takeaways\n\n✅ **String literals**:\n- Live in static memory (part of the binary).\n- Are immutable and zero-cost.\n- Have `'static` lifetime.\n\n🚀 **When to use them**:\n- For fixed, read-only strings (e.g., messages, constants).\n- To avoid allocations in function APIs (`&str` over `&String`).\n\n✅ **Never return `&str` borrowed from a local `String`**—it’s impossible in safe Rust.\n\n✅ **Solutions**:\n- Return `String` (ownership transfer).\n- Use `&'static str` (literals only).\n- Use `Cow<str>` for dynamic choices.\n\n**Advanced Note**: Rust optimizes `&str` references to literals. Even if you write:\n```rust\nlet s = String::from(\"hello\");\nlet slice = &s[..]; // Points to heap, not static memory!\n```\nThe compiler may elide copies if the content is known statically.\n\n**Experiment**: What happens if you try returning `&s[..]` instead of `&s`?  \n**Answer**: No—it’s the same issue! The slice still points to the doomed `String`.",
+    "contentHtml": "<p>String literals (<code>&amp;str</code>) in Rust are handled efficiently, with distinct memory characteristics compared to heap-allocated <code>String</code> types. Understanding their allocation and lifetime is key to writing performant and safe Rust code.</p>\n<h2>String Literals (&amp;str) in Memory</h2>\n<h3>Storage Location</h3>\n<ul>\n<li>String literals (e.g., <code>&quot;hello&quot;</code>) are stored in the <strong>read-only data segment</strong> (<code>.rodata</code>) of the compiled binary, not on the heap or stack.</li>\n<li>They are embedded directly in the executable and loaded into memory at program startup.</li>\n<li>Memory is <strong>static</strong>, meaning it lives for the entire program duration.</li>\n</ul>\n<h3>Type Inference</h3>\n<ul>\n<li>The type of <code>&quot;hello&quot;</code> is <code>&amp;&#39;static str</code>:<ul>\n<li><code>&amp;str</code>: An immutable string slice.</li>\n<li><code>&#39;static</code>: A lifetime lasting the entire program.</li>\n</ul>\n</li>\n</ul>\n<p><strong>Example: Memory Layout</strong>:</p>\n<pre><code class=\"language-rust\">let s: &amp;&#39;static str = &quot;hello&quot;; // Points to static memory\n</code></pre>\n<ul>\n<li><strong>Binary Representation</strong>:<ul>\n<li>Executable Memory: <code>&quot;hello&quot;</code> stored in <code>.rodata</code> section, e.g., at address <code>0x1000</code>.</li>\n<li>Variable <code>s</code>: A pointer (<code>0x1000</code>) + length (<code>5</code>), stored on the stack.</li>\n</ul>\n</li>\n</ul>\n<h2>Key Properties</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Property</strong></th>\n<th><strong>Explanation</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Immutable</strong></td>\n<td>Cannot modify the literal (e.g., <code>&quot;hello&quot;[0] = &#39;H&#39;</code> is forbidden).</td>\n</tr>\n<tr>\n<td><strong>Zero-Cost</strong></td>\n<td>No runtime allocation (already in memory).</td>\n</tr>\n<tr>\n<td><strong>Lifetime</strong></td>\n<td>Always <code>&#39;static</code> (valid for the whole program).</td>\n</tr>\n</tbody></table>\n<h2>Comparison with <code>String</code></h2>\n<table>\n<thead>\n<tr>\n<th><strong>Feature</strong></th>\n<th><strong>&amp;&#39;static str (literal)</strong></th>\n<th><strong>String</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><strong>Memory Location</strong></td>\n<td>Read-only data segment</td>\n<td>Heap</td>\n</tr>\n<tr>\n<td><strong>Mutability</strong></td>\n<td>Immutable</td>\n<td>Mutable</td>\n</tr>\n<tr>\n<td><strong>Lifetime</strong></td>\n<td><code>&#39;static</code></td>\n<td>Scoped to owner</td>\n</tr>\n<tr>\n<td><strong>Allocation Cost</strong></td>\n<td>None (compile-time)</td>\n<td>Runtime allocation</td>\n</tr>\n</tbody></table>\n<h2>Common Use Cases</h2>\n<h3>Constants</h3>\n<pre><code class=\"language-rust\">const GREETING: &amp;str = &quot;hello&quot;; // No allocation\n</code></pre>\n<h3>Function Arguments</h3>\n<p>Prefer <code>&amp;str</code> over <code>&amp;String</code> to accept literals without allocation:</p>\n<pre><code class=\"language-rust\">fn print(s: &amp;str) { /* ... */ }\nprint(&quot;world&quot;); // No conversion needed\n</code></pre>\n<h2>Why Not Always Use &amp;&#39;static str?</h2>\n<ul>\n<li>Limited to <strong>compile-time-known strings</strong>.</li>\n<li>Cannot dynamically create or modify them (unlike <code>String</code>).</li>\n</ul>\n<p><strong>Example: Dynamic Strings Require <code>String</code></strong>:</p>\n<pre><code class=\"language-rust\">let name = &quot;Alice&quot;.to_string(); // Heap-allocated copy\nname.push_str(&quot; and Bob&quot;);      // Mutability possible\n</code></pre>\n<h2>The Problem: Dangling Pointer Risk</h2>\n<p>Returning a reference (<code>&amp;str</code>) to a local <code>String</code> creates a dangling pointer, as the <code>String</code> is dropped when the function ends.</p>\n<p><strong>Example: Code That Fails to Compile</strong>:</p>\n<pre><code class=\"language-rust\">fn return_str() -&gt; &amp;str {         // ERROR: Missing lifetime specifier!\n    let s = String::from(&quot;hello&quot;);\n    &amp;s                            // Returns a reference to `s`...\n}                                 // `s` is dropped here (dangling pointer!)\n</code></pre>\n<p><strong>Compiler Error</strong>:</p>\n<pre><code>error[E0106]: missing lifetime specifier\n --&gt; src/main.rs:1:17\n  |\n1 | fn return_str() -&gt; &amp;str {\n  |                   ^ expected named lifetime parameter\n  |\n  = help: this function&#39;s return type contains a borrowed value, but there is no value for it to be borrowed from\n</code></pre>\n<h3>Why Rust Rejects This</h3>\n<ul>\n<li><strong>Ownership Rules</strong>: <code>String</code> (<code>s</code>) is owned by the function and dropped when the scope ends. Returning <code>&amp;s</code> would create a reference to freed memory.</li>\n<li><strong>Lifetime Enforcement</strong>: Rust requires explicit lifetimes to ensure references are always valid. Here, the reference (<code>&amp;str</code>) has no owner to borrow from after the function exits.</li>\n</ul>\n<h3>How to Fix It</h3>\n<h4>Option 1: Return an Owned <code>String</code> (No Reference)</h4>\n<pre><code class=\"language-rust\">fn return_owned() -&gt; String {  // Transfer ownership to caller\n    String::from(&quot;hello&quot;)      // No reference, no lifetime issue\n}\n</code></pre>\n<h4>Option 2: Return a <code>&amp;&#39;static str</code> (String Literal)</h4>\n<pre><code class=\"language-rust\">fn return_static() -&gt; &amp;&#39;static str {  // Lives forever in binary\n    &quot;hello&quot;                          // Static memory (not heap)\n}\n</code></pre>\n<h4>Option 3: Use <code>Cow&lt;str&gt;</code> for Flexibility</h4>\n<pre><code class=\"language-rust\">use std::borrow::Cow;\n\nfn return_cow(is_heap: bool) -&gt; Cow&lt;&#39;static, str&gt; {\n    if is_heap {\n        Cow::Owned(String::from(&quot;hello&quot;))  // Heap-allocated\n    } else {\n        Cow::Borrowed(&quot;hello&quot;)             // Static memory\n    }\n}\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>String literals</strong>:</p>\n<ul>\n<li>Live in static memory (part of the binary).</li>\n<li>Are immutable and zero-cost.</li>\n<li>Have <code>&#39;static</code> lifetime.</li>\n</ul>\n<p>🚀 <strong>When to use them</strong>:</p>\n<ul>\n<li>For fixed, read-only strings (e.g., messages, constants).</li>\n<li>To avoid allocations in function APIs (<code>&amp;str</code> over <code>&amp;String</code>).</li>\n</ul>\n<p>✅ <strong>Never return <code>&amp;str</code> borrowed from a local <code>String</code></strong>—it’s impossible in safe Rust.</p>\n<p>✅ <strong>Solutions</strong>:</p>\n<ul>\n<li>Return <code>String</code> (ownership transfer).</li>\n<li>Use <code>&amp;&#39;static str</code> (literals only).</li>\n<li>Use <code>Cow&lt;str&gt;</code> for dynamic choices.</li>\n</ul>\n<p><strong>Advanced Note</strong>: Rust optimizes <code>&amp;str</code> references to literals. Even if you write:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet slice = &amp;s[..]; // Points to heap, not static memory!\n</code></pre>\n<p>The compiler may elide copies if the content is known statically.</p>\n<p><strong>Experiment</strong>: What happens if you try returning <code>&amp;s[..]</code> instead of <code>&amp;s</code>?<br><strong>Answer</strong>: No—it’s the same issue! The slice still points to the doomed <code>String</code>.</p>\n",
+    "author": "mayo",
+    "category": "rust",
+    "tags": [
+      "rust",
+      "memory",
+      "string",
+      "str",
+      "allocation"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Where do string literals (&str) live?",
+      "description": "Rust memory and string",
+      "keywords": [
+        "rust",
+        "memory",
+        "string",
+        "str",
+        "allocation"
+      ]
+    },
+    "headings": [
+      {
+        "id": "string-literals-andstr-in-memory",
+        "text": "String Literals (&str) in Memory",
+        "level": 2
+      },
+      {
+        "id": "storage-location",
+        "text": "Storage Location",
+        "level": 3
+      },
+      {
+        "id": "type-inference",
+        "text": "Type Inference",
+        "level": 3
+      },
+      {
+        "id": "key-properties",
+        "text": "Key Properties",
+        "level": 2
+      },
+      {
+        "id": "comparison-with-string",
+        "text": "Comparison with `String`",
+        "level": 2
+      },
+      {
+        "id": "common-use-cases",
+        "text": "Common Use Cases",
+        "level": 2
+      },
+      {
+        "id": "constants",
+        "text": "Constants",
+        "level": 3
+      },
+      {
+        "id": "function-arguments",
+        "text": "Function Arguments",
+        "level": 3
+      },
+      {
+        "id": "why-not-always-use-andstatic-str",
+        "text": "Why Not Always Use &'static str?",
+        "level": 2
+      },
+      {
+        "id": "the-problem-dangling-pointer-risk",
+        "text": "The Problem: Dangling Pointer Risk",
+        "level": 2
+      },
+      {
+        "id": "why-rust-rejects-this",
+        "text": "Why Rust Rejects This",
+        "level": 3
+      },
+      {
+        "id": "how-to-fix-it",
+        "text": "How to Fix It",
+        "level": 3
+      },
+      {
+        "id": "option-1-return-an-owned-string-no-reference",
+        "text": "Option 1: Return an Owned `String` (No Reference)",
+        "level": 4
+      },
+      {
+        "id": "option-2-return-a-andstatic-str-string-literal",
+        "text": "Option 2: Return a `&'static str` (String Literal)",
+        "level": 4
+      },
+      {
+        "id": "option-3-use-cowlessstrgreater-for-flexibility",
+        "text": "Option 3: Use `Cow<str>` for Flexibility",
+        "level": 4
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "box-pointer-rust",
     "slug": "box-pointer-rust",
     "title": "What is the purpose of Box<T> in Rust?",
