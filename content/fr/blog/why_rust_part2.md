@@ -1,14 +1,13 @@
 ---
 id: c-low-level-cost-fr
-title: 'C te donne le Contrôle, mais à Quel Prix ?'
+title: 'Partie 2 : Les languages comme C/C++ ou Zig permettent de contrôler la mémoire mais à quel prix ?'
 locale: fr
 slug: c-low-level-cost-fr
 date: '2025-08-08'
 author: mayo
 excerpt: >-
-  C évite le garbage collection et donne un contrôle manuel de la mémoire, mais
-  ouvre la porte  à des bugs dangereux. Explore les vrais problèmes mémoire et
-  pourquoi ils comptent.
+  C évite le besoin d'avoir un garbage collector et donne un contrôle manuel de la mémoire, mais
+  ouvre la porte à des bugs dangereux.
 category: rust
 tags:
   - rust
@@ -18,9 +17,9 @@ tags:
   - undefined-behavior
 ---
 
-# C: La Puissance Sans Protection
+# C: La Puissance sans srotection
 
-Avec C, il n'y a pas de runtime, pas de GC. Juste de la vitesse brute et du contrôle.
+Avec C, il n'y a pas de runtime, pas de GC.
 
 ```c
 char* msg = malloc(100);
@@ -42,11 +41,13 @@ printf("%s", msg); // ❌ Use after free
 
 Tu dois :
 - Allouer la mémoire
-- Tracker la ownership  
+- Tracker l'ownership  
 - La libérer manuellement
 - Éviter d'accéder à la mémoire freed ou invalide
 
 ## Conséquences Réelles
+
+Voici quelques bugs connus.
 
 ### Heartbleed (OpenSSL)
 ```c
@@ -69,16 +70,16 @@ sprintf(log_buffer, "User: %s", user_input); // Buffer overflow possible
 - Exécuter du code arbitraire
 - Voler des données sensibles
 
-## Statistiques Memory Safety
+## Sécurité de la mémoire niveau statique (dans le code statique, avant l'exécution / runtime)
 
 **Vulnérabilités de sécurité par catégorie :**
 - **70%** des bugs sécurité Microsoft : problèmes de memory safety
 - **65%** des vulnérabilités Chrome : memory corruption  
 - **~50%** des patches sécurité Android : liés à la mémoire
 
-## Le Fardeau du Développeur
+## Un poid pour le développeur
 
-### Chaque Allocation Nécessite un Tracking
+### Chaque allocation nécessite un tracking
 ```c
 typedef struct {
     char* data;
@@ -107,9 +108,9 @@ void destroy_buffer(Buffer* buf) {
 }
 ```
 
-**Overhead mental :** Chaque fonction doit considérer :
+**Saturation mental :** Chaque fonction doit considérer :
 - Qui possède ce pointer ?
-- Quand doit-il être freed ?
+- Quand doit-il être liberé ?
 - Est-il encore valide ?
 
 ### Debugging des Problèmes Mémoire
@@ -121,7 +122,7 @@ $ valgrind ./my_program
 ==12345==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
 ```
 
-**Le problème :** Bugs trouvés au runtime, pas au moment de la compilation.
+**Un des problèmes majeurs :** Les bugs sont découverts trop tard, au runtime, pas au moment de la compilation.
 
 ## Trade-off Performance vs Sécurité
 
@@ -137,9 +138,9 @@ for (int i = 0; i < 1000000; i++) {
 **Vitesse :** ✅ Performance maximale  
 **Sécurité :** ❌ Une erreur = vulnérabilité de sécurité
 
-### Contrôle du Memory Layout
+### Contrôle de l'empreinte mémoire
 ```c
-// Contrôle précis du memory layout
+// Contrôle précis de l'emprunte mémoire
 struct Point {
     float x, y, z;     // Exactement 12 bytes
 } __attribute__((packed));
@@ -147,10 +148,10 @@ struct Point {
 Point* points = malloc(1000 * sizeof(Point)); // Allocation prévisible
 ```
 
-**Contrôle :** ✅ Contrôle complet du memory layout  
+**Contrôle :** ✅ Contrôle complet de l'emprunte mémoire
 **Risque :** ❌ Gestion manuelle des lifetimes
 
-## Les Outils Aident, Mais Ne Suffisent Pas
+## Les Outils aident, mais ne suffisent pas
 
 ### Static Analysis
 ```c
@@ -171,12 +172,12 @@ $ ./a.out
 
 ### La Limitation
 - **Outils static :** Ratent les cas complexes, faux positifs
-- **Outils runtime :** N'attrapent que les bugs qui s'exécutent pendant les tests
+- **Outils runtime :** Ne détectent les bugs qui s'exécutent que pendant les tests
 - **Code review :** Erreur humaine, chronophage
 
-## Pourquoi C Persiste Malgré les Risques
+## Pourquoi C est toujours utilisé malgré les risques
 
-### Exigences de Systems Programming
+### Exigences de programmation système
 - **Systèmes d'exploitation :** Besoin d'accès direct au hardware
 - **Systèmes embarqués :** Contraintes mémoire, pas de place pour un runtime
 - **Code critique en performance :** Chaque nanoseconde compte
@@ -190,37 +191,37 @@ $ ./a.out
 
 C te donne deux mauvais choix :
 
-**Option 1 : Manual Memory Management**
+**Option 1 : Gestion manuelle de la mémoire**
 ```c
 char* data = malloc(size);
 // ... logique complexe ...
 if (error) {
-    free(data);  // Il faut se rappeler du cleanup dans TOUS les chemins
+    free(data);  // Il faut se souvenir du cleanup dans TOUS les chemins
     return -1;
 }
 // ... plus de logique ...
 free(data);  // Facile d'oublier ou de double-free
 ```
 
-**Option 2 : Garbage Collection**
+**Option 2 : Garbage collector**
 - Ajouter une librairie GC comme Boehm GC
 - Perdre la prévisibilité des performances
-- Toujours possible d'avoir des memory leaks
+- Toujours possible d'avoir des fuites mémoires
 
 ## Points Clés
 
 ✅ **Performance prévisible - pas de pauses GC**  
-✅ **Contrôle complet du memory layout**  
+✅ **Contrôle complet de l'emprunte mémoire**  
 ✅ **Overhead runtime minimal**  
 ❌ **Unsafe par défaut - une erreur = vulnérabilité**  
-❌ **Fardeau mental élevé pour les développeurs**  
+❌ **Responsabilité élevé pour les développeurs**  
 ❌ **La plupart des bugs sécurité viennent des problèmes mémoire**  
-❌ **Les outils attrapent les bugs après qu'ils soient écrits, pas avant**
+❌ **Les outils détectent les bugs après qu'ils soient écrits, pas avant**
 
 ---
 
-**Le Défi :** Nous voulons la performance de C sans son danger.
+**Le Défi :** Nous voulons la performance de C/C++ sans ses inconvénients.
 
 **La Question :** Et si le compilateur pouvait prévenir les bugs mémoire au moment de la compilation ?
 
-**➡️ Suivant :** "Ownership de Rust : Memory Safety Sans Garbage Collection"
+**➡️ Suivant :** "Voir la partie 3 de cette article"

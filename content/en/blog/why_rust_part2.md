@@ -1,17 +1,17 @@
 ---
 id: c-low-level-cost
-title: "C Gives You Control, But at What Cost?"
-locale: "en"
+title: 'C Gives You Control, But at What Cost?'
+locale: en
 slug: c-low-level-cost
-date: '2025-08-01'
+date: '2025-04-11'
 author: mayo
 excerpt: >-
-  C avoids garbage collection and gives manual memory control, but opens the door to dangerous bugs.
-  Explore real-world memory issues and why they matter.
+  C avoids garbage collection and gives manual memory control, but opens the
+  door to dangerous bugs. Explore real-world memory issues and why they matter.
 category: rust
 tags:
-- rust
-- c
+  - rust
+  - c
 ---
 
 # C: Power Without Protection

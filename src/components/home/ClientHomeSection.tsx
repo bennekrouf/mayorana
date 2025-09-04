@@ -114,11 +114,12 @@ export default function ClientHomeSection() {
               >
                 {t('discover_api0')}
               </Link>
+              {/* CHANGED: More focused CTA text */}
               <Link
-                href={getLocalizedPath("/contact?service=rust-training")}
+                href={getLocalizedPath("/blog")}
                 className="inline-flex items-center px-8 py-4 rounded-lg bg-foreground text-background text-lg font-semibold hover:bg-foreground/90 transform transition duration-200 hover:-translate-y-1"
               >
-                {t('book_rust_training')}
+                Start Learning Rust
               </Link>
             </motion.div>
           </div>
@@ -254,12 +255,13 @@ export default function ClientHomeSection() {
               </motion.div>
             ))}
           </div>
+          {/* CHANGED: Link to blog instead of contact */}
           <div className="text-center mt-12">
             <Link
-              href={getLocalizedPath("/contact")}
+              href={getLocalizedPath("/blog")}
               className="inline-flex items-center px-6 py-3 rounded-lg bg-secondary text-foreground font-medium hover:bg-secondary/80 transition-colors"
             >
-              {t('contact_custom_solutions')}
+              Read More on Our Blog
             </Link>
           </div>
         </div>

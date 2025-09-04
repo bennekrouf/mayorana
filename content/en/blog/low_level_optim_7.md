@@ -1,17 +1,22 @@
 ---
 id: allocation-avoidance-real-time-rust
-title: "Use fixed-size arrays or Option to avoid allocations in a performance-critical path"
+title: >-
+  Use fixed-size arrays or Option to avoid allocations in a performance-critical
+  path
 slug: allocation-avoidance-real-time-rust
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Leveraging Rust's stack-based features like fixed-size arrays and Option to eliminate heap allocations in real-time systems for predictable, low-latency execution
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
+  Leveraging Rust's stack-based features like fixed-size arrays and Option to
+  eliminate heap allocations in real-time systems for predictable, low-latency
+  execution
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust
   - performance
+date: '2025-08-27'
 ---
 
 # Allocation Avoidance: In a real-time system, heap allocations can introduce latency. How would you use Rust's stack-based features (e.g., fixed-size arrays or Option) to avoid allocations in a performance-critical path?

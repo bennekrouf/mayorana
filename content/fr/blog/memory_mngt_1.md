@@ -16,7 +16,7 @@ date: '2025-08-06'
 
 # Quelle est la différence entre String et str ?
 
-Comprendre la distinction entre `String` et `str` est fondamental pour une gestion efficace de la mémoire.
+Comprendre la différence entre `String` et `str` est fondamental pour une gestion efficace de la mémoire.
 
 ## Différences Clés
 

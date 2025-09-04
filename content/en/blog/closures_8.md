@@ -15,7 +15,7 @@ tags:
 date: '2025-07-12'
 ---
 
-# What is the performance overhead of using closures versus regular functions in Rust? When might closures be less efficient?
+# What is the performance overhead of using closures versus regular functions in Rust?
 
 ## Performance Overhead
 

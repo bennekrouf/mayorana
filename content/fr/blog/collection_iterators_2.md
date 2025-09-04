@@ -1,9 +1,9 @@
 ---
 id: iter-methods-rust-fr
-title: 'Comment into_iter(), iter(), et iter_mut() diffèrent-elles ?'
+title: 'Différences entre into_iter(), iter(), et iter_mut()'
 slug: iter-methods-rust-fr
-locale: "fr"
-date: '2025-07-08'
+locale: fr
+date: '2025-08-22'
 author: mayo
 excerpt: 'Collections (comme Vec), iterators (into_iter, collect), et concepts associés'
 category: rust
@@ -18,7 +18,7 @@ tags:
 
 Ces trois méthodes sont fondamentales pour travailler avec les collections en Rust, chacune servant des cas d'usage distincts d'ownership et de mutabilité.
 
-## 1. `into_iter()` - Iterator qui Consomme l'Ownership
+## 1. `into_iter()` - Iterator qui transfert l'Ownership
 
 - **Prend ownership** de la collection (`self`).
 - **Produit** des valeurs owned (`T`) lors de l'itération.
@@ -51,7 +51,7 @@ println!("{:?}", vec);      // OK: `vec` toujours valide
 ```
 
 **Quand l'utiliser** :
-- Quand tu n'as besoin que d'un accès read-only aux éléments.
+- Quand tu n'as besoin que d'un accès read-only aux éléments d'une liste.
 - Pour des opérations comme la recherche (`.find()`) ou l'inspection.
 
 ## 3. `iter_mut()` - Iterator d'Emprunt Mutable

@@ -1,9 +1,9 @@
 ---
 id: fn-traits-rust-fr
 title: 'Quelles sont les différences entre Fn, FnMut, et FnOnce ?'
-locale: "fr"
+locale: fr
 slug: fn-traits-rust-fr
-date: '2025-07-07'
+date: '2025-08-31'
 author: mayo
 excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
 category: rust

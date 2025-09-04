@@ -1,14 +1,13 @@
 ---
 id: dispatch-performance-rust
-title: "fn process<T: MyTrait>(x: T)) VS using dyn MyTrait for dynamic dispatch."
+title: 'fn process<T: MyTrait>(x: T)) VS using dyn MyTrait for dynamic dispatch.'
 slug: dispatch-performance-rust
-locale: "en"
-date: '2025-07-07'
+locale: en
+date: '2025-08-12'
 author: mayo
-excerpt: >-
-  Static vs. Dynamic Dispatch
-content_focus: "Static vs. Dynamic Dispatch"
-technical_level: "Expert technical discussion"
+excerpt: Static vs. Dynamic Dispatch
+content_focus: Static vs. Dynamic Dispatch
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust

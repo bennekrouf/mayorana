@@ -1,8 +1,9 @@
 ---
 id: efficient-duplicate-removal-vec-fr
-title: 'Comment supprimer efficacement les doublons d\'un Vec<T> où T: Eq + Hash ?'
+title: Comment supprimer efficacement les doublons d\
+un Vec<T> où T: Eq + Hash ?'
 slug: efficient-duplicate-removal-vec-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
   Approches efficaces pour supprimer les doublons d'un Vec<T> où T: Eq + Hash,
@@ -15,7 +16,7 @@ tags:
   - hashset
   - performance
   - collections
-date: '2025-07-21'
+date: '2025-08-24'
 ---
 
 # Comment supprimer efficacement les doublons d'un Vec<T> où T: Eq + Hash ?

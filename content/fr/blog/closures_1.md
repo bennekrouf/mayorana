@@ -1,20 +1,20 @@
 ---
 id: function-vs-closure-rust-fr
-title: "Functions ou Closures en Rust ?"
-locale: "fr"
+title: Functions ou Closures en Rust ?
+locale: fr
 slug: function-vs-closure-rust-fr
-date: '2025-06-30'
+date: '2025-08-30'
 author: mayo
 excerpt: >-
-  Functions vs closures en Rust, couvrant
-  ownership, traits, lifetimes, et implications de performance.
+  Functions vs closures en Rust, couvrant ownership, traits, lifetimes, et
+  implications de performance.
 category: rust
 tags:
-- rust
-- functions
-- closures
-- traits
-- ownership
+  - rust
+  - functions
+  - closures
+  - traits
+  - ownership
 ---
 
 # Quelle est la différence entre une function et une closure en Rust ?

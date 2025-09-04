@@ -5,8 +5,9 @@ locale: fr
 slug: vec-retain-vs-filter-collect-fr
 author: mayo
 excerpt: >-
-  Comparer Vec::retain() pour le filtrage en place avec iter().filter().collect() pour
-  différents scénarios de filtrage et implications de performance
+  Comparer Vec::retain() pour le filtrage en place avec
+  iter().filter().collect() pour différents scénarios de filtrage et
+  implications de performance
 category: rust
 tags:
   - rust
@@ -15,7 +16,7 @@ tags:
   - filter
   - iterators
   - performance
-date: '2025-07-28'
+date: '2025-08-29'
 ---
 
 # Quel est le but de Vec::retain() ? Comment se compare-t-il au filtrage avec iter().filter().collect() ?

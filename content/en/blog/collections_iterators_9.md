@@ -6,7 +6,7 @@ slug: flatten-vec-iterators-performance
 author: mayo
 excerpt: >-
   Flattening Vec<Vec<T>> using iterators compared to manual concatenation,
-  analyzing performance implications and optimization strategies
+  analyzing performance implications
 category: rust
 tags:
   - rust

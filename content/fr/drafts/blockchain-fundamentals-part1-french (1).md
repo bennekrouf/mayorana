@@ -19,7 +19,7 @@ Comprendre la cryptographie à courbes elliptiques, c'est crucial pour développ
 **Contexte** : En cryptographie à courbes elliptiques (ECC), un **scalaire** c'est juste un entier normal (comme 5, 12, ou 1000), alors qu'un **point** c'est une paire de coordonnées `(x, y)` qui se trouve sur la courbe.
 
 **Différence** :
-* Un **scalaire** sert à multiplier un point (ex: `3 * P` veut dire "additionner le point P à lui-même 3 fois").
+* Un **scalaire** sert  à multiplier un point (ex: `3 * P` veut dire "additionner le point P à lui-même 3 fois").
 * Un **point** c'est un endroit géométrique sur la courbe, qui représente une clé publique ou un résultat intermédiaire.
 
 **Exemple** :

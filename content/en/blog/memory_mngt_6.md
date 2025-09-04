@@ -15,7 +15,7 @@ tags:
   - ownership
 ---
 
-# Why can’t you pass a &str directly to a function expecting a &String? How would you handle such a scenario?
+# Why can’t you pass a &str directly to a function expecting a &String?
 
 In Rust, you cannot pass a `&str` directly to a function expecting a `&String` due to their distinct types, which ensures type safety and prevents assumptions about memory ownership. Below, I explain why this mismatch occurs and how to handle it effectively.
 

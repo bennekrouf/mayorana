@@ -1,14 +1,12 @@
 ---
 id: why-rust-memory-safe-fr
-title: 'Rust: Memory Safety Sans Garbage Collection'
+title: 'Partie 3 : Rust: Memory safety sans garabe collector'
 locale: fr
 slug: why-rust-memory-safe-fr
 date: '2025-08-09'
 author: mayo
 excerpt: >-
-  Rust te donne la performance de C avec la memory safety appliquée au moment de
-  la compilation. Apprends comment ownership et borrowing éliminent des classes
-  entières de bugs.
+  Rust a des performances équivalentes à C/C++ avec en plus la sécurité mémoire vérifée dès la compilation. Cela grâce à deux mécanismes: borrowing et ownership.
 category: rust
 tags:
   - rust
@@ -25,9 +23,9 @@ Rust n'a pas de GC. Il n'en a pas besoin.
 let msg = String::from("hello");
 ```
 
-Cela alloue de la mémoire—mais Rust track l'ownership statiquement.
+Cela alloue de la mémoire—mais Rust track l'ownership déjà à la compilation avec l'ownership.
 
-## La Révolution Ownership
+## La Révolution "Ownership"
 
 ### Gestion Automatique de la Mémoire
 ```rust
@@ -67,9 +65,9 @@ error[E0597]: `s` does not live long enough
    |     - `s` dropped here while still borrowed
 ```
 
-Le bug est **attrapé au moment de la compilation**, pas au runtime.
+Le bug est **detecté au moment de la compilation**, pas au runtime.
 
-## Borrowing: References Sans Danger
+## Borrowing: manipulation de référence sans danger
 
 ### Immutable Borrowing
 ```rust
@@ -84,7 +82,7 @@ fn main() {
 }
 ```
 
-### Mutable Borrowing avec Règles
+### Mutable Borrowing est soumis à certaines règles
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -150,28 +148,29 @@ fn main() {
     let data = "hello";
     let processed = process_data(data);
     println!("{}", processed);
-    // processed automatiquement dropped à la fin du scope
+    // la variable processed est automatiquement supprimé à la fin du scope
 }
 ```
 
 ## Caractéristiques Performance
 
 ### Zero-Cost Abstractions
+Un code de haut niveau en apparence est traduit en code de bas niveau à la compilation.
 ```rust
 // Code haut niveau...
 let numbers: Vec<i32> = (0..1_000_000).collect();
 let sum: i32 = numbers.iter().sum();
 
-// ...compile vers le même assembly que:
+// ...compile vers le même code assembleur que:
 let mut sum = 0;
 for i in 0..1_000_000 {
     sum += i;
 }
 ```
 
-### Contrôle du Memory Layout
+### Et il est même possible de contrôler l'emprunte mémoire
 ```rust
-#[repr(C)]  // Même layout qu'une struct C
+#[repr(C)]  // Même emprunte mémoire qu'un struct en C
 struct Point {
     x: f32,
     y: f32,
@@ -179,12 +178,12 @@ struct Point {
 }
 
 let points = vec![Point { x: 1.0, y: 2.0, z: 3.0 }; 1000];
-// Memory layout contigu, pas d'overhead GC
+// Emprunte mémoire contigu, pas d'overhead GC
 ```
 
-## Thread Safety Gratuite
+## Sécurité niveau thread
 
-### Prévention des Data Race
+### Prévention des Data Race (2 thread qui tentent d'accéder à la même ressource dont un en écriture et qui ne sont pas synchronisés)
 ```rust
 use std::thread;
 
@@ -225,7 +224,7 @@ fn main() {
 }
 ```
 
-**Pas de data races possibles** - appliqué au moment de la compilation.
+**Pas de data races possibles** - vérifié au moment de la compilation.
 
 ## Comparaison des Features
 
@@ -264,13 +263,13 @@ fn main() {
 ## Success Stories Réelles
 
 ### Dropbox Magic Pocket
-- Remplacé Python par Rust pour le système de stockage
+- Ils ont remplacé Python par Rust pour le système de stockage
 - **Performance :** 10x d'amélioration en efficacité CPU
 - **Mémoire :** Usage prévisible, pas de pauses GC
 - **Fiabilité :** Éliminé des classes entières de bugs
 
 ### Discord Chat Service
-- Remplacé Go par Rust pour la gestion des messages  
+- Ils ont remplacé Go par Rust pour la gestion des messages  
 - **Latence :** Temps de réponse constants sub-milliseconde
 - **Mémoire :** Réduction de 40% de l'usage mémoire
 - **Scaling :** Gère des millions de connexions concurrentes
@@ -290,18 +289,18 @@ Code sûr → Garbage collection → Overhead performance
 
 ### Approche Rust
 ```
-Compiler intelligent → Système ownership → Code rapide + sûr
+Compilateur intelligent → Système ownership → Code rapide + sûr
 ```
 
 ## Points Clés
 
-🦀 **Rust te donne le meilleur des deux mondes :**
+🦀 **Rust réunit le meilleur des deux mondes :**
 
 ✅ **Performance prévisible** - pas de pauses GC, pas d'overhead runtime  
-✅ **Memory safety** - classes entières de bugs éliminées au moment de la compilation  
-✅ **Concurrence sans peur** - data races préventées par le type system  
-✅ **Systems programming** - contrôle bas niveau quand nécessaire  
-✅ **Ergonomie moderne** - type system puissant, gestion de packages  
+✅ **Sécurité mémoire** - classes entières de bugs éliminées au moment de la compilation  
+✅ **Concurrence en mode zen** - data races préventées par le type system  
+✅ **Programmation systéme** - contrôle bas niveau quand nécessaire  
+✅ **Ergonomie moderne** - type system puissant, gestion de packages grâce à cargo  
 
 ---
 
@@ -314,11 +313,9 @@ Compiler intelligent → Système ownership → Code rapide + sûr
 
 **Rust n'est pas "C plus sûr".** C'est un contrat fondamentalement différent :
 
-> "Tu n'as pas besoin d'un runtime pour être sûr—juste d'un compilateur intelligent."
+> "Tu n'as pas besoin d'un runtime pour être sûr — juste d'un compilateur intelligent."
 
-**Le Résultat :** Memory safety zero-cost. Le saint graal du systems programming.
+**Le Résultat :** Sécurité màmoire et "zero-cost abstraction". Le saint graal de la programmation système.
 
 ---
 
-**Prêt à éliminer des classes entières de bugs de ton code ?** 
-**→ Commence à apprendre Rust aujourd'hui.**

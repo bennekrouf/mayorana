@@ -1,12 +1,13 @@
 ---
 id: flatten-vec-iterators-performance-fr
 title: Aplatir un Vec<Vec<T>> en Vec<T> en utilisant les iterators
-locale: "fr"
+locale: fr
 slug: flatten-vec-iterators-performance-fr
 author: mayo
 excerpt: >-
-  Aplatir Vec<Vec<T>> en utilisant les iterators comparé à la concaténation manuelle,
-  analysant les implications de performance et stratégies d'optimisation
+  Aplatir Vec<Vec<T>> en utilisant les iterators comparé à la concaténation
+  manuelle, analysant les implications de performance et stratégies
+  d'optimisation
 category: rust
 tags:
   - rust
@@ -15,7 +16,7 @@ tags:
   - iterators
   - performance
   - collections
-date: '2025-07-23'
+date: '2025-08-30'
 ---
 
 # Comment aplatirais-tu un Vec<Vec<T>> en Vec<T> en utilisant les iterators ? Compare la performance avec la concaténation manuelle.
