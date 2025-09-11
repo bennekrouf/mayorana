@@ -10,6 +10,7 @@ import { useTranslations, useLocale } from 'next-intl';
 export default function AboutPage() {
   const t = useTranslations('about');
   const locale = useLocale();
+  const tHome = useTranslations('home');
 
   const skills = [
     { category: t('programming'), items: ["Rust", "TypeScript", "Python", "WebAssembly"] },
@@ -185,7 +186,7 @@ export default function AboutPage() {
               href={`/${locale}/contact`}
               className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
             >
-              {t('common.get_in_touch')}
+              {tHome('get_in_touch')}
             </Link>
           </div>
         </div>
