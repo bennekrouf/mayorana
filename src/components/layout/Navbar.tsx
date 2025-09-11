@@ -1,7 +1,9 @@
+// File: src/components/layout/Navbar.tsx - Fixed img element issue
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
@@ -61,12 +63,12 @@ const Navbar: React.FC = () => {
             href={`/${locale}`}
             className="flex items-center space-x-2"
           >
-            {/* Logo + mayorana text */}
-            <img
+            {/* Logo + mayorana text - Fixed img to Image */}
+            <Image
               src="/android-chrome-192x192.png"
               alt="Mayorana"
-              width="28"
-              height="28"
+              width={28}
+              height={28}
               className="rounded-md"
             />
             <span className="font-bold text-xl text-foreground">mayorana</span>
@@ -198,7 +200,6 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="container py-4 space-y-3">
-            {/* CHANGED: Include all nav items including blog for mobile */}
             {navItems.map((item) => (
               <Link
                 key={item.label}

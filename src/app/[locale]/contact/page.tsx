@@ -85,7 +85,7 @@ function ContactFormWithParams() {
   const services = [
     { value: "rust-training", label: tServices('rust_training.title') },
     { value: "llm-integration", label: tServices('llm_integration.title') },
-    { value: "ai-agent", label: tServices('ai_agent.title') },
+    { value: "chatbot", label: tServices('chatbot.title') },
     { value: "api0", label: tServices('api0.title') },
     { value: "other", label: "Other" }
   ];

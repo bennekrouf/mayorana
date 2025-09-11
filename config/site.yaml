@@ -43,7 +43,7 @@ navigation:
     - label: "Contact"
       path: "/contact"
 
-# Services from your content plan
+# Updated config/site.yaml - Services section
 services:
   - title: "Rust Training"
     description: "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization."
@@ -52,19 +52,19 @@ services:
     icon: "Code"
   
   - title: "LLM Integration"
-    description: "Seamlessly connect large language models (LLMs) to your applications for enhanced automation, chatbots, and data processing."
+    description: "Seamlessly connect large language models to your applications for enhanced automation and data processing."
     cta: "Get a Free Consultation"
     ctaLink: "/contact?service=llm-integration"
     icon: "Brain"
   
-  - title: "AI Agent Development"
-    description: "Build intelligent AI agents for automation, decision-making, and process optimization."
-    cta: "Start Your Agent Project"
-    ctaLink: "/contact?service=ai-agent"
-    icon: "Robot"
+  - title: "Chatbot Development"
+    description: "Transform your apps with intelligent chatbots. From simple interfaces to complex conversational systems."
+    cta: "Add Chat to Your App"
+    ctaLink: "/contact?service=chatbot"
+    icon: "MessageSquare"
   
   - title: "api0.ai Solutions"
-    description: "Cutting-edge platform that uses advanced NLP to match user inputs to API endpoints, simplifying integrations."
+    description: "Revolutionary chatbot platform that uses NLP to match user messages to your API endpoints automatically."
     cta: "Try api0.ai Now"
     ctaLink: "https://api0.ai"
     icon: "Network"

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from '@/components/ui/Motion';
-import { FaBrain, FaCode, FaNetworkWired, FaRobot } from 'react-icons/fa';
+import { FaBrain, FaCode, FaNetworkWired, FaCommentDots } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 
 export default function ClientHomeSection() {
@@ -34,11 +34,11 @@ export default function ClientHomeSection() {
       link: getLocalizedPath("/contact?service=llm-integration")
     },
     {
-      icon: <FaRobot className="h-8 w-8 text-primary" />,
-      title: tServices('ai_agent.title'),
-      description: tServices('ai_agent.description'),
-      cta: tServices('ai_agent.cta'),
-      link: getLocalizedPath("/contact?service=ai-agent")
+      icon: <FaCommentDots className="h-8 w-8 text-primary" />, // New icon
+      title: tServices('chatbot.title'),
+      description: tServices('chatbot.description'),
+      cta: tServices('chatbot.cta'),
+      link: getLocalizedPath("/contact?service=chatbot")
     },
     {
       icon: <FaNetworkWired className="h-8 w-8 text-primary" />,

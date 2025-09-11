@@ -65,14 +65,14 @@
       "benefit3": "Implémenter des frameworks d'ingénierie de prompts évolutifs",
       "benefit4": "Créer des systèmes d'évaluation robustes pour les sorties LLM"
     },
-    "ai_agent": {
-      "title": "Développement d'agents IA",
-      "description": "Construire des agents IA intelligents pour l'automatisation, la prise de décision et l'optimisation des processus. Du concept au déploiement, je crée des agents qui exploitent le NLP et gRPC pour des performances de niveau entreprise.",
-      "cta": "Démarrer votre projet d'agent",
-      "benefit1": "Automatiser des workflows complexes avec des agents intelligents",
-      "benefit2": "Créer des agents capables de raisonner sur votre domaine",
-      "benefit3": "Se connecter à plusieurs sources de données et API",
-      "benefit4": "Construire des systèmes auto-améliorants avec des boucles de rétroaction"
+    "chatbot": {
+      "title": "Développement de Chatbots",
+      "description": "Transformez vos apps avec des chatbots intelligents. Des interfaces Q&A simples aux systèmes conversationnels complexes.",
+      "cta": "Ajouter du Chat à votre App",
+      "benefit1": "Transformer n'importe quelle app en interface conversationnelle",
+      "benefit2": "Connecter les chatbots directement à vos APIs existantes",
+      "benefit3": "Gérer des requêtes utilisateur complexes en langage naturel",
+      "benefit4": "Réduire la charge support avec des réponses automatisées"
     },
     "api0": {
       "title": "Solutions api0.ai",

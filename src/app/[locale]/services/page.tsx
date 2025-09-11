@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { FaCode, FaBrain, FaRobot, FaArrowRight } from 'react-icons/fa';
+import { FaCode, FaBrain, FaCommentDots, FaArrowRight } from 'react-icons/fa';
 import { FaNetworkWired } from "react-icons/fa";
 import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
@@ -43,18 +43,18 @@ export default function ServicesPage() {
       link: `/${locale}/contact?service=llm-integration`
     },
     {
-      id: "ai-agent",
-      icon: <FaRobot className="h-8 w-8 text-primary" />,
-      title: t('ai_agent.title'),
-      description: t('ai_agent.description'),
+      id: "chatbot", // Changed from "ai-agent"
+      icon: <FaCommentDots className="h-8 w-8 text-primary" />, // Change icon
+      title: t('chatbot.title'), // Changed from ai_agent
+      description: t('chatbot.description'),
       benefits: [
-        t('ai_agent.benefit1'),
-        t('ai_agent.benefit2'),
-        t('ai_agent.benefit3'),
-        t('ai_agent.benefit4')
+        t('chatbot.benefit1'),
+        t('chatbot.benefit2'),
+        t('chatbot.benefit3'),
+        t('chatbot.benefit4')
       ],
-      cta: t('ai_agent.cta'),
-      link: `/${locale}/contact?service=ai-agent`
+      cta: t('chatbot.cta'),
+      link: `/${locale}/contact?service=chatbot` // Changed from ai-agent
     },
     {
       id: "api0",

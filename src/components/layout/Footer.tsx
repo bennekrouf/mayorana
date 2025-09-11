@@ -1,4 +1,4 @@
-// File: src/components/layout/Footer.tsx (updated with legal links)
+// File: src/components/layout/Footer.tsx (u// File: src/components/layout/Footer.tsx - Fixed JSX comment issue
 'use client';
 
 import React from 'react';
@@ -63,7 +63,6 @@ const Footer: React.FC = () => {
                 </li>
               ))}
 
-              {/* Legal Links */}
               <li className="pt-2 border-t border-border mt-4">
                 {legalLinks.map((item) => (
                   <div key={item.label} className="mb-2">
@@ -101,10 +100,10 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href={getLocalizedPath("/services#ai-agent")}
+                  href={getLocalizedPath("/services#chatbot")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {tServices('ai_agent.title')}
+                  {tServices('chatbot.title')}
                 </Link>
               </li>
               <li>
