@@ -1,18 +1,20 @@
 ---
 id: zero-cost-abstractions-rust
-title: "Zero-Cost Abstractions: How Rust Optimizes Iterator Chains"
+title: 'Zero-Cost Abstractions: How Rust Optimizes Iterator Chains'
 slug: zero-cost-abstractions-rust
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Low-level optimization in Rust, focusing on iterator chains and zero-cost abstractions
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
+  Low-level optimization in Rust, focusing on iterator chains and zero-cost
+  abstractions
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 category: rust
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-09-12'
 ---
 
 # Zero-Cost Abstractions: How Rust Optimizes Iterator Chains
