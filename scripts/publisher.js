@@ -72,63 +72,40 @@ class SimplePublisher {
     return null;
   }
 
-  // Publish one article
-  async publishOne() {
-    console.log('🔍 Looking for articles to publish...');
+  // Publish one article from each language if available
+  async publishBoth() {
+    console.log('🔍 Looking for articles to publish from both languages...');
 
-    const article = this.findNextArticle();
+    let results = [];
 
-    if (!article) {
-      console.log('📭 No articles found in any queue');
-      return { success: false, reason: 'no_articles' };
-    }
-
-    console.log(`📝 Publishing: ${article.filename} (${article.language.toUpperCase()})`);
-
-    try {
-      // Ensure target directory exists
-      const targetDir = path.dirname(article.targetPath);
-      if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
+    for (const lang of this.languages) {
+      const article = this.findNextArticleForLanguage(lang);
+      if (article) {
+        const result = await this.publishArticle(article);
+        if (result.success) {
+          results.push(result);
+        }
       }
-
-      // Read and process the file
-      const fileContents = fs.readFileSync(article.queuePath, 'utf8');
-      const { data, content } = matter(fileContents);
-
-      // Fix the locale to match directory
-      data.locale = article.language;
-
-      // Update date to today
-      const today = new Date().toISOString().split('T')[0];
-      data.date = today;
-
-      // Clean up scheduling metadata
-      delete data.scheduledFor;
-      delete data.scheduledAt;
-      delete data.queuedAt;
-      delete data.priority;
-
-      // Write to blog directory
-      const updatedContent = matter.stringify(content, data);
-      fs.writeFileSync(article.targetPath, updatedContent);
-
-      // Remove from queue
-      fs.unlinkSync(article.queuePath);
-
-      console.log(`✅ Published: "${data.title}" (${article.language.toUpperCase()})`);
-
-      return {
-        success: true,
-        title: data.title,
-        language: article.language,
-        filename: article.filename
-      };
-
-    } catch (error) {
-      console.error(`❌ Error publishing: ${error.message}`);
-      return { success: false, reason: 'processing_error', error: error.message };
     }
+
+    return results;
+  }
+
+  findNextArticleForLanguage(targetLang) {
+    const queueDir = path.join(this.projectRoot, `content/${targetLang}/queue`);
+
+    if (!fs.existsSync(queueDir)) return null;
+
+    const files = fs.readdirSync(queueDir).filter(f => f.endsWith('.md'));
+    if (files.length > 0) {
+      return {
+        language: targetLang,
+        filename: files[0],
+        queuePath: path.join(queueDir, files[0]),
+        targetPath: path.join(this.projectRoot, `content/${targetLang}/blog`, files[0])
+      };
+    }
+    return null;
   }
 
   // Show status
@@ -167,7 +144,7 @@ async function main() {
         break;
 
       case 'publish':
-        const result = await publisher.publishOne();
+        const result = await publisher.publishBoth();
         if (result.success) {
           console.log(`\n🎉 Published: "${result.title}" (${result.language.toUpperCase()})`);
         } else {

@@ -189,7 +189,7 @@ WORKFLOW:
           break;
 
         case 'publish':
-          const result = await this.publisher.publishOne();
+          const result = await this.publisher.publishBoth();
           if (result.success) {
             console.log(`\n🎉 Published: "${result.title}" (${result.language.toUpperCase()})`);
           } else {
