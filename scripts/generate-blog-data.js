@@ -165,22 +165,16 @@ async function generateBlogData() {
     totalCategories += result.categories;
   }
 
-  // Create fallback files for backward compatibility (uses English data)
+  // Create fallback files (posts only)
   try {
     const englishPosts = require(path.join(process.cwd(), 'src/data/blog-posts-en.json'));
-    const englishCategories = require(path.join(process.cwd(), 'src/data/blog-categories-en.json'));
 
     fs.writeFileSync(
       path.join(process.cwd(), 'src/data/blog-posts.json'),
       JSON.stringify(englishPosts, null, 2)
     );
 
-    fs.writeFileSync(
-      path.join(process.cwd(), 'src/data/blog-categories.json'),
-      JSON.stringify(englishCategories, null, 2)
-    );
-
-    console.log('📄 Created fallback files (blog-posts.json, blog-categories.json)');
+    console.log('📄 Created fallback file (blog-posts.json)');
   } catch (error) {
     console.warn('⚠️  Could not create fallback files:', error.message);
   }
