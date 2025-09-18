@@ -201,7 +201,7 @@
     },
     "llm_chatbot": {
       "title": "LLM-Powered Chatbot",
-      "description": "Integrated an LLM into a client's customer service platform, reducing response times by 40%.",
+      "description": "Turn any app to conversational AI, not only chat but executing actions.",
       "category": "Integration"
     },
     "api0_implementation": {

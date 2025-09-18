@@ -62,7 +62,11 @@ function ContactFormWithParams() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch('http://0.0.0.0:5009/api/contact', {
+      const apiUrl = process.env.NODE_ENV === 'production'
+        ? 'https://gateway.api0.ai/api/contact'
+        : 'http://0.0.0.0:5009/api/contact';
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
