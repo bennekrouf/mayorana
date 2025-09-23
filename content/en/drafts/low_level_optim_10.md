@@ -113,4 +113,8 @@ fn process_points(points: &mut [Point]) {
 
 ## Conclusion
 
-To tackle L1 cache misses in a Rust codebase, I’d use `perf` to detect high miss rates, `cargo flamegraph` to pinpoint the culprit, and `criterion` to measure improvements. The workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results. In this case, switching to an SoA layout slashed cache misses, boosting throughput, as confirmed by profiling tools. This approach helps developers to solve bottlenecks efficiently.
+To tackle L1 cache misses in a Rust codebase, I’d use `perf` to detect high miss rates, `cargo flamegraph` to pinpoint the culprit, and `criterion` to measure improvements.
+
+The workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results.
+
+In this case, switching to an SoA layout slashed cache misses, boosting throughput, as confirmed by profiling tools. This approach helps developers to solve bottlenecks efficiently.

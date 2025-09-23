@@ -1,6 +1,6 @@
 ---
 id: cow-copy-on-write-rust
-title: 'How does Cow<''a, B> (Copy-on-Write) work in Rust? When use it ?'
+title: 'How does Cow<''a, B> (Copy-on-Write) work in Rust?'
 slug: cow-copy-on-write-rust
 locale: en
 date: '2025-07-30'
