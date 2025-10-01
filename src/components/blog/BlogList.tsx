@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { BlogPost, formatDate } from '../../lib/blog';
 import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -27,16 +28,9 @@ const BlogList: React.FC<BlogListProps> = ({
   console.log('   - Current locale:', locale);
   console.log('   - Posts to display:', posts.length);
 
-  // Helper function to get localized path
-  const getLocalizedPath = (path: string) => {
-    const fullPath = `/${locale}${path}`;
-    console.log(`🔗 Generated path: ${path} -> ${fullPath}`);
-    return fullPath;
-  };
-
   // Debug each post's URL generation
   posts.forEach((post, index) => {
-    const postUrl = getLocalizedPath(`/blog/${post.slug}`);
+    const postUrl = getLocalizedPath(locale, `/blog/${post.slug}`);
     console.log(`📄 Post ${index + 1}: "${post.title}"`);
     console.log(`   - Slug: ${post.slug}`);
     console.log(`   - Locale: ${post.locale}`);
@@ -58,7 +52,7 @@ const BlogList: React.FC<BlogListProps> = ({
       {posts.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => {
-            const postUrl = getLocalizedPath(`/blog/${post.slug}`);
+            const postUrl = getLocalizedPath(locale, `/blog/${post.slug}`);
 
             return (
               <motion.div

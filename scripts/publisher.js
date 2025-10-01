@@ -73,6 +73,7 @@ class SimplePublisher {
   }
 
   // Publish one article from each language if available
+  // Publish one article from each language if available
   async publishBoth() {
     console.log('🔍 Looking for articles to publish from both languages...');
 
@@ -81,9 +82,49 @@ class SimplePublisher {
     for (const lang of this.languages) {
       const article = this.findNextArticleForLanguage(lang);
       if (article) {
-        const result = await this.publishArticle(article);
-        if (result.success) {
-          results.push(result);
+        // Move file directly (inline the logic)
+        try {
+          const targetDir = path.dirname(article.targetPath);
+
+          // Ensure target directory exists
+          if (!fs.existsSync(targetDir)) {
+            fs.mkdirSync(targetDir, { recursive: true });
+          }
+
+          // Read and update frontmatter
+          const content = fs.readFileSync(article.queuePath, 'utf8');
+          const matter = require('gray-matter');
+          const { data, content: markdown } = matter(content);
+
+          // Update date
+          data.date = new Date().toISOString().split('T')[0];
+
+          // Remove scheduling metadata
+          delete data.scheduledFor;
+          delete data.scheduledAt;
+          delete data.queuedAt;
+          delete data.priority;
+
+          // Write updated content
+          const updatedContent = matter.stringify(markdown, data);
+          fs.writeFileSync(article.targetPath, updatedContent);
+
+          // Remove from queue
+          fs.unlinkSync(article.queuePath);
+
+          results.push({
+            success: true,
+            title: data.title,
+            language: lang
+          });
+
+          console.log(`✅ Published: "${data.title}" (${lang.toUpperCase()})`);
+        } catch (error) {
+          console.error(`❌ Failed to publish ${article.filename}:`, error.message);
+          results.push({
+            success: false,
+            error: error.message
+          });
         }
       }
     }

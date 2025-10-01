@@ -5,16 +5,12 @@ import Link from 'next/link';
 import { motion } from '@/components/ui/Motion';
 import { FaBrain, FaCode, FaNetworkWired, FaCommentDots } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 
 export default function ClientHomeSection() {
   const t = useTranslations('home');
   const tServices = useTranslations('services');
   const locale = useLocale();
-
-  // Helper function to get localized path
-  const getLocalizedPath = (path: string) => {
-    return `/${locale}${path}`;
-  };
 
   const services = [
     {
@@ -22,21 +18,21 @@ export default function ClientHomeSection() {
       title: tServices('rust_training.title'),
       description: "Help your team adopt Rust with guided training and migration strategies",
       cta: "Start Your Rust Journey",
-      link: `${getLocalizedPath("/contact")}?service=rust-training`
+      link: `${getLocalizedPath(locale, "/contact")}?service=rust-training`
     },
     {
       icon: <FaBrain className="h-8 w-8 text-primary" />,
       title: tServices('llm_integration.title'),
       description: "Connect LLMs to your applications for enhanced automation and chatbots",
       cta: "Get Free Consultation",
-      link: getLocalizedPath("/contact?service=llm-integration")
+      link: getLocalizedPath(locale, "/contact?service=llm-integration")
     },
     {
       icon: <FaCommentDots className="h-8 w-8 text-primary" />,
       title: tServices('chatbot.title'),
       description: "Build intelligent chatbots that understand your business context",
       cta: "Add Chat to Your App",
-      link: getLocalizedPath("/contact?service=chatbot")
+      link: getLocalizedPath(locale, "/contact?service=chatbot")
     },
     {
       icon: <FaNetworkWired className="h-8 w-8 text-primary" />,
@@ -84,7 +80,7 @@ export default function ClientHomeSection() {
                 {t('discover_api0')}
               </Link>
               <Link
-                href={getLocalizedPath("/contact")}
+                href={getLocalizedPath(locale, "/contact")}
                 className="inline-flex items-center px-8 py-4 rounded-lg bg-foreground text-background text-lg font-semibold hover:bg-foreground/90 transform transition duration-200 hover:-translate-y-1"
               >
                 Get in Touch
@@ -199,7 +195,7 @@ export default function ClientHomeSection() {
               Let&apos;s discuss how my expertise can help your business achieve its technology goals
             </p>
             <Link
-              href={getLocalizedPath("/contact")}
+              href={getLocalizedPath(locale, "/contact")}
               className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
             >
               Get in Touch

@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { FiLinkedin, FiGithub, FiMail } from 'react-icons/fi';
 import { useTranslations, useLocale } from 'next-intl';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -12,12 +13,6 @@ const Footer: React.FC = () => {
   const tNav = useTranslations('navigation');
   const tServices = useTranslations('services');
   const locale = useLocale();
-
-  // Helper function to get localized path
-  const getLocalizedPath = (path: string) => {
-    if (locale === 'en') return path;
-    return `/${locale}${path}`;
-  };
 
   const footerNav = [
     { label: tNav('home'), path: "/" },
@@ -38,7 +33,7 @@ const Footer: React.FC = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1: Logo & Company Description */}
           <div className="space-y-4">
-            <Link href={getLocalizedPath("/")} className="flex items-center space-x-2">
+            <Link href={getLocalizedPath(locale, "/")} className="flex items-center space-x-2">
               <span className="font-bold text-xl text-foreground">mayorana</span>
             </Link>
             <p className="text-muted-foreground text-sm">
@@ -53,7 +48,7 @@ const Footer: React.FC = () => {
               {footerNav.map((item) => (
                 <li key={item.label}>
                   <Link
-                    href={item.external ? item.path : getLocalizedPath(item.path)}
+                    href={item.external ? item.path : getLocalizedPath(locale, item.path)}
                     target={item.external ? "_blank" : "_self"}
                     rel={item.external ? "noopener noreferrer" : ""}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -67,7 +62,7 @@ const Footer: React.FC = () => {
                 {legalLinks.map((item) => (
                   <div key={item.label} className="mb-2">
                     <Link
-                      href={getLocalizedPath(item.path)}
+                      href={getLocalizedPath(locale, item.path)}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
                       {item.label}
@@ -84,7 +79,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href={getLocalizedPath("/services#rust-training")}
+                  href={getLocalizedPath(locale, "/services#rust-training")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {tServices('rust_training.title')}
@@ -92,7 +87,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href={getLocalizedPath("/services#llm-integration")}
+                  href={getLocalizedPath(locale, "/services#llm-integration")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {tServices('llm_integration.title')}
@@ -100,7 +95,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href={getLocalizedPath("/services#chatbot")}
+                  href={getLocalizedPath(locale, "/services#chatbot")}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {tServices('chatbot.title')}
@@ -161,10 +156,10 @@ const Footer: React.FC = () => {
               &copy; {currentYear} Mayorana.ch. {t('copyright')}
             </p>
             <div className="flex space-x-4 text-xs text-muted-foreground">
-              <Link href={getLocalizedPath("/privacy")} className="hover:text-primary transition-colors">
+              <Link href={getLocalizedPath(locale, "/privacy")} className="hover:text-primary transition-colors">
                 Privacy
               </Link>
-              <Link href={getLocalizedPath("/terms")} className="hover:text-primary transition-colors">
+              <Link href={getLocalizedPath(locale, "/terms")} className="hover:text-primary transition-colors">
                 Terms
               </Link>
             </div>
