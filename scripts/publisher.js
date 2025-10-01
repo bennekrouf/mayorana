@@ -185,12 +185,18 @@ async function main() {
         break;
 
       case 'publish':
-        const result = await publisher.publishBoth();
-        if (result.success) {
-          console.log(`\n🎉 Published: "${result.title}" (${result.language.toUpperCase()})`);
+        const results = await this.publisher.publishBoth();
+
+        if (results.length > 0) {
+          results.forEach(result => {
+            if (result.success) {
+              console.log(`\n🎉 Published: "${result.title}" (${result.language.toUpperCase()})`);
+            } else {
+              console.log(`\n❌ Failed: ${result.error || 'Unknown error'}`);
+            }
+          });
         } else {
-          console.log(`\n❌ Failed: ${result.reason}`);
-          if (result.error) console.log(`Error: ${result.error}`);
+          console.log('\n📭 No articles to publish');
         }
         break;
 
