@@ -1,6 +1,6 @@
 ---
 id: fn-traits-rust-fr
-title: 'Quelles sont les différences entre Fn, FnMut, et FnOnce ?'
+title: 'Quelle est la différence entre Fn, FnMut, et FnOnce ?'
 locale: fr
 slug: fn-traits-rust-fr
 date: '2025-08-31'
@@ -17,17 +17,19 @@ tags:
 
 # Quelles sont les différences entre Fn, FnMut, et FnOnce ?
 
-Comprendre la distinction entre les traits `Fn`, `FnMut`, et `FnOnce` est crucial pour maîtriser le système de closures de Rust, l'ownership, et les caractéristiques de performance.
+Distinguer les traits `Fn`, `FnMut`, et `FnOnce` est crucial pour maîtriser le système de closures de Rust.
 
 ## Capture des Closures
 
-Les closures en Rust capturent les variables de leur environnement de trois façons, selon comment les variables sont utilisées :
+Les closures capturent les variables de leur environnement de trois façons, selon comment les variables sont utilisées :
 
 - **Immutable Borrow (`&T`)** : Si la closure ne fait que lire une variable.
 - **Mutable Borrow (`&mut T`)** : Si la closure modifie une variable.
 - **Ownership (`T`)** : Si la closure prend ownership (ex : via `move` ou en consommant la variable).
 
-Le compilateur infère automatiquement le mode de capture le moins restrictif nécessaire. Le mot-clé `move` force la capture par ownership, mais le trait de la closure (`Fn`, `FnMut`, ou `FnOnce`) dépend de comment les variables capturées sont utilisées.
+Le compilateur infère automatiquement le mode de capture le moins restrictif nécessaire.
+
+Le mot-clé `move` force la capture par ownership, mais le trait de la closure (`Fn`, `FnMut`, ou `FnOnce`) dépend de comment les variables capturées sont utilisées.
 
 ## Traits de Closure
 

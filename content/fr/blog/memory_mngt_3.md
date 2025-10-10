@@ -1,14 +1,13 @@
 ---
 id: stack-heap-allocation-rust-fr
-title: "Stack vs. Heap en Rust: Où Vivent tes Données ?"
+title: 'Stack vs. Heap en Rust: Où Vivent tes Données ?'
 slug: stack-heap-allocation-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-10-01'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 category: rust
 tags:
   - rust
