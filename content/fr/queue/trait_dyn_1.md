@@ -1,14 +1,14 @@
 ---
 id: rust-traits-vs-interfaces
 title: 'Rust Traits vs. Interfaces Java/C# : Comportement partagé bien fait'
-locale: fr
+locale: "fr"
 slug: rust-traits-vs-interfaces
-date: '2025-10-19'
+date: '2025-07-04'
 author: mayo
 excerpt: >-
-  Discussion sur les traits Rust vs les interfaces Java/C#, couvrant les
-  mécanismes de dispatch, le comportement pendant la compilation, et les
-  optimisations de performance.
+  Discussion sur les traits Rust vs les interfaces Java/C#, couvrant les mécanismes de dispatch,
+  le comportement pendant la compilation, et les optimisations de performance.
+
 tags:
   - rust
   - traits

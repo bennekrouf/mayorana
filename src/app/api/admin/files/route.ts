@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { FileNode } from '@/app/admin/types';
+import matter from 'gray-matter';
 
 // Security check - simple secret key validation
 function isAuthorized(request: NextRequest): boolean {
@@ -44,13 +45,26 @@ function buildFileTree(dirPath: string, basePath: string = ''): FileNode[] {
           children: children.length > 0 ? children : []
         });
       } else if (entry.name.endsWith('.md')) {
+        // Parse frontmatter to get the date
+        let frontmatterDate = null;
+        try {
+          const fileContent = fs.readFileSync(fullPath, 'utf8');
+          const { data } = matter(fileContent);
+          frontmatterDate = data.date; // Extract date from frontmatter
+        } catch (parseError) {
+          console.warn(`Failed to parse frontmatter for ${entry.name}:`, parseError);
+        }
+
+        // Fallback to file system date if no frontmatter date
         const stats = fs.statSync(fullPath);
+        const dateToUse = frontmatterDate || stats.mtime.toISOString().split('T')[0];
+
         items.push({
           id: relativePath,
           name: entry.name,
           path: relativePath,
           type: 'file',
-          lastModified: stats.mtime.toISOString()
+          lastModified: dateToUse // Use frontmatter date or fallback to file date
         });
       }
     }
@@ -58,7 +72,6 @@ function buildFileTree(dirPath: string, basePath: string = ''): FileNode[] {
     console.error(`Error reading directory ${dirPath}:`, error);
   }
 
-  // Don't sort here - let the frontend handle sorting
   return items;
 }
 
