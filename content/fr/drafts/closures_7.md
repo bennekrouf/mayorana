@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Gérer les lifetimes lors du retour de closures qui capturent des variables, couvrant
   le transfert d'ownership, les annotations de lifetime, et éviter les dangling references en Rust
-category: rust
+
 tags:
   - rust
   - closures

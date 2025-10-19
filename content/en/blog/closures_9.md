@@ -8,7 +8,6 @@ author: mayo
 excerpt: >-
   Storing closures in structs using generic parameters, trait objects, and
   lifetime annotations with Fn, FnMut, and FnOnce bounds
-category: rust
 tags:
   - rust
   - closures

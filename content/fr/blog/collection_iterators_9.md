@@ -8,7 +8,7 @@ excerpt: >-
   Aplatir Vec<Vec<T>> en utilisant les iterators comparé à la concaténation
   manuelle, analysant les implications de performance et stratégies
   d'optimisation
-category: rust
+
 tags:
   - rust
   - vec

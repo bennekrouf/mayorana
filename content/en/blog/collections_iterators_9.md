@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Flattening Vec<Vec<T>> using iterators compared to manual concatenation,
   analyzing performance implications
-category: rust
+
 tags:
   - rust
   - vec

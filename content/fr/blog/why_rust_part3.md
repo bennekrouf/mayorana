@@ -7,7 +7,7 @@ date: '2025-08-09'
 author: mayo
 excerpt: >-
   Rust a des performances équivalentes à C/C++ avec en plus la sécurité mémoire vérifée dès la compilation. Cela grâce à deux mécanismes: borrowing et ownership.
-category: rust
+
 tags:
   - rust
   - ownership

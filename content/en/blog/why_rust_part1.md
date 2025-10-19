@@ -9,7 +9,7 @@ excerpt: >-
   Java, Python, and JavaScript offer convenience, but garbage collection
   introduces unpredictable latency. Explore how runtime memory management
   affects performance in real systems.
-category: rust
+
 tags:
   - rust
   - gc

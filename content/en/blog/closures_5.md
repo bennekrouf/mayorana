@@ -5,7 +5,6 @@ slug: stateful-closures-rust
 locale: "en"
 author: mayo
 excerpt: Managing stateful closures in Rust for repeated function calls
-category: rust
 tags:
   - rust
   - closures

@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Comparaison du filtrage en place avec Vec::retain() et iter().filter().collect()
   pour différents scénarios de filtrage et implications sur les performances
-category: rust
+
 tags:
   - rust
   - retain

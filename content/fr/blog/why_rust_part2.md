@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   C évite le besoin d'avoir un garbage collector et donne un contrôle manuel de la mémoire, mais
   ouvre la porte à des bugs dangereux.
-category: rust
+
 tags:
   - rust
   - c

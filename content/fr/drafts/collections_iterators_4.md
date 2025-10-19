@@ -10,7 +10,7 @@ excerpt: >-
   Analyse des différences de performance entre Vec::push() dans des boucles et
   la pré-allocation avec Vec::with_capacity(), couvrant les coûts de réallocation mémoire
   et les stratégies d'optimisation
-category: rust
+
 tags:
   - rust
   - collections

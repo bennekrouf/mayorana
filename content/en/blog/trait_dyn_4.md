@@ -10,7 +10,7 @@ excerpt: >-
   dispatch
 content_focus: Object Safety
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - object-safety

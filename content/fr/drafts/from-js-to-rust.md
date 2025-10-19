@@ -5,7 +5,7 @@ slug: move-closures-rust-javascript-developers
 locale: "fr"
 author: mayo
 excerpt: 'Apprenez comment fonctionnent les move closures en Rust comparé aux closures JavaScript - ownership, threading et quand utiliser le mot-clé move'
-category: rust
+
 tags:
   - rust
   - closures

@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Discussion sur les traits Rust vs les interfaces Java/C#, couvrant les mécanismes de dispatch,
   le comportement pendant la compilation, et les optimisations de performance.
-category: rust
+
 tags:
   - rust
   - traits

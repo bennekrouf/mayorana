@@ -10,7 +10,7 @@ excerpt: >-
   Analyzing performance differences between Vec::push() in loops versus
   pre-allocating with Vec::with_capacity(), covering memory reallocation costs
   and optimization strategies
-category: rust
+
 tags:
   - rust
   - collections

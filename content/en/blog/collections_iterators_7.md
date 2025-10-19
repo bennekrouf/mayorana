@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Understanding Vec::drain() functionality and comparing it with Vec::truncate()
   and Vec::clear() for different element removal scenarios
-category: rust
+
 tags:
   - rust
   - drain

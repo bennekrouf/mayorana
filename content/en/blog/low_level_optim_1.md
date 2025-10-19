@@ -9,7 +9,7 @@ author: mayo
 excerpt: >-
   Low-level memory optimization in Rust, covering
   repr attributes, cache efficiency, and performance trade-offs
-category: rust
+
 tags:
   - rust
   - cache

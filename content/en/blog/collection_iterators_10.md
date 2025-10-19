@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Understanding the differences between .into_iter() and .iter() when iterating
   over Vec, covering ownership implications and performance considerations
-category: rust
+
 tags:
   - rust
   - iterators

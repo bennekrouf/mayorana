@@ -5,7 +5,7 @@ slug: move-closures-rust-javascript-developers
 locale: "fr"
 author: mayo
 excerpt: 'Apprenez comment fonctionnent les fermetures move en Rust comparées aux fermetures JavaScript - propriété, threading et quand utiliser le mot-clé move'
-category: rust
+
 date: "2025-17-10"
 tags:
   - rust

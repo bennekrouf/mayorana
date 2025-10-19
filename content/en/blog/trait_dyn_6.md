@@ -12,7 +12,7 @@ excerpt: >-
   unsized types efficiently
 content_focus: Sized and ?Sized
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - sized

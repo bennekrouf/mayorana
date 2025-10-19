@@ -6,7 +6,7 @@ locale: "fr"
 date: '2025-07-08'
 author: mayo
 excerpt: 'Collections (comme Vec), itérateurs (into_iter, collect) et concepts associés'
-category: rust
+
 tags:
   - rust
   - iterators

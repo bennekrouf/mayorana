@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Java, Python et JavaScript offrent de la commodité, mais le garbage collector
   introduit une latence  imprévisible.
-category: rust
+
 tags:
   - rust
   - java

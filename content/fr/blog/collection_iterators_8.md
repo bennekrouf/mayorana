@@ -8,7 +8,7 @@ excerpt: >-
   Comparer Vec::retain() pour le filtrage en place avec
   iter().filter().collect() pour différents scénarios de filtrage et
   implications de performance
-category: rust
+
 tags:
   - rust
   - vec

@@ -9,7 +9,7 @@ author: mayo
 excerpt: >-
   Vec allocation strategies in Rust, comparing
   Vec::new() and Vec::with_capacity() for optimal performance.
-category: rust
+
 tags:
   - rust
   - collections

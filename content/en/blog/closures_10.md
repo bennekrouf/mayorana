@@ -7,7 +7,6 @@ author: mayo
 excerpt: >-
   Comparing static and dynamic dispatch for closures in Rust, focusing on
   performance and use cases
-category: rust
 tags:
   - rust
   - closures

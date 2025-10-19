@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   C avoids garbage collection and gives manual memory control, but opens the
   door to dangerous bugs. Explore real-world memory issues and why they matter.
-category: rust
+
 tags:
   - rust
   - c
@@ -67,7 +67,7 @@ sprintf(log_buffer, "User: %s", user_input); // Buffer overflow possible
 
 ## Memory Safety Statistics
 
-**Security vulnerabilities by category:**
+**Security vulnerabilities by :**
 - **70%** of Microsoft security bugs: memory safety issues
 - **65%** of Chrome vulnerabilities: memory corruption  
 - **~50%** of Android security patches: memory-related

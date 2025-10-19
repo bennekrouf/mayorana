@@ -7,7 +7,6 @@ author: mayo
 excerpt: >-
   Efficient approaches to remove duplicates from Vec<T> where T: Eq + Hash,
   comparing HashSet-based and sort-based methods with performance analysis
-category: rust
 tags:
   - rust
   - collections

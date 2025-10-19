@@ -10,7 +10,7 @@ excerpt: >-
   type safety
 content_focus: Supertraits and Bounds
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - supertraits

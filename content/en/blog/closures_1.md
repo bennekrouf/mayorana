@@ -8,7 +8,6 @@ author: mayo
 excerpt: >-
   Functions vs closures in Rust, covering
   ownership, traits, lifetimes, and performance implications.
-category: rust
 tags:
   - rust
   - closures

@@ -12,7 +12,7 @@ excerpt: >-
   parameters
 content_focus: Associated Types
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - associated-types

@@ -6,7 +6,7 @@ slug: closure-parameter-rust-fr
 date: '2025-07-07'
 author: mayo
 excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
-category: rust
+
 tags:
   - rust
   - closures

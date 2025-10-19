@@ -8,7 +8,7 @@ author: mayo
 excerpt: Rust memory et string
 content_focus: rust memory et string
 technical_level: Discussion technique expert
-category: rust
+
 tags:
   - rust
   - memory

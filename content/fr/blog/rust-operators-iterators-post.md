@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Opérateurs Rust essentiels, différences d'itérateurs et gestion Unicode à
   connaître.
-category: rust
+
 tags:
   - rust
   - opérateurs

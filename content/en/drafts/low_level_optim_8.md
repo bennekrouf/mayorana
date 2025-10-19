@@ -8,7 +8,7 @@ excerpt: >-
   Strategic application of Rust's #[inline(always)] attribute for instruction-level optimization, covering effective usage patterns and risks of overuse
 content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
-category: rust
+
 tags:
   - rust
   - optimization

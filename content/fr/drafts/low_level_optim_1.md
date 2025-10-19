@@ -9,7 +9,7 @@ author: mayo
 excerpt: >-
   Optimisation mémoire bas niveau en Rust, couvrant
   les attributs repr, l'efficacité cache, et les compromis de performance
-category: rust
+
 tags:
   - rust
   - optimization

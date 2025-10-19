@@ -8,7 +8,7 @@ author: mayo
 excerpt: Static vs. Dynamic Dispatch
 content_focus: Static vs. Dynamic Dispatch
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - dispatch

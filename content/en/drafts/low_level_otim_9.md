@@ -8,7 +8,7 @@ excerpt: >-
   Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing
 content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
-category: rust
+
 tags:
   - rust
   - optimization

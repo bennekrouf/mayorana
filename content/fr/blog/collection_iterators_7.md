@@ -8,7 +8,7 @@ excerpt: >-
   Comprendre la fonctionnalité de Vec::drain() et la comparer avec
   Vec::truncate() et Vec::clear() pour différents scénarios de suppression
   d'éléments
-category: rust
+
 tags:
   - rust
   - vec

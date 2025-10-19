@@ -8,7 +8,7 @@ excerpt: >-
   Conception de structures de données alignées sur le cache dans les applications Rust multi-threadées pour éviter le faux partage et optimiser les performances lors du traitement de grands ensembles de données
 content_focus: "optimisation bas niveau en Rust"
 technical_level: "Discussion technique experte"
-category: rust
+
 tags:
   - rust
   - optimization

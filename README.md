@@ -8,7 +8,6 @@ A modern, responsive website for mayorana.ch built with Next.js and Tailwind CSS
 - Light and dark mode support
 - Configurable via YAML files
 - Pages for Services, About, and Contact
-- Blog with category filtering and markdown support
 - api0.ai solution showcase
 
 ## Tech Stack

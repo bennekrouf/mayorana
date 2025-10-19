@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Stocker des closures dans des structs en utilisant des paramètres génériques, trait objects, et
   annotations de lifetime avec les bounds Fn, FnMut, et FnOnce
-category: rust
+
 tags:
   - rust
   - closures

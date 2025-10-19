@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Comparaison des différences entre Box<[T]> et Vec<T> concernant la mutabilité, 
   la surcharge mémoire et les implications de performance pour différents cas d'usage
-category: rust
+
 tags:
   - rust
   - collections

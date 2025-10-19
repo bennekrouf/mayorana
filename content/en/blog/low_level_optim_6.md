@@ -10,7 +10,7 @@ excerpt: >-
   strategies
 content_focus: 'collections (like Vec), iterators (into_iter, collect), and related concepts'
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - performance

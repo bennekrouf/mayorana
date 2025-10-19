@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Essential Rust operators, iterator differences, and Unicode handling you need
   to know.
-category: rust
+
 tags:
   - rust
   - operators

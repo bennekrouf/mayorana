@@ -10,7 +10,7 @@ excerpt: >-
   computations
 content_focus: 'trait bounds, generics, monomorphization'
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - generics

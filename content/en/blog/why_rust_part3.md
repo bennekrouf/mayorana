@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Rust gives you the performance of C with memory safety enforced at compile
   time. Learn how ownership and borrowing eliminate entire bug classes.
-category: rust
+
 tags:
   - rust
   - ownership

@@ -11,7 +11,7 @@ excerpt: >-
   for maintainable libraries
 content_focus: Blanket Implementations
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - blanket-implementations

@@ -5,7 +5,7 @@ slug: memory-safety-rust
 author: mayo
 locale: fr
 excerpt: Mémoire et chaînes de caractères en Rust
-category: rust
+
 tags:
   - rust
   - mémoire

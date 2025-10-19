@@ -6,7 +6,6 @@ slug: fn-traits-rust
 date: '2025-07-07'
 author: mayo
 excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
-category: rust
 tags:
   - rust
   - closures

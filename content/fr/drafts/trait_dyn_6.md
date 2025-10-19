@@ -8,7 +8,7 @@ excerpt: >-
   Comprendre le rôle des bounds ?Sized dans les définitions de traits Rust et les exploiter pour créer des fonctions flexibles qui fonctionnent efficacement avec des types sized et unsized
 content_focus: "Sized et ?Sized"
 technical_level: "Discussion technique experte"
-category: rust
+
 tags:
   - rust
   - sized

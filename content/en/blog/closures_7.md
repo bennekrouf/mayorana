@@ -10,7 +10,7 @@ excerpt: >-
   Managing lifetimes when returning closures that capture variables, covering
   ownership transfer, lifetime annotations, and avoiding dangling references in
   Rust
-category: rust
+
 tags:
   - rust
   - closures

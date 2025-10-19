@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Comparaison entre l'aplatissement de Vec<Vec<T>> avec des itérateurs et la concaténation manuelle,
   avec analyse des implications sur les performances
-category: rust
+
 tags:
   - rust
   - vec

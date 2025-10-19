@@ -6,7 +6,6 @@ locale: "en"
 date: "2025-04-15"
 author: "Mayorana"
 excerpt: "Introduction to Rust for beginners, covering installation, basic syntax, and your first project."
-category: "rust"
 tags:
   - rust
   - beginners

@@ -8,7 +8,7 @@ excerpt: >-
   Optimisation bas niveau en Rust, se concentrant sur la minimisation des branch mispredictions dans les boucles critiques en performance
 content_focus: "optimisation bas niveau en Rust"
 technical_level: "Discussion technique experte"
-category: rust
+
 tags:
   - rust
   - optimization

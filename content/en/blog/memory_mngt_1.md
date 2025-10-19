@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   String vs str in Rust, covering memory management, ownership, and when to use
   each type.
-category: rust
+
 tags:
   - rust
   - string

@@ -5,7 +5,7 @@ slug: higher-order-functions-rust
 locale: "en"
 author: mayo
 excerpt: Exploring higher-order functions in Rust for functional programming patterns
-category: rust
+
 tags:
   - rust
   - closures

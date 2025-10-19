@@ -12,7 +12,7 @@ excerpt: >-
   execution
 content_focus: low-level optimization in Rust
 technical_level: Expert technical discussion
-category: rust
+
 tags:
   - rust
   - performance

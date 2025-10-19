@@ -13,7 +13,6 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   contentHtml: string;
-  category?: string;
   tags: string[];
   image?: string;
   readingTime: string;

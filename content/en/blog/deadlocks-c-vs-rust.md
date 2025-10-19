@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Deadlocks aren't prevented by compilers—but Rust adds safety guarantees that
   make writing deadlock-prone code harder. Here's how it compares to C.
-category: rust
+
 tags:
   - rust
   - c

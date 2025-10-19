@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Comparing Box<[T]> and Vec<T> differences in mutability, memory overhead, and
   performance implications for different use cases
-category: rust
+
 tags:
   - rust
   - collections

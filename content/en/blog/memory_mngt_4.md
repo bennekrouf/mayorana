@@ -6,7 +6,7 @@ locale: en
 date: '2025-08-02'
 author: mayo
 excerpt: Rust memory and string
-category: rust
+
 tags:
   - rust
   - memory

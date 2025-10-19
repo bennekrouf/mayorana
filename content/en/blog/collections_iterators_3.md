@@ -5,7 +5,6 @@ slug: collect-method-rust
 locale: "en"
 author: mayo
 excerpt: 'Collections (like Vec), iterators (into_iter, collect), and related concepts'
-category: rust
 tags:
   - rust
   - iterators

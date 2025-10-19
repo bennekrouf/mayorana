@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Analyser l'overhead de performance des closures versus les functions régulières en Rust,
   couvrant static dispatch, heap allocation, et scénarios d'optimisation
-category: rust
+
 tags:
   - rust
   - closures

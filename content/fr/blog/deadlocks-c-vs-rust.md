@@ -9,7 +9,7 @@ excerpt: >-
   Les deadlocks ne sont pas évités par le compilateur, mais Rust offre des
   garanties de sécurité qui rendent leur apparition plus difficile qu'en C.
   Comparaison détaillée.
-category: rust
+
 tags:
   - rust
   - c

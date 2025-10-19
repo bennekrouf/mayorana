@@ -7,7 +7,7 @@ author: mayo
 excerpt: >-
   Comparing Vec::retain() in-place filtering with iter().filter().collect() for
   different filtering scenarios and performance implications
-category: rust
+
 tags:
   - rust
   - retain

@@ -8,7 +8,7 @@ excerpt: >-
   Low-level optimization in Rust, focusing on minimizing branch mispredictions in performance-critical loops
 content_focus: "low-level optimization in Rust"
 technical_level: "Expert technical discussion"
-category: rust
+
 tags:
   - rust
   - optimization

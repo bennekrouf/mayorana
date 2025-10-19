@@ -7,7 +7,7 @@ locale: "fr"
 date: '2025-07-08'
 author: mayo
 excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
-category: rust
+
 tags:
   - rust
   - closures

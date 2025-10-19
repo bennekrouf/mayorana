@@ -9,7 +9,7 @@ excerpt: >-
   Dispatch Statique vs. Dynamique
 content_focus: "Dispatch Statique vs. Dynamique"
 technical_level: "Discussion technique experte"
-category: rust
+
 tags:
   - rust
   - dispatch

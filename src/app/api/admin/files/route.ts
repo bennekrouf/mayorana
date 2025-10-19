@@ -2,45 +2,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-
-interface FileNode {
-  id: string;
-  name: string;
-  path: string;
-  type: 'file' | 'folder';
-  children?: FileNode[];
-}
+import { FileNode } from '@/app/admin/types';
 
 // Security check - simple secret key validation
 function isAuthorized(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
   const secretKey = process.env.ADMIN_SECRET_KEY || 'your-secret-key-change-this';
-  
+
   // Check for secret in query params or authorization header
   const urlSecret = new URL(request.url).searchParams.get('key');
   const headerSecret = authHeader?.replace('Bearer ', '');
-  
+
   return urlSecret === secretKey || headerSecret === secretKey;
 }
 
 function buildFileTree(dirPath: string, basePath: string = ''): FileNode[] {
   const items: FileNode[] = [];
-  
+
   try {
     const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-    
+
     for (const entry of entries) {
       // Skip hidden files and common non-content directories
-      if (entry.name.startsWith('.') || 
-          entry.name === 'node_modules' || 
-          entry.name === 'dist' ||
-          entry.name === 'build') {
+      if (entry.name.startsWith('.') ||
+        entry.name === 'node_modules' ||
+        entry.name === 'dist' ||
+        entry.name === 'build') {
         continue;
       }
-      
+
       const fullPath = path.join(dirPath, entry.name);
       const relativePath = path.join(basePath, entry.name);
-      
+
       if (entry.isDirectory()) {
         const children = buildFileTree(fullPath, relativePath);
         items.push({
@@ -51,26 +44,22 @@ function buildFileTree(dirPath: string, basePath: string = ''): FileNode[] {
           children: children.length > 0 ? children : []
         });
       } else if (entry.name.endsWith('.md')) {
-        // Only include markdown files
+        const stats = fs.statSync(fullPath);
         items.push({
           id: relativePath,
           name: entry.name,
           path: relativePath,
-          type: 'file'
+          type: 'file',
+          lastModified: stats.mtime.toISOString()
         });
       }
     }
   } catch (error) {
     console.error(`Error reading directory ${dirPath}:`, error);
   }
-  
-  // Sort: folders first, then files, both alphabetically
-  return items.sort((a, b) => {
-    if (a.type !== b.type) {
-      return a.type === 'folder' ? -1 : 1;
-    }
-    return a.name.localeCompare(b.name);
-  });
+
+  // Don't sort here - let the frontend handle sorting
+  return items;
 }
 
 // GET /api/admin/files - Get file tree
@@ -81,7 +70,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const contentDir = path.join(process.cwd(), 'content');
-    
+
     if (!fs.existsSync(contentDir)) {
       return NextResponse.json({ error: 'Content directory not found' }, { status: 404 });
     }
@@ -102,7 +91,7 @@ export async function PUT(request: NextRequest) {
 
   try {
     const { path: filePath, content } = await request.json();
-    
+
     if (!filePath || typeof content !== 'string') {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
@@ -110,7 +99,7 @@ export async function PUT(request: NextRequest) {
     // Security: ensure the path is within the content directory
     const fullPath = path.join(process.cwd(), 'content', filePath);
     const contentDir = path.join(process.cwd(), 'content');
-    
+
     if (!fullPath.startsWith(contentDir)) {
       return NextResponse.json({ error: 'Invalid file path' }, { status: 400 });
     }
@@ -123,8 +112,8 @@ export async function PUT(request: NextRequest) {
     // Write the new content
     fs.writeFileSync(fullPath, content, 'utf8');
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: 'File saved successfully',
       timestamp: new Date().toISOString()
     });

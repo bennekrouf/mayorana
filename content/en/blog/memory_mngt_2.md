@@ -5,7 +5,7 @@ slug: memory-safety-rust
 author: mayo
 locale: en
 excerpt: Rust memory and string
-category: rust
+
 tags:
   - rust
   - memory

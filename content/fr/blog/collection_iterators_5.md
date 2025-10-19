@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Approches efficaces pour supprimer les doublons d'un Vec<T> où T: Eq + Hash,
   comparant les méthodes basées sur HashSet et sort avec analyse de performance
-category: rust
+
 tags:
   - rust
   - vec

@@ -8,7 +8,7 @@ excerpt: >-
   Optimisation bas niveau en Rust, se concentrant sur les outils de profiling pour identifier et corriger les goulots d'étranglement de performance comme les L1 cache misses
 content_focus: "optimisation bas niveau en Rust"
 technical_level: "Discussion technique experte"
-category: rust
+
 tags:
   - rust
   - profiling
