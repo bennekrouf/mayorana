@@ -15,14 +15,9 @@ export interface MetadataProps {
 
 // More specific types for different route patterns
 export type BlogPostParams = Promise<{ slug: string }>;
-export type CategoryParams = Promise<{ slug: string }>;
 
 export interface BlogPostProps {
   params: BlogPostParams;
   searchParams?: SearchParams;
 }
 
-export interface CategoryProps {
-  params: CategoryParams;
-  searchParams?: SearchParams;
-}

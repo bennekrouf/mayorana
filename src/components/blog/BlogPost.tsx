@@ -110,7 +110,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
         transition={{ duration: 0.5 }}
       >
         <div className="mb-4">
-          {/* Show main tags instead of category */}
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-3">
               {post.tags.slice(0, 3).map((tag) => (
@@ -261,8 +260,8 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
             <button
               onClick={copyLink}
               className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${linkCopied
-                  ? 'bg-green-500 text-white'
-                  : 'bg-secondary text-foreground hover:bg-secondary/80'
+                ? 'bg-green-500 text-white'
+                : 'bg-secondary text-foreground hover:bg-secondary/80'
                 }`}
               aria-label={linkCopied ? t('link_copied') : t('copy_link')}
               title={linkCopied ? t('link_copied') : t('copy_link')}
