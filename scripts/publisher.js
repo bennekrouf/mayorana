@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const matter = require('gray-matter');
+// const matter = require('gray-matter');
 
 class SimplePublisher {
   constructor() {
@@ -72,17 +72,15 @@ class SimplePublisher {
     return null;
   }
 
-  // Publish one article from each language if available
-  // Publish one article from each language if available
+  // Fix the publishBoth method in scripts/publisher.js
   async publishBoth() {
-    console.log('🔍 Looking for articles to publish from both languages...');
+    console.log('📝 Looking for articles to publish from both languages...');
 
     let results = [];
 
     for (const lang of this.languages) {
       const article = this.findNextArticleForLanguage(lang);
       if (article) {
-        // Move file directly (inline the logic)
         try {
           const targetDir = path.dirname(article.targetPath);
 
@@ -119,6 +117,10 @@ class SimplePublisher {
           });
 
           console.log(`✅ Published: "${data.title}" (${lang.toUpperCase()})`);
+
+          // Only publish one article per run - break after first success
+          break;
+
         } catch (error) {
           console.error(`❌ Failed to publish ${article.filename}:`, error.message);
           results.push({
@@ -129,7 +131,20 @@ class SimplePublisher {
       }
     }
 
-    return results;
+    if (results.length === 0) {
+      return { success: false, reason: 'No articles to publish' };
+    }
+
+    const successfulResult = results.find(r => r.success);
+    if (successfulResult) {
+      return {
+        success: true,
+        title: successfulResult.title,
+        language: successfulResult.language
+      };
+    }
+
+    return { success: false, reason: results[0].error };
   }
 
   findNextArticleForLanguage(targetLang) {
@@ -173,7 +188,7 @@ class SimplePublisher {
   }
 }
 
-// CLI
+// Fix the main function in publisher.js
 async function main() {
   const publisher = new SimplePublisher();
   const command = process.argv[2] || 'status';
@@ -185,18 +200,12 @@ async function main() {
         break;
 
       case 'publish':
-        const results = await this.publisher.publishBoth();
+        const results = await publisher.publishBoth(); // Fix: use publisher instance
 
-        if (results.length > 0) {
-          results.forEach(result => {
-            if (result.success) {
-              console.log(`\n🎉 Published: "${result.title}" (${result.language.toUpperCase()})`);
-            } else {
-              console.log(`\n❌ Failed: ${result.error || 'Unknown error'}`);
-            }
-          });
+        if (results.success) {
+          console.log(`\n🎉 Published: "${results.title}" (${results.language.toUpperCase()})`);
         } else {
-          console.log('\n📭 No articles to publish');
+          console.log(`\n❌ Failed: ${results.reason || 'Unknown error'}`);
         }
         break;
 
