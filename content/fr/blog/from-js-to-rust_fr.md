@@ -6,7 +6,7 @@ locale: "fr"
 author: mayo
 excerpt: 'Apprenez comment fonctionnent les fermetures move en Rust comparées aux fermetures JavaScript - propriété, threading et quand utiliser le mot-clé move'
 
-date: "2025-17-10"
+date: '2025-17-10'
 tags:
   - rust
   - closures
