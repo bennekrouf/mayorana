@@ -1,9 +1,9 @@
 {
   "metadata": {
     "site_title": "AI Tools That Actually Work—Built Solo",
-    "site_description": "Live AI tools powered by Rust + AI tech. Portfolio: api0.ai | cVenom | Solanize",
+    "site_description": "Live AI tools powered by Rust 🦀 + AI tech. Portfolio: api0.ai | cVenom | Solanize",
     "about_title": "About",
-    "about_description": "Discover Mayorana's live AI tools portfolio built with Rust",
+    "about_description": "Discover Mayorana's live AI tools portfolio built with Rust 🦀",
     "blog_title": "Blog - Mayorana",
     "blog_description": "Insights and articles on Rust, AI and live tool development",
     "contact_title": "Contact",
@@ -24,14 +24,14 @@
   },
   "home": {
     "hero_title": "AI Tools That Actually Work—Built Solo",
-    "hero_subtitle": "My portfolio: api0.ai | cVenom (live) | Solanize (MVP) - All powered by my Rust + AI tech",
+    "hero_subtitle": "My portfolio: api0.ai | cVenom (live) | Solanize (MVP) - All powered by my Rust 🦀 + AI tech",
     "hero_tagline": "I build what agencies pitch. See my live tools above.",
     "hero_primary_cta": "TRY LIVE TOOLS",
     "hero_secondary_cta": "BOOK 30MIN FREE",
     "book_rust_training": "BOOK 30MIN FREE",
     "discover_api0": "Explore api0.ai",
     "what_i_offer": "What I Build",
-    "services_subtitle": "AI tools that actually work, powered by Rust",
+    "services_subtitle": "AI tools that actually work, powered by Rust 🦀",
     "latest_insights": "Latest insights",
     "insights_subtitle": "Thoughts and tutorials on Rust, LLM integration and AI agent development.",
     "view_all_articles": "View all articles",
@@ -74,7 +74,7 @@
   },
   "services": {
     "services_title": "What I Build",
-    "services_subtitle": "AI tools that actually work, powered by Rust",
+    "services_subtitle": "AI tools that actually work, powered by Rust 🦀",
     "rust_training": {
       "title": "Rust Adoption & Training",
       "description": "I help your team adopt Rust for new applications or migrate existing systems. From initial assessment to hands-on training, I guide companies through their complete Rust transformation.",
@@ -186,7 +186,7 @@
   },
   "blog": {
     "hero_title": "Blog",
-    "hero_subtitle": "Insights and articles on Rust, AI and live tool development.",
+    "hero_subtitle": "Insights and articles on Rust 🦀, AI and live tool development.",
     "filter_by_topic": "Filter by topic",
     "all": "All",
     "no_posts": "No articles found",

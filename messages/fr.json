@@ -1,15 +1,15 @@
 {
   "metadata": {
     "site_title": "Outils d'IA qui fonctionnent vraiment — Développés en solo",
-    "site_description": "Outils d'IA live basés sur Rust et l'IA. Portfolio : api0.ai | cVenom | Solanize",
+    "site_description": "Outils d'IA live basés sur Rust 🦀 et l'IA. Portfolio : api0.ai | cVenom | Solanize",
     "about_title": "À propos",
-    "about_description": "Découvrez le portfolio d'outils d'IA live de Mayorana développés avec Rust",
+    "about_description": "Découvrez le portfolio d'outils d'IA live de Mayorana développés avec Rust 🦀",
     "blog_title": "Blog - Mayorana",
     "blog_description": "Articles et insights sur Rust, l'IA et le développement d'outils live",
     "contact_title": "Contact",
     "contact_description": "Contactez-moi pour découvrir comment mes outils d'IA live peuvent renforcer votre entreprise",
     "services_title": "Services",
-    "services_description": "Outils d'IA qui fonctionnent vraiment, développés avec Rust et l'IA"
+    "services_description": "Outils d'IA qui fonctionnent vraiment, développés avec Rust 🦀 et l'IA"
   },
   "navigation": {
     "home": "Accueil",
@@ -31,7 +31,7 @@
     "book_rust_training": "RÉSERVER 30MIN GRATUITES",
     "discover_api0": "Découvrir api0.ai",
     "what_i_offer": "Ce que je construis",
-    "services_subtitle": "Des outils d'IA qui fonctionnent vraiment, basés sur Rust",
+    "services_subtitle": "Des outils d'IA qui fonctionnent vraiment, basés sur Rust 🦀",
     "latest_insights": "Derniers insights",
     "insights_subtitle": "Réflexions et tutoriels sur Rust, l'intégration LLM et le développement d'agents IA.",
     "view_all_articles": "Voir tous les articles",
@@ -74,7 +74,7 @@
   },
   "services": {
     "services_title": "Ce que je construis",
-    "services_subtitle": "Des outils d'IA qui fonctionnent vraiment, renforcé par Rust",
+    "services_subtitle": "Des outils d'IA qui fonctionnent vraiment, renforcé par Rust 🦀",
     "rust_training": {
       "title": "Adoption & Formation Rust",
       "description": "J'accompagne votre équipe dans l'adoption de Rust pour de nouvelles applications ou la migration de systèmes existants. De l'évaluation initiale à la formation pratique, je guide les entreprises dans leur transformation Rust complète.",
@@ -205,7 +205,7 @@
     "articles_about": "articles sur"
   },
   "footer": {
-    "description": "Portfolio renforcé par Mayorana expert Rust",
+    "description": "Portfolio renforcé par Mayorana expert Rust 🦀",
     "footer_tagline": "Portfolio d'applications basé sur Rust",
     "footer_api0": "Api0.ai",
     "footer_solanize": "Solanize",
