@@ -1,18 +1,19 @@
 ---
 id: branch-prediction-rust
-title: "Boosting Rust Hot Loops: Slashing Branch Mispredictions"
+title: 'Boosting Rust Hot Loops: Slashing Branch Mispredictions'
 slug: branch-prediction-rust
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Low-level optimization in Rust, focusing on minimizing branch mispredictions in performance-critical loops
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
-
+  Low-level optimization in Rust, focusing on minimizing branch mispredictions
+  in performance-critical loops
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-10-23'
 ---
 
 # Boosting Rust Hot Loops: Slashing Branch Mispredictions
