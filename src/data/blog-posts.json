@@ -1,126 +1,64 @@
 [
   {
-    "id": "dyn-mot-cle-rust-fr",
-    "slug": "dyn-mot-cle-rust-fr",
-    "title": "Le mot-clé `dyn` : Origines, Signification et Limitations",
+    "id": "branch-prediction-rust",
+    "slug": "branch-prediction-rust",
+    "title": "Boosting Rust Hot Loops: Slashing Branch Mispredictions",
     "date": "2025-10-23",
-    "excerpt": "Exploration approfondie du mot-clé `dyn` en Rust, son origine, son opposé statique, et pourquoi Vec<dyn Trait> n'est pas possible",
-    "content": "En Rust, le mot-clé `dyn` est au cœur du polymorphisme dynamique, permettant d'écrire du code flexible qui peut travailler avec différents types à l'exécution. Mais d'où vient ce mot mystérieux, comment fonctionne-t-il, et pourquoi certaines constructions comme `Vec<dyn Trait>` sont-elles impossibles ? Plongeons dans les mécanismes internes du langage.\n\n## Origine et Signification de `dyn`\n\nLe mot `dyn` est l'abréviation de \"dynamic\" (dynamique en anglais). Il a été introduit dans l'édition 2018 de Rust pour remplacer la syntaxe des traits objets sans mot-clé explicite, rendant le code plus clair et explicite.\n\n### Évolution Historique\n\nAvant Rust 2018, les traits objets s'écrivaient simplement avec `&Trait` :\n\n```rust\n// Ancienne syntaxe (avant 2018)\nfn process_trait(obj: &Trait) {\n    obj.do_something();\n}\n```\n\nAvec Rust 2018, `dyn` est devenu obligatoire :\n\n```rust\n// Nouvelle syntaxe (2018+)\nfn process_trait(obj: &dyn Trait) {\n    obj.do_something();\n}\n```\n\nCette évolution a permis de distinguer clairement le polymorphisme statique (génériques) du polymorphisme dynamique (traits objets).\n\n### Pourquoi \"dyn\" ?\n\nLe choix de `dyn` reflète la nature du **dispatch dynamique** (dynamic dispatch). Contrairement au polymorphisme statique où la méthode à appeler est déterminée à la compilation, avec `dyn`, la résolution se fait à l'exécution via une table de fonctions virtuelles (vtable).\n\n```rust\ntrait Animal {\n    fn faire_du_bruit(&self);\n}\n\nstruct Chien;\nstruct Chat;\n\nimpl Animal for Chien {\n    fn faire_du_bruit(&self) {\n        println!(\"Wouf!\");\n    }\n}\n\nimpl Animal for Chat {\n    fn faire_du_bruit(&self) {\n        println!(\"Miaou!\");\n    }\n}\n\nfn faire_parler(animal: &dyn Animal) {\n    animal.faire_du_bruit(); // Résolution à l'exécution\n}\n```\n\n## L'Opposé de `dyn` : Le Polymorphisme Statique\n\nL'opposé conceptuel de `dyn` n'est pas un mot-clé spécifique, mais plutôt l'ensemble des mécanismes de polymorphisme statique :\n\n### Génériques avec Traits Liés\n\n```rust\nfn faire_parler_generique<T: Animal>(animal: &T) {\n    animal.faire_du_bruit(); // Résolution à la compilation\n}\n```\n\n### Impl Trait\n\n```rust\nfn creer_animal() -> impl Animal {\n    Chien {} // Type concret connu à la compilation\n}\n```\n\n### Tableau Comparatif\n\n| Aspect | `dyn Trait` (Dynamique) | Génériques (Statique) |\n|--------|------------------------|----------------------|\n| Résolution | Exécution (vtable) | Compilation (monomorphisation) |\n| Performance | Overhead d'indirection | Optimisations maximales |\n| Flexibilité | Types multiples à l'exécution | Type unique à la compilation |\n| Taille | Pointeur gras (data + vtable) | Taille du type concret |\n\n## Le Problème de `Vec<dyn Trait>`\n\nLa limitation la plus surprenante pour les nouveaux Rustacés est l'impossibilité d'écrire `Vec<dyn Trait>`. Explorons les raisons techniques.\n\n### Le Système de Taille (Sized Trait)\n\nEn Rust, tous les types doivent avoir une taille connue à la compilation. C'est ce qu'exprime le trait `Sized`. Or, `dyn Trait` n'est pas `Sized`.\n\n```rust\n// Ceci ne compile PAS !\n// let v: Vec<dyn Animal> = vec![];\n```\n\n### Pourquoi `dyn Trait` n'est pas Sized ?\n\nUn trait objet `dyn Trait` peut représenter n'importe quel type implémentant le trait, et ces types peuvent avoir des tailles différentes :\n\n```rust\nstruct PetitChien; // Taille : 0 octets\nstruct GrosChien { \n    nom: String,   // Taille : 24 octets\n    age: u32,      // + 4 octets\n}\n```\n\nComment stocker ces types de tailles différentes dans un `Vec` qui nécessite des éléments de taille uniforme ?\n\n### Les Solutions Pratiques\n\n#### 1. Pointeurs Intelligents (Box, Rc, Arc)\n\n```rust\nlet animaux: Vec<Box<dyn Animal>> = vec![\n    Box::new(Chien),\n    Box::new(Chat),\n];\n```\n\n#### 2. Références avec Lifetime\n\n```rust\nfn traiter_animaux(animaux: &[&dyn Animal]) {\n    for animal in animaux {\n        animal.faire_du_bruit();\n    }\n}\n```\n\n#### 3. Enum (Alternative Statique)\n\n```rust\nenum AnimalEnum {\n    Chien(Chien),\n    Chat(Chat),\n}\n\nimpl Animal for AnimalEnum {\n    fn faire_du_bruit(&self) {\n        match self {\n            AnimalEnum::Chien(chien) => chien.faire_du_bruit(),\n            AnimalEnum::Chat(chat) => chat.faire_du_bruit(),\n        }\n    }\n}\n```\n\n### Mécanisme des Pointeurs Gras\n\nQuand vous utilisez `Box<dyn Trait>`, vous utilisez un **pointeur gras** (fat pointer) :\n\n```rust\nlet chien: Box<dyn Animal> = Box::new(Chien);\n```\n\nCe pointeur contient :\n- Un pointeur vers les données (Chien)\n- Un pointeur vers la vtable (table des méthodes Animal pour Chien)\n\n## Implications des Choix de Conception\n\n### Considérations de Performance\n\n```rust\n// Dispatch statique - plus rapide\nfn benchmark_statique<T: Animal>(animaux: &[T]) {\n    for animal in animaux {\n        animal.faire_du_bruit(); // Appel direct\n    }\n}\n\n// Dispatch dynamique - plus flexible\nfn benchmark_dynamique(animaux: &[&dyn Animal]) {\n    for animal in animaux {\n        animal.faire_du_bruit(); // Appel via vtable\n    }\n}\n```\n\n### Trade-off Flexibilité vs Performance\n\nLe choix entre `dyn` et les génériques représente un compromis classique :\n\n- **Génériques** : Performance maximale, moins de flexibilité\n- **`dyn`** : Flexibilité maximale, léger overhead\n\n## Points Clés\n✅ `dyn` signifie \"dynamic\" et permet le polymorphisme à l'exécution via les vtables\n✅ L'opposé de `dyn` est le polymorphisme statique (génériques, impl Trait)\n✅ `Vec<dyn Trait>` est impossible car `dyn Trait` n'a pas de taille connue à la compilation\n✅ Utilisez `Box<dyn Trait>`, `&dyn Trait` ou des enums comme alternatives pratiques\n\n**Impact Réel** : Cette compréhension permet d'architecturer des systèmes Rust efficaces qui utilisent le bon type de polymorphisme selon les besoins - statique pour la performance critique, dynamique pour l'extensibilité et l'abstraction runtime.",
-    "contentHtml": "<p>En Rust, le mot-clé <code>dyn</code> est au cœur du polymorphisme dynamique, permettant d&#39;écrire du code flexible qui peut travailler avec différents types à l&#39;exécution. Mais d&#39;où vient ce mot mystérieux, comment fonctionne-t-il, et pourquoi certaines constructions comme <code>Vec&lt;dyn Trait&gt;</code> sont-elles impossibles ? Plongeons dans les mécanismes internes du langage.</p>\n<h2>Origine et Signification de <code>dyn</code></h2>\n<p>Le mot <code>dyn</code> est l&#39;abréviation de &quot;dynamic&quot; (dynamique en anglais). Il a été introduit dans l&#39;édition 2018 de Rust pour remplacer la syntaxe des traits objets sans mot-clé explicite, rendant le code plus clair et explicite.</p>\n<h3>Évolution Historique</h3>\n<p>Avant Rust 2018, les traits objets s&#39;écrivaient simplement avec <code>&amp;Trait</code> :</p>\n<pre><code class=\"language-rust\">// Ancienne syntaxe (avant 2018)\nfn process_trait(obj: &amp;Trait) {\n    obj.do_something();\n}\n</code></pre>\n<p>Avec Rust 2018, <code>dyn</code> est devenu obligatoire :</p>\n<pre><code class=\"language-rust\">// Nouvelle syntaxe (2018+)\nfn process_trait(obj: &amp;dyn Trait) {\n    obj.do_something();\n}\n</code></pre>\n<p>Cette évolution a permis de distinguer clairement le polymorphisme statique (génériques) du polymorphisme dynamique (traits objets).</p>\n<h3>Pourquoi &quot;dyn&quot; ?</h3>\n<p>Le choix de <code>dyn</code> reflète la nature du <strong>dispatch dynamique</strong> (dynamic dispatch). Contrairement au polymorphisme statique où la méthode à appeler est déterminée à la compilation, avec <code>dyn</code>, la résolution se fait à l&#39;exécution via une table de fonctions virtuelles (vtable).</p>\n<pre><code class=\"language-rust\">trait Animal {\n    fn faire_du_bruit(&amp;self);\n}\n\nstruct Chien;\nstruct Chat;\n\nimpl Animal for Chien {\n    fn faire_du_bruit(&amp;self) {\n        println!(&quot;Wouf!&quot;);\n    }\n}\n\nimpl Animal for Chat {\n    fn faire_du_bruit(&amp;self) {\n        println!(&quot;Miaou!&quot;);\n    }\n}\n\nfn faire_parler(animal: &amp;dyn Animal) {\n    animal.faire_du_bruit(); // Résolution à l&#39;exécution\n}\n</code></pre>\n<h2>L&#39;Opposé de <code>dyn</code> : Le Polymorphisme Statique</h2>\n<p>L&#39;opposé conceptuel de <code>dyn</code> n&#39;est pas un mot-clé spécifique, mais plutôt l&#39;ensemble des mécanismes de polymorphisme statique :</p>\n<h3>Génériques avec Traits Liés</h3>\n<pre><code class=\"language-rust\">fn faire_parler_generique&lt;T: Animal&gt;(animal: &amp;T) {\n    animal.faire_du_bruit(); // Résolution à la compilation\n}\n</code></pre>\n<h3>Impl Trait</h3>\n<pre><code class=\"language-rust\">fn creer_animal() -&gt; impl Animal {\n    Chien {} // Type concret connu à la compilation\n}\n</code></pre>\n<h3>Tableau Comparatif</h3>\n<table>\n<thead>\n<tr>\n<th>Aspect</th>\n<th><code>dyn Trait</code> (Dynamique)</th>\n<th>Génériques (Statique)</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Résolution</td>\n<td>Exécution (vtable)</td>\n<td>Compilation (monomorphisation)</td>\n</tr>\n<tr>\n<td>Performance</td>\n<td>Overhead d&#39;indirection</td>\n<td>Optimisations maximales</td>\n</tr>\n<tr>\n<td>Flexibilité</td>\n<td>Types multiples à l&#39;exécution</td>\n<td>Type unique à la compilation</td>\n</tr>\n<tr>\n<td>Taille</td>\n<td>Pointeur gras (data + vtable)</td>\n<td>Taille du type concret</td>\n</tr>\n</tbody></table>\n<h2>Le Problème de <code>Vec&lt;dyn Trait&gt;</code></h2>\n<p>La limitation la plus surprenante pour les nouveaux Rustacés est l&#39;impossibilité d&#39;écrire <code>Vec&lt;dyn Trait&gt;</code>. Explorons les raisons techniques.</p>\n<h3>Le Système de Taille (Sized Trait)</h3>\n<p>En Rust, tous les types doivent avoir une taille connue à la compilation. C&#39;est ce qu&#39;exprime le trait <code>Sized</code>. Or, <code>dyn Trait</code> n&#39;est pas <code>Sized</code>.</p>\n<pre><code class=\"language-rust\">// Ceci ne compile PAS !\n// let v: Vec&lt;dyn Animal&gt; = vec![];\n</code></pre>\n<h3>Pourquoi <code>dyn Trait</code> n&#39;est pas Sized ?</h3>\n<p>Un trait objet <code>dyn Trait</code> peut représenter n&#39;importe quel type implémentant le trait, et ces types peuvent avoir des tailles différentes :</p>\n<pre><code class=\"language-rust\">struct PetitChien; // Taille : 0 octets\nstruct GrosChien { \n    nom: String,   // Taille : 24 octets\n    age: u32,      // + 4 octets\n}\n</code></pre>\n<p>Comment stocker ces types de tailles différentes dans un <code>Vec</code> qui nécessite des éléments de taille uniforme ?</p>\n<h3>Les Solutions Pratiques</h3>\n<h4>1. Pointeurs Intelligents (Box, Rc, Arc)</h4>\n<pre><code class=\"language-rust\">let animaux: Vec&lt;Box&lt;dyn Animal&gt;&gt; = vec![\n    Box::new(Chien),\n    Box::new(Chat),\n];\n</code></pre>\n<h4>2. Références avec Lifetime</h4>\n<pre><code class=\"language-rust\">fn traiter_animaux(animaux: &amp;[&amp;dyn Animal]) {\n    for animal in animaux {\n        animal.faire_du_bruit();\n    }\n}\n</code></pre>\n<h4>3. Enum (Alternative Statique)</h4>\n<pre><code class=\"language-rust\">enum AnimalEnum {\n    Chien(Chien),\n    Chat(Chat),\n}\n\nimpl Animal for AnimalEnum {\n    fn faire_du_bruit(&amp;self) {\n        match self {\n            AnimalEnum::Chien(chien) =&gt; chien.faire_du_bruit(),\n            AnimalEnum::Chat(chat) =&gt; chat.faire_du_bruit(),\n        }\n    }\n}\n</code></pre>\n<h3>Mécanisme des Pointeurs Gras</h3>\n<p>Quand vous utilisez <code>Box&lt;dyn Trait&gt;</code>, vous utilisez un <strong>pointeur gras</strong> (fat pointer) :</p>\n<pre><code class=\"language-rust\">let chien: Box&lt;dyn Animal&gt; = Box::new(Chien);\n</code></pre>\n<p>Ce pointeur contient :</p>\n<ul>\n<li>Un pointeur vers les données (Chien)</li>\n<li>Un pointeur vers la vtable (table des méthodes Animal pour Chien)</li>\n</ul>\n<h2>Implications des Choix de Conception</h2>\n<h3>Considérations de Performance</h3>\n<pre><code class=\"language-rust\">// Dispatch statique - plus rapide\nfn benchmark_statique&lt;T: Animal&gt;(animaux: &amp;[T]) {\n    for animal in animaux {\n        animal.faire_du_bruit(); // Appel direct\n    }\n}\n\n// Dispatch dynamique - plus flexible\nfn benchmark_dynamique(animaux: &amp;[&amp;dyn Animal]) {\n    for animal in animaux {\n        animal.faire_du_bruit(); // Appel via vtable\n    }\n}\n</code></pre>\n<h3>Trade-off Flexibilité vs Performance</h3>\n<p>Le choix entre <code>dyn</code> et les génériques représente un compromis classique :</p>\n<ul>\n<li><strong>Génériques</strong> : Performance maximale, moins de flexibilité</li>\n<li><strong><code>dyn</code></strong> : Flexibilité maximale, léger overhead</li>\n</ul>\n<h2>Points Clés</h2>\n<p>✅ <code>dyn</code> signifie &quot;dynamic&quot; et permet le polymorphisme à l&#39;exécution via les vtables\n✅ L&#39;opposé de <code>dyn</code> est le polymorphisme statique (génériques, impl Trait)\n✅ <code>Vec&lt;dyn Trait&gt;</code> est impossible car <code>dyn Trait</code> n&#39;a pas de taille connue à la compilation\n✅ Utilisez <code>Box&lt;dyn Trait&gt;</code>, <code>&amp;dyn Trait</code> ou des enums comme alternatives pratiques</p>\n<p><strong>Impact Réel</strong> : Cette compréhension permet d&#39;architecturer des systèmes Rust efficaces qui utilisent le bon type de polymorphisme selon les besoins - statique pour la performance critique, dynamique pour l&#39;extensibilité et l&#39;abstraction runtime.</p>\n",
+    "excerpt": "Low-level optimization in Rust, focusing on minimizing branch mispredictions in performance-critical loops",
+    "content": "Branch mispredictions occur when the CPU’s branch predictor incorrectly guesses whether a conditional jump (e.g., from an `if`) is taken, causing pipeline stalls and costing cycles (10-20 cycles per misprediction on modern CPUs). In a performance-critical hot loop in Rust, I’d restructure the code to minimize or eliminate branches, leveraging Rust’s features, and use profiling tools to confirm measurable improvements in CPU pipeline efficiency.\n\n## Techniques to Reduce Branch Mispredictions\n\n### 1. Branch Elimination with Arithmetic\nReplace `if` statements with branchless operations to avoid conditional jumps.\n\n**Before** (branched):\n```rust\nlet mut sum = 0;\nfor x in data {\n    if x > 0 { sum += x; } // Branch: taken or not?\n}\n```\n\n**After** (branchless):\n```rust\nlet mut sum = 0;\nfor x in data {\n    sum += (x > 0) as i32 * x; // No branch: true=1, false=0\n}\n```\n\nThe comparison generates a mask (`1` for `true`, `0` for `false`), and multiplication avoids a jump. Rust’s type system ensures this is safe and explicit.\n\n### 2. Data Sorting for Predictable Patterns\nIf branches depend on input data, sort it to group similar outcomes, making branch prediction easier.\n\n**Before**:\n```rust\nfor x in data {\n    if x < threshold { process_a(x); } else { process_b(x); }\n}\n```\n\n**After**:\n```rust\ndata.sort_by(|a, b| a.partial_cmp(b).unwrap());\nfor x in data {\n    if x < threshold { process_a(x); } else { process_b(x); }\n}\n```\n\nSorting with `sort_by` creates long runs of “taken” or “not taken” branches, improving predictor accuracy.\n\n### 3. Conditional Moves with Pattern Matching\nUse Rust’s enums and `match` to structure code for potential branchless optimization.\n\n**Before**:\n```rust\nlet result = if flag { compute_a() } else { compute_b() };\n```\n\n**After**:\n```rust\nenum Op { A, B }\nlet op = if flag { Op::A } else { Op::B };\nlet result = match op {\n    Op::A => compute_a(),\n    Op::B => compute_b(),\n};\n```\n\nFor simple `compute_a` and `compute_b`, the compiler may optimize this into a conditional move (`cmov` on x86), avoiding jumps.\n\n### 4. Loop Unrolling\nUnroll small loops to reduce the frequency of loop-end branches.\n\n**Before**:\n```rust\nfor i in 0..4 {\n    if data[i] > 0 { out[i] = data[i]; }\n}\n```\n\n**After**:\n```rust\nout[0] = (data[0] > 0) as i32 * data[0];\nout[1] = (data[1] > 0) as i32 * data[1];\nout[2] = (data[2] > 0) as i32 * data[2];\nout[3] = (data[3] > 0) as i32 * data[3];\n```\n\nFewer loop-end branches improve pipeline flow.\n\n## Leveraging Rust’s Features\n\nRust’s ownership model and zero-cost abstractions (e.g., iterator fusion) reduce implicit branches. Iterators like `filter` can be inlined and optimized (see previous answers on iterator chains), and the type system encourages clean, optimizable patterns without unsafe code.\n\n## Profiling Tools and Verification\n\nTo measure and confirm reductions in branch mispredictions, I’d use:\n\n- **Linux `perf`**:\n  - **Command**: `perf stat -e branches,branch-misses ./target/release/myapp`\n  - **Metrics**: Monitor `branch-misses` as a percentage of `branches`. A drop from 10% to 2% indicates success.\n  - **Example Output (Before)**:\n    ```\n    10,000,000 branches\n    1,000,000 branch-misses (10.00%)\n    ```\n  - **After Optimization**:\n    ```\n    8,000,000 branches\n    160,000 branch-misses (2.00%)\n    ```\n\n- **Valgrind with Callgrind**:\n  - **Command**: `valgrind --tool=callgrind ./target",
+    "contentHtml": "<p>Branch mispredictions occur when the CPU’s branch predictor incorrectly guesses whether a conditional jump (e.g., from an <code>if</code>) is taken, causing pipeline stalls and costing cycles (10-20 cycles per misprediction on modern CPUs). In a performance-critical hot loop in Rust, I’d restructure the code to minimize or eliminate branches, leveraging Rust’s features, and use profiling tools to confirm measurable improvements in CPU pipeline efficiency.</p>\n<h2>Techniques to Reduce Branch Mispredictions</h2>\n<h3>1. Branch Elimination with Arithmetic</h3>\n<p>Replace <code>if</code> statements with branchless operations to avoid conditional jumps.</p>\n<p><strong>Before</strong> (branched):</p>\n<pre><code class=\"language-rust\">let mut sum = 0;\nfor x in data {\n    if x &gt; 0 { sum += x; } // Branch: taken or not?\n}\n</code></pre>\n<p><strong>After</strong> (branchless):</p>\n<pre><code class=\"language-rust\">let mut sum = 0;\nfor x in data {\n    sum += (x &gt; 0) as i32 * x; // No branch: true=1, false=0\n}\n</code></pre>\n<p>The comparison generates a mask (<code>1</code> for <code>true</code>, <code>0</code> for <code>false</code>), and multiplication avoids a jump. Rust’s type system ensures this is safe and explicit.</p>\n<h3>2. Data Sorting for Predictable Patterns</h3>\n<p>If branches depend on input data, sort it to group similar outcomes, making branch prediction easier.</p>\n<p><strong>Before</strong>:</p>\n<pre><code class=\"language-rust\">for x in data {\n    if x &lt; threshold { process_a(x); } else { process_b(x); }\n}\n</code></pre>\n<p><strong>After</strong>:</p>\n<pre><code class=\"language-rust\">data.sort_by(|a, b| a.partial_cmp(b).unwrap());\nfor x in data {\n    if x &lt; threshold { process_a(x); } else { process_b(x); }\n}\n</code></pre>\n<p>Sorting with <code>sort_by</code> creates long runs of “taken” or “not taken” branches, improving predictor accuracy.</p>\n<h3>3. Conditional Moves with Pattern Matching</h3>\n<p>Use Rust’s enums and <code>match</code> to structure code for potential branchless optimization.</p>\n<p><strong>Before</strong>:</p>\n<pre><code class=\"language-rust\">let result = if flag { compute_a() } else { compute_b() };\n</code></pre>\n<p><strong>After</strong>:</p>\n<pre><code class=\"language-rust\">enum Op { A, B }\nlet op = if flag { Op::A } else { Op::B };\nlet result = match op {\n    Op::A =&gt; compute_a(),\n    Op::B =&gt; compute_b(),\n};\n</code></pre>\n<p>For simple <code>compute_a</code> and <code>compute_b</code>, the compiler may optimize this into a conditional move (<code>cmov</code> on x86), avoiding jumps.</p>\n<h3>4. Loop Unrolling</h3>\n<p>Unroll small loops to reduce the frequency of loop-end branches.</p>\n<p><strong>Before</strong>:</p>\n<pre><code class=\"language-rust\">for i in 0..4 {\n    if data[i] &gt; 0 { out[i] = data[i]; }\n}\n</code></pre>\n<p><strong>After</strong>:</p>\n<pre><code class=\"language-rust\">out[0] = (data[0] &gt; 0) as i32 * data[0];\nout[1] = (data[1] &gt; 0) as i32 * data[1];\nout[2] = (data[2] &gt; 0) as i32 * data[2];\nout[3] = (data[3] &gt; 0) as i32 * data[3];\n</code></pre>\n<p>Fewer loop-end branches improve pipeline flow.</p>\n<h2>Leveraging Rust’s Features</h2>\n<p>Rust’s ownership model and zero-cost abstractions (e.g., iterator fusion) reduce implicit branches. Iterators like <code>filter</code> can be inlined and optimized (see previous answers on iterator chains), and the type system encourages clean, optimizable patterns without unsafe code.</p>\n<h2>Profiling Tools and Verification</h2>\n<p>To measure and confirm reductions in branch mispredictions, I’d use:</p>\n<ul>\n<li><p><strong>Linux <code>perf</code></strong>:</p>\n<ul>\n<li><strong>Command</strong>: <code>perf stat -e branches,branch-misses ./target/release/myapp</code></li>\n<li><strong>Metrics</strong>: Monitor <code>branch-misses</code> as a percentage of <code>branches</code>. A drop from 10% to 2% indicates success.</li>\n<li><strong>Example Output (Before)</strong>:<pre><code>10,000,000 branches\n1,000,000 branch-misses (10.00%)\n</code></pre>\n</li>\n<li><strong>After Optimization</strong>:<pre><code>8,000,000 branches\n160,000 branch-misses (2.00%)\n</code></pre>\n</li>\n</ul>\n</li>\n<li><p><strong>Valgrind with Callgrind</strong>:</p>\n<ul>\n<li><strong>Command</strong>: `valgrind --tool=callgrind ./target</li>\n</ul>\n</li>\n</ul>\n",
     "author": "mayo",
     "category": "uncategorized",
     "tags": [
       "rust",
-      "traits",
-      "polymorphisme",
-      "pointeurs-intelligents"
+      "optimization",
+      "advanced"
     ],
-    "readingTime": "5 min",
+    "readingTime": "3 min",
     "locale": "en",
     "seo": {
-      "title": "Le mot-clé `dyn` : Origines, Signification et Limitations",
-      "description": "Exploration approfondie du mot-clé `dyn` en Rust, son origine, son opposé statique, et pourquoi Vec<dyn Trait> n'est pas possible",
+      "title": "Boosting Rust Hot Loops: Slashing Branch Mispredictions",
+      "description": "Low-level optimization in Rust, focusing on minimizing branch mispredictions in performance-critical loops",
       "keywords": [
         "rust",
-        "traits",
-        "polymorphisme",
-        "pointeurs-intelligents"
+        "optimization",
+        "advanced"
       ]
     },
     "headings": [
       {
-        "id": "origine-et-signification-de-dyn",
-        "text": "Origine et Signification de `dyn`",
+        "id": "techniques-to-reduce-branch-mispredictions",
+        "text": "Techniques to Reduce Branch Mispredictions",
         "level": 2
       },
       {
-        "id": "evolution-historique",
-        "text": "Évolution Historique",
+        "id": "1-branch-elimination-with-arithmetic",
+        "text": "1. Branch Elimination with Arithmetic",
         "level": 3
       },
       {
-        "id": "pourquoi-dyn",
-        "text": "Pourquoi \"dyn\" ?",
+        "id": "2-data-sorting-for-predictable-patterns",
+        "text": "2. Data Sorting for Predictable Patterns",
         "level": 3
       },
       {
-        "id": "loppose-de-dyn-le-polymorphisme-statique",
-        "text": "L'Opposé de `dyn` : Le Polymorphisme Statique",
+        "id": "3-conditional-moves-with-pattern-matching",
+        "text": "3. Conditional Moves with Pattern Matching",
+        "level": 3
+      },
+      {
+        "id": "4-loop-unrolling",
+        "text": "4. Loop Unrolling",
+        "level": 3
+      },
+      {
+        "id": "leveraging-rusts-features",
+        "text": "Leveraging Rust’s Features",
         "level": 2
       },
       {
-        "id": "generiques-avec-traits-lies",
-        "text": "Génériques avec Traits Liés",
-        "level": 3
-      },
-      {
-        "id": "impl-trait",
-        "text": "Impl Trait",
-        "level": 3
-      },
-      {
-        "id": "tableau-comparatif",
-        "text": "Tableau Comparatif",
-        "level": 3
-      },
-      {
-        "id": "le-probleme-de-veclessdyn-traitgreater",
-        "text": "Le Problème de `Vec<dyn Trait>`",
-        "level": 2
-      },
-      {
-        "id": "le-systeme-de-taille-sized-trait",
-        "text": "Le Système de Taille (Sized Trait)",
-        "level": 3
-      },
-      {
-        "id": "pourquoi-dyn-trait-nest-pas-sized",
-        "text": "Pourquoi `dyn Trait` n'est pas Sized ?",
-        "level": 3
-      },
-      {
-        "id": "les-solutions-pratiques",
-        "text": "Les Solutions Pratiques",
-        "level": 3
-      },
-      {
-        "id": "1-pointeurs-intelligents-box-rc-arc",
-        "text": "1. Pointeurs Intelligents (Box, Rc, Arc)",
-        "level": 4
-      },
-      {
-        "id": "2-references-avec-lifetime",
-        "text": "2. Références avec Lifetime",
-        "level": 4
-      },
-      {
-        "id": "3-enum-alternative-statique",
-        "text": "3. Enum (Alternative Statique)",
-        "level": 4
-      },
-      {
-        "id": "mecanisme-des-pointeurs-gras",
-        "text": "Mécanisme des Pointeurs Gras",
-        "level": 3
-      },
-      {
-        "id": "implications-des-choix-de-conception",
-        "text": "Implications des Choix de Conception",
-        "level": 2
-      },
-      {
-        "id": "considerations-de-performance",
-        "text": "Considérations de Performance",
-        "level": 3
-      },
-      {
-        "id": "trade-off-flexibilite-vs-performance",
-        "text": "Trade-off Flexibilité vs Performance",
-        "level": 3
-      },
-      {
-        "id": "points-cles",
-        "text": "Points Clés",
+        "id": "profiling-tools-and-verification",
+        "text": "Profiling Tools and Verification",
         "level": 2
       }
     ]
