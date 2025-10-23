@@ -1,15 +1,15 @@
 ---
 id: dyn-mot-cle-rust-fr
-title: >-
-  Le mot-clé `dyn` : Origines, Signification et Limitations
+title: 'Le mot-clé `dyn` : Origines, Signification et Limitations'
 slug: dyn-mot-cle-rust-fr
 locale: fr
-date: '2025-10-18'
+date: '2025-10-23'
 author: mayo
-excerpt: Exploration approfondie du mot-clé `dyn` en Rust, son origine, son opposé statique, et pourquoi Vec<dyn Trait> n'est pas possible
-content_focus: Polymorphisme dynamique, traits, dispatch, limitations de taille
+excerpt: >-
+  Exploration approfondie du mot-clé `dyn` en Rust, son origine, son opposé
+  statique, et pourquoi Vec<dyn Trait> n'est pas possible
+content_focus: 'Polymorphisme dynamique, traits, dispatch, limitations de taille'
 technical_level: Discussion technique expert
-
 tags:
   - rust
   - traits
