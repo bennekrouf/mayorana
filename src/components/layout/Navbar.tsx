@@ -146,18 +146,7 @@ const Navbar: React.FC = () => {
           <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md">
             <div className="py-4 space-y-2">
               {navItems.map((item) => (
-                item.external ? (
-                  <a
-                    key={item.path}
-                    href={item.path}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ) : item.path.startsWith('/#') ? (
+                item.path.startsWith('/#') ? (
                   <a
                     key={item.path}
                     href={item.path}
