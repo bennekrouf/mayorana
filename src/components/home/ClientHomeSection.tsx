@@ -246,7 +246,7 @@ export default function ClientHomeSection() {
                     <br />
                     <br />
                     {/* Powers all my tools comment */}
-                    <span className="text-green-600">// Powers all my tools</span>
+                    <span className="text-green-600">Powers all my tools</span>
                   </code>
                 </div>
               </div>
