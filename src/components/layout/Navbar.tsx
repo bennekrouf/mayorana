@@ -21,7 +21,8 @@ const Navbar: React.FC = () => {
   const navItems = [
     { name: t('home'), path: '/' },
     { name: 'Portfolio', path: '/#portfolio' },
-    { name: t('about'), path: '/about' },
+    // { name: t('about'), path: '/about' },
+    { name: t('blog'), path: '/blog' },
     // { name: 'api0.ai', path: 'https://api0.ai', external: true },
     { name: t('contact'), path: '/contact' }
   ];
