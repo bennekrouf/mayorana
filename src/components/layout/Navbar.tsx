@@ -1,13 +1,12 @@
-// File: src/components/layout/Navbar.tsx - Fixed img element issue
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 import { useTranslations, useLocale } from 'next-intl';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 
 const Navbar: React.FC = () => {
   const [mounted, setMounted] = useState(false);
@@ -18,212 +17,208 @@ const Navbar: React.FC = () => {
   const t = useTranslations('navigation');
   const locale = useLocale();
 
-  // Navigation items
+  // Navigation items - exactly like live site but with Portfolio instead of Services
   const navItems = [
-    { label: t('home'), path: "/" },
-    { label: t('services'), path: "/services" },
-    { label: t('blog'), path: "/blog" },
-    { label: t('about'), path: "/about" },
-    { label: "api0.ai", path: "https://api0.ai", external: true },
-    { label: t('contact'), path: "/contact" }
+    { name: t('home'), path: '/' },
+    { name: 'Portfolio', path: '/#portfolio' },
+    { name: t('about'), path: '/about' },
+    // { name: 'api0.ai', path: 'https://api0.ai', external: true },
+    { name: t('contact'), path: '/contact' }
   ];
 
-  // Language options - using language codes instead of flags
-  const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'fr', name: 'Français' }
-  ];
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  // After mounting, we can safely access the theme
-  useEffect(() => setMounted(true), []);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const toggleLangMenu = () => setShowLangMenu(!showLangMenu);
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+  const isActivePath = (path: string) => {
+    if (path === '/') {
+      return pathname === `/${locale}` || pathname === '/' || pathname === `/${locale}/`;
+    }
+    if (path.startsWith('/#')) {
+      return false; // Portfolio anchor link should not be highlighted on homepage
+    }
+    return pathname.includes(path);
   };
 
-  // Helper function to check if a link is active
-  const isLinkActive = (path: string) => {
-    const currentPath = pathname.replace(/\/$/, '');
-    const normalizedPath = path.replace(/\/$/, '');
-    return currentPath === `/${locale}${normalizedPath}` ||
-      (path === '/' && currentPath === `/${locale}`);
-  };
-
-  // Get current language info
-  const currentLang = languages.find(lang => lang.code === locale) || languages[0];
+  if (!mounted) return null;
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center">
-          <Link
-            href={`/${locale}`}
-            className="flex items-center space-x-2"
-          >
-            {/* Logo + mayorana text - Fixed img to Image */}
-            <Image
-              src="/android-chrome-192x192.png"
-              alt="Mayorana"
-              width={28}
-              height={28}
-              className="rounded-md"
-            />
-            <span className="font-bold text-xl text-foreground">mayorana</span>
+    <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+
+          {/* Logo - exactly like live site */}
+          <Link href={getLocalizedPath(locale, '/')} className="font-bold text-xl">
+            Mayorana
           </Link>
-        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.external ? item.path : `/${locale}${item.path}`}
-              target={item.external ? "_blank" : "_self"}
-              rel={item.external ? "noopener noreferrer" : ""}
-              className={`text-sm font-medium transition-colors hover:text-primary ${isLinkActive(item.path) ? "text-primary" : "text-foreground"
-                }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-
-          {/* Language Switcher */}
-          <div className="relative">
-            <button
-              onClick={toggleLangMenu}
-              className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors flex items-center"
-              aria-label="Change Language"
-            >
-              <FiGlobe className="h-5 w-5 mr-1" />
-              <span className="text-sm font-medium">{currentLang.code.toUpperCase()}</span>
-            </button>
-
-            {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-40 bg-background border border-border rounded-lg shadow-lg py-1 z-50">
-                {languages.map((lang) => (
-                  <Link
-                    key={lang.code}
-                    href={pathname.replace(/^\/[a-z]{2}/, `/${lang.code}`)}
-                    className={`flex items-center px-3 py-2 text-sm hover:bg-secondary transition-colors ${locale === lang.code ? 'bg-secondary text-primary' : 'text-foreground'
-                      }`}
-                    onClick={() => setShowLangMenu(false)}
-                  >
-                    <span className="mr-2 text-xs font-mono">{lang.code.toUpperCase()}</span>
-                    {lang.name}
-                  </Link>
-                ))}
-              </div>
-            )}
+          {/* Desktop Navigation - exactly like live site layout */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              item.path.startsWith('/#') ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById('portfolio');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className={`transition-colors font-medium ${isActivePath(item.path)
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  href={getLocalizedPath(locale, item.path)}
+                  className={`transition-colors font-medium ${isActivePath(item.path)
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            ))}
           </div>
 
-          <button
-            onClick={toggleTheme}
-            className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors"
-            aria-label={t('toggle_theme')}
-          >
-            {mounted && theme === 'dark' ? (
-              <FiSun className="h-5 w-5" />
-            ) : (
-              <FiMoon className="h-5 w-5" />
-            )}
-          </button>
+          {/* Right side controls - exactly like live site */}
+          <div className="hidden md:flex items-center space-x-4">
 
-          <Link
-            href={`/${locale}/contact`}
-            className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition duration-200 hover:-translate-y-1 shadow-lg shadow-primary/20"
-          >
-            {t('get_started')}
-          </Link>
-        </nav>
-
-        {/* Mobile Navigation Toggle */}
-        <div className="flex md:hidden items-center space-x-2">
-          {/* Mobile Language Switcher */}
-          <div className="relative">
+            {/* Theme Toggle */}
             <button
-              onClick={toggleLangMenu}
-              className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors flex items-center"
-              aria-label="Change Language"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              aria-label={t('toggle_theme')}
             >
-              <FiGlobe className="h-5 w-5 mr-1" />
-              <span className="text-xs font-medium">{currentLang.code.toUpperCase()}</span>
+              {theme === 'dark' ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
             </button>
 
-            {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-32 bg-background border border-border rounded-lg shadow-lg py-1 z-50">
-                {languages.map((lang) => (
+            {/* Language Toggle */}
+            <div className="relative">
+              <button
+                onClick={() => setShowLangMenu(!showLangMenu)}
+                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                aria-label="Toggle language"
+              >
+                <FiGlobe className="h-4 w-4" />
+              </button>
+
+              {showLangMenu && (
+                <div className="absolute right-0 mt-2 w-20 bg-background border border-border rounded-lg shadow-lg z-50">
                   <Link
-                    key={lang.code}
-                    href={pathname.replace(/^\/[a-z]{2}/, `/${lang.code}`)}
-                    className={`flex items-center px-3 py-2 text-sm hover:bg-secondary transition-colors ${locale === lang.code ? 'bg-secondary text-primary' : 'text-foreground'
-                      }`}
+                    href={`/en${pathname.replace(/^\/[a-z]{2}/, '')}`}
+                    className="block px-3 py-2 text-sm hover:bg-secondary transition-colors"
                     onClick={() => setShowLangMenu(false)}
                   >
-                    <span className="mr-2 text-xs font-mono">{lang.code.toUpperCase()}</span>
-                    {lang.name}
+                    EN
                   </Link>
-                ))}
-              </div>
-            )}
+                  <Link
+                    href={`/fr${pathname.replace(/^\/[a-z]{2}/, '')}`}
+                    className="block px-3 py-2 text-sm hover:bg-secondary transition-colors"
+                    onClick={() => setShowLangMenu(false)}
+                  >
+                    FR
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
 
+          {/* Mobile Menu Button */}
           <button
-            onClick={toggleTheme}
-            className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors"
-            aria-label={t('toggle_theme')}
-          >
-            {mounted && theme === 'dark' ? (
-              <FiSun className="h-5 w-5" />
-            ) : (
-              <FiMoon className="h-5 w-5" />
-            )}
-          </button>
-
-          <button
-            onClick={toggleMenu}
-            className="p-2 rounded-md text-foreground"
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
             aria-label={t('toggle_menu')}
           >
-            {isOpen ? (
-              <FiX className="h-6 w-6" />
-            ) : (
-              <FiMenu className="h-6 w-6" />
-            )}
+            {isOpen ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
           </button>
         </div>
-      </div>
 
-      {/* Mobile Navigation Menu */}
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="container py-4 space-y-3">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.external ? item.path : `/${locale}${item.path}`}
-                target={item.external ? "_blank" : "_self"}
-                rel={item.external ? "noopener noreferrer" : ""}
-                className={`block px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${isLinkActive(item.path) ? "text-primary" : "text-foreground"
-                  }`}
-                onClick={toggleMenu}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              href={`/${locale}/contact`}
-              className="block px-4 py-2 mt-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90"
-              onClick={toggleMenu}
-            >
-              {t('get_started')}
-            </Link>
+        {/* Mobile Menu - exactly like live site */}
+        {isOpen && (
+          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md">
+            <div className="py-4 space-y-2">
+              {navItems.map((item) => (
+                item.external ? (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : item.path.startsWith('/#') ? (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('portfolio');
+                      if (element) {
+                        const navbarHeight = 64; // 16 * 4 = 64px (h-16 class)
+                        const elementPosition = element.offsetTop - navbarHeight + 50;
+                        window.scrollTo({
+                          top: elementPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className={`block px-4 py-2 transition-colors ${isActivePath(item.path)
+                      ? 'text-primary font-medium'
+                      : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.path}
+                    href={getLocalizedPath(locale, item.path)}
+                    className={`block px-4 py-2 transition-colors ${isActivePath(item.path)
+                      ? 'text-primary font-medium'
+                      : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              ))}
+
+              {/* Mobile controls */}
+              <div className="px-4 py-2 border-t border-border flex items-center justify-between">
+                <button
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                >
+                  {theme === 'dark' ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
+                </button>
+
+                <div className="flex items-center space-x-2">
+                  <Link href={`/en${pathname.replace(/^\/[a-z]{2}/, '')}`} className="text-sm text-muted-foreground hover:text-foreground">
+                    EN
+                  </Link>
+                  <span className="text-muted-foreground">|</span>
+                  <Link href={`/fr${pathname.replace(/^\/[a-z]{2}/, '')}`} className="text-sm text-muted-foreground hover:text-foreground">
+                    FR
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </div>
+    </nav>
   );
 };
 

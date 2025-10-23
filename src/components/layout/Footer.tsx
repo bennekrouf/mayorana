@@ -1,176 +1,182 @@
-// File: src/components/layout/Footer.tsx (u// File: src/components/layout/Footer.tsx - Fixed JSX comment issue
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { FiLinkedin, FiGithub, FiMail } from 'react-icons/fi';
-import { useTranslations, useLocale } from 'next-intl';
+import { ExternalLink } from 'lucide-react';
 import { getLocalizedPath } from '@/lib/i18n-utils';
+import { useLocale, useTranslations } from 'next-intl';
 
-const Footer: React.FC = () => {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('footer');
   const tNav = useTranslations('navigation');
-  const tServices = useTranslations('services');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
 
-  const footerNav = [
-    { label: tNav('home'), path: "/" },
-    { label: tNav('services'), path: "/services" },
-    { label: tNav('about'), path: "/about" },
-    { label: "api0.ai", path: "https://api0.ai", external: true },
-    { label: tNav('contact'), path: "/contact" }
+  const portfolioLinks = [
+    { name: t('footer_api0'), url: 'https://api0.ai', external: true },
+    { name: t('footer_solanize'), url: 'https://ribh.io', external: true }
   ];
 
-  const legalLinks = [
-    { label: "Privacy Policy", path: "/privacy" },
-    { label: "Terms of Service", path: "/terms" }
+  const actionLinks = [
+    { name: t('footer_book_call'), url: getLocalizedPath(locale, '/contact'), external: false },
+    { name: t('footer_whatsapp'), url: 'https://wa.me/41764837540', external: true }
+  ];
+
+  const navigationLinks = [
+    { name: tNav('home'), url: getLocalizedPath(locale, '/') },
+    { name: tNav('about'), url: getLocalizedPath(locale, '/about') },
+    { name: tNav('contact'), url: getLocalizedPath(locale, '/contact') },
+    { name: tNav('blog'), url: getLocalizedPath(locale, '/blog') }
   ];
 
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="container py-12">
+    <footer className="bg-secondary/30 border-t border-border">
+      <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
-          {/* Column 1: Logo & Company Description */}
-          <div className="space-y-4">
-            <Link href={getLocalizedPath(locale, "/")} className="flex items-center space-x-2">
-              <span className="font-bold text-xl text-foreground">mayorana</span>
+
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <Link
+              href={getLocalizedPath(locale, '/')}
+              className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
+            >
+              Mayorana
             </Link>
-            <p className="text-muted-foreground text-sm">
-              {t('description')}
+            <p className="mt-3 text-sm text-muted-foreground">
+              {t('footer_tagline')}
             </p>
+            <div className="mt-4">
+              <Link
+                href={locale === 'en' ? '/fr' : '/en'}
+                className="inline-flex items-center px-3 py-1 rounded text-sm font-medium bg-background hover:bg-background/80 transition-colors border border-border"
+              >
+                {locale === 'en' ? 'Français' : 'English'}
+              </Link>
+            </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* Portfolio Tools */}
           <div>
-            <h3 className="font-medium text-foreground mb-4">{t('quick_links')}</h3>
-            <ul className="space-y-2">
-              {footerNav.map((item) => (
-                <li key={item.label}>
+            <h3 className="font-semibold text-foreground mb-4">Live Portfolio</h3>
+            <ul className="space-y-3">
+              {portfolioLinks.map((link) => (
+                <li key={link.name}>
                   <Link
-                    href={item.external ? item.path : getLocalizedPath(locale, item.path)}
-                    target={item.external ? "_blank" : "_self"}
-                    rel={item.external ? "noopener noreferrer" : ""}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    href={link.url}
+                    target={link.external ? "_blank" : "_self"}
+                    rel={link.external ? "noopener noreferrer" : ""}
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
                   >
-                    {item.label}
+                    {link.name}
+                    {link.external && (
+                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    )}
                   </Link>
                 </li>
               ))}
-
-              <li className="pt-2 border-t border-border mt-4">
-                {legalLinks.map((item) => (
-                  <div key={item.label} className="mb-2">
-                    <Link
-                      href={getLocalizedPath(locale, item.path)}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </div>
-                ))}
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Services */}
-          <div>
-            <h3 className="font-medium text-foreground mb-4">{t('services')}</h3>
-            <ul className="space-y-2">
               <li>
                 <Link
-                  href={getLocalizedPath(locale, "/services#rust-training")}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {tServices('rust_training.title')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={getLocalizedPath(locale, "/services#llm-integration")}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {tServices('llm_integration.title')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={getLocalizedPath(locale, "/services#chatbot")}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {tServices('chatbot.title')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://api0.ai"
+                  href="https://cvenom.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
                 >
-                  {tServices('api0.title')}
+                  cVenom
+                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://ribh.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
+                >
+                  Solanize
+                  <span className="text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 px-2 py-0.5 rounded ml-1">
+                    MVP
+                  </span>
+                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Connect */}
+          {/* Navigation */}
           <div>
-            <h3 className="font-medium text-foreground mb-4">{t('connect')}</h3>
-            <div className="flex space-x-4 mb-4">
-              <a
-                href="https://linkedin.com/company/mayorana"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
+            <h3 className="font-semibold text-foreground mb-4">Navigation</h3>
+            <ul className="space-y-3">
+              {navigationLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.url}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Actions */}
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Get Started</h3>
+            <ul className="space-y-3">
+              {actionLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.url}
+                    target={link.external ? "_blank" : "_self"}
+                    rel={link.external ? "noopener noreferrer" : ""}
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
+                  >
+                    {link.name}
+                    {link.external && (
+                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA Button */}
+            <div className="mt-6">
+              <Link
+                href={getLocalizedPath(locale, '/contact')}
+                className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm"
               >
-                <FiLinkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="https://github.com/bennekrouf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub"
-              >
-                <FiGithub className="h-5 w-5" />
-              </a>
-              <a
-                href="mailto:contact@mayorana.ch"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Email"
-              >
-                <FiMail className="h-5 w-5" />
-              </a>
+                {tCommon('cta_button')}
+              </Link>
             </div>
-            <p className="text-sm text-muted-foreground">
-              {t('email_label')} contact@mayorana.ch
-            </p>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row md:justify-between items-center">
-          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-6 border-t border-border">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              &copy; {currentYear} Mayorana.ch. {t('copyright')}
+              © {currentYear} Mayorana. All rights reserved.
             </p>
-            <div className="flex space-x-4 text-xs text-muted-foreground">
-              <Link href={getLocalizedPath(locale, "/privacy")} className="hover:text-primary transition-colors">
+            <div className="flex items-center space-x-6 text-sm">
+              <Link
+                href={getLocalizedPath(locale, '/privacy')}
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
                 Privacy
               </Link>
-              <Link href={getLocalizedPath(locale, "/terms")} className="hover:text-primary transition-colors">
+              <Link
+                href={getLocalizedPath(locale, '/terms')}
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
                 Terms
               </Link>
+              <span className="text-muted-foreground">
+                Built with Rust + Next.js
+              </span>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground mt-2 md:mt-0">
-            {t('tagline')}
-          </p>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

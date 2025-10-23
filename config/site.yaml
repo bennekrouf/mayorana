@@ -1,10 +1,50 @@
 # Site Configuration
 site:
   name: "Mayorana"
-  domain: "mayorana.ch"
-  description: "Empowering Innovation with Rust, AI, and API Solutions"
-  locale: "en"
-  logoText: "mayorana"
+  title: "AI Tools That Actually Work—Built Solo"
+  description: "Live AI tools powered by Rust + AI tech. Portfolio: api0.ai | cVenom | Solanize (MVP)"
+  author: "Mayorana"
+  url: "https://mayorana.ch"
+  defaultLocale: "en"
+  locales: ["en", "fr"]
+
+# Portfolio Tools - Primary Focus (ordered by status: live first, MVP last)
+portfolio_tools:
+  - name: "API0.AI"
+    slug: "api0"
+    description_en: "English → API magic, no docs needed"
+    description_fr: "Anglais → magie API, sans docs"
+    tech_en: "Rust-powered NLP routing"
+    tech_fr: "Routage NLP utilise Rust"
+    url: "https://api0.ai"
+    status: "live"
+    cta_en: "GET SDK"
+    cta_fr: "SDK"
+    icon: "Brain"
+    
+  - name: "cVenom"
+    slug: "cvenom"
+    description_en: "CV + Job → Perfect match in seconds"
+    description_fr: "CV + Job → match parfait en secondes"
+    tech_en: "AI resume optimizer, bypass ATS systems"
+    tech_fr: "Optimiseur CV IA, contourne systèmes ATS"
+    url: "https://cvenom.com"
+    status: "live"
+    cta_en: "TRY LIVE"
+    cta_fr: "TESTER"
+    icon: "Shield"
+    
+  - name: "Solanize"
+    slug: "solanize"
+    description_en: "Chat → Solana swaps instantly"
+    description_fr: "Chat → swaps Solana instantanés"
+    tech_en: "MVP under heavy development"
+    tech_fr: "MVP en développement intensif"
+    url: "https://ribh.io"
+    status: "mvp"
+    cta_en: "VIEW MVP"
+    cta_fr: "VOIR MVP"
+    icon: "Zap"
   
 # Color theme based on your provided color palette
 colors:
@@ -28,60 +68,127 @@ colors:
     light: "#6B7280"
     dark: "#94A3B8"
 
-# Navigation
+# Navigation - Updated with portfolio focus
 navigation:
   main:
     - label: "Home"
       path: "/"
-    - label: "Services"
-      path: "/services"
+    - label: "Portfolio"
+      path: "/#portfolio"
     - label: "About"
       path: "/about"
+    - label: "Contact"
+      path: "/contact"
+    - label: "Blog"
+      path: "/blog"
+  
+  # Portfolio tools in header
+  portfolio_nav:
     - label: "api0.ai"
       path: "https://api0.ai"
       external: true
-    - label: "Contact"
-      path: "/contact"
+      status: "live"
+    - label: "cVenom"
+      path: "https://cvenom.com"
+      external: true
+      status: "live"
+    - label: "Solanize"
+      path: "https://ribh.io"
+      external: true
+      status: "mvp"
 
-# Updated config/site.yaml - Services section
+# Hero Content
+hero:
+  en:
+    title: "AI Tools That Actually Work—Built Solo"
+    subtitle: "My portfolio: api0.ai | cVenom (live) | Solanize (MVP) - All powered by my Rust + AI tech"
+    tagline: "I build what agencies pitch. See my live tools above."
+    primary_cta: "TRY LIVE TOOLS"
+    secondary_cta: "BOOK 30MIN FREE"
+  fr:
+    title: "Outils IA Qui Marchent Vraiment—Créés Solo"
+    subtitle: "Mon portfolio: api0.ai | cVenom (live) | Solanize (MVP) - Tous utilisent ma stack Rust + IA"
+    tagline: "Je construis ce que les agences promettent. Testez mes outils ci-dessus."
+    primary_cta: "TESTER OUTILS"
+    secondary_cta: "30MIN GRATUIT"
+
+# Services - Repositioned as secondary to portfolio
 services:
-  - title: "Rust Training"
-    description: "Expert-led Rust training for professionals and teams, covering memory safety, concurrency, and performance optimization."
-    cta: "Schedule a Training Session"
+  - title_en: "Rust Training"
+    title_fr: "Formation Rust"
+    description_en: "Expert-led Rust training for professionals and teams, using the same stack that powers my live tools."
+    description_fr: "Formation Rust dispensée par un expert pour professionnels et équipes, utilisant la même stack que mes outils en production."
+    cta_en: "BOOK 30MIN FREE"
+    cta_fr: "30MIN GRATUIT"
     ctaLink: "/contact?service=rust-training"
     icon: "Code"
   
-  - title: "LLM Integration"
-    description: "Seamlessly connect large language models to your applications for enhanced automation and data processing."
-    cta: "Get a Free Consultation"
+  - title_en: "LLM Integration"
+    title_fr: "Intégration LLM"
+    description_en: "Seamlessly connect large language models to your applications, just like in my portfolio tools."
+    description_fr: "Connectez facilement les grands modèles de langage à vos applications, comme dans mes outils portfolio."
+    cta_en: "BOOK 30MIN FREE"
+    cta_fr: "30MIN GRATUIT"
     ctaLink: "/contact?service=llm-integration"
     icon: "Brain"
   
-  - title: "Chatbot Development"
-    description: "Transform your apps with intelligent chatbots. From simple interfaces to complex conversational systems."
-    cta: "Add Chat to Your App"
-    ctaLink: "/contact?service=chatbot"
-    icon: "MessageSquare"
-  
-  - title: "api0.ai Solutions"
-    description: "Revolutionary chatbot platform that uses NLP to match user messages to your API endpoints automatically."
-    cta: "Try api0.ai Now"
-    ctaLink: "https://api0.ai"
+  - title_en: "Custom AI Tools"
+    title_fr: "Outils IA Personnalisés"
+    description_en: "Build your own AI tool using my proven Rust + AI stack. Your product, my portfolio tech."
+    description_fr: "Construisez votre propre outil IA avec ma stack Rust + IA éprouvée. Votre produit, ma tech portfolio."
+    cta_en: "BOOK 30MIN FREE"
+    cta_fr: "30MIN GRATUIT"
+    ctaLink: "/contact?service=custom-ai"
     icon: "Network"
 
-# Portfolio items
+# Portfolio Projects - Updated with live tools showcase
 portfolio:
-  - title: "Rust Training for Java Developers"
-    description: "Delivering hands-on Rust training programs tailored for Java developers, enabling them to master Rust with the same fluency as Java."
-    category: "Training"
+  - title_en: "API0.AI - Live Tool"
+    title_fr: "API0.AI - Outil Live"
+    description_en: "Revolutionary NLP-powered API routing platform. Powers all my portfolio tools."
+    description_fr: "Plateforme de routage API basé sur NLP. Fondation de tous mes les outils de mon portfolio."
+    category_en: "Live Tool"
+    category_fr: "Outil Live"
+    url: "https://api0.ai"
+    status: "live"
   
-  - title: "LLM-Powered Chatbot"
-    description: "Integrated an LLM into a client's customer service platform, reducing response times by 40%."
-    category: "Integration"
+  - title_en: "cVenom - Live Tool"
+    title_fr: "cVenom - Outil Live"
+    description_en: "AI resume optimizer that bypasses ATS systems. Perfect CV + Job matching in seconds."
+    description_fr: "Optimiseur CV IA qui contourne les systèmes ATS. Match parfait CV + Job en secondes."
+    category_en: "Live Tool"
+    category_fr: "Outil Live"
+    url: "https://cvenom.com"
+    status: "live"
   
-  - title: "api0.ai Implementation"
-    description: "Helped an e-commerce client map user queries to product APIs, cutting integration time by 50%."
-    category: "Development"
+  - title_en: "Solanize - MVP"
+    title_fr: "Solanize - MVP"
+    description_en: "Chat to Solana swaps platform. MVP under heavy development using Rust for speed and safety."
+    description_fr: "Plateforme de swaps Solana par chat. MVP en développement intensif utilisant Rust pour vitesse et sécurité."
+    category_en: "MVP"
+    category_fr: "MVP"
+    url: "https://ribh.io"
+    status: "mvp"
+
+# Contact Information
+contact:
+  en:
+    cta: "30min FREE: Build your AI edge with my Rust portfolio"
+    description: "Book a free consultation to see how my proven AI tools can power your business"
+    whatsapp: "+41764837540"
+    email: "contact@mayorana.ch"
+  fr:
+    cta: "30min GRATUIT: Construisez votre avantage IA avec mon portfolio Rust"
+    description: "Réservez une consultation gratuite pour voir comment mes outils IA éprouvés peuvent automatiser votre business"
+    whatsapp: "+41764837540"
+    email: "contact@mayorana.ch"
+
+# Social Proof
+social_proof:
+  en:
+    tagline: "Solo dev. 2 live tools + 1 MVP. api0 powers them all. Want this for your stack?"
+  fr:
+    tagline: "Dev solo. 2 outils live + 1 MVP et api0 comme fondation pour tous. Intrigué par cette stack ?"
 
 # Settings for logging as per your preference
 logging:
