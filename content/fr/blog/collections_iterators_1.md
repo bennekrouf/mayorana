@@ -1,15 +1,13 @@
 ---
 id: vec-new-vs-with-capacity
-title: >-
-  Rust Vec::new() vs. with_capacity() : Quand utiliser chacune
+title: 'Rust Vec::new() vs. with_capacity() : Quand utiliser chacune'
 slug: vec-new-vs-with-capacity
-locale: "fr"
-date: '2025-06-25'
+locale: fr
+date: '2025-10-24'
 author: mayo
 excerpt: >-
-  Stratégies d'allocation de Vec en Rust, comparant
-  Vec::new() et Vec::with_capacity() pour des performances optimales.
-
+  Stratégies d'allocation de Vec en Rust, comparant Vec::new() et
+  Vec::with_capacity() pour des performances optimales.
 tags:
   - rust
   - collections
