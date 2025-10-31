@@ -202,7 +202,9 @@
     "previous": "Previous",
     "next": "Next",
     "article": "Article",
-    "articles_about": "articles about"
+    "articles_about": "articles about",
+    "latest_insights": "Latest insights",
+    "view_all_articles": "View all articles"
   },
   "footer": {
     "description": "Rust-powered portfolio",
@@ -216,7 +218,12 @@
     "connect": "Get Started",
     "email_label": "Email:",
     "copyright": "All rights reserved.",
-    "tagline": "Based in Switzerland, serving the world"
+    "tagline": "Based in Switzerland, serving the world",
+    "live_portfolio": "Live portfolio",
+    "get_started": "Get started",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "built_with": "Built with"
   },
   "common": {
     "loading": "Loading...",

@@ -202,7 +202,9 @@
     "previous": "Précédent",
     "next": "Suivant",
     "article": "Article",
-    "articles_about": "articles sur"
+    "articles_about": "articles sur",
+    "latest_insights": "Dernières perspectives",
+    "view_all_articles": "Voir tous les articles"
   },
   "footer": {
     "description": "Portfolio renforcé par Mayorana expert Rust 🦀",
@@ -216,7 +218,12 @@
     "connect": "Commencer",
     "email_label": "Email :",
     "copyright": "Tous droits réservés.",
-    "tagline": "Basé en Suisse, au service du monde"
+    "tagline": "Basé en Suisse, au service du monde",
+    "live_portfolio": "Portfolio en direct",
+    "get_started": "Commencer",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "built_with": "Construit avec"
   },
   "common": {
     "loading": "Chargement...",
