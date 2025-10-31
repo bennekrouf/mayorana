@@ -2,16 +2,16 @@
 id: vec-drain-vs-truncate-clear
 title: 'Vec::drain() vs Vec::truncate() ou Vec::clear() ?'
 slug: vec-drain-vs-truncate-clear
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Comprendre le fonctionnement de Vec::drain() et le comparer avec Vec::truncate()
-  et Vec::clear() pour différents scénarios de suppression d'éléments
-
+  Comprendre le fonctionnement de Vec::drain() et le comparer avec
+  Vec::truncate() et Vec::clear() pour différents scénarios de suppression
+  d'éléments
 tags:
   - rust
   - drain
-date: '2025-07-26'
+date: '2025-10-29'
 ---
 
 # Comment fonctionne Vec::drain(), et quand est-il utile comparé à Vec::truncate() ou Vec::clear() ?

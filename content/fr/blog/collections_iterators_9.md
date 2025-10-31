@@ -5,13 +5,12 @@ locale: fr
 slug: flatten-vec-iterators-performance
 author: mayo
 excerpt: >-
-  Comparaison entre l'aplatissement de Vec<Vec<T>> avec des itérateurs et la concaténation manuelle,
-  avec analyse des implications sur les performances
-
+  Comparaison entre l'aplatissement de Vec<Vec<T>> avec des itérateurs et la
+  concaténation manuelle, avec analyse des implications sur les performances
 tags:
   - rust
   - vec
-date: '2025-07-29'
+date: '2025-10-31'
 ---
 
 # Comment aplatir un Vec<Vec<T>> en Vec<T> avec des itérateurs ? Comparaison des performances avec la concaténation manuelle.

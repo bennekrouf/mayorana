@@ -82,7 +82,7 @@ main() {
     # Restart if PM2 available
     if command -v pm2 >/dev/null 2>&1; then
       log "🔄 Restarting..."
-      pm2 restart mayorana 2>/dev/null || pm2 start ecosystem.config.js 2>/dev/null || true
+      pm2 restart mayorana
     fi
 
     # Health check

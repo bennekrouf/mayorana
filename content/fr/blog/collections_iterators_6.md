@@ -2,16 +2,16 @@
 id: box-slice-vs-vec-differences
 title: 'Quelle est la différence entre Box<[T]> et Vec<T> ?'
 slug: box-slice-vs-vec-differences
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Comparaison des différences entre Box<[T]> et Vec<T> concernant la mutabilité, 
-  la surcharge mémoire et les implications de performance pour différents cas d'usage
-
+  Comparaison des différences entre Box<[T]> et Vec<T> concernant la
+  mutabilité,  la surcharge mémoire et les implications de performance pour
+  différents cas d'usage
 tags:
   - rust
   - collections
-date: '2025-07-24'
+date: '2025-10-28'
 ---
 
 # Quelle est la différence entre Box<[T]> et Vec<T> ?
