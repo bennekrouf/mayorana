@@ -32,6 +32,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/profiling-optimization-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/branch-prediction-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -312,12 +317,17 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/tag/advanced</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/tag/optimization</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/advanced</loc>
+    <loc>https://mayorana.ch/blog/tag/cache</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -548,11 +558,6 @@
   </url>
   <url>
     <loc>https://mayorana.ch/blog/tag/fnmut</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://mayorana.ch/blog/tag/cache</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

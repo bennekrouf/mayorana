@@ -1,19 +1,20 @@
 ---
 id: profiling-optimization-rust
-title: "Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion"
+title: 'Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion'
 slug: profiling-optimization-rust
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Low-level optimization in Rust, focusing on profiling tools to identify and fix performance bottlenecks like L1 cache misses
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
-
+  Low-level optimization in Rust, focusing on profiling tools to identify and
+  fix performance bottlenecks like L1 cache misses
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 tags:
   - rust
   - advanced
   - optimization
   - cache
+date: '2025-11-02'
 ---
 
 # Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion

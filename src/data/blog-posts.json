@@ -81,6 +81,92 @@
     ]
   },
   {
+    "id": "profiling-optimization-rust",
+    "slug": "profiling-optimization-rust",
+    "title": "Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion",
+    "date": "2025-11-02",
+    "excerpt": "Low-level optimization in Rust, focusing on profiling tools to identify and fix performance bottlenecks like L1 cache misses",
+    "content": "Profiling and optimizing low-level performance bottlenecks in a Rust codebase, such as excessive L1 cache misses, requires a systematic approach using specialized tools. I’ll detail how to use `perf`, `cargo flamegraph`, and `criterion` to diagnose and optimize a performance-critical section, ensuring measurable improvements.\n\n## Tools and Their Roles\n\n- **`perf` (Linux)**: A system-level profiler for hardware events like cache misses, cycles, and instructions. Ideal for pinpointing L1 cache issues across the application.\n- **`cargo flamegraph`**: Generates visual flame graphs to identify where time is spent, correlating cache misses to specific functions.\n- **`criterion`**: A microbenchmarking tool for precise, repeatable measurements of small code sections, perfect for before-and-after optimization comparisons.\n\n## Example Scenario\n\nConsider a Rust application processing a large array of structs, where `perf` reveals high L1 cache miss rates causing slowdowns:\n\n```rust\nstruct Point { x: f32, y: f32, z: f32 } // 12 bytes\nfn process_points(points: &mut [Point]) {\n    for p in points {\n        p.x += 1.0; // Scattered access\n        p.y += 1.0;\n        p.z += 1.0;\n    }\n}\n```\n\n**Problem**: The Array-of-Structs (AoS) layout causes poor locality, as accessing only `x` pulls unnecessary `y` and `z` into the 64-byte L1 cache line, leading to excessive misses.\n\n## Workflow to Optimize L1 Cache Misses\n\n### 1. Setup and Reproduce\n- Compile with `--release` for realistic performance (`cargo build --release`).\n- Run the app with a representative workload (e.g., 1M `Point`s).\n\n### 2. Diagnose with `perf`\n- **Command**: `perf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses ./target/release/app`\n- **Sample Output**:\n  ```\n  10,000,000,000 cycles\n  15,000,000,000 instructions\n  5,000,000,000 L1-dcache-loads\n  500,000,000 L1-dcache-load-misses (10.00%)\n  ```\n- **Insight**: A 10% miss rate is high (ideal: <1-2%). L1 misses (50-100 cycles each) dominate runtime.\n\n### 3. Locate with `cargo flamegraph`\n- **Install**: `cargo install flamegraph`\n- **Run**: `cargo flamegraph --bin app`\n- **Output**: An SVG flame graph shows `process_points` taking 80% of time, with flat peaks indicating memory stalls.\n- **Hypothesis**: Strided access across `x`, `y`, `z` fetches unnecessary data per cache line.\n\n### 4. Microbenchmark with `criterion`\n- **Setup**:\n  ```rust\n  use criterion::{black_box, Criterion};\n  fn bench(c: &mut Criterion) {\n      let mut points = vec![Point { x: 0.0, y: 0.0, z: 0.0 }; 1_000_000];\n      c.bench_function(\"process_points\", |b| b.iter(|| process_points(black_box(&mut points))));\n  }\n  ```\n- **Baseline**: 50ms per iteration, high variance due to cache misses.\n\n### 5. Optimize\n- **Switch to Struct-of-Arrays (SoA)**:\n  ```rust\n  struct Points { xs: Vec<f32>, ys: Vec<f32>, zs: Vec<f32> }\n  impl Points {\n      fn new(n: usize) -> Self {\n          Points { xs: vec![0.0; n], ys: vec![0.0; n], zs: vec![0.0; n] }\n      }\n      fn process(&mut self) {\n          for x in &mut self.xs { *x += 1.0; } // Contiguous access\n      }\n  }\n  ```\n- **Why**: Contiguous `xs` fits 16 `f32`s per 64-byte cache line (vs. 5 `Point`s with padding), reducing loads and misses.\n- **Alternative**: If AoS is required, align `Point` with `#[repr(align(16))]` and pad to 16 bytes to reduce partial line fetches.\n\n### 6. Verify\n- **perf**: Re-run `perf stat`:\n  ```\n  8,000,000,000 cycles\n  12,000,000,000 instructions\n  3,000,000,000 L1-dcache-loads\n  30,000,000 L1-dcache-load-misses (1.00%)\n  ```\n  Misses drop to 1%, cycles decrease by 20%.\n- **Flamegraph**: New graph shows `process` as a narrower peak, less memory-bound.\n- **criterion**: Time drops to 40ms, with tighter variance, confirming cache efficiency.\n\n## Optimization Steps\n\n- **Hypothesis**: Poor locality from AoS layout.\n- **Fix**: Refactor to SoA for contiguous access.\n- **Iterate**: If misses persist, check alignment (`std::mem::align_of`), stride, or false sharing (e.g., in multi-threaded cases).\n\n## Conclusion\n\nTo tackle L1 cache misses in a Rust codebase, I’d use `perf` to detect high miss rates, `cargo flamegraph` to pinpoint the culprit, and `criterion` to measure improvements.\n\nThe workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results.\n\nIn this case, switching to an SoA layout slashed cache misses, boosting throughput, as confirmed by profiling tools. This approach helps developers to solve bottlenecks efficiently.",
+    "contentHtml": "<p>Profiling and optimizing low-level performance bottlenecks in a Rust codebase, such as excessive L1 cache misses, requires a systematic approach using specialized tools. I’ll detail how to use <code>perf</code>, <code>cargo flamegraph</code>, and <code>criterion</code> to diagnose and optimize a performance-critical section, ensuring measurable improvements.</p>\n<h2>Tools and Their Roles</h2>\n<ul>\n<li><strong><code>perf</code> (Linux)</strong>: A system-level profiler for hardware events like cache misses, cycles, and instructions. Ideal for pinpointing L1 cache issues across the application.</li>\n<li><strong><code>cargo flamegraph</code></strong>: Generates visual flame graphs to identify where time is spent, correlating cache misses to specific functions.</li>\n<li><strong><code>criterion</code></strong>: A microbenchmarking tool for precise, repeatable measurements of small code sections, perfect for before-and-after optimization comparisons.</li>\n</ul>\n<h2>Example Scenario</h2>\n<p>Consider a Rust application processing a large array of structs, where <code>perf</code> reveals high L1 cache miss rates causing slowdowns:</p>\n<pre><code class=\"language-rust\">struct Point { x: f32, y: f32, z: f32 } // 12 bytes\nfn process_points(points: &amp;mut [Point]) {\n    for p in points {\n        p.x += 1.0; // Scattered access\n        p.y += 1.0;\n        p.z += 1.0;\n    }\n}\n</code></pre>\n<p><strong>Problem</strong>: The Array-of-Structs (AoS) layout causes poor locality, as accessing only <code>x</code> pulls unnecessary <code>y</code> and <code>z</code> into the 64-byte L1 cache line, leading to excessive misses.</p>\n<h2>Workflow to Optimize L1 Cache Misses</h2>\n<h3>1. Setup and Reproduce</h3>\n<ul>\n<li>Compile with <code>--release</code> for realistic performance (<code>cargo build --release</code>).</li>\n<li>Run the app with a representative workload (e.g., 1M <code>Point</code>s).</li>\n</ul>\n<h3>2. Diagnose with <code>perf</code></h3>\n<ul>\n<li><strong>Command</strong>: <code>perf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses ./target/release/app</code></li>\n<li><strong>Sample Output</strong>:<pre><code>10,000,000,000 cycles\n15,000,000,000 instructions\n5,000,000,000 L1-dcache-loads\n500,000,000 L1-dcache-load-misses (10.00%)\n</code></pre>\n</li>\n<li><strong>Insight</strong>: A 10% miss rate is high (ideal: &lt;1-2%). L1 misses (50-100 cycles each) dominate runtime.</li>\n</ul>\n<h3>3. Locate with <code>cargo flamegraph</code></h3>\n<ul>\n<li><strong>Install</strong>: <code>cargo install flamegraph</code></li>\n<li><strong>Run</strong>: <code>cargo flamegraph --bin app</code></li>\n<li><strong>Output</strong>: An SVG flame graph shows <code>process_points</code> taking 80% of time, with flat peaks indicating memory stalls.</li>\n<li><strong>Hypothesis</strong>: Strided access across <code>x</code>, <code>y</code>, <code>z</code> fetches unnecessary data per cache line.</li>\n</ul>\n<h3>4. Microbenchmark with <code>criterion</code></h3>\n<ul>\n<li><strong>Setup</strong>:<pre><code class=\"language-rust\">use criterion::{black_box, Criterion};\nfn bench(c: &amp;mut Criterion) {\n    let mut points = vec![Point { x: 0.0, y: 0.0, z: 0.0 }; 1_000_000];\n    c.bench_function(&quot;process_points&quot;, |b| b.iter(|| process_points(black_box(&amp;mut points))));\n}\n</code></pre>\n</li>\n<li><strong>Baseline</strong>: 50ms per iteration, high variance due to cache misses.</li>\n</ul>\n<h3>5. Optimize</h3>\n<ul>\n<li><strong>Switch to Struct-of-Arrays (SoA)</strong>:<pre><code class=\"language-rust\">struct Points { xs: Vec&lt;f32&gt;, ys: Vec&lt;f32&gt;, zs: Vec&lt;f32&gt; }\nimpl Points {\n    fn new(n: usize) -&gt; Self {\n        Points { xs: vec![0.0; n], ys: vec![0.0; n], zs: vec![0.0; n] }\n    }\n    fn process(&amp;mut self) {\n        for x in &amp;mut self.xs { *x += 1.0; } // Contiguous access\n    }\n}\n</code></pre>\n</li>\n<li><strong>Why</strong>: Contiguous <code>xs</code> fits 16 <code>f32</code>s per 64-byte cache line (vs. 5 <code>Point</code>s with padding), reducing loads and misses.</li>\n<li><strong>Alternative</strong>: If AoS is required, align <code>Point</code> with <code>#[repr(align(16))]</code> and pad to 16 bytes to reduce partial line fetches.</li>\n</ul>\n<h3>6. Verify</h3>\n<ul>\n<li><strong>perf</strong>: Re-run <code>perf stat</code>:<pre><code>8,000,000,000 cycles\n12,000,000,000 instructions\n3,000,000,000 L1-dcache-loads\n30,000,000 L1-dcache-load-misses (1.00%)\n</code></pre>\nMisses drop to 1%, cycles decrease by 20%.</li>\n<li><strong>Flamegraph</strong>: New graph shows <code>process</code> as a narrower peak, less memory-bound.</li>\n<li><strong>criterion</strong>: Time drops to 40ms, with tighter variance, confirming cache efficiency.</li>\n</ul>\n<h2>Optimization Steps</h2>\n<ul>\n<li><strong>Hypothesis</strong>: Poor locality from AoS layout.</li>\n<li><strong>Fix</strong>: Refactor to SoA for contiguous access.</li>\n<li><strong>Iterate</strong>: If misses persist, check alignment (<code>std::mem::align_of</code>), stride, or false sharing (e.g., in multi-threaded cases).</li>\n</ul>\n<h2>Conclusion</h2>\n<p>To tackle L1 cache misses in a Rust codebase, I’d use <code>perf</code> to detect high miss rates, <code>cargo flamegraph</code> to pinpoint the culprit, and <code>criterion</code> to measure improvements.</p>\n<p>The workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results.</p>\n<p>In this case, switching to an SoA layout slashed cache misses, boosting throughput, as confirmed by profiling tools. This approach helps developers to solve bottlenecks efficiently.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "advanced",
+      "optimization",
+      "cache"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion",
+      "description": "Low-level optimization in Rust, focusing on profiling tools to identify and fix performance bottlenecks like L1 cache misses",
+      "keywords": [
+        "rust",
+        "advanced",
+        "optimization",
+        "cache"
+      ]
+    },
+    "headings": [
+      {
+        "id": "tools-and-their-roles",
+        "text": "Tools and Their Roles",
+        "level": 2
+      },
+      {
+        "id": "example-scenario",
+        "text": "Example Scenario",
+        "level": 2
+      },
+      {
+        "id": "workflow-to-optimize-l1-cache-misses",
+        "text": "Workflow to Optimize L1 Cache Misses",
+        "level": 2
+      },
+      {
+        "id": "1-setup-and-reproduce",
+        "text": "1. Setup and Reproduce",
+        "level": 3
+      },
+      {
+        "id": "2-diagnose-with-perf",
+        "text": "2. Diagnose with `perf`",
+        "level": 3
+      },
+      {
+        "id": "3-locate-with-cargo-flamegraph",
+        "text": "3. Locate with `cargo flamegraph`",
+        "level": 3
+      },
+      {
+        "id": "4-microbenchmark-with-criterion",
+        "text": "4. Microbenchmark with `criterion`",
+        "level": 3
+      },
+      {
+        "id": "5-optimize",
+        "text": "5. Optimize",
+        "level": 3
+      },
+      {
+        "id": "6-verify",
+        "text": "6. Verify",
+        "level": 3
+      },
+      {
+        "id": "optimization-steps",
+        "text": "Optimization Steps",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "text": "Conclusion",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "branch-prediction-rust",
     "slug": "branch-prediction-rust",
     "title": "Boosting Rust Hot Loops: Slashing Branch Mispredictions",
