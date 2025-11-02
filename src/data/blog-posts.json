@@ -1,5 +1,86 @@
 [
   {
+    "id": "move-closures-rust",
+    "slug": "move-closures-rust-javascript-developers",
+    "title": "Understanding Rust Move Closures: A Guide for JavaScript Developers",
+    "date": "2025-11-02",
+    "excerpt": "Learn how Rust move closures work compared to JavaScript closures - ownership, threading, and when to use the move keyword",
+    "content": "Coming from JavaScript? Closures work differently in Rust. A `move` closure forces ownership transfer of captured variables—no shared references like JS. This is the bridge between JavaScript's automatic closures and Rust's ownership model.\n\n## The JavaScript Baseline\n\nIn JavaScript, closures capture variables by reference automatically:\n\n```javascript\nconst makeCounter = () => {\n  let count = 0;\n  return () => count++; // captures `count` by reference\n};\n\nconst counter = makeCounter();\nconsole.log(counter()); // 0\nconsole.log(counter()); // 1\n```\n\nThe closure shares the same `count` variable. No copying, no moving—just a reference that lives as long as the closure does.\n\n## Rust's Explicit Choice\n\nRust makes you choose: borrow or own. Regular closures borrow:\n\n```rust\nlet mut count = 0;\nlet increment = || count += 1; // borrows `count` mutably\n```\n\n`move` closures take ownership:\n\n```rust\nlet count = 0;\nlet increment = move || count + 1; // `count` moved/copied into closure\n```\n\n### Ownership Transfer Mechanics\n\nFor **non-Copy** types like `String` or `Vec`, the closure takes ownership:\n\n```rust\nlet s = String::from(\"hello\");\nlet closure = move || println!(\"{}\", s); // `s` moved into closure\n// println!(\"{}\", s); // ERROR: `s` no longer valid\n```\n\nFor **Copy** types like `i32` or `bool`, the value is copied:\n\n```rust\nlet x = 42;\nlet closure = move || println!(\"{}\", x); // `x` copied\nprintln!(\"{}\", x); // OK: original `x` still valid\n```\n\n### When You Need `move`\n\n#### Threading\n\nIn JavaScript, you'd share state across async operations without thinking:\n\n```javascript\nconst data = [1, 2, 3];\nsetTimeout(() => {\n  console.log(data); // just works\n}, 100);\n```\n\nRust threads must own their data:\n\n```rust\nuse std::thread;\n\nlet data = vec![1, 2, 3];\nlet handle = thread::spawn(move || {\n    println!(\"{:?}\", data); // `data` owned by thread\n});\n// println!(\"{:?}\", data); // ERROR: moved\nhandle.join().unwrap();\n```\n\nWithout `move`, the compiler rejects this—the thread might outlive `data`.\n\n#### Returning Closures\n\nJavaScript factories work by reference:\n\n```javascript\nconst makeAdder = (x) => (y) => x + y; // `x` captured by reference\n\nconst addFive = makeAdder(5);\nconsole.log(addFive(3)); // 8\n```\n\nRust closures must own what they outlive:\n\n```rust\nfn make_adder(x: i32) -> impl Fn(i32) -> i32 {\n    move |y| x + y // `x` must be moved\n}\n\nlet add_five = make_adder(5);\nprintln!(\"{}\", add_five(3)); // 8\n```\n\nThe closure outlives the function scope, so it needs ownership of `x`.\n\n#### Async Blocks\n\nSimilar to threads, async blocks often need `move` when sent across tasks:\n\n```rust\nlet value = String::from(\"async\");\nlet future = async move {\n    println!(\"{}\", value);\n};\n// tokio::spawn requires 'static lifetime\ntokio::spawn(future);\n```\n\n### Borrow vs Own: The Core Difference\n\nJavaScript closures always share:\n\n```javascript\nlet count = 0;\nconst increment = () => count += 1;\nincrement();\nconsole.log(count); // 1 - same `count`\n```\n\nRust regular closures borrow:\n\n```rust\nlet mut count = 0;\nlet mut increment = || count += 1; // mutable borrow\nincrement();\nprintln!(\"{}\", count); // 1 - same `count`\n```\n\nRust `move` closures own:\n\n```rust\nlet mut count = 0;\nlet mut increment = move || count += 1; // `count` moved\nincrement();\n// println!(\"{}\", count); // ERROR: `count` moved\n```\n\nThe moved `count` is independent—changes inside don't affect the original.\n\n## The Paradigm Shift from JavaScript\n\nJavaScript: closures capture by reference implicitly. The GC manages lifetime. You never think about ownership:\n\n```javascript\nconst createHandler = () => {\n  const state = { count: 0 };\n  return () => state.count++; // reference lives as long as needed\n};\n```\n\nRust: you choose explicitly. Borrow for local use. Move for ownership transfer:\n\n```rust\nfn create_handler() -> impl FnMut() -> i32 {\n    let mut state = 0;\n    move || {\n        state += 1;\n        state\n    } // `state` owned by closure\n}\n```\n\nThis prevents data races and use-after-free at compile time—guarantees JavaScript can't make.\n\n## Summary\n\n| Scenario | Use `move` | Reason |\n|----------|-----------|---------|\n| Threading | Yes | Thread may outlive scope |\n| Returning closures | Yes | Closure outlives function |\n| Async tasks | Often | Task needs 'static lifetime |\n| Local use | No | Borrowing is sufficient |\n\n**Core principle:** If a closure outlives its environment or needs to be `Send`, use `move`. Otherwise, let the borrow checker choose the minimal capture mode.\n\nThe `move` keyword is Rust's way of saying: \"This closure now owns these variables.\" It's not just syntax—it's a contract enforced at compile time, eliminating entire classes of runtime errors that plague languages with garbage collection.",
+    "contentHtml": "<p>Coming from JavaScript? Closures work differently in Rust. A <code>move</code> closure forces ownership transfer of captured variables—no shared references like JS. This is the bridge between JavaScript&#39;s automatic closures and Rust&#39;s ownership model.</p>\n<h2>The JavaScript Baseline</h2>\n<p>In JavaScript, closures capture variables by reference automatically:</p>\n<pre><code class=\"language-javascript\">const makeCounter = () =&gt; {\n  let count = 0;\n  return () =&gt; count++; // captures `count` by reference\n};\n\nconst counter = makeCounter();\nconsole.log(counter()); // 0\nconsole.log(counter()); // 1\n</code></pre>\n<p>The closure shares the same <code>count</code> variable. No copying, no moving—just a reference that lives as long as the closure does.</p>\n<h2>Rust&#39;s Explicit Choice</h2>\n<p>Rust makes you choose: borrow or own. Regular closures borrow:</p>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet increment = || count += 1; // borrows `count` mutably\n</code></pre>\n<p><code>move</code> closures take ownership:</p>\n<pre><code class=\"language-rust\">let count = 0;\nlet increment = move || count + 1; // `count` moved/copied into closure\n</code></pre>\n<h3>Ownership Transfer Mechanics</h3>\n<p>For <strong>non-Copy</strong> types like <code>String</code> or <code>Vec</code>, the closure takes ownership:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet closure = move || println!(&quot;{}&quot;, s); // `s` moved into closure\n// println!(&quot;{}&quot;, s); // ERROR: `s` no longer valid\n</code></pre>\n<p>For <strong>Copy</strong> types like <code>i32</code> or <code>bool</code>, the value is copied:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = move || println!(&quot;{}&quot;, x); // `x` copied\nprintln!(&quot;{}&quot;, x); // OK: original `x` still valid\n</code></pre>\n<h3>When You Need <code>move</code></h3>\n<h4>Threading</h4>\n<p>In JavaScript, you&#39;d share state across async operations without thinking:</p>\n<pre><code class=\"language-javascript\">const data = [1, 2, 3];\nsetTimeout(() =&gt; {\n  console.log(data); // just works\n}, 100);\n</code></pre>\n<p>Rust threads must own their data:</p>\n<pre><code class=\"language-rust\">use std::thread;\n\nlet data = vec![1, 2, 3];\nlet handle = thread::spawn(move || {\n    println!(&quot;{:?}&quot;, data); // `data` owned by thread\n});\n// println!(&quot;{:?}&quot;, data); // ERROR: moved\nhandle.join().unwrap();\n</code></pre>\n<p>Without <code>move</code>, the compiler rejects this—the thread might outlive <code>data</code>.</p>\n<h4>Returning Closures</h4>\n<p>JavaScript factories work by reference:</p>\n<pre><code class=\"language-javascript\">const makeAdder = (x) =&gt; (y) =&gt; x + y; // `x` captured by reference\n\nconst addFive = makeAdder(5);\nconsole.log(addFive(3)); // 8\n</code></pre>\n<p>Rust closures must own what they outlive:</p>\n<pre><code class=\"language-rust\">fn make_adder(x: i32) -&gt; impl Fn(i32) -&gt; i32 {\n    move |y| x + y // `x` must be moved\n}\n\nlet add_five = make_adder(5);\nprintln!(&quot;{}&quot;, add_five(3)); // 8\n</code></pre>\n<p>The closure outlives the function scope, so it needs ownership of <code>x</code>.</p>\n<h4>Async Blocks</h4>\n<p>Similar to threads, async blocks often need <code>move</code> when sent across tasks:</p>\n<pre><code class=\"language-rust\">let value = String::from(&quot;async&quot;);\nlet future = async move {\n    println!(&quot;{}&quot;, value);\n};\n// tokio::spawn requires &#39;static lifetime\ntokio::spawn(future);\n</code></pre>\n<h3>Borrow vs Own: The Core Difference</h3>\n<p>JavaScript closures always share:</p>\n<pre><code class=\"language-javascript\">let count = 0;\nconst increment = () =&gt; count += 1;\nincrement();\nconsole.log(count); // 1 - same `count`\n</code></pre>\n<p>Rust regular closures borrow:</p>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet mut increment = || count += 1; // mutable borrow\nincrement();\nprintln!(&quot;{}&quot;, count); // 1 - same `count`\n</code></pre>\n<p>Rust <code>move</code> closures own:</p>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet mut increment = move || count += 1; // `count` moved\nincrement();\n// println!(&quot;{}&quot;, count); // ERROR: `count` moved\n</code></pre>\n<p>The moved <code>count</code> is independent—changes inside don&#39;t affect the original.</p>\n<h2>The Paradigm Shift from JavaScript</h2>\n<p>JavaScript: closures capture by reference implicitly. The GC manages lifetime. You never think about ownership:</p>\n<pre><code class=\"language-javascript\">const createHandler = () =&gt; {\n  const state = { count: 0 };\n  return () =&gt; state.count++; // reference lives as long as needed\n};\n</code></pre>\n<p>Rust: you choose explicitly. Borrow for local use. Move for ownership transfer:</p>\n<pre><code class=\"language-rust\">fn create_handler() -&gt; impl FnMut() -&gt; i32 {\n    let mut state = 0;\n    move || {\n        state += 1;\n        state\n    } // `state` owned by closure\n}\n</code></pre>\n<p>This prevents data races and use-after-free at compile time—guarantees JavaScript can&#39;t make.</p>\n<h2>Summary</h2>\n<table>\n<thead>\n<tr>\n<th>Scenario</th>\n<th>Use <code>move</code></th>\n<th>Reason</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Threading</td>\n<td>Yes</td>\n<td>Thread may outlive scope</td>\n</tr>\n<tr>\n<td>Returning closures</td>\n<td>Yes</td>\n<td>Closure outlives function</td>\n</tr>\n<tr>\n<td>Async tasks</td>\n<td>Often</td>\n<td>Task needs &#39;static lifetime</td>\n</tr>\n<tr>\n<td>Local use</td>\n<td>No</td>\n<td>Borrowing is sufficient</td>\n</tr>\n</tbody></table>\n<p><strong>Core principle:</strong> If a closure outlives its environment or needs to be <code>Send</code>, use <code>move</code>. Otherwise, let the borrow checker choose the minimal capture mode.</p>\n<p>The <code>move</code> keyword is Rust&#39;s way of saying: &quot;This closure now owns these variables.&quot; It&#39;s not just syntax—it&#39;s a contract enforced at compile time, eliminating entire classes of runtime errors that plague languages with garbage collection.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "closures",
+      "javascript",
+      "typescript"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Understanding Rust Move Closures: A Guide for JavaScript Developers",
+      "description": "Learn how Rust move closures work compared to JavaScript closures - ownership, threading, and when to use the move keyword",
+      "keywords": [
+        "rust",
+        "closures",
+        "javascript",
+        "typescript"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-javascript-baseline",
+        "text": "The JavaScript Baseline",
+        "level": 2
+      },
+      {
+        "id": "rusts-explicit-choice",
+        "text": "Rust's Explicit Choice",
+        "level": 2
+      },
+      {
+        "id": "ownership-transfer-mechanics",
+        "text": "Ownership Transfer Mechanics",
+        "level": 3
+      },
+      {
+        "id": "when-you-need-move",
+        "text": "When You Need `move`",
+        "level": 3
+      },
+      {
+        "id": "threading",
+        "text": "Threading",
+        "level": 4
+      },
+      {
+        "id": "returning-closures",
+        "text": "Returning Closures",
+        "level": 4
+      },
+      {
+        "id": "async-blocks",
+        "text": "Async Blocks",
+        "level": 4
+      },
+      {
+        "id": "borrow-vs-own-the-core-difference",
+        "text": "Borrow vs Own: The Core Difference",
+        "level": 3
+      },
+      {
+        "id": "the-paradigm-shift-from-javascript",
+        "text": "The Paradigm Shift from JavaScript",
+        "level": 2
+      },
+      {
+        "id": "summary",
+        "text": "Summary",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "branch-prediction-rust",
     "slug": "branch-prediction-rust",
     "title": "Boosting Rust Hot Loops: Slashing Branch Mispredictions",

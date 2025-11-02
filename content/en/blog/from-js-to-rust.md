@@ -1,16 +1,18 @@
 ---
 id: move-closures-rust
-title: "Understanding Rust Move Closures: A Guide for JavaScript Developers"
+title: 'Understanding Rust Move Closures: A Guide for JavaScript Developers'
 slug: move-closures-rust-javascript-developers
-locale: "en"
+locale: en
 author: mayo
-excerpt: 'Learn how Rust move closures work compared to JavaScript closures - ownership, threading, and when to use the move keyword'
-
+excerpt: >-
+  Learn how Rust move closures work compared to JavaScript closures - ownership,
+  threading, and when to use the move keyword
 tags:
   - rust
   - closures
   - javascript
   - typescript
+date: '2025-11-02'
 ---
 
 # Understanding Rust Move Closures: A Guide for JavaScript Developers
