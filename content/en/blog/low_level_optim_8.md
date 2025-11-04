@@ -1,18 +1,20 @@
 ---
 id: instruction-level-optimization-inline-always
-title: "Instruction-Level Optimization: #[inline(always)]"
+title: 'Instruction-Level Optimization: #[inline(always)]'
 slug: instruction-level-optimization-inline-always
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Strategic application of Rust's #[inline(always)] attribute for instruction-level optimization, covering effective usage patterns and risks of overuse
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
-
+  Strategic application of Rust's #[inline(always)] attribute for
+  instruction-level optimization, covering effective usage patterns and risks of
+  overuse
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-11-04'
 ---
 
 # Instruction-Level Optimization: How can you use Rust's #[inline(always)] attribute effectively, and what are the risks of overusing it in terms of code size and compile time?
