@@ -114,6 +114,100 @@
     ]
   },
   {
+    "id": "cache-line-awareness-optimization",
+    "slug": "cache-line-awareness-optimization",
+    "title": "Align data structures to cache lines",
+    "date": "2025-11-04",
+    "excerpt": "Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing",
+    "content": "In a multi-threaded Rust application processing large datasets, cache line awareness is key to maximizing performance. CPU cache lines (typically 64 bytes on modern x86_64 and ARM) dictate how data is fetched, and false sharing—where threads modify adjacent data on the same cache line—can tank throughput due to constant cache invalidation. I'd align data structures to cache lines and use Rust's features to eliminate false sharing, optimizing a multi-threaded workload.\n\n## Designing Cache-Aligned Structures\n\n- **Alignment**: Ensure each thread's data starts on a new cache line using `#[repr(align(64))]`.\n- **Padding**: Add dummy bytes to separate thread-local data, preventing overlap.\n- **Separation**: Split shared data into per-thread chunks, accessed independently.\n\n### Example: A multi-threaded counter where each thread increments its own tally:\n\n```rust\nuse std::sync::atomic::{AtomicU64, Ordering};\nuse std::thread;\n\n// Naive: False sharing likely\nstruct Counters {\n    counts: [AtomicU64; 4], // 4 threads, 8 bytes each = 32 bytes\n}\n\nimpl Counters {\n    fn new() -> Self {\n        Counters {\n            counts: [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)],\n        }\n    }\n}\n```\n\n**Problem**: `counts` is 32 bytes, fitting in one 64-byte cache line. If Thread 0 updates `counts[0]` and Thread 1 updates `counts[1]`, they thrash the same line, serializing access.\n\n## Restructured Cache-Aligned Version\n\n```rust\n#[repr(align(64))] // Align to 64-byte cache line\nstruct CacheAlignedCounter {\n    count: AtomicU64,      // 8 bytes\n    _padding: [u8; 56],    // 56 bytes padding to reach 64\n}\n\nstruct Counters {\n    counts: [CacheAlignedCounter; 4], // 4 threads, 64 bytes each\n}\n\nimpl Counters {\n    fn new() -> Self {\n        Counters {\n            counts: [\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n            ],\n        }\n    }\n\n    fn run(&self) {\n        let mut handles = Vec::new();\n        for i in 0..4 {\n            let counter = &self.counts[i];\n            handles.push(thread::spawn(move || {\n                for _ in 0..1_000_000 {\n                    counter.count.fetch_add(1, Ordering::Relaxed);\n                }\n            }));\n        }\n        for h in handles { h.join().unwrap(); }\n    }\n}\n```\n\n- **Alignment**: `#[repr(align(64))]` ensures each `CacheAlignedCounter` starts on a 64-byte boundary.\n- **Padding**: `_padding` fills the struct to 64 bytes, so `counts[1]` is on a new cache line.\n- **Result**: Each thread updates its own `count` without invalidating others' cache lines.\n\n## Rust Features and Techniques\n\n### #[repr(align(N))]\nForces struct alignment to a power of 2 (e.g., 64), aligning with cache lines.\n\n### Manual Padding\nArrays or unused fields (e.g., `[u8; 56]`) ensure size matches the cache line, avoiding overlap.\n\n### Per-Thread Data\nUse `thread_local!` or an array indexed by thread ID for complete separation:\n\n```rust\nthread_local! {\n    static MY_COUNTER: AtomicU64 = AtomicU64::new(0);\n}\n```\n\n**Atomic Operations**: `fetch_add` with `Relaxed` ordering is safe here (no data dependency), minimizing synchronization overhead.\n\n## Preventing False Sharing\n\n- **Separation**: Each count is 64 bytes apart, so Thread 0's writes to `counts[0]` don't invalidate `counts[1]`.\n- **Size Check**: `std::mem::size_of::<CacheAlignedCounter>()` returns 64, confirming alignment.\n- **Layout**: Avoid packing (e.g., `#[repr(packed)]`) unless explicitly needed—padding is our friend here.\n\n## Verification\n\n### Profiling with perf\nRun `perf stat -e cache-misses,L1-dcache-load-misses ./target/release/app` on both versions:\n- **Naive**: High L1-dcache-load-misses (e.g., 10M) due to false sharing.\n- **Optimized**: Drops significantly (e.g., 1M), as each thread's cache line stays local.\n\n### Benchmarking\n\n```rust\nuse criterion::{black_box, Criterion};\nfn bench(c: &mut Criterion) {\n    let counters = Counters::new();\n    c.bench_function(\"cache_aligned\", |b| b.iter(|| black_box(counters.run())));\n}\n```\n\nExpect 2-5x speedup (e.g., 50ms to 10ms) on a 4-core CPU.\n\n### Memory Layout\n`std::mem::align_of::<CacheAlignedCounter>()` confirms 64-byte alignment.\n\n## Conclusion\n\nI'd align data with `#[repr(align(64))]` and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust's type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. This eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor.",
+    "contentHtml": "<p>In a multi-threaded Rust application processing large datasets, cache line awareness is key to maximizing performance. CPU cache lines (typically 64 bytes on modern x86_64 and ARM) dictate how data is fetched, and false sharing—where threads modify adjacent data on the same cache line—can tank throughput due to constant cache invalidation. I&#39;d align data structures to cache lines and use Rust&#39;s features to eliminate false sharing, optimizing a multi-threaded workload.</p>\n<h2>Designing Cache-Aligned Structures</h2>\n<ul>\n<li><strong>Alignment</strong>: Ensure each thread&#39;s data starts on a new cache line using <code>#[repr(align(64))]</code>.</li>\n<li><strong>Padding</strong>: Add dummy bytes to separate thread-local data, preventing overlap.</li>\n<li><strong>Separation</strong>: Split shared data into per-thread chunks, accessed independently.</li>\n</ul>\n<h3>Example: A multi-threaded counter where each thread increments its own tally:</h3>\n<pre><code class=\"language-rust\">use std::sync::atomic::{AtomicU64, Ordering};\nuse std::thread;\n\n// Naive: False sharing likely\nstruct Counters {\n    counts: [AtomicU64; 4], // 4 threads, 8 bytes each = 32 bytes\n}\n\nimpl Counters {\n    fn new() -&gt; Self {\n        Counters {\n            counts: [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)],\n        }\n    }\n}\n</code></pre>\n<p><strong>Problem</strong>: <code>counts</code> is 32 bytes, fitting in one 64-byte cache line. If Thread 0 updates <code>counts[0]</code> and Thread 1 updates <code>counts[1]</code>, they thrash the same line, serializing access.</p>\n<h2>Restructured Cache-Aligned Version</h2>\n<pre><code class=\"language-rust\">#[repr(align(64))] // Align to 64-byte cache line\nstruct CacheAlignedCounter {\n    count: AtomicU64,      // 8 bytes\n    _padding: [u8; 56],    // 56 bytes padding to reach 64\n}\n\nstruct Counters {\n    counts: [CacheAlignedCounter; 4], // 4 threads, 64 bytes each\n}\n\nimpl Counters {\n    fn new() -&gt; Self {\n        Counters {\n            counts: [\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n            ],\n        }\n    }\n\n    fn run(&amp;self) {\n        let mut handles = Vec::new();\n        for i in 0..4 {\n            let counter = &amp;self.counts[i];\n            handles.push(thread::spawn(move || {\n                for _ in 0..1_000_000 {\n                    counter.count.fetch_add(1, Ordering::Relaxed);\n                }\n            }));\n        }\n        for h in handles { h.join().unwrap(); }\n    }\n}\n</code></pre>\n<ul>\n<li><strong>Alignment</strong>: <code>#[repr(align(64))]</code> ensures each <code>CacheAlignedCounter</code> starts on a 64-byte boundary.</li>\n<li><strong>Padding</strong>: <code>_padding</code> fills the struct to 64 bytes, so <code>counts[1]</code> is on a new cache line.</li>\n<li><strong>Result</strong>: Each thread updates its own <code>count</code> without invalidating others&#39; cache lines.</li>\n</ul>\n<h2>Rust Features and Techniques</h2>\n<h3>#[repr(align(N))]</h3>\n<p>Forces struct alignment to a power of 2 (e.g., 64), aligning with cache lines.</p>\n<h3>Manual Padding</h3>\n<p>Arrays or unused fields (e.g., <code>[u8; 56]</code>) ensure size matches the cache line, avoiding overlap.</p>\n<h3>Per-Thread Data</h3>\n<p>Use <code>thread_local!</code> or an array indexed by thread ID for complete separation:</p>\n<pre><code class=\"language-rust\">thread_local! {\n    static MY_COUNTER: AtomicU64 = AtomicU64::new(0);\n}\n</code></pre>\n<p><strong>Atomic Operations</strong>: <code>fetch_add</code> with <code>Relaxed</code> ordering is safe here (no data dependency), minimizing synchronization overhead.</p>\n<h2>Preventing False Sharing</h2>\n<ul>\n<li><strong>Separation</strong>: Each count is 64 bytes apart, so Thread 0&#39;s writes to <code>counts[0]</code> don&#39;t invalidate <code>counts[1]</code>.</li>\n<li><strong>Size Check</strong>: <code>std::mem::size_of::&lt;CacheAlignedCounter&gt;()</code> returns 64, confirming alignment.</li>\n<li><strong>Layout</strong>: Avoid packing (e.g., <code>#[repr(packed)]</code>) unless explicitly needed—padding is our friend here.</li>\n</ul>\n<h2>Verification</h2>\n<h3>Profiling with perf</h3>\n<p>Run <code>perf stat -e cache-misses,L1-dcache-load-misses ./target/release/app</code> on both versions:</p>\n<ul>\n<li><strong>Naive</strong>: High L1-dcache-load-misses (e.g., 10M) due to false sharing.</li>\n<li><strong>Optimized</strong>: Drops significantly (e.g., 1M), as each thread&#39;s cache line stays local.</li>\n</ul>\n<h3>Benchmarking</h3>\n<pre><code class=\"language-rust\">use criterion::{black_box, Criterion};\nfn bench(c: &amp;mut Criterion) {\n    let counters = Counters::new();\n    c.bench_function(&quot;cache_aligned&quot;, |b| b.iter(|| black_box(counters.run())));\n}\n</code></pre>\n<p>Expect 2-5x speedup (e.g., 50ms to 10ms) on a 4-core CPU.</p>\n<h3>Memory Layout</h3>\n<p><code>std::mem::align_of::&lt;CacheAlignedCounter&gt;()</code> confirms 64-byte alignment.</p>\n<h2>Conclusion</h2>\n<p>I&#39;d align data with <code>#[repr(align(64))]</code> and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust&#39;s type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. This eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "optimization",
+      "advanced"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Align data structures to cache lines",
+      "description": "Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing",
+      "keywords": [
+        "rust",
+        "optimization",
+        "advanced"
+      ]
+    },
+    "headings": [
+      {
+        "id": "designing-cache-aligned-structures",
+        "text": "Designing Cache-Aligned Structures",
+        "level": 2
+      },
+      {
+        "id": "example-a-multi-threaded-counter-where-each-thread-increments-its-own-tally",
+        "text": "Example: A multi-threaded counter where each thread increments its own tally:",
+        "level": 3
+      },
+      {
+        "id": "restructured-cache-aligned-version",
+        "text": "Restructured Cache-Aligned Version",
+        "level": 2
+      },
+      {
+        "id": "rust-features-and-techniques",
+        "text": "Rust Features and Techniques",
+        "level": 2
+      },
+      {
+        "id": "repralignn",
+        "text": "#[repr(align(N))]",
+        "level": 3
+      },
+      {
+        "id": "manual-padding",
+        "text": "Manual Padding",
+        "level": 3
+      },
+      {
+        "id": "per-thread-data",
+        "text": "Per-Thread Data",
+        "level": 3
+      },
+      {
+        "id": "preventing-false-sharing",
+        "text": "Preventing False Sharing",
+        "level": 2
+      },
+      {
+        "id": "verification",
+        "text": "Verification",
+        "level": 2
+      },
+      {
+        "id": "profiling-with-perf",
+        "text": "Profiling with perf",
+        "level": 3
+      },
+      {
+        "id": "benchmarking",
+        "text": "Benchmarking",
+        "level": 3
+      },
+      {
+        "id": "memory-layout",
+        "text": "Memory Layout",
+        "level": 3
+      },
+      {
+        "id": "conclusion",
+        "text": "Conclusion",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "inline-assembly-rust",
     "slug": "inline-assembly-rust",
     "title": "Mastering Inline Assembly in Rust: When and How to Optimize Safely",
