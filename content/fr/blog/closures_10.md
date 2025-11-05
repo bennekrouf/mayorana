@@ -1,20 +1,19 @@
 ---
 id: closure-dispatch-rust-fr
 title: 'impl Fn() vs. Box<dyn Fn()>: Le Duel du Dispatch des Closures en Rust'
-locale: "fr"
+locale: fr
 slug: closure-dispatch-rust-fr
 author: mayo
 excerpt: >-
   Comparaison du static et dynamic dispatch pour les closures en Rust, focus sur
   performance et cas d'usage
-
 tags:
   - rust
   - closures
   - dispatch
   - performance
   - traits
-date: '2025-07-09'
+date: '2025-11-05'
 ---
 
 # impl Fn() vs. Box<dyn Fn()>: Le Duel du Dispatch des Closures en Rust
