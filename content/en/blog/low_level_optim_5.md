@@ -1,18 +1,19 @@
 ---
 id: inline-assembly-rust
-title: "Mastering Inline Assembly in Rust: When and How to Optimize Safely"
+title: 'Mastering Inline Assembly in Rust: When and How to Optimize Safely'
 slug: inline-assembly-rust
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Low-level optimization in Rust, focusing on using inline assembly for performance-critical tasks
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
-
+  Low-level optimization in Rust, focusing on using inline assembly for
+  performance-critical tasks
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-11-03'
 ---
 
 # Mastering Inline Assembly in Rust: When and How to Optimize Safely

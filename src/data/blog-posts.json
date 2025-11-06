@@ -1,5 +1,434 @@
 [
   {
+    "id": "instruction-level-optimization-inline-always",
+    "slug": "instruction-level-optimization-inline-always",
+    "title": "Instruction-Level Optimization: #[inline(always)]",
+    "date": "2025-11-04",
+    "excerpt": "Strategic application of Rust's #[inline(always)] attribute for instruction-level optimization, covering effective usage patterns and risks of overuse",
+    "content": "Rust's `#[inline(always)]` attribute forces the compiler to inline a function's body at every call site, optimizing instruction-level performance by eliminating call overhead and exposing more optimization opportunities. I'd use it strategically in performance-critical code, but overuse carries risks to code size, compile time, and even runtime efficiency. Here's how I'd approach it.\n\n## Strategic Application\n\nI'd apply `#[inline(always)]` in scenarios where:\n\n- **Small, Hot Functions**: A tiny function called in a tight loop, where call overhead (stack setup, jumps) is significant relative to its work.\n- **Optimization Opportunities**: Inlining enables the compiler to fuse the function with its caller, simplifying branches or constants.\n\n### Example: A bit-manipulation utility in a real-time parser:\n\n```rust\n#[inline(always)]\nfn extract_bits(value: u32, shift: u32, mask: u32) -> u32 {\n    (value >> shift) & mask\n}\n\nfn parse_stream(data: &[u32]) -> u32 {\n    let mut result = 0;\n    for &val in data {\n        result += extract_bits(val, 8, 0xFF); // Hot loop\n    }\n    result\n}\n```\n\n**Why `#[inline(always)]`?**: Without inlining, each call incurs a jump and return (5-10 cycles on x86_64). Inlining reduces this to a single `shr` and `and`, and LLVM can further optimize the loop (e.g., unroll or vectorize).\n\n**Effectiveness**: The function's simplicity ensures inlining cuts overhead, and constant propagation (if shift and mask are fixed) might eliminate redundant ops.\n\n### Considerations:\n\n- **Size**: `extract_bits` is small (2-3 instructions), so inlining doesn't bloat much.\n- **Frequency**: Used in a hot loop, justifying the force.\n- **Profile First**: I'd confirm with perf that call overhead is a bottleneck before forcing inlining.\n\n## Downsides of Overuse\n\n### Code Size Increase\n- Inlining duplicates the function body everywhere it's called. For a larger function (e.g., 20 instructions) called 100 times, the binary grows by 2,000 instructions, bloating the instruction cache (I-cache).\n- **Impact**: More I-cache misses, slowing execution despite fewer calls.\n\n### Compile Time\n- LLVM must optimize each inlined instance, increasing compilation time. For a large codebase with many `#[inline(always)]` annotations, builds could slow from seconds to minutes.\n- **Impact**: Slower iteration, frustrating for development.\n\n### Runtime Performance Risks\n- Over-inlining large functions can disrupt I-cache locality, outweighing call savings. For example, inlining a 50-instruction function into a loop might evict other hot code.\n- The compiler's heuristics (e.g., with plain `#[inline]`) often balance this better than forced inlining.\n\n## Mitigation Strategies\n\n### Selective Use\n- Reserve `#[inline(always)]` for tiny, frequently called functions in hot paths. Use `#[inline]` (a hint) for larger ones, trusting LLVM's judgment.\n- **Example**: Don't inline a complex parser, but do inline a 2-line accessor.\n\n### Profiling\n- Use `perf stat -e instructions,cycles` or `cargo flamegraph` to identify call overhead. Only apply `#[inline(always)]` where data shows a win (e.g., 10%+ cycle reduction).\n- Post-optimization, check I-cache misses (`perf stat -e iTLB-load-misses`) to ensure no regression.\n\n### Measure Code Size\n- Run `size target/release/myapp` before and after. If the `.text` section balloons (e.g., 10KB to 100KB), reconsider inlining larger functions.\n\n### Alternatives\n- Loop unrolling or iterator fusion (Rust's zero-cost abstractions) can achieve similar gains without forced inlining.\n- **Example**: Rewrite `parse_stream` with `fold` to let the compiler inline implicitly.\n\n## Verification\n\n### Benchmark\nWith criterion:\n\n```rust\nuse criterion::{black_box, Criterion};\nfn bench(c: &mut Criterion) {\n    let data = vec![0x1234_5678; 1000];\n    c.bench_function(\"inline_parse\", |b| b.iter(|| parse_stream(black_box(&data))));\n}\n```\n\nCompare with and without `#[inline(always)]`—expect tighter latency.\n\n### Assembly\n`cargo rustc --release -- --emit asm` shows `shr` and `and` in the loop, no call instructions.\n\n### Size Check\n`ls -lh` on the binary confirms minimal growth.\n\n## Conclusion\n\nI'd use `#[inline(always)]` for small, hot functions like `extract_bits` in tight loops, ensuring call overhead vanishes and optimizations kick in. Overuse risks bloated binaries and slow compiles, so I'd profile to justify it, fallback to `#[inline]` elsewhere, and monitor I-cache effects. This balances performance gains with maintainability and scalability in a Rust codebase.",
+    "contentHtml": "<p>Rust&#39;s <code>#[inline(always)]</code> attribute forces the compiler to inline a function&#39;s body at every call site, optimizing instruction-level performance by eliminating call overhead and exposing more optimization opportunities. I&#39;d use it strategically in performance-critical code, but overuse carries risks to code size, compile time, and even runtime efficiency. Here&#39;s how I&#39;d approach it.</p>\n<h2>Strategic Application</h2>\n<p>I&#39;d apply <code>#[inline(always)]</code> in scenarios where:</p>\n<ul>\n<li><strong>Small, Hot Functions</strong>: A tiny function called in a tight loop, where call overhead (stack setup, jumps) is significant relative to its work.</li>\n<li><strong>Optimization Opportunities</strong>: Inlining enables the compiler to fuse the function with its caller, simplifying branches or constants.</li>\n</ul>\n<h3>Example: A bit-manipulation utility in a real-time parser:</h3>\n<pre><code class=\"language-rust\">#[inline(always)]\nfn extract_bits(value: u32, shift: u32, mask: u32) -&gt; u32 {\n    (value &gt;&gt; shift) &amp; mask\n}\n\nfn parse_stream(data: &amp;[u32]) -&gt; u32 {\n    let mut result = 0;\n    for &amp;val in data {\n        result += extract_bits(val, 8, 0xFF); // Hot loop\n    }\n    result\n}\n</code></pre>\n<p><strong>Why <code>#[inline(always)]</code>?</strong>: Without inlining, each call incurs a jump and return (5-10 cycles on x86_64). Inlining reduces this to a single <code>shr</code> and <code>and</code>, and LLVM can further optimize the loop (e.g., unroll or vectorize).</p>\n<p><strong>Effectiveness</strong>: The function&#39;s simplicity ensures inlining cuts overhead, and constant propagation (if shift and mask are fixed) might eliminate redundant ops.</p>\n<h3>Considerations:</h3>\n<ul>\n<li><strong>Size</strong>: <code>extract_bits</code> is small (2-3 instructions), so inlining doesn&#39;t bloat much.</li>\n<li><strong>Frequency</strong>: Used in a hot loop, justifying the force.</li>\n<li><strong>Profile First</strong>: I&#39;d confirm with perf that call overhead is a bottleneck before forcing inlining.</li>\n</ul>\n<h2>Downsides of Overuse</h2>\n<h3>Code Size Increase</h3>\n<ul>\n<li>Inlining duplicates the function body everywhere it&#39;s called. For a larger function (e.g., 20 instructions) called 100 times, the binary grows by 2,000 instructions, bloating the instruction cache (I-cache).</li>\n<li><strong>Impact</strong>: More I-cache misses, slowing execution despite fewer calls.</li>\n</ul>\n<h3>Compile Time</h3>\n<ul>\n<li>LLVM must optimize each inlined instance, increasing compilation time. For a large codebase with many <code>#[inline(always)]</code> annotations, builds could slow from seconds to minutes.</li>\n<li><strong>Impact</strong>: Slower iteration, frustrating for development.</li>\n</ul>\n<h3>Runtime Performance Risks</h3>\n<ul>\n<li>Over-inlining large functions can disrupt I-cache locality, outweighing call savings. For example, inlining a 50-instruction function into a loop might evict other hot code.</li>\n<li>The compiler&#39;s heuristics (e.g., with plain <code>#[inline]</code>) often balance this better than forced inlining.</li>\n</ul>\n<h2>Mitigation Strategies</h2>\n<h3>Selective Use</h3>\n<ul>\n<li>Reserve <code>#[inline(always)]</code> for tiny, frequently called functions in hot paths. Use <code>#[inline]</code> (a hint) for larger ones, trusting LLVM&#39;s judgment.</li>\n<li><strong>Example</strong>: Don&#39;t inline a complex parser, but do inline a 2-line accessor.</li>\n</ul>\n<h3>Profiling</h3>\n<ul>\n<li>Use <code>perf stat -e instructions,cycles</code> or <code>cargo flamegraph</code> to identify call overhead. Only apply <code>#[inline(always)]</code> where data shows a win (e.g., 10%+ cycle reduction).</li>\n<li>Post-optimization, check I-cache misses (<code>perf stat -e iTLB-load-misses</code>) to ensure no regression.</li>\n</ul>\n<h3>Measure Code Size</h3>\n<ul>\n<li>Run <code>size target/release/myapp</code> before and after. If the <code>.text</code> section balloons (e.g., 10KB to 100KB), reconsider inlining larger functions.</li>\n</ul>\n<h3>Alternatives</h3>\n<ul>\n<li>Loop unrolling or iterator fusion (Rust&#39;s zero-cost abstractions) can achieve similar gains without forced inlining.</li>\n<li><strong>Example</strong>: Rewrite <code>parse_stream</code> with <code>fold</code> to let the compiler inline implicitly.</li>\n</ul>\n<h2>Verification</h2>\n<h3>Benchmark</h3>\n<p>With criterion:</p>\n<pre><code class=\"language-rust\">use criterion::{black_box, Criterion};\nfn bench(c: &amp;mut Criterion) {\n    let data = vec![0x1234_5678; 1000];\n    c.bench_function(&quot;inline_parse&quot;, |b| b.iter(|| parse_stream(black_box(&amp;data))));\n}\n</code></pre>\n<p>Compare with and without <code>#[inline(always)]</code>—expect tighter latency.</p>\n<h3>Assembly</h3>\n<p><code>cargo rustc --release -- --emit asm</code> shows <code>shr</code> and <code>and</code> in the loop, no call instructions.</p>\n<h3>Size Check</h3>\n<p><code>ls -lh</code> on the binary confirms minimal growth.</p>\n<h2>Conclusion</h2>\n<p>I&#39;d use <code>#[inline(always)]</code> for small, hot functions like <code>extract_bits</code> in tight loops, ensuring call overhead vanishes and optimizations kick in. Overuse risks bloated binaries and slow compiles, so I&#39;d profile to justify it, fallback to <code>#[inline]</code> elsewhere, and monitor I-cache effects. This balances performance gains with maintainability and scalability in a Rust codebase.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "optimization",
+      "advanced"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Instruction-Level Optimization: #[inline(always)]",
+      "description": "Strategic application of Rust's #[inline(always)] attribute for instruction-level optimization, covering effective usage patterns and risks of overuse",
+      "keywords": [
+        "rust",
+        "optimization",
+        "advanced"
+      ]
+    },
+    "headings": [
+      {
+        "id": "strategic-application",
+        "text": "Strategic Application",
+        "level": 2
+      },
+      {
+        "id": "example-a-bit-manipulation-utility-in-a-real-time-parser",
+        "text": "Example: A bit-manipulation utility in a real-time parser:",
+        "level": 3
+      },
+      {
+        "id": "considerations",
+        "text": "Considerations:",
+        "level": 3
+      },
+      {
+        "id": "downsides-of-overuse",
+        "text": "Downsides of Overuse",
+        "level": 2
+      },
+      {
+        "id": "code-size-increase",
+        "text": "Code Size Increase",
+        "level": 3
+      },
+      {
+        "id": "compile-time",
+        "text": "Compile Time",
+        "level": 3
+      },
+      {
+        "id": "runtime-performance-risks",
+        "text": "Runtime Performance Risks",
+        "level": 3
+      },
+      {
+        "id": "mitigation-strategies",
+        "text": "Mitigation Strategies",
+        "level": 2
+      },
+      {
+        "id": "selective-use",
+        "text": "Selective Use",
+        "level": 3
+      },
+      {
+        "id": "profiling",
+        "text": "Profiling",
+        "level": 3
+      },
+      {
+        "id": "measure-code-size",
+        "text": "Measure Code Size",
+        "level": 3
+      },
+      {
+        "id": "alternatives",
+        "text": "Alternatives",
+        "level": 3
+      },
+      {
+        "id": "verification",
+        "text": "Verification",
+        "level": 2
+      },
+      {
+        "id": "benchmark",
+        "text": "Benchmark",
+        "level": 3
+      },
+      {
+        "id": "assembly",
+        "text": "Assembly",
+        "level": 3
+      },
+      {
+        "id": "size-check",
+        "text": "Size Check",
+        "level": 3
+      },
+      {
+        "id": "conclusion",
+        "text": "Conclusion",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "cache-line-awareness-optimization",
+    "slug": "cache-line-awareness-optimization",
+    "title": "Align data structures to cache lines",
+    "date": "2025-11-04",
+    "excerpt": "Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing",
+    "content": "In a multi-threaded Rust application processing large datasets, cache line awareness is key to maximizing performance. CPU cache lines (typically 64 bytes on modern x86_64 and ARM) dictate how data is fetched, and false sharing—where threads modify adjacent data on the same cache line—can tank throughput due to constant cache invalidation. I'd align data structures to cache lines and use Rust's features to eliminate false sharing, optimizing a multi-threaded workload.\n\n## Designing Cache-Aligned Structures\n\n- **Alignment**: Ensure each thread's data starts on a new cache line using `#[repr(align(64))]`.\n- **Padding**: Add dummy bytes to separate thread-local data, preventing overlap.\n- **Separation**: Split shared data into per-thread chunks, accessed independently.\n\n### Example: A multi-threaded counter where each thread increments its own tally:\n\n```rust\nuse std::sync::atomic::{AtomicU64, Ordering};\nuse std::thread;\n\n// Naive: False sharing likely\nstruct Counters {\n    counts: [AtomicU64; 4], // 4 threads, 8 bytes each = 32 bytes\n}\n\nimpl Counters {\n    fn new() -> Self {\n        Counters {\n            counts: [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)],\n        }\n    }\n}\n```\n\n**Problem**: `counts` is 32 bytes, fitting in one 64-byte cache line. If Thread 0 updates `counts[0]` and Thread 1 updates `counts[1]`, they thrash the same line, serializing access.\n\n## Restructured Cache-Aligned Version\n\n```rust\n#[repr(align(64))] // Align to 64-byte cache line\nstruct CacheAlignedCounter {\n    count: AtomicU64,      // 8 bytes\n    _padding: [u8; 56],    // 56 bytes padding to reach 64\n}\n\nstruct Counters {\n    counts: [CacheAlignedCounter; 4], // 4 threads, 64 bytes each\n}\n\nimpl Counters {\n    fn new() -> Self {\n        Counters {\n            counts: [\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n            ],\n        }\n    }\n\n    fn run(&self) {\n        let mut handles = Vec::new();\n        for i in 0..4 {\n            let counter = &self.counts[i];\n            handles.push(thread::spawn(move || {\n                for _ in 0..1_000_000 {\n                    counter.count.fetch_add(1, Ordering::Relaxed);\n                }\n            }));\n        }\n        for h in handles { h.join().unwrap(); }\n    }\n}\n```\n\n- **Alignment**: `#[repr(align(64))]` ensures each `CacheAlignedCounter` starts on a 64-byte boundary.\n- **Padding**: `_padding` fills the struct to 64 bytes, so `counts[1]` is on a new cache line.\n- **Result**: Each thread updates its own `count` without invalidating others' cache lines.\n\n## Rust Features and Techniques\n\n### #[repr(align(N))]\nForces struct alignment to a power of 2 (e.g., 64), aligning with cache lines.\n\n### Manual Padding\nArrays or unused fields (e.g., `[u8; 56]`) ensure size matches the cache line, avoiding overlap.\n\n### Per-Thread Data\nUse `thread_local!` or an array indexed by thread ID for complete separation:\n\n```rust\nthread_local! {\n    static MY_COUNTER: AtomicU64 = AtomicU64::new(0);\n}\n```\n\n**Atomic Operations**: `fetch_add` with `Relaxed` ordering is safe here (no data dependency), minimizing synchronization overhead.\n\n## Preventing False Sharing\n\n- **Separation**: Each count is 64 bytes apart, so Thread 0's writes to `counts[0]` don't invalidate `counts[1]`.\n- **Size Check**: `std::mem::size_of::<CacheAlignedCounter>()` returns 64, confirming alignment.\n- **Layout**: Avoid packing (e.g., `#[repr(packed)]`) unless explicitly needed—padding is our friend here.\n\n## Verification\n\n### Profiling with perf\nRun `perf stat -e cache-misses,L1-dcache-load-misses ./target/release/app` on both versions:\n- **Naive**: High L1-dcache-load-misses (e.g., 10M) due to false sharing.\n- **Optimized**: Drops significantly (e.g., 1M), as each thread's cache line stays local.\n\n### Benchmarking\n\n```rust\nuse criterion::{black_box, Criterion};\nfn bench(c: &mut Criterion) {\n    let counters = Counters::new();\n    c.bench_function(\"cache_aligned\", |b| b.iter(|| black_box(counters.run())));\n}\n```\n\nExpect 2-5x speedup (e.g., 50ms to 10ms) on a 4-core CPU.\n\n### Memory Layout\n`std::mem::align_of::<CacheAlignedCounter>()` confirms 64-byte alignment.\n\n## Conclusion\n\nI'd align data with `#[repr(align(64))]` and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust's type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. This eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor.",
+    "contentHtml": "<p>In a multi-threaded Rust application processing large datasets, cache line awareness is key to maximizing performance. CPU cache lines (typically 64 bytes on modern x86_64 and ARM) dictate how data is fetched, and false sharing—where threads modify adjacent data on the same cache line—can tank throughput due to constant cache invalidation. I&#39;d align data structures to cache lines and use Rust&#39;s features to eliminate false sharing, optimizing a multi-threaded workload.</p>\n<h2>Designing Cache-Aligned Structures</h2>\n<ul>\n<li><strong>Alignment</strong>: Ensure each thread&#39;s data starts on a new cache line using <code>#[repr(align(64))]</code>.</li>\n<li><strong>Padding</strong>: Add dummy bytes to separate thread-local data, preventing overlap.</li>\n<li><strong>Separation</strong>: Split shared data into per-thread chunks, accessed independently.</li>\n</ul>\n<h3>Example: A multi-threaded counter where each thread increments its own tally:</h3>\n<pre><code class=\"language-rust\">use std::sync::atomic::{AtomicU64, Ordering};\nuse std::thread;\n\n// Naive: False sharing likely\nstruct Counters {\n    counts: [AtomicU64; 4], // 4 threads, 8 bytes each = 32 bytes\n}\n\nimpl Counters {\n    fn new() -&gt; Self {\n        Counters {\n            counts: [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)],\n        }\n    }\n}\n</code></pre>\n<p><strong>Problem</strong>: <code>counts</code> is 32 bytes, fitting in one 64-byte cache line. If Thread 0 updates <code>counts[0]</code> and Thread 1 updates <code>counts[1]</code>, they thrash the same line, serializing access.</p>\n<h2>Restructured Cache-Aligned Version</h2>\n<pre><code class=\"language-rust\">#[repr(align(64))] // Align to 64-byte cache line\nstruct CacheAlignedCounter {\n    count: AtomicU64,      // 8 bytes\n    _padding: [u8; 56],    // 56 bytes padding to reach 64\n}\n\nstruct Counters {\n    counts: [CacheAlignedCounter; 4], // 4 threads, 64 bytes each\n}\n\nimpl Counters {\n    fn new() -&gt; Self {\n        Counters {\n            counts: [\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n                CacheAlignedCounter { count: AtomicU64::new(0), _padding: [0; 56] },\n            ],\n        }\n    }\n\n    fn run(&amp;self) {\n        let mut handles = Vec::new();\n        for i in 0..4 {\n            let counter = &amp;self.counts[i];\n            handles.push(thread::spawn(move || {\n                for _ in 0..1_000_000 {\n                    counter.count.fetch_add(1, Ordering::Relaxed);\n                }\n            }));\n        }\n        for h in handles { h.join().unwrap(); }\n    }\n}\n</code></pre>\n<ul>\n<li><strong>Alignment</strong>: <code>#[repr(align(64))]</code> ensures each <code>CacheAlignedCounter</code> starts on a 64-byte boundary.</li>\n<li><strong>Padding</strong>: <code>_padding</code> fills the struct to 64 bytes, so <code>counts[1]</code> is on a new cache line.</li>\n<li><strong>Result</strong>: Each thread updates its own <code>count</code> without invalidating others&#39; cache lines.</li>\n</ul>\n<h2>Rust Features and Techniques</h2>\n<h3>#[repr(align(N))]</h3>\n<p>Forces struct alignment to a power of 2 (e.g., 64), aligning with cache lines.</p>\n<h3>Manual Padding</h3>\n<p>Arrays or unused fields (e.g., <code>[u8; 56]</code>) ensure size matches the cache line, avoiding overlap.</p>\n<h3>Per-Thread Data</h3>\n<p>Use <code>thread_local!</code> or an array indexed by thread ID for complete separation:</p>\n<pre><code class=\"language-rust\">thread_local! {\n    static MY_COUNTER: AtomicU64 = AtomicU64::new(0);\n}\n</code></pre>\n<p><strong>Atomic Operations</strong>: <code>fetch_add</code> with <code>Relaxed</code> ordering is safe here (no data dependency), minimizing synchronization overhead.</p>\n<h2>Preventing False Sharing</h2>\n<ul>\n<li><strong>Separation</strong>: Each count is 64 bytes apart, so Thread 0&#39;s writes to <code>counts[0]</code> don&#39;t invalidate <code>counts[1]</code>.</li>\n<li><strong>Size Check</strong>: <code>std::mem::size_of::&lt;CacheAlignedCounter&gt;()</code> returns 64, confirming alignment.</li>\n<li><strong>Layout</strong>: Avoid packing (e.g., <code>#[repr(packed)]</code>) unless explicitly needed—padding is our friend here.</li>\n</ul>\n<h2>Verification</h2>\n<h3>Profiling with perf</h3>\n<p>Run <code>perf stat -e cache-misses,L1-dcache-load-misses ./target/release/app</code> on both versions:</p>\n<ul>\n<li><strong>Naive</strong>: High L1-dcache-load-misses (e.g., 10M) due to false sharing.</li>\n<li><strong>Optimized</strong>: Drops significantly (e.g., 1M), as each thread&#39;s cache line stays local.</li>\n</ul>\n<h3>Benchmarking</h3>\n<pre><code class=\"language-rust\">use criterion::{black_box, Criterion};\nfn bench(c: &amp;mut Criterion) {\n    let counters = Counters::new();\n    c.bench_function(&quot;cache_aligned&quot;, |b| b.iter(|| black_box(counters.run())));\n}\n</code></pre>\n<p>Expect 2-5x speedup (e.g., 50ms to 10ms) on a 4-core CPU.</p>\n<h3>Memory Layout</h3>\n<p><code>std::mem::align_of::&lt;CacheAlignedCounter&gt;()</code> confirms 64-byte alignment.</p>\n<h2>Conclusion</h2>\n<p>I&#39;d align data with <code>#[repr(align(64))]</code> and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust&#39;s type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. This eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "optimization",
+      "advanced"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Align data structures to cache lines",
+      "description": "Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing",
+      "keywords": [
+        "rust",
+        "optimization",
+        "advanced"
+      ]
+    },
+    "headings": [
+      {
+        "id": "designing-cache-aligned-structures",
+        "text": "Designing Cache-Aligned Structures",
+        "level": 2
+      },
+      {
+        "id": "example-a-multi-threaded-counter-where-each-thread-increments-its-own-tally",
+        "text": "Example: A multi-threaded counter where each thread increments its own tally:",
+        "level": 3
+      },
+      {
+        "id": "restructured-cache-aligned-version",
+        "text": "Restructured Cache-Aligned Version",
+        "level": 2
+      },
+      {
+        "id": "rust-features-and-techniques",
+        "text": "Rust Features and Techniques",
+        "level": 2
+      },
+      {
+        "id": "repralignn",
+        "text": "#[repr(align(N))]",
+        "level": 3
+      },
+      {
+        "id": "manual-padding",
+        "text": "Manual Padding",
+        "level": 3
+      },
+      {
+        "id": "per-thread-data",
+        "text": "Per-Thread Data",
+        "level": 3
+      },
+      {
+        "id": "preventing-false-sharing",
+        "text": "Preventing False Sharing",
+        "level": 2
+      },
+      {
+        "id": "verification",
+        "text": "Verification",
+        "level": 2
+      },
+      {
+        "id": "profiling-with-perf",
+        "text": "Profiling with perf",
+        "level": 3
+      },
+      {
+        "id": "benchmarking",
+        "text": "Benchmarking",
+        "level": 3
+      },
+      {
+        "id": "memory-layout",
+        "text": "Memory Layout",
+        "level": 3
+      },
+      {
+        "id": "conclusion",
+        "text": "Conclusion",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "inline-assembly-rust",
+    "slug": "inline-assembly-rust",
+    "title": "Mastering Inline Assembly in Rust: When and How to Optimize Safely",
+    "date": "2025-11-03",
+    "excerpt": "Low-level optimization in Rust, focusing on using inline assembly for performance-critical tasks",
+    "content": "Inline assembly in Rust, via the `asm!` macro or `core::arch` intrinsics, is a powerful but rare tool for optimizing performance-critical code when the compiler or standard libraries fall short. I’ll outline when to use it, provide an example implementation, and detail strategies to ensure safety and portability across architectures.\n\n## Scenarios for Inline Assembly\n\nInline assembly is justified in these cases:\n- **Unique CPU Instructions**: When a task requires instructions Rust can’t generate (e.g., x86’s `popcnt` for bit counting, if not using `count_ones()`).\n- **Extreme Optimization**: When hand-tuned register use or cycle shaving in a hot loop outperforms LLVM’s optimizations.\n- **Legacy Integration**: When interfacing with assembly-only hardware routines (e.g., custom interrupt handlers).\n\n## Example Scenario: Bit-Counting Loop\n\nConsider optimizing a cryptography function that counts set bits in a 64-bit integer array for Hamming distance in a real-time system. Rust’s `u64::count_ones()` uses `popcnt` on x86_64 if available, but I need a custom loop with manual unrolling and pipelining for a specific CPU (e.g., Skylake with AVX2 disabled), where profiling shows a bottleneck.\n\n### Implementation with `asm!`\n\nHere’s a bit-counting loop for x86_64:\n\n```rust\n#[cfg(target_arch = \"x86_64\")]\nunsafe fn count_bits(data: &[u64]) -> u64 {\n    let mut total: u64 = 0;\n    for chunk in data.chunks(4) { // Process 4 elements at a time\n        let mut sum: u64;\n        asm!(\n            \"xor {sum}, {sum}         \\n\\t\", // Zero sum\n            \"popcnt {tmp}, {x0}       \\n\\t\", // Count bits in first element\n            \"add {sum}, {tmp}         \\n\\t\",\n            \"popcnt {tmp}, {x1}       \\n\\t\", // Second element\n            \"add {sum}, {tmp}         \\n\\t\",\n            \"popcnt {tmp}, {x2}       \\n\\t\", // Third\n            \"add {sum}, {tmp}         \\n\\t\",\n            \"popcnt {tmp}, {x3}       \\n\\t\", // Fourth\n            \"add {sum}, {tmp}         \\n\\t\",\n            sum = out(reg) sum,          // Output: total bits\n            x0 = in(reg) chunk.get(0).copied().unwrap_or(0), // Inputs: 4 elements\n            x1 = in(reg) chunk.get(1).copied().unwrap_or(0),\n            x2 = in(reg) chunk.get(2).copied().unwrap_or(0),\n            x3 = in(reg) chunk.get(3).copied().unwrap_or(0),\n            tmp = out(reg) _,            // Temp register for popcnt\n            options(nostack, pure)       // No stack, deterministic\n        );\n        total += sum;\n    }\n    total\n}\n```\n\n**Why `asm!`?**: Manual unrolling and register control maximize CPU pipeline efficiency, potentially outperforming `count_ones()` by avoiding function call overhead and leveraging instruction-level parallelism.\n\n**Safe Abstraction**:\n```rust\npub fn total_bits(data: &[u64]) -> u64 {\n    if cfg!(target_arch = \"x86_64\") && is_x86_feature_detected!(\"popcnt\") {\n        unsafe { count_bits(data) }\n    } else {\n        data.iter().map(|x| x.count_ones() as u64).sum() // Fallback\n    }\n}\n```\n\n## Ensuring Safety\n\n- **Unsafe Scope**: The `asm!` block is confined to an `unsafe` function, clearly signaling risk. I’d document invariants (e.g., “data must be valid memory”).\n- **Register Management**: Use `in(reg)` for inputs, `out(reg)` for outputs, and clobber `tmp` to avoid corrupting caller state. `options(nostack)` prevents stack interference.\n- **No Undefined Behavior**: Avoid memory access in assembly; rely on Rust for bounds-checked loads. Test edge cases (e.g., empty or short chunks).\n- **Validation**: Unit tests with known inputs (e.g., `0xFFFF_FFFF_FFFF_FFFF` → 64 bits) ensure correctness against the scalar version.\n\n## Ensuring",
+    "contentHtml": "<p>Inline assembly in Rust, via the <code>asm!</code> macro or <code>core::arch</code> intrinsics, is a powerful but rare tool for optimizing performance-critical code when the compiler or standard libraries fall short. I’ll outline when to use it, provide an example implementation, and detail strategies to ensure safety and portability across architectures.</p>\n<h2>Scenarios for Inline Assembly</h2>\n<p>Inline assembly is justified in these cases:</p>\n<ul>\n<li><strong>Unique CPU Instructions</strong>: When a task requires instructions Rust can’t generate (e.g., x86’s <code>popcnt</code> for bit counting, if not using <code>count_ones()</code>).</li>\n<li><strong>Extreme Optimization</strong>: When hand-tuned register use or cycle shaving in a hot loop outperforms LLVM’s optimizations.</li>\n<li><strong>Legacy Integration</strong>: When interfacing with assembly-only hardware routines (e.g., custom interrupt handlers).</li>\n</ul>\n<h2>Example Scenario: Bit-Counting Loop</h2>\n<p>Consider optimizing a cryptography function that counts set bits in a 64-bit integer array for Hamming distance in a real-time system. Rust’s <code>u64::count_ones()</code> uses <code>popcnt</code> on x86_64 if available, but I need a custom loop with manual unrolling and pipelining for a specific CPU (e.g., Skylake with AVX2 disabled), where profiling shows a bottleneck.</p>\n<h3>Implementation with <code>asm!</code></h3>\n<p>Here’s a bit-counting loop for x86_64:</p>\n<pre><code class=\"language-rust\">#[cfg(target_arch = &quot;x86_64&quot;)]\nunsafe fn count_bits(data: &amp;[u64]) -&gt; u64 {\n    let mut total: u64 = 0;\n    for chunk in data.chunks(4) { // Process 4 elements at a time\n        let mut sum: u64;\n        asm!(\n            &quot;xor {sum}, {sum}         \\n\\t&quot;, // Zero sum\n            &quot;popcnt {tmp}, {x0}       \\n\\t&quot;, // Count bits in first element\n            &quot;add {sum}, {tmp}         \\n\\t&quot;,\n            &quot;popcnt {tmp}, {x1}       \\n\\t&quot;, // Second element\n            &quot;add {sum}, {tmp}         \\n\\t&quot;,\n            &quot;popcnt {tmp}, {x2}       \\n\\t&quot;, // Third\n            &quot;add {sum}, {tmp}         \\n\\t&quot;,\n            &quot;popcnt {tmp}, {x3}       \\n\\t&quot;, // Fourth\n            &quot;add {sum}, {tmp}         \\n\\t&quot;,\n            sum = out(reg) sum,          // Output: total bits\n            x0 = in(reg) chunk.get(0).copied().unwrap_or(0), // Inputs: 4 elements\n            x1 = in(reg) chunk.get(1).copied().unwrap_or(0),\n            x2 = in(reg) chunk.get(2).copied().unwrap_or(0),\n            x3 = in(reg) chunk.get(3).copied().unwrap_or(0),\n            tmp = out(reg) _,            // Temp register for popcnt\n            options(nostack, pure)       // No stack, deterministic\n        );\n        total += sum;\n    }\n    total\n}\n</code></pre>\n<p><strong>Why <code>asm!</code>?</strong>: Manual unrolling and register control maximize CPU pipeline efficiency, potentially outperforming <code>count_ones()</code> by avoiding function call overhead and leveraging instruction-level parallelism.</p>\n<p><strong>Safe Abstraction</strong>:</p>\n<pre><code class=\"language-rust\">pub fn total_bits(data: &amp;[u64]) -&gt; u64 {\n    if cfg!(target_arch = &quot;x86_64&quot;) &amp;&amp; is_x86_feature_detected!(&quot;popcnt&quot;) {\n        unsafe { count_bits(data) }\n    } else {\n        data.iter().map(|x| x.count_ones() as u64).sum() // Fallback\n    }\n}\n</code></pre>\n<h2>Ensuring Safety</h2>\n<ul>\n<li><strong>Unsafe Scope</strong>: The <code>asm!</code> block is confined to an <code>unsafe</code> function, clearly signaling risk. I’d document invariants (e.g., “data must be valid memory”).</li>\n<li><strong>Register Management</strong>: Use <code>in(reg)</code> for inputs, <code>out(reg)</code> for outputs, and clobber <code>tmp</code> to avoid corrupting caller state. <code>options(nostack)</code> prevents stack interference.</li>\n<li><strong>No Undefined Behavior</strong>: Avoid memory access in assembly; rely on Rust for bounds-checked loads. Test edge cases (e.g., empty or short chunks).</li>\n<li><strong>Validation</strong>: Unit tests with known inputs (e.g., <code>0xFFFF_FFFF_FFFF_FFFF</code> → 64 bits) ensure correctness against the scalar version.</li>\n</ul>\n<h2>Ensuring</h2>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "optimization",
+      "advanced"
+    ],
+    "readingTime": "3 min",
+    "locale": "en",
+    "seo": {
+      "title": "Mastering Inline Assembly in Rust: When and How to Optimize Safely",
+      "description": "Low-level optimization in Rust, focusing on using inline assembly for performance-critical tasks",
+      "keywords": [
+        "rust",
+        "optimization",
+        "advanced"
+      ]
+    },
+    "headings": [
+      {
+        "id": "scenarios-for-inline-assembly",
+        "text": "Scenarios for Inline Assembly",
+        "level": 2
+      },
+      {
+        "id": "example-scenario-bit-counting-loop",
+        "text": "Example Scenario: Bit-Counting Loop",
+        "level": 2
+      },
+      {
+        "id": "implementation-with-asm",
+        "text": "Implementation with `asm!`",
+        "level": 3
+      },
+      {
+        "id": "ensuring-safety",
+        "text": "Ensuring Safety",
+        "level": 2
+      },
+      {
+        "id": "ensuring",
+        "text": "Ensuring",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "move-closures-rust",
+    "slug": "move-closures-rust-javascript-developers",
+    "title": "Understanding Rust Move Closures: A Guide for JavaScript Developers",
+    "date": "2025-11-02",
+    "excerpt": "Learn how Rust move closures work compared to JavaScript closures - ownership, threading, and when to use the move keyword",
+    "content": "Coming from JavaScript? Closures work differently in Rust. A `move` closure forces ownership transfer of captured variables—no shared references like JS. This is the bridge between JavaScript's automatic closures and Rust's ownership model.\n\n## The JavaScript Baseline\n\nIn JavaScript, closures capture variables by reference automatically:\n\n```javascript\nconst makeCounter = () => {\n  let count = 0;\n  return () => count++; // captures `count` by reference\n};\n\nconst counter = makeCounter();\nconsole.log(counter()); // 0\nconsole.log(counter()); // 1\n```\n\nThe closure shares the same `count` variable. No copying, no moving—just a reference that lives as long as the closure does.\n\n## Rust's Explicit Choice\n\nRust makes you choose: borrow or own. Regular closures borrow:\n\n```rust\nlet mut count = 0;\nlet increment = || count += 1; // borrows `count` mutably\n```\n\n`move` closures take ownership:\n\n```rust\nlet count = 0;\nlet increment = move || count + 1; // `count` moved/copied into closure\n```\n\n### Ownership Transfer Mechanics\n\nFor **non-Copy** types like `String` or `Vec`, the closure takes ownership:\n\n```rust\nlet s = String::from(\"hello\");\nlet closure = move || println!(\"{}\", s); // `s` moved into closure\n// println!(\"{}\", s); // ERROR: `s` no longer valid\n```\n\nFor **Copy** types like `i32` or `bool`, the value is copied:\n\n```rust\nlet x = 42;\nlet closure = move || println!(\"{}\", x); // `x` copied\nprintln!(\"{}\", x); // OK: original `x` still valid\n```\n\n### When You Need `move`\n\n#### Threading\n\nIn JavaScript, you'd share state across async operations without thinking:\n\n```javascript\nconst data = [1, 2, 3];\nsetTimeout(() => {\n  console.log(data); // just works\n}, 100);\n```\n\nRust threads must own their data:\n\n```rust\nuse std::thread;\n\nlet data = vec![1, 2, 3];\nlet handle = thread::spawn(move || {\n    println!(\"{:?}\", data); // `data` owned by thread\n});\n// println!(\"{:?}\", data); // ERROR: moved\nhandle.join().unwrap();\n```\n\nWithout `move`, the compiler rejects this—the thread might outlive `data`.\n\n#### Returning Closures\n\nJavaScript factories work by reference:\n\n```javascript\nconst makeAdder = (x) => (y) => x + y; // `x` captured by reference\n\nconst addFive = makeAdder(5);\nconsole.log(addFive(3)); // 8\n```\n\nRust closures must own what they outlive:\n\n```rust\nfn make_adder(x: i32) -> impl Fn(i32) -> i32 {\n    move |y| x + y // `x` must be moved\n}\n\nlet add_five = make_adder(5);\nprintln!(\"{}\", add_five(3)); // 8\n```\n\nThe closure outlives the function scope, so it needs ownership of `x`.\n\n#### Async Blocks\n\nSimilar to threads, async blocks often need `move` when sent across tasks:\n\n```rust\nlet value = String::from(\"async\");\nlet future = async move {\n    println!(\"{}\", value);\n};\n// tokio::spawn requires 'static lifetime\ntokio::spawn(future);\n```\n\n### Borrow vs Own: The Core Difference\n\nJavaScript closures always share:\n\n```javascript\nlet count = 0;\nconst increment = () => count += 1;\nincrement();\nconsole.log(count); // 1 - same `count`\n```\n\nRust regular closures borrow:\n\n```rust\nlet mut count = 0;\nlet mut increment = || count += 1; // mutable borrow\nincrement();\nprintln!(\"{}\", count); // 1 - same `count`\n```\n\nRust `move` closures own:\n\n```rust\nlet mut count = 0;\nlet mut increment = move || count += 1; // `count` moved\nincrement();\n// println!(\"{}\", count); // ERROR: `count` moved\n```\n\nThe moved `count` is independent—changes inside don't affect the original.\n\n## The Paradigm Shift from JavaScript\n\nJavaScript: closures capture by reference implicitly. The GC manages lifetime. You never think about ownership:\n\n```javascript\nconst createHandler = () => {\n  const state = { count: 0 };\n  return () => state.count++; // reference lives as long as needed\n};\n```\n\nRust: you choose explicitly. Borrow for local use. Move for ownership transfer:\n\n```rust\nfn create_handler() -> impl FnMut() -> i32 {\n    let mut state = 0;\n    move || {\n        state += 1;\n        state\n    } // `state` owned by closure\n}\n```\n\nThis prevents data races and use-after-free at compile time—guarantees JavaScript can't make.\n\n## Summary\n\n| Scenario | Use `move` | Reason |\n|----------|-----------|---------|\n| Threading | Yes | Thread may outlive scope |\n| Returning closures | Yes | Closure outlives function |\n| Async tasks | Often | Task needs 'static lifetime |\n| Local use | No | Borrowing is sufficient |\n\n**Core principle:** If a closure outlives its environment or needs to be `Send`, use `move`. Otherwise, let the borrow checker choose the minimal capture mode.\n\nThe `move` keyword is Rust's way of saying: \"This closure now owns these variables.\" It's not just syntax—it's a contract enforced at compile time, eliminating entire classes of runtime errors that plague languages with garbage collection.",
+    "contentHtml": "<p>Coming from JavaScript? Closures work differently in Rust. A <code>move</code> closure forces ownership transfer of captured variables—no shared references like JS. This is the bridge between JavaScript&#39;s automatic closures and Rust&#39;s ownership model.</p>\n<h2>The JavaScript Baseline</h2>\n<p>In JavaScript, closures capture variables by reference automatically:</p>\n<pre><code class=\"language-javascript\">const makeCounter = () =&gt; {\n  let count = 0;\n  return () =&gt; count++; // captures `count` by reference\n};\n\nconst counter = makeCounter();\nconsole.log(counter()); // 0\nconsole.log(counter()); // 1\n</code></pre>\n<p>The closure shares the same <code>count</code> variable. No copying, no moving—just a reference that lives as long as the closure does.</p>\n<h2>Rust&#39;s Explicit Choice</h2>\n<p>Rust makes you choose: borrow or own. Regular closures borrow:</p>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet increment = || count += 1; // borrows `count` mutably\n</code></pre>\n<p><code>move</code> closures take ownership:</p>\n<pre><code class=\"language-rust\">let count = 0;\nlet increment = move || count + 1; // `count` moved/copied into closure\n</code></pre>\n<h3>Ownership Transfer Mechanics</h3>\n<p>For <strong>non-Copy</strong> types like <code>String</code> or <code>Vec</code>, the closure takes ownership:</p>\n<pre><code class=\"language-rust\">let s = String::from(&quot;hello&quot;);\nlet closure = move || println!(&quot;{}&quot;, s); // `s` moved into closure\n// println!(&quot;{}&quot;, s); // ERROR: `s` no longer valid\n</code></pre>\n<p>For <strong>Copy</strong> types like <code>i32</code> or <code>bool</code>, the value is copied:</p>\n<pre><code class=\"language-rust\">let x = 42;\nlet closure = move || println!(&quot;{}&quot;, x); // `x` copied\nprintln!(&quot;{}&quot;, x); // OK: original `x` still valid\n</code></pre>\n<h3>When You Need <code>move</code></h3>\n<h4>Threading</h4>\n<p>In JavaScript, you&#39;d share state across async operations without thinking:</p>\n<pre><code class=\"language-javascript\">const data = [1, 2, 3];\nsetTimeout(() =&gt; {\n  console.log(data); // just works\n}, 100);\n</code></pre>\n<p>Rust threads must own their data:</p>\n<pre><code class=\"language-rust\">use std::thread;\n\nlet data = vec![1, 2, 3];\nlet handle = thread::spawn(move || {\n    println!(&quot;{:?}&quot;, data); // `data` owned by thread\n});\n// println!(&quot;{:?}&quot;, data); // ERROR: moved\nhandle.join().unwrap();\n</code></pre>\n<p>Without <code>move</code>, the compiler rejects this—the thread might outlive <code>data</code>.</p>\n<h4>Returning Closures</h4>\n<p>JavaScript factories work by reference:</p>\n<pre><code class=\"language-javascript\">const makeAdder = (x) =&gt; (y) =&gt; x + y; // `x` captured by reference\n\nconst addFive = makeAdder(5);\nconsole.log(addFive(3)); // 8\n</code></pre>\n<p>Rust closures must own what they outlive:</p>\n<pre><code class=\"language-rust\">fn make_adder(x: i32) -&gt; impl Fn(i32) -&gt; i32 {\n    move |y| x + y // `x` must be moved\n}\n\nlet add_five = make_adder(5);\nprintln!(&quot;{}&quot;, add_five(3)); // 8\n</code></pre>\n<p>The closure outlives the function scope, so it needs ownership of <code>x</code>.</p>\n<h4>Async Blocks</h4>\n<p>Similar to threads, async blocks often need <code>move</code> when sent across tasks:</p>\n<pre><code class=\"language-rust\">let value = String::from(&quot;async&quot;);\nlet future = async move {\n    println!(&quot;{}&quot;, value);\n};\n// tokio::spawn requires &#39;static lifetime\ntokio::spawn(future);\n</code></pre>\n<h3>Borrow vs Own: The Core Difference</h3>\n<p>JavaScript closures always share:</p>\n<pre><code class=\"language-javascript\">let count = 0;\nconst increment = () =&gt; count += 1;\nincrement();\nconsole.log(count); // 1 - same `count`\n</code></pre>\n<p>Rust regular closures borrow:</p>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet mut increment = || count += 1; // mutable borrow\nincrement();\nprintln!(&quot;{}&quot;, count); // 1 - same `count`\n</code></pre>\n<p>Rust <code>move</code> closures own:</p>\n<pre><code class=\"language-rust\">let mut count = 0;\nlet mut increment = move || count += 1; // `count` moved\nincrement();\n// println!(&quot;{}&quot;, count); // ERROR: `count` moved\n</code></pre>\n<p>The moved <code>count</code> is independent—changes inside don&#39;t affect the original.</p>\n<h2>The Paradigm Shift from JavaScript</h2>\n<p>JavaScript: closures capture by reference implicitly. The GC manages lifetime. You never think about ownership:</p>\n<pre><code class=\"language-javascript\">const createHandler = () =&gt; {\n  const state = { count: 0 };\n  return () =&gt; state.count++; // reference lives as long as needed\n};\n</code></pre>\n<p>Rust: you choose explicitly. Borrow for local use. Move for ownership transfer:</p>\n<pre><code class=\"language-rust\">fn create_handler() -&gt; impl FnMut() -&gt; i32 {\n    let mut state = 0;\n    move || {\n        state += 1;\n        state\n    } // `state` owned by closure\n}\n</code></pre>\n<p>This prevents data races and use-after-free at compile time—guarantees JavaScript can&#39;t make.</p>\n<h2>Summary</h2>\n<table>\n<thead>\n<tr>\n<th>Scenario</th>\n<th>Use <code>move</code></th>\n<th>Reason</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Threading</td>\n<td>Yes</td>\n<td>Thread may outlive scope</td>\n</tr>\n<tr>\n<td>Returning closures</td>\n<td>Yes</td>\n<td>Closure outlives function</td>\n</tr>\n<tr>\n<td>Async tasks</td>\n<td>Often</td>\n<td>Task needs &#39;static lifetime</td>\n</tr>\n<tr>\n<td>Local use</td>\n<td>No</td>\n<td>Borrowing is sufficient</td>\n</tr>\n</tbody></table>\n<p><strong>Core principle:</strong> If a closure outlives its environment or needs to be <code>Send</code>, use <code>move</code>. Otherwise, let the borrow checker choose the minimal capture mode.</p>\n<p>The <code>move</code> keyword is Rust&#39;s way of saying: &quot;This closure now owns these variables.&quot; It&#39;s not just syntax—it&#39;s a contract enforced at compile time, eliminating entire classes of runtime errors that plague languages with garbage collection.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "closures",
+      "javascript",
+      "typescript"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Understanding Rust Move Closures: A Guide for JavaScript Developers",
+      "description": "Learn how Rust move closures work compared to JavaScript closures - ownership, threading, and when to use the move keyword",
+      "keywords": [
+        "rust",
+        "closures",
+        "javascript",
+        "typescript"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-javascript-baseline",
+        "text": "The JavaScript Baseline",
+        "level": 2
+      },
+      {
+        "id": "rusts-explicit-choice",
+        "text": "Rust's Explicit Choice",
+        "level": 2
+      },
+      {
+        "id": "ownership-transfer-mechanics",
+        "text": "Ownership Transfer Mechanics",
+        "level": 3
+      },
+      {
+        "id": "when-you-need-move",
+        "text": "When You Need `move`",
+        "level": 3
+      },
+      {
+        "id": "threading",
+        "text": "Threading",
+        "level": 4
+      },
+      {
+        "id": "returning-closures",
+        "text": "Returning Closures",
+        "level": 4
+      },
+      {
+        "id": "async-blocks",
+        "text": "Async Blocks",
+        "level": 4
+      },
+      {
+        "id": "borrow-vs-own-the-core-difference",
+        "text": "Borrow vs Own: The Core Difference",
+        "level": 3
+      },
+      {
+        "id": "the-paradigm-shift-from-javascript",
+        "text": "The Paradigm Shift from JavaScript",
+        "level": 2
+      },
+      {
+        "id": "summary",
+        "text": "Summary",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "profiling-optimization-rust",
+    "slug": "profiling-optimization-rust",
+    "title": "Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion",
+    "date": "2025-11-02",
+    "excerpt": "Low-level optimization in Rust, focusing on profiling tools to identify and fix performance bottlenecks like L1 cache misses",
+    "content": "Profiling and optimizing low-level performance bottlenecks in a Rust codebase, such as excessive L1 cache misses, requires a systematic approach using specialized tools. I’ll detail how to use `perf`, `cargo flamegraph`, and `criterion` to diagnose and optimize a performance-critical section, ensuring measurable improvements.\n\n## Tools and Their Roles\n\n- **`perf` (Linux)**: A system-level profiler for hardware events like cache misses, cycles, and instructions. Ideal for pinpointing L1 cache issues across the application.\n- **`cargo flamegraph`**: Generates visual flame graphs to identify where time is spent, correlating cache misses to specific functions.\n- **`criterion`**: A microbenchmarking tool for precise, repeatable measurements of small code sections, perfect for before-and-after optimization comparisons.\n\n## Example Scenario\n\nConsider a Rust application processing a large array of structs, where `perf` reveals high L1 cache miss rates causing slowdowns:\n\n```rust\nstruct Point { x: f32, y: f32, z: f32 } // 12 bytes\nfn process_points(points: &mut [Point]) {\n    for p in points {\n        p.x += 1.0; // Scattered access\n        p.y += 1.0;\n        p.z += 1.0;\n    }\n}\n```\n\n**Problem**: The Array-of-Structs (AoS) layout causes poor locality, as accessing only `x` pulls unnecessary `y` and `z` into the 64-byte L1 cache line, leading to excessive misses.\n\n## Workflow to Optimize L1 Cache Misses\n\n### 1. Setup and Reproduce\n- Compile with `--release` for realistic performance (`cargo build --release`).\n- Run the app with a representative workload (e.g., 1M `Point`s).\n\n### 2. Diagnose with `perf`\n- **Command**: `perf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses ./target/release/app`\n- **Sample Output**:\n  ```\n  10,000,000,000 cycles\n  15,000,000,000 instructions\n  5,000,000,000 L1-dcache-loads\n  500,000,000 L1-dcache-load-misses (10.00%)\n  ```\n- **Insight**: A 10% miss rate is high (ideal: <1-2%). L1 misses (50-100 cycles each) dominate runtime.\n\n### 3. Locate with `cargo flamegraph`\n- **Install**: `cargo install flamegraph`\n- **Run**: `cargo flamegraph --bin app`\n- **Output**: An SVG flame graph shows `process_points` taking 80% of time, with flat peaks indicating memory stalls.\n- **Hypothesis**: Strided access across `x`, `y`, `z` fetches unnecessary data per cache line.\n\n### 4. Microbenchmark with `criterion`\n- **Setup**:\n  ```rust\n  use criterion::{black_box, Criterion};\n  fn bench(c: &mut Criterion) {\n      let mut points = vec![Point { x: 0.0, y: 0.0, z: 0.0 }; 1_000_000];\n      c.bench_function(\"process_points\", |b| b.iter(|| process_points(black_box(&mut points))));\n  }\n  ```\n- **Baseline**: 50ms per iteration, high variance due to cache misses.\n\n### 5. Optimize\n- **Switch to Struct-of-Arrays (SoA)**:\n  ```rust\n  struct Points { xs: Vec<f32>, ys: Vec<f32>, zs: Vec<f32> }\n  impl Points {\n      fn new(n: usize) -> Self {\n          Points { xs: vec![0.0; n], ys: vec![0.0; n], zs: vec![0.0; n] }\n      }\n      fn process(&mut self) {\n          for x in &mut self.xs { *x += 1.0; } // Contiguous access\n      }\n  }\n  ```\n- **Why**: Contiguous `xs` fits 16 `f32`s per 64-byte cache line (vs. 5 `Point`s with padding), reducing loads and misses.\n- **Alternative**: If AoS is required, align `Point` with `#[repr(align(16))]` and pad to 16 bytes to reduce partial line fetches.\n\n### 6. Verify\n- **perf**: Re-run `perf stat`:\n  ```\n  8,000,000,000 cycles\n  12,000,000,000 instructions\n  3,000,000,000 L1-dcache-loads\n  30,000,000 L1-dcache-load-misses (1.00%)\n  ```\n  Misses drop to 1%, cycles decrease by 20%.\n- **Flamegraph**: New graph shows `process` as a narrower peak, less memory-bound.\n- **criterion**: Time drops to 40ms, with tighter variance, confirming cache efficiency.\n\n## Optimization Steps\n\n- **Hypothesis**: Poor locality from AoS layout.\n- **Fix**: Refactor to SoA for contiguous access.\n- **Iterate**: If misses persist, check alignment (`std::mem::align_of`), stride, or false sharing (e.g., in multi-threaded cases).\n\n## Conclusion\n\nTo tackle L1 cache misses in a Rust codebase, I’d use `perf` to detect high miss rates, `cargo flamegraph` to pinpoint the culprit, and `criterion` to measure improvements.\n\nThe workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results.\n\nIn this case, switching to an SoA layout slashed cache misses, boosting throughput, as confirmed by profiling tools. This approach helps developers to solve bottlenecks efficiently.",
+    "contentHtml": "<p>Profiling and optimizing low-level performance bottlenecks in a Rust codebase, such as excessive L1 cache misses, requires a systematic approach using specialized tools. I’ll detail how to use <code>perf</code>, <code>cargo flamegraph</code>, and <code>criterion</code> to diagnose and optimize a performance-critical section, ensuring measurable improvements.</p>\n<h2>Tools and Their Roles</h2>\n<ul>\n<li><strong><code>perf</code> (Linux)</strong>: A system-level profiler for hardware events like cache misses, cycles, and instructions. Ideal for pinpointing L1 cache issues across the application.</li>\n<li><strong><code>cargo flamegraph</code></strong>: Generates visual flame graphs to identify where time is spent, correlating cache misses to specific functions.</li>\n<li><strong><code>criterion</code></strong>: A microbenchmarking tool for precise, repeatable measurements of small code sections, perfect for before-and-after optimization comparisons.</li>\n</ul>\n<h2>Example Scenario</h2>\n<p>Consider a Rust application processing a large array of structs, where <code>perf</code> reveals high L1 cache miss rates causing slowdowns:</p>\n<pre><code class=\"language-rust\">struct Point { x: f32, y: f32, z: f32 } // 12 bytes\nfn process_points(points: &amp;mut [Point]) {\n    for p in points {\n        p.x += 1.0; // Scattered access\n        p.y += 1.0;\n        p.z += 1.0;\n    }\n}\n</code></pre>\n<p><strong>Problem</strong>: The Array-of-Structs (AoS) layout causes poor locality, as accessing only <code>x</code> pulls unnecessary <code>y</code> and <code>z</code> into the 64-byte L1 cache line, leading to excessive misses.</p>\n<h2>Workflow to Optimize L1 Cache Misses</h2>\n<h3>1. Setup and Reproduce</h3>\n<ul>\n<li>Compile with <code>--release</code> for realistic performance (<code>cargo build --release</code>).</li>\n<li>Run the app with a representative workload (e.g., 1M <code>Point</code>s).</li>\n</ul>\n<h3>2. Diagnose with <code>perf</code></h3>\n<ul>\n<li><strong>Command</strong>: <code>perf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses ./target/release/app</code></li>\n<li><strong>Sample Output</strong>:<pre><code>10,000,000,000 cycles\n15,000,000,000 instructions\n5,000,000,000 L1-dcache-loads\n500,000,000 L1-dcache-load-misses (10.00%)\n</code></pre>\n</li>\n<li><strong>Insight</strong>: A 10% miss rate is high (ideal: &lt;1-2%). L1 misses (50-100 cycles each) dominate runtime.</li>\n</ul>\n<h3>3. Locate with <code>cargo flamegraph</code></h3>\n<ul>\n<li><strong>Install</strong>: <code>cargo install flamegraph</code></li>\n<li><strong>Run</strong>: <code>cargo flamegraph --bin app</code></li>\n<li><strong>Output</strong>: An SVG flame graph shows <code>process_points</code> taking 80% of time, with flat peaks indicating memory stalls.</li>\n<li><strong>Hypothesis</strong>: Strided access across <code>x</code>, <code>y</code>, <code>z</code> fetches unnecessary data per cache line.</li>\n</ul>\n<h3>4. Microbenchmark with <code>criterion</code></h3>\n<ul>\n<li><strong>Setup</strong>:<pre><code class=\"language-rust\">use criterion::{black_box, Criterion};\nfn bench(c: &amp;mut Criterion) {\n    let mut points = vec![Point { x: 0.0, y: 0.0, z: 0.0 }; 1_000_000];\n    c.bench_function(&quot;process_points&quot;, |b| b.iter(|| process_points(black_box(&amp;mut points))));\n}\n</code></pre>\n</li>\n<li><strong>Baseline</strong>: 50ms per iteration, high variance due to cache misses.</li>\n</ul>\n<h3>5. Optimize</h3>\n<ul>\n<li><strong>Switch to Struct-of-Arrays (SoA)</strong>:<pre><code class=\"language-rust\">struct Points { xs: Vec&lt;f32&gt;, ys: Vec&lt;f32&gt;, zs: Vec&lt;f32&gt; }\nimpl Points {\n    fn new(n: usize) -&gt; Self {\n        Points { xs: vec![0.0; n], ys: vec![0.0; n], zs: vec![0.0; n] }\n    }\n    fn process(&amp;mut self) {\n        for x in &amp;mut self.xs { *x += 1.0; } // Contiguous access\n    }\n}\n</code></pre>\n</li>\n<li><strong>Why</strong>: Contiguous <code>xs</code> fits 16 <code>f32</code>s per 64-byte cache line (vs. 5 <code>Point</code>s with padding), reducing loads and misses.</li>\n<li><strong>Alternative</strong>: If AoS is required, align <code>Point</code> with <code>#[repr(align(16))]</code> and pad to 16 bytes to reduce partial line fetches.</li>\n</ul>\n<h3>6. Verify</h3>\n<ul>\n<li><strong>perf</strong>: Re-run <code>perf stat</code>:<pre><code>8,000,000,000 cycles\n12,000,000,000 instructions\n3,000,000,000 L1-dcache-loads\n30,000,000 L1-dcache-load-misses (1.00%)\n</code></pre>\nMisses drop to 1%, cycles decrease by 20%.</li>\n<li><strong>Flamegraph</strong>: New graph shows <code>process</code> as a narrower peak, less memory-bound.</li>\n<li><strong>criterion</strong>: Time drops to 40ms, with tighter variance, confirming cache efficiency.</li>\n</ul>\n<h2>Optimization Steps</h2>\n<ul>\n<li><strong>Hypothesis</strong>: Poor locality from AoS layout.</li>\n<li><strong>Fix</strong>: Refactor to SoA for contiguous access.</li>\n<li><strong>Iterate</strong>: If misses persist, check alignment (<code>std::mem::align_of</code>), stride, or false sharing (e.g., in multi-threaded cases).</li>\n</ul>\n<h2>Conclusion</h2>\n<p>To tackle L1 cache misses in a Rust codebase, I’d use <code>perf</code> to detect high miss rates, <code>cargo flamegraph</code> to pinpoint the culprit, and <code>criterion</code> to measure improvements.</p>\n<p>The workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results.</p>\n<p>In this case, switching to an SoA layout slashed cache misses, boosting throughput, as confirmed by profiling tools. This approach helps developers to solve bottlenecks efficiently.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "advanced",
+      "optimization",
+      "cache"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion",
+      "description": "Low-level optimization in Rust, focusing on profiling tools to identify and fix performance bottlenecks like L1 cache misses",
+      "keywords": [
+        "rust",
+        "advanced",
+        "optimization",
+        "cache"
+      ]
+    },
+    "headings": [
+      {
+        "id": "tools-and-their-roles",
+        "text": "Tools and Their Roles",
+        "level": 2
+      },
+      {
+        "id": "example-scenario",
+        "text": "Example Scenario",
+        "level": 2
+      },
+      {
+        "id": "workflow-to-optimize-l1-cache-misses",
+        "text": "Workflow to Optimize L1 Cache Misses",
+        "level": 2
+      },
+      {
+        "id": "1-setup-and-reproduce",
+        "text": "1. Setup and Reproduce",
+        "level": 3
+      },
+      {
+        "id": "2-diagnose-with-perf",
+        "text": "2. Diagnose with `perf`",
+        "level": 3
+      },
+      {
+        "id": "3-locate-with-cargo-flamegraph",
+        "text": "3. Locate with `cargo flamegraph`",
+        "level": 3
+      },
+      {
+        "id": "4-microbenchmark-with-criterion",
+        "text": "4. Microbenchmark with `criterion`",
+        "level": 3
+      },
+      {
+        "id": "5-optimize",
+        "text": "5. Optimize",
+        "level": 3
+      },
+      {
+        "id": "6-verify",
+        "text": "6. Verify",
+        "level": 3
+      },
+      {
+        "id": "optimization-steps",
+        "text": "Optimization Steps",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "text": "Conclusion",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "branch-prediction-rust",
     "slug": "branch-prediction-rust",
     "title": "Boosting Rust Hot Loops: Slashing Branch Mispredictions",

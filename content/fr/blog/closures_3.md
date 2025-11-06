@@ -1,12 +1,11 @@
 ---
 id: closure-parameter-rust-fr
 title: Comment spécifier une closure comme paramètre de function ou type de retour ?
-locale: "fr"
+locale: fr
 slug: closure-parameter-rust-fr
-date: '2025-07-07'
+date: '2025-11-06'
 author: mayo
 excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
-
 tags:
   - rust
   - closures

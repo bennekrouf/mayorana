@@ -27,6 +27,31 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/instruction-level-optimization-inline-always</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/cache-line-awareness-optimization</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/inline-assembly-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/move-closures-rust-javascript-developers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/profiling-optimization-rust</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/branch-prediction-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -302,6 +327,26 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/tag/closures</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/javascript</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/typescript</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/cache</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/tag/simd</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -522,22 +567,12 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/closures</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://mayorana.ch/blog/tag/higher-order-functions</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/blog/tag/fnmut</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://mayorana.ch/blog/tag/cache</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

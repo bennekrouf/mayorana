@@ -1,18 +1,19 @@
 ---
 id: cache-line-awareness-optimization
-title: "Align data structures to cache lines"
+title: Align data structures to cache lines
 slug: cache-line-awareness-optimization
-locale: "en"
+locale: en
 author: mayo
 excerpt: >-
-  Designing cache-aligned data structures in multi-threaded Rust applications to prevent false sharing and optimize performance for large dataset processing
-content_focus: "low-level optimization in Rust"
-technical_level: "Expert technical discussion"
-
+  Designing cache-aligned data structures in multi-threaded Rust applications to
+  prevent false sharing and optimize performance for large dataset processing
+content_focus: low-level optimization in Rust
+technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-11-04'
 ---
 
 # Cache Line Awareness: Suppose you're optimizing a multi-threaded Rust application that processes large datasets. How would you align data structures to cache lines, and what Rust features or techniques would you use to minimize false sharing?
