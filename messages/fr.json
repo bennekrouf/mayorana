@@ -190,7 +190,6 @@
     "filter_by_topic": "Filtrer par thème",
     "all": "Tous",
     "no_posts": "Aucun article trouvé",
-    "read_more": "Lire la suite",
     "back_to_blog": "Retour au blog",
     "share": "Partager :",
     "share_twitter": "Partager sur X (Twitter)",
@@ -204,7 +203,18 @@
     "article": "Article",
     "articles_about": "articles sur",
     "latest_insights": "Dernières perspectives",
-    "view_all_articles": "Voir tous les articles"
+    "view_all_articles": "Voir tous les articles",
+    "title": "Blog",
+    "subtitle": "Perspectives et articles sur Rust 🦀, l'IA et le développement d'outils en direct.",
+    "showing_results": "Affichage de {current} sur {total}",
+    "article_singular": "article",
+    "articles_plural": "articles",
+    "page_info": "Page {current} sur {total}",
+    "no_articles": "Aucun article trouvé",
+    "read_more": "Lire la suite",
+    "reading_time": "min de lecture",
+    "search_placeholder": "Rechercher des articles...",
+    "all_tags": "Tous les tags"
   },
   "footer": {
     "description": "Portfolio renforcé par Mayorana expert Rust 🦀",

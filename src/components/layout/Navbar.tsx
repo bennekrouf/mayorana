@@ -11,7 +11,6 @@ import { getLocalizedPath } from '@/lib/i18n-utils';
 const Navbar: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [showLangMenu, setShowLangMenu] = useState(false);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const t = useTranslations('navigation');
@@ -102,34 +101,18 @@ const Navbar: React.FC = () => {
             </button>
 
             {/* Language Toggle */}
-            <div className="relative">
-              <button
-                onClick={() => setShowLangMenu(!showLangMenu)}
-                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-                aria-label="Toggle language"
-              >
-                <FiGlobe className="h-4 w-4" />
-              </button>
-
-              {showLangMenu && (
-                <div className="absolute right-0 mt-2 w-20 bg-background border border-border rounded-lg shadow-lg z-50">
-                  <Link
-                    href={`/en${pathname.replace(/^\/[a-z]{2}/, '')}`}
-                    className="block px-3 py-2 text-sm hover:bg-secondary transition-colors"
-                    onClick={() => setShowLangMenu(false)}
-                  >
-                    EN
-                  </Link>
-                  <Link
-                    href={`/fr${pathname.replace(/^\/[a-z]{2}/, '')}`}
-                    className="block px-3 py-2 text-sm hover:bg-secondary transition-colors"
-                    onClick={() => setShowLangMenu(false)}
-                  >
-                    FR
-                  </Link>
-                </div>
-              )}
-            </div>
+            <button
+              onClick={() => {
+                const newLocale = locale === 'fr' ? 'en' : 'fr';
+                const newPath = pathname.replace(/^\/[a-z]{2}/, `/${newLocale}`);
+                window.location.href = newPath;
+              }}
+              className="rounded-full p-2 bg-secondary hover:bg-secondary/80 transition-colors flex items-center w-[60px] justify-center"
+              aria-label="Toggle language"
+            >
+              <FiGlobe size={16} className="mr-1 flex-shrink-0" />
+              <span className="text-sm font-medium">{locale.toUpperCase()}</span>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -194,15 +177,17 @@ const Navbar: React.FC = () => {
                   {theme === 'dark' ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
                 </button>
 
-                <div className="flex items-center space-x-2">
-                  <Link href={`/en${pathname.replace(/^\/[a-z]{2}/, '')}`} className="text-sm text-muted-foreground hover:text-foreground">
-                    EN
-                  </Link>
-                  <span className="text-muted-foreground">|</span>
-                  <Link href={`/fr${pathname.replace(/^\/[a-z]{2}/, '')}`} className="text-sm text-muted-foreground hover:text-foreground">
-                    FR
-                  </Link>
-                </div>
+                <button
+                  onClick={() => {
+                    const newLocale = locale === 'fr' ? 'en' : 'fr';
+                    const newPath = pathname.replace(/^\/[a-z]{2}/, `/${newLocale}`);
+                    window.location.href = newPath;
+                  }}
+                  className="px-4 py-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors flex items-center"
+                >
+                  <FiGlobe size={16} className="mr-2" />
+                  {locale === 'en' ? 'Switch to FR' : 'Passer en EN'}
+                </button>
               </div>
             </div>
           </div>

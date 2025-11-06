@@ -1,6 +1,4 @@
-// SIMPLEST FIX: Update your blog page to pass locale directly
 // File: src/app/[locale]/blog/page.tsx
-
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import TagFilter from '@/components/blog/TagFilter';
@@ -9,6 +7,7 @@ import {
   getPaginatedPosts,
   getAllTags,
 } from '@/lib/blog';
+// import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 type Props = {
@@ -31,14 +30,13 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const tags = getAllTags(locale);
 
   // Use the locale directly with getTranslations
-  const t = await getTranslations({ locale, namespace: 'blog' });
+  const t = await getTranslations('blog');
 
   // DEBUG: Blog data
   console.log('📊 Blog Data:');
   console.log('   - Posts found:', paginatedData.posts.length);
   console.log('   - Total posts:', paginatedData.totalPosts);
   console.log('   - Tags:', tags.length);
-
   if (paginatedData.posts.length > 0) {
     console.log('   - First post locale:', paginatedData.posts[0].locale);
     console.log('   - First post title:', paginatedData.posts[0].title);
@@ -50,9 +48,9 @@ export default async function BlogPage({ params, searchParams }: Props) {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-6">{t('hero_title')}</h1>
+            <h1 className="text-4xl font-bold mb-6">{t('title')}</h1>
             <p className="text-xl text-muted-foreground">
-              {t('hero_subtitle')}
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -76,13 +74,19 @@ export default async function BlogPage({ params, searchParams }: Props) {
                 <p className="text-sm text-muted-foreground">
                   {paginatedData.totalPosts > 0 ? (
                     <>
-                      Showing {paginatedData.posts.length} of {paginatedData.totalPosts} {paginatedData.totalPosts === 1 ? t('article') : 'articles'}
+                      {t('showing_results', {
+                        current: paginatedData.posts.length,
+                        total: paginatedData.totalPosts
+                      })} {paginatedData.totalPosts === 1 ? t('article_singular') : t('articles_plural')}
                       {paginatedData.totalPages > 1 && (
-                        <span> • Page {paginatedData.currentPage} of {paginatedData.totalPages}</span>
+                        <span> • {t('page_info', {
+                          current: paginatedData.currentPage,
+                          total: paginatedData.totalPages
+                        })}</span>
                       )}
                     </>
                   ) : (
-                    <span>{t('no_posts')}</span>
+                    <span>{t('no_articles')}</span>
                   )}
                 </p>
               </div>

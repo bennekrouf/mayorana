@@ -190,7 +190,6 @@
     "filter_by_topic": "Filter by topic",
     "all": "All",
     "no_posts": "No articles found",
-    "read_more": "Read more",
     "back_to_blog": "Back to blog",
     "share": "Share:",
     "share_twitter": "Share on X (Twitter)",
@@ -204,7 +203,18 @@
     "article": "Article",
     "articles_about": "articles about",
     "latest_insights": "Latest insights",
-    "view_all_articles": "View all articles"
+    "view_all_articles": "View all articles",
+    "title": "Blog",
+    "subtitle": "Insights and articles on Rust 🦀, AI and live tool development.",
+    "showing_results": "Showing {current} of {total}",
+    "article_singular": "article",
+    "articles_plural": "articles",
+    "page_info": "Page {current} of {total}",
+    "no_articles": "No articles found",
+    "read_more": "Read more",
+    "reading_time": "min read",
+    "search_placeholder": "Search articles...",
+    "all_tags": "All Tags"
   },
   "footer": {
     "description": "Rust-powered portfolio",

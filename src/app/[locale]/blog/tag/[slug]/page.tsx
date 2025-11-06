@@ -15,25 +15,17 @@ type Props = {
 
 // Generate static parameters for tags
 export async function generateStaticParams() {
-  try {
-    const locales = ['en', 'fr']; // Your supported locales
-    const params = [];
+  const locales = ['en', 'fr'];
+  const params = [];
 
-    for (const locale of locales) {
-      const tags = getAllTags(locale);
-      for (const tag of tags) {
-        params.push({
-          locale,
-          slug: tag.toLowerCase().replace(/\s+/g, '-')
-        });
-      }
+  for (const locale of locales) {
+    const tags = getAllTags(locale);
+    for (const tag of tags) {
+      const slug = tag.toLowerCase().replace(/\s+/g, '-');
+      params.push({ locale, slug });
     }
-
-    return params;
-  } catch (error) {
-    console.error('Error generating static params for tags:', error);
-    return [];
   }
+  return params;
 }
 
 export default async function TagPage({ params }: Props) {
