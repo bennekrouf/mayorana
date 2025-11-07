@@ -1,13 +1,13 @@
 ---
 id: move-closures-rust-fr
 title: >-
-  Que sont les move closures (move || { ... }) ? Quand sont-elles nécessaires et comment interagissent-elles avec l'ownership ?
+  Que sont les move closures (move || { ... }) ? Quand sont-elles nécessaires et
+  comment interagissent-elles avec l'ownership ?
 slug: move-closures-rust-fr
-locale: "fr"
-date: '2025-07-08'
+locale: fr
+date: '2025-11-07'
 author: mayo
 excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
-
 tags:
   - rust
   - closures
