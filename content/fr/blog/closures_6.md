@@ -2,17 +2,18 @@
 id: higher-order-functions-rust-fr
 title: 'Higher-Order Functions de Rust: Alimenter des Closures Flexibles'
 slug: higher-order-functions-rust-fr
-locale: "fr"
+locale: fr
 author: mayo
-excerpt: Explorer les higher-order functions en Rust pour des patterns de programmation fonctionnelle
-
+excerpt: >-
+  Explorer les higher-order functions en Rust pour des patterns de programmation
+  fonctionnelle
 tags:
   - rust
   - closures
   - higher-order-functions
   - traits
   - lifetimes
-date: '2025-07-12'
+date: '2025-11-08'
 ---
 
 # Higher-Order Functions de Rust: Alimenter des Closures Flexibles
