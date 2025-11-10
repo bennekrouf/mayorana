@@ -1,14 +1,13 @@
 ---
 id: closure-performance-overhead-rust-fr
-title: >-
-  Utiliser des closures versus des functions régulières ?
+title: Utiliser des closures versus des functions régulières ?
 slug: closure-performance-overhead-rust-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Analyser l'overhead de performance des closures versus les functions régulières en Rust,
-  couvrant static dispatch, heap allocation, et scénarios d'optimisation
-
+  Analyser l'overhead de performance des closures versus les functions
+  régulières en Rust, couvrant static dispatch, heap allocation, et scénarios
+  d'optimisation
 tags:
   - rust
   - closures
@@ -16,7 +15,7 @@ tags:
   - optimization
   - static-dispatch
   - heap-allocation
-date: '2025-07-12'
+date: '2025-11-10'
 ---
 
 # Quel est l'overhead de performance d'utiliser des closures versus des functions régulières en Rust ? Quand les closures peuvent-elles être moins efficaces ?
