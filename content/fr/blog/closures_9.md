@@ -1,14 +1,12 @@
 ---
 id: storing-closures-in-structs-fr
-title: >-
-  Comment stocker une closure dans une struct ?
+title: Comment stocker une closure dans une struct ?
 slug: storing-closures-in-structs-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Stocker des closures dans des structs en utilisant des paramètres génériques, trait objects, et
-  annotations de lifetime avec les bounds Fn, FnMut, et FnOnce
-
+  Stocker des closures dans des structs en utilisant des paramètres génériques,
+  trait objects, et annotations de lifetime avec les bounds Fn, FnMut, et FnOnce
 tags:
   - rust
   - closures
@@ -16,7 +14,7 @@ tags:
   - trait-bounds
   - lifetimes
   - generic-types
-date: '2025-07-14'
+date: '2025-11-11'
 ---
 
 # Comment stocker une closure dans une struct ? Quels trait bounds et annotations de lifetime sont requis ?
