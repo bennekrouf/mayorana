@@ -1,23 +1,21 @@
 ---
 id: zero-cost-abstractions-rust
-title: "Abstractions Zéro-Coût : Comment Rust Optimise les Chaînes d'Itérateurs"
+title: 'Abstractions Zéro-Coût : Comment Rust Optimise les Chaînes d''Itérateurs'
 slug: zero-cost-abstractions-rust
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-15'
 author: mayo
 excerpt: >-
-  Optimisation bas niveau en Rust, se concentrant sur les chaînes d'itérateurs et les abstractions zéro-coût
-content_focus: "optimisation bas niveau en Rust"
-technical_level: "Discussion technique experte"
-
+  Optimisation bas niveau en Rust, se concentrant sur les chaînes d'itérateurs
+  et les abstractions zéro-coût
+content_focus: optimisation bas niveau en Rust
+technical_level: Discussion technique experte
 tags:
   - rust
   - optimization
   - iterators
   - zero-cost-abstractions
   - performance
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # Abstractions Zéro-Coût : Comment Rust Optimise les Chaînes d'Itérateurs
