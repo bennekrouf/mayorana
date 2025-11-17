@@ -23,7 +23,9 @@ Rust n'a pas de GC. Il n'en a pas besoin.
 let msg = String::from("hello");
 ```
 
-Cela alloue de la mémoire—mais Rust track l'ownership déjà à la compilation avec l'ownership.
+L’allocation mémoire est gérée automatiquement — mais pas par un garbage collector.
+Grâce au système d’ownership, Rust vérifie à la compilation que chaque valeur a un seul propriétaire, et que la mémoire est libérée au bon moment.
+Zéro coût. Zéro surprise. Zéro fuite.
 
 ## La Révolution "Ownership"
 
@@ -50,7 +52,7 @@ fn main() {
         r = &s;  // Borrow s
     } // s sort du scope ici
     
-    println!("{}", r); // ❌ Erreur compile: s doesn't live long enough
+    println!("{}", r); // ❌ Erreur de compilation: s doesn't live long enough
 }
 ```
 
@@ -194,7 +196,7 @@ fn main() {
         println!("Data: {:?}", data);  // data moved vers le thread
     });
     
-    // println!("{:?}", data);  // ❌ Erreur compile: data was moved
+    // println!("{:?}", data);  // ❌ Erreur de compilation: data was moved
 }
 ```
 

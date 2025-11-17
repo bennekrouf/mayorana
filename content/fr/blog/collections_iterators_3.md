@@ -1,8 +1,7 @@
 ---
 id: collect-method-rust
 title: >-
-  La magie de collect() en Rust : Transformer des itérateurs en Vecs, HashMaps
-  et Strings !
+  La magie de collect() en Rust : Transformer des itérateurs en Vecs, HashMaps et Strings !
 slug: collect-method-rust
 locale: fr
 author: mayo

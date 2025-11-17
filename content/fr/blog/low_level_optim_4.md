@@ -1,20 +1,21 @@
 ---
 id: branch-prediction-rust
-title: "Booster les Boucles Chaudes Rust : Réduire les Branch Mispredictions"
+title: 'Booster les Boucles Chaudes Rust : Réduire les Branch Mispredictions'
 slug: branch-prediction-rust
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Optimisation bas niveau en Rust, se concentrant sur la minimisation des branch mispredictions dans les boucles critiques en performance
-content_focus: "optimisation bas niveau en Rust"
-technical_level: "Discussion technique experte"
-
+  Optimisation bas niveau en Rust, se concentrant sur la minimisation des branch
+  mispredictions dans les boucles critiques en performance
+content_focus: optimisation bas niveau en Rust
+technical_level: Discussion technique experte
 tags:
   - rust
   - optimization
   - branch-prediction
   - performance
   - profiling
+date: '2025-11-17'
 ---
 
 # Booster les Boucles Chaudes Rust : Réduire les Branch Mispredictions

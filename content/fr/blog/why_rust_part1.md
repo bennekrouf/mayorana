@@ -3,7 +3,7 @@ id: why-garbage-collector-fr
 title: 'Partie 1 : GC Pauses et Latence: Le coût caché des langages de haut niveau'
 locale: fr
 slug: why-garbage-collector-fr
-date: '2025-08-08'
+date: '2025-08-07'
 author: mayo
 excerpt: >-
   Java, Python et JavaScript offrent de la commodité, mais le garbage collector
