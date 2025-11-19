@@ -1,14 +1,15 @@
 ---
 id: vec-push-vs-with-capacity-performance
-title: "Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?"
+title: 'Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?'
 slug: vec-push-vs-with-capacity-performance
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Comparaison des performances de Vec::push() dans les boucles versus pré-allouer avec Vec::with_capacity(), analysant les coûts de réallocation mémoire et stratégies d'optimisation
-content_focus: "collections (comme Vec), iterators (into_iter, collect), et concepts reliés"
-technical_level: "Discussion technique experte"
-
+  Comparaison des performances de Vec::push() dans les boucles versus
+  pré-allouer avec Vec::with_capacity(), analysant les coûts de réallocation
+  mémoire et stratégies d'optimisation
+content_focus: 'collections (comme Vec), iterators (into_iter, collect), et concepts reliés'
+technical_level: Discussion technique experte
 tags:
   - rust
   - vec
@@ -16,6 +17,7 @@ tags:
   - memory-allocation
   - optimization
   - collections
+date: '2025-11-19'
 ---
 
 # Quel est l'impact performance d'utiliser Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
