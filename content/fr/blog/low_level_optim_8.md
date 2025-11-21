@@ -1,18 +1,20 @@
 ---
 id: instruction-level-optimization-inline-always
-title: "Optimisation au niveau des instructions : #[inline(always)]"
+title: 'Optimisation au niveau des instructions : #[inline(always)]'
 slug: instruction-level-optimization-inline-always
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Application stratégique de l'attribut #[inline(always)] de Rust pour l'optimisation au niveau des instructions, couvrant les modèles d'utilisation efficaces et les risques de surutilisation
-content_focus: "optimisation bas niveau en Rust"
-technical_level: "Discussion technique experte"
-
+  Application stratégique de l'attribut #[inline(always)] de Rust pour
+  l'optimisation au niveau des instructions, couvrant les modèles d'utilisation
+  efficaces et les risques de surutilisation
+content_focus: optimisation bas niveau en Rust
+technical_level: Discussion technique experte
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-11-21'
 ---
 
 # Optimisation au niveau des instructions : Comment utiliser efficacement l'attribut #[inline(always)] de Rust et quels sont les risques de surutilisation en termes de taille de code et de temps de compilation ?
