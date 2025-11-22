@@ -1,18 +1,20 @@
 ---
 id: cache-line-awareness-optimization
-title: "Aligner les structures de données aux lignes de cache"
+title: Aligner les structures de données aux lignes de cache
 slug: cache-line-awareness-optimization
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Conception de structures de données alignées sur le cache dans les applications Rust multi-threadées pour éviter le faux partage et optimiser les performances lors du traitement de grands ensembles de données
-content_focus: "optimisation bas niveau en Rust"
-technical_level: "Discussion technique experte"
-
+  Conception de structures de données alignées sur le cache dans les
+  applications Rust multi-threadées pour éviter le faux partage et optimiser les
+  performances lors du traitement de grands ensembles de données
+content_focus: optimisation bas niveau en Rust
+technical_level: Discussion technique experte
 tags:
   - rust
   - optimization
   - advanced
+date: '2025-11-22'
 ---
 
 # Conscience des Lignes de Cache : Supposons que vous optimisez une application Rust multi-threadée qui traite de grands ensembles de données. Comment aligneriez-vous les structures de données aux lignes de cache, et quelles fonctionnalités ou techniques Rust utiliseriez-vous pour minimiser le faux partage ?
