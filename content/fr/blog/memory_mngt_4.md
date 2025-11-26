@@ -1,15 +1,13 @@
 ---
 id: ownership-safety-rust-fr
-title: "Comment l'ownership prévient-il les memory leaks et data races ?"
+title: Comment l'ownership prévient-il les memory leaks et data races ?
 slug: ownership-safety-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-26'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
-
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 tags:
   - rust
   - memory
