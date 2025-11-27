@@ -1,15 +1,13 @@
 ---
 id: box-pointer-rust-fr
-title: "Quel est le but de Box<T> en Rust ?"
+title: Quel est le but de Box<T> en Rust ?
 slug: box-pointer-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-27'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
-
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 tags:
   - rust
   - memory
