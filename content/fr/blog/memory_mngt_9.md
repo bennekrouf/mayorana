@@ -1,23 +1,19 @@
 ---
 id: borrowing-rules-rust-fr
-title: "emprunts mutables vs. immutables."
+title: emprunts mutables vs. immutables.
 slug: borrowing-rules-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-29'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
-
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 tags:
   - rust
   - memory
   - borrowing
   - ownership
   - safety
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # Quelles sont les règles de borrowing en Rust ? Explique les emprunts mutables vs. immutables.
