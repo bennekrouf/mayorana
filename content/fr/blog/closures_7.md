@@ -1,14 +1,15 @@
 ---
 id: handling-lifetimes-returning-closures-fr
 title: >-
-  Comment gérer les lifetimes lors du retour d'une closure qui capture des variables de son environnement ?
+  Comment gérer les lifetimes lors du retour d'une closure qui capture des
+  variables de son environnement ?
 slug: handling-lifetimes-returning-closures-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Gérer les lifetimes lors du retour de closures qui capturent des variables, couvrant
-  le transfert d'ownership, les annotations de lifetime, et éviter les dangling references en Rust
-
+  Gérer les lifetimes lors du retour de closures qui capturent des variables,
+  couvrant le transfert d'ownership, les annotations de lifetime, et éviter les
+  dangling references en Rust
 tags:
   - rust
   - closures
@@ -16,7 +17,7 @@ tags:
   - ownership
   - move
   - references
-date: '2025-07-12'
+date: '2025-11-09'
 ---
 
 # Comment gérer les lifetimes lors du retour d'une closure qui capture des variables de son environnement ?

@@ -3,7 +3,7 @@ id: dyn-mot-cle-rust-fr
 title: 'Le mot-clé `dyn` : Origines, Signification et Limitations'
 slug: dyn-mot-cle-rust-fr
 locale: fr
-date: '2025-10-23'
+date: '2025-11-30'
 author: mayo
 excerpt: >-
   Exploration approfondie du mot-clé `dyn` en Rust, son origine, son opposé

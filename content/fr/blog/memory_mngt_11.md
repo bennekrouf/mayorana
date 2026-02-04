@@ -1,23 +1,19 @@
 ---
 id: drop-trait-rust-fr
-title: "Comprendre le Trait Drop en Rust"
+title: Comprendre le Trait Drop en Rust
 slug: drop-trait-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-24'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
-
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 tags:
   - rust
   - beginner
   - memory
   - drop
   - ownership
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # Comprendre le Trait Drop en Rust

@@ -1,15 +1,15 @@
 ---
 id: string-literals-memory-rust-fr
-title: "Comment Rust gère-t-il les string literals (&str) en termes d'allocation mémoire ? Où vivent-elles ?"
+title: >-
+  Comment Rust gère-t-il les string literals (&str) en termes d'allocation
+  mémoire ? Où vivent-elles ?
 slug: string-literals-memory-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-28'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
-
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 tags:
   - rust
   - memory

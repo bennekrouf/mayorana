@@ -1,15 +1,13 @@
 ---
 id: memory-layout-optimization-rust
-title: >-
-  Rust repr : Optimiser la Mémoire des Structs pour l'Efficacité Cache
+title: 'Rust repr : Optimiser la Mémoire des Structs pour l''Efficacité Cache'
 slug: memory-layout-optimization-rust
-locale: "fr"
-date: '2025-06-26'
+locale: fr
+date: '2025-11-13'
 author: mayo
 excerpt: >-
-  Optimisation mémoire bas niveau en Rust, couvrant
-  les attributs repr, l'efficacité cache, et les compromis de performance
-
+  Optimisation mémoire bas niveau en Rust, couvrant les attributs repr,
+  l'efficacité cache, et les compromis de performance
 tags:
   - rust
   - optimization

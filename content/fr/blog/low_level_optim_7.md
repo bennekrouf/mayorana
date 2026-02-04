@@ -1,14 +1,17 @@
 ---
 id: allocation-avoidance-real-time-rust
-title: "Utiliser des tableaux de taille fixe ou Option pour éviter les allocations dans un chemin critique en performance"
+title: >-
+  Utiliser des tableaux de taille fixe ou Option pour éviter les allocations
+  dans un chemin critique en performance
 slug: allocation-avoidance-real-time-rust
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: >-
-  Exploiter les fonctionnalités stack-based de Rust comme les tableaux de taille fixe et Option pour éliminer les allocations heap dans les systèmes temps réel pour une exécution prévisible et faible latence
-content_focus: "optimisation bas niveau en Rust"
-technical_level: "Discussion technique experte"
-
+  Exploiter les fonctionnalités stack-based de Rust comme les tableaux de taille
+  fixe et Option pour éliminer les allocations heap dans les systèmes temps réel
+  pour une exécution prévisible et faible latence
+content_focus: optimisation bas niveau en Rust
+technical_level: Discussion technique experte
 tags:
   - rust
   - real-time
@@ -16,6 +19,7 @@ tags:
   - stack-allocation
   - heap-allocation
   - optimization
+date: '2025-11-20'
 ---
 
 # Évitement d'Allocations : Dans un système temps réel, les allocations heap peuvent introduire de la latence. Comment utiliserais-tu les fonctionnalités stack-based de Rust (ex : tableaux de taille fixe ou Option) pour éviter les allocations dans un chemin critique en performance ?

@@ -2,17 +2,16 @@
 id: stateful-closures-rust-fr
 title: 'Closures avec État en Rust: Passer et Muter à Travers Plusieurs Appels'
 slug: stateful-closures-rust-fr
-locale: "fr"
+locale: fr
 author: mayo
 excerpt: Gérer les closures avec état en Rust pour des appels de fonction répétés
-
 tags:
   - rust
   - closures
   - state
   - fnmut
   - lifetimes
-date: '2025-07-10'
+date: '2025-11-08'
 ---
 
 # Closures avec État en Rust: Passer et Muter à Travers Plusieurs Appels

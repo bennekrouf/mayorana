@@ -1,15 +1,13 @@
 ---
 id: cow-copy-on-write-rust-fr
-title: "Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? Quand l'utiliser ?"
+title: 'Comment fonctionne Cow<''a, B> (Copy-on-Write) en Rust ? Quand l''utiliser ?'
 slug: cow-copy-on-write-rust-fr
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-23'
 author: mayo
-excerpt: >-
-  Rust memory et string
-content_focus: "rust memory et string"
-technical_level: "Discussion technique expert"
-
+excerpt: Rust memory et string
+content_focus: rust memory et string
+technical_level: Discussion technique expert
 tags:
   - rust
   - beginner
@@ -17,8 +15,6 @@ tags:
   - cow
   - string
   - copy-on-write
-scheduledFor: '2025-07-08'
-scheduledAt: '2025-07-08T06:55:13.405Z'
 ---
 
 # Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? Quand l'utiliserais-tu pour les strings ou autres données ?

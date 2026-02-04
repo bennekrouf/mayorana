@@ -1,15 +1,15 @@
 ---
 id: inline-assembly-rust
-title: "Maîtriser l'Inline Assembly en Rust : Quand et Comment Optimiser en Sécurité"
+title: 'Maîtriser l''Inline Assembly en Rust : Quand et Comment Optimiser en Sécurité'
 slug: inline-assembly-rust
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-11-18'
 author: mayo
 excerpt: >-
-  Optimisation bas niveau en Rust, se concentrant sur l'utilisation d'inline assembly pour les tâches critiques en performance
-content_focus: "optimisation bas niveau en Rust"
-technical_level: "Discussion technique experte"
-
+  Optimisation bas niveau en Rust, se concentrant sur l'utilisation d'inline
+  assembly pour les tâches critiques en performance
+content_focus: optimisation bas niveau en Rust
+technical_level: Discussion technique experte
 tags:
   - rust
   - optimization

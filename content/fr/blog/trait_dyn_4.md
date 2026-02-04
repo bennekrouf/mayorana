@@ -1,15 +1,17 @@
 ---
 id: object-safety-rust
-title: "Rendre les Traits Object-Safe pour dyn Trait de Rust dans les Systèmes de Plugins"
+title: >-
+  Rendre les Traits Object-Safe pour dyn Trait de Rust dans les Systèmes de
+  Plugins
 slug: object-safety-rust
-locale: "fr"
-date: '2025-07-07'
+locale: fr
+date: '2025-12-01'
 author: mayo
 excerpt: >-
-  Comprendre l'object safety en Rust et refactoriser les traits pour le dispatch dynamique
-content_focus: "Object Safety"
-technical_level: "Discussion technique experte"
-
+  Comprendre l'object safety en Rust et refactoriser les traits pour le dispatch
+  dynamique
+content_focus: Object Safety
+technical_level: Discussion technique experte
 tags:
   - rust
   - object-safety
