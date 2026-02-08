@@ -5,7 +5,8 @@
 module.exports = {
   apps: [{
     name: 'mayorana',
-    script: 'yarn',
+    // script: 'yarn', // Deprecated: relies on global yarn
+    script: './node_modules/next/dist/bin/next',
     args: 'start',
     cwd: process.cwd(),
     instances: 1,
