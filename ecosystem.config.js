@@ -20,9 +20,9 @@ module.exports = {
     },
 
     // Logging (smart defaults)
-    error_file: '/var/log/pm2/mayorana-error.log',
-    out_file: '/var/log/pm2/mayorana-out.log',
-    log_file: '/var/log/pm2/mayorana-combined.log',
+    // error_file: './logs/mayorana-error.log', // Optional: relative path
+    // out_file: './logs/mayorana-out.log', // Optional: relative path
+    // log_file: './logs/mayorana-combined.log', // Optional: relative path
     time: true,
 
     // Auto-restart configuration
