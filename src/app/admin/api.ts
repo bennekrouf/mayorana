@@ -8,10 +8,13 @@ export const authenticatedFetch = async (url: string, options: RequestInit = {})
     throw new Error('No authentication key found');
   }
 
-  const separator = url.includes('?') ? '&' : '?';
-  const authenticatedUrl = `${url}${separator}key=${encodeURIComponent(authKey)}`;
-
-  return fetch(authenticatedUrl, options);
+  return fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      'Authorization': `Bearer ${authKey}`
+    }
+  });
 };
 
 // Load file tree
@@ -77,7 +80,11 @@ export const findTranslationFile = async (originalPath: string): Promise<string 
 
   for (const searchPath of searchPaths) {
     try {
-      const response = await fetch(`/api/admin/files/${encodeURIComponent(searchPath)}?key=${encodeURIComponent(authKey)}`);
+      const response = await fetch(`/api/admin/files/${encodeURIComponent(searchPath)}`, {
+        headers: {
+          'Authorization': `Bearer ${authKey}`
+        }
+      });
       if (response.ok) {
         return searchPath;
       }

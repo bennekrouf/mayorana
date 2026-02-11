@@ -10,11 +10,23 @@ function isAuthorized(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
   const secretKey = process.env.ADMIN_SECRET_KEY || 'your-secret-key-change-this';
 
-  // Check for secret in query params or authorization header
-  const urlSecret = new URL(request.url).searchParams.get('key');
+  // Clean up header value
   const headerSecret = authHeader?.replace('Bearer ', '');
 
-  return urlSecret === secretKey || headerSecret === secretKey;
+  // Basic constant-time comparison to prevent timing attacks
+  // (Not strictly necessary for this low-stakes scenario but good practice)
+  const provided = headerSecret || new URL(request.url).searchParams.get('key') || '';
+
+  if (provided.length !== secretKey.length) {
+    return false;
+  }
+
+  let result = 0;
+  for (let i = 0; i < secretKey.length; i++) {
+    result |= provided.charCodeAt(i) ^ secretKey.charCodeAt(i);
+  }
+
+  return result === 0;
 }
 
 function buildFileTree(dirPath: string, basePath: string = ''): FileNode[] {

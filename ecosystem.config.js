@@ -36,7 +36,7 @@ module.exports = {
 
     // Graceful shutdown
     kill_timeout: 5000,
-    wait_ready: true,
+    wait_ready: false,
     listen_timeout: 10000,
 
     // Health monitoring

@@ -28,7 +28,11 @@ export default function SecretAdminPage() {
 
     try {
       // Test authentication by making a request to the API
-      const response = await fetch(`/api/admin/files?key=${encodeURIComponent(password)}`);
+      const response = await fetch('/api/admin/files', {
+        headers: {
+          'Authorization': `Bearer ${password}`
+        }
+      });
 
       if (response.ok) {
         setIsAuthenticated(true);
