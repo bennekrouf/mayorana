@@ -3,16 +3,29 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// Security check - simple secret key validation
+// Security check - secret key validation via Authorization header only
 function isAuthorized(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
-  const secretKey = process.env.ADMIN_SECRET_KEY || 'your-secret-key-change-this';
-  
-  // Check for secret in query params or authorization header
-  const urlSecret = new URL(request.url).searchParams.get('key');
-  const headerSecret = authHeader?.replace('Bearer ', '');
-  
-  return urlSecret === secretKey || headerSecret === secretKey;
+  const secretKey = process.env.ADMIN_SECRET_KEY;
+
+  if (!secretKey || secretKey.length < 16) {
+    console.error('ADMIN_SECRET_KEY is not set or too short (min 16 chars). Admin access disabled.');
+    return false;
+  }
+
+  const provided = authHeader?.replace('Bearer ', '') || '';
+
+  // Constant-time comparison to prevent timing attacks
+  if (provided.length !== secretKey.length) {
+    return false;
+  }
+
+  let result = 0;
+  for (let i = 0; i < secretKey.length; i++) {
+    result |= provided.charCodeAt(i) ^ secretKey.charCodeAt(i);
+  }
+
+  return result === 0;
 }
 
 // GET /api/admin/files/[...path] - Get specific file content

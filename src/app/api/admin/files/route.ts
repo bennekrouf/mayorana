@@ -5,18 +5,19 @@ import path from 'path';
 import { FileNode } from '@/app/admin/types';
 import matter from 'gray-matter';
 
-// Security check - simple secret key validation
+// Security check - secret key validation via Authorization header only
 function isAuthorized(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
-  const secretKey = process.env.ADMIN_SECRET_KEY || 'your-secret-key-change-this';
+  const secretKey = process.env.ADMIN_SECRET_KEY;
 
-  // Clean up header value
-  const headerSecret = authHeader?.replace('Bearer ', '');
+  if (!secretKey || secretKey.length < 16) {
+    console.error('ADMIN_SECRET_KEY is not set or too short (min 16 chars). Admin access disabled.');
+    return false;
+  }
 
-  // Basic constant-time comparison to prevent timing attacks
-  // (Not strictly necessary for this low-stakes scenario but good practice)
-  const provided = headerSecret || new URL(request.url).searchParams.get('key') || '';
+  const provided = authHeader?.replace('Bearer ', '') || '';
 
+  // Constant-time comparison to prevent timing attacks
   if (provided.length !== secretKey.length) {
     return false;
   }

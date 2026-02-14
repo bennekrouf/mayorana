@@ -2,20 +2,13 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Simple in-memory rate limiting
-// IN PRODUCTION: Use Redis or similar for distributed rate limiting
+// Rate limiting for general traffic as defense in depth
 const ipRateLimit = new Map<string, { count: number, resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 5; // 5 attempts per minute
+const MAX_REQUESTS_ADMIN = 5; // 5 attempts per minute for admin
+const MAX_REQUESTS_GENERAL = 100; // 100 requests per minute for general traffic
 
-export function middleware(request: NextRequest) {
-    // Only protect admin routes
-    if (!request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/api/admin')) {
-        return NextResponse.next();
-    }
-
-    // Rate Limiting Logic
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+function getRateLimit(ip: string, limit: number): boolean {
     const now = Date.now();
 
     // Clean up expired entries occasionally
@@ -34,35 +27,42 @@ export function middleware(request: NextRequest) {
         rateLimitData.resetTime = now + RATE_LIMIT_WINDOW;
     }
 
-    if (request.nextUrl.pathname.startsWith('/admin') || request.nextUrl.pathname.startsWith('/api/admin')) {
-        rateLimitData.count++;
-        ipRateLimit.set(ip, rateLimitData);
+    rateLimitData.count++;
+    ipRateLimit.set(ip, rateLimitData);
 
-        if (rateLimitData.count > MAX_REQUESTS) {
+    return rateLimitData.count > limit;
+}
+
+export function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
+    const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+
+    // Block admin routes entirely at the application level (defense in depth)
+    // nginx also blocks these, but this protects against direct access to the Node process
+    if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+        // Only allow access from localhost (e.g., SSH tunnel)
+        const isLocalhost = ip === '127.0.0.1' || ip === '::1' || ip === 'localhost';
+
+        if (!isLocalhost) {
+            return new NextResponse('Forbidden', { status: 403 });
+        }
+
+        // Even for localhost, apply rate limiting
+        if (getRateLimit(`admin:${ip}`, MAX_REQUESTS_ADMIN)) {
             return new NextResponse('Too Many Requests', { status: 429 });
         }
+
+        return NextResponse.next();
     }
 
-    // We don't perform the full auth check here to avoid blocking valid traffic if not necessary,
-    // identifying the session happens in the page/api. 
-    // However, for the /admin page itself, we might want to check for a cookie or basic auth.
-    // Given the current implementation uses a query param or header 'key', 
-    // modifying the middleware to ENFORCE this would break the initial 'login' page load 
-    // unless we have a specific login route.
-
-    // The user's goal is to prevent attacks. Rate limiting the login attempts is key.
-    // The current login page tries to fetch `/api/admin/files?key=...` to authenticate.
-    // So limiting requests to `/api/admin` is crucial.
-
-    // Let's protect sensitive API routes specifically
-    if (request.nextUrl.pathname.startsWith('/api/admin')) {
-        // Allow the check through, but the API route will validate the key.
-        // The rate limit above already protects against bruteforce.
+    // General rate limiting for all other routes
+    if (getRateLimit(`general:${ip}`, MAX_REQUESTS_GENERAL)) {
+        return new NextResponse('Too Many Requests', { status: 429 });
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/admin/:path*', '/api/admin/:path*'],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
