@@ -58,16 +58,30 @@ export function middleware(request: NextRequest) {
     // Swissrust Domain Proxy Logic
     const hostname = request.headers.get('host') || '';
     if (hostname.includes('swissrust.ch')) {
-        // Exclude Next.js static files and API requests from being rewritten
+        // Essential: Exclude Next.js static files, data requests, and API requests from being rewritten
         if (!pathname.startsWith('/_next') && !pathname.startsWith('/api') && !pathname.includes('.')) {
-            // Determine language from browser headers
-            const acceptLanguage = request.headers.get('accept-language') || '';
-            const isFrench = acceptLanguage.toLowerCase().includes('fr');
-            const locale = isFrench ? 'fr' : 'en';
 
-            // Rewrite swissrust.ch homepage or subpaths to the localized blog path
-            const newPath = `/${locale}/blog${pathname === '/' ? '' : pathname}`;
-            return NextResponse.rewrite(new URL(newPath, request.url));
+            // 1. Identify if the pathname already starts with a locale (e.g., /en or /fr)
+            const pathParts = pathname.split('/').filter(Boolean);
+            const hasLocalePrefix = pathParts.length > 0 && (pathParts[0] === 'en' || pathParts[0] === 'fr');
+
+            // 2. Determine target locale
+            let targetLocale = 'en';
+            if (hasLocalePrefix) {
+                targetLocale = pathParts[0];
+            } else {
+                const acceptLanguage = request.headers.get('accept-language') || '';
+                targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
+            }
+
+            // 3. Extract the rest of the path after the locale (if present)
+            const remainingPath = hasLocalePrefix ? `/${pathParts.slice(1).join('/')}` : pathname;
+
+            // 4. We only want to rewrite if they aren't already explicitly browsing the /blog directory
+            if (!remainingPath.startsWith('/blog')) {
+                const newPath = `/${targetLocale}/blog${remainingPath === '/' ? '' : remainingPath}`;
+                return NextResponse.rewrite(new URL(newPath, request.url));
+            }
         }
     }
 
