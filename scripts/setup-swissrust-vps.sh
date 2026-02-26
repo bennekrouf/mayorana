@@ -39,8 +39,8 @@ server {
     error_log /var/log/nginx/swissrust_error.log;
 
     location / {
-        limit_req zone=general burst=20 nodelay;
-        limit_conn addr 50;
+        limit_req zone=general burst=100 nodelay;
+        limit_conn addr 150;
 
         proxy_pass http://localhost:$APP_PORT;
         proxy_set_header Host \$host;

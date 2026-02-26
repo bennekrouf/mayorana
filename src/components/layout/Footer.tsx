@@ -176,9 +176,11 @@ export default function Footer() {
               >
                 Terms
               </Link>
-              <span className="text-muted-foreground">
-                Built with Rust + Next.js
-              </span>
+              {!isSwissRust && (
+                <span className="text-muted-foreground">
+                  Built with Rust + Next.js
+                </span>
+              )}
             </div>
           </div>
         </div>
