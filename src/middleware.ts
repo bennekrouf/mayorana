@@ -6,7 +6,7 @@ import type { NextRequest } from 'next/server'
 const ipRateLimit = new Map<string, { count: number, resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS_ADMIN = 5; // 5 attempts per minute for admin
-const MAX_REQUESTS_GENERAL = 100; // 100 requests per minute for general traffic
+const MAX_REQUESTS_GENERAL = 500; // 500 requests per minute for general traffic
 
 function getRateLimit(ip: string, limit: number): boolean {
     const now = Date.now();

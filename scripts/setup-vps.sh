@@ -340,8 +340,8 @@ server {
 
     # Main proxy
     location / {
-        limit_req zone=general burst=20 nodelay;
-        limit_conn addr 50;
+        limit_req zone=general burst=100 nodelay;
+        limit_conn addr 150;
 
         limit_req_status 429;
         limit_conn_status 429;
