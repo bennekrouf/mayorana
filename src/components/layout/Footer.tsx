@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useLocale, useTranslations } from 'next-intl';
+import { useHostContext } from '@/providers/HostProvider';
 
 export default function Footer() {
+  const { isSwissRust } = useHostContext();
   const currentYear = new Date().getFullYear();
   const t = useTranslations('footer');
   const tNav = useTranslations('navigation');
@@ -21,7 +23,7 @@ export default function Footer() {
     { name: t('footer_whatsapp'), url: 'https://wa.me/41764837540', external: true }
   ];
 
-  const navigationLinks = [
+  const navigationLinks = isSwissRust ? [] : [
     { name: tNav('home'), url: getLocalizedPath(locale, '/') },
     { name: tNav('about'), url: getLocalizedPath(locale, '/about') },
     { name: tNav('contact'), url: getLocalizedPath(locale, '/contact') },
@@ -39,7 +41,7 @@ export default function Footer() {
               href={getLocalizedPath(locale, '/')}
               className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
             >
-              Mayorana
+              {isSwissRust ? "Swiss rust 🦀🇨🇭" : "Mayorana"}
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
               {t('footer_tagline')}
@@ -155,7 +157,7 @@ export default function Footer() {
         <div className="mt-12 pt-6 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Mayorana. All rights reserved.
+              © {currentYear} {isSwissRust ? "Swiss rust" : "Mayorana"}. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-sm">
               <Link

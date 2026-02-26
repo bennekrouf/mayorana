@@ -7,8 +7,10 @@ import { FiMenu, FiX, FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
+import { useHostContext } from '@/providers/HostProvider';
 
 const Navbar: React.FC = () => {
+  const { isSwissRust } = useHostContext();
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -17,7 +19,7 @@ const Navbar: React.FC = () => {
   const locale = useLocale();
 
   // Navigation items - exactly like live site but with Portfolio instead of Services
-  const navItems = [
+  const allNavItems = [
     { name: t('home'), path: '/' },
     { name: 'Portfolio', path: '/#portfolio' },
     // { name: t('about'), path: '/about' },
@@ -25,6 +27,8 @@ const Navbar: React.FC = () => {
     // { name: 'api0.ai', path: 'https://api0.ai', external: true },
     { name: t('contact'), path: '/contact' }
   ];
+
+  const navItems = isSwissRust ? [] : allNavItems;
 
   useEffect(() => {
     setMounted(true);
@@ -49,7 +53,7 @@ const Navbar: React.FC = () => {
 
           {/* Logo - exactly like live site */}
           <Link href={getLocalizedPath(locale, '/')} className="font-bold text-xl">
-            Mayorana
+            {isSwissRust ? "Swiss rust 🦀🇨🇭" : "Mayorana"}
           </Link>
 
           {/* Desktop Navigation - exactly like live site layout */}

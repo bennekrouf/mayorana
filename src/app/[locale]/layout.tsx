@@ -49,11 +49,17 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+import { headers } from 'next/headers';
+import { HostProvider } from '@/providers/HostProvider';
+
 export default async function LocaleLayout({
   children,
   params
 }: Props) {
   const { locale } = await params;
+  const headersList = await headers();
+  const hostname = headersList.get('x-hostname') || '';
+  const isSwissRust = hostname.includes('swissrust');
 
   // console.log('🔍 LocaleLayout - received locale:', locale);
 
@@ -95,11 +101,12 @@ export default async function LocaleLayout({
             }
           `}
         </Script>
-        {/* MANUAL: Pass the route locale directly */}
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <CanonicalMeta />
-            {children}
+            <HostProvider isSwissRust={isSwissRust}>
+              {children}
+            </HostProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
