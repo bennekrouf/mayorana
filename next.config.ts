@@ -17,6 +17,18 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https' as const,
+        hostname: 'swissrust.ch',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' as const,
+        hostname: 'www.swissrust.ch',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 

@@ -55,6 +55,22 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // Swissrust Domain Proxy Logic
+    const hostname = request.headers.get('host') || '';
+    if (hostname.includes('swissrust.ch')) {
+        // Exclude Next.js static files and API requests from being rewritten
+        if (!pathname.startsWith('/_next') && !pathname.startsWith('/api') && !pathname.includes('.')) {
+            // Determine language from browser headers
+            const acceptLanguage = request.headers.get('accept-language') || '';
+            const isFrench = acceptLanguage.toLowerCase().includes('fr');
+            const locale = isFrench ? 'fr' : 'en';
+
+            // Rewrite swissrust.ch homepage or subpaths to the localized blog path
+            const newPath = `/${locale}/blog${pathname === '/' ? '' : pathname}`;
+            return NextResponse.rewrite(new URL(newPath, request.url));
+        }
+    }
+
     // General rate limiting for all other routes
     if (getRateLimit(`general:${ip}`, MAX_REQUESTS_GENERAL)) {
         return new NextResponse('Too Many Requests', { status: 429 });
