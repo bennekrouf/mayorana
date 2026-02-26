@@ -57,6 +57,10 @@ export function middleware(request: NextRequest) {
 
     // Swissrust Domain Proxy Logic
     const hostname = request.headers.get('host') || '';
+    // Inject hostname into request headers so layout.tsx can read it via headers()
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-hostname', hostname);
+
     if (hostname.includes('swissrust.ch')) {
         // Essential: Exclude Next.js static files, data requests, and API requests from being rewritten
         if (!pathname.startsWith('/_next') && !pathname.startsWith('/api') && !pathname.includes('.')) {
@@ -80,7 +84,11 @@ export function middleware(request: NextRequest) {
             // 4. We only want to rewrite if they aren't already explicitly browsing the /blog directory
             if (!remainingPath.startsWith('/blog')) {
                 const newPath = `/${targetLocale}/blog${remainingPath === '/' ? '' : remainingPath}`;
-                return NextResponse.rewrite(new URL(newPath, request.url));
+                return NextResponse.rewrite(new URL(newPath, request.url), {
+                    request: {
+                        headers: requestHeaders,
+                    }
+                });
             }
         }
     }
@@ -90,7 +98,11 @@ export function middleware(request: NextRequest) {
         return new NextResponse('Too Many Requests', { status: 429 });
     }
 
-    return NextResponse.next();
+    return NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        }
+    });
 }
 
 export const config = {
