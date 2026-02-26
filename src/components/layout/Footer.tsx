@@ -57,68 +57,72 @@ export default function Footer() {
           </div>
 
           {/* Portfolio Tools */}
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Live Portfolio</h3>
-            <ul className="space-y-3">
-              {portfolioLinks.map((link) => (
-                <li key={link.name}>
+          {!isSwissRust && (
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Live Portfolio</h3>
+              <ul className="space-y-3">
+                {portfolioLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.url}
+                      target={link.external ? "_blank" : "_self"}
+                      rel={link.external ? "noopener noreferrer" : ""}
+                      className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
+                    >
+                      {link.name}
+                      {link.external && (
+                        <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      )}
+                    </Link>
+                  </li>
+                ))}
+                <li>
                   <Link
-                    href={link.url}
-                    target={link.external ? "_blank" : "_self"}
-                    rel={link.external ? "noopener noreferrer" : ""}
+                    href="https://cvenom.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
                   >
-                    {link.name}
-                    {link.external && (
-                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    )}
+                    cVenom
+                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                 </li>
-              ))}
-              <li>
-                <Link
-                  href="https://cvenom.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
-                >
-                  cVenom
-                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://ribh.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
-                >
-                  Solanize
-                  <span className="text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 px-2 py-0.5 rounded ml-1">
-                    MVP
-                  </span>
-                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
-              </li>
-            </ul>
-          </div>
+                <li>
+                  <Link
+                    href="https://ribh.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
+                  >
+                    Solanize
+                    <span className="text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 px-2 py-0.5 rounded ml-1">
+                      MVP
+                    </span>
+                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
 
           {/* Navigation */}
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Navigation</h3>
-            <ul className="space-y-3">
-              {navigationLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.url}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {!isSwissRust && (
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Navigation</h3>
+              <ul className="space-y-3">
+                {navigationLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.url}
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Contact Actions */}
           <div>
