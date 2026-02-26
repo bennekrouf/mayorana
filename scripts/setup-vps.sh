@@ -28,7 +28,7 @@ REPO="git@github.com:bennekrouf/mayorana.git"
 APP_DIR="/var/www/mayorana"
 APP_PORT=3006
 APP_USER="mayorana"       # Unprivileged user that runs the Node.js app only
-DEPLOY_USER="debian"      # OVH default SSH user (your login account)
+DEPLOY_USER="ubuntu"      # OVH default SSH user (your login account)
 VPS_IP="57.131.31.38"
 NODE_VERSION=22
 
@@ -224,9 +224,17 @@ step "7/11 — Create app user and clone repo"
 # Create an unprivileged user for the app (no login shell, no SSH)
 if ! id "$APP_USER" &>/dev/null; then
   useradd -r -m -d /var/www -s /usr/sbin/nologin "$APP_USER"
+  chmod 755 /var/www
   log "Created app user: $APP_USER (nologin shell, runs Node.js only)"
 else
   log "App user $APP_USER already exists"
+  chmod 755 /var/www
+fi
+
+# Add mpm2 alias to deploy user's bashrc for convenience
+if ! grep -q "alias mpm2=" "/home/$DEPLOY_USER/.bashrc"; then
+  echo "alias mpm2='sudo -u $APP_USER pm2'" >> "/home/$DEPLOY_USER/.bashrc"
+  log "Added 'mpm2' alias to $DEPLOY_USER profile"
 fi
 
 # Generate deploy key automatically (no manual step needed)
