@@ -88,9 +88,9 @@ step "3/4 — Install, Build, and Start App"
 # Using bash to source node environments properly if needed
 sudo -u "$APP_USER" HOME=/var/www bash -c "
   cd $APP_DIR
-  npm install -g yarn 2>/dev/null || true
-  npm install
-  npm run build
+  sudo yarn install -g yarn 2>/dev/null || true
+  yarn install
+  yarn build
   $(which pm2) start ecosystem.config.js
   $(which pm2) save
 "

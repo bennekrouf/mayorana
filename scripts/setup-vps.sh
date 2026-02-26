@@ -169,7 +169,7 @@ fi
 
 # Install PM2 globally
 if ! command -v pm2 &> /dev/null; then
-  npm install -g pm2
+  yarn install -g pm2
   log "PM2 installed"
 else
   log "PM2 already installed"
@@ -300,8 +300,8 @@ step "9/11 — Install dependencies, build, and start with PM2"
 # npm/pm2 need a writable HOME and a shell — use bash explicitly
 sudo -u "$APP_USER" HOME=/var/www bash -c "
   cd $APP_DIR
-  npm install
-  npm run build
+  yarn install
+  yarn build
   $(which pm2) start ecosystem.config.js
   $(which pm2) save
 "
