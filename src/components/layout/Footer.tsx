@@ -43,9 +43,11 @@ export default function Footer() {
             >
               {isSwissRust ? "Swiss rust 🦀🇨🇭" : "Mayorana"}
             </Link>
-            <p className="mt-3 text-sm text-muted-foreground">
-              {t('footer_tagline')}
-            </p>
+            {!isSwissRust && (
+              <p className="mt-3 text-sm text-muted-foreground">
+                {t('footer_tagline')}
+              </p>
+            )}
             <div className="mt-4">
               <Link
                 href={locale === 'en' ? '/fr' : '/en'}
