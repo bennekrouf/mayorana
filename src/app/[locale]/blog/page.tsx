@@ -9,6 +9,7 @@ import {
 } from '@/lib/blog';
 // import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { headers } from 'next/headers';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -32,6 +33,10 @@ export default async function BlogPage({ params, searchParams }: Props) {
   // Use the locale directly with getTranslations
   const t = await getTranslations('blog');
 
+  const headersList = await headers();
+  const hostname = headersList.get('x-hostname') || '';
+  const isSwissRust = hostname.includes('swissrust');
+
   // DEBUG: Blog data
   console.log('📊 Blog Data:');
   console.log('   - Posts found:', paginatedData.posts.length);
@@ -50,7 +55,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-6">{t('title')}</h1>
             <p className="text-xl text-muted-foreground">
-              {t('subtitle')}
+              {isSwissRust ? t('subtitle_swissrust') : t('subtitle')}
             </p>
           </div>
         </div>
