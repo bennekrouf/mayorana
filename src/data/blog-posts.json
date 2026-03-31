@@ -1,5 +1,73 @@
 [
   {
+    "id": "reborrow-rust",
+    "slug": "reborrow-rust",
+    "title": "What is &mut *x (reborrow) in Rust, and why does it freeze the original reference?",
+    "date": "2026-03-31",
+    "excerpt": "Rust memory and borrowing",
+    "content": "In Rust, the expression `&mut *x` is called a **reborrow**. It lets you create a new mutable reference from an existing one without consuming it — something the borrow checker would normally block. Understanding reborrows is key to writing idiomatic Rust when dealing with mutable references across function boundaries.\n\n## Breaking Down `&mut *x`\n\nGiven a variable `x` of type `&mut T`, the expression `&mut *x` does two things in sequence:\n\n- `*x` — dereferences `x` to access the underlying value of type `T`.\n- `&mut` — takes a new mutable reference to that value.\n\nThe result is a new mutable reference `y` pointing to the **same data** as `x`, but as a distinct reference with its own lifetime.\n\n```rust\nfn main() {\n    let mut value = 42;\n    let x: &mut i32 = &mut value;\n\n    let y: &mut i32 = &mut *x; // reborrow: y points to the same data as x\n    *y += 1;\n\n    // y is no longer used past this point, so x is accessible again\n    println!(\"{}\", x); // prints 43\n}\n```\n\n## The \"Freeze\" Mechanism\n\nThis is the crucial part: **while `y` is alive, `x` is frozen**.\n\nThe borrow checker enforces that you cannot have two active mutable references to the same data simultaneously. During a reborrow:\n\n- `y` is the **active** mutable reference — you can use it to read or modify the value.\n- `x` is **frozen** — it exists, but it cannot be used until `y` goes out of scope.\n- Once `y`'s scope ends, the freeze is lifted and `x` becomes usable again.\n\n```rust\nfn main() {\n    let mut value = String::from(\"hello\");\n    let x = &mut value;\n\n    let y = &mut *x; // x is now frozen\n    y.push_str(\", world\");\n\n    // println!(\"{}\", x); // ERROR: x is frozen while y is live\n\n    drop(y); // y goes out of scope, freeze is lifted\n    println!(\"{}\", x); // OK: prints \"hello, world\"\n}\n```\n\nThis is not a workaround for Rust's safety rules — it is how those rules work. The borrow checker tracks the lifetimes of both `x` and `y` and guarantees they are never used simultaneously.\n\n## Why Not Just Pass `x` Directly?\n\nIf you pass `x` directly to a function expecting `&mut T`, Rust moves the borrow into the function. Without reborrowing, you would lose access to `x` for the duration of the call.\n\n```rust\nfn add_one(n: &mut i32) {\n    *n += 1;\n}\n\nfn main() {\n    let mut value = 0;\n    let x = &mut value;\n\n    add_one(x);        // Rust implicitly reborrows x here as &mut *x\n    add_one(x);        // x is still usable after the first call\n    println!(\"{}\", x); // prints 2\n}\n```\n\nIn modern Rust with **Non-Lexical Lifetimes (NLL)**, the compiler performs this reborrow implicitly when you pass a `&mut T` to a function. The explicit form `&mut *x` is what happens under the hood.\n\n## Implicit vs Explicit Reborrow\n\n| **Form** | **When Used** | **Example** |\n|---|---|---|\n| Implicit (`x`) | Passing `&mut T` to a function | `add_one(x)` → compiler inserts `&mut *x` |\n| Explicit (`&mut *x`) | Complex scenarios requiring manual control | Method chaining, iterator adapters |\n\nIn most day-to-day Rust code, you never need to write `&mut *x` yourself. The NLL-aware borrow checker handles it. However, explicit reborrows are sometimes needed in:\n\n- **Method chaining**: When calling a method that takes `&mut self` on a `&mut T`.\n- **Iterator patterns**: When iterating over a mutable slice via a reference.\n- **Older Rust code**: Where the borrow checker's inference is less sophisticated.\n- **Trait implementations**: Where the compiler cannot infer the reborrow automatically.\n\n## Reborrow vs Move\n\nIt is important not to confuse a reborrow with a move. A move would consume the original reference; a reborrow only temporarily suspends it.\n\n```rust\nfn consume(x: &mut i32) { *x += 1; }\n\nfn main() {\n    let mut v = 0;\n    let x = &mut v;\n\n    // This is a reborrow (x remains usable after the call):\n    consume(&mut *x);\n    println!(\"{}\", x); // OK\n\n    // This also works due to implicit reborrow:\n    consume(x);\n    println!(\"{}\", x); // Also OK\n}\n```\n\n## How it Compares to Raw Pointers and `unsafe`\n\n| **Concept** | **Safety** | **How it Works** |\n|---|---|---|\n| `&mut *x` (reborrow) | Safe | Borrow checker enforces single-active-reference rule |\n| `*mut T` (raw pointer) | Unsafe | No borrow checker guarantees; manual aliasing control |\n| `UnsafeCell<T>` | Unsafe interior | Explicit opt-out from borrow rules |\n\nReborrows give you the flexibility of working with multiple reference-like handles at different stages of a computation, while staying entirely within Rust's safe memory model.\n\n## Key Takeaways\n\n✅ `&mut *x` creates a new mutable reference pointing to the same data as `x`, without consuming `x`.\n\n✅ While the reborrow `y` is alive, `x` is frozen — the borrow checker prevents both from being used simultaneously.\n\n✅ Once `y` goes out of scope, the freeze is lifted and `x` is usable again.\n\n✅ Modern Rust performs reborrows implicitly when passing `&mut T` to functions — you rarely need to write `&mut *x` explicitly.\n\n🚫 A reborrow is **not** a clone of the data — no memory is copied. Only the reference (a pointer) is duplicated, with its lifetime constrained by the borrow checker.\n\n**Thought Experiment**: What happens if you reborrow `x` twice into `y` and `z` at the same time?\n**Answer**: The compiler rejects it. You cannot have two live mutable reborrows of the same reference simultaneously — the same rule that prevents two `&mut` references to the same data in general.",
+    "contentHtml": "<p>In Rust, the expression <code>&amp;mut *x</code> is called a <strong>reborrow</strong>. It lets you create a new mutable reference from an existing one without consuming it — something the borrow checker would normally block. Understanding reborrows is key to writing idiomatic Rust when dealing with mutable references across function boundaries.</p>\n<h2>Breaking Down <code>&amp;mut *x</code></h2>\n<p>Given a variable <code>x</code> of type <code>&amp;mut T</code>, the expression <code>&amp;mut *x</code> does two things in sequence:</p>\n<ul>\n<li><code>*x</code> — dereferences <code>x</code> to access the underlying value of type <code>T</code>.</li>\n<li><code>&amp;mut</code> — takes a new mutable reference to that value.</li>\n</ul>\n<p>The result is a new mutable reference <code>y</code> pointing to the <strong>same data</strong> as <code>x</code>, but as a distinct reference with its own lifetime.</p>\n<pre><code class=\"language-rust\">fn main() {\n    let mut value = 42;\n    let x: &amp;mut i32 = &amp;mut value;\n\n    let y: &amp;mut i32 = &amp;mut *x; // reborrow: y points to the same data as x\n    *y += 1;\n\n    // y is no longer used past this point, so x is accessible again\n    println!(&quot;{}&quot;, x); // prints 43\n}\n</code></pre>\n<h2>The &quot;Freeze&quot; Mechanism</h2>\n<p>This is the crucial part: <strong>while <code>y</code> is alive, <code>x</code> is frozen</strong>.</p>\n<p>The borrow checker enforces that you cannot have two active mutable references to the same data simultaneously. During a reborrow:</p>\n<ul>\n<li><code>y</code> is the <strong>active</strong> mutable reference — you can use it to read or modify the value.</li>\n<li><code>x</code> is <strong>frozen</strong> — it exists, but it cannot be used until <code>y</code> goes out of scope.</li>\n<li>Once <code>y</code>&#39;s scope ends, the freeze is lifted and <code>x</code> becomes usable again.</li>\n</ul>\n<pre><code class=\"language-rust\">fn main() {\n    let mut value = String::from(&quot;hello&quot;);\n    let x = &amp;mut value;\n\n    let y = &amp;mut *x; // x is now frozen\n    y.push_str(&quot;, world&quot;);\n\n    // println!(&quot;{}&quot;, x); // ERROR: x is frozen while y is live\n\n    drop(y); // y goes out of scope, freeze is lifted\n    println!(&quot;{}&quot;, x); // OK: prints &quot;hello, world&quot;\n}\n</code></pre>\n<p>This is not a workaround for Rust&#39;s safety rules — it is how those rules work. The borrow checker tracks the lifetimes of both <code>x</code> and <code>y</code> and guarantees they are never used simultaneously.</p>\n<h2>Why Not Just Pass <code>x</code> Directly?</h2>\n<p>If you pass <code>x</code> directly to a function expecting <code>&amp;mut T</code>, Rust moves the borrow into the function. Without reborrowing, you would lose access to <code>x</code> for the duration of the call.</p>\n<pre><code class=\"language-rust\">fn add_one(n: &amp;mut i32) {\n    *n += 1;\n}\n\nfn main() {\n    let mut value = 0;\n    let x = &amp;mut value;\n\n    add_one(x);        // Rust implicitly reborrows x here as &amp;mut *x\n    add_one(x);        // x is still usable after the first call\n    println!(&quot;{}&quot;, x); // prints 2\n}\n</code></pre>\n<p>In modern Rust with <strong>Non-Lexical Lifetimes (NLL)</strong>, the compiler performs this reborrow implicitly when you pass a <code>&amp;mut T</code> to a function. The explicit form <code>&amp;mut *x</code> is what happens under the hood.</p>\n<h2>Implicit vs Explicit Reborrow</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Form</strong></th>\n<th><strong>When Used</strong></th>\n<th><strong>Example</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Implicit (<code>x</code>)</td>\n<td>Passing <code>&amp;mut T</code> to a function</td>\n<td><code>add_one(x)</code> → compiler inserts <code>&amp;mut *x</code></td>\n</tr>\n<tr>\n<td>Explicit (<code>&amp;mut *x</code>)</td>\n<td>Complex scenarios requiring manual control</td>\n<td>Method chaining, iterator adapters</td>\n</tr>\n</tbody></table>\n<p>In most day-to-day Rust code, you never need to write <code>&amp;mut *x</code> yourself. The NLL-aware borrow checker handles it. However, explicit reborrows are sometimes needed in:</p>\n<ul>\n<li><strong>Method chaining</strong>: When calling a method that takes <code>&amp;mut self</code> on a <code>&amp;mut T</code>.</li>\n<li><strong>Iterator patterns</strong>: When iterating over a mutable slice via a reference.</li>\n<li><strong>Older Rust code</strong>: Where the borrow checker&#39;s inference is less sophisticated.</li>\n<li><strong>Trait implementations</strong>: Where the compiler cannot infer the reborrow automatically.</li>\n</ul>\n<h2>Reborrow vs Move</h2>\n<p>It is important not to confuse a reborrow with a move. A move would consume the original reference; a reborrow only temporarily suspends it.</p>\n<pre><code class=\"language-rust\">fn consume(x: &amp;mut i32) { *x += 1; }\n\nfn main() {\n    let mut v = 0;\n    let x = &amp;mut v;\n\n    // This is a reborrow (x remains usable after the call):\n    consume(&amp;mut *x);\n    println!(&quot;{}&quot;, x); // OK\n\n    // This also works due to implicit reborrow:\n    consume(x);\n    println!(&quot;{}&quot;, x); // Also OK\n}\n</code></pre>\n<h2>How it Compares to Raw Pointers and <code>unsafe</code></h2>\n<table>\n<thead>\n<tr>\n<th><strong>Concept</strong></th>\n<th><strong>Safety</strong></th>\n<th><strong>How it Works</strong></th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>&amp;mut *x</code> (reborrow)</td>\n<td>Safe</td>\n<td>Borrow checker enforces single-active-reference rule</td>\n</tr>\n<tr>\n<td><code>*mut T</code> (raw pointer)</td>\n<td>Unsafe</td>\n<td>No borrow checker guarantees; manual aliasing control</td>\n</tr>\n<tr>\n<td><code>UnsafeCell&lt;T&gt;</code></td>\n<td>Unsafe interior</td>\n<td>Explicit opt-out from borrow rules</td>\n</tr>\n</tbody></table>\n<p>Reborrows give you the flexibility of working with multiple reference-like handles at different stages of a computation, while staying entirely within Rust&#39;s safe memory model.</p>\n<h2>Key Takeaways</h2>\n<p>✅ <code>&amp;mut *x</code> creates a new mutable reference pointing to the same data as <code>x</code>, without consuming <code>x</code>.</p>\n<p>✅ While the reborrow <code>y</code> is alive, <code>x</code> is frozen — the borrow checker prevents both from being used simultaneously.</p>\n<p>✅ Once <code>y</code> goes out of scope, the freeze is lifted and <code>x</code> is usable again.</p>\n<p>✅ Modern Rust performs reborrows implicitly when passing <code>&amp;mut T</code> to functions — you rarely need to write <code>&amp;mut *x</code> explicitly.</p>\n<p>🚫 A reborrow is <strong>not</strong> a clone of the data — no memory is copied. Only the reference (a pointer) is duplicated, with its lifetime constrained by the borrow checker.</p>\n<p><strong>Thought Experiment</strong>: What happens if you reborrow <code>x</code> twice into <code>y</code> and <code>z</code> at the same time?\n<strong>Answer</strong>: The compiler rejects it. You cannot have two live mutable reborrows of the same reference simultaneously — the same rule that prevents two <code>&amp;mut</code> references to the same data in general.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "rust",
+      "memory",
+      "borrowing",
+      "ownership",
+      "borrow-checker"
+    ],
+    "readingTime": "5 min",
+    "locale": "en",
+    "seo": {
+      "title": "What is &mut *x (reborrow) in Rust, and why does it freeze the original reference?",
+      "description": "Rust memory and borrowing",
+      "keywords": [
+        "rust",
+        "memory",
+        "borrowing",
+        "ownership",
+        "borrow-checker"
+      ]
+    },
+    "headings": [
+      {
+        "id": "breaking-down-andmut-x",
+        "text": "Breaking Down `&mut *x`",
+        "level": 2
+      },
+      {
+        "id": "the-freeze-mechanism",
+        "text": "The \"Freeze\" Mechanism",
+        "level": 2
+      },
+      {
+        "id": "why-not-just-pass-x-directly",
+        "text": "Why Not Just Pass `x` Directly?",
+        "level": 2
+      },
+      {
+        "id": "implicit-vs-explicit-reborrow",
+        "text": "Implicit vs Explicit Reborrow",
+        "level": 2
+      },
+      {
+        "id": "reborrow-vs-move",
+        "text": "Reborrow vs Move",
+        "level": 2
+      },
+      {
+        "id": "how-it-compares-to-raw-pointers-and-unsafe",
+        "text": "How it Compares to Raw Pointers and `unsafe`",
+        "level": 2
+      },
+      {
+        "id": "key-takeaways",
+        "text": "Key Takeaways",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "instruction-level-optimization-inline-always",
     "slug": "instruction-level-optimization-inline-always",
     "title": "Instruction-Level Optimization: #[inline(always)]",
