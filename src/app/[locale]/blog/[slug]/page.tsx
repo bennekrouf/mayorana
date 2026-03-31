@@ -1,7 +1,7 @@
 // Debug version of blog post page to see what's happening
 // File: src/app/[locale]/blog/[slug]/page.tsx (add debugging)
 
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogPost from '@/components/blog/BlogPost';
 import { getPostBySlug, getAllPosts } from '@/lib/blog';
@@ -79,8 +79,8 @@ export default async function PostPage({ params }: Props) {
     // });
 
     if (!post) {
-      console.log('❌ Post not found, calling notFound()');
-      notFound();
+      console.log('❌ Post not found, redirecting to blog listing');
+      redirect(`/${locale}/blog`);
     }
 
     // console.log('✅ Post found, rendering...');
