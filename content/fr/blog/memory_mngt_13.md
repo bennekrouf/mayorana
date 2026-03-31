@@ -1,9 +1,9 @@
 ---
 id: reborrow-rust-fr
 title: "Qu'est-ce que &mut *x (réemprunt) en Rust, et pourquoi gèle-t-il la référence originale ?"
-slug: reborrow-rust-fr
+slug: reborrow-rust
 locale: fr
-date: '2025-12-06'
+date: '2026-03-31'
 author: mayo
 excerpt: Rust mémoire et borrowing
 

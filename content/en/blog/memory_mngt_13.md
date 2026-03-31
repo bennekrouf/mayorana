@@ -3,7 +3,7 @@ id: reborrow-rust
 title: "What is &mut *x (reborrow) in Rust, and why does it freeze the original reference?"
 slug: reborrow-rust
 locale: en
-date: '2025-11-05'
+date: '2026-03-31'
 author: mayo
 excerpt: Rust memory and borrowing
 
