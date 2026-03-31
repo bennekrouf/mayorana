@@ -36,7 +36,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # =============================================================================
-step "1/4 — Ensure App User & Deploy Key"
+step "1/5 — Ensure App User & Deploy Key"
 # =============================================================================
 # Ensure app user exists
 if ! id "$APP_USER" &>/dev/null; then
@@ -70,7 +70,7 @@ echo ""
 read -p "Press Enter once the deploy key is added to cvenom-landing..." _
 
 # =============================================================================
-step "2/4 — Clone Repository"
+step "2/5 — Clone Repository"
 # =============================================================================
 if [ ! -d "$APP_DIR" ]; then
   ssh-keyscan github.com >> /var/www/.ssh/known_hosts 2>/dev/null
@@ -83,12 +83,37 @@ else
 fi
 
 # =============================================================================
-step "3/4 — Install, Build, and Start App"
+step "3/5 — Create .env file"
 # =============================================================================
+if [ -f "$APP_DIR/.env" ]; then
+  warn ".env already exists at $APP_DIR/.env — skipping creation."
+else
+  echo ""
+  read -p "Enter NEXT_PUBLIC_WHATSAPP_NUMBER (or press Enter to skip): " whatsapp_number
+  read -p "Enter NEXT_PUBLIC_API_URL [https://gateway.api0.ai/api/contact]: " api_url
+  api_url=${api_url:-https://gateway.api0.ai/api/contact}
+
+  cat > "$APP_DIR/.env" <<EOF
+NEXT_PUBLIC_WHATSAPP_NUMBER=${whatsapp_number}
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=cvenom.com
+NEXT_PUBLIC_API_URL=${api_url}
+EOF
+
+  chown "$APP_USER:$APP_USER" "$APP_DIR/.env"
+  chmod 600 "$APP_DIR/.env"
+  log "Created .env with environment variables"
+fi
+
+# =============================================================================
+step "4/5 — Install, Build, and Start App"
+# =============================================================================
+# Create logs directory
+mkdir -p "$APP_DIR/logs"
+chown "$APP_USER:$APP_USER" "$APP_DIR/logs"
+
 # Using bash to source node environments properly if needed
 sudo -u "$APP_USER" HOME=/var/www bash -c "
   cd $APP_DIR
-  sudo yarn install -g yarn 2>/dev/null || true
   yarn install
   yarn build
   $(which pm2) start ecosystem.config.js
@@ -97,7 +122,7 @@ sudo -u "$APP_USER" HOME=/var/www bash -c "
 log "cvenom-landing built and running via PM2 on port $APP_PORT"
 
 # =============================================================================
-step "4/4 — Configure Nginx & SSL"
+step "5/5 — Configure Nginx & SSL"
 # =============================================================================
 cat > /etc/nginx/sites-available/cvenom <<NGINX
 server {
@@ -111,11 +136,19 @@ server {
         limit_req zone=general burst=20 nodelay;
         limit_conn addr 50;
 
+        limit_req_status 429;
+        limit_conn_status 429;
+
         proxy_pass http://localhost:$APP_PORT;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto \$scheme;
+
+        # Anti-slowloris
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 10s;
+        proxy_read_timeout 30s;
 
         client_max_body_size 1m;
 
@@ -124,6 +157,12 @@ server {
         add_header X-Frame-Options "SAMEORIGIN" always;
         add_header X-XSS-Protection "1; mode=block" always;
         add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    }
+
+    # Block common scanner paths
+    location ~* ^/(wp-admin|wp-login|phpmyadmin|phpMyAdmin|xmlrpc\.php|\.env|\.git) {
+        return 403;
     }
 }
 NGINX
@@ -148,4 +187,9 @@ step "cvenom-landing Deployment Complete!"
 # =============================================================================
 echo -e "${GREEN}Website: https://$DOMAIN${NC}"
 echo -e "${GREEN}App is running locally on port $APP_PORT${NC}"
+echo ""
+echo -e "${GREEN}Useful commands:${NC}"
+echo -e "${GREEN}  sudo -u $APP_USER pm2 status               — app status${NC}"
+echo -e "${GREEN}  sudo -u $APP_USER pm2 logs cvenom-landing   — app logs${NC}"
+echo -e "${GREEN}  sudo -u $APP_USER pm2 restart cvenom-landing — restart app${NC}"
 echo ""
