@@ -95,6 +95,12 @@ export default async function PostPage({ params }: Props) {
       </LayoutTemplate>
     );
   } catch (error) {
+    // Next.js redirect() and notFound() work by throwing special internal errors.
+    // We must re-throw them so the framework can handle them correctly.
+    const digest = (error as { digest?: string })?.digest;
+    if (digest?.startsWith('NEXT_')) {
+      throw error;
+    }
     console.error('❌ Error in PostPage:', error);
     notFound();
   }

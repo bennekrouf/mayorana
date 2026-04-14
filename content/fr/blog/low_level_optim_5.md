@@ -530,6 +530,26 @@ mod tests {
 }
 ```
 
+## Stratégie de Test & Validation
+
+Parce que l'inline assembly contourne les vérifications de sécurité habituelles de Rust, des tests rigoureux sont non-négociables :
+
+| **Type de Test** | **Méthode** |
+|---|---|
+| Justesse | Comparer la sortie de `total_bits` contre le fallback scalaire sur des entrées aléatoires (tests basés sur les propriétés avec `quickcheck` ou `proptest`) |
+| Cas limites | Slices vides, éléments uniques, longueurs non-alignées, valeurs maximales |
+| Performance | Benchmarker les deux versions avec `criterion` pour s'assurer que l'assembly gagne vraiment |
+| Comportement indéfini | Exécuter sous `miri` (bien que `asm!` soit partiellement non supporté) et Valgrind/ASan |
+
+## Quand Ne Pas Utiliser l'Inline Assembly
+
+En note finale, résistez à la tentation de recourir à `asm!` quand :
+
+- Le compilateur génère déjà du code optimal (vérifiez avec `cargo asm` ou [Compiler Explorer](https://godbolt.org)).
+- Un intrinsèque sûr ou une abstraction SIMD existe (`std::simd`, `packed_simd`, `core::arch::*`).
+- La portabilité importe plus qu'une micro-optimisation.
+- Vous écrivez du code de bibliothèque pour la consommation publique sans CI exhaustif sur plusieurs cibles.
+
 ## Assurer la Portabilité
 
 ### Abstraction Multi-Architecture
