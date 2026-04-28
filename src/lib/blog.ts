@@ -32,6 +32,7 @@ export interface BlogPost {
 
 export interface PaginatedPosts {
   posts: BlogPost[];
+  pinnedPosts: BlogPost[];
   currentPage: number;
   totalPages: number;
   totalPosts: number;
@@ -40,6 +41,12 @@ export interface PaginatedPosts {
 }
 
 const POSTS_PER_PAGE = 6;
+
+// Slugs of the permanently pinned "Why Rust?" series, per locale
+const PINNED_SLUGS: Record<string, string[]> = {
+  en: ['why-garbage-collector', 'c-low-level-cost', 'why-rust-memory-safe'],
+  fr: ['why-garbage-collector-fr', 'c-low-level-cost-fr', 'why-rust-memory-safe-fr'],
+};
 
 // Define supported locales
 type SupportedLocale = 'en' | 'fr';
@@ -63,19 +70,36 @@ export function getAllPosts(locale: string = 'en'): BlogPost[] {
   return getBlogDataSync(locale);
 }
 
+// Get the permanently pinned "Why Rust?" posts for a locale
+export function getPinnedPosts(locale: string = 'en'): BlogPost[] {
+  const all = getAllPosts(locale);
+  const slugs = PINNED_SLUGS[locale] ?? PINNED_SLUGS['en'];
+  // Preserve the intended order of the series
+  return slugs
+    .map(slug => all.find(p => p.slug === slug))
+    .filter((p): p is BlogPost => p !== undefined);
+}
+
 // Get paginated posts for a specific locale
+// Pinned posts are excluded from pagination — they are returned separately
+// and always displayed on every page.
 export function getPaginatedPosts(page: number = 1, locale: string = 'en'): PaginatedPosts {
   const allPosts = getAllPosts(locale);
-  const totalPosts = allPosts.length;
-  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const pinnedPosts = getPinnedPosts(locale);
+  const pinnedSlugs = new Set(pinnedPosts.map(p => p.slug));
+
+  const regularPosts = allPosts.filter(p => !pinnedSlugs.has(p.slug));
+  const totalPosts = regularPosts.length;
+  const totalPages = Math.max(1, Math.ceil(totalPosts / POSTS_PER_PAGE));
   const currentPage = Math.max(1, Math.min(page, totalPages));
 
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const posts = allPosts.slice(startIndex, endIndex);
+  const posts = regularPosts.slice(startIndex, endIndex);
 
   return {
     posts,
+    pinnedPosts,
     currentPage,
     totalPages,
     totalPosts,
@@ -109,9 +133,9 @@ export function getPostBySlug(slug: string, locale: string = 'en'): BlogPost | n
 }
 
 // Get recent posts for a specific locale only
+// Returns the pinned "Why Rust?" series so the home page always shows them.
 export function getRecentPosts(count: number = 3, locale: string = 'en'): BlogPost[] {
-  const posts = getAllPosts(locale);
-  return posts.slice(0, count);
+  return getPinnedPosts(locale).slice(0, count);
 }
 
 // Get tag display name from slug for a specific locale only

@@ -213,6 +213,8 @@
     "articles_plural": "articles",
     "page_info": "Page {current} of {total}",
     "no_articles": "No articles found",
+    "pinned_series": "Why Rust?",
+    "latest_articles": "Latest articles",
     "read_more": "Read more",
     "reading_time": "min read",
     "search_placeholder": "Search articles...",

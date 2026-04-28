@@ -96,11 +96,33 @@ export default async function BlogPage({ params, searchParams }: Props) {
                 </p>
               </div>
 
-              <BlogList
-                posts={paginatedData.posts}
-                title=""
-                description=""
-              />
+              {/* Pinned "Why Rust?" series — always shown on every page */}
+              {paginatedData.pinnedPosts.length > 0 && (
+                <div className="mb-12">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-lg font-semibold">📌 {t('pinned_series')}</span>
+                  </div>
+                  <BlogList
+                    posts={paginatedData.pinnedPosts}
+                    title=""
+                    description=""
+                  />
+                </div>
+              )}
+
+              {/* Regular posts ordered by date */}
+              {paginatedData.posts.length > 0 && (
+                <div className="mb-8">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-lg font-semibold">🗓 {t('latest_articles')}</span>
+                  </div>
+                  <BlogList
+                    posts={paginatedData.posts}
+                    title=""
+                    description=""
+                  />
+                </div>
+              )}
 
               <Pagination
                 currentPage={paginatedData.currentPage}

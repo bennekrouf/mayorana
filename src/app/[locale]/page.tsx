@@ -5,11 +5,15 @@ import { getRecentPosts } from '@/lib/blog';
 import ClientHomeSection from '@/components/home/ClientHomeSection';
 import { useTranslations } from 'next-intl';
 
-export default function HomePage() {
-  // Fetch data directly in the server component
-  const recentPosts = getRecentPosts(3);
+type Props = {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  // Always show the pinned "Why Rust?" series on the home page
+  const recentPosts = getRecentPosts(3, locale);
   const t = useTranslations('home');
-  debugger
   return (
     <LayoutTemplate>
       {/* Hero Section */}
