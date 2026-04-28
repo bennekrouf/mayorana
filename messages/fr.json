@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "site_title": "Outils d'IA qui fonctionnent vraiment — Développés en solo",
+    "site_title": "Outils d'IA qui fonctionnent vraiment",
     "site_description": "Outils d'IA live basés sur Rust 🦀 et l'IA. Portfolio : api0.ai | cVenom | Solanize",
     "about_title": "À propos",
     "about_description": "Découvrez le portfolio d'outils d'IA live de Mayorana développés avec Rust 🦀",
@@ -44,7 +44,7 @@
     "api0_feature4": "Alimente tous mes outils portfolio",
     "explore_api0": "Explorer api0.ai",
     "my_work": "MON PORTFOLIO EN DIRECT",
-    "work_subtitle": "Développement solo. 2 outils live + 1 MVP. api0 les alimente tous.",
+    "work_subtitle": "2 outils live + 1 MVP. api0 les alimente tous.",
     "contact_custom_solutions": "Contactez-moi pour des solutions sur mesure",
     "what_clients_say": "Témoignages clients",
     "testimonials_subtitle": "Expériences de ceux qui ont bénéficié de mes services.",
@@ -54,7 +54,7 @@
   },
   "portfolio": {
     "portfolio_title": "MON PORTFOLIO EN DIRECT",
-    "portfolio_subtitle": "Développement solo. 2 outils live + 1 MVP. api0 les alimente tous.",
+    "portfolio_subtitle": "2 outils live + 1 MVP. api0 les alimente tous.",
     "portfolio_bottom_line": "Vous voulez ça pour votre stack ?",
     "solanize_name": "SOLANIZE",
     "solanize_description": "Votre phrase → Action Solana",
@@ -118,9 +118,9 @@
   },
   "about": {
     "hero_title": "À propos de moi",
-    "hero_subtitle": "Développeur solo avec 2 outils d'IA live + 1 MVP. Tous utilisent ma stack Rust + IA",
+    "hero_subtitle": "2 outils d'IA live + 1 MVP. Tous utilisent ma stack Rust + IA",
     "who_i_am": "Qui je suis",
-    "description1": "En tant qu'entrepreneur solo basé en Suisse, je construis des outils d'IA qui fonctionnent vraiment. Mon portfolio live : API0.AI, cVenom et Solanize (MVP).",
+    "description1": "Basé en Suisse, je construis des outils d'IA qui fonctionnent vraiment. Mon portfolio live : API0.AI, cVenom et Solanize (MVP).",
     "description2": "Plutôt que de promettre, je livre. Mes outils sont live, testables et renforcés par ma stack Rust + IA maison.",
     "description3": "Mon travail allie expertise technique et résultats concrets. 2 outils live + 1 MVP en développement actif.",
     "description4": "Opérant fièrement du cœur de la Suisse, j'apporte précision et fiabilité à chaque projet.",

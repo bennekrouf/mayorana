@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "site_title": "AI Tools That Actually Work—Built Solo",
+    "site_title": "AI Tools That Actually Work",
     "site_description": "Live AI tools powered by Rust 🦀 + AI tech. Portfolio: api0.ai | cVenom | Solanize",
     "about_title": "About",
     "about_description": "Discover Mayorana's live AI tools portfolio built with Rust 🦀",
@@ -24,7 +24,7 @@
     "toggle_menu": "Toggle menu"
   },
   "home": {
-    "hero_title": "AI Tools That Actually Work—Built Solo",
+    "hero_title": "AI Tools That Actually Work",
     "hero_subtitle": "My portfolio: api0.ai | cVenom (live) | Solanize (MVP) - All powered by my Rust 🦀 + AI tech",
     "hero_tagline": "I build what agencies pitch. See my live tools above.",
     "hero_primary_cta": "TRY LIVE TOOLS",
@@ -44,7 +44,7 @@
     "api0_feature4": "Powers all my portfolio tools",
     "explore_api0": "Explore api0.ai",
     "my_work": "MY LIVE PORTFOLIO",
-    "work_subtitle": "Solo dev. 2 live tools + 1 MVP. api0 powers them all.",
+    "work_subtitle": "2 live tools + 1 MVP. api0 powers them all.",
     "contact_custom_solutions": "Contact me for custom solutions",
     "what_clients_say": "What clients say",
     "testimonials_subtitle": "Experiences from those who have benefited from my services.",
@@ -54,7 +54,7 @@
   },
   "portfolio": {
     "portfolio_title": "MY LIVE PORTFOLIO",
-    "portfolio_subtitle": "Solo dev. 2 live tools + 1 MVP. api0 powers them all.",
+    "portfolio_subtitle": "2 live tools + 1 MVP. api0 powers them all.",
     "portfolio_bottom_line": "Want this for your stack?",
     "solanize_name": "SOLANIZE",
     "solanize_description": "Chat → Solana swaps instantly",
@@ -118,9 +118,9 @@
   },
   "about": {
     "hero_title": "About me",
-    "hero_subtitle": "Solo dev with 2 live AI tools + 1 MVP. All powered by my Rust + AI tech",
+    "hero_subtitle": "2 live AI tools + 1 MVP. All powered by my Rust + AI tech",
     "who_i_am": "About me",
-    "description1": "As a solo entrepreneur based in Switzerland, I build AI tools that actually work. My live portfolio: API0.AI, cVenom, and Solanize (MVP).",
+    "description1": "Based in Switzerland, I build AI tools that actually work. My live portfolio: API0.AI, cVenom, and Solanize (MVP).",
     "description2": "Rather than promising, I deliver. My tools are live, testable, and powered by my homegrown Rust + AI stack.",
     "description3": "My work combines technical expertise with concrete results. 2 live tools + 1 MVP under heavy development.",
     "description4": "Operating proudly from the heart of Switzerland, I bring precision and reliability to every project.",

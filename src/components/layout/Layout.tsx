@@ -68,7 +68,7 @@ export function generatePortfolioMetadata(
   // t: (key: string) => string,
   overrides: Partial<LayoutProps['metadata']> = {}
 ): Metadata {
-  const defaultTitle = "AI Tools That Actually Work—Built Solo";
+  const defaultTitle = "AI Tools That Actually Work";
   const defaultDescription = "Live AI tools powered by Rust + AI tech. Portfolio: api0.ai | cVenom | Solanize";
   const siteUrl = 'https://mayorana.ch';
 
@@ -86,7 +86,7 @@ export function generatePortfolioMetadata(
       'Solana DeFi',
       'resume optimization',
       'AI consulting',
-      'solo developer',
+      'Swiss developer',
       'live portfolio'
     ],
     authors: [{ name: 'Mayorana' }],
