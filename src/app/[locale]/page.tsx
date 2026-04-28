@@ -3,7 +3,7 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import { getRecentPosts } from '@/lib/blog';
 import ClientHomeSection from '@/components/home/ClientHomeSection';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -13,7 +13,7 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   // Always show the pinned "Why Rust?" series on the home page
   const recentPosts = getRecentPosts(3, locale);
-  const t = useTranslations('home');
+  const t = await getTranslations({ locale, namespace: 'home' });
   return (
     <LayoutTemplate>
       {/* Hero Section */}
