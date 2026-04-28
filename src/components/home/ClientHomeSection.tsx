@@ -121,7 +121,7 @@ export default function ClientHomeSection() {
             {portfolioTools.map((tool) => (
               <div
                 key={tool.name}
-                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/50 to-secondary/20 border border-border p-6 hover:shadow-2xl transition-all duration-300"
+                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/50 to-secondary/20 border border-border p-6 hover:shadow-2xl transition-all duration-300 flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 bg-primary/10 rounded-full text-primary">
@@ -165,14 +165,15 @@ export default function ClientHomeSection() {
             ))}
 
             {/* Consulting - Fourth Card */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 p-6 hover:shadow-2xl transition-all duration-300">
-              <div className="text-center">
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 p-6 hover:shadow-2xl transition-all duration-300 flex flex-col">
+              <div className="text-center flex flex-col flex-1">
                 <div className="p-3 bg-primary/10 rounded-full text-primary mb-4 inline-block">
                   {consulting.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-primary">{consulting.name}</h3>
                 <p className="text-sm font-medium mb-2">{consulting.description}</p>
                 <p className="text-xs text-muted-foreground mb-4">{consulting.tech}</p>
+                <div className="mt-auto">
                 <Link
                   href={getLocalizedPath(locale, "/contact")}
                   className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-lg group-hover:shadow-primary/25"
@@ -180,6 +181,7 @@ export default function ClientHomeSection() {
                   {consulting.cta}
                   <ArrowRight className="ml-1 w-3 h-3" />
                 </Link>
+                </div>
               </div>
             </div>
           </div>
