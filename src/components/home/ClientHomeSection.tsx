@@ -185,6 +185,16 @@ export default function ClientHomeSection() {
               </div>
             </div>
           </div>
+
+          {/* Desktop apps link */}
+          <div className="text-center mt-12">
+            <Link
+              href={getLocalizedPath(locale, '/apps')}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border bg-secondary hover:bg-secondary/80 text-foreground font-medium transition-colors"
+            >
+              🖥️ Desktop apps (open source)
+            </Link>
+          </div>
         </div>
       </section>
 

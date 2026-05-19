@@ -24,6 +24,7 @@ const Navbar: React.FC = () => {
     { name: 'Portfolio', path: '/#portfolio' },
     // { name: t('about'), path: '/about' },
     { name: t('blog'), path: '/blog' },
+    { name: 'Apps', path: '/apps' },
     // { name: 'api0.ai', path: 'https://api0.ai', external: true },
     { name: t('contact'), path: '/contact' }
   ];
