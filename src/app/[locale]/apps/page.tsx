@@ -25,9 +25,10 @@ interface DesktopApp {
   downloads: DownloadLink[];
 }
 
-const LATEST = 'v0.3.4';
 const REPO   = 'https://github.com/Bennekrouf/ais-runner';
-const BASE   = `${REPO}/releases/download/${LATEST}`;
+// /releases/latest/download/ always redirects to the current release —
+// no version number needed, never goes 404 when a new release ships.
+const DL = `${REPO}/releases/latest/download`;
 
 const apps: DesktopApp[] = [
   {
@@ -46,19 +47,19 @@ const apps: DesktopApp[] = [
       {
         os: 'mac',
         label: 'macOS (Apple Silicon)',
-        href: `${BASE}/ais-runner-macos-arm64.tar.gz`,
+        href: `${DL}/ais-runner-macos-arm64.tar.gz`,
         icon: <FaApple className="w-4 h-4" />,
       },
       {
         os: 'linux',
         label: 'Linux x86_64',
-        href: `${BASE}/ais-runner-linux-x86_64.tar.gz`,
+        href: `${DL}/ais-runner-linux-x86_64.tar.gz`,
         icon: <FaLinux className="w-4 h-4" />,
       },
       {
         os: 'windows',
         label: 'Windows',
-        href: `${BASE}/ais-runner-setup.exe`,
+        href: `${DL}/ais-runner-setup.exe`,
         icon: <FaWindows className="w-4 h-4" />,
       },
     ],
@@ -163,14 +164,14 @@ export default function AppsPage() {
                         {dl.label}
                       </a>
                     ))}
-                    <Link
+                    <a
                       href={`${app.github}/releases/latest`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1 text-center"
                     >
                       All releases & checksums ↗
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </motion.div>
