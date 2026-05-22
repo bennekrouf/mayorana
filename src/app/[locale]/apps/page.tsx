@@ -25,10 +25,8 @@ interface DesktopApp {
   downloads: DownloadLink[];
 }
 
-const REPO   = 'https://github.com/Bennekrouf/ais-runner';
-// /releases/latest/download/ always redirects to the current release —
-// no version number needed, never goes 404 when a new release ships.
-const DL = `${REPO}/releases/latest/download`;
+const runner  = 'https://github.com/Bennekrouf/ais-runner';
+const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 
 const apps: DesktopApp[] = [
   {
@@ -36,30 +34,63 @@ const apps: DesktopApp[] = [
     name: 'AIS Runner',
     tagline: 'Azure Integration Services — local development desktop',
     description:
-      'A Rust/Dioxus desktop app for running Azure Logic Apps locally. ' +
-      'One-click Azurite + func start, live run history, workflow analysis, ' +
-      'Service Bus queue counts, CI/CD DevOps view, and direct publish to Azure — ' +
-      'without leaving your desk.',
+      'Run and test Azure Logic Apps locally without pushing to Azure. ' +
+      'One-click Azurite + func start, live run history, workflow analysis bar, ' +
+      'Service Bus queue counts, CI/CD DevOps view, Liquid template tester, ' +
+      'and workflow chain graph — all in one desktop app.',
     tech: 'Rust · Dioxus · Azure CLI · Azurite · Azure Functions',
     status: 'live',
-    github: REPO,
+    github: runner,
     downloads: [
       {
         os: 'mac',
         label: 'macOS (Apple Silicon)',
-        href: `${DL}/ais-runner-macos-arm64.tar.gz`,
+        href: `${runner}/releases/latest/download/ais-runner-macos-arm64.tar.gz`,
         icon: <FaApple className="w-4 h-4" />,
       },
       {
         os: 'linux',
         label: 'Linux x86_64',
-        href: `${DL}/ais-runner-linux-x86_64.tar.gz`,
+        href: `${runner}/releases/latest/download/ais-runner-linux-x86_64.tar.gz`,
         icon: <FaLinux className="w-4 h-4" />,
       },
       {
         os: 'windows',
         label: 'Windows',
-        href: `${DL}/ais-runner-setup.exe`,
+        href: `${runner}/releases/latest/download/ais-runner-setup.exe`,
+        icon: <FaWindows className="w-4 h-4" />,
+      },
+    ],
+  },
+  {
+    id: 'ais-monitor',
+    name: 'AIS Monitor',
+    tagline: 'Azure Logic Apps workflow chain explorer',
+    description:
+      'Visualise how your Logic Apps connect to each other via Service Bus queues ' +
+      'and Event Grid, inspect live run history per chain, trigger HTTP workflows ' +
+      'with saved payloads, and monitor deployed workflow states — ' +
+      'all from a single desktop view.',
+    tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
+    status: 'beta',
+    github: monitor,
+    downloads: [
+      {
+        os: 'mac',
+        label: 'macOS (Apple Silicon)',
+        href: `${monitor}/releases/latest/download/ais-monitor-macos-arm64.tar.gz`,
+        icon: <FaApple className="w-4 h-4" />,
+      },
+      {
+        os: 'linux',
+        label: 'Linux x86_64',
+        href: `${monitor}/releases/latest/download/ais-monitor-linux-x86_64.tar.gz`,
+        icon: <FaLinux className="w-4 h-4" />,
+      },
+      {
+        os: 'windows',
+        label: 'Windows',
+        href: `${monitor}/releases/latest/download/ais-monitor-setup.exe`,
         icon: <FaWindows className="w-4 h-4" />,
       },
     ],
