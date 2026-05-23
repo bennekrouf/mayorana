@@ -18,14 +18,10 @@ const Navbar: React.FC = () => {
   const t = useTranslations('navigation');
   const locale = useLocale();
 
-  // Navigation items - exactly like live site but with Portfolio instead of Services
   const allNavItems = [
     { name: t('home'), path: '/' },
-    { name: 'Portfolio', path: '/#portfolio' },
-    // { name: t('about'), path: '/about' },
     { name: t('blog'), path: '/blog' },
     { name: 'Apps', path: '/apps' },
-    // { name: 'api0.ai', path: 'https://api0.ai', external: true },
     { name: t('contact'), path: '/contact' }
   ];
 
@@ -38,9 +34,6 @@ const Navbar: React.FC = () => {
   const isActivePath = (path: string) => {
     if (path === '/') {
       return pathname === `/${locale}` || pathname === '/' || pathname === `/${locale}/`;
-    }
-    if (path.startsWith('/#')) {
-      return false; // Portfolio anchor link should not be highlighted on homepage
     }
     return pathname.includes(path);
   };
@@ -60,36 +53,16 @@ const Navbar: React.FC = () => {
           {/* Desktop Navigation - exactly like live site layout */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              item.path.startsWith('/#') ? (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const element = document.getElementById('portfolio');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className={`transition-colors font-medium ${isActivePath(item.path)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                    }`}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.path}
-                  href={getLocalizedPath(locale, item.path)}
-                  className={`transition-colors font-medium ${isActivePath(item.path)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                    }`}
-                >
-                  {item.name}
-                </Link>
-              )
+              <Link
+                key={item.path}
+                href={getLocalizedPath(locale, item.path)}
+                className={`transition-colors font-medium ${isActivePath(item.path)
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
+                  }`}
+              >
+                {item.name}
+              </Link>
             ))}
           </div>
 
@@ -135,42 +108,17 @@ const Navbar: React.FC = () => {
           <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md">
             <div className="py-4 space-y-2">
               {navItems.map((item) => (
-                item.path.startsWith('/#') ? (
-                  <a
-                    key={item.path}
-                    href={item.path}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const element = document.getElementById('portfolio');
-                      if (element) {
-                        const navbarHeight = 64; // 16 * 4 = 64px (h-16 class)
-                        const elementPosition = element.offsetTop - navbarHeight + 50;
-                        window.scrollTo({
-                          top: elementPosition,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }}
-                    className={`block px-4 py-2 transition-colors ${isActivePath(item.path)
-                      ? 'text-primary font-medium'
-                      : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.path}
-                    href={getLocalizedPath(locale, item.path)}
-                    className={`block px-4 py-2 transition-colors ${isActivePath(item.path)
-                      ? 'text-primary font-medium'
-                      : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                )
+                <Link
+                  key={item.path}
+                  href={getLocalizedPath(locale, item.path)}
+                  className={`block px-4 py-2 transition-colors ${isActivePath(item.path)
+                    ? 'text-primary font-medium'
+                    : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
               ))}
 
               {/* Mobile controls */}
