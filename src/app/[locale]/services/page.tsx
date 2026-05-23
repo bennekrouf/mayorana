@@ -58,11 +58,11 @@ export default function ServicesPage() {
       id: "api0",
       icon: <FaNetworkWired className="h-8 w-8 text-primary" />,
       title: "api0.ai Solutions",
-      description: "My flagship NLP platform that automatically matches user inputs to your API endpoints, eliminating complex routing logic.",
+      description: "An MCP gateway that turns your APIs into tools for AI agents — connect endpoints, define capabilities, and let LLMs orchestrate workflows.",
       approach: [
-        "NLP-powered endpoint matching",
-        "Secure API key management",
-        "Domain-restricted access control",
+        "MCP-native gateway for AI agent workflows",
+        "Connect any API as a tool for LLMs in minutes",
+        "Secure API key management with domain restrictions",
         "Enterprise-grade scaling and monitoring"
       ],
       cta: "Try api0.ai",

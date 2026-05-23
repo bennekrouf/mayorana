@@ -37,11 +37,11 @@
     "insights_subtitle": "Thoughts and tutorials on Rust, LLM integration and AI agent development.",
     "view_all_articles": "View all articles",
     "discover_api0_title": "API0.AI - My Flagship Solution",
-    "api0_description": "My flagship solution that uses advanced NLP to match user inputs to API endpoints, reducing integration complexity for businesses.",
-    "api0_feature1": "Minimal setup with JavaScript SDK",
-    "api0_feature2": "Secure API key management with domain restrictions",
-    "api0_feature3": "Scalable for enterprise traffic",
-    "api0_feature4": "Powers all my portfolio tools",
+    "api0_description": "An MCP gateway that lets you build AI agents connected to your APIs — no glue code, just configuration.",
+    "api0_feature1": "MCP-native gateway for AI agent workflows",
+    "api0_feature2": "Connect any API as a tool for LLMs in minutes",
+    "api0_feature3": "Secure API key management with domain restrictions",
+    "api0_feature4": "Scalable for enterprise traffic",
     "explore_api0": "Explore api0.ai",
     "my_work": "MY LIVE PORTFOLIO",
     "work_subtitle": "2 live tools + 1 MVP. api0 powers them all.",
@@ -61,9 +61,9 @@
     "solanize_tech": "MVP under heavy development",
     "solanize_cta": "VIEW MVP",
     "api0_name": "API0.AI",
-    "api0_description": "English → API magic, no docs needed",
-    "api0_tech": "Rust-powered NLP routing",
-    "api0_cta": "GET SDK",
+    "api0_description": "MCP gateway — build AI agents on your APIs",
+    "api0_tech": "Rust-powered MCP gateway",
+    "api0_cta": "TRY IT",
     "cvenom_name": "CVENOM",
     "cvenom_description": "CV + Job → Perfect match in seconds",
     "cvenom_tech": "AI resume optimizer, bypass ATS systems",
@@ -71,7 +71,7 @@
     "consulting_title": "YOUR PROJECT",
     "consulting_description": "Custom AI with my Rust stack",
     "consulting_tech": "Your product, my portfolio tech",
-    "consulting_cta": "BOOK 30MIN FREE"
+    "consulting_cta": "CONTACT US"
   },
   "services": {
     "services_title": "What I Build",
@@ -104,11 +104,11 @@
       "benefit4": "Reduce support load with automated responses"
     },
     "api0": {
-      "title": "api0.ai Solutions",
-      "description": "My cutting-edge platform that uses advanced NLP to match user inputs to API endpoints, simplifying integrations for businesses. Easy to use, secure, and designed for minimal setup.",
+      "title": "api0.ai — MCP Gateway",
+      "description": "An MCP gateway that turns your APIs into tools for AI agents. Connect any endpoint, define capabilities, and let LLMs orchestrate workflows — no glue code needed.",
       "cta": "Try api0.ai now",
-      "benefit1": "Match natural language inputs to the right API endpoints",
-      "benefit2": "Reduce integration time and complexity",
+      "benefit1": "Expose any API as an MCP tool for AI agents",
+      "benefit2": "Build multi-step agent workflows with zero glue code",
       "benefit3": "Secure API key management with domain restrictions",
       "benefit4": "Scale seamlessly for enterprise-level traffic"
     },
@@ -148,8 +148,8 @@
     },
     "featured_project": "Featured project: api0.ai",
     "project_subtitle": "My flagship innovation, powers all my portfolio tools",
-    "project_description1": "api0.ai represents the culmination of my work in AI and API integration, providing a solution that intelligently matches natural language inputs to the right API endpoints.",
-    "project_description2": "Using advanced natural language processing, api0.ai simplifies the integration process for businesses, reducing development time and complexity while providing robust security features.",
+    "project_description1": "api0.ai is an MCP gateway that turns your existing APIs into tools AI agents can use — connect endpoints, define capabilities, and orchestrate workflows.",
+    "project_description2": "Built with Rust for performance and reliability, api0.ai lets businesses build AI agents on top of their own infrastructure with minimal setup and enterprise-grade security.",
     "visit_api0": "Visit api0.ai",
     "ready_work_together": "Ready to work together?",
     "cta_description": "Let's discuss how my live AI tools can power your business."
@@ -266,7 +266,7 @@
       "author": "Fintech Lead in Zurich"
     },
     "ecommerce_cto": {
-      "quote": "api0.ai made our API integrations effortless. It's a game-changer for our platform.",
+      "quote": "api0.ai lets us build AI agents on our own APIs in hours instead of weeks. A real game-changer.",
       "author": "E-commerce Solution CTO"
     }
   }

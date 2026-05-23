@@ -37,11 +37,11 @@
     "insights_subtitle": "Réflexions et tutoriels sur Rust, l'intégration LLM et le développement d'agents IA.",
     "view_all_articles": "Voir tous les articles",
     "discover_api0_title": "API0.AI - Ma solution phare",
-    "api0_description": "Ma solution phare qui utilise le NLP avancé pour relier les requêtes utilisateurs aux endpoints API, réduisant la complexité d'intégration pour les entreprises.",
-    "api0_feature1": "Configuration minimale avec SDK JavaScript",
-    "api0_feature2": "Gestion sécurisée des clés API avec restrictions de domaine",
-    "api0_feature3": "Évolutif pour le trafic enterprise",
-    "api0_feature4": "Alimente tous mes outils portfolio",
+    "api0_description": "Une passerelle MCP qui permet de construire des agents IA connectés à vos APIs — sans code intermédiaire, juste de la configuration.",
+    "api0_feature1": "Passerelle MCP native pour les workflows d'agents IA",
+    "api0_feature2": "Connectez n'importe quelle API comme outil pour les LLMs en minutes",
+    "api0_feature3": "Gestion sécurisée des clés API avec restrictions de domaine",
+    "api0_feature4": "Évolutif pour le trafic enterprise",
     "explore_api0": "Explorer api0.ai",
     "my_work": "MON PORTFOLIO EN DIRECT",
     "work_subtitle": "2 outils live + 1 MVP. api0 les alimente tous.",
@@ -61,9 +61,9 @@
     "solanize_tech": "Parlez, Solana exécute ✨",
     "solanize_cta": "VOIR LE MVP",
     "api0_name": "API0.AI",
-    "api0_description": "Anglais → Magie API, sans documentation",
-    "api0_tech": "Routage NLP basé sur Rust",
-    "api0_cta": "OBTENIR LE SDK",
+    "api0_description": "Passerelle MCP — créez des agents IA sur vos APIs",
+    "api0_tech": "Passerelle MCP basée sur Rust",
+    "api0_cta": "ESSAYER",
     "cvenom_name": "CVENOM",
     "cvenom_description": "CV + Offre → Correspondance parfaite en secondes",
     "cvenom_tech": "Optimisateur de CV IA, contourne les systèmes ATS",
@@ -71,7 +71,7 @@
     "consulting_title": "VOTRE PROJET",
     "consulting_description": "IA sur mesure avec ma stack Rust",
     "consulting_tech": "Votre produit, ma technologie portfolio",
-    "consulting_cta": "RÉSERVER 30MIN GRATUITES"
+    "consulting_cta": "CONTACTEZ-NOUS"
   },
   "services": {
     "services_title": "Ce que je construis",
@@ -104,11 +104,11 @@
       "benefit4": "Réduire la charge de support avec des réponses automatisées"
     },
     "api0": {
-      "title": "Solutions api0.ai",
-      "description": "Ma plateforme de pointe qui utilise le NLP avancé pour relier les requêtes utilisateurs aux endpoints API, simplifiant les intégrations pour les entreprises. Facile à utiliser, sécurisée et conçue pour une configuration minimale.",
+      "title": "api0.ai — Passerelle MCP",
+      "description": "Une passerelle MCP qui transforme vos APIs en outils pour agents IA. Connectez vos endpoints, définissez les capacités, et laissez les LLMs orchestrer vos workflows — sans code intermédiaire.",
       "cta": "Essayer api0.ai maintenant",
-      "benefit1": "Relier les requêtes en langage naturel aux bons endpoints API",
-      "benefit2": "Réduire le temps et la complexité d'intégration",
+      "benefit1": "Exposez n'importe quelle API comme outil MCP pour agents IA",
+      "benefit2": "Construisez des workflows d'agents multi-étapes sans code",
       "benefit3": "Gestion sécurisée des clés API avec restrictions de domaine",
       "benefit4": "Évoluer facilement pour un trafic de niveau enterprise"
     },
@@ -148,8 +148,8 @@
     },
     "featured_project": "Projet en vedette : api0.ai",
     "project_subtitle": "Mon innovation phare, alimente tous mes outils portfolio",
-    "project_description1": "api0.ai représente l'aboutissement de mon travail en IA et intégration API, fournissant une solution qui relie intelligemment les requêtes en langage naturel aux bons endpoints API.",
-    "project_description2": "Utilisant le traitement du langage naturel avancé, api0.ai simplifie le processus d'intégration pour les entreprises, réduisant le temps de développement et la complexité tout en offrant des fonctionnalités de sécurité robustes.",
+    "project_description1": "api0.ai est une passerelle MCP qui transforme vos APIs existantes en outils utilisables par des agents IA — connectez vos endpoints, définissez les capacités et orchestrez vos workflows.",
+    "project_description2": "Construit avec Rust pour la performance et la fiabilité, api0.ai permet aux entreprises de créer des agents IA sur leur propre infrastructure avec une configuration minimale et une sécurité de niveau enterprise.",
     "visit_api0": "Visiter api0.ai",
     "ready_work_together": "Prêt à collaborer ?",
     "cta_description": "Discutons de comment mes outils d'IA live peuvent renforcer votre entreprise."
@@ -266,7 +266,7 @@
       "author": "Responsable Fintech à Zurich"
     },
     "ecommerce_cto": {
-      "quote": "api0.ai a rendu nos intégrations API sans effort. C'est un game-changer pour notre plateforme.",
+      "quote": "api0.ai nous permet de créer des agents IA sur nos propres APIs en heures au lieu de semaines. Un vrai game-changer.",
       "author": "CTO de Solution E-commerce"
     }
   }

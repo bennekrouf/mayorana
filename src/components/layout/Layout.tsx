@@ -82,7 +82,7 @@ export function generatePortfolioMetadata(
       'Solanize',
       'api0.ai',
       'cVenom',
-      'NLP routing',
+      'MCP gateway',
       'Solana DeFi',
       'resume optimization',
       'AI consulting',
