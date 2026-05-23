@@ -61,7 +61,7 @@ export default function Footer() {
           {/* Portfolio Tools */}
           {!isSwissRust && (
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Live Portfolio</h3>
+              <h3 className="font-semibold text-foreground mb-4">{t('live_portfolio')}</h3>
               <ul className="space-y-3">
                 {portfolioLinks.map((link) => (
                   <li key={link.name}>
@@ -128,7 +128,7 @@ export default function Footer() {
 
           {/* Contact Actions */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Get Started</h3>
+            <h3 className="font-semibold text-foreground mb-4">{t('get_started')}</h3>
             <ul className="space-y-3">
               {actionLinks.map((link) => (
                 <li key={link.name}>
@@ -163,24 +163,24 @@ export default function Footer() {
         <div className="mt-12 pt-6 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} {isSwissRust ? "Swiss rust" : "Mayorana"}. All rights reserved.
+              © {currentYear} {isSwissRust ? "Swiss rust" : "Mayorana"}. {t('copyright')}
             </p>
             <div className="flex items-center space-x-6 text-sm">
               <Link
                 href={getLocalizedPath(locale, '/privacy')}
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
-                Privacy
+                {t('privacy')}
               </Link>
               <Link
                 href={getLocalizedPath(locale, '/terms')}
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
-                Terms
+                {t('terms')}
               </Link>
               {!isSwissRust && (
                 <span className="text-muted-foreground">
-                  Built with Rust + Next.js
+                  {t('built_with')} Rust + Next.js
                 </span>
               )}
             </div>
