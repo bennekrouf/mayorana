@@ -299,7 +299,7 @@ export default function AppsPage() {
 
       {/* Desktop Apps */}
       <section className="py-16 bg-secondary/30">
-        <div className="container max-w-5xl">
+        <div className="container max-w-6xl">
           <h2 className="text-2xl font-bold mb-8">Desktop Apps (Open Source)</h2>
           <div className="space-y-10">
             {desktopApps.map((app, i) => (
