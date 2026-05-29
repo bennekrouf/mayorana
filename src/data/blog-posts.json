@@ -1,5 +1,93 @@
 [
   {
+    "id": "ais-runner-intro",
+    "slug": "ais-runner-intro",
+    "title": "AIS Runner: A Desktop GUI for Local Azure Logic Apps Standard Development",
+    "date": "2026-05-29",
+    "excerpt": "AIS Runner is a Dioxus-based desktop app for local Azure Logic Apps Standard development — manage, run, debug, and compare workflows without leaving your dev environment.",
+    "content": "Developing Azure Logic Apps Standard locally usually means juggling the CLI, VS Code extensions, the Azure portal, DevOps pipelines, and a handful of terminals to inspect Service Bus queues or compare environment settings. **AIS Runner** brings all of that into a single Dioxus-based desktop app — a visual GUI to manage, run, debug, and compare workflows without leaving your dev environment.\n\nIt runs natively on macOS, Windows, and Linux via Dioxus desktop (WebView).\n\n## 🔧 Local Development Environment\n\n- **Auto-detection of prerequisites** — checks for Node.js, Azure Functions Core Tools, .NET, and Java runtimes, and guides setup\n- **Project workspace management** — link local Logic Apps projects to their Azure counterparts (subscription, resource group, app name, Service Bus namespace)\n- **`local.settings.json` editor** — visual key/value editor with secret masking, grouped by category (Service Bus, connection strings, etc.)\n- **System theme support** — auto-detects dark/light OS preference with manual toggle\n\n## ▶️ Workflow Execution\n\n- Run workflows locally with **trigger-aware execution** (HTTP, Service Bus, Blob triggers)\n- **Payload editor** — compose and send JSON payloads to trigger workflows\n- **Service Bus message injection** — send messages to queues via AMQP, auto-detecting local emulator vs cloud namespace\n- **Blob trigger support** — pre-flight checks for Azurite container existence\n- **Run history viewer** — inspect individual run details, inputs/outputs per action\n\n## 📊 Workflow Visualization\n\n- Workflow list with trigger type indicators and status\n- **Visual graph panel** — DAG rendering of workflow action dependencies\n- **Workflow analysis** — detects all referenced queues, connections, and actions per workflow\n- **Connection diagnostics** — validates `connections.json` references and flags broken `@appsetting` bindings\n\n## ☁️ Azure Cloud Integration\n\n- **Azure panel** — list remote workflows, diff local vs deployed definitions\n- **Sync & deploy** — compare local workflow JSON with Azure-deployed versions\n- **Download remote configs** — pull `parameters.json` and `connections.json` from Azure\n- **Run history from Azure** — fetch execution history for deployed workflows\n- **`az login` integration** — detects expired tokens and prompts re-authentication\n\n## 🔄 Azure DevOps Integration\n\n- **Pipeline viewer** — list and browse DevOps pipelines for the linked project\n- **Auto-detect DevOps URL** from the git remote\n- **Variable group browser** — list all DevOps variable groups and inspect their contents\n\n## ⊞ Compare Environments\n\n- **Multi-column environment comparison** — compare `local.settings.json` against Azure cloud app settings and multiple DevOps variable groups side-by-side\n- **Diff filtering** — toggle \"Differences only\" with per-column checkboxes to compare any subset of environments\n- **Secret masking** — hides sensitive keys with a reveal toggle\n- **Click-to-copy cells** with clipboard integration and detail popup\n\n## ⚡ Event Grid\n\n- **Topic browser** — lists all custom and system Event Grid topics subscription-wide, with resource group badges\n- **Subscription inspector** — expand any topic to see event subscriptions with endpoint type, filters, and event types\n- **Topic comparison** — two-dropdown side-by-side compare of Event Grid topics between environments, highlighting differences in subscriptions and filters\n\n## 🚌 Service Bus\n\n- **Queue detection** — scans all workflow triggers and actions to discover referenced Service Bus queues\n- **Emulator management** — Docker-based Service Bus emulator with auto-config generation\n- **Queue browser (DB panel)** — inspect queue message counts, dead-letter queues, send test messages\n- **Cross-environment queue comparison** — compare queues between DEV/STG/PROD namespaces with property diff (session, max delivery, lock duration, TTL, auto-delete)\n- **DLQ and active message badges** in the comparison view\n\n## 💾 Data Connectors (DB Panel)\n\n- **SQL** — connection management for SQL Server databases referenced by workflows\n- **Cosmos DB** — browse and manage Cosmos DB connections\n- **Blob Storage / Azurite** — local Azurite emulator integration, container management, WebJobs storage config\n- **SFTP** — SFTP connection viewer for file-based integrations\n- **Maps** — Logic Apps maps (XSLT/Liquid transforms) management\n\n## 🖥️ UX\n\n- **Resizable split pane** — draggable divider between workflow list and detail panel\n- **Persistent configuration** — workspace links, graph preferences, and settings saved across sessions\n- **Keyboard shortcuts** — Escape to close overlays\n- **Cross-platform** — runs on macOS, Windows, and Linux via Dioxus desktop (WebView)\n\n## Why a Native Desktop App?\n\nBuilding AIS Runner with Dioxus in Rust gives it the responsiveness of a native app with a modern UI layer. No Electron-sized memory footprint, no browser tab to lose. It sits next to your editor and your terminal, talks to your local emulators directly, and authenticates to Azure with the same `az` CLI session you already use.\n\nIf you work with Logic Apps Standard daily, AIS Runner is built to remove the friction between writing a workflow, running it locally, comparing it across environments, and shipping it.",
+    "contentHtml": "<p>Developing Azure Logic Apps Standard locally usually means juggling the CLI, VS Code extensions, the Azure portal, DevOps pipelines, and a handful of terminals to inspect Service Bus queues or compare environment settings. <strong>AIS Runner</strong> brings all of that into a single Dioxus-based desktop app — a visual GUI to manage, run, debug, and compare workflows without leaving your dev environment.</p>\n<p>It runs natively on macOS, Windows, and Linux via Dioxus desktop (WebView).</p>\n<h2>🔧 Local Development Environment</h2>\n<ul>\n<li><strong>Auto-detection of prerequisites</strong> — checks for Node.js, Azure Functions Core Tools, .NET, and Java runtimes, and guides setup</li>\n<li><strong>Project workspace management</strong> — link local Logic Apps projects to their Azure counterparts (subscription, resource group, app name, Service Bus namespace)</li>\n<li><strong><code>local.settings.json</code> editor</strong> — visual key/value editor with secret masking, grouped by category (Service Bus, connection strings, etc.)</li>\n<li><strong>System theme support</strong> — auto-detects dark/light OS preference with manual toggle</li>\n</ul>\n<h2>▶️ Workflow Execution</h2>\n<ul>\n<li>Run workflows locally with <strong>trigger-aware execution</strong> (HTTP, Service Bus, Blob triggers)</li>\n<li><strong>Payload editor</strong> — compose and send JSON payloads to trigger workflows</li>\n<li><strong>Service Bus message injection</strong> — send messages to queues via AMQP, auto-detecting local emulator vs cloud namespace</li>\n<li><strong>Blob trigger support</strong> — pre-flight checks for Azurite container existence</li>\n<li><strong>Run history viewer</strong> — inspect individual run details, inputs/outputs per action</li>\n</ul>\n<h2>📊 Workflow Visualization</h2>\n<ul>\n<li>Workflow list with trigger type indicators and status</li>\n<li><strong>Visual graph panel</strong> — DAG rendering of workflow action dependencies</li>\n<li><strong>Workflow analysis</strong> — detects all referenced queues, connections, and actions per workflow</li>\n<li><strong>Connection diagnostics</strong> — validates <code>connections.json</code> references and flags broken <code>@appsetting</code> bindings</li>\n</ul>\n<h2>☁️ Azure Cloud Integration</h2>\n<ul>\n<li><strong>Azure panel</strong> — list remote workflows, diff local vs deployed definitions</li>\n<li><strong>Sync &amp; deploy</strong> — compare local workflow JSON with Azure-deployed versions</li>\n<li><strong>Download remote configs</strong> — pull <code>parameters.json</code> and <code>connections.json</code> from Azure</li>\n<li><strong>Run history from Azure</strong> — fetch execution history for deployed workflows</li>\n<li><strong><code>az login</code> integration</strong> — detects expired tokens and prompts re-authentication</li>\n</ul>\n<h2>🔄 Azure DevOps Integration</h2>\n<ul>\n<li><strong>Pipeline viewer</strong> — list and browse DevOps pipelines for the linked project</li>\n<li><strong>Auto-detect DevOps URL</strong> from the git remote</li>\n<li><strong>Variable group browser</strong> — list all DevOps variable groups and inspect their contents</li>\n</ul>\n<h2>⊞ Compare Environments</h2>\n<ul>\n<li><strong>Multi-column environment comparison</strong> — compare <code>local.settings.json</code> against Azure cloud app settings and multiple DevOps variable groups side-by-side</li>\n<li><strong>Diff filtering</strong> — toggle &quot;Differences only&quot; with per-column checkboxes to compare any subset of environments</li>\n<li><strong>Secret masking</strong> — hides sensitive keys with a reveal toggle</li>\n<li><strong>Click-to-copy cells</strong> with clipboard integration and detail popup</li>\n</ul>\n<h2>⚡ Event Grid</h2>\n<ul>\n<li><strong>Topic browser</strong> — lists all custom and system Event Grid topics subscription-wide, with resource group badges</li>\n<li><strong>Subscription inspector</strong> — expand any topic to see event subscriptions with endpoint type, filters, and event types</li>\n<li><strong>Topic comparison</strong> — two-dropdown side-by-side compare of Event Grid topics between environments, highlighting differences in subscriptions and filters</li>\n</ul>\n<h2>🚌 Service Bus</h2>\n<ul>\n<li><strong>Queue detection</strong> — scans all workflow triggers and actions to discover referenced Service Bus queues</li>\n<li><strong>Emulator management</strong> — Docker-based Service Bus emulator with auto-config generation</li>\n<li><strong>Queue browser (DB panel)</strong> — inspect queue message counts, dead-letter queues, send test messages</li>\n<li><strong>Cross-environment queue comparison</strong> — compare queues between DEV/STG/PROD namespaces with property diff (session, max delivery, lock duration, TTL, auto-delete)</li>\n<li><strong>DLQ and active message badges</strong> in the comparison view</li>\n</ul>\n<h2>💾 Data Connectors (DB Panel)</h2>\n<ul>\n<li><strong>SQL</strong> — connection management for SQL Server databases referenced by workflows</li>\n<li><strong>Cosmos DB</strong> — browse and manage Cosmos DB connections</li>\n<li><strong>Blob Storage / Azurite</strong> — local Azurite emulator integration, container management, WebJobs storage config</li>\n<li><strong>SFTP</strong> — SFTP connection viewer for file-based integrations</li>\n<li><strong>Maps</strong> — Logic Apps maps (XSLT/Liquid transforms) management</li>\n</ul>\n<h2>🖥️ UX</h2>\n<ul>\n<li><strong>Resizable split pane</strong> — draggable divider between workflow list and detail panel</li>\n<li><strong>Persistent configuration</strong> — workspace links, graph preferences, and settings saved across sessions</li>\n<li><strong>Keyboard shortcuts</strong> — Escape to close overlays</li>\n<li><strong>Cross-platform</strong> — runs on macOS, Windows, and Linux via Dioxus desktop (WebView)</li>\n</ul>\n<h2>Why a Native Desktop App?</h2>\n<p>Building AIS Runner with Dioxus in Rust gives it the responsiveness of a native app with a modern UI layer. No Electron-sized memory footprint, no browser tab to lose. It sits next to your editor and your terminal, talks to your local emulators directly, and authenticates to Azure with the same <code>az</code> CLI session you already use.</p>\n<p>If you work with Logic Apps Standard daily, AIS Runner is built to remove the friction between writing a workflow, running it locally, comparing it across environments, and shipping it.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "azure",
+      "logic-apps",
+      "dioxus",
+      "rust",
+      "desktop"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "AIS Runner: A Desktop GUI for Local Azure Logic Apps Standard Development",
+      "description": "AIS Runner is a Dioxus-based desktop app for local Azure Logic Apps Standard development — manage, run, debug, and compare workflows without leaving your dev environment.",
+      "keywords": [
+        "azure",
+        "logic-apps",
+        "dioxus",
+        "rust",
+        "desktop"
+      ]
+    },
+    "headings": [
+      {
+        "id": "local-development-environment",
+        "text": "🔧 Local Development Environment",
+        "level": 2
+      },
+      {
+        "id": "workflow-execution",
+        "text": "▶️ Workflow Execution",
+        "level": 2
+      },
+      {
+        "id": "workflow-visualization",
+        "text": "📊 Workflow Visualization",
+        "level": 2
+      },
+      {
+        "id": "azure-cloud-integration",
+        "text": "☁️ Azure Cloud Integration",
+        "level": 2
+      },
+      {
+        "id": "azure-devops-integration",
+        "text": "🔄 Azure DevOps Integration",
+        "level": 2
+      },
+      {
+        "id": "compare-environments",
+        "text": "⊞ Compare Environments",
+        "level": 2
+      },
+      {
+        "id": "event-grid",
+        "text": "⚡ Event Grid",
+        "level": 2
+      },
+      {
+        "id": "service-bus",
+        "text": "🚌 Service Bus",
+        "level": 2
+      },
+      {
+        "id": "data-connectors-db-panel",
+        "text": "💾 Data Connectors (DB Panel)",
+        "level": 2
+      },
+      {
+        "id": "ux",
+        "text": "🖥️ UX",
+        "level": 2
+      },
+      {
+        "id": "why-a-native-desktop-app",
+        "text": "Why a Native Desktop App?",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "clamp-rust",
     "slug": "clamp-rust",
     "title": "What is `clamp` in Rust, and when should you use it?",
