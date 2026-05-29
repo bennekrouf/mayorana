@@ -40,6 +40,7 @@ interface DesktopApp {
 
 const runner  = 'https://github.com/Bennekrouf/ais-runner';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
+const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
 
 const desktopApps: DesktopApp[] = [
   {
@@ -104,6 +105,39 @@ const desktopApps: DesktopApp[] = [
         os: 'windows',
         label: 'Windows',
         href: `${monitor}/releases/latest/download/ais-monitor-setup.exe`,
+        icon: <FaWindows className="w-4 h-4" />,
+      },
+    ],
+  },
+  {
+    id: 'blog-toolkit',
+    name: 'Blog Toolkit',
+    tagline: 'AI-powered blog post manager with queue-to-publish workflow',
+    description:
+      'Write, generate, and schedule blog posts from your desktop. ' +
+      'AI drafting via DeepSeek or Claude, markdown editor with live preview, ' +
+      'queue-to-publish flow, weekly auto-publish, ' +
+      'and multi-language support (FR/EN) \u2014 all in one native app.',
+    tech: 'Rust \u00b7 Dioxus \u00b7 DeepSeek / Claude \u00b7 Markdown',
+    status: 'live',
+    github: blogtk,
+    downloads: [
+      {
+        os: 'mac',
+        label: 'macOS (Apple Silicon)',
+        href: `${blogtk}/releases/latest/download/blog-toolkit-macos-arm64.tar.gz`,
+        icon: <FaApple className="w-4 h-4" />,
+      },
+      {
+        os: 'linux',
+        label: 'Linux x86_64',
+        href: `${blogtk}/releases/latest/download/blog-toolkit-linux-x86_64.tar.gz`,
+        icon: <FaLinux className="w-4 h-4" />,
+      },
+      {
+        os: 'windows',
+        label: 'Windows',
+        href: `${blogtk}/releases/latest/download/blog-toolkit-setup.exe`,
         icon: <FaWindows className="w-4 h-4" />,
       },
     ],
@@ -265,7 +299,7 @@ export default function AppsPage() {
 
       {/* Desktop Apps */}
       <section className="py-16 bg-secondary/30">
-        <div className="container max-w-5xl">
+        <div className="container max-w-6xl">
           <h2 className="text-2xl font-bold mb-8">Desktop Apps (Open Source)</h2>
           <div className="space-y-10">
             {desktopApps.map((app, i) => (

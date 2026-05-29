@@ -93,6 +93,30 @@ export function middleware(request: NextRequest) {
         }
     }
 
+    // Locale detection and redirect for mayorana.ch
+    if (!hostname.includes('swissrust.ch') &&
+        !pathname.startsWith('/_next') &&
+        !pathname.startsWith('/api') &&
+        !pathname.includes('.')) {
+
+        const pathParts = pathname.split('/').filter(Boolean);
+        const hasLocalePrefix = pathParts.length > 0 && (pathParts[0] === 'en' || pathParts[0] === 'fr');
+
+        // Root path: detect browser language and redirect
+        if (pathname === '/' || pathname === '') {
+            const acceptLanguage = request.headers.get('accept-language') || '';
+            const targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
+            return NextResponse.redirect(new URL(`/${targetLocale}`, request.url));
+        }
+
+        // Non-locale prefixed paths: redirect to locale version
+        if (!hasLocalePrefix) {
+            const acceptLanguage = request.headers.get('accept-language') || '';
+            const targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
+            return NextResponse.redirect(new URL(`/${targetLocale}${pathname}`, request.url));
+        }
+    }
+
     // General rate limiting for all other routes
     if (getRateLimit(`general:${ip}`, MAX_REQUESTS_GENERAL)) {
         return new NextResponse('Too Many Requests', { status: 429 });
