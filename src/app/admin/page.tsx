@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminComponent from './AdminComponent';
 import { FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
-import { ThemeProvider } from 'next-themes';
 
 export default function SecretAdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -57,16 +56,11 @@ export default function SecretAdminPage() {
   };
 
   if (isAuthenticated) {
-    return (
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        <AdminPageWithAuth onLogout={handleLogout} />
-      </ThemeProvider>
-    );
+    return <AdminPageWithAuth onLogout={handleLogout} />;
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl p-8 w-full max-w-md">
           <div className="text-center mb-8">
             <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -138,7 +132,6 @@ export default function SecretAdminPage() {
           </div>
         </div>
       </div>
-    </ThemeProvider>
   );
 }
 
