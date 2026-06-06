@@ -74,6 +74,25 @@
     "consulting_tech": "Votre produit, notre technologie portfolio",
     "consulting_cta": "CONTACTEZ-NOUS"
   },
+  "apps": {
+    "page_title": "Apps & Outils",
+    "page_subtitle": "Plateformes web, outils SaaS et apps de bureau open-source — le tout construit avec Rust.",
+    "web_apps_heading": "Apps Web & SaaS",
+    "desktop_apps_heading": "Apps de bureau (Open Source)",
+    "download_label": "Télécharger",
+    "open_source_button": "Open source",
+    "all_releases": "Toutes les versions & checksums",
+    "more_coming_soon": "D'autres à venir",
+    "more_coming_soon_subtitle": "Suivez l'organisation GitHub ou contactez-nous si vous avez une idée d'outil.",
+    "ais_runner_tagline": "Azure Integration Services — environnement de développement local",
+    "ais_runner_description": "Exécutez et testez vos Azure Logic Apps en local sans déployer sur Azure. Démarrage Azurite + func en un clic, historique d'exécutions en direct, barre d'analyse des workflows, comptage des files Service Bus, vue CI/CD DevOps, testeur de templates Liquid et graphe des chaînes de workflows — le tout dans une seule app de bureau.",
+    "ais_monitor_tagline": "Explorateur de chaînes de workflows Azure Logic Apps",
+    "ais_monitor_description": "Visualisez comment vos Logic Apps se connectent entre elles via les files Service Bus et Event Grid, inspectez l'historique d'exécutions en direct par chaîne, déclenchez des workflows HTTP avec des payloads sauvegardés, et surveillez l'état des workflows déployés — depuis une seule vue de bureau.",
+    "blog_toolkit_tagline": "Gestionnaire de billets de blog propulsé par l'IA avec flux file-vers-publication",
+    "blog_toolkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
+    "appscreens_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
+    "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native."
+  },
   "services": {
     "services_title": "Ce que nous construisons",
     "services_subtitle": "Des outils d'IA qui fonctionnent vraiment, renforcé par Rust 🦀",

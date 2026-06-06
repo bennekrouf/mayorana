@@ -74,6 +74,25 @@
     "consulting_tech": "Your product, our portfolio tech",
     "consulting_cta": "CONTACT US"
   },
+  "apps": {
+    "page_title": "Apps & Tools",
+    "page_subtitle": "Web platforms, SaaS tools, and open-source desktop apps — all built with Rust.",
+    "web_apps_heading": "Web Apps & SaaS",
+    "desktop_apps_heading": "Desktop Apps (Open Source)",
+    "download_label": "Download",
+    "open_source_button": "Open source",
+    "all_releases": "All releases & checksums",
+    "more_coming_soon": "More coming soon",
+    "more_coming_soon_subtitle": "Follow the GitHub org or reach out if you have a tool idea.",
+    "ais_runner_tagline": "Azure Integration Services — local development desktop",
+    "ais_runner_description": "Run and test Azure Logic Apps locally without pushing to Azure. One-click Azurite + func start, live run history, workflow analysis bar, Service Bus queue counts, CI/CD DevOps view, Liquid template tester, and workflow chain graph — all in one desktop app.",
+    "ais_monitor_tagline": "Azure Logic Apps workflow chain explorer",
+    "ais_monitor_description": "Visualise how your Logic Apps connect to each other via Service Bus queues and Event Grid, inspect live run history per chain, trigger HTTP workflows with saved payloads, and monitor deployed workflow states — all from a single desktop view.",
+    "blog_toolkit_tagline": "AI-powered blog post manager with queue-to-publish workflow",
+    "blog_toolkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
+    "appscreens_tagline": "The complete iOS & Android build and publish assistant",
+    "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app."
+  },
   "services": {
     "services_title": "What We Build",
     "services_subtitle": "AI tools that actually work, powered by Rust 🦀",

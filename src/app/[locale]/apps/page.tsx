@@ -43,16 +43,14 @@ const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
 const screens = 'https://github.com/bennekrouf/appscreens';
 
-const desktopApps: DesktopApp[] = [
+// Per-app static config. Translatable strings (tagline, description) live in
+// messages/{en,fr}.json under the "apps" namespace and are looked up by id.
+type DesktopAppConfig = Omit<DesktopApp, 'tagline' | 'description'>;
+
+const desktopAppsConfig: DesktopAppConfig[] = [
   {
     id: 'ais-runner',
     name: 'AIS Runner',
-    tagline: 'Azure Integration Services — local development desktop',
-    description:
-      'Run and test Azure Logic Apps locally without pushing to Azure. ' +
-      'One-click Azurite + func start, live run history, workflow analysis bar, ' +
-      'Service Bus queue counts, CI/CD DevOps view, Liquid template tester, ' +
-      'and workflow chain graph — all in one desktop app.',
     tech: 'Rust · Dioxus · Azure CLI · Azurite · Azure Functions',
     status: 'live',
     github: runner,
@@ -80,12 +78,6 @@ const desktopApps: DesktopApp[] = [
   {
     id: 'ais-monitor',
     name: 'AIS Monitor',
-    tagline: 'Azure Logic Apps workflow chain explorer',
-    description:
-      'Visualise how your Logic Apps connect to each other via Service Bus queues ' +
-      'and Event Grid, inspect live run history per chain, trigger HTTP workflows ' +
-      'with saved payloads, and monitor deployed workflow states — ' +
-      'all from a single desktop view.',
     tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
     status: 'beta',
     github: monitor,
