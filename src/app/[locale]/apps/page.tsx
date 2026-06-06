@@ -155,6 +155,7 @@ const statusBadge: Record<string, string> = {
   beta: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
   mvp:  'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
   wip:  'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
+  coming_soon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
 };
 
 export default function AppsPage() {
@@ -244,26 +245,31 @@ export default function AppsPage() {
                     {app.icon}
                   </div>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusBadge[app.status]}`}>
-                    {app.status === 'live' ? 'LIVE' : app.status === 'mvp' ? 'MVP' : 'COMING SOON'}
+                    {app.status === 'live' ? 'LIVE' : app.status === 'mvp' ? 'MVP' : app.status === 'coming_soon' ? 'COMING SOON' : 'WIP'}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-primary">{app.name}</h3>
                 <p className="text-sm font-medium mb-2">{app.description}</p>
                 <p className="text-xs text-muted-foreground mb-4">{app.tech}</p>
                 <div className="mt-auto">
-                  <a
-                    href={app.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                      app.status === 'live'
-                        ? 'bg-primary text-white hover:bg-primary/90'
-                        : 'bg-yellow-500 text-white hover:bg-yellow-600'
-                    }`}
-                  >
-                    {app.cta}
-                    <ExternalLink className="ml-1 w-3 h-3" />
-                  </a>
+                  {app.status === 'coming_soon' ? (
+                    <button
+                      onClick={() => alert('Coming Soon!')}
+                      className="inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-colors bg-gray-400 text-white cursor-not-allowed opacity-70"
+                    >
+                      {app.cta}
+                    </button>
+                  ) : (
+                    <a
+                      href={app.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-colors bg-primary text-white hover:bg-primary/90"
+                    >
+                      {app.cta}
+                      <ExternalLink className="ml-1 w-3 h-3" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             ))}
