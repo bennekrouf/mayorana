@@ -27,6 +27,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/ais-runner-intro</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/clamp-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -322,7 +327,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/tag/azure</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/logic-apps</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/dioxus</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/tag/rust</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/blog/tag/desktop</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
