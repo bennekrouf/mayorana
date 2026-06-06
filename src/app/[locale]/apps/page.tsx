@@ -41,6 +41,7 @@ interface DesktopApp {
 const runner  = 'https://github.com/Bennekrouf/ais-runner';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
+const screens = 'https://github.com/bennekrouf/appscreens';
 
 const desktopApps: DesktopApp[] = [
   {
@@ -138,6 +139,32 @@ const desktopApps: DesktopApp[] = [
         os: 'windows',
         label: 'Windows',
         href: `${blogtk}/releases/latest/download/blog-toolkit-setup.exe`,
+        icon: <FaWindows className="w-4 h-4" />,
+      },
+    ],
+  },
+  {
+    id: 'appscreens',
+    name: 'AppScreens',
+    tagline: 'App Store & Google Play screenshot generator',
+    description:
+      'Generate marketing screenshots for the App Store and Google Play from a single source image. ' +
+      'Compose device frames, headlines, and backgrounds, then export the full set of required sizes ' +
+      'for iOS and Android — all from a native desktop app.',
+    tech: 'Rust · Dioxus · image · imageproc',
+    status: 'beta',
+    github: screens,
+    downloads: [
+      {
+        os: 'linux',
+        label: 'Linux x86_64 (.deb)',
+        href: `${screens}/releases/latest/download/appscreens-linux-x86_64.deb`,
+        icon: <FaLinux className="w-4 h-4" />,
+      },
+      {
+        os: 'windows',
+        label: 'Windows',
+        href: `${screens}/releases/latest/download/appscreens-windows-setup.msi`,
         icon: <FaWindows className="w-4 h-4" />,
       },
     ],
