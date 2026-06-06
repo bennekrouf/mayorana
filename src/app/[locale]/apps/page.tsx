@@ -158,6 +158,14 @@ const desktopAppsConfig: DesktopAppConfig[] = [
   },
 ];
 
+// Map DesktopApp.id → translation key prefix in messages/{en,fr}.json "apps"
+const appI18nKey: Record<string, string> = {
+  'ais-runner':   'ais_runner',
+  'ais-monitor':  'ais_monitor',
+  'blog-toolkit': 'blog_toolkit',
+  'appscreens':   'appscreens',
+};
+
 const osColors: Record<string, string> = {
   mac:     'bg-neutral-800 hover:bg-neutral-700 text-white',
   linux:   'bg-orange-600  hover:bg-orange-500  text-white',
@@ -174,7 +182,14 @@ const statusBadge: Record<string, string> = {
 
 export default function AppsPage() {
   const tPortfolio = useTranslations('portfolio');
+  const tApps = useTranslations('apps');
   const locale = useLocale();
+
+  const desktopApps: DesktopApp[] = desktopAppsConfig.map((app) => ({
+    ...app,
+    tagline:     tApps(`${appI18nKey[app.id]}_tagline`),
+    description: tApps(`${appI18nKey[app.id]}_description`),
+  }));
 
   const webApps: WebApp[] = [
     {
@@ -227,7 +242,7 @@ export default function AppsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Apps & Tools
+              {tApps('page_title')}
             </motion.h1>
             <motion.p
               className="text-xl text-muted-foreground"
@@ -235,7 +250,7 @@ export default function AppsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Web platforms, SaaS tools, and open-source desktop apps — all built with Rust.
+              {tApps('page_subtitle')}
             </motion.p>
           </div>
         </div>
@@ -244,7 +259,7 @@ export default function AppsPage() {
       {/* Web Apps & SaaS */}
       <section className="py-16 bg-background">
         <div className="container max-w-6xl">
-          <h2 className="text-2xl font-bold mb-8">Web Apps & SaaS</h2>
+          <h2 className="text-2xl font-bold mb-8">{tApps('web_apps_heading')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {webApps.map((app, i) => (
               <motion.div
@@ -320,7 +335,7 @@ export default function AppsPage() {
       {/* Desktop Apps */}
       <section className="py-16 bg-secondary/30">
         <div className="container max-w-6xl">
-          <h2 className="text-2xl font-bold mb-8">Desktop Apps (Open Source)</h2>
+          <h2 className="text-2xl font-bold mb-8">{tApps('desktop_apps_heading')}</h2>
           <div className="space-y-10">
             {desktopApps.map((app, i) => (
               <motion.div
@@ -346,7 +361,7 @@ export default function AppsPage() {
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-background hover:bg-secondary transition-colors text-sm font-medium"
                   >
                     <FaGithub className="w-4 h-4" />
-                    Open source
+                    {tApps('open_source_button')}
                     <FiExternalLink className="w-3 h-3 opacity-60" />
                   </a>
                 </div>
@@ -360,7 +375,7 @@ export default function AppsPage() {
                   </div>
                   <div className="md:w-64 flex flex-col gap-3">
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-1">
-                      Download
+                      {tApps('download_label')}
                     </p>
                     {app.downloads.map((dl) => (
                       <a
@@ -378,7 +393,7 @@ export default function AppsPage() {
                       rel="noopener noreferrer"
                       className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1 text-center"
                     >
-                      All releases & checksums
+                      {tApps('all_releases')}
                     </a>
                   </div>
                 </div>
@@ -391,9 +406,9 @@ export default function AppsPage() {
       {/* Footer CTA */}
       <section className="py-16 bg-secondary">
         <div className="container text-center">
-          <h2 className="text-2xl font-bold mb-4">More coming soon</h2>
+          <h2 className="text-2xl font-bold mb-4">{tApps('more_coming_soon')}</h2>
           <p className="text-muted-foreground mb-6">
-            Follow the GitHub org or reach out if you have a tool idea.
+            {tApps('more_coming_soon_subtitle')}
           </p>
           <a
             href="https://github.com/Bennekrouf"
