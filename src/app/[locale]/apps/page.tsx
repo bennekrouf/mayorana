@@ -146,15 +146,22 @@ const desktopApps: DesktopApp[] = [
   {
     id: 'appscreens',
     name: 'AppScreens',
-    tagline: 'App Store & Google Play screenshot generator',
+    tagline: 'The complete iOS & Android build and publish assistant',
     description:
-      'Generate marketing screenshots for the App Store and Google Play from a single source image. ' +
-      'Compose device frames, headlines, and backgrounds, then export the full set of required sizes ' +
-      'for iOS and Android — all from a native desktop app.',
-    tech: 'Rust · Dioxus · image · imageproc',
+      'Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, ' +
+      'then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, ' +
+      'signing config, version bumps, screenshot generation in every required size, ' +
+      'and the device-frame marketing assets — all from a single native desktop app.',
+    tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'beta',
     github: screens,
     downloads: [
+      {
+        os: 'mac',
+        label: 'macOS (Apple Silicon)',
+        href: `${screens}/releases/latest/download/appscreens-macos-arm64.dmg`,
+        icon: <FaApple className="w-4 h-4" />,
+      },
       {
         os: 'linux',
         label: 'Linux x86_64 (.deb)',
