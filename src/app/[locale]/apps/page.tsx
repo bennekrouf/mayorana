@@ -105,12 +105,6 @@ const desktopAppsConfig: DesktopAppConfig[] = [
   {
     id: 'blog-toolkit',
     name: 'Blog Toolkit',
-    tagline: 'AI-powered blog post manager with queue-to-publish workflow',
-    description:
-      'Write, generate, and schedule blog posts from your desktop. ' +
-      'AI drafting via DeepSeek or Claude, markdown editor with live preview, ' +
-      'queue-to-publish flow, weekly auto-publish, ' +
-      'and multi-language support (FR/EN) \u2014 all in one native app.',
     tech: 'Rust \u00b7 Dioxus \u00b7 DeepSeek / Claude \u00b7 Markdown',
     status: 'live',
     github: blogtk,
@@ -138,12 +132,6 @@ const desktopAppsConfig: DesktopAppConfig[] = [
   {
     id: 'appscreens',
     name: 'AppScreens',
-    tagline: 'The complete iOS & Android build and publish assistant',
-    description:
-      'Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, ' +
-      'then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, ' +
-      'signing config, version bumps, screenshot generation in every required size, ' +
-      'and the device-frame marketing assets — all from a single native desktop app.',
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'beta',
     github: screens,
