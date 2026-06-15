@@ -58,7 +58,7 @@ const desktopAppsConfig: DesktopAppConfig[] = [
       {
         os: 'mac',
         label: 'macOS (Apple Silicon)',
-        href: `${runner}/releases/latest/download/ais-runner-macos-arm64.tar.gz`,
+        href: `${runner}/releases/latest/download/ais-runner-macos-arm64.dmg`,
         icon: <FaApple className="w-4 h-4" />,
       },
       {
@@ -85,7 +85,7 @@ const desktopAppsConfig: DesktopAppConfig[] = [
       {
         os: 'mac',
         label: 'macOS (Apple Silicon)',
-        href: `${monitor}/releases/latest/download/ais-monitor-macos-arm64.tar.gz`,
+        href: `${monitor}/releases/latest/download/ais-monitor-macos-arm64.dmg`,
         icon: <FaApple className="w-4 h-4" />,
       },
       {
@@ -112,7 +112,7 @@ const desktopAppsConfig: DesktopAppConfig[] = [
       {
         os: 'mac',
         label: 'macOS (Apple Silicon)',
-        href: `${blogtk}/releases/latest/download/blog-toolkit-macos-arm64.tar.gz`,
+        href: `${blogtk}/releases/latest/download/blog-toolkit-macos-arm64.dmg`,
         icon: <FaApple className="w-4 h-4" />,
       },
       {
