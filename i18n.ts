@@ -6,32 +6,24 @@ import { getRequestConfig } from 'next-intl/server';
 export const locales = ['en', 'fr'] as const;
 export const defaultLocale = 'en' as const;
 
+type Locale = (typeof locales)[number];
+
+function isLocale(value: string | undefined | null): value is Locale {
+  return value === 'en' || value === 'fr';
+}
+
+// Server components MUST pass explicit { locale } to getTranslations({ locale, namespace }),
+// because this default config can't reliably resolve locale from the URL.
+// Without middleware-provided requestLocale, anything that omits the locale arg falls back to 'en'.
 export default getRequestConfig(async ({ requestLocale }) => {
-  // Since we don't have middleware, requestLocale will always be undefined
-  // We'll handle locale detection manually in our components
-  let locale = await requestLocale;
-
-  // console.log('🌍 i18n - requestLocale (will be undefined):', locale);
-
-  // Always default to English for i18n config
-  // The actual locale will be handled by our components directly
-  locale = defaultLocale;
-
-  // console.log('🔄 Using default locale for i18n config:', locale);
+  const fromRequest = await requestLocale;
+  const locale: Locale = isLocale(fromRequest) ? fromRequest : defaultLocale;
 
   try {
     const messages = (await import(`./messages/${locale}.json`)).default;
-    // console.log('✅ Messages loaded for default locale:', locale);
-
-    return {
-      locale,
-      messages
-    };
+    return { locale, messages };
   } catch (error) {
-    console.error('❌ Error loading messages:', error);
-    return {
-      locale: 'en',
-      messages: {}
-    };
+    console.error('❌ Error loading messages for locale', locale, error);
+    return { locale: 'en', messages: {} };
   }
 });
