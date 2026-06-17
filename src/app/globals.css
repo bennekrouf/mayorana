@@ -2,6 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* Sentry-inspired: airy marketing leading vs dense UI leading */
+  .lead-marketing {
+    font-size: 1rem;
+    line-height: 2;
+    font-weight: 400;
+  }
+  .lead-ui {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  /* Uppercase button/eyebrow cap with 0.2px tracking — the "console cadence" */
+  .btn-cap {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+  .btn-cap-light {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.29;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+  .eyebrow {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  /* Inline keyword-highlight chip — wrap one word inside a headline.
+     Hugs cap-height with 0 vertical / 12px horizontal padding. */
+  .chip-highlight {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-radius: 4px;
+    padding: 0 0.75rem;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+}
+
 /* Blog styles from blog.css */
 .prose {
   max-width: 65ch;

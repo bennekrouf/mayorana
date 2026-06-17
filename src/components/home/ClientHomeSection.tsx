@@ -15,25 +15,25 @@ export default function ClientHomeSection() {
       <section className="py-20 md:py-32 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-[1.1]">
               {t('hero_title')}
             </h1>
 
-            <p className="text-xl md:text-2xl text-muted-foreground mb-10">
+            <p className="lead-marketing text-muted-foreground mb-10 max-w-2xl mx-auto md:text-lg">
               {t('hero_subtitle')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href={getLocalizedPath(locale, "/apps")}
-                className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
+                className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
               >
                 {t('see_our_apps')}
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
               <Link
                 href={getLocalizedPath(locale, "/contact")}
-                className="inline-flex items-center px-8 py-4 rounded-lg bg-foreground text-background text-lg font-semibold hover:bg-foreground/90 transform transition duration-200 hover:-translate-y-1"
+                className="btn-cap-light inline-flex items-center px-6 py-3 rounded-lg border border-foreground/20 text-foreground hover:bg-foreground/5 transition duration-200"
               >
                 {t('get_in_touch')}
               </Link>
@@ -47,8 +47,9 @@ export default function ClientHomeSection() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div>
+              <div className="eyebrow text-primary mb-3">Featured</div>
               <h2 className="text-3xl font-bold mb-6">{t('discover_api0_title')}</h2>
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="lead-marketing text-muted-foreground mb-6">
                 {t('api0_description')}
               </p>
               <ul className="space-y-4 mb-8">
@@ -74,14 +75,14 @@ export default function ClientHomeSection() {
                   href="https://api0.ai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-lg shadow-primary/20"
+                  className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-lg shadow-primary/20"
                 >
                   {t('explore_api0')}
                   <ExternalLink className="ml-2 w-4 h-4" />
                 </Link>
                 <Link
                   href={getLocalizedPath(locale, "/contact")}
-                  className="inline-flex items-center px-6 py-3 rounded-lg border border-primary text-primary font-medium hover:bg-primary/10 transition duration-200"
+                  className="btn-cap-light inline-flex items-center px-6 py-3 rounded-lg border border-primary text-primary hover:bg-primary/10 transition duration-200"
                 >
                   {t('get_in_touch')}
                 </Link>
@@ -118,18 +119,19 @@ export default function ClientHomeSection() {
       <section className="py-20 bg-background">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="eyebrow text-primary mb-3">Get Started</div>
             <h2 className="text-3xl font-bold mb-6">
               {t('ready_elevate')}
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="lead-marketing text-muted-foreground mb-8 max-w-2xl mx-auto">
               {t('cta_description')}
             </p>
             <Link
               href={getLocalizedPath(locale, "/contact")}
-              className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
+              className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
             >
               {t('get_in_touch')}
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </div>
         </div>
