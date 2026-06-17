@@ -4,7 +4,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface TagFilterProps {
   tags: string[];
@@ -13,9 +13,10 @@ interface TagFilterProps {
 
 const TagFilter: React.FC<TagFilterProps> = ({ tags, currentTag }) => {
   const locale = useLocale();
+  const t = useTranslations('blog');
   return (
     <div className="mb-10">
-      <h3 className="text-lg font-medium mb-4">Filter by Topic</h3>
+      <h3 className="text-lg font-medium mb-4">{t('filter_by_topic')}</h3>
       <div className="flex flex-wrap gap-2">
         <Link
           href={`/${locale}/blog`} // Add locale prefix
@@ -24,7 +25,7 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, currentTag }) => {
             : 'bg-secondary hover:bg-secondary/80 text-foreground'
             }`}
         >
-          All
+          {t('all')}
         </Link>
 
         {tags.map((tag) => (

@@ -207,7 +207,7 @@
   },
   "blog": {
     "hero_title": "Blog",
-    "hero_subtitle": "Articles et insights sur Rust, l'IA et le développement d'outils live.",
+    "hero_subtitle": "Articles et insights sur Rust 🦀, l'IA et le développement d'outils en direct.",
     "filter_by_topic": "Filtrer par thème",
     "all": "Tous",
     "no_posts": "Aucun article trouvé",

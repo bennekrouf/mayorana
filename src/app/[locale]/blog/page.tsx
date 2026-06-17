@@ -30,8 +30,8 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const paginatedData = getPaginatedPosts(page, locale);
   const tags = getAllTags(locale);
 
-  // Use the locale directly with getTranslations
-  const t = await getTranslations('blog');
+  // Use the locale directly with getTranslations (server components must pass locale explicitly)
+  const t = await getTranslations({ locale, namespace: 'blog' });
 
   const headersList = await headers();
   const hostname = headersList.get('x-hostname') || '';
