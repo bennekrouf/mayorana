@@ -101,6 +101,30 @@ export default async function LocaleLayout({
             }
           `}
         </Script>
+        <Script
+          id="organization-jsonld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Mayorana',
+              alternateName: 'Mayorana Sàrl',
+              url: 'https://mayorana.ch',
+              logo: 'https://mayorana.ch/image/logo.png',
+              description: 'Swiss consultancy specializing in Rust, AI agents, and API solutions.',
+              foundingLocation: {
+                '@type': 'Place',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'CH',
+                },
+              },
+              sameAs: ['https://mayorana.ch'],
+            }),
+          }}
+        />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <CanonicalMeta />
