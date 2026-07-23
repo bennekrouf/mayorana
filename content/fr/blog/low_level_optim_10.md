@@ -25,6 +25,38 @@ date: '2025-11-14'
 
 Profiler et optimiser les goulots d'étranglement de performance bas niveau dans une codebase Rust, comme les L1 cache misses excessifs, nécessite une approche systématique utilisant des outils spécialisés. Je vais détailler comment utiliser `perf`, `cargo flamegraph`, et `criterion` pour diagnostiquer et optimiser une section critique en performance, assurant des améliorations mesurables.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo10-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Array-of-Structs gaspille de l'espace de ligne de cache en chargeant des champs inutilisés, tandis que Struct-of-Arrays empaquette un champ de façon contiguë par ligne de cache">
+<!-- style -->
+<style>
+.lo10-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo10-fig,[data-theme="dark"] .lo10-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo10-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo10-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo10-fig .x{fill:#FF6B00;opacity:0.75}
+.lo10-fig .yz{fill:var(--mut);opacity:0.35}
+.lo10-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo10-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo10-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+</style>
+<!-- top: AoS -->
+<text x="40" y="30" class="ti">Array-of-Structs — une ligne L1 de 64 octets</text>
+<rect x="40" y="42" width="720" height="46" rx="5" class="box"/>
+<rect x="40" y="42" width="120" height="46" class="x"/>
+<rect x="160" y="42" width="120" height="46" class="yz"/>
+<rect x="280" y="42" width="120" height="46" class="x"/>
+<rect x="400" y="42" width="120" height="46" class="yz"/>
+<rect x="520" y="42" width="120" height="46" class="x"/>
+<rect x="640" y="42" width="120" height="46" class="yz"/>
+<text x="400" y="106" text-anchor="middle" class="mut">lire x charge aussi y, z dont on n'a pas besoin — ligne gaspillée vite</text>
+<!-- bottom: SoA -->
+<text x="40" y="150" class="ti">Struct-of-Arrays — xs empaquetés en continu</text>
+<rect x="40" y="162" width="720" height="46" rx="5" class="boxac"/>
+<text x="400" y="190" text-anchor="middle" class="tx">xs: [f32] … 16 valeurs tiennent par ligne de 64 octets</text>
+<text x="40" y="226" class="mut">accès contigu, aucun octet gaspillé — cache misses divisés par ~10</text>
+</svg>
+</div>
+
 ## Outils et Leurs Rôles
 
 - **`perf` (Linux)** : Un profiler système pour les événements matériels comme les cache misses, cycles, et instructions. Idéal pour cibler les problèmes de L1 cache à travers l'application.

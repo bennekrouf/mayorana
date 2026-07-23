@@ -17,6 +17,48 @@ date: '2025-07-12'
 
 Higher-order functions (HOFs) in Rust—functions that accept or return other functions/closures—leverage Rust’s closure system, trait bounds (`Fn`, `FnMut`, `FnOnce`), and ownership model to enable powerful functional programming patterns like callbacks and decorators. I’ll explain how HOFs work in Rust, their mechanics, and practical use cases.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl6-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="A higher-order function returns a closure that owns its captured data, via either static or dynamic dispatch">
+<!-- style -->
+<style>
+.cl6-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl6-fig,[data-theme="dark"] .cl6-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl6-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl6-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl6-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl6-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl6-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl6-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl6arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">A higher-order function returns a closure that owns its captured data</text>
+<!-- row1: static -->
+<rect x="40" y="50" width="190" height="60" rx="6" class="box"/>
+<text x="135" y="86" text-anchor="middle" class="tx">make_adder(5)</text>
+<path d="M230,80 L290,80" class="ln" marker-end="url(#cl6arrow)"/>
+<rect x="290" y="50" width="230" height="60" rx="6" class="boxac"/>
+<text x="405" y="75" text-anchor="middle" class="tx">move |y| x + y</text>
+<text x="405" y="93" text-anchor="middle" class="mut">owns x = 5 (Copy)</text>
+<path d="M520,80 L580,80" class="ln" marker-end="url(#cl6arrow)"/>
+<rect x="580" y="50" width="180" height="60" rx="6" class="box"/>
+<text x="670" y="86" text-anchor="middle" class="tx">add_five(3) → 8</text>
+<!-- row2: dynamic -->
+<rect x="40" y="150" width="190" height="60" rx="6" class="box"/>
+<text x="135" y="186" text-anchor="middle" class="tx">math_op("add")</text>
+<path d="M230,180 L290,180" class="ln" marker-end="url(#cl6arrow)"/>
+<rect x="290" y="150" width="230" height="60" rx="6" class="box"/>
+<text x="405" y="175" text-anchor="middle" class="tx">Box&lt;dyn Fn(i32,i32)-&gt;i32&gt;</text>
+<text x="405" y="193" text-anchor="middle" class="mut">vtable dispatch</text>
+<path d="M520,180 L580,180" class="ln" marker-end="url(#cl6arrow)"/>
+<rect x="580" y="150" width="180" height="60" rx="6" class="box"/>
+<text x="670" y="186" text-anchor="middle" class="tx">add(2,3) → 5</text>
+</svg>
+</div>
+
 ## What are Higher-Order Functions?
 
 HOFs either:

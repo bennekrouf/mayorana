@@ -24,6 +24,36 @@ date: '2025-11-10'
 
 Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâce au static dispatch et aux optimisations du compilateur. Cependant, des scénarios spécifiques peuvent introduire des coûts :
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl8-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison du coût d'appel : impl Fn est inliné à coût quasi nul, Box de dyn Fn paie un vtable lookup">
+<!-- style -->
+<style>
+.cl8-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl8-fig,[data-theme="dark"] .cl8-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl8-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl8-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl8-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl8-fig .axis{stroke:var(--ln);stroke-width:1.5}
+.cl8-fig .bar1{fill:var(--ac)}
+.cl8-fig .bar2{fill:var(--mut);opacity:0.55}
+</style>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Coût d'appel : impl Fn est inliné ; Box&lt;dyn Fn&gt; paie un vtable lookup</text>
+<!-- axis -->
+<path d="M250,68 L250,178" class="axis"/>
+<!-- row1 -->
+<text x="60" y="100" class="tx">impl Fn (statique)</text>
+<rect x="250" y="82" width="90" height="32" rx="4" class="bar1"/>
+<text x="352" y="103" class="mut">~0 ns (inliné)</text>
+<!-- row2 -->
+<text x="60" y="162" class="tx">Box&lt;dyn Fn&gt; (dynamique)</text>
+<rect x="250" y="144" width="260" height="32" rx="4" class="bar2"/>
+<text x="522" y="165" class="mut">~2-3x plus lent (vtable + cache miss)</text>
+<!-- caption -->
+<text x="400" y="205" text-anchor="middle" class="mut">Les grandes captures (ex : un buffer de 1KB) augmentent aussi la taille, quel que soit le dispatch</text>
+</svg>
+</div>
+
 | Aspect | Closures | Functions Régulières |
 |--------|----------|-------------------|
 | Dispatch | Static (via monomorphization) | Toujours static (appel direct) |

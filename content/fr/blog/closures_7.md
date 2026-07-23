@@ -24,6 +24,45 @@ date: '2025-11-09'
 
 Quand on retourne une closure qui capture des variables (spécialement des références), tu dois assurer que les données capturées survivent à la closure. Rust applique ceci à travers les annotations de lifetime et les règles d'ownership. Voici comment le gérer :
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl7-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Déplacer des données owned dans une closure retournée est sûr ; une référence capturée vers une variable locale devient dangling">
+<!-- style -->
+<style>
+.cl7-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl7-fig,[data-theme="dark"] .cl7-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl7-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl7-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl7-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl7-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl7-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl7-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl7arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="16" text-anchor="middle" class="ti">Déplace les données owned ; jamais de closure survivant à une référence</text>
+<!-- box1 -->
+<rect x="300" y="26" width="200" height="50" rx="6" class="box"/>
+<text x="400" y="47" text-anchor="middle" class="tx">fn f() -&gt; impl Fn() -&gt; ...</text>
+<text x="400" y="63" text-anchor="middle" class="mut">capture une variable locale</text>
+<!-- fork -->
+<path d="M400,76 L400,96 L230,96 L230,116" class="ln" marker-end="url(#cl7arrow)"/>
+<path d="M400,96 L590,96 L590,116" class="ln" marker-end="url(#cl7arrow)"/>
+<!-- safe -->
+<rect x="60" y="116" width="340" height="84" rx="6" class="boxac"/>
+<text x="230" y="140" text-anchor="middle" class="tx">move || s (String owned)</text>
+<text x="230" y="158" text-anchor="middle" class="mut">sûr : la closure possède les données</text>
+<text x="230" y="174" text-anchor="middle" class="mut">aucune dépendance au frame appelant</text>
+<!-- dangling -->
+<rect x="420" y="116" width="340" height="84" rx="6" class="box"/>
+<text x="590" y="140" text-anchor="middle" class="tx">move || &amp;local</text>
+<text x="590" y="158" text-anchor="middle" class="mut">ERREUR : `local` droppée en fin de fn</text>
+<text x="590" y="174" text-anchor="middle" class="mut">le compilateur rejette la dangling ref</text>
+</svg>
+</div>
+
 ## Stratégies Clés
 
 ### Utiliser move pour Transférer l'Ownership

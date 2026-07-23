@@ -22,6 +22,52 @@ date: '2025-11-17'
 
 Les branch mispredictions surviennent quand le branch predictor du CPU devine incorrectement si un saut conditionnel (ex : d'un `if`) est pris, causant des stalls de pipeline et coûtant des cycles (10-20 cycles par misprediction sur les CPUs modernes). Dans une boucle chaude critique en performance en Rust, je restructurerais le code pour minimiser ou éliminer les branches, exploitant les fonctionnalités de Rust, et utiliserais des outils de profiling pour confirmer des améliorations mesurables dans l'efficacité du pipeline CPU.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo4-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Diagramme de pipeline comparant un if branché causant un flush de misprediction à une version branchless qui garde le pipeline plein">
+<style>
+.lo4-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo4-fig,[data-theme="dark"] .lo4-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo4-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo4-fig .warn{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo4-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo4-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4-fig line{stroke:var(--ln);stroke-width:1.5}
+</style>
+<defs>
+<marker id="lo4-arrow-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- ligne 1 : branché -->
+<text x="20" y="22" class="tx" text-anchor="start">Branché : if x &gt; 0 { sum += x }</text>
+<rect x="20" y="35" width="140" height="50" rx="6" class="box"/>
+<text x="90" y="65" class="tx">Fetch / Decode</text>
+<line x1="160" y1="60" x2="178" y2="60" marker-end="url(#lo4-arrow-fr)"/>
+<rect x="180" y="35" width="140" height="50" rx="6" class="box"/>
+<text x="250" y="65" class="tx">Prédit pris</text>
+<line x1="320" y1="60" x2="338" y2="60" marker-end="url(#lo4-arrow-fr)"/>
+<rect x="340" y="35" width="140" height="50" rx="6" class="warn"/>
+<text x="410" y="65" class="ac">Misprediction !</text>
+<line x1="480" y1="60" x2="498" y2="60" marker-end="url(#lo4-arrow-fr)"/>
+<rect x="500" y="35" width="280" height="50" rx="6" class="warn"/>
+<text x="640" y="65" class="ac">Flush + refetch : ~15 cycles perdus</text>
+<!-- ligne 2 : branchless -->
+<text x="20" y="122" class="tx" text-anchor="start">Branchless : sum += (x &gt; 0) as i32 * x</text>
+<rect x="20" y="135" width="140" height="50" rx="6" class="box"/>
+<text x="90" y="165" class="tx">Fetch / Decode</text>
+<line x1="160" y1="160" x2="178" y2="160" marker-end="url(#lo4-arrow-fr)"/>
+<rect x="180" y="135" width="280" height="50" rx="6" class="box"/>
+<text x="320" y="160" class="tx">Exécute masque + multiplication</text>
+<text x="320" y="176" class="mut">aucun saut conditionnel</text>
+<line x1="460" y1="160" x2="478" y2="160" marker-end="url(#lo4-arrow-fr)"/>
+<rect x="480" y="135" width="300" height="50" rx="6" class="fin"/>
+<text x="630" y="165" class="ac">Retire : débit stable</text>
+<text x="400" y="225" class="mut">Même résultat, aucun flush — prévisible quelle que soit la distribution</text>
+</svg>
+</div>
+
 ## Techniques pour Réduire les Branch Mispredictions
 
 ### 1. Élimination de Branches avec Arithmétique

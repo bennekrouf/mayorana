@@ -23,6 +23,50 @@ tags:
 
 In a performance-sensitive Rust library for mathematical computations, trait bounds like `T: Add + Mul` ensure type safety and maximize performance by restricting generic types to those supporting required operations, enabling efficient, type-specific code via monomorphization.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td2-fig" viewBox="0 0 800 280" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Flow from a bounded generic dot_product function through monomorphization to specialized f32 and i32 machine code">
+<style>
+.td2-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td2-fig,[data-theme="dark"] .td2-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td2-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td2-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td2-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td2-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td2-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td2-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td2-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td2-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- generic function -->
+<rect class="box" x="240" y="20" width="320" height="46" rx="6"/>
+<text x="400" y="42" class="tx">dot_product&lt;T: Add+Mul+Default+Copy&gt;</text>
+<text x="400" y="58" class="mut">where T::Output = T</text>
+<!-- arrow down to monomorphization -->
+<path class="lnAc" d="M400,66 L400,92" marker-end="url(#td2-arrowAc)"/>
+<rect class="boxAc" x="280" y="93" width="240" height="40" rx="6"/>
+<text x="400" y="118" class="tx">Monomorphization</text>
+<!-- Y-merge split to two specialized versions -->
+<path class="ln" d="M400,133 L400,150 L220,150 L220,168" marker-end="url(#td2-arrow)"/>
+<path class="ln" d="M400,150 L580,150 L580,168" marker-end="url(#td2-arrow)"/>
+<!-- f32 box -->
+<rect class="box" x="80" y="169" width="280" height="70" rx="6"/>
+<text x="220" y="192" class="tx">f32 version</text>
+<text x="220" y="210" class="mut">fldz / fmul / fadd</text>
+<text x="220" y="226" class="mut">inlined, no calls</text>
+<!-- i32 box -->
+<rect class="box" x="440" y="169" width="280" height="70" rx="6"/>
+<text x="580" y="192" class="tx">i32 version</text>
+<text x="580" y="210" class="mut">xor / imul / add</text>
+<text x="580" y="226" class="mut">inlined, no calls</text>
+<!-- caption -->
+<text x="400" y="265" class="mut">One generic body, separate native code paths per T — no vtable</text>
+</svg>
+</div>
+
 ## Example: Dot Product Function
 
 Consider a dot product function for two vectors, critical in signal processing or machine learning:

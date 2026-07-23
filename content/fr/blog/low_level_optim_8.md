@@ -21,6 +21,46 @@ date: '2025-11-21'
 
 L'attribut `#[inline(always)]` de Rust force le compilateur à intégrer le corps d'une fonction à chaque site d'appel, optimisant les performances au niveau des instructions en éliminant la surcharge des appels et en exposant davantage d'opportunités d'optimisation. Je l'utiliserais stratégiquement dans du code critique pour les performances, mais la surutilisation comporte des risques pour la taille du code, le temps de compilation et même l'efficacité à l'exécution. Voici comment je l'aborderais.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo8-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un appel normal saute vers une fonction séparée et revient, tandis que inline(always) copie le corps de la fonction directement dans la boucle chaude">
+<!-- style -->
+<style>
+.lo8-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo8-fig,[data-theme="dark"] .lo8-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo8-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo8-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo8-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo8-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo8-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.lo8-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="lo8arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- top: normal call -->
+<text x="40" y="30" class="ti">Appel normal, dans une boucle</text>
+<rect x="40" y="42" width="200" height="46" rx="6" class="box"/>
+<text x="140" y="70" text-anchor="middle" class="tx">boucle parse_stream</text>
+<path d="M240,65 L268,65" class="ln" marker-end="url(#lo8arrowfr)"/>
+<rect x="270" y="42" width="180" height="46" rx="6" class="box"/>
+<text x="360" y="70" text-anchor="middle" class="tx">saut + retour</text>
+<path d="M450,65 L478,65" class="ln" marker-end="url(#lo8arrowfr)"/>
+<rect x="480" y="42" width="220" height="46" rx="6" class="box"/>
+<text x="590" y="70" text-anchor="middle" class="tx">corps de extract_bits</text>
+<text x="620" y="105" class="mut">~5–10 cycles de surcharge par appel</text>
+<!-- bottom: inline(always) -->
+<text x="40" y="150" class="ti">#[inline(always)] extract_bits</text>
+<rect x="40" y="162" width="200" height="46" rx="6" class="box"/>
+<text x="140" y="190" text-anchor="middle" class="tx">boucle parse_stream</text>
+<path d="M240,185 L268,185" class="ln" marker-end="url(#lo8arrowfr)"/>
+<rect x="270" y="162" width="220" height="46" rx="6" class="boxac"/>
+<text x="380" y="184" text-anchor="middle" class="tx">shr + and</text>
+<text x="380" y="200" text-anchor="middle" class="mut">corps copié en ligne</text>
+<text x="620" y="190" class="mut">pas de saut — mais dupliqué à chaque site d'appel</text>
+</svg>
+</div>
+
 ## Application stratégique
 
 J'appliquerais `#[inline(always)]` dans des scénarios où :

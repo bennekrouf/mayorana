@@ -294,6 +294,51 @@ Code sûr → Garbage collection → Overhead performance
 Compilateur intelligent → Système ownership → Code rapide + sûr
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="rustevo-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="L'évolution de C, rapide mais dangereux, vers les langages avec garbage collector, sûrs mais lents, vers Rust, à la fois rapide et sûr">
+<style>
+.rustevo-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .rustevo-fig,[data-theme="dark"] .rustevo-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.rustevo-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.rustevo-fig .title{font-size:15px;font-weight:700}
+.rustevo-fig .body{font-size:12px;font-weight:600}
+.rustevo-fig .cap{font-size:11px;fill:var(--mut)}
+.rustevo-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.rustevo-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.rustevo-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="rustevo-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- step 1: C -->
+<rect class="box" x="20" y="80" width="210" height="110" rx="8"></rect>
+<text x="125" y="108" text-anchor="middle" class="title">C</text>
+<text x="125" y="130" text-anchor="middle" class="body">Rapide</text>
+<text x="125" y="148" text-anchor="middle" class="cap">gestion mémoire manuelle</text>
+<text x="125" y="163" text-anchor="middle" class="cap">unsafe — bugs au runtime</text>
+<!-- step 2: GC languages -->
+<rect class="box" x="295" y="80" width="210" height="110" rx="8"></rect>
+<text x="400" y="108" text-anchor="middle" class="title">Java / Python / JS</text>
+<text x="400" y="130" text-anchor="middle" class="body">Sûr</text>
+<text x="400" y="148" text-anchor="middle" class="cap">garbage collector</text>
+<text x="400" y="163" text-anchor="middle" class="cap">lent — overhead des pauses GC</text>
+<!-- step 3: rust accent -->
+<rect class="acbox" x="570" y="80" width="210" height="110" rx="8"></rect>
+<text x="675" y="108" text-anchor="middle" class="title" fill="#ffffff">Rust</text>
+<text x="675" y="130" text-anchor="middle" class="body" fill="#ffffff">Rapide ET Sûr</text>
+<text x="675" y="148" text-anchor="middle" class="cap" fill="#ffffff">ownership, pas de GC</text>
+<text x="675" y="163" text-anchor="middle" class="cap" fill="#ffffff">garanties compile-time</text>
+<!-- arrows -->
+<path class="ln" d="M230,135 L295,135" marker-end="url(#rustevo-arrow-fr)"></path>
+<path class="ln" d="M505,135 L570,135" marker-end="url(#rustevo-arrow-fr)"></path>
+<!-- caption -->
+<text x="400" y="225" text-anchor="middle" class="cap">Rust n'est pas "C plus sûr" — c'est un contrat différent : pas besoin de runtime pour être sûr</text>
+</svg>
+</div>
+
 ## Points Clés
 
 🦀 **Rust réunit le meilleur des deux mondes :**

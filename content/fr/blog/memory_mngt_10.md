@@ -21,6 +21,45 @@ tags:
 
 `Cow<'a, B>` (Copy-on-Write) est un smart pointer dans le module `std::borrow` de Rust qui fournit une abstraction sans clone sur les données borrowed et owned. Il permet une gestion efficace des données qui peuvent ou non nécessiter une modification, minimisant les allocations tout en maintenant la flexibilité.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm10-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un Cow démarre comme une référence borrowed sans allocation, et se convertit en donnée owned seulement quand une modification est réellement nécessaire">
+<style>
+.mm10-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm10-fig,[data-theme="dark"] .mm10-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm10-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm10-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm10-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm10-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm10-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm10-fig .ac{fill:var(--ac)}
+.mm10-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm10-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln)"/></marker>
+<marker id="mm10-arrow-ac-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac)"/></marker>
+</defs>
+<!-- input box -->
+<rect x="30" y="90" width="180" height="60" rx="8" class="box"/>
+<text x="120" y="115" text-anchor="middle" class="body">Cow::Borrowed</text>
+<text x="120" y="133" text-anchor="middle" class="cap">entrée, zero-cost</text>
+<!-- decision box -->
+<rect x="300" y="90" width="200" height="60" rx="8" class="box"/>
+<text x="400" y="115" text-anchor="middle" class="body">besoin de mutation ?</text>
+<text x="400" y="133" text-anchor="middle" class="cap">vérifié au call site</text>
+<path d="M210,120 L300,120" marker-end="url(#mm10-arrow-fr)"/>
+<!-- no path -->
+<rect x="590" y="20" width="190" height="55" rx="8" class="box"/>
+<text x="685" y="45" text-anchor="middle" class="body">reste Borrowed</text>
+<text x="685" y="61" text-anchor="middle" class="cap">non : zéro allocation</text>
+<path d="M500,105 L590,55" marker-end="url(#mm10-arrow-fr)"/>
+<!-- yes path -->
+<rect x="590" y="155" width="190" height="55" rx="8" class="acbox"/>
+<text x="685" y="180" text-anchor="middle" class="body ac">devient Owned</text>
+<text x="685" y="196" text-anchor="middle" class="cap">oui : une allocation</text>
+<path d="M500,135 L590,182" style="stroke:var(--ac)" marker-end="url(#mm10-arrow-ac-fr)"/>
+</svg>
+</div>
+
 ## Qu'est-ce que Cow ?
 
 `Cow` (abréviation de Copy-on-Write) peut représenter :

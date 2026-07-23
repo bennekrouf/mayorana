@@ -19,6 +19,33 @@ tags:
 
 Distinguer les traits `Fn`, `FnMut`, et `FnOnce` est crucial pour maîtriser le système de closures de Rust.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl2-fig" viewBox="0 0 800 340" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Fn est un sous-ensemble de FnMut, lui-même un sous-ensemble de FnOnce, selon la façon dont chacun capture les variables">
+<!-- style -->
+<style>
+.cl2-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl2-fig,[data-theme="dark"] .cl2-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl2-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl2-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl2-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl2-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl2-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+</style>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Fn est un sous-ensemble de FnMut, lui-même un sous-ensemble de FnOnce</text>
+<!-- outer: FnOnce -->
+<rect x="40" y="60" width="720" height="250" rx="10" class="box"/>
+<text x="60" y="85" class="tx">FnOnce — ownership (T), appelable une fois</text>
+<!-- middle: FnMut -->
+<rect x="110" y="105" width="580" height="170" rx="10" class="box"/>
+<text x="130" y="130" class="tx">FnMut — mutable borrow (&amp;mut T), appels multiples</text>
+<!-- inner: Fn -->
+<rect x="190" y="150" width="420" height="90" rx="10" class="boxac"/>
+<text x="400" y="180" text-anchor="middle" class="tx">Fn — immutable borrow (&amp;T), appels multiples</text>
+<text x="400" y="198" text-anchor="middle" class="mut">choix par défaut recommandé sans mutation</text>
+</svg>
+</div>
+
 ## Capture des Closures
 
 Les closures capturent les variables de leur environnement de trois façons, selon comment les variables sont utilisées :

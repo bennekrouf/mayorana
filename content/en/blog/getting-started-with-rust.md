@@ -15,6 +15,54 @@ tags:
 
 Rust has been gaining significant traction among developers for its focus on performance, memory safety, and concurrency. If you're new to Rust, this guide will help you get started with the basics.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="rstart-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Rust getting-started pipeline: install with rustup, compile a single file with rustc, then scaffold and build a real project with cargo">
+<style>
+.rstart-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .rstart-fig,[data-theme="dark"] .rstart-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.rstart-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.rstart-fig .title{font-size:14px;font-weight:700}
+.rstart-fig .body{font-size:12px;font-weight:600}
+.rstart-fig .cap{font-size:11px;fill:var(--mut)}
+.rstart-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.rstart-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.rstart-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="rstart-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- step 1 -->
+<rect class="box" x="20" y="60" width="170" height="90" rx="8"></rect>
+<text x="105" y="90" text-anchor="middle" class="title">rustup</text>
+<text x="105" y="110" text-anchor="middle" class="cap">install toolchain</text>
+<text x="105" y="125" text-anchor="middle" class="cap">via sh.rustup.rs</text>
+<!-- step 2 -->
+<rect class="box" x="210" y="60" width="170" height="90" rx="8"></rect>
+<text x="295" y="90" text-anchor="middle" class="title">rustc hello.rs</text>
+<text x="295" y="110" text-anchor="middle" class="cap">compile a single file</text>
+<text x="295" y="125" text-anchor="middle" class="cap">./hello to run</text>
+<!-- step 3 -->
+<rect class="box" x="400" y="60" width="170" height="90" rx="8"></rect>
+<text x="485" y="90" text-anchor="middle" class="title">cargo new</text>
+<text x="485" y="110" text-anchor="middle" class="cap">scaffolds project</text>
+<text x="485" y="125" text-anchor="middle" class="cap">Cargo.toml + src/</text>
+<!-- step 4 accent -->
+<rect class="acbox" x="590" y="60" width="170" height="90" rx="8"></rect>
+<text x="675" y="90" text-anchor="middle" class="title" fill="#ffffff">cargo build/run</text>
+<text x="675" y="110" text-anchor="middle" class="cap" fill="#ffffff">manages deps</text>
+<text x="675" y="125" text-anchor="middle" class="cap" fill="#ffffff">and builds for you</text>
+<!-- arrows -->
+<path class="ln" d="M190,105 L210,105" marker-end="url(#rstart-arrow)"></path>
+<path class="ln" d="M380,105 L400,105" marker-end="url(#rstart-arrow)"></path>
+<path class="ln" d="M570,105 L590,105" marker-end="url(#rstart-arrow)"></path>
+<!-- caption -->
+<text x="400" y="195" text-anchor="middle" class="cap">rustc works for one file — cargo is the everyday workflow for real projects</text>
+</svg>
+</div>
+
 ## Setting Up Your Environment
 
 First, you'll need to install Rust on your system. The easiest way is to use rustup, the Rust toolchain installer:

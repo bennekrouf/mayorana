@@ -18,6 +18,47 @@ date: '2025-08-06'
 
 Comprendre la différence entre `String` et `str` est fondamental pour une gestion efficace de la mémoire.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm1-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison entre le layout owned de String et la vue fat-pointer de str vers heap, stack ou mémoire statique">
+<style>
+.mm1-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm1-fig,[data-theme="dark"] .mm1-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm1-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm1-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm1-fig .title{font:700 14px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm1-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm1-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm1-fig .ac{fill:var(--ac)}
+.mm1-fig line,.mm1-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm1-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">Données Owned vs. Borrowed</text>
+<!-- String box -->
+<rect x="60" y="50" width="230" height="110" rx="8" class="box"/>
+<text x="175" y="72" text-anchor="middle" class="title">String</text>
+<text x="175" y="92" text-anchor="middle" class="body">ptr | len | cap</text>
+<text x="175" y="110" text-anchor="middle" class="cap">owned, mutable, extensible</text>
+<text x="175" y="126" text-anchor="middle" class="cap">3 mots sur le stack</text>
+<!-- str box -->
+<rect x="510" y="50" width="230" height="110" rx="8" class="acbox"/>
+<text x="625" y="72" text-anchor="middle" class="title ac">&amp;str</text>
+<text x="625" y="92" text-anchor="middle" class="body">ptr | len</text>
+<text x="625" y="110" text-anchor="middle" class="cap">vue borrowed, immutable</text>
+<text x="625" y="126" text-anchor="middle" class="cap">fat pointer, 2 mots</text>
+<!-- data box -->
+<rect x="230" y="220" width="340" height="60" rx="8" class="box"/>
+<text x="400" y="245" text-anchor="middle" class="body">Octets UTF-8</text>
+<text x="400" y="262" text-anchor="middle" class="cap">buffer heap, array stack, ou .rodata</text>
+<!-- arrows: Y-merge into shared point, then single arrow to data box -->
+<path d="M175,160 L175,200 L400,200"/>
+<path d="M625,160 L625,200 L400,200" style="stroke:var(--ac)"/>
+<path d="M400,200 L400,220" marker-end="url(#mm1-arrow-fr)"/>
+</svg>
+</div>
+
 ## Différences Clés
 
 | `String` | `str` (habituellement `&str`) |

@@ -23,6 +23,40 @@ date: '2025-08-27'
 
 In a real-time system, heap allocations via Box, Vec, or other dynamic structures introduce latency due to memory management overhead and potential garbage collection pauses (though Rust avoids GC, allocation/deallocation still varies). I'd use Rust's stack-based features like fixed-size arrays, Option, and custom structs to eliminate these in a performance-critical path, ensuring predictable, low-latency execution.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo7-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="A fixed-size stack array with a wrapping write index replaces a heap Vec that risks reallocation and shifting">
+<!-- style -->
+<style>
+.lo7-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo7-fig,[data-theme="dark"] .lo7-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo7-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo7-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo7-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo7-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo7-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.lo7-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="lo7arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- top: heap vec -->
+<text x="40" y="30" class="ti">Vec&lt;f32&gt; on the heap</text>
+<rect x="40" y="42" width="720" height="40" rx="5" class="box"/>
+<text x="400" y="66" text-anchor="middle" class="tx">heap buffer — push() may reallocate + shift on overflow</text>
+<!-- bottom: fixed array ring -->
+<text x="40" y="128" class="ti">[f32; 64] on the stack — circular write via index % 64</text>
+<rect x="40" y="140" width="720" height="46" rx="5" class="boxac"/>
+<text x="140" y="167" text-anchor="middle" class="tx">…</text>
+<circle cx="240" cy="163" r="4" fill="var(--mut)"/>
+<circle cx="400" cy="163" r="4" fill="var(--mut)"/>
+<rect x="470" y="146" width="46" height="34" rx="4" class="box" stroke="var(--ac)"/>
+<text x="493" y="167" text-anchor="middle" class="tx">idx</text>
+<path d="M493,180 L493,200 L120,200 L120,186" class="ln" marker-end="url(#lo7arrow)"/>
+<text x="120" y="216" text-anchor="middle" class="mut">wraps to 0 — no allocation, ever</text>
+</svg>
+</div>
+
 ## Example Scenario: Replacing a Dynamic Buffer
 
 Suppose I'm building a real-time audio processor that handles 64-sample chunks. A naive implementation might use a Vec:

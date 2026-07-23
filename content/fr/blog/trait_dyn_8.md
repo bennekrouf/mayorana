@@ -26,6 +26,54 @@ date: '2025-12-04'
 
 Dans un driver I/O bas niveau pour un système embarqué, j'utiliserais les types associés dans un trait Rust pour définir une API flexible et type-safe qui lie des types d'entrée/sortie spécifiques à chaque implémentation de driver. Contrairement aux paramètres de type génériques, les types associés fournissent une conception plus claire et plus contrainte, améliorant la clarté et maintenant les performances. Voici comment je procéderais avec un exemple.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td8-fig" viewBox="0 0 800 280" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Types associés verrouillant Input et Output de UartDriver à u8 comparés aux méthodes génériques qui monomorphisent par type d'appel">
+<style>
+.td8-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td8-fig,[data-theme="dark"] .td8-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td8-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td8-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td8-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td8-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td8-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td8-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td8-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- column titles -->
+<text x="200" y="26" class="ti">Types associés</text>
+<text x="600" y="26" class="ti">Paramètres génériques</text>
+<!-- left column -->
+<rect class="boxAc" x="60" y="45" width="280" height="50" rx="6"/>
+<text x="200" y="67" class="tx">type Input = u8; type Output = u8;</text>
+<text x="200" y="84" class="mut">fixé par driver</text>
+<path class="ln" d="M200,95 L200,121" marker-end="url(#td8-arrow-fr)"/>
+<rect class="box" x="60" y="122" width="280" height="46" rx="6"/>
+<text x="200" y="145" class="tx">write(&amp;mut self, u8)</text>
+<text x="200" y="160" class="mut">un seul impl, pas de bounds</text>
+<path class="ln" d="M200,168 L200,194" marker-end="url(#td8-arrow-fr)"/>
+<rect class="box" x="60" y="195" width="280" height="46" rx="6"/>
+<text x="200" y="218" class="tx">mov inliné vers registre</text>
+<text x="200" y="233" class="mut">coût de conversion nul</text>
+<!-- right column -->
+<rect class="box" x="460" y="45" width="280" height="50" rx="6"/>
+<text x="600" y="67" class="tx">write&lt;T&gt;(&amp;mut self, data: T)</text>
+<text x="600" y="84" class="mut">T pourrait être n'importe quoi</text>
+<path class="ln" d="M600,95 L600,121" marker-end="url(#td8-arrow-fr)"/>
+<rect class="box" x="460" y="122" width="280" height="46" rx="6"/>
+<text x="600" y="145" class="tx">bound T: Into&lt;u8&gt; nécessaire</text>
+<text x="600" y="160" class="mut">overhead de conversion</text>
+<path class="ln" d="M600,168 L600,194" marker-end="url(#td8-arrow-fr)"/>
+<rect class="box" x="460" y="195" width="280" height="46" rx="6"/>
+<text x="600" y="218" class="tx">write&lt;u8&gt;, write&lt;i32&gt;, ...</text>
+<text x="600" y="233" class="mut">gonflage de monomorphization</text>
+<!-- captions -->
+<text x="400" y="265" class="mut">UartDriver verrouille Input/Output à u8 — types incompatibles rejetés à la compilation</text>
+</svg>
+</div>
+
 ## Concevoir le Trait avec des Types Associés
 
 Pour un driver I/O gérant les interfaces matérielles (ex : UART, SPI), je définirais un trait comme ceci :

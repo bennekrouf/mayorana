@@ -17,6 +17,46 @@ date: '2025-07-31'
 # Comment Rust assure la sécurité mémoire sans garbage collector ?
 Rust garantit la sécurité mémoire à la compilation avec trois mécanismes : ownership, borrowing et lifetimes. Ça évite les fuites mémoire, les data races et les pointeurs pendants sans avoir besoin d'un garbage collector.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm2-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Ownership, borrowing et lifetimes convergent pour garantir la sécurité mémoire à la compilation sans garbage collector">
+<style>
+.mm2-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm2-fig,[data-theme="dark"] .mm2-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm2-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm2-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm2-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm2-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm2-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm2-fig .ac{fill:var(--ac)}
+.mm2-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm2-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac)"/></marker>
+</defs>
+<!-- three mechanism boxes -->
+<rect x="30" y="30" width="200" height="70" rx="8" class="box"/>
+<text x="130" y="58" text-anchor="middle" class="title">Ownership</text>
+<text x="130" y="76" text-anchor="middle" class="cap">propriétaire unique, drop en fin de scope</text>
+<!-- box2 -->
+<rect x="300" y="30" width="200" height="70" rx="8" class="box"/>
+<text x="400" y="58" text-anchor="middle" class="title">Borrowing</text>
+<text x="400" y="76" text-anchor="middle" class="cap">&amp;T ou &amp;mut T, jamais les deux</text>
+<!-- box3 -->
+<rect x="570" y="30" width="200" height="70" rx="8" class="box"/>
+<text x="670" y="58" text-anchor="middle" class="title">Lifetimes</text>
+<text x="670" y="76" text-anchor="middle" class="cap">les références ne survivent jamais aux données</text>
+<!-- merge point -->
+<path d="M130,100 L130,160 L400,160"/>
+<path d="M400,100 L400,160"/>
+<path d="M670,100 L670,160 L400,160"/>
+<path d="M400,160 L400,180" marker-end="url(#mm2-arrow-fr)"/>
+<!-- result box -->
+<rect x="230" y="180" width="340" height="60" rx="8" class="acbox"/>
+<text x="400" y="205" text-anchor="middle" class="title ac">Sécurité Mémoire</text>
+<text x="400" y="223" text-anchor="middle" class="cap">pas de GC, pas d'overhead runtime</text>
+</svg>
+</div>
+
 ## Le problème du C/C++
 C et C++ donnent un contrôle total sur la mémoire, mais ça mène à des problèmes critiques :
 

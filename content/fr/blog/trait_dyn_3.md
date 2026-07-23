@@ -22,6 +22,53 @@ tags:
 
 En Rust, le **dispatch statique** (via les generics avec trait bounds) et le **dispatch dynamique** (via `dyn Trait`) offrent des profils de performance distincts, critiques pour des systèmes comme les processeurs de données temps réel. Le dispatch statique exploite la monomorphization pour la vitesse, tandis que le dispatch dynamique utilise des vtables pour la flexibilité. Ci-dessous, je compare les deux avec un exemple et expose quand choisir chacun basé sur la performance, flexibilité et maintenabilité.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td3-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Séquence d'appel par événement pour process_static versus process_dynamic sur 1 million d'événements">
+<style>
+.td3-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td3-fig,[data-theme="dark"] .td3-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td3-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td3-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td3-fig .lane{stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4 3}
+.td3-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td3-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td3-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td3-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td3-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- lane titles -->
+<text x="200" y="26" class="ti">process_static::&lt;T&gt;()</text>
+<text x="600" y="26" class="ti">process_dynamic(&amp;mut dyn T)</text>
+<!-- static lane -->
+<line class="lane" x1="200" y1="40" x2="200" y2="270"/>
+<rect class="box" x="90" y="45" width="220" height="40" rx="6"/>
+<text x="200" y="70" class="tx">boucle d'événements, par item</text>
+<path class="ln" d="M200,85 L200,111" marker-end="url(#td3-arrow-fr)"/>
+<rect class="boxAc" x="90" y="112" width="220" height="40" rx="6"/>
+<text x="200" y="137" class="tx">add inliné, pas d'appel</text>
+<path class="ln" d="M200,152 L200,178" marker-end="url(#td3-arrow-fr)"/>
+<rect class="box" x="90" y="179" width="220" height="40" rx="6"/>
+<text x="200" y="204" class="tx">boucle unrollée / SIMD</text>
+<text x="200" y="230" class="mut">1M événements ≈ 1ms</text>
+<!-- dynamic lane -->
+<line class="lane" x1="600" y1="40" x2="600" y2="270"/>
+<rect class="box" x="490" y="45" width="220" height="40" rx="6"/>
+<text x="600" y="70" class="tx">boucle d'événements, par item</text>
+<path class="ln" d="M600,85 L600,111" marker-end="url(#td3-arrow-fr)"/>
+<rect class="box" x="490" y="112" width="220" height="40" rx="6"/>
+<text x="600" y="137" class="tx">charge le ptr vtable</text>
+<path class="ln" d="M600,152 L600,178" marker-end="url(#td3-arrow-fr)"/>
+<rect class="box" x="490" y="179" width="220" height="40" rx="6"/>
+<text x="600" y="204" class="tx">appel indirect [rax]</text>
+<text x="600" y="230" class="mut">1M événements ≈ 1.2ms</text>
+<!-- caption -->
+<text x="400" y="300" class="mut">Même boucle, deux chemins de dispatch : arithmétique inlinée vs indirection vtable à chaque itération</text>
+</svg>
+</div>
+
 ## Exemple : Processeur d'événements
 
 Considère un système traitant des événements (ex : lectures de capteurs, paquets réseau) :

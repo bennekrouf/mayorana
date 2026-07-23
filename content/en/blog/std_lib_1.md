@@ -25,6 +25,56 @@ Otherwise      → returns value
 
 Think of it like a vice: the value cannot escape the bounds you give it.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="clamp-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="clamp evaluates a value against min and max, then merges all three outcomes into one bounded return value" >
+<style>
+.clamp-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .clamp-fig,[data-theme="dark"] .clamp-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.clamp-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.clamp-fig .title{font-size:14px;font-weight:700}
+.clamp-fig .body{font-size:12px;font-weight:600}
+.clamp-fig .cap{font-size:11px;fill:var(--mut)}
+.clamp-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.clamp-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.clamp-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="clamp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- input -->
+<rect class="box" x="300" y="15" width="200" height="45" rx="8"></rect>
+<text x="400" y="43" text-anchor="middle" class="body">value</text>
+<!-- fan out to 3 branches -->
+<path class="ln" d="M400,60 L400,85"></path>
+<path class="ln" d="M160,85 L640,85"></path>
+<path class="ln" d="M160,85 L160,110" marker-end="url(#clamp-arrow)"></path>
+<path class="ln" d="M400,85 L400,110" marker-end="url(#clamp-arrow)"></path>
+<path class="ln" d="M640,85 L640,110" marker-end="url(#clamp-arrow)"></path>
+<!-- branch boxes -->
+<rect class="box" x="60" y="110" width="200" height="55" rx="8"></rect>
+<text x="160" y="133" text-anchor="middle" class="body">value &lt; min</text>
+<text x="160" y="150" text-anchor="middle" class="cap">→ return min</text>
+<rect class="box" x="300" y="110" width="200" height="55" rx="8"></rect>
+<text x="400" y="133" text-anchor="middle" class="body">min ≤ value ≤ max</text>
+<text x="400" y="150" text-anchor="middle" class="cap">→ return value</text>
+<rect class="box" x="540" y="110" width="200" height="55" rx="8"></rect>
+<text x="640" y="133" text-anchor="middle" class="body">value &gt; max</text>
+<text x="640" y="150" text-anchor="middle" class="cap">→ return max</text>
+<!-- merge into single call -->
+<path class="ln" d="M160,165 L160,195"></path>
+<path class="ln" d="M400,165 L400,195"></path>
+<path class="ln" d="M640,165 L640,195"></path>
+<path class="ln" d="M160,195 L640,195"></path>
+<path class="ln" d="M400,195 L400,220" marker-end="url(#clamp-arrow)"></path>
+<!-- output accent -->
+<rect class="acbox" x="280" y="220" width="240" height="50" rx="8"></rect>
+<text x="400" y="250" text-anchor="middle" class="body" fill="#ffffff">value.clamp(min, max)</text>
+</svg>
+</div>
+
 ## In Practice
 
 ```rust

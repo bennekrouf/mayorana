@@ -20,6 +20,44 @@ date: '2025-11-04'
 
 In a multi-threaded Rust application processing large datasets, cache line awareness is key to maximizing performance. CPU cache lines (typically 64 bytes on modern x86_64 and ARM) dictate how data is fetched, and false sharing—where threads modify adjacent data on the same cache line—can tank throughput due to constant cache invalidation. I'd align data structures to cache lines and use Rust's features to eliminate false sharing, optimizing a multi-threaded workload.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo9-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Four naive counters packed into one 64-byte cache line cause false sharing, while padding each counter to its own cache line isolates them">
+<!-- style -->
+<style>
+.lo9-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo9-fig,[data-theme="dark"] .lo9-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo9-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo9-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo9-fig .bad{fill:var(--box);stroke:#e11d48;stroke-width:1.5}
+.lo9-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo9-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo9-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+</style>
+<!-- top: naive, one cache line -->
+<text x="40" y="30" class="ti">Naive — 4 counters share one 64-byte cache line</text>
+<rect x="40" y="42" width="720" height="46" rx="5" class="bad"/>
+<line x1="220" y1="42" x2="220" y2="88" stroke="var(--ln)" stroke-width="1"/>
+<line x1="400" y1="42" x2="400" y2="88" stroke="var(--ln)" stroke-width="1"/>
+<line x1="580" y1="42" x2="580" y2="88" stroke="var(--ln)" stroke-width="1"/>
+<text x="130" y="70" text-anchor="middle" class="tx">T0</text>
+<text x="310" y="70" text-anchor="middle" class="tx">T1</text>
+<text x="490" y="70" text-anchor="middle" class="tx">T2</text>
+<text x="670" y="70" text-anchor="middle" class="tx">T3</text>
+<text x="40" y="106" class="mut">any thread's write invalidates the whole line for the others</text>
+<!-- bottom: aligned, 4 separate lines -->
+<text x="40" y="150" class="ti">#[repr(align(64))] + padding — one cache line each</text>
+<rect x="40" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="125" y="190" text-anchor="middle" class="tx">T0 + pad</text>
+<rect x="223" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="308" y="190" text-anchor="middle" class="tx">T1 + pad</text>
+<rect x="406" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="491" y="190" text-anchor="middle" class="tx">T2 + pad</text>
+<rect x="589" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="674" y="190" text-anchor="middle" class="tx">T3 + pad</text>
+<text x="40" y="226" class="mut">64 bytes apart — writes stay local, no invalidation</text>
+</svg>
+</div>
+
 ## Designing Cache-Aligned Structures
 
 - **Alignment**: Ensure each thread's data starts on a new cache line using `#[repr(align(64))]`.

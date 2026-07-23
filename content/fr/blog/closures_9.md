@@ -21,6 +21,51 @@ date: '2025-11-11'
 
 Stocker une closure dans une struct nécessite de spécifier des trait bounds (`Fn`, `FnMut`, `FnOnce`) et potentiellement des lifetimes si la closure capture des références. Voici comment faire :
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl9-fig" viewBox="0 0 800 280" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Trois façons de stocker une closure dans une struct : dispatch statique générique, dispatch dynamique boxé, ou références liées à une lifetime">
+<!-- style -->
+<style>
+.cl9-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl9-fig,[data-theme="dark"] .cl9-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl9-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl9-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl9-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl9-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl9-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl9-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl9arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="16" text-anchor="middle" class="ti">Trois façons de stocker une closure dans une struct</text>
+<!-- box1 -->
+<rect x="300" y="26" width="200" height="50" rx="6" class="box"/>
+<text x="400" y="47" text-anchor="middle" class="tx">struct Processor { op: ? }</text>
+<text x="400" y="63" text-anchor="middle" class="mut">comment typer `op` ?</text>
+<!-- fork -->
+<path d="M400,76 L400,96 L150,96 L150,116" class="ln" marker-end="url(#cl9arrowfr)"/>
+<path d="M400,96 L400,116" class="ln" marker-end="url(#cl9arrowfr)"/>
+<path d="M400,96 L650,96 L650,116" class="ln" marker-end="url(#cl9arrowfr)"/>
+<!-- generic -->
+<rect x="40" y="116" width="220" height="94" rx="6" class="boxac"/>
+<text x="150" y="140" text-anchor="middle" class="tx">Générique &lt;F: Fn&gt;</text>
+<text x="150" y="158" text-anchor="middle" class="mut">dispatch statique</text>
+<text x="150" y="174" text-anchor="middle" class="mut">type fixe, zero-cost</text>
+<!-- boxed -->
+<rect x="290" y="116" width="220" height="94" rx="6" class="box"/>
+<text x="400" y="140" text-anchor="middle" class="tx">Box&lt;dyn Fn&gt;</text>
+<text x="400" y="158" text-anchor="middle" class="mut">dispatch dynamique</text>
+<text x="400" y="174" text-anchor="middle" class="mut">heap, hétérogène</text>
+<!-- lifetime -->
+<rect x="540" y="116" width="220" height="94" rx="6" class="box"/>
+<text x="650" y="140" text-anchor="middle" class="tx">Box&lt;dyn Fn + 'a&gt;</text>
+<text x="650" y="158" text-anchor="middle" class="mut">lié à une lifetime</text>
+<text x="650" y="174" text-anchor="middle" class="mut">capture des références</text>
+</svg>
+</div>
+
 ## 1. Struct Générique (Static Dispatch)
 
 Utilise un paramètre de type générique avec des bounds `Fn`/`FnMut`/`FnOnce`. Idéal pour des types de closures fixes.

@@ -22,6 +22,55 @@ tags:
 
 Les **abstractions zéro-coût** de Rust permettent aux constructs haut niveau, comme les chaînes d'itérateurs, de compiler vers du code machine aussi efficace que des boucles écrites à la main, sans overhead à l'exécution. C'est critique pour les systèmes sensibles aux performances. Ci-dessous, j'explique comment le compilateur Rust transforme une chaîne d'itérateurs (ex : utilisant `map`, `filter`, et `collect`) en boucle efficace, en me concentrant sur l'inlining et la fusion de boucles, et comment vérifier l'optimisation en pratique.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo2-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Chaîne d'itérateurs filter, map et collect inlinée puis fusionnée par le compilateur en une seule boucle serrée">
+<style>
+.lo2-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo2-fig,[data-theme="dark"] .lo2-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo2-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo2-fig .mid{fill:var(--box);stroke:var(--mut);stroke-width:1.5}
+.lo2-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo2-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig line,.lo2-fig path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="lo2-arrow-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+<marker id="lo2-arrow-ac-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"/>
+</marker>
+</defs>
+<!-- ligne du haut : trois adaptateurs d'itérateur -->
+<rect x="30" y="30" width="200" height="55" rx="6" class="box"/>
+<text x="130" y="55" class="tx">.filter(x % 2 == 0)</text>
+<text x="130" y="72" class="mut">ignore les nombres impairs</text>
+<rect x="300" y="30" width="200" height="55" rx="6" class="box"/>
+<text x="400" y="55" class="tx">.map(x * 2)</text>
+<text x="400" y="72" class="mut">double chaque valeur</text>
+<rect x="570" y="30" width="200" height="55" rx="6" class="box"/>
+<text x="670" y="55" class="tx">.collect()</text>
+<text x="670" y="72" class="mut">size_hint pré-alloue</text>
+<!-- connexion des trois adaptateurs -->
+<line x1="230" y1="57" x2="298" y2="57" marker-end="url(#lo2-arrow-fr)"/>
+<line x1="500" y1="57" x2="568" y2="57" marker-end="url(#lo2-arrow-fr)"/>
+<!-- fusion en Y vers l'étape compilateur -->
+<path class="ln" d="M130,85 L130,110 L400,110"/>
+<path class="ln" d="M670,85 L670,110 L400,110"/>
+<line x1="400" y1="110" x2="400" y2="138" marker-end="url(#lo2-arrow-fr)"/>
+<rect x="230" y="140" width="340" height="55" rx="6" class="mid"/>
+<text x="400" y="163" class="tx">Inlining + Fusion de Boucles</text>
+<text x="400" y="180" class="mut">LLVM fusionne les appels next() en une passe</text>
+<!-- boucle finale serrée -->
+<line x1="400" y1="195" x2="400" y2="223" marker-end="url(#lo2-arrow-ac-fr)"/>
+<rect x="210" y="225" width="380" height="55" rx="6" class="fin"/>
+<text x="400" y="248" class="ac">Boucle unique et serrée</text>
+<text x="400" y="265" class="mut">cmp / test / lea / mov — sans overhead d'appel</text>
+</svg>
+</div>
+
 ## Comment le Compilateur Optimise les Chaînes d'Itérateurs
 
 Considère cet exemple :

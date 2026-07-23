@@ -16,6 +16,50 @@ date: '2025-07-10'
 
 To pass a closure to a Rust function that needs to call it multiple times while maintaining state between calls, the closure must implement the `FnMut` trait to allow mutation of its captured environment. I’ll explain how to design this, using Rust’s ownership, traits, and lifetimes, and highlight when to use simple closures versus structured approaches.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl5-fig" viewBox="0 0 800 200" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Each FnMut call mutates the shared counter state across successive invocations">
+<!-- style -->
+<style>
+.cl5-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl5-fig,[data-theme="dark"] .cl5-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl5-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl5-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl5-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl5-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl5-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl5-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl5arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Each FnMut call mutates the shared counter across invocations</text>
+<!-- box1 -->
+<rect x="30" y="60" width="170" height="90" rx="6" class="box"/>
+<text x="115" y="98" text-anchor="middle" class="tx">let mut counter = 0;</text>
+<text x="115" y="116" text-anchor="middle" class="mut">closure captures &amp;mut counter</text>
+<!-- arrow -->
+<path d="M200,105 L220,105" class="ln" marker-end="url(#cl5arrow)"/>
+<!-- box2 -->
+<rect x="220" y="60" width="170" height="90" rx="6" class="box"/>
+<text x="305" y="98" text-anchor="middle" class="tx">f() call 1</text>
+<text x="305" y="116" text-anchor="middle" class="mut">counter += 1 → 1</text>
+<!-- arrow -->
+<path d="M390,105 L410,105" class="ln" marker-end="url(#cl5arrow)"/>
+<!-- box3 -->
+<rect x="410" y="60" width="170" height="90" rx="6" class="box"/>
+<text x="495" y="98" text-anchor="middle" class="tx">f() call 2</text>
+<text x="495" y="116" text-anchor="middle" class="mut">counter += 1 → 2</text>
+<!-- arrow -->
+<path d="M580,105 L600,105" class="ln" marker-end="url(#cl5arrow)"/>
+<!-- box4 -->
+<rect x="600" y="60" width="170" height="90" rx="6" class="boxac"/>
+<text x="685" y="98" text-anchor="middle" class="tx">closure() call 3</text>
+<text x="685" y="116" text-anchor="middle" class="mut">counter += 1 → 3</text>
+</svg>
+</div>
+
 ## Solution: Use FnMut and Mutable Closure
 
 A closure that mutates state must implement `FnMut`, which allows multiple calls with mutable access to captured variables. The function receiving the closure takes it as `&mut impl FnMut` to retain ownership while enabling mutation.

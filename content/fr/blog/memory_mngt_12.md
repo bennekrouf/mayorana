@@ -23,6 +23,47 @@ tags:
 
 Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowing pour garantir la thread safety au moment de la compilation, éliminant les data races sans nécessiter un garbage collector. Cette approche assure un parallélisme sûr et haute performance avec un overhead runtime minimal.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm12-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Plusieurs threads détiennent chacun un Arc cloné pointant vers les mêmes données protégées par un Mutex, mais le Mutex n'autorise qu'un seul thread à la fois en accès exclusif">
+<!-- style -->
+<style>
+.mm12-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm12-fig,[data-theme="dark"] .mm12-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm12-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm12-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm12-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.mm12-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.mm12-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.mm12-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm12arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- threads -->
+<rect x="40" y="30" width="160" height="46" rx="6" class="box"/>
+<text x="120" y="58" text-anchor="middle" class="tx">Thread A : clone Arc</text>
+<rect x="40" y="94" width="160" height="46" rx="6" class="box"/>
+<text x="120" y="122" text-anchor="middle" class="tx">Thread B : clone Arc</text>
+<rect x="40" y="158" width="160" height="46" rx="6" class="box"/>
+<text x="120" y="186" text-anchor="middle" class="tx">Thread C : clone Arc</text>
+<!-- Y-merge to mutex -->
+<path d="M200,53 L340,53 L340,125" class="ln" marker-end="url(#mm12arrowfr)"/>
+<path d="M200,117 L340,117 L340,125" class="ln"/>
+<path d="M200,181 L340,181 L340,125" class="ln" marker-end="url(#mm12arrowfr)"/>
+<!-- mutex -->
+<rect x="340" y="103" width="160" height="46" rx="6" class="boxac"/>
+<text x="420" y="122" text-anchor="middle" class="tx">Mutex&lt;T&gt;</text>
+<text x="420" y="138" text-anchor="middle" class="mut">un seul lock() à la fois</text>
+<!-- to data -->
+<path d="M500,126 L560,126" class="ln" marker-end="url(#mm12arrowfr)"/>
+<rect x="560" y="103" width="180" height="46" rx="6" class="box"/>
+<text x="650" y="126" text-anchor="middle" class="tx">données partagées</text>
+<text x="650" y="142" text-anchor="middle" class="mut">accès exclusif, pas de race</text>
+<text x="40" y="222" class="mut">Arc : ownership partagé entre threads · Mutex : accès exclusif à la fois</text>
+</svg>
+</div>
+
 ## Modèle de Concurrence de Rust
 
 Rust utilise les mécanismes suivants pour gérer la concurrence :

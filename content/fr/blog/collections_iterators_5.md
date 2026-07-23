@@ -20,6 +20,56 @@ date: '2025-10-28'
 
 Lorsque T implémente Eq + Hash (pour les vérifications d'égalité et le hachage), les méthodes optimales sont :
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci5-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison côte à côte de l'approche HashSet, qui préserve l'ordre, et de sort+dedup, plus rapide mais qui change l'ordre">
+<!-- style -->
+<style>
+.ci5-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci5-fig,[data-theme="dark"] .ci5-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci5-fig .bg{fill:var(--bg)}
+.ci5-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci5-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci5-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci5-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci5-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci5-fig .ac{fill:var(--ac)}
+.ci5-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci5-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="260" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">Déduplication de Vec&lt;1,2,2,3,3,3&gt;</text>
+<!-- input box -->
+<rect class="box" x="300" y="40" width="200" height="34" rx="6"/>
+<text x="400" y="61" text-anchor="middle" class="tx">[1, 2, 2, 3, 3, 3]</text>
+<!-- split -->
+<path class="ln" d="M400 74V94"/>
+<path class="ln" d="M220 94H580"/>
+<path class="ln" d="M220 94V114" marker-end="url(#ci5-arrow-fr)"/>
+<path class="ln" d="M580 94V114" marker-end="url(#ci5-arrow-fr)"/>
+<!-- left column: HashSet -->
+<rect class="acbox" x="120" y="114" width="200" height="36" rx="6"/>
+<text x="220" y="137" text-anchor="middle" class="tx ac">HashSet retain</text>
+<path class="ln" d="M220 150V174" marker-end="url(#ci5-arrow-fr)"/>
+<rect class="box" x="120" y="174" width="200" height="34" rx="6"/>
+<text x="220" y="195" text-anchor="middle" class="tx">[1, 2, 3]</text>
+<text x="220" y="226" text-anchor="middle" class="mut" font-weight="700">ordre préservé</text>
+<text x="220" y="244" text-anchor="middle" class="mut">O(n) temps · O(n) espace</text>
+<!-- right column: sort+dedup -->
+<rect class="box" x="480" y="114" width="200" height="36" rx="6"/>
+<text x="580" y="137" text-anchor="middle" class="tx">sort() + dedup()</text>
+<path class="ln" d="M580 150V174" marker-end="url(#ci5-arrow-fr)"/>
+<rect class="box" x="480" y="174" width="200" height="34" rx="6"/>
+<text x="580" y="195" text-anchor="middle" class="tx">[1, 2, 3]</text>
+<text x="580" y="226" text-anchor="middle" class="mut">ordre modifié</text>
+<text x="580" y="244" text-anchor="middle" class="mut">O(n log n) temps · O(1) espace</text>
+</svg>
+</div>
+
 ## 1. Utilisation de HashSet (préserve l'ordre)
 
 ### Étapes :

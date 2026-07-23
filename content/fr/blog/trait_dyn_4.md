@@ -24,6 +24,58 @@ tags:
 
 Rust exige que les traits soient **object-safe** pour les utiliser avec `dyn Trait` pour le dispatch dynamique, car cela assure une vtable (table virtuelle) cohérente pour les appels de méthodes à l'exécution. Les traits non-object-safe, comme ceux avec des méthodes génériques ou des exigences statiques, ne peuvent pas être utilisés avec `dyn Trait`, mais ils peuvent être refactorisés pour les systèmes de plugins nécessitant du polymorphisme à l'exécution. Je vais expliquer pourquoi l'object safety est nécessaire et démontrer comment refactoriser un trait non-object-safe pour un système de plugins.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td4-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Refactorisation d'un trait Transformer non-object-safe en un trait object-safe produisant un fat pointer Box dyn Transformer">
+<style>
+.td4-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td4-fig,[data-theme="dark"] .td4-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td4-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td4-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td4-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td4-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td4-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td4-arrowAc-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- non object safe -->
+<rect class="box" x="40" y="30" width="330" height="66" rx="6"/>
+<text x="205" y="52" class="tx">transform&lt;T: Into&lt;f64&gt;&gt;(&amp;self, T)</text>
+<text x="205" y="70" class="tx">fn new() -&gt; Self</text>
+<text x="205" y="86" class="mut">méthode générique + retour Self statique</text>
+<!-- X mark to failure -->
+<path class="ln" d="M205,96 L205,122" marker-end="url(#td4-arrow-fr)"/>
+<rect class="box" x="80" y="123" width="250" height="36" rx="6"/>
+<text x="205" y="146" class="tx">Box&lt;dyn Transformer&gt; — échoue</text>
+<!-- refactor arrow across -->
+<path class="lnAc" d="M375,63 L425,63" marker-end="url(#td4-arrowAc-fr)"/>
+<text x="400" y="50" class="mut">refactor</text>
+<!-- object safe -->
+<rect class="boxAc" x="430" y="30" width="330" height="66" rx="6"/>
+<text x="595" y="52" class="tx">transform(&amp;self, value: f64) -&gt; f64</text>
+<text x="595" y="70" class="tx">pas de generics, pas de retour Self</text>
+<text x="595" y="86" class="mut">fonction factory crée les instances</text>
+<path class="lnAc" d="M595,96 L595,122" marker-end="url(#td4-arrowAc-fr)"/>
+<rect class="boxAc" x="470" y="123" width="250" height="36" rx="6"/>
+<text x="595" y="146" class="tx">Box&lt;dyn Transformer&gt; — fonctionne</text>
+<!-- fat pointer layout -->
+<path class="ln" d="M595,159 L595,185" marker-end="url(#td4-arrow-fr)"/>
+<rect class="box" x="440" y="186" width="140" height="50" rx="6"/>
+<text x="510" y="207" class="tx">ptr données</text>
+<text x="510" y="223" class="mut">SquareTransformer</text>
+<rect class="box" x="590" y="186" width="140" height="50" rx="6"/>
+<text x="660" y="207" class="tx">ptr vtable</text>
+<text x="660" y="223" class="mut">fn transform</text>
+<text x="595" y="260" class="mut">fat pointer : 16 octets (données + vtable)</text>
+<text x="205" y="220" class="mut">La vtable exige une seule</text>
+<text x="205" y="236" class="mut">signature par méthode — impossible ici</text>
+</svg>
+</div>
+
 ## Pourquoi l'Object Safety Compte
 
 Un trait est **object-safe** si :

@@ -21,6 +21,44 @@ date: '2025-11-22'
 
 Dans une application Rust multi-threadée traitant de grands ensembles de données, la conscience des lignes de cache est essentielle pour maximiser les performances. Les lignes de cache du CPU (généralement 64 octets sur les architectures x86_64 et ARM modernes) dictent la manière dont les données sont récupérées, et le faux partage - où les threads modifient des données adjacentes sur la même ligne de cache - peut dégrader considérablement le débit en raison des invalidations constantes du cache. J'alignerais les structures de données aux lignes de cache et utiliserais les fonctionnalités de Rust pour éliminer le faux partage, optimisant ainsi une charge de travail multi-threadée.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo9-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Quatre compteurs naïfs empaquetés dans une seule ligne de cache de 64 octets causent du faux partage, tandis que le padding de chaque compteur sur sa propre ligne les isole">
+<!-- style -->
+<style>
+.lo9-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo9-fig,[data-theme="dark"] .lo9-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo9-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo9-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo9-fig .bad{fill:var(--box);stroke:#e11d48;stroke-width:1.5}
+.lo9-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo9-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo9-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+</style>
+<!-- top: naive, one cache line -->
+<text x="40" y="30" class="ti">Naïf — 4 compteurs partagent une ligne de cache de 64 octets</text>
+<rect x="40" y="42" width="720" height="46" rx="5" class="bad"/>
+<line x1="220" y1="42" x2="220" y2="88" stroke="var(--ln)" stroke-width="1"/>
+<line x1="400" y1="42" x2="400" y2="88" stroke="var(--ln)" stroke-width="1"/>
+<line x1="580" y1="42" x2="580" y2="88" stroke="var(--ln)" stroke-width="1"/>
+<text x="130" y="70" text-anchor="middle" class="tx">T0</text>
+<text x="310" y="70" text-anchor="middle" class="tx">T1</text>
+<text x="490" y="70" text-anchor="middle" class="tx">T2</text>
+<text x="670" y="70" text-anchor="middle" class="tx">T3</text>
+<text x="40" y="106" class="mut">l'écriture d'un thread invalide toute la ligne pour les autres</text>
+<!-- bottom: aligned, 4 separate lines -->
+<text x="40" y="150" class="ti">#[repr(align(64))] + padding — une ligne de cache chacun</text>
+<rect x="40" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="125" y="190" text-anchor="middle" class="tx">T0 + pad</text>
+<rect x="223" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="308" y="190" text-anchor="middle" class="tx">T1 + pad</text>
+<rect x="406" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="491" y="190" text-anchor="middle" class="tx">T2 + pad</text>
+<rect x="589" y="162" width="170" height="46" rx="5" class="boxac"/>
+<text x="674" y="190" text-anchor="middle" class="tx">T3 + pad</text>
+<text x="40" y="226" class="mut">64 octets d'écart — les écritures restent locales, aucune invalidation</text>
+</svg>
+</div>
+
 ## Conception de Structures Alignées sur le Cache
 
 - **Alignement** : S'assurer que les données de chaque thread commencent sur une nouvelle ligne de cache en utilisant `#[repr(align(64))]`.

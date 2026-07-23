@@ -22,6 +22,60 @@ tags:
 
 Les capacités **SIMD (Single Instruction, Multiple Data)** de Rust permettent le traitement parallèle de plusieurs éléments de données en une seule instruction CPU, idéal pour des tâches computationnellement intensives comme la multiplication de matrices. Je vais expliquer comment exploiter `std::arch` pour un débit maximum, adresser la portabilité à travers les architectures (ex : x86_64 avec SSE/AVX vs ARM avec NEON), et souligner les défis et solutions pour assurer justesse et performance.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo3-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison entre une boucle scalaire traitant un f32 à la fois et une instruction AVX traitant 8 lanes f32 simultanément">
+<style>
+.lo3-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo3-fig,[data-theme="dark"] .lo3-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo3-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo3-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo3-fig .lane{fill:var(--bg);stroke:var(--ln);stroke-width:1}
+.lo3-fig .lane-on{fill:var(--ac);stroke:var(--ac);stroke-width:1}
+.lo3-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3-fig line{stroke:var(--ln);stroke-width:1.5}
+</style>
+<defs>
+<marker id="lo3-arrow-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- gauche : scalaire -->
+<rect x="40" y="30" width="320" height="110" rx="6" class="box"/>
+<text x="200" y="52" class="tx">Boucle scalaire</text>
+<text x="200" y="70" class="mut">c[i][j] += a[i][k] * b[k][j]</text>
+<rect x="80" y="82" width="20" height="20" class="lane-on"/>
+<rect x="105" y="82" width="20" height="20" class="lane"/>
+<rect x="130" y="82" width="20" height="20" class="lane"/>
+<rect x="155" y="82" width="20" height="20" class="lane"/>
+<rect x="180" y="82" width="20" height="20" class="lane"/>
+<rect x="205" y="82" width="20" height="20" class="lane"/>
+<rect x="230" y="82" width="20" height="20" class="lane"/>
+<rect x="255" y="82" width="20" height="20" class="lane"/>
+<text x="200" y="122" class="mut">1 f32 par instruction, 8 itérations</text>
+<!-- droite : SIMD -->
+<rect x="440" y="30" width="320" height="110" rx="6" class="fin"/>
+<text x="600" y="52" class="tx">AVX : _mm256_mul_ps / add_ps</text>
+<text x="600" y="70" class="mut">8 termes du produit scalaire à la fois</text>
+<rect x="480" y="82" width="20" height="20" class="lane-on"/>
+<rect x="505" y="82" width="20" height="20" class="lane-on"/>
+<rect x="530" y="82" width="20" height="20" class="lane-on"/>
+<rect x="555" y="82" width="20" height="20" class="lane-on"/>
+<rect x="580" y="82" width="20" height="20" class="lane-on"/>
+<rect x="605" y="82" width="20" height="20" class="lane-on"/>
+<rect x="630" y="82" width="20" height="20" class="lane-on"/>
+<rect x="655" y="82" width="20" height="20" class="lane-on"/>
+<text x="600" y="122" class="ac">8 f32 par instruction, 1 itération</text>
+<!-- fusion vers le résultat -->
+<line x1="200" y1="140" x2="200" y2="168" marker-end="url(#lo3-arrow-fr)"/>
+<line x1="600" y1="140" x2="600" y2="168" marker-end="url(#lo3-arrow-fr)"/>
+<path d="M200,168 L200,190 L600,190 L600,168" fill="none" stroke="var(--ln)" stroke-width="1.5"/>
+<rect x="270" y="195" width="260" height="45" rx="6" class="box"/>
+<text x="400" y="222" class="tx">~8x moins d'itérations de boucle</text>
+</svg>
+</div>
+
 ## Vectoriser la Multiplication de Matrices avec SIMD
 
 La multiplication de matrices (ex : \( C = A \times B \), où \( A \) est \( m \times n \), \( B \) est \( n \times p \), et \( C \) est \( m \times p \)) implique de calculer des produits scalaires de lignes et colonnes. Une implémentation scalaire naïve pour une matrice 4x4 est :

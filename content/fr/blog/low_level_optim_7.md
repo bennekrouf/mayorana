@@ -26,6 +26,40 @@ date: '2025-11-20'
 
 Dans un système temps réel, les allocations heap via Box, Vec, ou autres structures dynamiques introduisent de la latence due à l'overhead de gestion mémoire et aux pauses potentielles de garbage collection (bien que Rust évite le GC, allocation/désallocation varie encore). J'utiliserais les fonctionnalités stack-based de Rust comme les tableaux de taille fixe, Option, et structs custom pour éliminer celles-ci dans un chemin critique en performance, assurant une exécution prévisible et faible latence.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo7-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un tableau de taille fixe sur la stack avec un index d'écriture circulaire remplace un Vec sur le heap qui risque réallocation et décalage">
+<!-- style -->
+<style>
+.lo7-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo7-fig,[data-theme="dark"] .lo7-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo7-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo7-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo7-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo7-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo7-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.lo7-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="lo7arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- top: heap vec -->
+<text x="40" y="30" class="ti">Vec&lt;f32&gt; sur le heap</text>
+<rect x="40" y="42" width="720" height="40" rx="5" class="box"/>
+<text x="400" y="66" text-anchor="middle" class="tx">buffer heap — push() peut réallouer + décaler en cas de dépassement</text>
+<!-- bottom: fixed array ring -->
+<text x="40" y="128" class="ti">[f32; 64] sur la stack — écriture circulaire via index % 64</text>
+<rect x="40" y="140" width="720" height="46" rx="5" class="boxac"/>
+<text x="140" y="167" text-anchor="middle" class="tx">…</text>
+<circle cx="240" cy="163" r="4" fill="var(--mut)"/>
+<circle cx="400" cy="163" r="4" fill="var(--mut)"/>
+<rect x="470" y="146" width="46" height="34" rx="4" class="box" stroke="var(--ac)"/>
+<text x="493" y="167" text-anchor="middle" class="tx">idx</text>
+<path d="M493,180 L493,200 L120,200 L120,186" class="ln" marker-end="url(#lo7arrowfr)"/>
+<text x="120" y="216" text-anchor="middle" class="mut">revient à 0 — aucune allocation, jamais</text>
+</svg>
+</div>
+
 ## Scénario d'Exemple : Remplacer un Buffer Dynamique
 
 Suppose que je construis un processeur audio temps réel qui gère des chunks de 64 échantillons. Une implémentation naïve pourrait utiliser un Vec :

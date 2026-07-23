@@ -21,6 +21,38 @@ date: '2025-11-02'
 
 Profiling and optimizing low-level performance bottlenecks in a Rust codebase, such as excessive L1 cache misses, requires a systematic approach using specialized tools. I’ll detail how to use `perf`, `cargo flamegraph`, and `criterion` to diagnose and optimize a performance-critical section, ensuring measurable improvements.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo10-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Array-of-Structs wastes cache line space pulling in unused fields, while Struct-of-Arrays packs one field contiguously per cache line">
+<!-- style -->
+<style>
+.lo10-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo10-fig,[data-theme="dark"] .lo10-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo10-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo10-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo10-fig .x{fill:#FF6B00;opacity:0.75}
+.lo10-fig .yz{fill:var(--mut);opacity:0.35}
+.lo10-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo10-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo10-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+</style>
+<!-- top: AoS -->
+<text x="40" y="30" class="ti">Array-of-Structs — one 64-byte L1 line</text>
+<rect x="40" y="42" width="720" height="46" rx="5" class="box"/>
+<rect x="40" y="42" width="120" height="46" class="x"/>
+<rect x="160" y="42" width="120" height="46" class="yz"/>
+<rect x="280" y="42" width="120" height="46" class="x"/>
+<rect x="400" y="42" width="120" height="46" class="yz"/>
+<rect x="520" y="42" width="120" height="46" class="x"/>
+<rect x="640" y="42" width="120" height="46" class="yz"/>
+<text x="400" y="106" text-anchor="middle" class="mut">reading x also loads y, z you don't need — line wasted fast</text>
+<!-- bottom: SoA -->
+<text x="40" y="150" class="ti">Struct-of-Arrays — xs packed contiguously</text>
+<rect x="40" y="162" width="720" height="46" rx="5" class="boxac"/>
+<text x="400" y="190" text-anchor="middle" class="tx">xs: [f32] … 16 values fit per 64-byte line</text>
+<text x="40" y="226" class="mut">contiguous access, no wasted bytes — cache misses drop ~10x</text>
+</svg>
+</div>
+
 ## Tools and Their Roles
 
 - **`perf` (Linux)**: A system-level profiler for hardware events like cache misses, cycles, and instructions. Ideal for pinpointing L1 cache issues across the application.

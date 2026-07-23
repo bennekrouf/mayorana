@@ -17,6 +17,57 @@ date: '2025-10-26'
 
 `collect()` est une méthode qui convertit un itérateur en collection. Elle s'appuie sur le trait `FromIterator` de Rust, qui définit comment construire un type à partir d'un itérateur.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci3-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un itérateur s'écoule vers collect(), qui se ramifie vers un Vec, une HashMap ou une String selon le type cible">
+<!-- style -->
+<style>
+.ci3-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci3-fig,[data-theme="dark"] .ci3-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci3-fig .bg{fill:var(--bg)}
+.ci3-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci3-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci3-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci3-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci3-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci3-fig .ac{fill:var(--ac)}
+.ci3-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci3-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="260" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">collect() via FromIterator</text>
+<!-- source box -->
+<rect class="box" x="300" y="42" width="200" height="36" rx="6"/>
+<text x="400" y="65" text-anchor="middle" class="tx">Iterator&lt;Item=T&gt;</text>
+<!-- arrow to collect -->
+<path class="ln" d="M400 78V102" marker-end="url(#ci3-arrow-fr)"/>
+<rect class="acbox" x="320" y="102" width="160" height="36" rx="6"/>
+<text x="400" y="125" text-anchor="middle" class="tx ac">collect()</text>
+<!-- Y merge then split to 3 targets -->
+<path class="ln" d="M400 138V158"/>
+<path class="ln" d="M140 158H660"/>
+<path class="ln" d="M140 158V178" marker-end="url(#ci3-arrow-fr)"/>
+<path class="ln" d="M400 158V178" marker-end="url(#ci3-arrow-fr)"/>
+<path class="ln" d="M660 158V178" marker-end="url(#ci3-arrow-fr)"/>
+<!-- target boxes -->
+<rect class="box" x="60" y="178" width="160" height="36" rx="6"/>
+<text x="140" y="201" text-anchor="middle" class="tx">Vec&lt;T&gt;</text>
+<rect class="box" x="320" y="178" width="160" height="36" rx="6"/>
+<text x="400" y="201" text-anchor="middle" class="tx">HashMap&lt;K,V&gt;</text>
+<rect class="box" x="580" y="178" width="160" height="36" rx="6"/>
+<text x="660" y="201" text-anchor="middle" class="tx">String</text>
+<!-- captions -->
+<text x="140" y="230" text-anchor="middle" class="mut">depuis un simple itérateur</text>
+<text x="400" y="230" text-anchor="middle" class="mut">depuis des tuples (K, V)</text>
+<text x="660" y="230" text-anchor="middle" class="mut">depuis des chars ou &amp;str</text>
+<text x="400" y="252" text-anchor="middle" class="mut">Le type cible doit implémenter FromIterator ; le compilateur infère quelle impl appeler</text>
+</svg>
+</div>
+
 ## Mécanismes clés
 
 - **Évaluation paresseuse** : Les itérateurs sont paresseux — `collect()` déclenche leur consommation.

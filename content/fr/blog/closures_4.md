@@ -20,6 +20,47 @@ tags:
 
 Une `move` closure (définie avec le mot-clé `move`) force la closure à prendre ownership des variables qu'elle capture de l'environnement. Contrairement aux closures normales, qui capturent les variables par référence (immutable ou mutable) quand c'est possible, les `move` closures déplacent ou copient les variables dans la closure elle-même.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl4-fig" viewBox="0 0 800 380" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="move transfère l'ownership des données capturées dans la closure afin qu'elle survive à son scope d'origine">
+<!-- style -->
+<style>
+.cl4-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl4-fig,[data-theme="dark"] .cl4-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl4-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl4-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl4-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl4-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl4-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl4-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl4arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="18" text-anchor="middle" class="ti">move transfère l'ownership dans la closure pour qu'elle survive à son scope</text>
+<!-- box1 -->
+<rect x="250" y="40" width="300" height="60" rx="6" class="box"/>
+<text x="400" y="65" text-anchor="middle" class="tx">let data = String::from("hi");</text>
+<text x="400" y="83" text-anchor="middle" class="mut">owned dans le scope de main</text>
+<!-- arrow -->
+<path d="M400,100 L400,130" class="ln" marker-end="url(#cl4arrow)"/>
+<!-- box2 -->
+<rect x="250" y="130" width="300" height="70" rx="6" class="boxac"/>
+<text x="400" y="155" text-anchor="middle" class="tx">move || println!("{}", data)</text>
+<text x="400" y="173" text-anchor="middle" class="mut">la closure possède maintenant `data`</text>
+<!-- arrow -->
+<path d="M400,200 L400,230" class="ln" marker-end="url(#cl4arrow)"/>
+<!-- box3 -->
+<rect x="250" y="230" width="300" height="70" rx="6" class="box"/>
+<text x="400" y="255" text-anchor="middle" class="tx">thread::spawn(closure)</text>
+<text x="400" y="273" text-anchor="middle" class="mut">data vit à l'intérieur du thread</text>
+<!-- caption -->
+<text x="400" y="335" text-anchor="middle" class="mut">Sans move : la closure emprunte &amp;data —</text>
+<text x="400" y="352" text-anchor="middle" class="mut">risque de dangling reference si `data` est droppée avant</text>
+</svg>
+</div>
+
 ## Mécaniques Clés
 
 ### 1. Transfer d'Ownership

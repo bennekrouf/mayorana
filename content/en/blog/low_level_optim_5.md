@@ -20,6 +20,54 @@ date: '2025-11-03'
 
 Inline assembly in Rust, via the `asm!` macro or `core::arch` intrinsics, is a powerful but rare tool for optimizing performance-critical code when the compiler or standard libraries fall short. I’ll outline when to use it, provide an example implementation, and detail strategies to ensure safety and portability across architectures.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo5-fig" viewBox="0 0 800 400" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Decision flow for when to reach for inline assembly, always wrapped in a safe API with a fallback">
+<style>
+.lo5-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo5-fig,[data-theme="dark"] .lo5-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo5-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo5-fig .dia{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo5-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo5-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5-fig .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5-fig line,.lo5-fig path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="lo5-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- top -->
+<rect x="310" y="20" width="180" height="50" rx="6" class="box"/>
+<text x="400" y="50" class="tx">Profiling finds a bottleneck</text>
+<line x1="400" y1="70" x2="400" y2="88" marker-end="url(#lo5-arrow)"/>
+<!-- diamond -->
+<polygon points="400,90 490,140 400,190 310,140" class="dia"/>
+<text x="400" y="135" class="tx">Safe intrinsic</text>
+<text x="400" y="150" class="tx">or std enough?</text>
+<!-- yes branch -->
+<line x1="490" y1="140" x2="518" y2="140" marker-end="url(#lo5-arrow)"/>
+<text x="505" y="128" class="mut">yes</text>
+<rect x="520" y="110" width="250" height="60" rx="6" class="box"/>
+<text x="645" y="135" class="tx">Use safe intrinsic</text>
+<text x="645" y="152" class="mut">std::arch / std::simd</text>
+<!-- no branch -->
+<line x1="400" y1="190" x2="400" y2="208" marker-end="url(#lo5-arrow)"/>
+<text x="420" y="203" class="mut">no</text>
+<rect x="290" y="210" width="220" height="60" rx="6" class="box"/>
+<text x="400" y="235" class="tx">asm! in unsafe fn</text>
+<text x="400" y="252" class="mut">isolated, documented invariants</text>
+<!-- Y-merge into fallback -->
+<path class="ln" d="M645,170 L645,300 L522,300"/>
+<path class="ln" d="M400,270 L400,300 L522,300"/>
+<line x1="522" y1="300" x2="522" y2="313" marker-end="url(#lo5-arrow)"/>
+<rect x="362" y="315" width="320" height="60" rx="6" class="fin"/>
+<text x="522" y="340" class="ac">Wrap in a safe API</text>
+<text x="522" y="357" class="mut">always keep a portable fallback</text>
+</svg>
+</div>
+
 ## Scenarios for Inline Assembly
 
 Inline assembly is justified in these cases:

@@ -21,6 +21,36 @@ date: '2025-07-12'
 
 Closures in Rust have zero runtime overhead in most cases due to static dispatch and compiler optimizations. However, specific scenarios can introduce costs:
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl8-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Call overhead comparison: impl Fn is inlined at near zero cost, Box of dyn Fn pays a vtable lookup">
+<!-- style -->
+<style>
+.cl8-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl8-fig,[data-theme="dark"] .cl8-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl8-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl8-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl8-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl8-fig .axis{stroke:var(--ln);stroke-width:1.5}
+.cl8-fig .bar1{fill:var(--ac)}
+.cl8-fig .bar2{fill:var(--mut);opacity:0.55}
+</style>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Call overhead: impl Fn is inlined; Box&lt;dyn Fn&gt; pays a vtable lookup</text>
+<!-- axis -->
+<path d="M250,68 L250,178" class="axis"/>
+<!-- row1 -->
+<text x="60" y="100" class="tx">impl Fn (static)</text>
+<rect x="250" y="82" width="90" height="32" rx="4" class="bar1"/>
+<text x="352" y="103" class="mut">~0 ns (inlined)</text>
+<!-- row2 -->
+<text x="60" y="162" class="tx">Box&lt;dyn Fn&gt; (dynamic)</text>
+<rect x="250" y="144" width="260" height="32" rx="4" class="bar2"/>
+<text x="522" y="165" class="mut">~2-3x slower (vtable + cache miss)</text>
+<!-- caption -->
+<text x="400" y="205" text-anchor="middle" class="mut">Large captures (e.g. a 1KB buffer) also grow closure size, regardless of dispatch</text>
+</svg>
+</div>
+
 | Aspect | Closures | Regular Functions |
 |--------|----------|-------------------|
 | Dispatch | Static (via monomorphization) | Always static (direct call) |

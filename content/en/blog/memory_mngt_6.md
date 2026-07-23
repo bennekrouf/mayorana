@@ -19,6 +19,43 @@ tags:
 
 In Rust, you cannot pass a `&str` directly to a function expecting a `&String` due to their distinct types, which ensures type safety and prevents assumptions about memory ownership. Below, I explain why this mismatch occurs and how to handle it effectively.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm6-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Deref coercion allows a reference String to convert automatically into a str slice, but the reverse direction is rejected by the compiler">
+<style>
+.mm6-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#ef4444}
+:root.dark .mm6-fig,[data-theme="dark"] .mm6-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569;--bad:#f87171}
+.mm6-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm6-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm6-fig .title{font:700 14px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm6-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm6-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm6-fig .ac{fill:var(--ac)}
+.mm6-fig .bad{fill:var(--bad)}
+.mm6-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm6-arrow-ac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac)"/></marker>
+<marker id="mm6-arrow-bad" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--bad)"/></marker>
+</defs>
+<!-- boxes -->
+<rect x="60" y="60" width="220" height="70" rx="8" class="box"/>
+<text x="170" y="90" text-anchor="middle" class="title">&amp;String</text>
+<text x="170" y="108" text-anchor="middle" class="cap">owned, growable reference</text>
+<rect x="520" y="60" width="220" height="70" rx="8" class="acbox"/>
+<text x="630" y="90" text-anchor="middle" class="title ac">&amp;str</text>
+<text x="630" y="108" text-anchor="middle" class="cap">flexible slice, preferred param</text>
+<!-- coercion arrow, top -->
+<path d="M280,80 L520,80" style="stroke:var(--ac)" marker-end="url(#mm6-arrow-ac)"/>
+<text x="400" y="70" text-anchor="middle" class="cap ac">Deref coercion (automatic)</text>
+<!-- blocked arrow, bottom -->
+<path d="M520,115 L280,115" style="stroke:var(--bad)" marker-end="url(#mm6-arrow-bad)"/>
+<text x="400" y="135" text-anchor="middle" class="cap bad">no implicit conversion (compile error)</text>
+<!-- caption box -->
+<rect x="140" y="160" width="520" height="50" rx="8" class="box"/>
+<text x="400" y="190" text-anchor="middle" class="body">Fix: accept &amp;str in function params, or convert with .to_string()</text>
+</svg>
+</div>
+
 ## The Core Issue: Type Mismatch
 
 - **`&String`**: A reference to a heap-allocated, growable `String`.

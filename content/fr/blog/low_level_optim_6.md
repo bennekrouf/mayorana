@@ -22,6 +22,43 @@ date: '2025-11-19'
 
 # Quel est l'impact performance d'utiliser Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo6-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Vec::new() croît par doublements et copies répétés, tandis que Vec::with_capacity(n) alloue la taille finale une seule fois">
+<!-- style -->
+<style>
+.lo6-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo6-fig,[data-theme="dark"] .lo6-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo6-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo6-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo6-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.lo6-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo6-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.lo6-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="lo6arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- top lane -->
+<text x="40" y="30" class="ti">Vec::new() — 4 réallocations pour 10 éléments</text>
+<rect x="40" y="42" width="60" height="40" rx="5" class="box"/><text x="70" y="66" text-anchor="middle" class="tx">0</text>
+<path d="M100,62 L128,62" class="ln" marker-end="url(#lo6arrowfr)"/>
+<rect x="130" y="42" width="80" height="40" rx="5" class="box"/><text x="170" y="66" text-anchor="middle" class="tx">4</text>
+<path d="M210,62 L238,62" class="ln" marker-end="url(#lo6arrowfr)"/>
+<rect x="240" y="42" width="110" height="40" rx="5" class="box"/><text x="295" y="66" text-anchor="middle" class="tx">8</text>
+<path d="M350,62 L378,62" class="ln" marker-end="url(#lo6arrowfr)"/>
+<rect x="380" y="42" width="150" height="40" rx="5" class="box"/><text x="455" y="66" text-anchor="middle" class="tx">16</text>
+<text x="600" y="66" class="mut">copie + libération à chaque fois</text>
+<!-- bottom lane -->
+<text x="40" y="140" class="ti">Vec::with_capacity(10) — 1 allocation</text>
+<rect x="40" y="152" width="490" height="40" rx="5" class="boxac"/>
+<text x="285" y="176" text-anchor="middle" class="tx">10 (alloué en amont)</text>
+<text x="600" y="176" class="mut">aucune copie, aucune libération</text>
+<!-- caption -->
+<text x="40" y="222" class="mut">Mêmes 10 push — with_capacity() est ~4.5x plus rapide en benchmark</text>
+</svg>
+</div>
+
 ## Différences Performance Clés
 
 | Vec::push() dans une Boucle | Vec::with_capacity() + push() |

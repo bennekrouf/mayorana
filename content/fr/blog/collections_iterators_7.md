@@ -20,6 +20,64 @@ date: '2025-10-29'
 
 `drain()` supprime une plage d'éléments d'un Vec tout en cédant leur ownership via un itérateur. Contrairement à `truncate()` ou `clear()`, il vous permet de traiter les éléments supprimés avant qu'ils ne soient libérés.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci7-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un Vec peut être réduit avec drain, qui cède les éléments supprimés via un itérateur, ou avec truncate/clear, qui les libèrent sans céder l'ownership">
+<!-- style -->
+<style>
+.ci7-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci7-fig,[data-theme="dark"] .ci7-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci7-fig .bg{fill:var(--bg)}
+.ci7-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci7-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci7-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci7-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci7-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci7-fig .ac{fill:var(--ac)}
+.ci7-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci7-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="260" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">vec!['a','b','c','d'] — trois façons de supprimer des éléments</text>
+<!-- source box -->
+<rect class="box" x="300" y="42" width="200" height="36" rx="6"/>
+<text x="400" y="65" text-anchor="middle" class="tx">['a','b','c','d']</text>
+<!-- Y merge then split to 3 -->
+<path class="ln" d="M400 78V98"/>
+<path class="ln" d="M140 98H660"/>
+<path class="ln" d="M140 98V118" marker-end="url(#ci7-arrow-fr)"/>
+<path class="ln" d="M400 98V118" marker-end="url(#ci7-arrow-fr)"/>
+<path class="ln" d="M660 98V118" marker-end="url(#ci7-arrow-fr)"/>
+<!-- method boxes -->
+<rect class="acbox" x="60" y="118" width="160" height="36" rx="6"/>
+<text x="140" y="141" text-anchor="middle" class="tx ac">drain(1..3)</text>
+<rect class="box" x="320" y="118" width="160" height="36" rx="6"/>
+<text x="400" y="141" text-anchor="middle" class="tx">truncate(2)</text>
+<rect class="box" x="580" y="118" width="160" height="36" rx="6"/>
+<text x="660" y="141" text-anchor="middle" class="tx">clear()</text>
+<!-- arrows to outputs -->
+<path class="ln" d="M140 154V178" marker-end="url(#ci7-arrow-fr)"/>
+<path class="ln" d="M400 154V178" marker-end="url(#ci7-arrow-fr)"/>
+<path class="ln" d="M660 154V178" marker-end="url(#ci7-arrow-fr)"/>
+<!-- output boxes -->
+<rect class="box" x="60" y="178" width="160" height="34" rx="6"/>
+<text x="140" y="199" text-anchor="middle" class="tx">['a','d']</text>
+<rect class="box" x="320" y="178" width="160" height="34" rx="6"/>
+<text x="400" y="199" text-anchor="middle" class="tx">['a','b']</text>
+<rect class="box" x="580" y="178" width="160" height="34" rx="6"/>
+<text x="660" y="199" text-anchor="middle" class="tx">[]</text>
+<!-- captions -->
+<text x="140" y="230" text-anchor="middle" class="mut ac">cède 'b','c' via itérateur</text>
+<text x="400" y="230" text-anchor="middle" class="mut">libère la fin, sans itérateur</text>
+<text x="660" y="230" text-anchor="middle" class="mut">libère tout, sans itérateur</text>
+<text x="400" y="250" text-anchor="middle" class="mut">Les trois préservent la capacité du Vec — seul drain() permet d'utiliser les valeurs supprimées</text>
+</svg>
+</div>
+
 ### Signature
 ```rust
 pub fn drain<R>(&mut self, range: R) -> Drain<'_, T>

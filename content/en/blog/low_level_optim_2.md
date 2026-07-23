@@ -21,6 +21,55 @@ date: '2025-09-12'
 
 Rust’s **zero-cost abstractions** allow high-level constructs, like iterator chains, to compile into machine code as efficient as hand-written loops, with no runtime overhead. This is critical for performance-sensitive systems. Below, I explain how the Rust compiler transforms an iterator chain (e.g., using `map`, `filter`, and `collect`) into an efficient loop, focusing on inlining and loop fusion, and how to verify the optimization in practice.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo2-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Iterator chain of filter, map, and collect being inlined and fused by the compiler into a single tight loop">
+<style>
+.lo2-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo2-fig,[data-theme="dark"] .lo2-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo2-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo2-fig .mid{fill:var(--box);stroke:var(--mut);stroke-width:1.5}
+.lo2-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo2-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig line,.lo2-fig path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="lo2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+<marker id="lo2-arrow-ac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"/>
+</marker>
+</defs>
+<!-- top row: three iterator adapters -->
+<rect x="30" y="30" width="200" height="55" rx="6" class="box"/>
+<text x="130" y="55" class="tx">.filter(x % 2 == 0)</text>
+<text x="130" y="72" class="mut">skip odd numbers</text>
+<rect x="300" y="30" width="200" height="55" rx="6" class="box"/>
+<text x="400" y="55" class="tx">.map(x * 2)</text>
+<text x="400" y="72" class="mut">double each value</text>
+<rect x="570" y="30" width="200" height="55" rx="6" class="box"/>
+<text x="670" y="55" class="tx">.collect()</text>
+<text x="670" y="72" class="mut">size_hint pre-allocates</text>
+<!-- connect the three adapters -->
+<line x1="230" y1="57" x2="298" y2="57" marker-end="url(#lo2-arrow)"/>
+<line x1="500" y1="57" x2="568" y2="57" marker-end="url(#lo2-arrow)"/>
+<!-- Y-merge into compiler stage -->
+<path class="ln" d="M130,85 L130,110 L400,110"/>
+<path class="ln" d="M670,85 L670,110 L400,110"/>
+<line x1="400" y1="110" x2="400" y2="138" marker-end="url(#lo2-arrow)"/>
+<rect x="230" y="140" width="340" height="55" rx="6" class="mid"/>
+<text x="400" y="163" class="tx">Inlining + Loop Fusion</text>
+<text x="400" y="180" class="mut">LLVM merges next() calls into one pass</text>
+<!-- final tight loop -->
+<line x1="400" y1="195" x2="400" y2="223" marker-end="url(#lo2-arrow-ac)"/>
+<rect x="210" y="225" width="380" height="55" rx="6" class="fin"/>
+<text x="400" y="248" class="ac">Single tight loop</text>
+<text x="400" y="265" class="mut">cmp / test / lea / mov — no call overhead</text>
+</svg>
+</div>
+
 ## How the Compiler Optimizes Iterator Chains
 
 Consider this example:

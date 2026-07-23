@@ -30,6 +30,48 @@ This streamlines the API but requires careful handling of trait coherence to avo
 
 Here's how I'd do it with an example.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td9-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Vec i32 and Vec f64 implementing Summable converge through one blanket impl into an automatically granted Stats trait">
+<style>
+.td9-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td9-fig,[data-theme="dark"] .td9-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td9-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td9-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td9-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td9-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td9-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td9-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td9-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td9-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td9-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- inputs -->
+<rect class="box" x="40" y="30" width="230" height="46" rx="6"/>
+<text x="155" y="58" class="tx">impl Summable for Vec&lt;i32&gt;</text>
+<rect class="box" x="40" y="110" width="230" height="46" rx="6"/>
+<text x="155" y="138" class="tx">impl Summable for Vec&lt;f64&gt;</text>
+<!-- Y-merge -->
+<path class="ln" d="M270,53 L310,53 L310,88" marker-end="none"/>
+<path class="ln" d="M270,133 L310,133 L310,88" marker-end="none"/>
+<path class="lnAc" d="M310,88 L360,88" marker-end="url(#td9-arrowAc)"/>
+<!-- blanket impl -->
+<rect class="boxAc" x="362" y="60" width="280" height="56" rx="6"/>
+<text x="502" y="83" class="tx">impl&lt;T: Summable&gt; Stats for T</text>
+<text x="502" y="100" class="mut">fn mean(&amp;self) -&gt; f64</text>
+<!-- arrow to result -->
+<path class="ln" d="M642,88 L668,88" marker-end="url(#td9-arrow)"/>
+<rect class="box" x="670" y="63" width="100" height="50" rx="6"/>
+<text x="720" y="83" class="tx">.mean()</text>
+<text x="720" y="99" class="mut">for free</text>
+<!-- caption -->
+<text x="400" y="170" class="mut">One blanket impl replaces separate Stats impls for every Summable type</text>
+<text x="400" y="200" class="mut">Sealed trait guards prevent downstream coherence conflicts</text>
+</svg>
+</div>
+
 ## Using Blanket Implementation
 
 **Scenario**: A library offers data processing utilities, including a `Summable` trait for types that can be summed (e.g., numbers, vectors). I want to add a `Stats` trait for computing statistics (e.g., mean) on any `Summable` type without writing repetitive implementations.

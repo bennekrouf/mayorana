@@ -76,6 +76,32 @@ Réponse normale: 50ms
 Pendant pause GC: 2000ms (40x plus lent!)
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="gcpause-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Une requête normale de 50ms comparée à la même requête étirée à 2000ms par une pause GC imprévisible">
+<style>
+.gcpause-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .gcpause-fig,[data-theme="dark"] .gcpause-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.gcpause-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.gcpause-fig .title{font-size:14px;font-weight:700}
+.gcpause-fig .body{font-size:12px;font-weight:600}
+.gcpause-fig .cap{font-size:11px;fill:var(--mut)}
+.gcpause-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.gcpause-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+</style>
+<!-- row 1: normal -->
+<text x="40" y="55" class="title">Requête normale</text>
+<rect class="box" x="40" y="65" width="70" height="34" rx="6"></rect>
+<text x="140" y="87" class="body">50ms — terminé</text>
+<!-- row 2: gc pause -->
+<text x="40" y="145" class="title">Requête pendant une pause GC</text>
+<rect class="box" x="40" y="155" width="70" height="34" rx="6"></rect>
+<rect class="acbox" x="110" y="155" width="620" height="34" rx="6"></rect>
+<text x="115" y="176" class="body" fill="#ffffff">Pause GC — thread gelé, durée imprévisible</text>
+<!-- caption -->
+<text x="400" y="210" text-anchor="middle" class="cap">Même requête, même code — 2000ms au total, 40x plus lent, et tu ne contrôles pas quand cela arrive</text>
+</svg>
+</div>
+
 ## Comparaison GC
 
 | Langage    | Type GC           | Ton Contrôle | Prévisibilité  |

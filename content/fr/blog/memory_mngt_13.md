@@ -19,6 +19,48 @@ tags:
 
 En Rust, l'expression `&mut *x` correspond à ce qu'on appelle un **réemprunt** (*reborrow* en anglais). Elle permet de créer une nouvelle référence mutable à partir d'une référence existante sans la consommer — quelque chose que le borrow checker interdirait normalement. Comprendre les réemprunts est essentiel pour écrire du Rust idiomatique lorsqu'on manipule des références mutables à travers des frontières de fonctions.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm13-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Chronologie d'un réemprunt : x est actif, puis y réemprunte et x gèle, puis y est abandonné et x redevient actif">
+<!-- style -->
+<style>
+.mm13-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm13-fig,[data-theme="dark"] .mm13-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm13-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm13-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm13-fig .frozen{fill:var(--box);stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4 3;opacity:0.6}
+.mm13-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.mm13-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.mm13-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.mm13-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm13arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" text-anchor="middle" class="ti">Durée de vie de &amp;mut *x — la fenêtre de gel</text>
+<!-- stage 1 -->
+<rect x="40" y="44" width="200" height="46" rx="6" class="boxac"/>
+<text x="140" y="72" text-anchor="middle" class="tx">x actif</text>
+<path d="M240,67 L268,67" class="ln" marker-end="url(#mm13arrowfr)"/>
+<!-- stage 2 -->
+<rect x="270" y="44" width="240" height="46" rx="6" class="frozen"/>
+<text x="390" y="66" text-anchor="middle" class="tx">x gelé</text>
+<text x="390" y="82" text-anchor="middle" class="mut">y = &amp;mut *x est actif</text>
+<path d="M510,67 L538,67" class="ln" marker-end="url(#mm13arrowfr)"/>
+<!-- stage 3 -->
+<rect x="540" y="44" width="220" height="46" rx="6" class="boxac"/>
+<text x="650" y="66" text-anchor="middle" class="tx">x actif à nouveau</text>
+<text x="650" y="82" text-anchor="middle" class="mut">y abandonné, gel levé</text>
+<!-- caption -->
+<text x="40" y="130" class="mut">Un seul de x, y est utilisable à la fois — le borrow checker impose la frontière</text>
+<rect x="40" y="150" width="720" height="4" rx="2" fill="var(--ln)"/>
+<text x="60" y="188" class="mut">t0 : let x = &amp;mut value;</text>
+<text x="330" y="188" class="mut">t1 : let y = &amp;mut *x;</text>
+<text x="610" y="188" class="mut">t2 : drop(y);</text>
+</svg>
+</div>
+
 ## Décortiquer `&mut *x`
 
 Supposons une variable `x` de type `&mut T`. L'expression `&mut *x` effectue deux opérations en séquence :

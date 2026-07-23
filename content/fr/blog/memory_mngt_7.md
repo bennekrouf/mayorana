@@ -20,6 +20,44 @@ tags:
 
 `Box<T>` est un smart pointer en Rust qui fournit l'allocation heap pour une valeur de type `T`. C'est la façon la plus simple de stocker des données sur le heap, offrant des garanties d'ownership et memory safety sans overhead runtime.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm7-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un pointeur Box vit sur le stack avec une taille fixe et possède exclusivement une valeur allouée sur le heap, comparé à Rc et Arc qui permettent l'ownership partagé">
+<style>
+.mm7-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm7-fig,[data-theme="dark"] .mm7-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm7-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm7-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm7-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm7-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm7-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm7-fig .ac{fill:var(--ac)}
+.mm7-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm7-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac)"/></marker>
+</defs>
+<!-- stack box -->
+<rect x="60" y="40" width="180" height="70" rx="8" class="acbox"/>
+<text x="150" y="68" text-anchor="middle" class="title ac">Box&lt;T&gt;</text>
+<text x="150" y="86" text-anchor="middle" class="cap">stack : un pointeur (usize)</text>
+<!-- heap box -->
+<rect x="400" y="40" width="200" height="70" rx="8" class="box"/>
+<text x="500" y="68" text-anchor="middle" class="title">Valeur T</text>
+<text x="500" y="86" text-anchor="middle" class="cap">heap : possédée exclusivement</text>
+<path d="M240,75 L400,75" style="stroke:var(--ac)" marker-end="url(#mm7-arrow-fr)"/>
+<!-- comparison row -->
+<rect x="60" y="150" width="220" height="60" rx="8" class="acbox"/>
+<text x="170" y="175" text-anchor="middle" class="body ac">Box&lt;T&gt;</text>
+<text x="170" y="193" text-anchor="middle" class="cap">propriétaire unique</text>
+<rect x="300" y="150" width="220" height="60" rx="8" class="box"/>
+<text x="410" y="175" text-anchor="middle" class="body">Rc&lt;T&gt;</text>
+<text x="410" y="193" text-anchor="middle" class="cap">partagé, refcount single-thread</text>
+<rect x="540" y="150" width="220" height="60" rx="8" class="box"/>
+<text x="650" y="175" text-anchor="middle" class="body">Arc&lt;T&gt;</text>
+<text x="650" y="193" text-anchor="middle" class="cap">partagé, refcount atomique</text>
+</svg>
+</div>
+
 ## Qu'est-ce que Box<T> ?
 
 - **Allocation Heap** : Déplace les données du stack vers le heap.

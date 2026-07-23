@@ -28,6 +28,54 @@ free(msg);
 printf("%s", msg); // ❌ Use after free
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cmem-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Une séquence use-after-free : allocation, écriture, libération, puis une quatrième étape lit la mémoire libérée et déclenche un comportement indéfini">
+<style>
+.cmem-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cmem-fig,[data-theme="dark"] .cmem-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cmem-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.cmem-fig .title{font-size:13px;font-weight:700}
+.cmem-fig .body{font-size:12px;font-weight:600}
+.cmem-fig .cap{font-size:11px;fill:var(--mut)}
+.cmem-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cmem-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.cmem-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cmem-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- step 1 -->
+<rect class="box" x="10" y="70" width="170" height="80" rx="8"></rect>
+<text x="95" y="100" text-anchor="middle" class="title">malloc(100)</text>
+<text x="95" y="120" text-anchor="middle" class="cap">mémoire allouée</text>
+<text x="95" y="135" text-anchor="middle" class="cap">msg → pointeur valide</text>
+<!-- step 2 -->
+<rect class="box" x="210" y="70" width="170" height="80" rx="8"></rect>
+<text x="295" y="100" text-anchor="middle" class="title">strcpy(msg, ..)</text>
+<text x="295" y="120" text-anchor="middle" class="cap">écrit "hello"</text>
+<text x="295" y="135" text-anchor="middle" class="cap">dans le bloc alloué</text>
+<!-- step 3 -->
+<rect class="box" x="410" y="70" width="170" height="80" rx="8"></rect>
+<text x="495" y="100" text-anchor="middle" class="title">free(msg)</text>
+<text x="495" y="120" text-anchor="middle" class="cap">mémoire libérée</text>
+<text x="495" y="135" text-anchor="middle" class="cap">msg est maintenant pendant</text>
+<!-- step 4 accent -->
+<rect class="acbox" x="610" y="70" width="180" height="80" rx="8"></rect>
+<text x="700" y="100" text-anchor="middle" class="title" fill="#ffffff">printf(msg)</text>
+<text x="700" y="120" text-anchor="middle" class="cap" fill="#ffffff">lit mémoire libérée</text>
+<text x="700" y="135" text-anchor="middle" class="cap" fill="#ffffff">comportement indéfini</text>
+<!-- arrows -->
+<path class="ln" d="M180,110 L210,110" marker-end="url(#cmem-arrow-fr)"></path>
+<path class="ln" d="M380,110 L410,110" marker-end="url(#cmem-arrow-fr)"></path>
+<path class="ln" d="M580,110 L610,110" marker-end="url(#cmem-arrow-fr)"></path>
+<!-- caption -->
+<text x="400" y="195" text-anchor="middle" class="cap">Rien en C n'empêche l'étape 4 de lire une mémoire qui ne lui appartient plus</text>
+</svg>
+</div>
+
 ## Pièges Courants
 
 | Problème | Code | Risque |

@@ -20,6 +20,42 @@ tags:
 
 Les règles de borrowing de Rust, appliquées par le borrow checker au moment de la compilation, assurent la memory safety et préviennent les data races sans overhead runtime. Ces règles gouvernent comment les données peuvent être accédées via des références, distinguant entre emprunts mutables (`&mut T`) et immutables (`&T`).
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm9-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Les états d'emprunt autorisés sont plusieurs références immutables ou exactement une référence mutable vers les mêmes données ; mélanger un emprunt mutable et immutable est rejeté">
+<style>
+.mm9-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#ef4444}
+:root.dark .mm9-fig,[data-theme="dark"] .mm9-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569;--bad:#f87171}
+.mm9-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm9-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm9-fig .badbox{fill:var(--box);stroke:var(--bad);stroke-width:2}
+.mm9-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm9-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm9-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm9-fig .ac{fill:var(--ac)}
+.mm9-fig .bad{fill:var(--bad)}
+</style>
+<!-- allowed: many immutable -->
+<text x="150" y="24" text-anchor="middle" class="title">OK : Plusieurs &amp;T</text>
+<rect x="30" y="40" width="240" height="50" rx="8" class="acbox"/>
+<text x="150" y="70" text-anchor="middle" class="body ac">&amp;x, &amp;x, &amp;x, ...</text>
+<text x="150" y="110" text-anchor="middle" class="cap">read-only, nombre illimité</text>
+<!-- allowed: one mutable -->
+<text x="400" y="24" text-anchor="middle" class="title">OK : Un seul &amp;mut T</text>
+<rect x="280" y="40" width="240" height="50" rx="8" class="acbox"/>
+<text x="400" y="70" text-anchor="middle" class="body ac">&amp;mut x</text>
+<text x="400" y="110" text-anchor="middle" class="cap">accès exclusif, aucun autre</text>
+<!-- rejected: mixed -->
+<text x="650" y="24" text-anchor="middle" class="title">Rejeté : Mélange</text>
+<rect x="530" y="40" width="240" height="50" rx="8" class="badbox"/>
+<text x="650" y="70" text-anchor="middle" class="body bad">&amp;x + &amp;mut x</text>
+<text x="650" y="110" text-anchor="middle" class="cap">erreur compile-time : risque de data race</text>
+<!-- summary box -->
+<rect x="130" y="150" width="540" height="60" rx="8" class="box"/>
+<text x="400" y="175" text-anchor="middle" class="body">Le borrow checker applique ceci au moment de la compilation</text>
+<text x="400" y="193" text-anchor="middle" class="cap">aucun coût runtime, data races impossibles en code safe</text>
+</svg>
+</div>
+
 ## Les Règles de Borrowing (Appliquées par le Compiler)
 
 1. **Soit Un Emprunt Mutable (`&mut T`) SOIT Plusieurs Emprunts Immutables (`&T`)** :

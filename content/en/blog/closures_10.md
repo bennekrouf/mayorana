@@ -17,6 +17,52 @@ date: '2025-07-09'
 
 Rust’s closure system offers two ways to handle function-like behavior: `impl Fn()` for static dispatch and `Box<dyn Fn()>` for dynamic dispatch. Each has distinct performance and flexibility characteristics, driven by Rust’s ownership, traits, and lifetimes. I’ll compare them and explain when to choose one over the other.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl10-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Call path comparison: impl Fn is inlined directly at the call site, while Box dyn Fn goes through a fat pointer and vtable lookup before reaching heap-allocated code">
+<!-- style -->
+<style>
+.cl10-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl10-fig,[data-theme="dark"] .cl10-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl10-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl10-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl10-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl10-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl10-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl10-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.cl10-fig .lnac{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl10arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl10arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- top lane: static -->
+<text x="40" y="34" class="ti">impl Fn() — static dispatch</text>
+<rect x="40" y="46" width="150" height="46" rx="6" class="box"/>
+<text x="115" y="74" text-anchor="middle" class="tx">call site</text>
+<path d="M190,69 L330,69" class="lnac" marker-end="url(#cl10arrowac)"/>
+<rect x="330" y="46" width="200" height="46" rx="6" class="boxac"/>
+<text x="430" y="69" text-anchor="middle" class="tx">inlined code</text>
+<text x="430" y="83" text-anchor="middle" class="mut">monomorphized</text>
+<text x="620" y="74" class="mut">~1–2 ns, no indirection</text>
+<!-- bottom lane: dynamic -->
+<text x="40" y="146" class="ti">Box&lt;dyn Fn()&gt; — dynamic dispatch</text>
+<rect x="40" y="158" width="150" height="46" rx="6" class="box"/>
+<text x="115" y="186" text-anchor="middle" class="tx">call site</text>
+<path d="M190,181 L270,181" class="ln" marker-end="url(#cl10arrow)"/>
+<rect x="270" y="158" width="140" height="46" rx="6" class="box"/>
+<text x="340" y="181" text-anchor="middle" class="tx">fat pointer</text>
+<text x="340" y="195" text-anchor="middle" class="mut">data + vtable</text>
+<path d="M410,181 L490,181" class="ln" marker-end="url(#cl10arrow)"/>
+<rect x="490" y="158" width="140" height="46" rx="6" class="box"/>
+<text x="560" y="181" text-anchor="middle" class="tx">vtable lookup</text>
+<path d="M630,181 L690,181 L690,220" class="ln" marker-end="url(#cl10arrow)"/>
+<rect x="600" y="220" width="180" height="34" rx="6" class="box"/>
+<text x="690" y="242" text-anchor="middle" class="tx">heap closure code</text>
+<text x="40" y="242" class="mut">~5–10 ns, two indirections</text>
+</svg>
+</div>
+
 ## Key Differences
 
 | **Aspect** | **impl Fn() (Static Dispatch)** | **Box<dyn Fn()> (Dynamic Dispatch)** |

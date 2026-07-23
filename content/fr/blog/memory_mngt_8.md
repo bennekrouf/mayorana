@@ -22,6 +22,46 @@ tags:
 
 Les string literals (`&str`) en Rust sont gérées efficacement, avec des caractéristiques mémoire distinctes comparées aux types `String` heap-allocated. Comprendre leur allocation et lifetime est clé pour écrire du code Rust performant et sûr.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm8-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Une variable str statique sur le stack pointe dans le segment rodata read-only du binaire, tandis qu'une variable String pointe vers une allocation heap mutable">
+<style>
+.mm8-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm8-fig,[data-theme="dark"] .mm8-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm8-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm8-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm8-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm8-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm8-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm8-fig .ac{fill:var(--ac)}
+.mm8-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm8-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln)"/></marker>
+<marker id="mm8-arrow-ac-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac)"/></marker>
+</defs>
+<!-- stack variables -->
+<rect x="40" y="30" width="220" height="60" rx="8" class="box"/>
+<text x="150" y="55" text-anchor="middle" class="body">s: &amp;'static str</text>
+<text x="150" y="72" text-anchor="middle" class="cap">ptr + len (stack)</text>
+<rect x="40" y="120" width="220" height="60" rx="8" class="box"/>
+<text x="150" y="145" text-anchor="middle" class="body">name: String</text>
+<text x="150" y="162" text-anchor="middle" class="cap">ptr + len + cap (stack)</text>
+<!-- memory segments -->
+<rect x="480" y="30" width="280" height="60" rx="8" class="acbox"/>
+<text x="620" y="55" text-anchor="middle" class="title ac">segment .rodata</text>
+<text x="620" y="72" text-anchor="middle" class="cap">"hello" — immutable, 'static</text>
+<rect x="480" y="120" width="280" height="60" rx="8" class="box"/>
+<text x="620" y="145" text-anchor="middle" class="title">Heap</text>
+<text x="620" y="162" text-anchor="middle" class="cap">"Alice and Bob" — mutable, scopé</text>
+<!-- arrows -->
+<path d="M260,60 L480,60" style="stroke:var(--ac)" marker-end="url(#mm8-arrow-ac-fr)"/>
+<path d="M260,150 L480,150" marker-end="url(#mm8-arrow-fr)"/>
+<!-- caption -->
+<rect x="150" y="210" width="500" height="40" rx="8" class="box"/>
+<text x="400" y="235" text-anchor="middle" class="cap">Retourner &amp;str emprunté d'un String local devient pendant quand la fonction retourne</text>
+</svg>
+</div>
+
 ## String Literals (&str) en Mémoire
 
 ### Localisation de Stockage

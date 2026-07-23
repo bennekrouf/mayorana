@@ -18,6 +18,62 @@ tags:
 
 Comprendre les stratégies d'allocation de Vec est crucial pour écrire du code Rust performant, particulièrement lorsqu'on travaille avec des collections et des itérateurs.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci1-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Vec::new() réalloue plusieurs fois en grandissant, tandis que Vec::with_capacity(n) alloue une seule fois au départ">
+<!-- style -->
+<style>
+.ci1-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci1-fig,[data-theme="dark"] .ci1-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci1-fig .bg{fill:var(--bg)}
+.ci1-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci1-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci1-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci1-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci1-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci1-fig .ac{fill:var(--ac)}
+.ci1-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.ci1-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci1-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+<marker id="ci1-arrowac-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="240" rx="8"/>
+<!-- title -->
+<text x="400" y="28" text-anchor="middle" class="title">Vec::new() vs Vec::with_capacity(n)</text>
+<!-- row1 -->
+<text x="20" y="70" class="tx">Vec::new()</text>
+<rect class="box" x="110" y="50" width="60" height="34" rx="6"/>
+<text x="140" y="71" text-anchor="middle" class="tx">cap 0</text>
+<rect class="box" x="240" y="50" width="60" height="34" rx="6"/>
+<text x="270" y="71" text-anchor="middle" class="tx">cap 4</text>
+<rect class="box" x="370" y="50" width="60" height="34" rx="6"/>
+<text x="400" y="71" text-anchor="middle" class="tx">cap 8</text>
+<rect class="box" x="500" y="50" width="70" height="34" rx="6"/>
+<text x="535" y="71" text-anchor="middle" class="tx">cap 16</text>
+<!-- row1 arrows -->
+<path class="ln" d="M170 67H240" marker-end="url(#ci1-arrow-fr)"/>
+<path class="ln" d="M300 67H370" marker-end="url(#ci1-arrow-fr)"/>
+<path class="ln" d="M430 67H500" marker-end="url(#ci1-arrow-fr)"/>
+<text x="205" y="60" text-anchor="middle" class="mut">copie</text>
+<text x="335" y="60" text-anchor="middle" class="mut">copie</text>
+<text x="465" y="60" text-anchor="middle" class="mut">copie</text>
+<text x="650" y="71" text-anchor="middle" class="mut">4 réallocations</text>
+<!-- row2 -->
+<text x="20" y="150" class="tx">with_capacity(16)</text>
+<rect class="acbox" x="240" y="130" width="180" height="34" rx="6"/>
+<text x="330" y="151" text-anchor="middle" class="tx ac">cap 16 (1 alloc)</text>
+<path class="acln" d="M420 147H540" marker-end="url(#ci1-arrowac-fr)"/>
+<rect class="box" x="540" y="130" width="140" height="34" rx="6"/>
+<text x="610" y="151" text-anchor="middle" class="tx">push × 16</text>
+<text x="330" y="185" text-anchor="middle" class="mut">0 réallocation</text>
+<!-- caption -->
+<text x="400" y="222" text-anchor="middle" class="mut">Connaître la taille finale à l'avance évite les cycles répétés de copie et libération</text>
+</svg>
+</div>
+
 ## Différences principales
 
 | `Vec::new()` | `Vec::with_capacity(n)` |

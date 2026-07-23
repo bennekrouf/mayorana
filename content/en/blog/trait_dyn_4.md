@@ -23,6 +23,58 @@ tags:
 
 Rust requires traits to be **object-safe** to use with `dyn Trait` for dynamic dispatch, as this ensures a consistent vtable (virtual table) for runtime method calls. Non-object-safe traits, such as those with generic methods or static requirements, cannot be used with `dyn Trait`, but they can be refactored for plugin systems needing runtime polymorphism. I’ll explain why object safety is necessary and demonstrate how to refactor a non-object-safe trait for a plugin system.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td4-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Refactoring a non-object-safe Transformer trait into an object-safe one that produces a Box dyn Transformer fat pointer">
+<style>
+.td4-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td4-fig,[data-theme="dark"] .td4-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td4-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td4-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td4-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td4-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td4-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td4-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- non object safe -->
+<rect class="box" x="40" y="30" width="330" height="66" rx="6"/>
+<text x="205" y="52" class="tx">transform&lt;T: Into&lt;f64&gt;&gt;(&amp;self, T)</text>
+<text x="205" y="70" class="tx">fn new() -&gt; Self</text>
+<text x="205" y="86" class="mut">generic method + static Self return</text>
+<!-- X mark to failure -->
+<path class="ln" d="M205,96 L205,122" marker-end="url(#td4-arrow)"/>
+<rect class="box" x="80" y="123" width="250" height="36" rx="6"/>
+<text x="205" y="146" class="tx">Box&lt;dyn Transformer&gt; — fails</text>
+<!-- refactor arrow across -->
+<path class="lnAc" d="M375,63 L425,63" marker-end="url(#td4-arrowAc)"/>
+<text x="400" y="50" class="mut">refactor</text>
+<!-- object safe -->
+<rect class="boxAc" x="430" y="30" width="330" height="66" rx="6"/>
+<text x="595" y="52" class="tx">transform(&amp;self, value: f64) -&gt; f64</text>
+<text x="595" y="70" class="tx">no generics, no Self return</text>
+<text x="595" y="86" class="mut">factory fn creates instances</text>
+<path class="lnAc" d="M595,96 L595,122" marker-end="url(#td4-arrowAc)"/>
+<rect class="boxAc" x="470" y="123" width="250" height="36" rx="6"/>
+<text x="595" y="146" class="tx">Box&lt;dyn Transformer&gt; — works</text>
+<!-- fat pointer layout -->
+<path class="ln" d="M595,159 L595,185" marker-end="url(#td4-arrow)"/>
+<rect class="box" x="440" y="186" width="140" height="50" rx="6"/>
+<text x="510" y="207" class="tx">data ptr</text>
+<text x="510" y="223" class="mut">SquareTransformer</text>
+<rect class="box" x="590" y="186" width="140" height="50" rx="6"/>
+<text x="660" y="207" class="tx">vtable ptr</text>
+<text x="660" y="223" class="mut">transform fn</text>
+<text x="595" y="260" class="mut">fat pointer: 16 bytes (data + vtable)</text>
+<text x="205" y="220" class="mut">Vtable needs one fixed</text>
+<text x="205" y="236" class="mut">signature per method — impossible here</text>
+</svg>
+</div>
+
 ## Why Object Safety Matters
 
 A trait is **object-safe** if:

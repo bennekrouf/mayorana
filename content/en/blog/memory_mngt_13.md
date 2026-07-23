@@ -19,6 +19,48 @@ tags:
 
 In Rust, the expression `&mut *x` is called a **reborrow**. It lets you create a new mutable reference from an existing one without consuming it — something the borrow checker would normally block. Understanding reborrows is key to writing idiomatic Rust when dealing with mutable references across function boundaries.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm13-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Timeline of a reborrow: x is active, then y reborrows and x freezes, then y drops and x becomes active again">
+<!-- style -->
+<style>
+.mm13-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm13-fig,[data-theme="dark"] .mm13-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm13-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm13-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm13-fig .frozen{fill:var(--box);stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4 3;opacity:0.6}
+.mm13-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.mm13-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.mm13-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.mm13-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm13arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" text-anchor="middle" class="ti">Lifetime of &amp;mut *x — the freeze window</text>
+<!-- stage 1 -->
+<rect x="40" y="44" width="200" height="46" rx="6" class="boxac"/>
+<text x="140" y="72" text-anchor="middle" class="tx">x active</text>
+<path d="M240,67 L268,67" class="ln" marker-end="url(#mm13arrow)"/>
+<!-- stage 2 -->
+<rect x="270" y="44" width="240" height="46" rx="6" class="frozen"/>
+<text x="390" y="66" text-anchor="middle" class="tx">x frozen</text>
+<text x="390" y="82" text-anchor="middle" class="mut">y = &amp;mut *x is active</text>
+<path d="M510,67 L538,67" class="ln" marker-end="url(#mm13arrow)"/>
+<!-- stage 3 -->
+<rect x="540" y="44" width="220" height="46" rx="6" class="boxac"/>
+<text x="650" y="66" text-anchor="middle" class="tx">x active again</text>
+<text x="650" y="82" text-anchor="middle" class="mut">y dropped, freeze lifted</text>
+<!-- caption -->
+<text x="40" y="130" class="mut">Only one of x, y is ever usable at a time — the borrow checker enforces the boundary</text>
+<rect x="40" y="150" width="720" height="4" rx="2" fill="var(--ln)"/>
+<text x="60" y="188" class="mut">t0: let x = &amp;mut value;</text>
+<text x="330" y="188" class="mut">t1: let y = &amp;mut *x;</text>
+<text x="610" y="188" class="mut">t2: drop(y);</text>
+</svg>
+</div>
+
 ## Breaking Down `&mut *x`
 
 Given a variable `x` of type `&mut T`, the expression `&mut *x` does two things in sequence:

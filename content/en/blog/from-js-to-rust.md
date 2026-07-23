@@ -19,6 +19,58 @@ date: '2025-11-02'
 
 Coming from JavaScript? Closures work differently in Rust. A `move` closure forces ownership transfer of captured variables—no shared references like JS. This is the bridge between JavaScript's automatic closures and Rust's ownership model.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="moveclo-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="JavaScript closures share a reference to the captured variable, while Rust move closures take ownership and the original becomes inaccessible">
+<style>
+.moveclo-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .moveclo-fig,[data-theme="dark"] .moveclo-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.moveclo-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.moveclo-fig .title{font-size:14px;font-weight:700}
+.moveclo-fig .body{font-size:12px;font-weight:600}
+.moveclo-fig .cap{font-size:11px;fill:var(--mut)}
+.moveclo-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.moveclo-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.moveclo-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="moveclo-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+<marker id="moveclo-arrow-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"></path>
+</marker>
+</defs>
+<!-- column titles -->
+<text x="210" y="25" text-anchor="middle" class="title">JavaScript</text>
+<text x="590" y="25" text-anchor="middle" class="title">Rust move closure</text>
+<!-- js outer -->
+<rect class="box" x="70" y="45" width="280" height="55" rx="8"></rect>
+<text x="210" y="68" text-anchor="middle" class="body">outer scope: count</text>
+<text x="210" y="86" text-anchor="middle" class="cap">stays valid after capture</text>
+<!-- js closure -->
+<rect class="box" x="70" y="190" width="280" height="55" rx="8"></rect>
+<text x="210" y="213" text-anchor="middle" class="body">closure: count++</text>
+<text x="210" y="231" text-anchor="middle" class="cap">captures by reference</text>
+<!-- js bidirectional arrow -->
+<path class="ln" d="M210,100 L210,190" marker-end="url(#moveclo-arrow)" marker-start="url(#moveclo-arrow)"></path>
+<text x="255" y="150" text-anchor="middle" class="cap">shared</text>
+<!-- rust outer -->
+<rect class="box" x="450" y="45" width="280" height="55" rx="8"></rect>
+<text x="590" y="68" text-anchor="middle" class="body">outer scope: count</text>
+<text x="590" y="86" text-anchor="middle" class="cap">no longer accessible</text>
+<!-- rust closure -->
+<rect class="box" x="450" y="190" width="280" height="55" rx="8"></rect>
+<text x="590" y="213" text-anchor="middle" class="body">move closure</text>
+<text x="590" y="231" text-anchor="middle" class="cap">owns count exclusively</text>
+<!-- rust one-way move arrow -->
+<path class="acln" d="M590,100 L590,190" marker-end="url(#moveclo-arrow-ac)"></path>
+<text x="630" y="150" text-anchor="middle" class="cap" fill="var(--ac)">move</text>
+<!-- caption -->
+<text x="400" y="285" text-anchor="middle" class="cap">JS: implicit shared reference — Rust: explicit, compiler-enforced ownership transfer</text>
+</svg>
+</div>
+
 ## The JavaScript Baseline
 
 In JavaScript, closures capture variables by reference automatically:

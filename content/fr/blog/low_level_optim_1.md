@@ -20,6 +20,65 @@ tags:
 
 L'attribut `repr` contrôle le layout mémoire des structs, ce qui est critique pour l'optimisation bas niveau dans les systèmes à haut débit où la localité cache détermine les performances.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo1-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison entre le layout paddé de repr(C) et le layout compact de repr(packed) pour la même struct">
+<style>
+.lo1-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo1-fig,[data-theme="dark"] .lo1-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo1-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo1-fig .pad{fill:var(--bg);stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4,3}
+.lo1-fig .warn{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo1-fig .cap{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo1-fig .cap2{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo1-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo1-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig line{stroke:var(--ln);stroke-width:1.5}
+</style>
+<defs>
+<marker id="lo1-arrow-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- groupe gauche repr(C) -->
+<text x="210" y="30" class="ti">repr(C) : struct Data</text>
+<rect x="40" y="45" width="60" height="55" class="box"/>
+<text x="70" y="68" text-anchor="middle" class="tx">flag</text>
+<text x="70" y="84" text-anchor="middle" class="mut">1o</text>
+<rect x="100" y="45" width="60" height="55" class="pad"/>
+<text x="130" y="68" text-anchor="middle" class="mut">pad</text>
+<text x="130" y="84" text-anchor="middle" class="mut">3o</text>
+<rect x="160" y="45" width="90" height="55" class="box"/>
+<text x="205" y="68" text-anchor="middle" class="tx">value</text>
+<text x="205" y="84" text-anchor="middle" class="mut">u32, 4o</text>
+<rect x="250" y="45" width="130" height="55" class="box"/>
+<text x="315" y="68" text-anchor="middle" class="tx">counter</text>
+<text x="315" y="84" text-anchor="middle" class="mut">u64, 8o</text>
+<!-- flèche vers la légende -->
+<line x1="210" y1="100" x2="210" y2="140" marker-end="url(#lo1-arrow-fr)"/>
+<rect x="60" y="150" width="300" height="55" rx="6" class="cap"/>
+<text x="210" y="172" class="ac">16 octets au total</text>
+<text x="210" y="190" class="mut">accès alignés, cache-friendly</text>
+<!-- groupe droit repr(packed) -->
+<text x="590" y="30" class="ti">repr(packed) : struct PackedData</text>
+<rect x="420" y="45" width="60" height="55" class="box"/>
+<text x="450" y="68" text-anchor="middle" class="tx">flag</text>
+<text x="450" y="84" text-anchor="middle" class="mut">1o</text>
+<rect x="480" y="45" width="90" height="55" class="warn"/>
+<text x="525" y="68" text-anchor="middle" class="tx">value</text>
+<text x="525" y="84" text-anchor="middle" class="mut">u32, 4o</text>
+<rect x="570" y="45" width="130" height="55" class="warn"/>
+<text x="635" y="68" text-anchor="middle" class="tx">counter</text>
+<text x="635" y="84" text-anchor="middle" class="mut">u64, 8o</text>
+<!-- flèche vers la légende -->
+<line x1="560" y1="100" x2="560" y2="140" marker-end="url(#lo1-arrow-fr)"/>
+<rect x="440" y="150" width="260" height="55" rx="6" class="cap2"/>
+<text x="570" y="172" class="tx">13 octets au total</text>
+<text x="570" y="190" class="mut">accès non-aligné, plus lent</text>
+</svg>
+</div>
+
 ## Comment Ils Fonctionnent
 
 **`repr(C)`** : Impose un layout compatible C avec des champs ordonnés séquentiellement comme déclarés, ajoutant du padding pour aligner chaque champ à son alignement naturel (ex : `u32` s'aligne sur 4 octets). Assure une interopérabilité prévisible et s'aligne typiquement bien avec les lignes de cache CPU (souvent 64 octets).

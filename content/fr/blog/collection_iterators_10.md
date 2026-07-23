@@ -21,6 +21,54 @@ date: '2025-08-21'
 
 # Lors de l'itération sur un Vec, pourquoi utiliser .into_iter() au lieu de .iter() ?
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci10-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="into_iter consomme le Vec qui devient donc inutilisable ensuite, tandis que iter l'emprunte et le laisse disponible pour un usage ultérieur">
+<!-- style -->
+<style>
+.ci10-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci10-fig,[data-theme="dark"] .ci10-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci10-fig .bg{fill:var(--bg)}
+.ci10-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci10-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci10-fig .ghost{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:3 3}
+.ci10-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci10-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci10-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci10-fig .ac{fill:var(--ac)}
+.ci10-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci10-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="240" rx="8"/>
+<!-- title -->
+<text x="400" y="24" text-anchor="middle" class="title">.into_iter() vs .iter() — ownership</text>
+<!-- row1: into_iter -->
+<text x="20" y="70" class="tx">.into_iter()</text>
+<rect class="box" x="130" y="50" width="140" height="36" rx="6"/>
+<text x="200" y="73" text-anchor="middle" class="tx">vec (owner)</text>
+<path class="acln" d="M270 68H340" marker-end="url(#ci10-arrow-fr)"/>
+<rect class="acbox" x="340" y="50" width="150" height="36" rx="6"/>
+<text x="415" y="73" text-anchor="middle" class="tx ac">produit T (moved)</text>
+<rect class="ghost" x="130" y="104" width="140" height="30" rx="6"/>
+<text x="200" y="123" text-anchor="middle" class="mut" font-size="10">vec inutilisable après</text>
+<!-- row2: iter -->
+<text x="20" y="170" class="tx">.iter()</text>
+<rect class="box" x="130" y="150" width="140" height="36" rx="6"/>
+<text x="200" y="173" text-anchor="middle" class="tx">vec (owner)</text>
+<path class="ln" d="M270 168H340" marker-end="url(#ci10-arrow-fr)"/>
+<rect class="box" x="340" y="150" width="150" height="36" rx="6"/>
+<text x="415" y="173" text-anchor="middle" class="tx">produit &amp;T</text>
+<path class="ln" d="M200 186V206" marker-end="url(#ci10-arrow-fr)"/>
+<rect class="box" x="130" y="206" width="140" height="26" rx="6"/>
+<text x="200" y="223" text-anchor="middle" class="mut" font-size="10">vec toujours utilisable</text>
+<text x="620" y="70" class="mut">pas de clone, mais vec disparaît</text>
+<text x="620" y="170" class="mut">lecture seule, vec réutilisable après</text>
+</svg>
+</div>
+
 ## Différences Clés
 
 | .into_iter() | .iter() |

@@ -26,6 +26,49 @@ date: '2025-12-03'
 
 Le bound `?Sized` dans les définitions de traits Rust relâche la contrainte `Sized` par défaut sur les types génériques, permettant à une fonction ou trait de fonctionner avec à la fois des types sized (taille connue pendant la compilation, comme `[u8; 16]`) et des types unsized (ex : `[u8]`, `str`, `dyn Trait`). Dans une bibliothèque de sérialisation de données, j'utiliserais `?Sized` pour écrire une fonction flexible qui traite à la fois les tableaux fixes et les slices dynamiques efficacement, améliorant la fonctionnalité sans sacrifier la performance.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td6-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Entrées sized et unsized convergeant via un bound T: ?Sized + Checksum vers une seule fonction compute_checksum">
+<style>
+.td6-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td6-fig,[data-theme="dark"] .td6-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td6-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td6-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td6-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td6-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td6-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td6-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td6-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td6-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td6-arrowAc-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- sized input -->
+<rect class="box" x="40" y="30" width="260" height="50" rx="6"/>
+<text x="170" y="52" class="tx">FixedBuffer([u8; 16])</text>
+<text x="170" y="68" class="mut">Sized — connu à la compilation</text>
+<!-- unsized input -->
+<rect class="box" x="40" y="110" width="260" height="50" rx="6"/>
+<text x="170" y="132" class="tx">&amp;[u8] slice</text>
+<text x="170" y="148" class="mut">Unsized — fat pointer (data+len)</text>
+<!-- Y-merge to shared point then single arrow -->
+<path class="ln" d="M300,55 L340,55 L340,105" marker-end="none"/>
+<path class="ln" d="M300,135 L340,135 L340,105" marker-end="none"/>
+<path class="lnAc" d="M340,105 L390,105" marker-end="url(#td6-arrowAc-fr)"/>
+<!-- function box -->
+<rect class="boxAc" x="392" y="75" width="330" height="60" rx="6"/>
+<text x="557" y="98" class="tx">compute_checksum&lt;T: ?Sized + Checksum&gt;</text>
+<text x="557" y="116" class="mut">data: &amp;T</text>
+<!-- arrow to result -->
+<path class="ln" d="M557,135 L557,161" marker-end="url(#td6-arrow-fr)"/>
+<rect class="box" x="437" y="162" width="240" height="42" rx="6"/>
+<text x="557" y="188" class="tx">checksum() — inliné, sans overhead</text>
+<!-- caption -->
+<text x="400" y="230" class="mut">?Sized relâche la contrainte Sized par défaut, une seule fonction accepte les deux formes</text>
+</svg>
+</div>
+
 ## Rôle de ?Sized
 
 - **Sized par Défaut** : Par défaut, les paramètres génériques (`T`) impliquent `T: Sized`, signifiant que la taille du type doit être connue pendant la compilation. Cela exclut les types unsized comme les slices (`[u8]`), chaînes (`str`), ou trait objects (`dyn Trait`), qui n'existent que derrière des pointeurs (ex : `&[u8]`, `Box<dyn Trait>`).

@@ -25,6 +25,46 @@ date: '2025-08-14'
 
 In a Rust numerical computation library, I'd use supertraits to create a hierarchy of behaviors, ensuring that advanced operations build on basic ones, and combine them with where clauses to write a complex generic algorithm that's type-safe and performant. This approach organizes code logically, enforces correctness at compile time, and optimizes for efficiency through static dispatch.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td5-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Layered supertrait hierarchy from Numeric up to AdvancedNumeric consumed by matrix_multiply">
+<style>
+.td5-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td5-fig,[data-theme="dark"] .td5-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td5-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td5-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td5-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td5-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td5-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td5-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- base layer: Numeric -->
+<rect class="box" x="220" y="200" width="360" height="56" rx="6"/>
+<text x="400" y="222" class="tx">trait Numeric: Add + Copy</text>
+<text x="400" y="240" class="mut">fn zero() -&gt; Self</text>
+<!-- arrow up to AdvancedNumeric -->
+<path class="lnAc" d="M400,200 L400,156" marker-end="url(#td5-arrowAc)"/>
+<!-- advanced layer -->
+<rect class="boxAc" x="220" y="100" width="360" height="56" rx="6"/>
+<text x="400" y="122" class="tx">trait AdvancedNumeric: Numeric + Mul</text>
+<text x="400" y="140" class="mut">fn one() -&gt; Self</text>
+<!-- arrow up to matrix_multiply -->
+<path class="ln" d="M400,100 L400,56" marker-end="url(#td5-arrow)"/>
+<!-- consumer -->
+<rect class="box" x="180" y="20" width="440" height="36" rx="6"/>
+<text x="400" y="43" class="tx">matrix_multiply&lt;T: AdvancedNumeric&gt;(...)</text>
+<!-- captions -->
+<text x="400" y="278" class="mut">basic ops: + and zero()</text>
+<text x="120" y="128" class="mut">supertrait</text>
+<text x="400" y="295" class="mut">Advanced requires Numeric — no + means no *, enforced at compile time</text>
+</svg>
+</div>
+
 ## Designing the Trait Hierarchy
 
 For numerical types, I'd define a hierarchy of traits:

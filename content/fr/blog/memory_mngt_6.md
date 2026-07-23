@@ -23,6 +23,43 @@ tags:
 
 En Rust, tu ne peux pas passer un `&str` directement à une fonction attendant un `&String` à cause de leurs types distincts, ce qui assure la type safety et prévient les assumptions sur l'ownership mémoire. Ci-dessous, j'explique pourquoi ce mismatch survient et comment le gérer efficacement.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm6-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Le deref coercion permet à une référence String de se convertir automatiquement en slice str, mais la direction inverse est rejetée par le compilateur">
+<style>
+.mm6-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#ef4444}
+:root.dark .mm6-fig,[data-theme="dark"] .mm6-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569;--bad:#f87171}
+.mm6-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm6-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm6-fig .title{font:700 14px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm6-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm6-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm6-fig .ac{fill:var(--ac)}
+.mm6-fig .bad{fill:var(--bad)}
+.mm6-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm6-arrow-ac-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac)"/></marker>
+<marker id="mm6-arrow-bad-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--bad)"/></marker>
+</defs>
+<!-- boxes -->
+<rect x="60" y="60" width="220" height="70" rx="8" class="box"/>
+<text x="170" y="90" text-anchor="middle" class="title">&amp;String</text>
+<text x="170" y="108" text-anchor="middle" class="cap">référence owned, extensible</text>
+<rect x="520" y="60" width="220" height="70" rx="8" class="acbox"/>
+<text x="630" y="90" text-anchor="middle" class="title ac">&amp;str</text>
+<text x="630" y="108" text-anchor="middle" class="cap">slice flexible, paramètre préféré</text>
+<!-- coercion arrow, top -->
+<path d="M280,80 L520,80" style="stroke:var(--ac)" marker-end="url(#mm6-arrow-ac-fr)"/>
+<text x="400" y="70" text-anchor="middle" class="cap ac">Deref coercion (automatique)</text>
+<!-- blocked arrow, bottom -->
+<path d="M520,115 L280,115" style="stroke:var(--bad)" marker-end="url(#mm6-arrow-bad-fr)"/>
+<text x="400" y="135" text-anchor="middle" class="cap bad">pas de conversion implicite (erreur compile-time)</text>
+<!-- caption box -->
+<rect x="140" y="160" width="520" height="50" rx="8" class="box"/>
+<text x="400" y="190" text-anchor="middle" class="body">Fix : accepte &amp;str en paramètre, ou convertis avec .to_string()</text>
+</svg>
+</div>
+
 ## Le Problème Central : Type Mismatch
 
 - **`&String`** : Une référence vers un `String` heap-allocated, extensible.

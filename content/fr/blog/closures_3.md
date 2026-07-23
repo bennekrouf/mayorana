@@ -18,6 +18,53 @@ tags:
 
 Les closures en Rust sont des types anonymes, donc tu dois utiliser des trait bounds (`Fn`, `FnMut`, `FnOnce`) pour définir leurs signatures. Voici comment travailler avec elles comme paramètres et types de retour.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl3-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Retourner une closure : impl Fn reste sur la stack, Box de dyn Fn passe sur le heap">
+<!-- style -->
+<style>
+.cl3-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl3-fig,[data-theme="dark"] .cl3-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl3-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl3-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl3-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl3-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl3-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl3-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl3arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="16" text-anchor="middle" class="ti">Retourner une closure : impl Fn reste sur la stack, Box&lt;dyn Fn&gt; passe sur le heap</text>
+<!-- source -->
+<rect x="300" y="26" width="200" height="50" rx="6" class="box"/>
+<text x="400" y="47" text-anchor="middle" class="tx">fn make_closure(...)</text>
+<text x="400" y="63" text-anchor="middle" class="mut">-&gt; impl Fn ou Box&lt;dyn Fn&gt;</text>
+<!-- fork -->
+<path d="M400,76 L400,96 L230,96 L230,116" class="ln" marker-end="url(#cl3arrow)"/>
+<path d="M400,96 L570,96 L570,116" class="ln" marker-end="url(#cl3arrow)"/>
+<!-- impl Fn -->
+<rect x="80" y="116" width="300" height="70" rx="6" class="boxac"/>
+<text x="230" y="140" text-anchor="middle" class="tx">impl Fn(i32) -&gt; i32</text>
+<text x="230" y="158" text-anchor="middle" class="mut">stack, monomorphized</text>
+<!-- Box dyn Fn -->
+<rect x="420" y="116" width="300" height="70" rx="6" class="box"/>
+<text x="570" y="140" text-anchor="middle" class="tx">Box&lt;dyn Fn(i32) -&gt; i32&gt;</text>
+<text x="570" y="158" text-anchor="middle" class="mut">heap, vtable</text>
+<!-- arrows down to notes -->
+<path d="M230,186 L230,210" class="ln" marker-end="url(#cl3arrow)"/>
+<path d="M570,186 L570,210" class="ln" marker-end="url(#cl3arrow)"/>
+<!-- notes -->
+<rect x="80" y="210" width="300" height="55" rx="6" class="box"/>
+<text x="230" y="233" text-anchor="middle" class="tx">type de closure unique</text>
+<text x="230" y="250" text-anchor="middle" class="mut">zero-cost, fixe</text>
+<rect x="420" y="210" width="300" height="55" rx="6" class="box"/>
+<text x="570" y="233" text-anchor="middle" class="tx">closures hétérogènes</text>
+<text x="570" y="250" text-anchor="middle" class="mut">flexible, coût runtime</text>
+</svg>
+</div>
+
 ## Closure comme Paramètre de Function
 
 Utilise des paramètres de type générique avec trait bounds pour accepter des closures.

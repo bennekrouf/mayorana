@@ -16,6 +16,47 @@ tags:
 
 Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating data races without requiring a garbage collector. This approach ensures safe, high-performance parallelism with minimal runtime overhead.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm12-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Multiple threads each hold a cloned Arc pointing to the same Mutex-protected data, but the Mutex allows only one thread exclusive access at a time">
+<!-- style -->
+<style>
+.mm12-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm12-fig,[data-theme="dark"] .mm12-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm12-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm12-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm12-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.mm12-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.mm12-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.mm12-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm12arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- threads -->
+<rect x="40" y="30" width="160" height="46" rx="6" class="box"/>
+<text x="120" y="58" text-anchor="middle" class="tx">Thread A: Arc clone</text>
+<rect x="40" y="94" width="160" height="46" rx="6" class="box"/>
+<text x="120" y="122" text-anchor="middle" class="tx">Thread B: Arc clone</text>
+<rect x="40" y="158" width="160" height="46" rx="6" class="box"/>
+<text x="120" y="186" text-anchor="middle" class="tx">Thread C: Arc clone</text>
+<!-- Y-merge to mutex -->
+<path d="M200,53 L340,53 L340,125" class="ln" marker-end="url(#mm12arrow)"/>
+<path d="M200,117 L340,117 L340,125" class="ln"/>
+<path d="M200,181 L340,181 L340,125" class="ln" marker-end="url(#mm12arrow)"/>
+<!-- mutex -->
+<rect x="340" y="103" width="160" height="46" rx="6" class="boxac"/>
+<text x="420" y="122" text-anchor="middle" class="tx">Mutex&lt;T&gt;</text>
+<text x="420" y="138" text-anchor="middle" class="mut">one lock() at a time</text>
+<!-- to data -->
+<path d="M500,126 L560,126" class="ln" marker-end="url(#mm12arrow)"/>
+<rect x="560" y="103" width="180" height="46" rx="6" class="box"/>
+<text x="650" y="126" text-anchor="middle" class="tx">shared data</text>
+<text x="650" y="142" text-anchor="middle" class="mut">exclusive access, no race</text>
+<text x="40" y="222" class="mut">Arc: shared ownership across threads · Mutex: exclusive access at a time</text>
+</svg>
+</div>
+
 ## Rust’s Concurrency Model
 
 Rust uses the following mechanisms to manage concurrency:

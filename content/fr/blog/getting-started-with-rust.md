@@ -17,6 +17,54 @@ tags:
 
 Rust gagne considérablement en popularité parmi les développeurs pour son focus sur la performance, la memory safety, et la concurrence. Si tu es nouveau à Rust, ce guide t'aidera à débuter avec les bases.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="rstart-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Pipeline de démarrage Rust : installer avec rustup, compiler un fichier unique avec rustc, puis scaffolder et builder un vrai projet avec cargo">
+<style>
+.rstart-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .rstart-fig,[data-theme="dark"] .rstart-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.rstart-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.rstart-fig .title{font-size:14px;font-weight:700}
+.rstart-fig .body{font-size:12px;font-weight:600}
+.rstart-fig .cap{font-size:11px;fill:var(--mut)}
+.rstart-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.rstart-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.rstart-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="rstart-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- step 1 -->
+<rect class="box" x="20" y="60" width="170" height="90" rx="8"></rect>
+<text x="105" y="90" text-anchor="middle" class="title">rustup</text>
+<text x="105" y="110" text-anchor="middle" class="cap">installe la toolchain</text>
+<text x="105" y="125" text-anchor="middle" class="cap">via sh.rustup.rs</text>
+<!-- step 2 -->
+<rect class="box" x="210" y="60" width="170" height="90" rx="8"></rect>
+<text x="295" y="90" text-anchor="middle" class="title">rustc hello.rs</text>
+<text x="295" y="110" text-anchor="middle" class="cap">compile un seul fichier</text>
+<text x="295" y="125" text-anchor="middle" class="cap">./hello pour exécuter</text>
+<!-- step 3 -->
+<rect class="box" x="400" y="60" width="170" height="90" rx="8"></rect>
+<text x="485" y="90" text-anchor="middle" class="title">cargo new</text>
+<text x="485" y="110" text-anchor="middle" class="cap">scaffold le projet</text>
+<text x="485" y="125" text-anchor="middle" class="cap">Cargo.toml + src/</text>
+<!-- step 4 accent -->
+<rect class="acbox" x="590" y="60" width="170" height="90" rx="8"></rect>
+<text x="675" y="90" text-anchor="middle" class="title" fill="#ffffff">cargo build/run</text>
+<text x="675" y="110" text-anchor="middle" class="cap" fill="#ffffff">gère les dépendances</text>
+<text x="675" y="125" text-anchor="middle" class="cap" fill="#ffffff">et build pour toi</text>
+<!-- arrows -->
+<path class="ln" d="M190,105 L210,105" marker-end="url(#rstart-arrow-fr)"></path>
+<path class="ln" d="M380,105 L400,105" marker-end="url(#rstart-arrow-fr)"></path>
+<path class="ln" d="M570,105 L590,105" marker-end="url(#rstart-arrow-fr)"></path>
+<!-- caption -->
+<text x="400" y="195" text-anchor="middle" class="cap">rustc fonctionne pour un fichier — cargo est le flux de travail quotidien pour un vrai projet</text>
+</svg>
+</div>
+
 ## Configuration de Ton Environnement
 
 D'abord, tu dois installer Rust. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
