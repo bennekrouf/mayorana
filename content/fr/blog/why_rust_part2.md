@@ -223,6 +223,59 @@ $ ./a.out
 - **Outils runtime :** Ne détectent les bugs qui s'exécutent que pendant les tests
 - **Code review :** Erreur humaine, chronophage
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cmemb-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="L'analyse statique, les sanitizers et la revue de code ne couvrent chacun qu'une partie de l'espace des bugs, si bien qu'un résidu de bugs mémoire atteint quand même la production">
+<!-- style -->
+<style>
+.cmemb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .cmemb-fig,[data-theme="dark"] .cmemb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cmemb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cmemb-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2}
+.cmemb-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .bad{fill:var(--bad);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .ac{fill:var(--ac);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cmemb-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" class="ti">Chaque filet de sécurité en C a son trou ailleurs</text>
+<!-- static analysis -->
+<rect x="25" y="40" width="235" height="100" rx="7" class="box"/>
+<text x="142" y="64" class="tx">Analyse statique</text>
+<text x="142" y="88" class="mut">lit le code, ne l'exécute pas</text>
+<text x="142" y="108" class="mut">rate les pointeurs dont le</text>
+<text x="142" y="126" class="mut">chemin est indécidable — et bruite</text>
+<!-- sanitizers -->
+<rect x="282" y="40" width="235" height="100" rx="7" class="box"/>
+<text x="399" y="64" class="tx">ASan / Valgrind</text>
+<text x="399" y="88" class="mut">exécute le vrai programme</text>
+<text x="399" y="108" class="mut">mais ne voit que les lignes</text>
+<text x="399" y="126" class="mut">réellement couvertes par les tests</text>
+<!-- code review -->
+<rect x="539" y="40" width="235" height="100" rx="7" class="box"/>
+<text x="656" y="64" class="tx">Revue de code</text>
+<text x="656" y="88" class="mut">comprend l'intention</text>
+<text x="656" y="108" class="mut">mais un pointeur libéré peut être</text>
+<text x="656" y="126" class="mut">à des fichiers de son usage</text>
+<!-- Y-merge -->
+<path d="M142,140 L142,164 L399,164" class="ln"/>
+<path d="M399,140 L399,164" class="ln"/>
+<path d="M656,140 L656,164 L399,164" class="ln"/>
+<path d="M399,164 L399,184" class="ln" marker-end="url(#cmemb-arrow-fr)"/>
+<!-- residue -->
+<rect x="230" y="184" width="340" height="46" rx="6" class="boxbad"/>
+<text x="400" y="204" class="bad">l'union des trois ≠ tout l'espace</text>
+<text x="400" y="221" class="mut">ce qu'aucun des trois n'a vu part en production</text>
+<!-- footer -->
+<text x="400" y="256" class="ac">Rust supprime la catégorie au lieu de traquer les cas — aucun de ces bugs ne compile</text>
+</svg>
+</div>
+
 ## Pourquoi C est toujours utilisé malgré les risques
 
 ### Exigences de programmation système

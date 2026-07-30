@@ -112,6 +112,72 @@ let guard = shared.lock().unwrap();  // Accès exclusif
 - **Send** : Un type peut être transféré sûrement entre threads (ex : `String`, `Mutex<T>`).
 - **Sync** : Un type peut être partagé sûrement entre threads via des références (ex : `&i32`, `Arc<T>`).
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm12b-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Send déplace une valeur à travers la frontière de thread, Sync permet à deux threads d'utiliser une même référence en même temps, et Rc n'est ni l'un ni l'autre donc rejeté à la compilation">
+<!-- style -->
+<style>
+.mm12b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .mm12b-fig,[data-theme="dark"] .mm12b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm12b-fig .panel{fill:none;stroke:var(--ln);stroke-width:1.5}
+.mm12b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm12b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm12b-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2;stroke-dasharray:4 3}
+.mm12b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm12b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm12b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm12b-fig .bad{fill:var(--bad);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm12b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.mm12b-fig .lnac{stroke:var(--ac);stroke-width:2;fill:none}
+.mm12b-fig .lnbad{stroke:var(--bad);stroke-width:1.5;fill:none;stroke-dasharray:4 3}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm12b-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="mm12b-arrowac-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+<marker id="mm12b-arrowbad-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--bad)"/></marker>
+</defs>
+<!-- panel 1: Send -->
+<rect x="20" y="44" width="242" height="170" rx="8" class="panel"/>
+<text x="141" y="68" class="ti">Send — la valeur traverse</text>
+<rect x="36" y="84" width="90" height="32" rx="5" class="box"/>
+<text x="81" y="105" class="tx">Thread A</text>
+<path d="M126,100 L156,100" class="lnac" marker-end="url(#mm12b-arrowac-fr)"/>
+<rect x="156" y="84" width="90" height="32" rx="5" class="boxac"/>
+<text x="201" y="105" class="tx">Thread B</text>
+<text x="141" y="150" class="mut">l'ownership se déplace</text>
+<text x="141" y="168" class="mut">A n'y touche plus ensuite</text>
+<text x="141" y="198" class="mut">String · Box&lt;T&gt; · Mutex&lt;T&gt;</text>
+<!-- panel 2: Sync -->
+<rect x="278" y="44" width="242" height="170" rx="8" class="panel"/>
+<text x="399" y="68" class="ti">Sync — référence partagée</text>
+<rect x="294" y="84" width="90" height="32" rx="5" class="box"/>
+<text x="339" y="105" class="tx">Thread A</text>
+<rect x="414" y="84" width="90" height="32" rx="5" class="box"/>
+<text x="459" y="105" class="tx">Thread B</text>
+<path d="M339,116 L339,132 L399,132" class="ln"/>
+<path d="M459,116 L459,132 L399,132" class="ln"/>
+<path d="M399,132 L399,146" class="ln" marker-end="url(#mm12b-arrow-fr)"/>
+<rect x="339" y="146" width="120" height="34" rx="5" class="boxac"/>
+<text x="399" y="168" class="tx">&amp;T — une valeur</text>
+<text x="399" y="198" class="mut">&amp;i32 · Arc&lt;T&gt; · Mutex&lt;T&gt;</text>
+<!-- panel 3: neither -->
+<rect x="536" y="44" width="242" height="170" rx="8" class="panel"/>
+<text x="657" y="68" class="ti">Rc&lt;T&gt; — ni l'un ni l'autre</text>
+<rect x="552" y="84" width="90" height="32" rx="5" class="box"/>
+<text x="597" y="105" class="tx">Thread A</text>
+<rect x="672" y="84" width="90" height="32" rx="5" class="box"/>
+<text x="717" y="105" class="tx">Thread B</text>
+<path d="M597,116 L597,132 L657,132" class="lnbad"/>
+<path d="M717,116 L717,132 L657,132" class="lnbad"/>
+<path d="M657,132 L657,146" class="lnbad" marker-end="url(#mm12b-arrowbad-fr)"/>
+<rect x="597" y="146" width="120" height="34" rx="5" class="boxbad"/>
+<text x="657" y="168" class="tx">Rc&lt;T&gt;</text>
+<text x="657" y="198" class="bad">rejeté à la compilation</text>
+<!-- footer -->
+<text x="400" y="238" class="mut">Send demande « peut-elle se déplacer ici ? » · Sync demande « les deux côtés peuvent-ils en tenir une référence à la fois ? »</text>
+</svg>
+</div>
+
 **Exemple : Spawning Threads** :
 ```rust
 use std::thread;

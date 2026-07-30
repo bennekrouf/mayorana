@@ -114,6 +114,58 @@ This is not a workaround for Rust's safety rules — it is how those rules work.
 
 If you pass `x` directly to a function expecting `&mut T`, Rust moves the borrow into the function. Without reborrowing, you would lose access to `x` for the duration of the call.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm13b-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Without reborrowing the first call would consume x and the second would fail, but the compiler inserts an implicit reborrow so the borrow returns and the second call compiles">
+<!-- style -->
+<style>
+.mm13b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .mm13b-fig,[data-theme="dark"] .mm13b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm13b-fig .panel{fill:none;stroke:var(--ln);stroke-width:1.5}
+.mm13b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm13b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm13b-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2;stroke-dasharray:4 3}
+.mm13b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .bad{fill:var(--bad);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.mm13b-fig .lnbad{stroke:var(--bad);stroke-width:1.5;fill:none;stroke-dasharray:4 3}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm13b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="mm13b-arrowbad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--bad)"/></marker>
+</defs>
+<!-- left panel: hypothetical move -->
+<rect x="20" y="14" width="370" height="212" rx="8" class="panel"/>
+<text x="205" y="36" class="ti">If the borrow were moved in</text>
+<rect x="55" y="52" width="300" height="34" rx="5" class="box"/>
+<text x="205" y="74" class="tx">let x = &amp;mut value;</text>
+<path d="M205,86 L205,100" class="ln" marker-end="url(#mm13b-arrow)"/>
+<rect x="55" y="100" width="300" height="34" rx="5" class="box"/>
+<text x="205" y="122" class="tx">add_one(x) — x moved into fn</text>
+<path d="M205,134 L205,148" class="lnbad" marker-end="url(#mm13b-arrowbad)"/>
+<rect x="55" y="148" width="300" height="34" rx="5" class="boxbad"/>
+<text x="205" y="170" class="bad">add_one(x) again → use after move</text>
+<text x="205" y="206" class="mut">one call would consume the reference for good</text>
+<!-- right panel: actual reborrow -->
+<rect x="410" y="14" width="370" height="212" rx="8" class="panel"/>
+<text x="595" y="36" class="ti">What the compiler actually does</text>
+<rect x="445" y="52" width="300" height="34" rx="5" class="box"/>
+<text x="595" y="74" class="tx">let x = &amp;mut value;</text>
+<path d="M595,86 L595,100" class="ln" marker-end="url(#mm13b-arrow)"/>
+<rect x="445" y="100" width="300" height="34" rx="5" class="boxac"/>
+<text x="595" y="118" class="tx">add_one(&amp;mut *x) — inserted for you</text>
+<text x="595" y="130" class="mut">borrow lasts only for the call</text>
+<path d="M595,134 L595,148" class="ln" marker-end="url(#mm13b-arrow)"/>
+<rect x="445" y="148" width="300" height="34" rx="5" class="box"/>
+<text x="595" y="170" class="tx">add_one(x) again → OK, prints 2</text>
+<text x="595" y="206" class="mut">the loan returns when the call returns</text>
+<!-- footer -->
+<text x="400" y="248" class="mut">NLL writes the &amp;mut *x for you — the explicit form is just this desugaring spelled out</text>
+</svg>
+</div>
+
 ```rust
 fn add_one(n: &mut i32) {
     *n += 1;

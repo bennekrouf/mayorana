@@ -58,6 +58,70 @@ global.gc(); // Disponible seulement avec --expose-gc flag
 
 V8 gère la mémoire automatiquement sans contrôle développeur. Les pauses arrivent quand le moteur décide.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="gcstrat-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Trois stratégies de garbage collection paient chacune un coût différent, tandis que Rust libère à l'accolade fermante sans aucun collecteur">
+<!-- style -->
+<style>
+.gcstrat-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .gcstrat-fig,[data-theme="dark"] .gcstrat-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.gcstrat-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.gcstrat-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.gcstrat-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="gcstrat-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" class="ti">Qui décide du moment où la mémoire disparaît ?</text>
+<!-- java -->
+<rect x="20" y="42" width="180" height="112" rx="7" class="box"/>
+<text x="110" y="66" class="tx">Java</text>
+<text x="110" y="86" class="mut">stop-the-world</text>
+<text x="110" y="110" class="mut">les threads gèlent</text>
+<text x="110" y="128" class="mut">pendant le balayage</text>
+<text x="110" y="146" class="mut">coût : pics de latence</text>
+<!-- python -->
+<rect x="215" y="42" width="180" height="112" rx="7" class="box"/>
+<text x="305" y="66" class="tx">Python</text>
+<text x="305" y="86" class="mut">refcount + cycles</text>
+<text x="305" y="110" class="mut">chaque affectation</text>
+<text x="305" y="128" class="mut">incrémente un compteur</text>
+<text x="305" y="146" class="mut">coût : overhead constant</text>
+<!-- javascript -->
+<rect x="410" y="42" width="180" height="112" rx="7" class="box"/>
+<text x="500" y="66" class="tx">JavaScript</text>
+<text x="500" y="86" class="mut">générationnel, V8</text>
+<text x="500" y="110" class="mut">le moteur choisit</text>
+<text x="500" y="128" class="mut">le moment, pas toi</text>
+<text x="500" y="146" class="mut">coût : aucun contrôle</text>
+<!-- rust -->
+<rect x="605" y="42" width="175" height="112" rx="7" class="boxac"/>
+<text x="692" y="66" class="ac">Rust</text>
+<text x="692" y="86" class="mut">aucun collecteur</text>
+<text x="692" y="110" class="mut">libéré à l'accolade</text>
+<text x="692" y="128" class="mut">fermante, à chaque fois</text>
+<text x="692" y="146" class="mut">coût : nul à l'exécution</text>
+<!-- Y-merge of the three GC languages -->
+<path d="M110,154 L110,178 L305,178" class="ln"/>
+<path d="M305,154 L305,178" class="ln"/>
+<path d="M500,154 L500,178 L305,178" class="ln"/>
+<path d="M305,178 L305,196" class="ln" marker-end="url(#gcstrat-arrow-fr)"/>
+<rect x="140" y="196" width="330" height="38" rx="6" class="box"/>
+<text x="305" y="220" class="tx">un runtime décide — tu le découvres après</text>
+<!-- rust path -->
+<path d="M692,154 L692,196" class="ln" marker-end="url(#gcstrat-arrow-fr)"/>
+<rect x="560" y="196" width="220" height="38" rx="6" class="boxac"/>
+<text x="670" y="220" class="tx">le compilateur décide — tu peux le lire</text>
+<!-- footer -->
+<text x="400" y="258" class="mut">Les trois stratégies de GC échangent débit ou prévisibilité contre du confort ; Rust déplace la décision à la compilation</text>
+</svg>
+</div>
+
 ## L'Impact Réel
 
 Concrétement, voici quelques expériences mettant en évidence ce problème.

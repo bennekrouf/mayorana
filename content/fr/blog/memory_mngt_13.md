@@ -114,6 +114,58 @@ Ce n'est pas un contournement des règles de sécurité de Rust — c'est ainsi 
 
 Si vous passez `x` directement à une fonction attendant `&mut T`, Rust déplace l'emprunt dans la fonction. Sans réemprunt, vous perdriez l'accès à `x` pendant toute la durée de l'appel.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm13b-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Sans réemprunt le premier appel consommerait x et le second échouerait, mais le compilateur insère un réemprunt implicite si bien que l'emprunt revient et le second appel compile">
+<!-- style -->
+<style>
+.mm13b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .mm13b-fig,[data-theme="dark"] .mm13b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm13b-fig .panel{fill:none;stroke:var(--ln);stroke-width:1.5}
+.mm13b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm13b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm13b-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2;stroke-dasharray:4 3}
+.mm13b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .bad{fill:var(--bad);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.mm13b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.mm13b-fig .lnbad{stroke:var(--bad);stroke-width:1.5;fill:none;stroke-dasharray:4 3}
+</style>
+<!-- defs -->
+<defs>
+<marker id="mm13b-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="mm13b-arrowbad-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--bad)"/></marker>
+</defs>
+<!-- left panel: hypothetical move -->
+<rect x="20" y="14" width="370" height="212" rx="8" class="panel"/>
+<text x="205" y="36" class="ti">Si l'emprunt était déplacé</text>
+<rect x="55" y="52" width="300" height="34" rx="5" class="box"/>
+<text x="205" y="74" class="tx">let x = &amp;mut value;</text>
+<path d="M205,86 L205,100" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
+<rect x="55" y="100" width="300" height="34" rx="5" class="box"/>
+<text x="205" y="122" class="tx">ajouter_un(x) — x déplacé dans la fn</text>
+<path d="M205,134 L205,148" class="lnbad" marker-end="url(#mm13b-arrowbad-fr)"/>
+<rect x="55" y="148" width="300" height="34" rx="5" class="boxbad"/>
+<text x="205" y="170" class="bad">ajouter_un(x) à nouveau → use after move</text>
+<text x="205" y="206" class="mut">un seul appel consommerait la référence définitivement</text>
+<!-- right panel: actual reborrow -->
+<rect x="410" y="14" width="370" height="212" rx="8" class="panel"/>
+<text x="595" y="36" class="ti">Ce que fait réellement le compilateur</text>
+<rect x="445" y="52" width="300" height="34" rx="5" class="box"/>
+<text x="595" y="74" class="tx">let x = &amp;mut value;</text>
+<path d="M595,86 L595,100" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
+<rect x="445" y="100" width="300" height="34" rx="5" class="boxac"/>
+<text x="595" y="118" class="tx">ajouter_un(&amp;mut *x) — inséré pour vous</text>
+<text x="595" y="130" class="mut">l'emprunt ne dure que l'appel</text>
+<path d="M595,134 L595,148" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
+<rect x="445" y="148" width="300" height="34" rx="5" class="box"/>
+<text x="595" y="170" class="tx">ajouter_un(x) à nouveau → OK, affiche 2</text>
+<text x="595" y="206" class="mut">le prêt revient quand l'appel se termine</text>
+<!-- footer -->
+<text x="400" y="248" class="mut">NLL écrit le &amp;mut *x pour vous — la forme explicite n'est que ce sucre syntaxique déplié</text>
+</svg>
+</div>
+
 ```rust
 fn ajouter_un(n: &mut i32) {
     *n += 1;

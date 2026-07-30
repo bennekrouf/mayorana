@@ -178,6 +178,64 @@ Avec clamp : cx = -0.3 → floor → -1.0 → clampé à 0.0 → 0 → toujours 
 
 C'est plus lisible et plus sûr que d'écrire des `if` partout dans ton code.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="clampb-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Une coordonnée interpolée négative castée en usize repasse à un index énorme et panique, alors que clamper avant le cast la garde dans la plage valide">
+<!-- style -->
+<style>
+.clampb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .clampb-fig,[data-theme="dark"] .clampb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.clampb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.clampb-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.clampb-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2}
+.clampb-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.clampb-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.clampb-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.clampb-fig .bad{fill:var(--bad);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.clampb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.clampb-fig .lnbad{stroke:var(--bad);stroke-width:1.5;fill:none}
+.clampb-fig .lnac{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="clampb-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="clampb-arrowbad-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--bad)"/></marker>
+<marker id="clampb-arrowac-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- top row: without clamp -->
+<text x="20" y="30" class="ti">Sans clamp — c'est le cast qui casse</text>
+<rect x="20" y="44" width="150" height="42" rx="5" class="box"/>
+<text x="95" y="70" class="tx">cx = -0.3</text>
+<path d="M170,65 L200,65" class="ln" marker-end="url(#clampb-arrow-fr)"/>
+<rect x="200" y="44" width="150" height="42" rx="5" class="box"/>
+<text x="275" y="70" class="tx">floor → -1</text>
+<path d="M350,65 L380,65" class="lnbad" marker-end="url(#clampb-arrowbad-fr)"/>
+<rect x="380" y="44" width="180" height="42" rx="5" class="boxbad"/>
+<text x="470" y="63" class="tx">as usize</text>
+<text x="470" y="79" class="mut">aucun négatif n'existe</text>
+<path d="M560,65 L590,65" class="lnbad" marker-end="url(#clampb-arrowbad-fr)"/>
+<rect x="590" y="44" width="190" height="42" rx="5" class="boxbad"/>
+<text x="685" y="63" class="bad">18446744073709551615</text>
+<text x="685" y="79" class="mut">index hors bornes → panique</text>
+<!-- bottom row: with clamp -->
+<text x="20" y="150" class="ti">Avec clamp — borner avant le cast</text>
+<rect x="20" y="164" width="150" height="42" rx="5" class="box"/>
+<text x="95" y="190" class="tx">cx = -0.3</text>
+<path d="M170,185 L200,185" class="ln" marker-end="url(#clampb-arrow-fr)"/>
+<rect x="200" y="164" width="150" height="42" rx="5" class="box"/>
+<text x="275" y="190" class="tx">floor → -1.0</text>
+<path d="M350,185 L380,185" class="lnac" marker-end="url(#clampb-arrowac-fr)"/>
+<rect x="380" y="164" width="180" height="42" rx="5" class="boxac"/>
+<text x="470" y="183" class="tx">.clamp(0.0, w)</text>
+<text x="470" y="199" class="mut">→ 0.0</text>
+<path d="M560,185 L590,185" class="ln" marker-end="url(#clampb-arrow-fr)"/>
+<rect x="590" y="164" width="190" height="42" rx="5" class="box"/>
+<text x="685" y="183" class="tx">as usize → 0</text>
+<text x="685" y="199" class="mut">toujours un index valide</text>
+<!-- footer -->
+<text x="400" y="240" class="mut">Le cast ne peut pas représenter un négatif — le clamp doit avoir lieu tant que la valeur est signée</text>
+</svg>
+</div>
+
 ## Points clés
 
 ✅ `value.clamp(min, max)` borne une valeur en un seul appel — pas besoin de logique `if` manuelle.

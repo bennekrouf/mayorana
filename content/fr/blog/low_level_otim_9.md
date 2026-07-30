@@ -87,6 +87,72 @@ impl Counters {
 
 **Problème** : `counts` fait 32 octets, tenant dans une seule ligne de cache de 64 octets. Si le Thread 0 met à jour `counts[0]` et le Thread 1 met à jour `counts[1]`, ils sollicitent excessivement la même ligne, sérialisant l'accès.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo9b-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Chronologie en quatre étapes d'une ligne de cache qui fait des allers-retours entre deux cœurs : chaque fetch_add passe la ligne en Modified sur un cœur et invalide la copie de l'autre">
+<style>
+.lo9b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo9b-fig,[data-theme="dark"] .lo9b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo9b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo9b-fig .st{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo9b-fig .m{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo9b-fig .inv{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4 4}
+.lo9b-fig .ti{fill:var(--tx);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig line{stroke:var(--ln);stroke-width:1.5}
+</style>
+<defs>
+<marker id="lo9b-arrow-fr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- step t1 -->
+<rect x="20" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="107" y="62" class="ti">t1 · Cœur 0 fetch_add</text>
+<rect x="32" y="72" width="151" height="34" rx="4" class="m"/>
+<text x="107" y="93" class="ac">Cœur 0 — Modified</text>
+<rect x="32" y="112" width="151" height="34" rx="4" class="inv"/>
+<text x="107" y="133" class="mut">Cœur 1 — Invalid</text>
+<text x="107" y="166" class="mut">ligne chargée en écriture</text>
+<text x="107" y="182" class="mut">les 4 compteurs dedans</text>
+<line x1="195" y1="115" x2="213" y2="115" marker-end="url(#lo9b-arrow-fr)"/>
+<!-- step t2 -->
+<rect x="215" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="302" y="62" class="ti">t2 · Cœur 1 fetch_add</text>
+<rect x="227" y="72" width="151" height="34" rx="4" class="inv"/>
+<text x="302" y="93" class="mut">Cœur 0 — Invalid</text>
+<rect x="227" y="112" width="151" height="34" rx="4" class="m"/>
+<text x="302" y="133" class="ac">Cœur 1 — Modified</text>
+<text x="302" y="166" class="mut">read-for-ownership</text>
+<text x="302" y="182" class="mut">vole toute la ligne</text>
+<line x1="390" y1="115" x2="408" y2="115" marker-end="url(#lo9b-arrow-fr)"/>
+<!-- step t3 -->
+<rect x="410" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="497" y="62" class="ti">t3 · Cœur 0 à nouveau</text>
+<rect x="422" y="72" width="151" height="34" rx="4" class="m"/>
+<text x="497" y="93" class="ac">Cœur 0 — Modified</text>
+<rect x="422" y="112" width="151" height="34" rx="4" class="inv"/>
+<text x="497" y="133" class="mut">Cœur 1 — Invalid</text>
+<text x="497" y="166" class="mut">la ligne revient</text>
+<text x="497" y="182" class="mut">le Cœur 1 cale</text>
+<line x1="585" y1="115" x2="603" y2="115" marker-end="url(#lo9b-arrow-fr)"/>
+<!-- step t4 -->
+<rect x="605" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="692" y="62" class="ti">t4 · et ainsi de suite…</text>
+<rect x="617" y="72" width="151" height="34" rx="4" class="st"/>
+<text x="692" y="93" class="tx">1M itérations / thread</text>
+<rect x="617" y="112" width="151" height="34" rx="4" class="st"/>
+<text x="692" y="133" class="tx">millions de transferts</text>
+<text x="692" y="166" class="mut">aucune donnée partagée —</text>
+<text x="692" y="182" class="mut">seule la ligne l'est</text>
+<!-- footer -->
+<rect x="120" y="210" width="560" height="60" rx="6" class="box"/>
+<text x="400" y="234" class="tx">L'ordering Relaxed n'y change rien : la cohérence est par ligne, pas par variable</text>
+<text x="400" y="254" class="mut">perf stat -e L1-dcache-load-misses est là où ça se voit</text>
+</svg>
+</div>
+
 ## Version Restructurée Alignée sur le Cache
 
 ```rust

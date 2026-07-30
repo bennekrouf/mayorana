@@ -82,6 +82,65 @@ fn process_points(points: &mut [Point]) {
 
 ## Workflow pour Optimiser les L1 Cache Misses
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo10b-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Boucle de profiling en six étapes, de la reproduction à perf, flamegraph, criterion, optimisation et vérification, qui reboucle sur perf jusqu'à ce que le taux de miss baisse">
+<!-- style -->
+<style>
+.lo10b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo10b-fig,[data-theme="dark"] .lo10b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo10b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo10b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.lo10b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo10b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo10b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo10b-fig .ac{fill:var(--ac);font:700 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo10b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.lo10b-fig .lnac{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="lo10b-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="lo10b-arrowac-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" class="ti">Reproduire → mesurer → corriger → remesurer</text>
+<!-- step 1 -->
+<rect x="25" y="50" width="115" height="60" rx="6" class="box"/>
+<text x="82" y="75" class="tx">1 Reproduire</text>
+<text x="82" y="93" class="mut">--release, 1M pts</text>
+<path d="M140,80 L150,80" class="ln" marker-end="url(#lo10b-arrow-fr)"/>
+<!-- step 2 -->
+<rect x="152" y="50" width="115" height="60" rx="6" class="boxac"/>
+<text x="209" y="75" class="tx">2 perf stat</text>
+<text x="209" y="93" class="mut">est-ce le cache ?</text>
+<path d="M267,80 L277,80" class="ln" marker-end="url(#lo10b-arrow-fr)"/>
+<!-- step 3 -->
+<rect x="279" y="50" width="115" height="60" rx="6" class="box"/>
+<text x="336" y="75" class="tx">3 flamegraph</text>
+<text x="336" y="93" class="mut">quelle fonction ?</text>
+<path d="M394,80 L404,80" class="ln" marker-end="url(#lo10b-arrow-fr)"/>
+<!-- step 4 -->
+<rect x="406" y="50" width="115" height="60" rx="6" class="box"/>
+<text x="463" y="75" class="tx">4 criterion</text>
+<text x="463" y="93" class="mut">baseline 50ms</text>
+<path d="M521,80 L531,80" class="ln" marker-end="url(#lo10b-arrow-fr)"/>
+<!-- step 5 -->
+<rect x="533" y="50" width="115" height="60" rx="6" class="box"/>
+<text x="590" y="75" class="tx">5 Optimiser</text>
+<text x="590" y="93" class="mut">AoS → SoA</text>
+<path d="M648,80 L658,80" class="ln" marker-end="url(#lo10b-arrow-fr)"/>
+<!-- step 6 -->
+<rect x="660" y="50" width="115" height="60" rx="6" class="box"/>
+<text x="717" y="75" class="tx">6 Vérifier</text>
+<text x="717" y="93" class="mut">1% miss, 40ms</text>
+<!-- feedback loop -->
+<path d="M717,110 L717,170 L209,170 L209,112" class="lnac" marker-end="url(#lo10b-arrowac-fr)"/>
+<text x="463" y="188" class="ac">toujours au-dessus de 1–2 % ? on refait un tour</text>
+<!-- footer -->
+<text x="400" y="222" class="mut">Chaque étape répond à une question différente — n'optimisez jamais avant que l'étape 2 prouve que le cache est en cause</text>
+</svg>
+</div>
+
 ### 1. Setup et Reproduction
 - Compiler avec `--release` pour une performance réaliste (`cargo build --release`).
 - Lancer l'app avec une charge de travail représentative (ex : 1M `Point`s).
