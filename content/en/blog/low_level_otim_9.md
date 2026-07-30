@@ -86,6 +86,72 @@ impl Counters {
 
 **Problem**: `counts` is 32 bytes, fitting in one 64-byte cache line. If Thread 0 updates `counts[0]` and Thread 1 updates `counts[1]`, they thrash the same line, serializing access.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo9b-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Four-step timeline of one cache line ping-ponging between two cores: each fetch_add moves the line to Modified on one core and invalidates the other core's copy">
+<style>
+.lo9b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo9b-fig,[data-theme="dark"] .lo9b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo9b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo9b-fig .st{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo9b-fig .m{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo9b-fig .inv{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4 4}
+.lo9b-fig .ti{fill:var(--tx);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo9b-fig line{stroke:var(--ln);stroke-width:1.5}
+</style>
+<defs>
+<marker id="lo9b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- step t1 -->
+<rect x="20" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="107" y="62" class="ti">t1 · Core 0 fetch_add</text>
+<rect x="32" y="72" width="151" height="34" rx="4" class="m"/>
+<text x="107" y="93" class="ac">Core 0 — Modified</text>
+<rect x="32" y="112" width="151" height="34" rx="4" class="inv"/>
+<text x="107" y="133" class="mut">Core 1 — Invalid</text>
+<text x="107" y="166" class="mut">line loaded for writing</text>
+<text x="107" y="182" class="mut">all 4 counters inside it</text>
+<line x1="195" y1="115" x2="213" y2="115" marker-end="url(#lo9b-arrow)"/>
+<!-- step t2 -->
+<rect x="215" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="302" y="62" class="ti">t2 · Core 1 fetch_add</text>
+<rect x="227" y="72" width="151" height="34" rx="4" class="inv"/>
+<text x="302" y="93" class="mut">Core 0 — Invalid</text>
+<rect x="227" y="112" width="151" height="34" rx="4" class="m"/>
+<text x="302" y="133" class="ac">Core 1 — Modified</text>
+<text x="302" y="166" class="mut">read-for-ownership</text>
+<text x="302" y="182" class="mut">steals the whole line</text>
+<line x1="390" y1="115" x2="408" y2="115" marker-end="url(#lo9b-arrow)"/>
+<!-- step t3 -->
+<rect x="410" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="497" y="62" class="ti">t3 · Core 0 again</text>
+<rect x="422" y="72" width="151" height="34" rx="4" class="m"/>
+<text x="497" y="93" class="ac">Core 0 — Modified</text>
+<rect x="422" y="112" width="151" height="34" rx="4" class="inv"/>
+<text x="497" y="133" class="mut">Core 1 — Invalid</text>
+<text x="497" y="166" class="mut">line travels back</text>
+<text x="497" y="182" class="mut">Core 1 now stalls</text>
+<line x1="585" y1="115" x2="603" y2="115" marker-end="url(#lo9b-arrow)"/>
+<!-- step t4 -->
+<rect x="605" y="40" width="175" height="150" rx="6" class="box"/>
+<text x="692" y="62" class="ti">t4 · and again…</text>
+<rect x="617" y="72" width="151" height="34" rx="4" class="st"/>
+<text x="692" y="93" class="tx">1M iterations / thread</text>
+<rect x="617" y="112" width="151" height="34" rx="4" class="st"/>
+<text x="692" y="133" class="tx">millions of transfers</text>
+<text x="692" y="166" class="mut">no data is shared —</text>
+<text x="692" y="182" class="mut">only the line is</text>
+<!-- footer -->
+<rect x="120" y="210" width="560" height="60" rx="6" class="box"/>
+<text x="400" y="234" class="tx">Relaxed ordering does not help: coherence works per line, not per variable</text>
+<text x="400" y="254" class="mut">perf stat -e L1-dcache-load-misses is where this shows up</text>
+</svg>
+</div>
+
 ## Restructured Cache-Aligned Version
 
 ```rust

@@ -348,8 +348,8 @@ Le trait obtenu ne se choisit pas : le compilateur le déduit de la façon dont 
 </style>
 <!-- defs -->
 <defs>
-<marker id="cl5b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
-<marker id="cl5b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+<marker id="cl5b-arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl5b-arrowacfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
 </defs>
 <!-- title -->
 <text x="400" y="20" text-anchor="middle" class="ti">Le corps décide du trait — le trait décide du nombre d'appels</text>
@@ -362,11 +362,11 @@ Le trait obtenu ne se choisit pas : le compilateur le déduit de la façon dont 
 <!-- bus -->
 <path d="M145,116 L655,116" class="ln"/>
 <!-- branch down 1 -->
-<path d="M145,116 L145,150" class="ln" marker-end="url(#cl5b-arrow)"/>
+<path d="M145,116 L145,150" class="ln" marker-end="url(#cl5b-arrowfr)"/>
 <!-- branch down 2 -->
-<path d="M400,116 L400,150" class="ln" marker-end="url(#cl5b-arrowac)"/>
+<path d="M400,116 L400,150" class="ln" marker-end="url(#cl5b-arrowacfr)"/>
 <!-- branch down 3 -->
-<path d="M655,116 L655,150" class="ln" marker-end="url(#cl5b-arrow)"/>
+<path d="M655,116 L655,150" class="ln" marker-end="url(#cl5b-arrowfr)"/>
 <!-- leaf 1 -->
 <rect x="30" y="150" width="230" height="80" rx="6" class="box"/>
 <text x="145" y="174" text-anchor="middle" class="hd">Fn</text>
@@ -383,7 +383,7 @@ Le trait obtenu ne se choisit pas : le compilateur le déduit de la façon dont 
 <text x="655" y="194" text-anchor="middle" class="tx">il les consomme</text>
 <text x="655" y="212" text-anchor="middle" class="mut">un seul appel</text>
 <!-- to verdict -->
-<path d="M400,230 L400,262" class="ln" marker-end="url(#cl5b-arrowac)"/>
+<path d="M400,230 L400,262" class="ln" marker-end="url(#cl5b-arrowacfr)"/>
 <!-- verdict -->
 <rect x="180" y="262" width="440" height="52" rx="6" class="boxac"/>
 <text x="400" y="284" text-anchor="middle" class="tx">fn call_repeatedly&lt;F: FnMut() -&gt; i32&gt;(f: &amp;mut F)</text>

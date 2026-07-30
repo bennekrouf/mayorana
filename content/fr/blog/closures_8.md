@@ -104,7 +104,7 @@ Une closure n'est qu'un struct anonyme contenant ses captures : « combien ça c
 </style>
 <!-- defs -->
 <defs>
-<marker id="cl8b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+<marker id="cl8b-arrowacfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
 </defs>
 <!-- title -->
 <text x="400" y="20" text-anchor="middle" class="ti">Une closure est un struct de ses captures — le layout, c'est le coût</text>
@@ -136,13 +136,13 @@ Une closure n'est qu'un struct anonyme contenant ses captures : « combien ça c
 <text x="660" y="98" text-anchor="middle" class="tx">16 octets : fat pointer</text>
 <text x="660" y="115" text-anchor="middle" class="mut">ptr données + ptr vtable</text>
 <!-- arrow 1 -->
-<path d="M660,122 L660,150" class="ln" marker-end="url(#cl8b-arrowac)"/>
+<path d="M660,122 L660,150" class="ln" marker-end="url(#cl8b-arrowacfr)"/>
 <!-- col3 box2 -->
 <rect x="540" y="150" width="240" height="44" rx="6" class="box"/>
 <text x="660" y="170" text-anchor="middle" class="tx">env capturé</text>
 <text x="660" y="187" text-anchor="middle" class="mut">allocation heap séparée</text>
 <!-- arrow 2 -->
-<path d="M660,194 L660,222" class="ln" marker-end="url(#cl8b-arrowac)"/>
+<path d="M660,194 L660,222" class="ln" marker-end="url(#cl8b-arrowacfr)"/>
 <!-- col3 box3 -->
 <rect x="540" y="222" width="240" height="44" rx="6" class="box"/>
 <text x="660" y="242" text-anchor="middle" class="tx">vtable</text>

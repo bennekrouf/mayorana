@@ -109,6 +109,56 @@ for s in vec.into_iter() {  // Pas de clone, move le `String`
 }
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci10b-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison : iter donne une référence, donc posséder le String impose un clone et un second tampon sur le tas, tandis que into_iter transmet le tampon d'origine sans aucune allocation">
+<!-- style -->
+<style>
+.ci10b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci10b-fig,[data-theme="dark"] .ci10b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci10b-fig .bg{fill:var(--bg)}
+.ci10b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci10b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci10b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci10b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci10b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci10b-fig .ac{fill:var(--ac)}
+.ci10b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.ci10b-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci10b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+<marker id="ci10b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="270" rx="8"/>
+<!-- titre -->
+<text x="400" y="26" text-anchor="middle" class="title">Obtenir un String possédé depuis un Vec&lt;String&gt;</text>
+<!-- colonne gauche : iter + clone -->
+<rect class="box" x="80" y="52" width="260" height="36" rx="6"/>
+<text x="210" y="75" text-anchor="middle" class="tx">.iter() cède &amp;String</text>
+<path class="ln" d="M210 88V110" marker-end="url(#ci10b-arrow)"/>
+<rect class="box" x="80" y="110" width="260" height="36" rx="6"/>
+<text x="210" y="133" text-anchor="middle" class="tx">.clone() pour le posséder</text>
+<path class="ln" d="M210 146V168" marker-end="url(#ci10b-arrow)"/>
+<rect class="box" x="80" y="168" width="260" height="36" rx="6"/>
+<text x="210" y="191" text-anchor="middle" class="tx">second tampon + memcpy</text>
+<text x="210" y="226" text-anchor="middle" class="mut">vec possède toujours l'original</text>
+<!-- colonne droite : into_iter -->
+<rect class="acbox" x="460" y="52" width="260" height="36" rx="6"/>
+<text x="590" y="75" text-anchor="middle" class="tx ac">.into_iter() cède String</text>
+<path class="acln" d="M590 88V110" marker-end="url(#ci10b-arrowac)"/>
+<rect class="box" x="460" y="110" width="260" height="36" rx="6"/>
+<text x="590" y="133" text-anchor="middle" class="tx">le pointeur du tampon sort</text>
+<path class="acln" d="M590 146V168" marker-end="url(#ci10b-arrowac)"/>
+<rect class="acbox" x="460" y="168" width="260" height="36" rx="6"/>
+<text x="590" y="191" text-anchor="middle" class="tx ac">zéro nouvelle allocation</text>
+<text x="590" y="226" text-anchor="middle" class="mut">vec est consommé, il disparaît</text>
+<!-- pied -->
+<text x="400" y="252" text-anchor="middle" class="mut">Pour les types Copy comme i32, les deux chemins compilent pareil ; le gain n'apparaît que sur des données possédées.</text>
+</svg>
+</div>
+
 ## Implications d'Ownership
 
 ### Après .into_iter(), le Vec original est "moved" et ne peut pas être utilisé :

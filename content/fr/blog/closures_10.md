@@ -125,6 +125,64 @@ fn main() {
 
 Supporte le comportement dynamique, idéal pour les event handlers ou plugins.
 
+Remarque que `create_op` n'est pas seulement *plus lent* avec `impl Fn` — c'est impossible. Chaque littéral de closure reçoit son propre type anonyme : les deux branches renvoient donc deux types sans rapport, alors qu'`impl Trait` promet exactement un seul :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl10b-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Deux littéraux de closure aux types anonymes distincts sont rejetés par impl Fn mais s'unifient derrière un unique type dyn Fn boxé">
+<!-- style -->
+<style>
+.cl10b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl10b-fig,[data-theme="dark"] .cl10b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl10b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl10b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl10b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .acb{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl10b-arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl10b-arrowacfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Deux branches, deux types anonymes — un seul type de retour les accepte</text>
+<!-- literal A -->
+<rect x="250" y="36" width="140" height="44" rx="6" class="box"/>
+<text x="320" y="58" text-anchor="middle" class="tx">|x, y| x + y</text>
+<text x="320" y="74" text-anchor="middle" class="mut">type n°1</text>
+<!-- literal B -->
+<rect x="410" y="36" width="140" height="44" rx="6" class="box"/>
+<text x="480" y="58" text-anchor="middle" class="tx">|x, y| x * y</text>
+<text x="480" y="74" text-anchor="middle" class="mut">type n°2</text>
+<!-- merge stems -->
+<path d="M320,80 L320,104" class="ln"/>
+<path d="M480,80 L480,104" class="ln"/>
+<!-- shared bus -->
+<path d="M170,104 L630,104" class="ln"/>
+<!-- branch to impl Fn -->
+<path d="M170,104 L170,140" class="ln" marker-end="url(#cl10b-arrowfr)"/>
+<!-- branch to Box dyn -->
+<path d="M630,104 L630,140" class="ln" marker-end="url(#cl10b-arrowacfr)"/>
+<!-- impl Fn outcome -->
+<rect x="40" y="140" width="260" height="110" rx="6" class="box"/>
+<text x="170" y="166" text-anchor="middle" class="tx">-&gt; impl Fn(i32, i32) -&gt; i32</text>
+<text x="170" y="186" text-anchor="middle" class="mut">désigne un seul type concret</text>
+<text x="170" y="205" text-anchor="middle" class="mut">choisi une fois, à la compilation</text>
+<text x="170" y="230" text-anchor="middle" class="acb">E0308 : types incompatibles</text>
+<!-- Box dyn outcome -->
+<rect x="500" y="140" width="260" height="110" rx="6" class="boxac"/>
+<text x="630" y="166" text-anchor="middle" class="tx">-&gt; Box&lt;dyn Fn(i32, i32) -&gt; i32&gt;</text>
+<text x="630" y="186" text-anchor="middle" class="mut">les deux types effacés via une vtable</text>
+<text x="630" y="205" text-anchor="middle" class="mut">les branches s'accordent</text>
+<text x="630" y="230" text-anchor="middle" class="acb">compile — une alloc par Box</text>
+<!-- caption -->
+<text x="400" y="284" text-anchor="middle" class="mut">Le même mur bloque `Vec&lt;impl Fn&gt;` : un vecteur exige un seul type d'élément.</text>
+<text x="400" y="301" text-anchor="middle" class="mut">Ici le dynamic dispatch n'est pas l'option lente — c'est la seule option.</text>
+</svg>
+</div>
+
 ## Considérations de Lifetime
 
 - **Box&lt;dyn Fn()&gt;** : Nécessite des lifetimes explicites si la closure capture des références :

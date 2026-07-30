@@ -109,6 +109,56 @@ fn parse_stream(data: &[u32]) -> u32 {
 - Over-inlining large functions can disrupt I-cache locality, outweighing call savings. For example, inlining a 50-instruction function into a loop might evict other hot code.
 - The compiler's heuristics (e.g., with plain `#[inline]`) often balance this better than forced inlining.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo8b-fig" viewBox="0 0 800 295" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Side-by-side view of the L1 instruction cache: a single small inlined helper leaves room for other hot code, while a large function duplicated at every call site fills the cache and evicts it">
+<style>
+.lo8b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo8b-fig,[data-theme="dark"] .lo8b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo8b-fig .frame{fill:none;stroke:var(--mut);stroke-width:2}
+.lo8b-fig .blk{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo8b-fig .blkac{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo8b-fig .free{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:4 4}
+.lo8b-fig .gone{fill:none;stroke:var(--ac);stroke-width:2;stroke-dasharray:4 4}
+.lo8b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo8b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo8b-fig .hd{fill:var(--mut);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo8b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo8b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo8b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+</style>
+<!-- left panel: judicious inlining -->
+<text x="205" y="26" class="ti">Tiny helper, forced inline</text>
+<rect x="30" y="40" width="350" height="170" rx="6" class="frame"/>
+<text x="205" y="60" class="hd">L1 instruction cache — 32 KB</text>
+<rect x="50" y="70" width="310" height="30" rx="4" class="blk"/>
+<text x="205" y="90" class="tx">parse_stream loop</text>
+<rect x="50" y="104" width="310" height="30" rx="4" class="blkac"/>
+<text x="205" y="124" class="ac">extract_bits — 2 instructions inlined</text>
+<rect x="50" y="138" width="310" height="30" rx="4" class="blk"/>
+<text x="205" y="158" class="tx">other hot code — still resident</text>
+<rect x="50" y="172" width="310" height="32" rx="4" class="free"/>
+<text x="205" y="192" class="mut">headroom</text>
+<!-- right panel: over-inlining -->
+<text x="595" y="26" class="ti">50-instruction fn, 100 call sites</text>
+<rect x="420" y="40" width="350" height="170" rx="6" class="frame"/>
+<text x="595" y="60" class="hd">L1 instruction cache — 32 KB</text>
+<rect x="440" y="70" width="310" height="24" rx="4" class="blk"/>
+<text x="595" y="87" class="tx">inlined copy #1</text>
+<rect x="440" y="98" width="310" height="24" rx="4" class="blk"/>
+<text x="595" y="115" class="tx">inlined copy #2</text>
+<rect x="440" y="126" width="310" height="24" rx="4" class="blk"/>
+<text x="595" y="143" class="tx">inlined copy #3</text>
+<rect x="440" y="154" width="310" height="24" rx="4" class="blk"/>
+<text x="595" y="171" class="tx">inlined copy #4 … #100</text>
+<rect x="440" y="182" width="310" height="24" rx="4" class="gone"/>
+<text x="595" y="199" class="ac">other hot code — evicted</text>
+<!-- footer -->
+<rect x="90" y="228" width="620" height="60" rx="6" class="box"/>
+<text x="400" y="252" class="tx">The cache size is fixed — every duplicated body costs someone else their lines</text>
+<text x="400" y="272" class="mut">Watch both numbers: size target/release/app for .text, perf stat -e iTLB-load-misses for the cost</text>
+</svg>
+</div>
+
 ## Mitigation Strategies
 
 ### Selective Use

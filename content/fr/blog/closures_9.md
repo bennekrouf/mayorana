@@ -632,8 +632,8 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 </style>
 <!-- defs -->
 <defs>
-<marker id="cl9b-arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
-<marker id="cl9b-arrow2ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+<marker id="cl9b-arrow2fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl9b-arrow2acfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
 </defs>
 <!-- title -->
 <text x="400" y="20" text-anchor="middle" class="ti">Le bound stocké dicte le receiver, et le receiver dicte l'appelant</text>
@@ -645,11 +645,11 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 <rect x="20" y="64" width="225" height="54" rx="6" class="box"/>
 <text x="133" y="88" text-anchor="middle" class="tx">F: Fn(i32) -&gt; i32</text>
 <text x="133" y="106" text-anchor="middle" class="mut">lit seulement ses captures</text>
-<path d="M245,91 L290,91" class="ln" marker-end="url(#cl9b-arrow2)"/>
+<path d="M245,91 L290,91" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
 <rect x="290" y="64" width="220" height="54" rx="6" class="box"/>
 <text x="400" y="88" text-anchor="middle" class="tx">&amp;self</text>
 <text x="400" y="106" text-anchor="middle" class="mut">emprunt partagé</text>
-<path d="M510,91 L555,91" class="ln" marker-end="url(#cl9b-arrow2)"/>
+<path d="M510,91 L555,91" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
 <rect x="555" y="64" width="225" height="54" rx="6" class="box"/>
 <text x="667" y="88" text-anchor="middle" class="tx">appels illimités</text>
 <text x="667" y="106" text-anchor="middle" class="mut">plusieurs lecteurs à la fois</text>
@@ -657,11 +657,11 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 <rect x="20" y="130" width="225" height="54" rx="6" class="boxac"/>
 <text x="133" y="154" text-anchor="middle" class="tx">F: FnMut(i32) -&gt; i32</text>
 <text x="133" y="172" text-anchor="middle" class="mut">mute ses captures</text>
-<path d="M245,157 L290,157" class="ln" marker-end="url(#cl9b-arrow2ac)"/>
+<path d="M245,157 L290,157" class="ln" marker-end="url(#cl9b-arrow2acfr)"/>
 <rect x="290" y="130" width="220" height="54" rx="6" class="boxac"/>
 <text x="400" y="154" text-anchor="middle" class="tx">&amp;mut self</text>
 <text x="400" y="172" text-anchor="middle" class="mut">emprunt exclusif</text>
-<path d="M510,157 L555,157" class="ln" marker-end="url(#cl9b-arrow2ac)"/>
+<path d="M510,157 L555,157" class="ln" marker-end="url(#cl9b-arrow2acfr)"/>
 <rect x="555" y="130" width="225" height="54" rx="6" class="boxac"/>
 <text x="667" y="154" text-anchor="middle" class="tx">appels illimités</text>
 <text x="667" y="172" text-anchor="middle" class="mut">mais le binding doit être `mut`</text>
@@ -669,11 +669,11 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 <rect x="20" y="196" width="225" height="54" rx="6" class="box"/>
 <text x="133" y="220" text-anchor="middle" class="tx">F: FnOnce(i32) -&gt; i32</text>
 <text x="133" y="238" text-anchor="middle" class="mut">consomme ses captures</text>
-<path d="M245,223 L290,223" class="ln" marker-end="url(#cl9b-arrow2)"/>
+<path d="M245,223 L290,223" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
 <rect x="290" y="196" width="220" height="54" rx="6" class="box"/>
 <text x="400" y="220" text-anchor="middle" class="tx">self</text>
 <text x="400" y="238" text-anchor="middle" class="mut">prend l'ownership</text>
-<path d="M510,223 L555,223" class="ln" marker-end="url(#cl9b-arrow2)"/>
+<path d="M510,223 L555,223" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
 <rect x="555" y="196" width="225" height="54" rx="6" class="box"/>
 <text x="667" y="220" text-anchor="middle" class="tx">un seul appel</text>
 <text x="667" y="238" text-anchor="middle" class="mut">la struct disparaît ensuite</text>
