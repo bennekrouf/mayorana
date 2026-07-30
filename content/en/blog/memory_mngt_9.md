@@ -116,6 +116,57 @@ let r1 = &mut x;  // OK: Mutable borrow
    }
    ```
 
+What the checker actually compares is not *whether* both borrows exist, but whether their live spans touch. A borrow's span ends at its **last use**, not at the end of the block:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm9b-fig" viewBox="0 0 800 316" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Two timelines of borrow live spans: in the rejected order the shared borrow is still live when the mutable borrow starts, in the accepted order the shared borrow ends at its last use before the mutable borrow begins">
+<style>
+.mm9b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm9b-fig,[data-theme="dark"] .mm9b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm9b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm9b-fig .bar{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.mm9b-fig .acbar{fill:var(--bg);stroke:var(--ac);stroke-width:2}
+.mm9b-fig .zone{fill:none;stroke:var(--ac);stroke-width:2;stroke-dasharray:5 4}
+.mm9b-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm9b-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm9b-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm9b-fig .ac{fill:var(--ac)}
+.mm9b-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm9b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--mut);stroke:none"/></marker>
+</defs>
+<!-- rejected timeline -->
+<text x="30" y="26" class="title">Rejected: the shared borrow is still live later</text>
+<text x="286" y="46" text-anchor="middle" class="cap">1. let r1 = &amp;data;</text>
+<text x="480" y="46" text-anchor="middle" class="cap">2. let r2 = &amp;mut data;</text>
+<text x="673" y="46" text-anchor="middle" class="cap">3. println!("{}", r1);</text>
+<text x="30" y="74" class="body">&amp;data</text>
+<rect x="200" y="58" width="500" height="24" rx="6" class="bar"/>
+<text x="450" y="75" text-anchor="middle" class="cap">live until its last use on line 3</text>
+<text x="30" y="106" class="body">&amp;mut data</text>
+<rect x="400" y="90" width="360" height="24" rx="6" class="bar"/>
+<text x="580" y="107" text-anchor="middle" class="cap">live from line 2 onward</text>
+<rect x="400" y="52" width="300" height="66" rx="8" class="zone"/>
+<text x="550" y="136" text-anchor="middle" class="cap ac">both live at once, so rustc refuses</text>
+<!-- accepted timeline -->
+<text x="30" y="176" class="title">Accepted: same two borrows, reordered</text>
+<text x="286" y="196" text-anchor="middle" class="cap">1. let r1 = &amp;data;</text>
+<text x="480" y="196" text-anchor="middle" class="cap">2. println!("{}", r1);</text>
+<text x="673" y="196" text-anchor="middle" class="cap">3. let r2 = &amp;mut data;</text>
+<text x="30" y="224" class="body">&amp;data</text>
+<rect x="200" y="208" width="290" height="24" rx="6" class="bar"/>
+<text x="345" y="225" text-anchor="middle" class="cap">span closes at last use</text>
+<text x="30" y="256" class="body">&amp;mut data</text>
+<rect x="560" y="240" width="200" height="24" rx="6" class="acbar"/>
+<text x="660" y="257" text-anchor="middle" class="cap ac">now exclusive</text>
+<text x="400" y="284" text-anchor="middle" class="cap">No instant has both spans live, so the same statements now compile.</text>
+<!-- time axis -->
+<text x="170" y="304" text-anchor="end" class="cap">time</text>
+<path d="M200,300 L770,300" style="stroke:var(--mut)" marker-end="url(#mm9b-arrow)"/>
+</svg>
+</div>
+
 ## Why These Rules Matter
 
 - **Prevents Data Races**: By disallowing concurrent mutable access, Rust ensures thread safety by default.

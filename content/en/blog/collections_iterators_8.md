@@ -105,6 +105,85 @@ assert_eq!(filtered, [2, 4]);  // New `Vec` created
 - **Time**: O(n) (single pass, shifts elements left in-place).
 - **Space**: O(1) (no extra allocations).
 
+Concretely, `retain()` walks the buffer with two cursors: a read cursor that visits every element, and a write cursor that only advances when an element is kept.
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci8b-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Step by step buffer states as retain compacts kept elements to the left with a read cursor and a write cursor, then truncates the length">
+<!-- style -->
+<style>
+.ci8b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci8b-fig,[data-theme="dark"] .ci8b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci8b-fig .bg{fill:var(--bg)}
+.ci8b-fig .cell{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci8b-fig .accell{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci8b-fig .ghost{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:3 3}
+.ci8b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci8b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci8b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci8b-fig .ac{fill:var(--ac)}
+</style>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="270" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">retain(|x| x % 2 == 0) on [1, 2, 3, 4]: one pass, two cursors</text>
+<!-- row 1 -->
+<text x="20" y="67" class="mut">read 0 → 1 is odd</text>
+<rect class="cell" x="300" y="48" width="52" height="28" rx="4"/>
+<text x="326" y="67" text-anchor="middle" class="tx">1</text>
+<rect class="cell" x="358" y="48" width="52" height="28" rx="4"/>
+<text x="384" y="67" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="416" y="48" width="52" height="28" rx="4"/>
+<text x="442" y="67" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="48" width="52" height="28" rx="4"/>
+<text x="500" y="67" text-anchor="middle" class="tx">4</text>
+<text x="560" y="67" class="mut">skip · write stays 0</text>
+<!-- row 2 -->
+<text x="20" y="103" class="mut">read 1 → 2 is even</text>
+<rect class="accell" x="300" y="84" width="52" height="28" rx="4"/>
+<text x="326" y="103" text-anchor="middle" class="tx ac">2</text>
+<rect class="cell" x="358" y="84" width="52" height="28" rx="4"/>
+<text x="384" y="103" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="416" y="84" width="52" height="28" rx="4"/>
+<text x="442" y="103" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="84" width="52" height="28" rx="4"/>
+<text x="500" y="103" text-anchor="middle" class="tx">4</text>
+<text x="560" y="103" class="mut ac">move into slot 0 · write 1</text>
+<!-- row 3 -->
+<text x="20" y="139" class="mut">read 2 → 3 is odd</text>
+<rect class="cell" x="300" y="120" width="52" height="28" rx="4"/>
+<text x="326" y="139" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="358" y="120" width="52" height="28" rx="4"/>
+<text x="384" y="139" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="416" y="120" width="52" height="28" rx="4"/>
+<text x="442" y="139" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="120" width="52" height="28" rx="4"/>
+<text x="500" y="139" text-anchor="middle" class="tx">4</text>
+<text x="560" y="139" class="mut">skip · write stays 1</text>
+<!-- row 4 -->
+<text x="20" y="175" class="mut">read 3 → 4 is even</text>
+<rect class="cell" x="300" y="156" width="52" height="28" rx="4"/>
+<text x="326" y="175" text-anchor="middle" class="tx">2</text>
+<rect class="accell" x="358" y="156" width="52" height="28" rx="4"/>
+<text x="384" y="175" text-anchor="middle" class="tx ac">4</text>
+<rect class="cell" x="416" y="156" width="52" height="28" rx="4"/>
+<text x="442" y="175" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="156" width="52" height="28" rx="4"/>
+<text x="500" y="175" text-anchor="middle" class="tx">4</text>
+<text x="560" y="175" class="mut ac">move into slot 1 · write 2</text>
+<!-- row 5 -->
+<text x="20" y="211" class="mut">set len = write</text>
+<rect class="cell" x="300" y="192" width="52" height="28" rx="4"/>
+<text x="326" y="211" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="358" y="192" width="52" height="28" rx="4"/>
+<text x="384" y="211" text-anchor="middle" class="tx">4</text>
+<rect class="ghost" x="416" y="192" width="52" height="28" rx="4"/>
+<rect class="ghost" x="474" y="192" width="52" height="28" rx="4"/>
+<text x="560" y="211" class="mut">len 2, capacity still 4</text>
+<!-- footer -->
+<text x="400" y="248" text-anchor="middle" class="mut">The same allocation throughout — kept elements are moved left over the dropped ones, then len shrinks.</text>
+</svg>
+</div>
+
 ### filter().collect():
 - **Time**: O(n) (but requires copying to a new allocation).
 - **Space**: O(n) (new Vec allocated).

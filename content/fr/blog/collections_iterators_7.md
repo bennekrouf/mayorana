@@ -137,6 +137,69 @@ assert!(vec.is_empty());
 - Les trois méthodes conservent la capacité du Vec (pas de réallocation si des éléments sont rajoutés).
 - `drain()` est paresseux : les éléments ne sont libérés que lorsque l'itérateur est consommé.
 
+Cette paresse signifie que le travail intéressant s'étale sur la durée de vie de la garde `Drain`, et non dans l'appel à `drain()` :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci7b-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Chronologie de la garde Drain : l'appel verrouille le Vec, l'itérateur cède les éléments possédés, la destruction de la garde libère ce qui reste, puis la queue est remise en place">
+<!-- style -->
+<style>
+.ci7b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci7b-fig,[data-theme="dark"] .ci7b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci7b-fig .bg{fill:var(--bg)}
+.ci7b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci7b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci7b-fig .dot{fill:var(--box);stroke:var(--ln);stroke-width:2}
+.ci7b-fig .acdot{fill:var(--ac);stroke:var(--ac);stroke-width:2}
+.ci7b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci7b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci7b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci7b-fig .ac{fill:var(--ac)}
+.ci7b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci7b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="220" rx="8"/>
+<!-- titre -->
+<text x="400" y="26" text-anchor="middle" class="title">Durée de vie de la garde Drain issue de vec.drain(1..3)</text>
+<!-- chronologie -->
+<path class="ln" d="M40 62H770" marker-end="url(#ci7b-arrow)"/>
+<circle class="dot" cx="105" cy="62" r="6"/>
+<circle class="dot" cx="300" cy="62" r="6"/>
+<circle class="acdot" cx="495" cy="62" r="6"/>
+<circle class="dot" cx="690" cy="62" r="6"/>
+<!-- étape 1 -->
+<path class="ln" d="M105 68V86"/>
+<rect class="box" x="15" y="86" width="180" height="66" rx="6"/>
+<text x="105" y="108" text-anchor="middle" class="tx" font-size="11">1 · appel de drain(1..3)</text>
+<text x="105" y="126" text-anchor="middle" class="mut">len passe à 1 aussitôt,</text>
+<text x="105" y="142" text-anchor="middle" class="mut">&amp;mut vec pris par la garde</text>
+<!-- étape 2 -->
+<path class="ln" d="M300 68V86"/>
+<rect class="box" x="210" y="86" width="180" height="66" rx="6"/>
+<text x="300" y="108" text-anchor="middle" class="tx" font-size="11">2 · next() cède 'b', 'c'</text>
+<text x="300" y="126" text-anchor="middle" class="mut">la propriété vous revient,</text>
+<text x="300" y="142" text-anchor="middle" class="mut">un élément à la fois</text>
+<!-- étape 3 -->
+<path class="ln" d="M495 68V86"/>
+<rect class="acbox" x="405" y="86" width="180" height="66" rx="6"/>
+<text x="495" y="108" text-anchor="middle" class="tx ac" font-size="11">3 · garde détruite</text>
+<text x="495" y="126" text-anchor="middle" class="mut">tout ce qui n'a pas été cédé</text>
+<text x="495" y="142" text-anchor="middle" class="mut">est libéré ici même</text>
+<!-- étape 4 -->
+<path class="ln" d="M690 68V86"/>
+<rect class="box" x="600" y="86" width="180" height="66" rx="6"/>
+<text x="690" y="108" text-anchor="middle" class="tx" font-size="11">4 · queue restaurée</text>
+<text x="690" y="126" text-anchor="middle" class="mut">'d' décalé, vec devient</text>
+<text x="690" y="142" text-anchor="middle" class="mut">['a','d'], capacité gardée</text>
+<!-- pied -->
+<text x="400" y="184" text-anchor="middle" class="mut">Les étapes 3 et 4 viennent de l'impl Drop de Drain : la suppression a lieu même sans aucun appel à next().</text>
+<text x="400" y="204" text-anchor="middle" class="mut">Tant que la garde vit, vec est emprunté mutablement et intouchable.</text>
+</svg>
+</div>
+
 ## Utilisation avancée : Réutiliser le stockage
 
 `drain()` est idéal pour remplacer efficacement un sous-ensemble d'éléments :

@@ -136,6 +136,59 @@ One function handles both fixed arrays (`[u8; 16]`) and slices (`[u8]`), plus tr
   - For `[u8]`: Slice iteration, potentially vectorized by LLVM.
 - **No Overhead**: The `?Sized` bound itself adds no runtime cost—it's a compile-time relaxation. The vtable (if `dyn Checksum`) is only used if explicitly chosen, not here.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td6b-fig" viewBox="0 0 800 310" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Word layout of a reference for a sized buffer, a slice and a trait object, showing thin versus fat pointers">
+<style>
+.td6b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td6b-fig,[data-theme="dark"] .td6b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td6b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td6b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td6b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td6b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td6b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td6b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- title -->
+<text x="400" y="26" class="ti">What &amp;T is made of, one row per T</text>
+<!-- column headers -->
+<text x="140" y="70" class="mut">the reference</text>
+<text x="325" y="70" class="mut">word 0</text>
+<text x="485" y="70" class="mut">word 1</text>
+<text x="680" y="70" class="mut">width, and where the size lives</text>
+<!-- row 1: sized -->
+<rect class="box" x="40" y="84" width="200" height="52" rx="6"/>
+<text x="140" y="106" class="tx">&amp;FixedBuffer</text>
+<text x="140" y="124" class="mut">Sized</text>
+<rect class="box" x="250" y="84" width="150" height="52" rx="6"/>
+<text x="325" y="115" class="tx">data ptr</text>
+<text x="485" y="115" class="mut">— no second word —</text>
+<text x="680" y="106" class="tx">8 bytes</text>
+<text x="680" y="124" class="mut">size baked into [u8; 16]</text>
+<!-- row 2: slice -->
+<rect class="box" x="40" y="146" width="200" height="52" rx="6"/>
+<text x="140" y="168" class="tx">&amp;[u8]</text>
+<text x="140" y="186" class="mut">unsized slice</text>
+<rect class="box" x="250" y="146" width="150" height="52" rx="6"/>
+<text x="325" y="177" class="tx">data ptr</text>
+<rect class="box" x="410" y="146" width="150" height="52" rx="6"/>
+<text x="485" y="177" class="tx">len: usize</text>
+<text x="680" y="168" class="tx">16 bytes</text>
+<text x="680" y="186" class="mut">length travels in the pointer</text>
+<!-- row 3: trait object -->
+<rect class="box" x="40" y="208" width="200" height="52" rx="6"/>
+<text x="140" y="230" class="tx">&amp;dyn Checksum</text>
+<text x="140" y="248" class="mut">trait object</text>
+<rect class="box" x="250" y="208" width="150" height="52" rx="6"/>
+<text x="325" y="239" class="tx">data ptr</text>
+<rect class="boxAc" x="410" y="208" width="150" height="52" rx="6"/>
+<text x="485" y="239" class="tx">vtable ptr</text>
+<text x="680" y="230" class="tx">16 bytes</text>
+<text x="680" y="248" class="mut">size and checksum() in the vtable</text>
+<!-- caption -->
+<text x="400" y="290" class="mut">?Sized admits any T whose size travels in the pointer instead of the type — &amp;T costs nothing extra</text>
+</svg>
+</div>
+
 ## Implementation Details
 
 - **Trait Bound**: `Checksum` defines the behavior, implemented for both sized (`FixedBuffer`) and unsized (`[u8]`) types. `?Sized` lets `compute_checksum` bridge them.

@@ -137,6 +137,69 @@ assert!(vec.is_empty());
 - All three methods retain the Vec's capacity (no reallocation if elements are re-added).
 - `drain()` is lazy: Elements are only dropped when the iterator is consumed.
 
+That laziness means the interesting work is spread over the lifetime of the `Drain` guard, not concentrated in the `drain()` call:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci7b-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Timeline of a Drain guard: the call locks the Vec, the iterator yields owned elements, dropping the guard drops anything left, and the tail is shifted back into place">
+<!-- style -->
+<style>
+.ci7b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci7b-fig,[data-theme="dark"] .ci7b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci7b-fig .bg{fill:var(--bg)}
+.ci7b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci7b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci7b-fig .dot{fill:var(--box);stroke:var(--ln);stroke-width:2}
+.ci7b-fig .acdot{fill:var(--ac);stroke:var(--ac);stroke-width:2}
+.ci7b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci7b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci7b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci7b-fig .ac{fill:var(--ac)}
+.ci7b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci7b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="220" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">Lifetime of the Drain guard from vec.drain(1..3)</text>
+<!-- timeline -->
+<path class="ln" d="M40 62H770" marker-end="url(#ci7b-arrow)"/>
+<circle class="dot" cx="105" cy="62" r="6"/>
+<circle class="dot" cx="300" cy="62" r="6"/>
+<circle class="acdot" cx="495" cy="62" r="6"/>
+<circle class="dot" cx="690" cy="62" r="6"/>
+<!-- stop 1 -->
+<path class="ln" d="M105 68V86"/>
+<rect class="box" x="15" y="86" width="180" height="66" rx="6"/>
+<text x="105" y="108" text-anchor="middle" class="tx" font-size="11">1 · drain(1..3) called</text>
+<text x="105" y="126" text-anchor="middle" class="mut">len set to 1 up front,</text>
+<text x="105" y="142" text-anchor="middle" class="mut">&amp;mut vec held by the guard</text>
+<!-- stop 2 -->
+<path class="ln" d="M300 68V86"/>
+<rect class="box" x="210" y="86" width="180" height="66" rx="6"/>
+<text x="300" y="108" text-anchor="middle" class="tx" font-size="11">2 · next() yields 'b', 'c'</text>
+<text x="300" y="126" text-anchor="middle" class="mut">ownership moves to you,</text>
+<text x="300" y="142" text-anchor="middle" class="mut">one element at a time</text>
+<!-- stop 3 -->
+<path class="ln" d="M495 68V86"/>
+<rect class="acbox" x="405" y="86" width="180" height="66" rx="6"/>
+<text x="495" y="108" text-anchor="middle" class="tx ac" font-size="11">3 · guard dropped</text>
+<text x="495" y="126" text-anchor="middle" class="mut">anything not yielded</text>
+<text x="495" y="142" text-anchor="middle" class="mut">is dropped right here</text>
+<!-- stop 4 -->
+<path class="ln" d="M690 68V86"/>
+<rect class="box" x="600" y="86" width="180" height="66" rx="6"/>
+<text x="690" y="108" text-anchor="middle" class="tx" font-size="11">4 · tail restored</text>
+<text x="690" y="126" text-anchor="middle" class="mut">'d' shifted left, vec is</text>
+<text x="690" y="142" text-anchor="middle" class="mut">['a','d'], capacity kept</text>
+<!-- footer -->
+<text x="400" y="184" text-anchor="middle" class="mut">Steps 3 and 4 run from Drain's Drop impl, so the removal happens even if you never call next().</text>
+<text x="400" y="204" text-anchor="middle" class="mut">While the guard lives, vec is mutably borrowed and cannot be touched.</text>
+</svg>
+</div>
+
 ## Advanced Use: Reuse Storage
 
 `drain()` is ideal for replacing a subset of elements efficiently:
