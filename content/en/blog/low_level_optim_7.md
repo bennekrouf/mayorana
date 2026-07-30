@@ -120,6 +120,66 @@ impl AudioProcessor {
 - **Determinism**: Writes and reads are O(1) with predictable cycles—no reallocation or deallocation delays.
 - **Size Known**: 64 elements fit the real-time constraint (e.g., a 1ms audio frame at 64kHz), avoiding dynamic resizing.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo7b-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Per-call latency over twelve process calls: the Vec version spikes past the one millisecond deadline on each reallocation, the fixed array version stays flat">
+<style>
+.lo7b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo7b-fig,[data-theme="dark"] .lo7b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo7b-fig .bar{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo7b-fig .barac{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo7b-fig .ax{stroke:var(--mut);stroke-width:1.5}
+.lo7b-fig .dl{stroke:var(--ac);stroke-width:1.5;stroke-dasharray:5 4}
+.lo7b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.lo7b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.lo7b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.lo7b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif}
+</style>
+<!-- chart 1: Vec -->
+<text x="40" y="26" class="ti">Vec&lt;f32&gt; — latency of 12 consecutive process() calls</text>
+<line x1="50" y1="75" x2="560" y2="75" class="dl"/>
+<text x="52" y="70" class="ac">1 ms frame deadline</text>
+<rect x="60" y="116" width="24" height="14" class="bar"/>
+<rect x="100" y="118" width="24" height="12" class="bar"/>
+<rect x="140" y="117" width="24" height="13" class="bar"/>
+<rect x="180" y="60" width="24" height="70" class="barac"/>
+<rect x="220" y="118" width="24" height="12" class="bar"/>
+<rect x="260" y="116" width="24" height="14" class="bar"/>
+<rect x="300" y="118" width="24" height="12" class="bar"/>
+<rect x="340" y="117" width="24" height="13" class="bar"/>
+<rect x="380" y="118" width="24" height="12" class="bar"/>
+<rect x="420" y="45" width="24" height="85" class="barac"/>
+<rect x="460" y="117" width="24" height="13" class="bar"/>
+<rect x="500" y="118" width="24" height="12" class="bar"/>
+<line x1="50" y1="130" x2="560" y2="130" class="ax"/>
+<text x="50" y="147" class="mut">call 1 → 12</text>
+<text x="600" y="60" class="ac">2 reallocations</text>
+<text x="600" y="80" class="mut">malloc + memcpy + free</text>
+<text x="600" y="100" class="mut">deadline missed twice</text>
+<text x="600" y="120" class="mut">audible glitch</text>
+<!-- chart 2: fixed array -->
+<text x="40" y="172" class="ti">[f32; 64] on the stack — same 12 calls</text>
+<line x1="50" y1="215" x2="560" y2="215" class="dl"/>
+<text x="52" y="210" class="ac">1 ms frame deadline</text>
+<rect x="60" y="258" width="24" height="12" class="bar"/>
+<rect x="100" y="257" width="24" height="13" class="bar"/>
+<rect x="140" y="258" width="24" height="12" class="bar"/>
+<rect x="180" y="258" width="24" height="12" class="bar"/>
+<rect x="220" y="257" width="24" height="13" class="bar"/>
+<rect x="260" y="258" width="24" height="12" class="bar"/>
+<rect x="300" y="258" width="24" height="12" class="bar"/>
+<rect x="340" y="257" width="24" height="13" class="bar"/>
+<rect x="380" y="258" width="24" height="12" class="bar"/>
+<rect x="420" y="258" width="24" height="12" class="bar"/>
+<rect x="460" y="257" width="24" height="13" class="bar"/>
+<rect x="500" y="258" width="24" height="12" class="bar"/>
+<line x1="50" y1="270" x2="560" y2="270" class="ax"/>
+<text x="50" y="287" class="mut">call 1 → 12</text>
+<text x="600" y="240" class="tx">0 allocations</text>
+<text x="600" y="260" class="mut">one store + one modulo</text>
+<text x="600" y="280" class="mut">worst case = average case</text>
+</svg>
+</div>
+
 ## Ensuring Safety
 
 - **Bounds Safety**: The modulo operation (`% 64`) ensures index stays within [0, 63]. Rust's array indexing panics on out-of-bounds in debug mode, catching errors early.

@@ -152,6 +152,53 @@ Blanket implementations amplify coherence risks:
 
 **Problem**: If another crate defines `impl Stats for Vec<i32>`, it conflicts with the blanket `impl<T: Summable> Stats for T` if `Vec<i32>: Summable`.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td9b-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Two candidate Stats impls for Vec i32 meeting at the coherence check and producing error E0119">
+<style>
+.td9b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td9b-fig,[data-theme="dark"] .td9b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td9b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td9b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td9b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td9b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td9b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td9b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td9b-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td9b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td9b-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="26" class="ti">Two impls, one (type, trait) pair</text>
+<!-- your crate -->
+<rect class="box" x="40" y="45" width="300" height="56" rx="6"/>
+<text x="190" y="68" class="tx">your crate: impl&lt;T: Summable&gt; Stats for T</text>
+<text x="190" y="87" class="mut">already covers Vec&lt;i32&gt;</text>
+<!-- other crate -->
+<rect class="box" x="460" y="45" width="300" height="56" rx="6"/>
+<text x="610" y="68" class="tx">other crate: impl Stats for Vec&lt;i32&gt;</text>
+<text x="610" y="87" class="mut">writable while Stats stays open</text>
+<!-- Y-merge into the coherence check -->
+<path class="ln" d="M190,101 L190,125"/>
+<path class="ln" d="M610,101 L610,125"/>
+<path class="ln" d="M190,125 L610,125"/>
+<path class="lnAc" d="M400,125 L400,150" marker-end="url(#td9b-arrowAc)"/>
+<!-- coherence check -->
+<rect class="box" x="250" y="152" width="300" height="52" rx="6"/>
+<text x="400" y="175" class="tx">resolving Vec&lt;i32&gt;: Stats</text>
+<text x="400" y="193" class="mut">two candidates, no tie-break rule</text>
+<!-- outcome -->
+<path class="lnAc" d="M400,204 L400,230" marker-end="url(#td9b-arrowAc)"/>
+<rect class="boxAc" x="250" y="232" width="300" height="52" rx="6"/>
+<text x="400" y="255" class="tx">error[E0119]</text>
+<text x="400" y="273" class="mut">conflicting implementations</text>
+<!-- caption -->
+<text x="400" y="308" class="mut">Sealing Stats behind a private supertrait deletes the right-hand branch: that impl becomes unwritable</text>
+</svg>
+</div>
+
 **Mitigation**: Make `Stats` a sealed trait (non-public or with a private supertrait) to prevent external implementations:
 
 ```rust

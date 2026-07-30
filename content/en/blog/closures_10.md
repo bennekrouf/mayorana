@@ -122,6 +122,64 @@ fn main() {
 
 Supports dynamic behavior, ideal for event handlers or plugins.
 
+Notice that `create_op` is not merely *slower* with `impl Fn` — it is impossible. Every closure literal gets its own anonymous type, so the two branches return two unrelated types, and `impl Trait` promises exactly one:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl10b-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Two closure literals with distinct anonymous types are rejected by impl Fn but unify behind a single boxed dyn Fn type">
+<!-- style -->
+<style>
+.cl10b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl10b-fig,[data-theme="dark"] .cl10b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl10b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl10b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl10b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .acb{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl10b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl10b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl10b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Two branches, two anonymous types — only one return form accepts both</text>
+<!-- literal A -->
+<rect x="250" y="36" width="140" height="44" rx="6" class="box"/>
+<text x="320" y="58" text-anchor="middle" class="tx">|x, y| x + y</text>
+<text x="320" y="74" text-anchor="middle" class="mut">type #1</text>
+<!-- literal B -->
+<rect x="410" y="36" width="140" height="44" rx="6" class="box"/>
+<text x="480" y="58" text-anchor="middle" class="tx">|x, y| x * y</text>
+<text x="480" y="74" text-anchor="middle" class="mut">type #2</text>
+<!-- merge stems -->
+<path d="M320,80 L320,104" class="ln"/>
+<path d="M480,80 L480,104" class="ln"/>
+<!-- shared bus -->
+<path d="M170,104 L630,104" class="ln"/>
+<!-- branch to impl Fn -->
+<path d="M170,104 L170,140" class="ln" marker-end="url(#cl10b-arrow)"/>
+<!-- branch to Box dyn -->
+<path d="M630,104 L630,140" class="ln" marker-end="url(#cl10b-arrowac)"/>
+<!-- impl Fn outcome -->
+<rect x="40" y="140" width="260" height="110" rx="6" class="box"/>
+<text x="170" y="166" text-anchor="middle" class="tx">-&gt; impl Fn(i32, i32) -&gt; i32</text>
+<text x="170" y="186" text-anchor="middle" class="mut">stands for one concrete type</text>
+<text x="170" y="205" text-anchor="middle" class="mut">chosen once, at compile time</text>
+<text x="170" y="230" text-anchor="middle" class="acb">E0308: mismatched types</text>
+<!-- Box dyn outcome -->
+<rect x="500" y="140" width="260" height="110" rx="6" class="boxac"/>
+<text x="630" y="166" text-anchor="middle" class="tx">-&gt; Box&lt;dyn Fn(i32, i32) -&gt; i32&gt;</text>
+<text x="630" y="186" text-anchor="middle" class="mut">both types erased behind a vtable</text>
+<text x="630" y="205" text-anchor="middle" class="mut">the arms now agree</text>
+<text x="630" y="230" text-anchor="middle" class="acb">compiles — one alloc per Box</text>
+<!-- caption -->
+<text x="400" y="284" text-anchor="middle" class="mut">The same wall blocks `Vec&lt;impl Fn&gt;`: a vector needs one element type.</text>
+<text x="400" y="301" text-anchor="middle" class="mut">Dynamic dispatch is not the slow option here — it is the only option.</text>
+</svg>
+</div>
+
 ## Lifetime Considerations
 
 - **Box<dyn Fn()>**: Requires explicit lifetimes if the closure captures references:

@@ -612,6 +612,77 @@ fn cache_example() {
 }
 ```
 
+## Comment le Bound Remodèle l'API de la Struct
+
+Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision locale : cela se propage vers l'extérieur, dans le receiver que doit prendre chaque méthode appelant la closure, puis dans la façon dont les appelants peuvent utiliser la struct :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl9b-fig" viewBox="0 0 800 310" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Correspondance entre le bound de la closure stockée, le receiver que doit prendre run et la limite qui en résulte pour les appelants de la struct">
+<!-- style -->
+<style>
+.cl9b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl9b-fig,[data-theme="dark"] .cl9b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl9b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl9b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl9b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl9b-fig .hd{fill:var(--mut);font:700 11px ui-sans-serif,system-ui,sans-serif}
+.cl9b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl9b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl9b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl9b-arrow2fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl9b-arrow2acfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Le bound stocké dicte le receiver, et le receiver dicte l'appelant</text>
+<!-- headers -->
+<text x="133" y="48" text-anchor="middle" class="hd">BOUND DU CHAMP</text>
+<text x="400" y="48" text-anchor="middle" class="hd">run() DOIT PRENDRE</text>
+<text x="667" y="48" text-anchor="middle" class="hd">CE QU'OBTIENT L'APPELANT</text>
+<!-- row 1 -->
+<rect x="20" y="64" width="225" height="54" rx="6" class="box"/>
+<text x="133" y="88" text-anchor="middle" class="tx">F: Fn(i32) -&gt; i32</text>
+<text x="133" y="106" text-anchor="middle" class="mut">lit seulement ses captures</text>
+<path d="M245,91 L290,91" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
+<rect x="290" y="64" width="220" height="54" rx="6" class="box"/>
+<text x="400" y="88" text-anchor="middle" class="tx">&amp;self</text>
+<text x="400" y="106" text-anchor="middle" class="mut">emprunt partagé</text>
+<path d="M510,91 L555,91" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
+<rect x="555" y="64" width="225" height="54" rx="6" class="box"/>
+<text x="667" y="88" text-anchor="middle" class="tx">appels illimités</text>
+<text x="667" y="106" text-anchor="middle" class="mut">plusieurs lecteurs à la fois</text>
+<!-- row 2 -->
+<rect x="20" y="130" width="225" height="54" rx="6" class="boxac"/>
+<text x="133" y="154" text-anchor="middle" class="tx">F: FnMut(i32) -&gt; i32</text>
+<text x="133" y="172" text-anchor="middle" class="mut">mute ses captures</text>
+<path d="M245,157 L290,157" class="ln" marker-end="url(#cl9b-arrow2acfr)"/>
+<rect x="290" y="130" width="220" height="54" rx="6" class="boxac"/>
+<text x="400" y="154" text-anchor="middle" class="tx">&amp;mut self</text>
+<text x="400" y="172" text-anchor="middle" class="mut">emprunt exclusif</text>
+<path d="M510,157 L555,157" class="ln" marker-end="url(#cl9b-arrow2acfr)"/>
+<rect x="555" y="130" width="225" height="54" rx="6" class="boxac"/>
+<text x="667" y="154" text-anchor="middle" class="tx">appels illimités</text>
+<text x="667" y="172" text-anchor="middle" class="mut">mais le binding doit être `mut`</text>
+<!-- row 3 -->
+<rect x="20" y="196" width="225" height="54" rx="6" class="box"/>
+<text x="133" y="220" text-anchor="middle" class="tx">F: FnOnce(i32) -&gt; i32</text>
+<text x="133" y="238" text-anchor="middle" class="mut">consomme ses captures</text>
+<path d="M245,223 L290,223" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
+<rect x="290" y="196" width="220" height="54" rx="6" class="box"/>
+<text x="400" y="220" text-anchor="middle" class="tx">self</text>
+<text x="400" y="238" text-anchor="middle" class="mut">prend l'ownership</text>
+<path d="M510,223 L555,223" class="ln" marker-end="url(#cl9b-arrow2fr)"/>
+<rect x="555" y="196" width="225" height="54" rx="6" class="box"/>
+<text x="667" y="220" text-anchor="middle" class="tx">un seul appel</text>
+<text x="667" y="238" text-anchor="middle" class="mut">la struct disparaît ensuite</text>
+<!-- caption -->
+<text x="400" y="280" text-anchor="middle" class="mut">Le boxing ne change rien : `Box&lt;dyn FnMut&gt;` impose toujours `&amp;mut self` à la méthode.</text>
+<text x="400" y="297" text-anchor="middle" class="mut">Note aussi les parenthèses de `(self.operation)(x)` — sans elles Rust cherche une méthode.</text>
+</svg>
+</div>
+
 ## Quand Utiliser Chaque Approche
 
 | Approche | Cas d'Usage | Trade-Offs |

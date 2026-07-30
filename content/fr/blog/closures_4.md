@@ -98,7 +98,7 @@ Le même mot-clé `move` produit deux résultats totalement différents pour le 
 </style>
 <!-- defs -->
 <defs>
-<marker id="cl4b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl4b-arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
 </defs>
 <!-- title -->
 <text x="400" y="18" text-anchor="middle" class="ti">Le même `move`, deux issues pour le binding d'origine</text>
@@ -116,8 +116,8 @@ Le même mot-clé `move` produit deux résultats totalement différents pour le 
 <text x="590" y="84" text-anchor="middle" class="tx">let x = 42;</text>
 <text x="590" y="102" text-anchor="middle" class="mut">4 octets sur la stack</text>
 <!-- arrows down -->
-<path d="M210,114 L210,144" class="ln" marker-end="url(#cl4b-arrow)"/>
-<path d="M590,114 L590,144" class="ln" marker-end="url(#cl4b-arrow)"/>
+<path d="M210,114 L210,144" class="ln" marker-end="url(#cl4b-arrowfr)"/>
+<path d="M590,114 L590,144" class="ln" marker-end="url(#cl4b-arrowfr)"/>
 <!-- left box2 -->
 <rect x="40" y="144" width="340" height="58" rx="6" class="boxac"/>
 <text x="210" y="168" text-anchor="middle" class="tx">move || println!("{}", s)</text>
@@ -127,8 +127,8 @@ Le même mot-clé `move` produit deux résultats totalement différents pour le 
 <text x="590" y="168" text-anchor="middle" class="tx">move || println!("{}", x)</text>
 <text x="590" y="186" text-anchor="middle" class="mut">copie bit à bit stockée dedans</text>
 <!-- arrows down -->
-<path d="M210,202 L210,232" class="ln" marker-end="url(#cl4b-arrow)"/>
-<path d="M590,202 L590,232" class="ln" marker-end="url(#cl4b-arrow)"/>
+<path d="M210,202 L210,232" class="ln" marker-end="url(#cl4b-arrowfr)"/>
+<path d="M590,202 L590,232" class="ln" marker-end="url(#cl4b-arrowfr)"/>
 <!-- left box3 -->
 <rect x="40" y="232" width="340" height="58" rx="6" class="box"/>
 <text x="210" y="256" text-anchor="middle" class="tx">println!("{}", s); // E0382</text>

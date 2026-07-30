@@ -199,6 +199,56 @@ let mut uart = UartDriver { buffer: 0 };
 let result = process_io(&mut uart, 42); // Fonctionne avec u8
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td8b-fig" viewBox="0 0 800 295" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Chaque impl de driver remplit les trous Input et Output de IoDriver, et process_io résout D::Input différemment selon le driver au site d'appel">
+<style>
+.td8b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td8b-fig,[data-theme="dark"] .td8b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td8b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td8b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td8b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td8b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td8b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td8b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td8b-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td8b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td8b-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- the trait, with two holes -->
+<rect class="boxAc" x="250" y="30" width="300" height="50" rx="6"/>
+<text x="400" y="52" class="tx">trait IoDriver { type Input; type Output }</text>
+<text x="400" y="70" class="mut">deux trous, remplis une fois par driver</text>
+<!-- split to the two impls -->
+<path class="ln" d="M400,80 L400,96"/>
+<path class="ln" d="M400,96 L210,96 L210,113" marker-end="url(#td8b-arrow)"/>
+<path class="ln" d="M400,96 L590,96 L590,113" marker-end="url(#td8b-arrow)"/>
+<!-- impl 1 -->
+<rect class="box" x="60" y="115" width="300" height="52" rx="6"/>
+<text x="210" y="137" class="tx">impl IoDriver for UartDriver</text>
+<text x="210" y="155" class="mut">Input = u8, Output = u8</text>
+<path class="lnAc" d="M210,167 L210,193" marker-end="url(#td8b-arrowAc)"/>
+<!-- impl 2 -->
+<rect class="box" x="440" y="115" width="300" height="52" rx="6"/>
+<text x="590" y="137" class="tx">impl IoDriver for SpiDriver</text>
+<text x="590" y="155" class="mut">Input = [u8], Output = [u8]</text>
+<path class="ln" d="M590,167 L590,193" marker-end="url(#td8b-arrow)"/>
+<!-- call site 1 -->
+<rect class="boxAc" x="60" y="195" width="300" height="52" rx="6"/>
+<text x="210" y="217" class="tx">process_io(&amp;mut uart, 42)</text>
+<text x="210" y="235" class="mut">ici D::Input se lit u8</text>
+<!-- call site 2 -->
+<rect class="box" x="440" y="195" width="300" height="52" rx="6"/>
+<text x="590" y="217" class="tx">process_io(&amp;mut spi, buf)</text>
+<text x="590" y="235" class="mut">ici D::Input se lit [u8]</text>
+<!-- caption -->
+<text x="400" y="277" class="mut">Une signature, deux sens de D::Input — c'est le driver qui choisit le type, jamais l'appelant</text>
+</svg>
+</div>
+
+
 ### Flexibilité
 
 Ajoute des types associés pour les erreurs ou configs si nécessaire (ex : `type Error`).

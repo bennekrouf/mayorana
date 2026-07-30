@@ -111,6 +111,54 @@ fn process(data: Box<[i32]>) { /* ... */ }
 | Vec → Box<[T]> | `vec.into_boxed_slice()` | O(1) |
 | Box<[T]> → Vec | `Vec::from(boxed_slice)` | O(n) |
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci6b-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="into_boxed_slice converts a Vec to a boxed slice in constant time when capacity equals length, while Vec::from copies the data back, and a Vec with spare capacity must shrink first">
+<!-- style -->
+<style>
+.ci6b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci6b-fig,[data-theme="dark"] .ci6b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci6b-fig .bg{fill:var(--bg)}
+.ci6b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci6b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci6b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci6b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci6b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci6b-fig .ac{fill:var(--ac)}
+.ci6b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci6b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="250" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">Cost of the round trip</text>
+<!-- top label -->
+<text x="400" y="58" text-anchor="middle" class="mut">into_boxed_slice() · O(1) when capacity == len</text>
+<!-- left box: Vec -->
+<rect class="box" x="70" y="70" width="230" height="52" rx="6"/>
+<text x="185" y="92" text-anchor="middle" class="tx">Vec&lt;i32&gt;</text>
+<text x="185" y="111" text-anchor="middle" class="mut">len 3 · cap 3</text>
+<!-- right box: boxed slice -->
+<rect class="acbox" x="500" y="70" width="230" height="52" rx="6"/>
+<text x="615" y="92" text-anchor="middle" class="tx ac">Box&lt;[i32]&gt;</text>
+<text x="615" y="111" text-anchor="middle" class="mut">len 3 · exact fit</text>
+<!-- forward arrow -->
+<path class="ln" d="M300 86H500" marker-end="url(#ci6b-arrow)"/>
+<!-- backward arrow -->
+<path class="ln" d="M500 106H300" marker-end="url(#ci6b-arrow)"/>
+<!-- bottom label -->
+<text x="400" y="146" text-anchor="middle" class="mut">Vec::from(boxed) · O(n), allocates and copies every element</text>
+<!-- caveat -->
+<rect class="acbox" x="150" y="166" width="500" height="48" rx="6"/>
+<text x="400" y="187" text-anchor="middle" class="tx">If cap &gt; len, the O(1) claim breaks</text>
+<text x="400" y="205" text-anchor="middle" class="mut">into_boxed_slice() must shrink first: allocate the exact size, copy, free the old block</text>
+<!-- footer -->
+<text x="400" y="238" text-anchor="middle" class="mut">Convert once, when you stop mutating — round-tripping pays a copy in each direction.</text>
+</svg>
+</div>
+
 ### Example:
 
 ```rust

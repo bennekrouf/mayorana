@@ -288,7 +288,7 @@ Le decorator est le cas subtil : `with_logging` *accepte* une closure et en *ret
 </style>
 <!-- defs -->
 <defs>
-<marker id="cl6b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl6b-arrowfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
 </defs>
 <!-- title -->
 <text x="400" y="20" text-anchor="middle" class="ti">Une closure decorator enveloppe la fonction qu'on lui a confiée</text>
@@ -301,13 +301,13 @@ Le decorator est le cas subtil : `with_logging` *accepte* une closure et en *ret
 <text x="105" y="136" text-anchor="middle" class="tx">decorated()</text>
 <text x="105" y="154" text-anchor="middle" class="mut">appelant</text>
 <!-- arrow into log step -->
-<path d="M180,139 L230,139" class="ln" marker-end="url(#cl6b-arrow)"/>
+<path d="M180,139 L230,139" class="ln" marker-end="url(#cl6b-arrowfr)"/>
 <!-- log step -->
 <rect x="230" y="112" width="170" height="54" rx="6" class="box"/>
 <text x="315" y="136" text-anchor="middle" class="tx">println!("Début…")</text>
 <text x="315" y="154" text-anchor="middle" class="mut">comportement ajouté</text>
 <!-- arrow to inner f -->
-<path d="M400,139 L440,139" class="ln" marker-end="url(#cl6b-arrow)"/>
+<path d="M400,139 L440,139" class="ln" marker-end="url(#cl6b-arrowfr)"/>
 <!-- inner f -->
 <rect x="440" y="112" width="150" height="54" rx="6" class="box"/>
 <text x="515" y="136" text-anchor="middle" class="tx">f()</text>
@@ -316,7 +316,7 @@ Le decorator est le cas subtil : `with_logging` *accepte* une closure et en *ret
 <text x="410" y="200" text-anchor="middle" class="mut">`f` a été moved dedans : le wrapper reste valide bien après le retour de with_logging</text>
 <text x="410" y="218" text-anchor="middle" class="mut">un nouveau type anonyme par enveloppe — inlinable, sans vtable</text>
 <!-- arrow out -->
-<path d="M590,139 L650,139" class="ln" marker-end="url(#cl6b-arrow)"/>
+<path d="M590,139 L650,139" class="ln" marker-end="url(#cl6b-arrowfr)"/>
 <!-- result -->
 <rect x="650" y="112" width="120" height="54" rx="6" class="box"/>
 <text x="710" y="143" text-anchor="middle" class="tx">42</text>

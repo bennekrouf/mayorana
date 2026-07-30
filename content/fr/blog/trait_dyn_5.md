@@ -145,6 +145,73 @@ let strings = vec!["a", "b"];
 matrix_multiply(&strings, &strings, 1, 1, 1); // Erreur : String manque Numeric
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td5b-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Tableau des obligations montrant quelles exigences de la chaîne Numeric et AdvancedNumeric sont satisfaites par f32, i32 et str">
+<style>
+.td5b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td5b-fig,[data-theme="dark"] .td5b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td5b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td5b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td5b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5b-fig .ok{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5b-fig .no{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td5b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- title -->
+<text x="400" y="26" class="ti">Ce qu'un seul bound T: AdvancedNumeric exige vraiment</text>
+<!-- group labels -->
+<text x="317" y="46" class="mut">hérité de Numeric</text>
+<text x="555" y="46" class="mut">ajouté par AdvancedNumeric</text>
+<!-- header row -->
+<rect class="box" x="30" y="54" width="750" height="30" rx="4"/>
+<text x="100" y="73" class="mut">type</text>
+<text x="222" y="73" class="mut">Add&lt;Out=Self&gt;</text>
+<text x="317" y="73" class="mut">Copy</text>
+<text x="412" y="73" class="mut">zero()</text>
+<text x="507" y="73" class="mut">Mul&lt;Out=Self&gt;</text>
+<text x="602" y="73" class="mut">one()</text>
+<text x="715" y="73" class="mut">verdict</text>
+<!-- row f32 -->
+<rect class="box" x="30" y="84" width="750" height="36" rx="4"/>
+<text x="100" y="106" class="tx">f32</text>
+<text x="222" y="107" class="ok">✓</text>
+<text x="317" y="107" class="ok">✓</text>
+<text x="412" y="107" class="ok">✓</text>
+<text x="507" y="107" class="ok">✓</text>
+<text x="602" y="107" class="ok">✓</text>
+<text x="715" y="107" class="mut">monomorphisé</text>
+<!-- row i32 -->
+<rect class="box" x="30" y="120" width="750" height="36" rx="4"/>
+<text x="100" y="142" class="tx">i32</text>
+<text x="222" y="143" class="ok">✓</text>
+<text x="317" y="143" class="ok">✓</text>
+<text x="412" y="143" class="ok">✓</text>
+<text x="507" y="143" class="ok">✓</text>
+<text x="602" y="143" class="ok">✓</text>
+<text x="715" y="143" class="mut">monomorphisé</text>
+<!-- row &str -->
+<rect class="boxAc" x="30" y="156" width="750" height="36" rx="4"/>
+<text x="100" y="178" class="tx">&amp;str</text>
+<text x="222" y="179" class="no">✗</text>
+<text x="317" y="179" class="ok">✓</text>
+<text x="412" y="179" class="no">✗</text>
+<text x="507" y="179" class="no">✗</text>
+<text x="602" y="179" class="no">✗</text>
+<text x="715" y="179" class="mut">error[E0277]</text>
+<!-- column separators -->
+<path class="ln" d="M175,54 L175,192"/>
+<path class="ln" d="M270,54 L270,192"/>
+<path class="ln" d="M365,54 L365,192"/>
+<path class="ln" d="M460,54 L460,192"/>
+<path class="ln" d="M555,54 L555,192"/>
+<path class="ln" d="M650,54 L650,192"/>
+<!-- caption -->
+<text x="400" y="222" class="mut">Copy ne suffit pas : une seule case manquante et matrix_multiply n'est jamais instancié pour ce type</text>
+</svg>
+</div>
+
 ### Efficacité
 - **Dispatch Statique** : `T: AdvancedNumeric` déclenche la monomorphization, générant du code spécialisé pour `f32`, `i32`, etc. Les opérations comme `+` et `*` s'inlinent vers des instructions natives (ex : `fadd` pour `f32`).
 - **Bounds Minimaux** : `Copy` évite le clonage, `Output = Self` assure pas de conversions de type dans le chemin chaud. `Into<f64>` n'est utilisé que si nécessaire, souvent optimisé.

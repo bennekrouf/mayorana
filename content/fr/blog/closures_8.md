@@ -85,6 +85,74 @@ let data = [0u8; 1024]; // Array 1KB
 let closure = move || data.len(); // Taille closure = 1KB + overhead
 ```
 
+Une closure n'est qu'un struct anonyme contenant ses captures : « combien ça coûte » est donc en réalité une question sur le layout de ce struct :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl8b-fig" viewBox="0 0 800 330" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Layout mémoire de trois closures : une petite capture Copy, une capture d'array d'un kilooctet, et un trait object boxé avec environnement sur le heap et vtable">
+<!-- style -->
+<style>
+.cl8b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl8b-fig,[data-theme="dark"] .cl8b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl8b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl8b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl8b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl8b-fig .hd{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl8b-fig .hdac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl8b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl8b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl8b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl8b-arrowacfr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Une closure est un struct de ses captures — le layout, c'est le coût</text>
+<!-- col1 header -->
+<text x="140" y="46" text-anchor="middle" class="hd">petite capture Copy</text>
+<text x="140" y="64" text-anchor="middle" class="mut">move || x * 2</text>
+<!-- col1 box -->
+<rect x="20" y="78" width="240" height="48" rx="6" class="box"/>
+<text x="140" y="100" text-anchor="middle" class="tx">4 octets sur la stack</text>
+<text x="140" y="118" text-anchor="middle" class="mut">juste le i32 capturé</text>
+<!-- col1 note -->
+<text x="140" y="152" text-anchor="middle" class="mut">entièrement inlinée —</text>
+<text x="140" y="169" text-anchor="middle" class="mut">même ASM qu'une fn normale</text>
+<!-- col2 header -->
+<text x="400" y="46" text-anchor="middle" class="hd">grosse capture</text>
+<text x="400" y="64" text-anchor="middle" class="mut">move || data.len()</text>
+<!-- col2 box -->
+<rect x="280" y="78" width="240" height="132" rx="6" class="box"/>
+<text x="400" y="130" text-anchor="middle" class="tx">1024 octets sur la stack</text>
+<text x="400" y="150" text-anchor="middle" class="mut">tout le [0u8; 1024]</text>
+<text x="400" y="167" text-anchor="middle" class="mut">copié octet par octet</text>
+<!-- col2 note -->
+<text x="400" y="236" text-anchor="middle" class="mut">pas de heap, mais trop gros pour être inliné</text>
+<!-- col3 header -->
+<text x="660" y="46" text-anchor="middle" class="hdac">Box&lt;dyn Fn&gt;</text>
+<text x="660" y="64" text-anchor="middle" class="mut">Box::new(|x| x + 1)</text>
+<!-- col3 box1 -->
+<rect x="540" y="78" width="240" height="44" rx="6" class="boxac"/>
+<text x="660" y="98" text-anchor="middle" class="tx">16 octets : fat pointer</text>
+<text x="660" y="115" text-anchor="middle" class="mut">ptr données + ptr vtable</text>
+<!-- arrow 1 -->
+<path d="M660,122 L660,150" class="ln" marker-end="url(#cl8b-arrowacfr)"/>
+<!-- col3 box2 -->
+<rect x="540" y="150" width="240" height="44" rx="6" class="box"/>
+<text x="660" y="170" text-anchor="middle" class="tx">env capturé</text>
+<text x="660" y="187" text-anchor="middle" class="mut">allocation heap séparée</text>
+<!-- arrow 2 -->
+<path d="M660,194 L660,222" class="ln" marker-end="url(#cl8b-arrowacfr)"/>
+<!-- col3 box3 -->
+<rect x="540" y="222" width="240" height="44" rx="6" class="box"/>
+<text x="660" y="242" text-anchor="middle" class="tx">vtable</text>
+<text x="660" y="259" text-anchor="middle" class="mut">un saut indirect par appel</text>
+<!-- caption -->
+<text x="400" y="300" text-anchor="middle" class="mut">Seule la colonne de droite touche le heap ; seule elle ne peut pas être inlinée.</text>
+<text x="400" y="317" text-anchor="middle" class="mut">Celle du milieu est gratuite à l'appel mais coûteuse à déplacer.</text>
+</svg>
+</div>
+
 ### Monomorphization Excessive
 
 Les closures génériques avec beaucoup d'instanciations (ex : dans une hot loop) peuvent gonfler la taille du binaire :

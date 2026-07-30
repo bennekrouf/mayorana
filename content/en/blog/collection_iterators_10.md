@@ -105,6 +105,56 @@ for s in vec.into_iter() {  // No clone, moves `String`
 }
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci10b-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Side by side: iter yields a reference so owning the String needs a clone and a second heap buffer, while into_iter hands over the original buffer with no allocation">
+<!-- style -->
+<style>
+.ci10b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci10b-fig,[data-theme="dark"] .ci10b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci10b-fig .bg{fill:var(--bg)}
+.ci10b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci10b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci10b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci10b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci10b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci10b-fig .ac{fill:var(--ac)}
+.ci10b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.ci10b-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci10b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+<marker id="ci10b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="270" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">Getting an owned String out of Vec&lt;String&gt;</text>
+<!-- left column: iter + clone -->
+<rect class="box" x="80" y="52" width="260" height="36" rx="6"/>
+<text x="210" y="75" text-anchor="middle" class="tx">.iter() yields &amp;String</text>
+<path class="ln" d="M210 88V110" marker-end="url(#ci10b-arrow)"/>
+<rect class="box" x="80" y="110" width="260" height="36" rx="6"/>
+<text x="210" y="133" text-anchor="middle" class="tx">.clone() to own it</text>
+<path class="ln" d="M210 146V168" marker-end="url(#ci10b-arrow)"/>
+<rect class="box" x="80" y="168" width="260" height="36" rx="6"/>
+<text x="210" y="191" text-anchor="middle" class="tx">second heap buffer + memcpy</text>
+<text x="210" y="226" text-anchor="middle" class="mut">vec still owns the original</text>
+<!-- right column: into_iter -->
+<rect class="acbox" x="460" y="52" width="260" height="36" rx="6"/>
+<text x="590" y="75" text-anchor="middle" class="tx ac">.into_iter() yields String</text>
+<path class="acln" d="M590 88V110" marker-end="url(#ci10b-arrowac)"/>
+<rect class="box" x="460" y="110" width="260" height="36" rx="6"/>
+<text x="590" y="133" text-anchor="middle" class="tx">the buffer pointer moves out</text>
+<path class="acln" d="M590 146V168" marker-end="url(#ci10b-arrowac)"/>
+<rect class="acbox" x="460" y="168" width="260" height="36" rx="6"/>
+<text x="590" y="191" text-anchor="middle" class="tx ac">zero new allocations</text>
+<text x="590" y="226" text-anchor="middle" class="mut">vec is consumed and gone</text>
+<!-- footer -->
+<text x="400" y="252" text-anchor="middle" class="mut">For Copy types like i32 both paths compile to the same code; the saving only shows up on owned data.</text>
+</svg>
+</div>
+
 ## Ownership Implications
 
 ### After .into_iter(), the original Vec is moved and can't be used:

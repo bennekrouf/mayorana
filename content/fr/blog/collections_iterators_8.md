@@ -105,6 +105,85 @@ assert_eq!(filtered, [2, 4]);  // Nouveau `Vec` créé
 - **Temps** : O(n) (passage unique, décale les éléments vers la gauche en place).
 - **Espace** : O(1) (pas d'allocations supplémentaires).
 
+Concrètement, `retain()` parcourt le tampon avec deux curseurs : un curseur de lecture qui visite chaque élément, et un curseur d'écriture qui n'avance que lorsqu'un élément est conservé.
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci8b-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="États successifs du tampon pendant que retain compacte vers la gauche les éléments conservés avec un curseur de lecture et un curseur d'écriture, puis réduit la longueur">
+<!-- style -->
+<style>
+.ci8b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci8b-fig,[data-theme="dark"] .ci8b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci8b-fig .bg{fill:var(--bg)}
+.ci8b-fig .cell{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci8b-fig .accell{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci8b-fig .ghost{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:3 3}
+.ci8b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci8b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci8b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci8b-fig .ac{fill:var(--ac)}
+</style>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="270" rx="8"/>
+<!-- titre -->
+<text x="400" y="26" text-anchor="middle" class="title">retain(|x| x % 2 == 0) sur [1, 2, 3, 4] : un passage, deux curseurs</text>
+<!-- ligne 1 -->
+<text x="20" y="67" class="mut">lecture 0 → 1 impair</text>
+<rect class="cell" x="300" y="48" width="52" height="28" rx="4"/>
+<text x="326" y="67" text-anchor="middle" class="tx">1</text>
+<rect class="cell" x="358" y="48" width="52" height="28" rx="4"/>
+<text x="384" y="67" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="416" y="48" width="52" height="28" rx="4"/>
+<text x="442" y="67" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="48" width="52" height="28" rx="4"/>
+<text x="500" y="67" text-anchor="middle" class="tx">4</text>
+<text x="560" y="67" class="mut">ignoré · écriture reste 0</text>
+<!-- ligne 2 -->
+<text x="20" y="103" class="mut">lecture 1 → 2 pair</text>
+<rect class="accell" x="300" y="84" width="52" height="28" rx="4"/>
+<text x="326" y="103" text-anchor="middle" class="tx ac">2</text>
+<rect class="cell" x="358" y="84" width="52" height="28" rx="4"/>
+<text x="384" y="103" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="416" y="84" width="52" height="28" rx="4"/>
+<text x="442" y="103" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="84" width="52" height="28" rx="4"/>
+<text x="500" y="103" text-anchor="middle" class="tx">4</text>
+<text x="560" y="103" class="mut ac">placé en case 0 · écriture 1</text>
+<!-- ligne 3 -->
+<text x="20" y="139" class="mut">lecture 2 → 3 impair</text>
+<rect class="cell" x="300" y="120" width="52" height="28" rx="4"/>
+<text x="326" y="139" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="358" y="120" width="52" height="28" rx="4"/>
+<text x="384" y="139" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="416" y="120" width="52" height="28" rx="4"/>
+<text x="442" y="139" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="120" width="52" height="28" rx="4"/>
+<text x="500" y="139" text-anchor="middle" class="tx">4</text>
+<text x="560" y="139" class="mut">ignoré · écriture reste 1</text>
+<!-- ligne 4 -->
+<text x="20" y="175" class="mut">lecture 3 → 4 pair</text>
+<rect class="cell" x="300" y="156" width="52" height="28" rx="4"/>
+<text x="326" y="175" text-anchor="middle" class="tx">2</text>
+<rect class="accell" x="358" y="156" width="52" height="28" rx="4"/>
+<text x="384" y="175" text-anchor="middle" class="tx ac">4</text>
+<rect class="cell" x="416" y="156" width="52" height="28" rx="4"/>
+<text x="442" y="175" text-anchor="middle" class="tx">3</text>
+<rect class="cell" x="474" y="156" width="52" height="28" rx="4"/>
+<text x="500" y="175" text-anchor="middle" class="tx">4</text>
+<text x="560" y="175" class="mut ac">placé en case 1 · écriture 2</text>
+<!-- ligne 5 -->
+<text x="20" y="211" class="mut">len = écriture</text>
+<rect class="cell" x="300" y="192" width="52" height="28" rx="4"/>
+<text x="326" y="211" text-anchor="middle" class="tx">2</text>
+<rect class="cell" x="358" y="192" width="52" height="28" rx="4"/>
+<text x="384" y="211" text-anchor="middle" class="tx">4</text>
+<rect class="ghost" x="416" y="192" width="52" height="28" rx="4"/>
+<rect class="ghost" x="474" y="192" width="52" height="28" rx="4"/>
+<text x="560" y="211" class="mut">len 2, capacité toujours 4</text>
+<!-- pied -->
+<text x="400" y="248" text-anchor="middle" class="mut">La même allocation du début à la fin : les éléments gardés recouvrent les supprimés, puis len diminue.</text>
+</svg>
+</div>
+
 ### filter().collect() :
 - **Temps** : O(n) (mais nécessite une copie vers une nouvelle allocation).
 - **Espace** : O(n) (nouveau Vec alloué).

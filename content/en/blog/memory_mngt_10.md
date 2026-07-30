@@ -98,6 +98,58 @@ fn main() {
 }
 ```
 
+Both calls return the same type, but the returned value holds physically different things:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm10b-fig" viewBox="0 0 800 326" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Side by side memory view of the two process calls: the borrowed Cow holds only a pointer and length aimed back at the caller's bytes, while the owned Cow holds a String header pointing at a freshly allocated heap buffer">
+<style>
+.mm10b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm10b-fig,[data-theme="dark"] .mm10b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm10b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm10b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm10b-fig .bytes{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.mm10b-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm10b-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm10b-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm10b-fig .ac{fill:var(--ac)}
+.mm10b-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm10b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm10b-arrowac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- left panel: borrowed -->
+<text x="207" y="26" text-anchor="middle" class="title">process("hello world")</text>
+<rect x="30" y="40" width="355" height="48" rx="8" class="bytes"/>
+<text x="207" y="62" text-anchor="middle" class="body">h e l l o   w o r l d</text>
+<text x="207" y="79" text-anchor="middle" class="cap">caller's bytes, never touched</text>
+<rect x="30" y="126" width="355" height="54" rx="8" class="box"/>
+<text x="207" y="150" text-anchor="middle" class="body">Cow::Borrowed(&amp;str)</text>
+<text x="207" y="168" text-anchor="middle" class="cap">tag + { ptr, len } — nothing else</text>
+<path d="M207,126 L207,90" marker-end="url(#mm10b-arrow)"/>
+<text x="400" y="112" text-anchor="middle" class="cap">points back</text>
+<text x="207" y="216" text-anchor="middle" class="cap">There is no third box: the return value is</text>
+<text x="207" y="234" text-anchor="middle" class="cap">a window onto memory that already existed.</text>
+<text x="207" y="252" text-anchor="middle" class="cap">Allocations: 0</text>
+<!-- right panel: owned -->
+<text x="592" y="26" text-anchor="middle" class="title ac">process("error: foo")</text>
+<rect x="415" y="40" width="355" height="48" rx="8" class="bytes"/>
+<text x="592" y="62" text-anchor="middle" class="body">e r r o r :   f o o</text>
+<text x="592" y="79" text-anchor="middle" class="cap">caller's bytes, also never touched</text>
+<rect x="415" y="126" width="355" height="54" rx="8" class="acbox"/>
+<text x="592" y="150" text-anchor="middle" class="body ac">Cow::Owned(String)</text>
+<text x="592" y="168" text-anchor="middle" class="cap">tag + { ptr, len, cap } — a full owner</text>
+<path d="M592,88 L592,126" marker-end="url(#mm10b-arrow)"/>
+<rect x="415" y="216" width="355" height="48" rx="8" class="bytes"/>
+<text x="592" y="238" text-anchor="middle" class="body">:   f o o</text>
+<text x="592" y="255" text-anchor="middle" class="cap">fresh heap buffer built by replace()</text>
+<path d="M592,180 L592,216" style="stroke:var(--ac)" marker-end="url(#mm10b-arrowac)"/>
+<!-- caption -->
+<text x="400" y="298" text-anchor="middle" class="cap">Callers deref both the same way and cannot tell which arm they got.</text>
+<text x="400" y="316" text-anchor="middle" class="cap">The only difference is whether a heap buffer had to be born.</text>
+</svg>
+</div>
+
 ## Key Use Cases
 
 ### 1. Optimizing String Operations

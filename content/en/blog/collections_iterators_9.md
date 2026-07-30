@@ -114,6 +114,62 @@ flat.extend(nested.into_iter().flatten());
 - `.flatten()` is lazy, but `.collect()` still needs to allocate the result.
 - Chained iterators (e.g., `.filter().flatten()`) may optimize better than manual loops.
 
+Laziness here means `flatten()` keeps just two things alive — the outer iterator and the inner iterator it is currently draining — and does all its work inside a single `next()` call:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci9b-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Decision flow for one next call on flatten: yield from the current inner iterator, or when it is exhausted pull the next inner collection from the outer iterator, or finish when the outer is done">
+<!-- style -->
+<style>
+.ci9b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci9b-fig,[data-theme="dark"] .ci9b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci9b-fig .bg{fill:var(--bg)}
+.ci9b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci9b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci9b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci9b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci9b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci9b-fig .ac{fill:var(--ac)}
+.ci9b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci9b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="320" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">What one .next() on .flatten() actually does</text>
+<!-- consumer -->
+<rect class="box" x="300" y="44" width="200" height="34" rx="6"/>
+<text x="400" y="66" text-anchor="middle" class="tx">collect() asks for an item</text>
+<path class="ln" d="M400 78V100" marker-end="url(#ci9b-arrow)"/>
+<!-- current inner iterator -->
+<rect class="acbox" x="290" y="100" width="220" height="36" rx="6"/>
+<text x="400" y="123" text-anchor="middle" class="tx ac">current inner iterator</text>
+<!-- yield branch -->
+<path class="ln" d="M510 118H560" marker-end="url(#ci9b-arrow)"/>
+<rect class="box" x="560" y="100" width="210" height="36" rx="6"/>
+<text x="665" y="123" text-anchor="middle" class="tx">has an item → yield it</text>
+<!-- exhausted branch -->
+<path class="ln" d="M400 136V170" marker-end="url(#ci9b-arrow)"/>
+<rect class="box" x="300" y="170" width="200" height="36" rx="6"/>
+<text x="400" y="193" text-anchor="middle" class="tx">inner is exhausted</text>
+<path class="ln" d="M400 206V240" marker-end="url(#ci9b-arrow)"/>
+<rect class="box" x="300" y="240" width="200" height="36" rx="6"/>
+<text x="400" y="263" text-anchor="middle" class="tx">outer.next()</text>
+<!-- done branch -->
+<path class="ln" d="M500 258H560" marker-end="url(#ci9b-arrow)"/>
+<rect class="box" x="560" y="240" width="210" height="36" rx="6"/>
+<text x="665" y="263" text-anchor="middle" class="tx">None → flatten is done</text>
+<!-- loop back -->
+<path class="ln" d="M300 258H200V118H290" marker-end="url(#ci9b-arrow)"/>
+<text x="190" y="190" text-anchor="end" class="mut">Some(inner_vec)</text>
+<text x="190" y="206" text-anchor="end" class="mut">becomes current</text>
+<!-- footer -->
+<text x="400" y="302" text-anchor="middle" class="mut">No intermediate Vec is ever built for the nested layer — only collect() allocates, once, for the result.</text>
+</svg>
+</div>
+
 ## Benchmark Example
 
 ```rust

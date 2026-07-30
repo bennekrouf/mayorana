@@ -157,6 +157,58 @@ error[E0106]: missing lifetime specifier
 
 ### Comment le Corriger
 
+Le correctif ne peut prendre que trois formes, et elles diffèrent par qui possède les octets :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm8b-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Une fonction rejetée retournant une référence vers un String local se ramifie en trois conceptions valides : retourner un String owned, retourner un str static, ou retourner un Cow emprunté ou owned">
+<style>
+.mm8b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm8b-fig,[data-theme="dark"] .mm8b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm8b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm8b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm8b-fig .deadbox{fill:none;stroke:var(--mut);stroke-width:1.5;stroke-dasharray:4 3}
+.mm8b-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm8b-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm8b-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm8b-fig .ac{fill:var(--ac)}
+.mm8b-fig .mut{fill:var(--mut)}
+.mm8b-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm8b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm8b-arrowac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- rejected root -->
+<rect x="280" y="26" width="240" height="58" rx="8" class="deadbox"/>
+<text x="400" y="50" text-anchor="middle" class="body mut">fn return_str() -&gt; &amp;str</text>
+<text x="400" y="68" text-anchor="middle" class="cap">rien à emprunter pour le &amp;str</text>
+<!-- fan out -->
+<path d="M400,84 L400,112"/>
+<path d="M135,112 L665,112"/>
+<path d="M135,112 L135,140" marker-end="url(#mm8b-arrow)"/>
+<path d="M400,112 L400,140" style="stroke:var(--ac)" marker-end="url(#mm8b-arrowac)"/>
+<path d="M665,112 L665,140" marker-end="url(#mm8b-arrow)"/>
+<!-- option 1 -->
+<rect x="30" y="140" width="210" height="80" rx="8" class="box"/>
+<text x="135" y="164" text-anchor="middle" class="body">-&gt; String</text>
+<text x="135" y="184" text-anchor="middle" class="cap">l'ownership passe à l'appelant</text>
+<text x="135" y="202" text-anchor="middle" class="cap">coûte une allocation heap</text>
+<!-- option 2 -->
+<rect x="295" y="140" width="210" height="80" rx="8" class="acbox"/>
+<text x="400" y="164" text-anchor="middle" class="body ac">-&gt; &amp;'static str</text>
+<text x="400" y="184" text-anchor="middle" class="cap">octets déjà dans .rodata</text>
+<text x="400" y="202" text-anchor="middle" class="cap">zéro allocation, literals seulement</text>
+<!-- option 3 -->
+<rect x="560" y="140" width="210" height="80" rx="8" class="box"/>
+<text x="665" y="164" text-anchor="middle" class="body">-&gt; Cow&lt;'static, str&gt;</text>
+<text x="665" y="184" text-anchor="middle" class="cap">emprunté ou owned selon l'appel</text>
+<text x="665" y="202" text-anchor="middle" class="cap">n'alloue que si nécessaire</text>
+<!-- caption -->
+<text x="400" y="252" text-anchor="middle" class="cap">Le String local n'est jamais une option : il meurt à l'accolade fermante.</text>
+<text x="400" y="272" text-anchor="middle" class="cap">Chaque correctif cède l'ownership ou pointe vers de la mémoire qui survit à l'appel.</text>
+</svg>
+</div>
+
 #### Option 1 : Retourner un `String` Owned (Pas de Référence)
 ```rust
 fn return_owned() -> String {  // Transfère ownership à l'appelant

@@ -80,6 +80,77 @@ date: '2025-11-19'
 - **push() avec Vec::new()** : 4 réallocations (capacité 0 → 4 → 8 → 16).
 - **push() avec with_capacity(10)** : 0 réallocation.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo6b-fig" viewBox="0 0 800 245" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Disposition d'un Vec après dix push : une struct sur la pile avec ptr, len et cap pointant vers un tampon de seize emplacements sur le tas, dix initialisés et six réservés mais inutilisés">
+<style>
+.lo6b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo6b-fig,[data-theme="dark"] .lo6b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo6b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo6b-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo6b-fig .used{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo6b-fig .spare{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:3 3}
+.lo6b-fig .hd{fill:var(--mut);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo6b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo6b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo6b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo6b-fig line,.lo6b-fig path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.lo6b-fig line.acln{stroke:var(--ac)}
+</style>
+<defs>
+<marker id="lo6b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- côté pile -->
+<text x="120" y="32" class="hd">Sur la pile — 24 octets</text>
+<rect x="30" y="40" width="180" height="110" rx="6" class="box"/>
+<rect x="42" y="52" width="156" height="26" rx="4" class="used"/>
+<text x="120" y="70" class="tx">ptr</text>
+<rect x="42" y="84" width="156" height="26" rx="4" class="used"/>
+<text x="120" y="102" class="tx">len = 10</text>
+<rect x="42" y="116" width="156" height="26" rx="4" class="used"/>
+<text x="120" y="134" class="tx">cap = 16</text>
+<!-- ptr vers le tampon du tas -->
+<line x1="210" y1="65" x2="278" y2="65" marker-end="url(#lo6b-arrow)"/>
+<!-- tampon : 16 emplacements, 10 initialisés -->
+<text x="519" y="32" class="hd">Sur le tas — un bloc de 64 octets</text>
+<rect x="280" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="310" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="340" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="370" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="400" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="430" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="460" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="490" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="520" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="550" y="52" width="28" height="40" rx="3" class="used"/>
+<rect x="580" y="52" width="28" height="40" rx="3" class="spare"/>
+<rect x="610" y="52" width="28" height="40" rx="3" class="spare"/>
+<rect x="640" y="52" width="28" height="40" rx="3" class="spare"/>
+<rect x="670" y="52" width="28" height="40" rx="3" class="spare"/>
+<rect x="700" y="52" width="28" height="40" rx="3" class="spare"/>
+<rect x="730" y="52" width="28" height="40" rx="3" class="spare"/>
+<!-- accolades -->
+<line x1="281" y1="102" x2="577" y2="102"/>
+<text x="429" y="118" class="tx">len = 10 — initialisés</text>
+<line x1="581" y1="102" x2="757" y2="102" class="acln"/>
+<text x="669" y="118" class="ac">6 emplacements réservés, inutilisés</text>
+<!-- routes vers les deux issues -->
+<path class="ln" d="M429,126 L429,146 L255,146"/>
+<line x1="255" y1="146" x2="255" y2="163" marker-end="url(#lo6b-arrow)"/>
+<path class="ln" d="M669,126 L669,146 L565,146"/>
+<line x1="565" y1="146" x2="565" y2="163" marker-end="url(#lo6b-arrow)"/>
+<rect x="110" y="165" width="290" height="66" rx="6" class="box"/>
+<text x="255" y="188" class="tx">Le 11e push() tient dans la réserve</text>
+<text x="255" y="207" class="mut">aucun appel à l'allocateur, aucun memcpy</text>
+<text x="255" y="224" class="mut">c'est le cas amorti O(1)</text>
+<rect x="420" y="165" width="290" height="66" rx="6" class="fin"/>
+<text x="565" y="188" class="ac">shrink_to_fit()</text>
+<text x="565" y="207" class="mut">réalloue jusqu'à cap = 10</text>
+<text x="565" y="224" class="mut">une copie pour récupérer 24 octets</text>
+</svg>
+</div>
+
 ## Comparaison Benchmark
 
 ```rust

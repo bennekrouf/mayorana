@@ -155,6 +155,65 @@ fn main() {
 }
 ```
 
+Nothing was copied here. `s1` and `s2` are two stack slots, but there is only ever one heap buffer and one owner of it — which is why the compiler retires `s1` the moment it hands the buffer to `s2`:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="rstartb-fig" viewBox="0 0 800 330" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Moving a String transfers the single heap buffer from s1 to s2, invalidating s1, and the buffer is freed exactly once when s2 leaves scope">
+<style>
+.rstartb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .rstartb-fig,[data-theme="dark"] .rstartb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.rstartb-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.rstartb-fig .title{font-size:14px;font-weight:700}
+.rstartb-fig .body{font-size:12px;font-weight:600}
+.rstartb-fig .cap{font-size:11px;fill:var(--mut)}
+.rstartb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.rstartb-fig .gone{fill:var(--bg);stroke:var(--mut);stroke-width:1.5;stroke-dasharray:5 4}
+.rstartb-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.rstartb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.rstartb-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="rstartb-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+<marker id="rstartb-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"></path>
+</marker>
+</defs>
+<!-- header -->
+<text x="400" y="26" text-anchor="middle" class="title">let s1 = String::from("hello");   let s2 = s1;</text>
+<text x="190" y="56" text-anchor="middle" class="cap">stack</text>
+<text x="610" y="56" text-anchor="middle" class="cap">heap</text>
+<!-- s1 slot, retired -->
+<rect class="gone" x="60" y="68" width="260" height="52" rx="8"></rect>
+<text x="190" y="90" text-anchor="middle" class="body" fill="var(--mut)">s1</text>
+<text x="190" y="108" text-anchor="middle" class="cap">moved out — using it is a compile error</text>
+<!-- s2 slot, the owner -->
+<rect class="box" x="60" y="136" width="260" height="52" rx="8"></rect>
+<text x="190" y="158" text-anchor="middle" class="body">s2</text>
+<text x="190" y="176" text-anchor="middle" class="cap">ptr · len 5 · cap 5</text>
+<!-- heap buffer -->
+<rect class="box" x="480" y="90" width="260" height="76" rx="8"></rect>
+<text x="610" y="116" text-anchor="middle" class="title">"hello"</text>
+<text x="610" y="136" text-anchor="middle" class="cap">a single allocation</text>
+<text x="610" y="152" text-anchor="middle" class="cap">the move never copies it</text>
+<!-- ownership pointer -->
+<path class="acln" d="M320,162 L480,140" marker-end="url(#rstartb-arrowac)"></path>
+<text x="400" y="136" text-anchor="middle" class="body" fill="var(--ac)">owns</text>
+<!-- scope end -->
+<rect class="box" x="40" y="225" width="330" height="56" rx="8"></rect>
+<text x="205" y="249" text-anchor="middle" class="body">} // end of main</text>
+<text x="205" y="268" text-anchor="middle" class="cap">the one owner goes out of scope</text>
+<path class="ln" d="M370,253 L430,253" marker-end="url(#rstartb-arrow)"></path>
+<rect class="acbox" x="430" y="225" width="330" height="56" rx="8"></rect>
+<text x="595" y="249" text-anchor="middle" class="body" fill="#ffffff">the buffer is freed — exactly once</text>
+<text x="595" y="268" text-anchor="middle" class="cap" fill="#ffffff">no double free, no garbage collector</text>
+<!-- caption -->
+<text x="400" y="312" text-anchor="middle" class="cap">Rule 2 (one owner) and rule 3 (drop at end of scope) are what remove free() from your code</text>
+</svg>
+</div>
+
 ## Next Steps
 
 Now that you have the basics, try building a small project to practice your skills. The Rust documentation is an excellent resource for learning more:

@@ -94,6 +94,61 @@ Dropping resource 2
 Dropping resource 1
 ```
 
+Trois événements différents convergent vers le même appel au destructeur — et exactement un le contourne :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm11b-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Fin de scope, move d'ownership et mem drop convergent tous vers le même appel au destructeur, tandis que mem forget consomme la valeur sans jamais exécuter le destructeur">
+<style>
+.mm11b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm11b-fig,[data-theme="dark"] .mm11b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm11b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm11b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm11b-fig .deadbox{fill:none;stroke:var(--mut);stroke-width:1.5;stroke-dasharray:4 3}
+.mm11b-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm11b-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm11b-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm11b-fig .ac{fill:var(--ac)}
+.mm11b-fig .mut{fill:var(--mut)}
+.mm11b-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm11b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm11b-arrowac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- triggers -->
+<rect x="20" y="40" width="175" height="62" rx="8" class="box"/>
+<text x="107" y="66" text-anchor="middle" class="body">fin de scope</text>
+<text x="107" y="86" text-anchor="middle" class="cap">l'accolade fermante</text>
+<rect x="215" y="40" width="175" height="62" rx="8" class="box"/>
+<text x="302" y="66" text-anchor="middle" class="body">ownership moved</text>
+<text x="302" y="86" text-anchor="middle" class="cap">le scope de l'appelé finit</text>
+<rect x="410" y="40" width="175" height="62" rx="8" class="box"/>
+<text x="497" y="66" text-anchor="middle" class="body">std::mem::drop(v)</text>
+<text x="497" y="86" text-anchor="middle" class="cap">clôt le scope plus tôt</text>
+<rect x="605" y="40" width="175" height="62" rx="8" class="acbox"/>
+<text x="692" y="66" text-anchor="middle" class="body ac">std::mem::forget(v)</text>
+<text x="692" y="86" text-anchor="middle" class="cap">consommé, aucun cleanup</text>
+<!-- Y-merge of the three normal triggers -->
+<path d="M107,102 L107,140"/>
+<path d="M302,102 L302,140"/>
+<path d="M497,102 L497,140"/>
+<path d="M107,140 L497,140"/>
+<path d="M302,140 L302,180" marker-end="url(#mm11b-arrow)"/>
+<!-- destructor runs -->
+<rect x="180" y="180" width="245" height="62" rx="8" class="box"/>
+<text x="302" y="206" text-anchor="middle" class="body">drop(&amp;mut self) s'exécute</text>
+<text x="302" y="226" text-anchor="middle" class="cap">puis les champs, mémoire libérée</text>
+<!-- forget path -->
+<path d="M675,102 L675,180" style="stroke:var(--ac)" marker-end="url(#mm11b-arrowac)"/>
+<rect x="560" y="180" width="230" height="62" rx="8" class="deadbox"/>
+<text x="675" y="206" text-anchor="middle" class="body mut">destructeur jamais appelé</text>
+<text x="675" y="226" text-anchor="middle" class="cap">fichier ouvert, mémoire retenue</text>
+<!-- caption -->
+<text x="400" y="272" text-anchor="middle" class="cap">Un move ne saute pas le cleanup : il déplace qui en est responsable.</text>
+<text x="400" y="290" text-anchor="middle" class="cap">Seul mem::forget supprime la responsabilité, d'où la fuite.</text>
+</svg>
+</div>
+
 ## Quand Implémenter Drop Manuellement
 
 ### 1. Cleanup de Ressources
