@@ -137,6 +137,64 @@ good(&owned);  // Deref coercion: String -> &str
 good("literal");  // Direct &str
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm1-fig2" viewBox="0 0 800 340" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="A &str parameter accepts both a String and a literal through deref coercion, while a String parameter forces the literal to allocate">
+<style>
+.mm1-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm1-fig2,[data-theme="dark"] .mm1-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm1-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm1-fig2 .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm1-fig2 .title{font:700 14px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm1-fig2 .sub{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm1-fig2 .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm1-fig2 .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm1-fig2 .ac{fill:var(--ac)}
+.mm1-fig2 path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm1b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm1b-arrow-ac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" text-anchor="middle" class="title">Which Callers Can Reach Your Function?</text>
+<!-- row 1 label -->
+<text x="40" y="56" class="sub">fn good(s: &amp;str)</text>
+<!-- callers -->
+<rect x="40" y="70" width="190" height="46" rx="8" class="box"/>
+<text x="135" y="90" text-anchor="middle" class="body">String::from("test")</text>
+<text x="135" y="106" text-anchor="middle" class="cap">passed as &amp;owned</text>
+<rect x="40" y="140" width="190" height="46" rx="8" class="box"/>
+<text x="135" y="160" text-anchor="middle" class="body">"literal"</text>
+<text x="135" y="176" text-anchor="middle" class="cap">already a &amp;'static str</text>
+<!-- coercion node -->
+<rect x="310" y="93" width="170" height="70" rx="8" class="acbox"/>
+<text x="395" y="117" text-anchor="middle" class="title ac">&amp;str</text>
+<text x="395" y="136" text-anchor="middle" class="cap">deref coercion</text>
+<text x="395" y="152" text-anchor="middle" class="cap">zero allocation</text>
+<!-- callee -->
+<rect x="560" y="105" width="200" height="46" rx="8" class="box"/>
+<text x="660" y="133" text-anchor="middle" class="body">fn good(s: &amp;str)</text>
+<!-- arrows row 1: Y-merge then single arrow -->
+<path d="M230,93 L270,93 L270,128"/>
+<path d="M230,163 L270,163 L270,128"/>
+<path d="M270,128 L310,128" marker-end="url(#mm1b-arrow-ac)"/>
+<path d="M480,128 L560,128" marker-end="url(#mm1b-arrow)"/>
+<!-- divider -->
+<path d="M40,215 L760,215" style="stroke-dasharray:4 4"/>
+<!-- row 2 label -->
+<text x="40" y="247" class="sub">fn bad(s: String)</text>
+<rect x="40" y="262" width="190" height="46" rx="8" class="box"/>
+<text x="135" y="290" text-anchor="middle" class="body">"literal"</text>
+<rect x="310" y="262" width="170" height="46" rx="8" class="box"/>
+<text x="395" y="282" text-anchor="middle" class="body">.to_string()</text>
+<text x="395" y="299" text-anchor="middle" class="cap">forced heap alloc</text>
+<rect x="560" y="262" width="200" height="46" rx="8" class="box"/>
+<text x="660" y="290" text-anchor="middle" class="body">fn bad(s: String)</text>
+<path d="M230,285 L310,285" marker-end="url(#mm1b-arrow)"/>
+<path d="M480,285 L560,285" marker-end="url(#mm1b-arrow)"/>
+</svg>
+</div>
+
 **Memory Allocation**:
 - `String` allocates on heap, requires deallocation
 - `&str` to literals points to program binary (zero allocation)

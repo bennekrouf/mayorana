@@ -88,6 +88,60 @@ date: '2025-10-27'
 - **push() avec Vec::new()** : 4 réallocations (capacité 0 → 4 → 8 → 16).
 - **push() avec with_capacity(10)** : 0 réallocation.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci4b-fig" viewBox="0 0 800 210" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="La capacité double de 0 à 4 puis 8 puis 16 pendant l'insertion de dix éléments, et chaque étape de croissance recopie les éléments déjà stockés">
+<!-- style -->
+<style>
+.ci4b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci4b-fig,[data-theme="dark"] .ci4b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci4b-fig .bg{fill:var(--bg)}
+.ci4b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci4b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci4b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci4b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci4b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci4b-fig .ac{fill:var(--ac)}
+.ci4b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci4b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="210" rx="8"/>
+<!-- titre -->
+<text x="400" y="26" text-anchor="middle" class="title">Chronologie de la capacité : 10 push() sur Vec::new()</text>
+<!-- étape 1 -->
+<rect class="box" x="40" y="62" width="140" height="40" rx="6"/>
+<text x="110" y="87" text-anchor="middle" class="tx">cap 0</text>
+<text x="110" y="122" text-anchor="middle" class="mut">aucun bloc sur le tas</text>
+<!-- étape 1 vers 2 -->
+<text x="205" y="76" text-anchor="middle" class="mut" font-size="10">alloc</text>
+<path class="ln" d="M180 88H230" marker-end="url(#ci4b-arrow)"/>
+<!-- étape 2 -->
+<rect class="box" x="230" y="62" width="140" height="40" rx="6"/>
+<text x="300" y="87" text-anchor="middle" class="tx">cap 4</text>
+<text x="300" y="122" text-anchor="middle" class="mut">push 1 à 4 entrent</text>
+<!-- étape 2 vers 3 -->
+<text x="395" y="76" text-anchor="middle" class="mut ac" font-size="10">copie 4</text>
+<path class="ln" d="M370 88H420" marker-end="url(#ci4b-arrow)"/>
+<!-- étape 3 -->
+<rect class="box" x="420" y="62" width="140" height="40" rx="6"/>
+<text x="490" y="87" text-anchor="middle" class="tx">cap 8</text>
+<text x="490" y="122" text-anchor="middle" class="mut">push 5 à 8 entrent</text>
+<!-- étape 3 vers 4 -->
+<text x="585" y="76" text-anchor="middle" class="mut ac" font-size="10">copie 8</text>
+<path class="ln" d="M560 88H610" marker-end="url(#ci4b-arrow)"/>
+<!-- étape 4 -->
+<rect class="acbox" x="610" y="62" width="140" height="40" rx="6"/>
+<text x="680" y="87" text-anchor="middle" class="tx ac">cap 16</text>
+<text x="680" y="122" text-anchor="middle" class="mut">push 9 et 10, 6 inutilisés</text>
+<!-- pied -->
+<text x="400" y="160" text-anchor="middle" class="mut">Chaque croissance alloue un bloc plus grand, recopie les éléments déjà stockés, puis libère l'ancien bloc.</text>
+<text x="400" y="182" text-anchor="middle" class="mut">with_capacity(10) saute toute la ligne : une allocation, zéro copie, exactement 10 emplacements.</text>
+</svg>
+</div>
+
 ## Comparaison de benchmark
 
 ```rust

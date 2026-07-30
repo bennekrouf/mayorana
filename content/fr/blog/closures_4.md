@@ -79,6 +79,70 @@ Une `move` closure (définie avec le mot-clé `move`) force la closure à prendr
   println!("{}", x); // OK: `x` est toujours valide
   ```
 
+Le même mot-clé `move` produit deux résultats totalement différents pour le binding d'origine, selon que le type capturé est `Copy` ou non :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl4b-fig" viewBox="0 0 800 350" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison côte à côte de move capturant une String non-Copy contre un i32 Copy et de ce qu'il advient du binding d'origine">
+<!-- style -->
+<style>
+.cl4b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl4b-fig,[data-theme="dark"] .cl4b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl4b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl4b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl4b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl4b-fig .hd{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl4b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl4b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl4b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.cl4b-fig .sep{stroke:var(--ln);stroke-width:1;stroke-dasharray:4 4}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl4b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="18" text-anchor="middle" class="ti">Le même `move`, deux issues pour le binding d'origine</text>
+<!-- separator -->
+<path d="M400,36 L400,300" class="sep"/>
+<!-- headers -->
+<text x="210" y="50" text-anchor="middle" class="hd">type non-Copy</text>
+<text x="590" y="50" text-anchor="middle" class="hd">type Copy</text>
+<!-- left box1 -->
+<rect x="40" y="62" width="340" height="52" rx="6" class="box"/>
+<text x="210" y="84" text-anchor="middle" class="tx">let s = String::from("hello");</text>
+<text x="210" y="102" text-anchor="middle" class="mut">buffer sur le heap, un seul owner</text>
+<!-- right box1 -->
+<rect x="420" y="62" width="340" height="52" rx="6" class="box"/>
+<text x="590" y="84" text-anchor="middle" class="tx">let x = 42;</text>
+<text x="590" y="102" text-anchor="middle" class="mut">4 octets sur la stack</text>
+<!-- arrows down -->
+<path d="M210,114 L210,144" class="ln" marker-end="url(#cl4b-arrow)"/>
+<path d="M590,114 L590,144" class="ln" marker-end="url(#cl4b-arrow)"/>
+<!-- left box2 -->
+<rect x="40" y="144" width="340" height="58" rx="6" class="boxac"/>
+<text x="210" y="168" text-anchor="middle" class="tx">move || println!("{}", s)</text>
+<text x="210" y="186" text-anchor="middle" class="mut">le buffer migre dans la closure</text>
+<!-- right box2 -->
+<rect x="420" y="144" width="340" height="58" rx="6" class="boxac"/>
+<text x="590" y="168" text-anchor="middle" class="tx">move || println!("{}", x)</text>
+<text x="590" y="186" text-anchor="middle" class="mut">copie bit à bit stockée dedans</text>
+<!-- arrows down -->
+<path d="M210,202 L210,232" class="ln" marker-end="url(#cl4b-arrow)"/>
+<path d="M590,202 L590,232" class="ln" marker-end="url(#cl4b-arrow)"/>
+<!-- left box3 -->
+<rect x="40" y="232" width="340" height="58" rx="6" class="box"/>
+<text x="210" y="256" text-anchor="middle" class="tx">println!("{}", s); // E0382</text>
+<text x="210" y="274" text-anchor="middle" class="mut">le binding d'origine est mort</text>
+<!-- right box3 -->
+<rect x="420" y="232" width="340" height="58" rx="6" class="box"/>
+<text x="590" y="256" text-anchor="middle" class="tx">println!("{}", x); // OK</text>
+<text x="590" y="274" text-anchor="middle" class="mut">l'original reste utilisable</text>
+<!-- caption -->
+<text x="400" y="322" text-anchor="middle" class="mut">C'est pourquoi un `let mut count = 0` muté dans une move closure laisse le</text>
+<text x="400" y="338" text-anchor="middle" class="mut">`count` externe à 0 — la closure incrémente sa propre copie privée.</text>
+</svg>
+</div>
+
 ### 2. Interaction avec les Closure Traits
 
 Le trait d'une `move` closure (`Fn`, `FnMut`, `FnOnce`) dépend de comment les variables capturées sont utilisées :

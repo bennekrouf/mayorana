@@ -270,6 +270,61 @@ fn decorator_example() {
 }
 ```
 
+Le decorator est le cas subtil : `with_logging` *accepte* une closure et en *retourne* une, donc la closure retournée doit avaler `f` en entier. Voici ce qu'un appel à travers le wrapper fait réellement :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl6b-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un appel traversant la closure decorator retournée par with_logging, qui possède la fonction enveloppée et exécute le log avant de lui déléguer">
+<!-- style -->
+<style>
+.cl6b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl6b-fig,[data-theme="dark"] .cl6b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl6b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl6b-fig .shell{fill:none;stroke:var(--ac);stroke-width:2}
+.cl6b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl6b-fig .hdac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl6b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl6b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl6b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl6b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Une closure decorator enveloppe la fonction qu'on lui a confiée</text>
+<!-- shell -->
+<rect x="200" y="44" width="420" height="200" rx="8" class="shell"/>
+<text x="410" y="66" text-anchor="middle" class="hdac">closure retournée par with_logging</text>
+<text x="410" y="84" text-anchor="middle" class="mut">move || { … } — possède `f` entièrement</text>
+<!-- caller -->
+<rect x="30" y="112" width="150" height="54" rx="6" class="box"/>
+<text x="105" y="136" text-anchor="middle" class="tx">decorated()</text>
+<text x="105" y="154" text-anchor="middle" class="mut">appelant</text>
+<!-- arrow into log step -->
+<path d="M180,139 L230,139" class="ln" marker-end="url(#cl6b-arrow)"/>
+<!-- log step -->
+<rect x="230" y="112" width="170" height="54" rx="6" class="box"/>
+<text x="315" y="136" text-anchor="middle" class="tx">println!("Début…")</text>
+<text x="315" y="154" text-anchor="middle" class="mut">comportement ajouté</text>
+<!-- arrow to inner f -->
+<path d="M400,139 L440,139" class="ln" marker-end="url(#cl6b-arrow)"/>
+<!-- inner f -->
+<rect x="440" y="112" width="150" height="54" rx="6" class="box"/>
+<text x="515" y="136" text-anchor="middle" class="tx">f()</text>
+<text x="515" y="154" text-anchor="middle" class="mut">l'original capturé</text>
+<!-- inner note -->
+<text x="410" y="200" text-anchor="middle" class="mut">`f` a été moved dedans : le wrapper reste valide bien après le retour de with_logging</text>
+<text x="410" y="218" text-anchor="middle" class="mut">un nouveau type anonyme par enveloppe — inlinable, sans vtable</text>
+<!-- arrow out -->
+<path d="M590,139 L650,139" class="ln" marker-end="url(#cl6b-arrow)"/>
+<!-- result -->
+<rect x="650" y="112" width="120" height="54" rx="6" class="box"/>
+<text x="710" y="143" text-anchor="middle" class="tx">42</text>
+<!-- caption -->
+<text x="400" y="276" text-anchor="middle" class="mut">Enveloppe le wrapper et ça s'imbrique encore — chaque couche est une coquille `impl Fn`.</text>
+</svg>
+</div>
+
 ### 4. Factory Pattern avec HOFs
 
 ```rust

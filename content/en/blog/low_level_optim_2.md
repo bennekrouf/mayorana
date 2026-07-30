@@ -122,6 +122,53 @@ To confirm this efficiency in practice, use these techniques:
 - **Profiling**: With `perf` on Linux (`perf stat -e instructions,cycles`), check instruction count and cycles. A fused loop should show minimal overhead versus the baseline.
 - **Debug vs. Release**: Compile with `--debug` and `--release` to see the difference. Debug mode might show separate iterator steps, while release mode fuses them, proving the optimization.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo2-fig2" viewBox="0 0 800 375" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="In a debug build each iterator adapter costs a nested next() stack frame per element, while the release build collapses them into one fused loop body with no call instructions">
+<style>
+.lo2-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo2-fig2,[data-theme="dark"] .lo2-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo2-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo2-fig2 .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo2-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig2 .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig2 .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig2 .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo2-fig2 line,.lo2-fig2 path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="lo2b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- left: debug nesting -->
+<text x="190" y="22" class="ti">Debug build — 4 stack frames per element</text>
+<rect x="40" y="38" width="300" height="40" rx="5" class="box"/>
+<text x="190" y="63" class="tx">collect() calls next()</text>
+<line x1="235" y1="78" x2="235" y2="96" marker-end="url(#lo2b-arrow)"/>
+<rect x="70" y="98" width="270" height="40" rx="5" class="box"/>
+<text x="205" y="123" class="tx">Map::next() — x * 2</text>
+<line x1="235" y1="138" x2="235" y2="156" marker-end="url(#lo2b-arrow)"/>
+<rect x="100" y="158" width="240" height="40" rx="5" class="box"/>
+<text x="220" y="183" class="tx">Filter::next() — x % 2</text>
+<line x1="235" y1="198" x2="235" y2="216" marker-end="url(#lo2b-arrow)"/>
+<rect x="130" y="218" width="210" height="40" rx="5" class="box"/>
+<text x="235" y="243" class="tx">Range::next()</text>
+<!-- right: release fused -->
+<text x="600" y="22" class="ti">Release build — inlining + fusion</text>
+<rect x="430" y="38" width="340" height="220" rx="6" class="fin"/>
+<text x="600" y="110" class="ac">One fused loop body</text>
+<text x="600" y="136" class="tx">no Map / Filter structs remain</text>
+<text x="600" y="160" class="mut">1 stack frame, 0 call instructions</text>
+<!-- merge into verification -->
+<path class="ln" d="M235,258 L235,286 L400,286"/>
+<path class="ln" d="M600,258 L600,286 L400,286"/>
+<line x1="400" y1="286" x2="400" y2="300" marker-end="url(#lo2b-arrow)"/>
+<rect x="210" y="302" width="380" height="58" rx="6" class="box"/>
+<text x="400" y="327" class="tx">Verify: --emit asm on both builds</text>
+<text x="400" y="347" class="mut">release should contain no call inside the loop</text>
+</svg>
+</div>
+
 ## Example Outcome
 
 In the assembly for the example, expect a loop like:

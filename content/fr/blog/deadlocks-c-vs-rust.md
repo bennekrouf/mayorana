@@ -126,6 +126,74 @@ Rust garantit que :
 - Un mutex ne peut pas être accédé sans être verrouillé
 - Les règles d’emprunt empêchent les accès concurrents non valides
 
+La différence avec C se joue du côté du *déverrouillage*. En C, l'unlock est une instruction qu'il faut atteindre ; en Rust, c'est une implémentation de `Drop` qui s'exécute sur chaque chemin de sortie du scope :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="dlockb-fig" viewBox="0 0 800 400" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison côte à côte : en C un return précoce saute le pthread_mutex_unlock et laisse le mutex verrouillé, alors qu'en Rust la destruction du MutexGuard déverrouille sur tous les chemins de sortie">
+<style>
+.dlockb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .dlockb-fig,[data-theme="dark"] .dlockb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.dlockb-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.dlockb-fig .title{font-size:13px;font-weight:700}
+.dlockb-fig .body{font-size:12px;font-weight:600}
+.dlockb-fig .cap{font-size:11px;fill:var(--mut)}
+.dlockb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.dlockb-fig .dead{fill:var(--bg);stroke:var(--mut);stroke-width:1.5;stroke-dasharray:5 4}
+.dlockb-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.dlockb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="dlockb-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- column titles -->
+<text x="210" y="28" text-anchor="middle" class="title">C — l'unlock est une instruction</text>
+<text x="590" y="28" text-anchor="middle" class="title">Rust — l'unlock est un destructeur</text>
+<!-- C step 1 -->
+<rect class="box" x="40" y="48" width="340" height="52" rx="8"></rect>
+<text x="210" y="70" text-anchor="middle" class="body">pthread_mutex_lock(&amp;m)</text>
+<text x="210" y="88" text-anchor="middle" class="cap">le verrou est détenu par ce thread</text>
+<path class="ln" d="M210,100 L210,124" marker-end="url(#dlockb-arrow-fr)"></path>
+<!-- C step 2 -->
+<rect class="box" x="40" y="124" width="340" height="52" rx="8"></rect>
+<text x="210" y="146" text-anchor="middle" class="body">if (err) return;</text>
+<text x="210" y="164" text-anchor="middle" class="cap">la sortie précoce saute la suite</text>
+<path class="ln" d="M210,176 L210,200" marker-end="url(#dlockb-arrow-fr)"></path>
+<!-- C step 3 -->
+<rect class="dead" x="40" y="200" width="340" height="52" rx="8"></rect>
+<text x="210" y="222" text-anchor="middle" class="body" fill="var(--mut)">pthread_mutex_unlock(&amp;m)</text>
+<text x="210" y="240" text-anchor="middle" class="cap">jamais atteint sur le chemin d'erreur</text>
+<path class="ln" d="M210,252 L210,276" marker-end="url(#dlockb-arrow-fr)"></path>
+<!-- C outcome -->
+<rect class="dead" x="40" y="276" width="340" height="58" rx="8"></rect>
+<text x="210" y="300" text-anchor="middle" class="title" fill="var(--mut)">Le mutex reste verrouillé</text>
+<text x="210" y="320" text-anchor="middle" class="cap">le thread suivant se bloque indéfiniment</text>
+<!-- Rust step 1 -->
+<rect class="box" x="420" y="48" width="340" height="52" rx="8"></rect>
+<text x="590" y="70" text-anchor="middle" class="body">let g = m.lock().unwrap();</text>
+<text x="590" y="88" text-anchor="middle" class="cap">le MutexGuard possède le verrou</text>
+<path class="ln" d="M590,100 L590,124" marker-end="url(#dlockb-arrow-fr)"></path>
+<!-- Rust step 2 -->
+<rect class="box" x="420" y="124" width="340" height="52" rx="8"></rect>
+<text x="590" y="146" text-anchor="middle" class="body">if err { return; }</text>
+<text x="590" y="164" text-anchor="middle" class="cap">sortie précoce — ou panique — hors du scope</text>
+<path class="ln" d="M590,176 L590,200" marker-end="url(#dlockb-arrow-fr)"></path>
+<!-- Rust step 3 -->
+<rect class="box" x="420" y="200" width="340" height="52" rx="8"></rect>
+<text x="590" y="222" text-anchor="middle" class="body">drop(g) — inséré par le compilateur</text>
+<text x="590" y="240" text-anchor="middle" class="cap">exécuté sur tous les chemins, unwind inclus</text>
+<path class="ln" d="M590,252 L590,276" marker-end="url(#dlockb-arrow-fr)"></path>
+<!-- Rust outcome -->
+<rect class="acbox" x="420" y="276" width="340" height="58" rx="8"></rect>
+<text x="590" y="300" text-anchor="middle" class="title" fill="#ffffff">Libéré, toujours</text>
+<text x="590" y="320" text-anchor="middle" class="body" fill="#ffffff">un mode de défaillance en moins à gérer</text>
+<!-- caption -->
+<text x="400" y="368" text-anchor="middle" class="cap">RAII supprime l'oubli de déverrouillage — pas le bug d'ordre de verrouillage</text>
+</svg>
+</div>
+
 Mais : **Rust ne vérifie pas l’ordre de verrouillage**. Si un thread verrouille `a` puis `b`, et un autre `b` puis `a`, un deadlock peut quand même se produire.
 
 ## Compilation vs Exécution

@@ -173,6 +173,71 @@ fn main() {
   ```
 - **Quantifié** : Pour 1M d'événements, statique pourrait prendre 1ms (arithmétique pure), tandis que dynamique prend 1.2ms (overhead vtable + pas de fusion). Une différence de 20% compte en temps réel.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td3b-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Empreinte binaire : le dispatch statique émet une copie de code machine par type de processeur alors que le dispatch dynamique n'émet qu'un seul corps partagé">
+<style>
+.td3b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td3b-fig,[data-theme="dark"] .td3b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td3b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td3b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td3b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td3b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td3b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td3b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td3b-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td3b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td3b-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- titles -->
+<text x="220" y="26" class="ti">Statique : une copie par type</text>
+<text x="612" y="26" class="ti">Dynamique : une copie pour tous</text>
+<!-- left: types -->
+<rect class="box" x="55" y="54" width="120" height="38" rx="6"/>
+<text x="115" y="78" class="tx">FastProcessor</text>
+<rect class="box" x="55" y="104" width="120" height="38" rx="6"/>
+<text x="115" y="128" class="tx">LogProcessor</text>
+<rect class="box" x="55" y="154" width="120" height="38" rx="6"/>
+<text x="115" y="178" class="tx">…8 autres types</text>
+<!-- left: one arrow per type, no sharing -->
+<path class="ln" d="M175,73 L203,73" marker-end="url(#td3b-arrow)"/>
+<path class="ln" d="M175,123 L203,123" marker-end="url(#td3b-arrow)"/>
+<path class="ln" d="M175,173 L203,173" marker-end="url(#td3b-arrow)"/>
+<!-- left: emitted copies -->
+<rect class="box" x="205" y="54" width="180" height="38" rx="6"/>
+<text x="295" y="78" class="tx">process_static&lt;Fast&gt;</text>
+<rect class="box" x="205" y="104" width="180" height="38" rx="6"/>
+<text x="295" y="128" class="tx">process_static&lt;Log&gt;</text>
+<rect class="box" x="205" y="154" width="180" height="38" rx="6"/>
+<text x="295" y="178" class="tx">× 8 copies de plus</text>
+<!-- right: types -->
+<rect class="box" x="440" y="54" width="120" height="38" rx="6"/>
+<text x="500" y="78" class="tx">FastProcessor</text>
+<rect class="box" x="440" y="104" width="120" height="38" rx="6"/>
+<text x="500" y="128" class="tx">LogProcessor</text>
+<rect class="box" x="440" y="154" width="120" height="38" rx="6"/>
+<text x="500" y="178" class="tx">…8 autres types</text>
+<!-- right: Y-merge into a single shared body -->
+<path class="lnAc" d="M560,73 L590,73"/>
+<path class="lnAc" d="M560,123 L590,123"/>
+<path class="lnAc" d="M560,173 L590,173"/>
+<path class="lnAc" d="M590,73 L590,173"/>
+<path class="lnAc" d="M590,123 L633,123" marker-end="url(#td3b-arrowAc)"/>
+<rect class="boxAc" x="635" y="99" width="150" height="48" rx="6"/>
+<text x="710" y="120" class="tx">process_dynamic</text>
+<text x="710" y="138" class="mut">un seul corps, ~50 o</text>
+<!-- footprint captions -->
+<text x="220" y="225" class="mut">.text grossit de ~100 o par type</text>
+<text x="220" y="243" class="mut">≈ 1 Ko dès qu'il y en a 10</text>
+<text x="612" y="225" class="mut">.text reste stable quand on ajoute des types</text>
+<text x="612" y="243" class="mut">chaque valeur porte un ptr vtable de 8 octets</text>
+<!-- caption -->
+<text x="400" y="282" class="mut">Les cycles favorisent la colonne de gauche ; la taille binaire et l'ajout de types favorisent la droite</text>
+</svg>
+</div>
+
 ## Scénarios et Préférences
 
 ### Choisir le Dispatch Statique

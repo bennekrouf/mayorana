@@ -102,6 +102,56 @@ fn main() {
 - `T: Default`: Provides a zero-like starting value for `sum`, common for numeric types.
 - `T: Copy`: Allows stack-based copying of `T` values (e.g., `a[i]`), avoiding costly cloning or references for primitives like `f32`.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td2b-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Each trait bound on dot_product maps to the one line of the function body it makes legal">
+<style>
+.td2b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td2b-fig,[data-theme="dark"] .td2b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td2b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td2b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td2b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td2b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td2b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td2b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td2b-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td2b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td2b-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- headers -->
+<text x="165" y="24" class="ti">Bound</text>
+<text x="595" y="24" class="ti">The line it makes legal</text>
+<!-- row 1: Add -->
+<rect class="box" x="40" y="44" width="250" height="40" rx="6"/>
+<text x="165" y="69" class="tx">T: Add&lt;Output = T&gt;</text>
+<path class="ln" d="M290,64 L428,64" marker-end="url(#td2b-arrow)"/>
+<rect class="box" x="430" y="44" width="330" height="40" rx="6"/>
+<text x="595" y="69" class="tx">sum = sum + …  (stays T)</text>
+<!-- row 2: Mul -->
+<rect class="box" x="40" y="96" width="250" height="40" rx="6"/>
+<text x="165" y="121" class="tx">T: Mul&lt;Output = T&gt;</text>
+<path class="ln" d="M290,116 L428,116" marker-end="url(#td2b-arrow)"/>
+<rect class="box" x="430" y="96" width="330" height="40" rx="6"/>
+<text x="595" y="121" class="tx">a[i] * b[i]</text>
+<!-- row 3: Default -->
+<rect class="box" x="40" y="148" width="250" height="40" rx="6"/>
+<text x="165" y="173" class="tx">T: Default</text>
+<path class="ln" d="M290,168 L428,168" marker-end="url(#td2b-arrow)"/>
+<rect class="box" x="430" y="148" width="330" height="40" rx="6"/>
+<text x="595" y="173" class="tx">let mut sum = T::default()</text>
+<!-- row 4: Copy -->
+<rect class="boxAc" x="40" y="200" width="250" height="40" rx="6"/>
+<text x="165" y="225" class="tx">T: Copy</text>
+<path class="lnAc" d="M290,220 L428,220" marker-end="url(#td2b-arrowAc)"/>
+<rect class="boxAc" x="430" y="200" width="330" height="40" rx="6"/>
+<text x="595" y="225" class="tx">read a[i] with no move, no clone</text>
+<!-- caption -->
+<text x="400" y="270" class="mut">Remove one bound and exactly that line stops compiling — nothing waits until run time</text>
+</svg>
+</div>
+
 ## Ensuring Type Safety
 
 - **Compile-Time Checks**: The bounds reject invalid types at compile time. For example:

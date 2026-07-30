@@ -329,6 +329,70 @@ fn state_machine_example() {
 - **`FnOnce`** : Ne peut être appelée qu'une fois, consommant la closure. Inapproprié pour plusieurs appels.
 - **`Fn`** : Utilise des emprunts immutables, empêchant la mutation d'état, donc ne peut pas modifier les variables capturées.
 
+Le trait obtenu ne se choisit pas : le compilateur le déduit de la façon dont le corps touche ses captures, et cela détermine ensuite combien de fois tu peux l'appeler :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl5b-fig" viewBox="0 0 800 350" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Branchement de décision montrant comment l'usage des captures par le corps de la closure sélectionne Fn, FnMut ou FnOnce et combien d'appels chacun autorise">
+<!-- style -->
+<style>
+.cl5b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl5b-fig,[data-theme="dark"] .cl5b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl5b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl5b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl5b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .hd{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .hdac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl5b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl5b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">Le corps décide du trait — le trait décide du nombre d'appels</text>
+<!-- root box -->
+<rect x="230" y="38" width="340" height="52" rx="6" class="box"/>
+<text x="400" y="60" text-anchor="middle" class="tx">Comment le corps touche-t-il ses captures ?</text>
+<text x="400" y="78" text-anchor="middle" class="mut">déduit, jamais déclaré</text>
+<!-- trunk -->
+<path d="M400,90 L400,116" class="ln"/>
+<!-- bus -->
+<path d="M145,116 L655,116" class="ln"/>
+<!-- branch down 1 -->
+<path d="M145,116 L145,150" class="ln" marker-end="url(#cl5b-arrow)"/>
+<!-- branch down 2 -->
+<path d="M400,116 L400,150" class="ln" marker-end="url(#cl5b-arrowac)"/>
+<!-- branch down 3 -->
+<path d="M655,116 L655,150" class="ln" marker-end="url(#cl5b-arrow)"/>
+<!-- leaf 1 -->
+<rect x="30" y="150" width="230" height="80" rx="6" class="box"/>
+<text x="145" y="174" text-anchor="middle" class="hd">Fn</text>
+<text x="145" y="194" text-anchor="middle" class="tx">il les lit seulement</text>
+<text x="145" y="212" text-anchor="middle" class="mut">appels multiples, état figé</text>
+<!-- leaf 2 -->
+<rect x="285" y="150" width="230" height="80" rx="6" class="boxac"/>
+<text x="400" y="174" text-anchor="middle" class="hdac">FnMut</text>
+<text x="400" y="194" text-anchor="middle" class="tx">il les mute</text>
+<text x="400" y="212" text-anchor="middle" class="mut">appels multiples, état conservé</text>
+<!-- leaf 3 -->
+<rect x="540" y="150" width="230" height="80" rx="6" class="box"/>
+<text x="655" y="174" text-anchor="middle" class="hd">FnOnce</text>
+<text x="655" y="194" text-anchor="middle" class="tx">il les consomme</text>
+<text x="655" y="212" text-anchor="middle" class="mut">un seul appel</text>
+<!-- to verdict -->
+<path d="M400,230 L400,262" class="ln" marker-end="url(#cl5b-arrowac)"/>
+<!-- verdict -->
+<rect x="180" y="262" width="440" height="52" rx="6" class="boxac"/>
+<text x="400" y="284" text-anchor="middle" class="tx">fn call_repeatedly&lt;F: FnMut() -&gt; i32&gt;(f: &amp;mut F)</text>
+<text x="400" y="302" text-anchor="middle" class="mut">le binding et le paramètre doivent tous deux être `mut`</text>
+<!-- caption -->
+<text x="400" y="338" text-anchor="middle" class="mut">Prendre `&amp;mut F` plutôt que `F` est ce qui permet à l'appelant de réutiliser la closure ensuite.</text>
+</svg>
+</div>
+
 ```rust
 fn demonstrate_trait_differences() {
     let x = 5;

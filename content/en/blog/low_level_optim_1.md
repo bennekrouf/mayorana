@@ -147,6 +147,58 @@ If using `repr(packed)` (13 bytes), I'd save 3 bytes per packet, but unaligned `
 
 **Alternative scenario**: Serializing thousands of tiny structs to disk with infrequent access—`repr(packed)` might make sense to minimize storage, accepting slower deserialization.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo1-fig2" viewBox="0 0 800 380" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Decision tree for choosing between repr(C), repr(packed), and the default Rust layout based on access pattern and memory pressure">
+<style>
+.lo1-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo1-fig2,[data-theme="dark"] .lo1-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo1-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo1-fig2 .dia{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.lo1-fig2 .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo1-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig2 .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig2 .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig2 .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo1-fig2 line{stroke:var(--ln);stroke-width:1.5}
+</style>
+<defs>
+<marker id="lo1b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+</defs>
+<!-- root -->
+<rect x="300" y="14" width="200" height="44" rx="6" class="box"/>
+<text x="400" y="41" class="ti">Choosing a repr</text>
+<line x1="400" y1="58" x2="400" y2="74" marker-end="url(#lo1b-arrow)"/>
+<!-- first decision -->
+<polygon points="400,76 520,136 400,196 280,136" class="dia"/>
+<text x="400" y="141" class="tx">Hot loop or C FFI?</text>
+<line x1="520" y1="136" x2="548" y2="136" marker-end="url(#lo1b-arrow)"/>
+<text x="534" y="127" class="mut">yes</text>
+<rect x="550" y="106" width="230" height="60" rx="6" class="fin"/>
+<text x="665" y="132" class="ac">repr(C)</text>
+<text x="665" y="152" class="mut">padding buys aligned reads</text>
+<!-- second decision -->
+<line x1="400" y1="196" x2="400" y2="212" marker-end="url(#lo1b-arrow)"/>
+<text x="418" y="209" class="mut">no</text>
+<polygon points="400,214 520,274 400,334 280,274" class="dia"/>
+<text x="400" y="270" class="tx">Memory-bound or</text>
+<text x="400" y="286" class="tx">written to disk?</text>
+<line x1="520" y1="274" x2="548" y2="274" marker-end="url(#lo1b-arrow)"/>
+<text x="534" y="265" class="mut">yes</text>
+<rect x="550" y="244" width="230" height="60" rx="6" class="box"/>
+<text x="665" y="270" class="tx">repr(packed)</text>
+<text x="665" y="290" class="mut">13 B, unaligned reads</text>
+<line x1="280" y1="274" x2="252" y2="274" marker-end="url(#lo1b-arrow)"/>
+<text x="266" y="265" class="mut">no</text>
+<rect x="20" y="244" width="230" height="60" rx="6" class="box"/>
+<text x="135" y="270" class="tx">Default Rust layout</text>
+<text x="135" y="290" class="mut">compiler reorders freely</text>
+<!-- caption -->
+<text x="400" y="362" class="mut">On ARM and other strict-alignment targets, packed field access can panic — measure on the target</text>
+</svg>
+</div>
+
 ## Advanced Considerations
 
 - Use profiling tools like `perf` to confirm cache miss reductions

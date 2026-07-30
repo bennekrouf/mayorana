@@ -86,6 +86,52 @@ fn capture_ref<'a>(s: &'a str) -> impl Fn() -> &'a str + 'a {
 }
 ```
 
+Ce seul `'a` fait trois choses à la fois : il nomme la durée de validité de l'emprunt d'entrée, il borne la durée de vie de la closure elle-même, et il marque la référence que la closure renvoie. Les trois spans doivent tenir à l'intérieur des données de l'appelant :
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl7b-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Spans de lifetime imbriqués montrant les données de l'appelant survivant à l'emprunt, à la closure retournée et à la référence qu'elle renvoie">
+<!-- style -->
+<style>
+.cl7b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl7b-fig,[data-theme="dark"] .cl7b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl7b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl7b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl7b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl7b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl7b-fig .lb{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl7b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl7b-fig .acx{fill:var(--ac);font:700 11px ui-sans-serif,system-ui,sans-serif}
+.cl7b-fig .lim{stroke:var(--ac);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+</style>
+<!-- title -->
+<text x="400" y="18" text-anchor="middle" class="ti">Un seul `'a`, trois spans imbriqués — tous doivent finir avant la donnée</text>
+<!-- signature -->
+<rect x="190" y="30" width="420" height="34" rx="6" class="boxac"/>
+<text x="400" y="52" text-anchor="middle" class="tx">fn capture_ref&lt;'a&gt;(s: &amp;'a str) -&gt; impl Fn() -&gt; &amp;'a str + 'a</text>
+<!-- limit marker -->
+<path d="M772,84 L772,252" class="lim"/>
+<text x="772" y="78" text-anchor="end" class="acx">donnée droppée ici</text>
+<!-- lane 1 -->
+<text x="265" y="110" text-anchor="end" class="lb">String de l'appelant</text>
+<rect x="280" y="90" width="492" height="30" rx="4" class="box"/>
+<text x="526" y="110" text-anchor="middle" class="mut">la seule chose qui possède vraiment des octets</text>
+<!-- lane 2 -->
+<text x="265" y="152" text-anchor="end" class="lb">s: &amp;'a str</text>
+<rect x="300" y="132" width="462" height="30" rx="4" class="box"/>
+<text x="531" y="152" text-anchor="middle" class="mut">emprunt confié à la fonction</text>
+<!-- lane 3 -->
+<text x="265" y="194" text-anchor="end" class="lb">closure + 'a</text>
+<rect x="320" y="174" width="400" height="30" rx="4" class="boxac"/>
+<text x="520" y="194" text-anchor="middle" class="mut">ne peut plus être appelée après cette barre</text>
+<!-- lane 4 -->
+<text x="265" y="236" text-anchor="end" class="lb">valeur renvoyée</text>
+<rect x="340" y="216" width="340" height="30" rx="4" class="box"/>
+<text x="510" y="236" text-anchor="middle" class="mut">&amp;'a str, le même emprunt qui ressort</text>
+<!-- caption -->
+<text x="400" y="280" text-anchor="middle" class="mut">Retire la borne `+ 'a` et la closure peut s'échapper au-delà de la barre — d'où l'erreur.</text>
+</svg>
+</div>
+
 ### Evite de Retourner des Closures Capturant des Références Courtes
 
 Les closures capturant des références à des variables locales ne peuvent pas échapper à leur scope :

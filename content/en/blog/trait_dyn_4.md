@@ -153,6 +153,61 @@ fn main() {
     plugins.insert("square".to_string(), create_square_transformer);
     ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td4b-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="A run-time plugin name is looked up in the factory registry, boxed as a dyn Transformer, and called through its single vtable slot">
+<style>
+.td4b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td4b-fig,[data-theme="dark"] .td4b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td4b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td4b-fig .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td4b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4b-fig .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td4b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td4b-fig .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td4b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td4b-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="26" class="ti">From a run-time string to a compiled method call</text>
+<!-- step 1 -->
+<rect class="box" x="40" y="60" width="200" height="56" rx="6"/>
+<text x="140" y="84" class="tx">config says "square"</text>
+<text x="140" y="104" class="mut">known only at run time</text>
+<path class="ln" d="M240,88 L298,88" marker-end="url(#td4b-arrow)"/>
+<!-- step 2 -->
+<rect class="boxAc" x="300" y="60" width="200" height="56" rx="6"/>
+<text x="400" y="84" class="tx">plugins.get("square")</text>
+<text x="400" y="104" class="mut">HashMap&lt;String, factory fn&gt;</text>
+<path class="ln" d="M500,88 L558,88" marker-end="url(#td4b-arrow)"/>
+<!-- step 3 -->
+<rect class="box" x="560" y="60" width="200" height="56" rx="6"/>
+<text x="660" y="84" class="tx">create_square_transformer</text>
+<text x="660" y="104" class="mut">a plain fn pointer, no Self</text>
+<!-- wrap to second row -->
+<path class="ln" d="M660,116 L660,148 L140,148 L140,175" marker-end="url(#td4b-arrow)"/>
+<!-- step 4 -->
+<rect class="box" x="40" y="177" width="200" height="56" rx="6"/>
+<text x="140" y="201" class="tx">Box::new(SquareTransformer)</text>
+<text x="140" y="221" class="mut">heap value + vtable ptr</text>
+<path class="lnAc" d="M240,205 L298,205" marker-end="url(#td4b-arrowAc)"/>
+<!-- step 5 -->
+<rect class="boxAc" x="300" y="177" width="200" height="56" rx="6"/>
+<text x="400" y="201" class="tx">transformer.transform(3.0)</text>
+<text x="400" y="221" class="mut">the one fixed vtable slot</text>
+<path class="ln" d="M500,205 L558,205" marker-end="url(#td4b-arrow)"/>
+<!-- step 6 -->
+<rect class="box" x="560" y="177" width="200" height="56" rx="6"/>
+<text x="660" y="201" class="tx">9.0</text>
+<text x="660" y="221" class="mut">no generic ever instantiated</text>
+<!-- caption -->
+<text x="400" y="265" class="mut">A generic transform&lt;T&gt; has no single slot to point at, so this chain could never be built</text>
+</svg>
+</div>
+
 ## How It Enables dyn Trait
 
 - **Vtable Construction**: The refactored `Transformer` has one method with a fixed signature, enabling a vtable like:

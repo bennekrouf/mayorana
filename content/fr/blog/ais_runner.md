@@ -124,6 +124,81 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 - **Masquage des secrets** — masque les clés sensibles avec un bouton de révélation
 - **Cellules cliquables** avec copie dans le presse-papiers et popup de détail
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="aisenv-fig2" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="La grille de comparaison d'environnements aligne les paramètres locaux, les paramètres Azure et deux groupes de variables DevOps côte à côte, en signalant les cellules qui diffèrent">
+<style>
+.aisenv-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .aisenv-fig2,[data-theme="dark"] .aisenv-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.aisenv-fig2 text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.aisenv-fig2 .title{font-size:13px;font-weight:700}
+.aisenv-fig2 .body{font-size:12px;font-weight:600}
+.aisenv-fig2 .cap{font-size:11px;fill:var(--mut)}
+.aisenv-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.aisenv-fig2 .hdr{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.aisenv-fig2 .acbox{fill:var(--ac);stroke:var(--ac)}
+.aisenv-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="aisenv2-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"></path>
+</marker>
+</defs>
+<!-- header row -->
+<text x="20" y="28" class="title">Comparer les environnements — une ligne par clé, une colonne par environnement</text>
+<rect class="box" x="560" y="12" width="220" height="26" rx="13"></rect>
+<text x="670" y="30" text-anchor="middle" class="body" fill="var(--ac)">Différences seulement ✓</text>
+<!-- column headers -->
+<rect class="hdr" x="20" y="52" width="140" height="32" rx="6"></rect>
+<text x="90" y="73" text-anchor="middle" class="body">Clé</text>
+<rect class="hdr" x="170" y="52" width="145" height="32" rx="6"></rect>
+<text x="243" y="73" text-anchor="middle" class="body">local.settings</text>
+<rect class="hdr" x="325" y="52" width="145" height="32" rx="6"></rect>
+<text x="398" y="73" text-anchor="middle" class="body">Paramètres Azure</text>
+<rect class="hdr" x="480" y="52" width="145" height="32" rx="6"></rect>
+<text x="553" y="73" text-anchor="middle" class="body">VG DevOps · DEV</text>
+<rect class="hdr" x="635" y="52" width="145" height="32" rx="6"></rect>
+<text x="707" y="73" text-anchor="middle" class="body">VG DevOps · PROD</text>
+<!-- row 1: identical secret -->
+<rect class="box" x="20" y="92" width="140" height="34" rx="6"></rect>
+<text x="90" y="114" text-anchor="middle" class="cap">Sql:ConnStr</text>
+<rect class="box" x="170" y="92" width="145" height="34" rx="6"></rect>
+<text x="243" y="114" text-anchor="middle" class="cap">•••• masqué</text>
+<rect class="box" x="325" y="92" width="145" height="34" rx="6"></rect>
+<text x="398" y="114" text-anchor="middle" class="cap">•••• masqué</text>
+<rect class="box" x="480" y="92" width="145" height="34" rx="6"></rect>
+<text x="553" y="114" text-anchor="middle" class="cap">•••• masqué</text>
+<rect class="box" x="635" y="92" width="145" height="34" rx="6"></rect>
+<text x="707" y="114" text-anchor="middle" class="cap">•••• masqué</text>
+<!-- row 2: value drift in PROD -->
+<rect class="box" x="20" y="130" width="140" height="34" rx="6"></rect>
+<text x="90" y="152" text-anchor="middle" class="cap">ServiceBus:ns</text>
+<rect class="box" x="170" y="130" width="145" height="34" rx="6"></rect>
+<text x="243" y="152" text-anchor="middle" class="cap">sb-dev</text>
+<rect class="box" x="325" y="130" width="145" height="34" rx="6"></rect>
+<text x="398" y="152" text-anchor="middle" class="cap">sb-dev</text>
+<rect class="box" x="480" y="130" width="145" height="34" rx="6"></rect>
+<text x="553" y="152" text-anchor="middle" class="cap">sb-dev</text>
+<rect class="acbox" x="635" y="130" width="145" height="34" rx="6"></rect>
+<text x="707" y="152" text-anchor="middle" class="body" fill="#ffffff">sb-prod</text>
+<!-- row 3: key missing in one variable group -->
+<rect class="box" x="20" y="168" width="140" height="34" rx="6"></rect>
+<text x="90" y="190" text-anchor="middle" class="cap">Feature:Retry</text>
+<rect class="box" x="170" y="168" width="145" height="34" rx="6"></rect>
+<text x="243" y="190" text-anchor="middle" class="cap">true</text>
+<rect class="box" x="325" y="168" width="145" height="34" rx="6"></rect>
+<text x="398" y="190" text-anchor="middle" class="cap">true</text>
+<rect class="acbox" x="480" y="168" width="145" height="34" rx="6"></rect>
+<text x="553" y="190" text-anchor="middle" class="body" fill="#ffffff">— absente</text>
+<rect class="box" x="635" y="168" width="145" height="34" rx="6"></rect>
+<text x="707" y="190" text-anchor="middle" class="cap">true</text>
+<!-- filter points at the flagged cells -->
+<path class="ln" d="M670,38 L670,72 L707,72 L707,130" marker-end="url(#aisenv2-arrow-fr)" stroke="var(--ac)" stroke-width="2"></path>
+<!-- caption -->
+<text x="400" y="230" text-anchor="middle" class="cap">Seules les cellules divergentes restent visibles — un mauvais namespace ou un flag absent apparaît avant le déploiement</text>
+</svg>
+</div>
+
 ## ⚡ Event Grid
 
 - **Navigateur de topics** — liste tous les topics Event Grid custom et système au niveau de la souscription, avec badges de groupe de ressources

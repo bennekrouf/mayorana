@@ -153,6 +153,60 @@ println!("{:?}", vec);       // [2, 4, 6]
   // vec.push(3);           // ERROR: Cannot borrow `vec` while iterator exists
   ```
 
+The second one surprises people because nothing *looks* like it is still borrowing. The mutable borrow taken by `iter_mut()` is stored inside the iterator, so it stays alive for as long as the iterator is still used later in the function:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="ci2-fig2" viewBox="0 0 800 262" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Timeline showing the mutable borrow created by iter_mut staying alive until the iterator's last use, so a push in between is rejected by the borrow checker">
+<!-- style -->
+<style>
+.ci2-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .ci2-fig2,[data-theme="dark"] .ci2-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.ci2-fig2 .bg{fill:var(--bg)}
+.ci2-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.ci2-fig2 .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.ci2-fig2 .span{fill:var(--ac);opacity:0.22}
+.ci2-fig2 .spanln{stroke:var(--ac);stroke-width:2;fill:none}
+.ci2-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.ci2-fig2 .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.ci2-fig2 .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.ci2-fig2 .ac{fill:var(--ac)}
+.ci2-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.ci2-fig2 .acln{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="ci2b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ln)"/></marker>
+<marker id="ci2b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- bg -->
+<rect class="bg" x="0" y="0" width="800" height="262" rx="8"/>
+<!-- title -->
+<text x="400" y="26" text-anchor="middle" class="title">How long does the &amp;mut borrow from iter_mut() last?</text>
+<!-- borrow span band -->
+<rect class="span" x="352" y="100" width="18" height="118" rx="6"/>
+<!-- code lines -->
+<rect class="box" x="40" y="46" width="300" height="30" rx="5"/>
+<text x="56" y="66" class="tx">let mut vec = vec![1, 2];</text>
+<rect class="box" x="40" y="100" width="300" height="30" rx="5"/>
+<text x="56" y="120" class="tx">let iter = vec.iter_mut();</text>
+<rect class="acbox" x="40" y="152" width="300" height="30" rx="5"/>
+<text x="56" y="172" class="tx ac">vec.push(3);</text>
+<rect class="box" x="40" y="204" width="300" height="30" rx="5"/>
+<text x="56" y="224" class="tx">for x in iter { *x += 1; }</text>
+<!-- links from lines to band -->
+<path class="ln" d="M340 115H352"/>
+<path class="acln" d="M340 167H352" marker-end="url(#ci2b-arrowac)"/>
+<path class="ln" d="M340 219H352"/>
+<!-- band annotations -->
+<text x="386" y="112" class="mut">&amp;mut vec is created and parked inside iter</text>
+<text x="386" y="164" class="tx ac">E0502: needs &amp;mut vec again — still borrowed</text>
+<text x="386" y="180" class="mut">push() may reallocate, invalidating iter's pointers</text>
+<text x="386" y="223" class="mut">last use of iter — borrow finally ends here</text>
+<!-- caption -->
+<text x="400" y="252" text-anchor="middle" class="mut">Move the push above the iter_mut() call, or below the loop, and both versions compile</text>
+</svg>
+</div>
+
 ## Real-World Examples
 
 - **`iter()` for read-only processing**:

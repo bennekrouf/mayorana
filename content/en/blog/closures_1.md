@@ -124,6 +124,66 @@ let threshold = 10;
 let filter = |x: i32| x > threshold;  // Captures `threshold`
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl1-fig2" viewBox="0 0 800 380" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Decision tree: no environment capture means a plain fn, capture means a closure, then one type means impl Fn and many types mean Box dyn Fn">
+<!-- style -->
+<style>
+.cl1-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl1-fig2,[data-theme="dark"] .cl1-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl1-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl1-fig2 .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl1-fig2 .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl1-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl1-fig2 .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl1-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl1b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="18" text-anchor="middle" class="ti">Which one do you actually need?</text>
+<!-- q1 -->
+<rect x="270" y="36" width="260" height="48" rx="6" class="box"/>
+<text x="400" y="58" text-anchor="middle" class="tx">Does the logic read a variable</text>
+<text x="400" y="75" text-anchor="middle" class="tx">from the enclosing scope?</text>
+<!-- split -->
+<path d="M400,84 L400,104 L170,104 L170,124" class="ln" marker-end="url(#cl1b-arrow)"/>
+<path d="M400,104 L630,104 L630,124" class="ln" marker-end="url(#cl1b-arrow)"/>
+<text x="290" y="99" text-anchor="middle" class="mut">no</text>
+<text x="512" y="99" text-anchor="middle" class="mut">yes</text>
+<!-- fn -->
+<rect x="40" y="124" width="260" height="66" rx="6" class="box"/>
+<text x="170" y="150" text-anchor="middle" class="tx">fn add(a: i32, b: i32)</text>
+<text x="170" y="170" text-anchor="middle" class="mut">no captures, direct call, fixed type</text>
+<!-- closure -->
+<rect x="500" y="124" width="260" height="66" rx="6" class="box"/>
+<text x="630" y="150" text-anchor="middle" class="tx">|x| x &gt; threshold</text>
+<text x="630" y="170" text-anchor="middle" class="mut">closure: unique anonymous type</text>
+<!-- to q2 -->
+<path d="M630,190 L630,210" class="ln" marker-end="url(#cl1b-arrow)"/>
+<!-- q2 -->
+<rect x="390" y="210" width="420" height="44" rx="6" class="box"/>
+<text x="600" y="238" text-anchor="middle" class="tx">Is it always the same one closure at this spot?</text>
+<!-- split2 -->
+<path d="M600,254 L600,272 L405,272 L405,292" class="ln" marker-end="url(#cl1b-arrow)"/>
+<path d="M600,272 L680,272 L680,292" class="ln" marker-end="url(#cl1b-arrow)"/>
+<text x="480" y="267" text-anchor="middle" class="mut">yes</text>
+<text x="655" y="267" text-anchor="middle" class="mut">no</text>
+<!-- impl Fn -->
+<rect x="300" y="292" width="210" height="66" rx="6" class="boxac"/>
+<text x="405" y="318" text-anchor="middle" class="tx">impl Fn</text>
+<text x="405" y="338" text-anchor="middle" class="mut">inlined, zero-cost</text>
+<!-- box dyn -->
+<rect x="560" y="292" width="210" height="66" rx="6" class="box"/>
+<text x="665" y="318" text-anchor="middle" class="tx">Box&lt;dyn Fn&gt;</text>
+<text x="665" y="338" text-anchor="middle" class="mut">vtable, heterogeneous</text>
+<!-- caption -->
+<text x="170" y="318" text-anchor="middle" class="mut">Reach for a closure only when the</text>
+<text x="170" y="336" text-anchor="middle" class="mut">answer to the first question is yes.</text>
+</svg>
+</div>
+
 ## Performance Considerations
 
 | Scenario | Static Dispatch (Closures) | Dynamic Dispatch (dyn Fn) |

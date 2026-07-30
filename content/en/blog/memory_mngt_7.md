@@ -78,6 +78,62 @@ enum List {
 }
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm7b-fig" viewBox="0 0 800 330" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Without Box each Cons variant embeds another whole List inline so its size never resolves, while with Box each node stores a fixed size pointer to the next node until Nil ends the chain">
+<style>
+.mm7b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm7b-fig,[data-theme="dark"] .mm7b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm7b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm7b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm7b-fig .deadbox{fill:none;stroke:var(--mut);stroke-width:1.5;stroke-dasharray:4 3}
+.mm7b-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm7b-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm7b-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm7b-fig .ac{fill:var(--ac)}
+.mm7b-fig .mut{fill:var(--mut)}
+.mm7b-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm7b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm7b-arrowac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- top row: without Box -->
+<text x="30" y="30" class="title">Without Box: the size question never terminates</text>
+<rect x="30" y="46" width="170" height="56" rx="8" class="box"/>
+<text x="115" y="70" text-anchor="middle" class="body">Cons(i32, List)</text>
+<text x="115" y="88" text-anchor="middle" class="cap">4 + size of List</text>
+<rect x="240" y="46" width="170" height="56" rx="8" class="box"/>
+<text x="325" y="70" text-anchor="middle" class="body">Cons(i32, List)</text>
+<text x="325" y="88" text-anchor="middle" class="cap">4 + size of List</text>
+<rect x="450" y="46" width="170" height="56" rx="8" class="box"/>
+<text x="535" y="70" text-anchor="middle" class="body">Cons(i32, List)</text>
+<text x="535" y="88" text-anchor="middle" class="cap">and so on, inline</text>
+<rect x="660" y="46" width="110" height="56" rx="8" class="deadbox"/>
+<text x="715" y="70" text-anchor="middle" class="body mut">size = infinite</text>
+<text x="715" y="88" text-anchor="middle" class="cap">rustc rejects it</text>
+<path d="M200,74 L240,74" marker-end="url(#mm7b-arrow)"/>
+<path d="M410,74 L450,74" marker-end="url(#mm7b-arrow)"/>
+<path d="M620,74 L660,74" marker-end="url(#mm7b-arrow)"/>
+<text x="400" y="126" text-anchor="middle" class="cap">Each variant embeds a whole List by value, so the compiler cannot lay it out.</text>
+<!-- bottom row: with Box -->
+<text x="30" y="186" class="title ac">With Box: every node is a fixed 16 bytes</text>
+<rect x="30" y="202" width="200" height="56" rx="8" class="acbox"/>
+<text x="130" y="226" text-anchor="middle" class="body ac">Cons(i32, Box&lt;List&gt;)</text>
+<text x="130" y="244" text-anchor="middle" class="cap">4 bytes + one 8-byte pointer</text>
+<rect x="270" y="202" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="226" text-anchor="middle" class="body">next node on the heap</text>
+<text x="370" y="244" text-anchor="middle" class="cap">same fixed layout again</text>
+<rect x="510" y="202" width="200" height="56" rx="8" class="box"/>
+<text x="610" y="226" text-anchor="middle" class="body">Nil</text>
+<text x="610" y="244" text-anchor="middle" class="cap">variant with no payload, chain ends</text>
+<path d="M230,230 L270,230" style="stroke:var(--ac)" marker-end="url(#mm7b-arrowac)"/>
+<path d="M470,230 L510,230" style="stroke:var(--ac)" marker-end="url(#mm7b-arrowac)"/>
+<!-- caption -->
+<text x="400" y="290" text-anchor="middle" class="cap">Box changes "contains a List" into "points to a List".</text>
+<text x="400" y="310" text-anchor="middle" class="cap">The recursion moves to runtime, where it is finite, and the stack size becomes known.</text>
+</svg>
+</div>
+
 ### 2. Large Data (Avoid Stack Overflow)
 Moving large structs (e.g., a 1MB buffer) to the heap prevents stack overflows.
 

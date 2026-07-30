@@ -116,6 +116,55 @@ let closure = move || println!("{}", s); // `s` est moved dans la closure
   - Si la closure ne mute pas ou ne consomme pas `s`, elle implémente toujours `Fn` (puisque `s` est owned mais pas modifié).
   - Si la closure consomme `s` (ex : `drop(s)`), elle devient `FnOnce`.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl2-fig2" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Les trois closures utilisent move, pourtant lire donne Fn, muter donne FnMut et consommer donne FnOnce">
+<!-- style -->
+<style>
+.cl2-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl2-fig2,[data-theme="dark"] .cl2-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl2-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl2-fig2 .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl2-fig2 .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl2-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl2-fig2 .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl2-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl2b-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="18" text-anchor="middle" class="ti">Même `move`, même `s` — c'est le corps qui choisit le trait</text>
+<text x="400" y="38" text-anchor="middle" class="mut">`move` décide de l'ownership. L'usage de `s` décide Fn / FnMut / FnOnce.</text>
+<!-- row1 -->
+<rect x="40" y="56" width="330" height="56" rx="6" class="box"/>
+<text x="205" y="80" text-anchor="middle" class="tx">move || println!("{}", s)</text>
+<text x="205" y="99" text-anchor="middle" class="mut">lit s uniquement</text>
+<path d="M370,84 L470,84" class="ln" marker-end="url(#cl2b-arrow-fr)"/>
+<rect x="470" y="56" width="290" height="56" rx="6" class="box"/>
+<text x="615" y="80" text-anchor="middle" class="tx">Fn</text>
+<text x="615" y="99" text-anchor="middle" class="mut">appelable autant de fois que voulu</text>
+<!-- row2 -->
+<rect x="40" y="126" width="330" height="56" rx="6" class="box"/>
+<text x="205" y="150" text-anchor="middle" class="tx">move || s.push_str("!")</text>
+<text x="205" y="169" text-anchor="middle" class="mut">mute s (exige `let mut`)</text>
+<path d="M370,154 L470,154" class="ln" marker-end="url(#cl2b-arrow-fr)"/>
+<rect x="470" y="126" width="290" height="56" rx="6" class="box"/>
+<text x="615" y="150" text-anchor="middle" class="tx">FnMut</text>
+<text x="615" y="169" text-anchor="middle" class="mut">plusieurs appels, accès exclusif</text>
+<!-- row3 -->
+<rect x="40" y="196" width="330" height="56" rx="6" class="box"/>
+<text x="205" y="220" text-anchor="middle" class="tx">move || drop(s)</text>
+<text x="205" y="239" text-anchor="middle" class="mut">consomme s</text>
+<path d="M370,224 L470,224" class="ln" marker-end="url(#cl2b-arrow-fr)"/>
+<rect x="470" y="196" width="290" height="56" rx="6" class="boxac"/>
+<text x="615" y="220" text-anchor="middle" class="tx">FnOnce</text>
+<text x="615" y="239" text-anchor="middle" class="mut">le 2e appel ne compile pas</text>
+<!-- caption -->
+<text x="400" y="282" text-anchor="middle" class="mut">Retire `move` de la ligne 1 : le trait reste Fn — seul le mode de capture change.</text>
+</svg>
+</div>
+
 ## Exemples Détaillés
 
 ### 1. Immutable Capture (`Fn`)

@@ -109,6 +109,115 @@ for x in data {
 
 Sorting with `sort_by` creates long runs of “taken” or “not taken” branches, improving predictor accuracy.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo4b-fig" viewBox="0 0 800 275" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Strip of sixteen branch outcomes showing that unsorted data alternates taken and not-taken and mispredicts often, while sorted data forms two long runs with a single misprediction at the boundary">
+<style>
+.lo4b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo4b-fig,[data-theme="dark"] .lo4b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo4b-fig .cell{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo4b-fig .cellt{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo4b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo4b-fig .miss{fill:var(--ac)}
+.lo4b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.lo4b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4b-fig .mutl{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.lo4b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+</style>
+<!-- row 1 title -->
+<text x="20" y="22" class="ti">Unsorted data — x &lt; threshold flips constantly</text>
+<!-- row 1: 16 branch outcomes -->
+<rect x="40" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="55" y="55" class="tx">T</text>
+<rect x="74" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="89" y="55" class="tx">N</text>
+<circle cx="89" cy="80" r="4" class="miss"/>
+<rect x="108" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="123" y="55" class="tx">T</text>
+<circle cx="123" cy="80" r="4" class="miss"/>
+<rect x="142" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="157" y="55" class="tx">T</text>
+<rect x="176" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="191" y="55" class="tx">N</text>
+<circle cx="191" cy="80" r="4" class="miss"/>
+<rect x="210" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="225" y="55" class="tx">T</text>
+<circle cx="225" cy="80" r="4" class="miss"/>
+<rect x="244" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="259" y="55" class="tx">N</text>
+<circle cx="259" cy="80" r="4" class="miss"/>
+<rect x="278" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="293" y="55" class="tx">N</text>
+<rect x="312" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="327" y="55" class="tx">T</text>
+<circle cx="327" cy="80" r="4" class="miss"/>
+<rect x="346" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="361" y="55" class="tx">T</text>
+<rect x="380" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="395" y="55" class="tx">N</text>
+<circle cx="395" cy="80" r="4" class="miss"/>
+<rect x="414" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="429" y="55" class="tx">T</text>
+<circle cx="429" cy="80" r="4" class="miss"/>
+<rect x="448" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="463" y="55" class="tx">N</text>
+<circle cx="463" cy="80" r="4" class="miss"/>
+<rect x="482" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="497" y="55" class="tx">N</text>
+<rect x="516" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="531" y="55" class="tx">T</text>
+<circle cx="531" cy="80" r="4" class="miss"/>
+<rect x="550" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="565" y="55" class="tx">T</text>
+<text x="690" y="47" class="ac">10 of 16 mispredicted</text>
+<text x="690" y="66" class="mut">~150 cycles thrown away</text>
+<text x="690" y="84" class="mut">predictor learns nothing</text>
+<!-- row 2 title -->
+<text x="20" y="118" class="ti">After sort_by — two long runs</text>
+<!-- row 2: 16 branch outcomes -->
+<rect x="40" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="55" y="151" class="tx">N</text>
+<rect x="74" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="89" y="151" class="tx">N</text>
+<rect x="108" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="123" y="151" class="tx">N</text>
+<rect x="142" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="157" y="151" class="tx">N</text>
+<rect x="176" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="191" y="151" class="tx">N</text>
+<rect x="210" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="225" y="151" class="tx">N</text>
+<rect x="244" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="259" y="151" class="tx">N</text>
+<rect x="278" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="293" y="151" class="tx">N</text>
+<rect x="312" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="327" y="151" class="tx">T</text>
+<circle cx="327" cy="176" r="4" class="miss"/>
+<rect x="346" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="361" y="151" class="tx">T</text>
+<rect x="380" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="395" y="151" class="tx">T</text>
+<rect x="414" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="429" y="151" class="tx">T</text>
+<rect x="448" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="463" y="151" class="tx">T</text>
+<rect x="482" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="497" y="151" class="tx">T</text>
+<rect x="516" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="531" y="151" class="tx">T</text>
+<rect x="550" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="565" y="151" class="tx">T</text>
+<text x="690" y="143" class="ac">1 of 16 mispredicted</text>
+<text x="690" y="162" class="mut">only at the run boundary</text>
+<text x="690" y="180" class="mut">predictor saturates</text>
+<!-- footer -->
+<rect x="120" y="200" width="560" height="60" rx="6" class="box"/>
+<text x="400" y="224" class="tx">T = branch taken · N = not taken · orange dot = pipeline flush</text>
+<text x="400" y="244" class="mut">Pay the sort once when the loop body runs many times per element</text>
+</svg>
+</div>
+
 ### 3. Conditional Moves with Pattern Matching
 Use Rust’s enums and `match` to structure code for potential branchless optimization.
 

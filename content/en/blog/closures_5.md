@@ -122,6 +122,70 @@ fn main() {
 - **`FnOnce`**: Can only be called once, consuming the closure. Unsuitable for multiple calls.
 - **`Fn`**: Uses immutable borrows, preventing state mutation, so it can’t modify captured variables.
 
+The trait you get is not something you pick — the compiler derives it from how the body touches its captures, and that in turn decides how many times you may call it:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl5b-fig" viewBox="0 0 800 350" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Decision branch showing how the closure body's use of its captures selects Fn, FnMut or FnOnce and how many calls each allows">
+<!-- style -->
+<style>
+.cl5b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl5b-fig,[data-theme="dark"] .cl5b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl5b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl5b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl5b-fig .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .hd{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .hdac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl5b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl5b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="cl5b-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="20" text-anchor="middle" class="ti">The body decides the trait — the trait decides the call budget</text>
+<!-- root box -->
+<rect x="230" y="38" width="340" height="52" rx="6" class="box"/>
+<text x="400" y="60" text-anchor="middle" class="tx">How does the body touch its captures?</text>
+<text x="400" y="78" text-anchor="middle" class="mut">inferred, never declared</text>
+<!-- trunk -->
+<path d="M400,90 L400,116" class="ln"/>
+<!-- bus -->
+<path d="M145,116 L655,116" class="ln"/>
+<!-- branch down 1 -->
+<path d="M145,116 L145,150" class="ln" marker-end="url(#cl5b-arrow)"/>
+<!-- branch down 2 -->
+<path d="M400,116 L400,150" class="ln" marker-end="url(#cl5b-arrowac)"/>
+<!-- branch down 3 -->
+<path d="M655,116 L655,150" class="ln" marker-end="url(#cl5b-arrow)"/>
+<!-- leaf 1 -->
+<rect x="30" y="150" width="230" height="80" rx="6" class="box"/>
+<text x="145" y="174" text-anchor="middle" class="hd">Fn</text>
+<text x="145" y="194" text-anchor="middle" class="tx">reads them only</text>
+<text x="145" y="212" text-anchor="middle" class="mut">many calls, state frozen</text>
+<!-- leaf 2 -->
+<rect x="285" y="150" width="230" height="80" rx="6" class="boxac"/>
+<text x="400" y="174" text-anchor="middle" class="hdac">FnMut</text>
+<text x="400" y="194" text-anchor="middle" class="tx">mutates them</text>
+<text x="400" y="212" text-anchor="middle" class="mut">many calls, state carries over</text>
+<!-- leaf 3 -->
+<rect x="540" y="150" width="230" height="80" rx="6" class="box"/>
+<text x="655" y="174" text-anchor="middle" class="hd">FnOnce</text>
+<text x="655" y="194" text-anchor="middle" class="tx">consumes them</text>
+<text x="655" y="212" text-anchor="middle" class="mut">exactly one call</text>
+<!-- to verdict -->
+<path d="M400,230 L400,262" class="ln" marker-end="url(#cl5b-arrowac)"/>
+<!-- verdict -->
+<rect x="180" y="262" width="440" height="52" rx="6" class="boxac"/>
+<text x="400" y="284" text-anchor="middle" class="tx">fn call_repeatedly&lt;F: FnMut() -&gt; i32&gt;(f: &amp;mut F)</text>
+<text x="400" y="302" text-anchor="middle" class="mut">both the binding and the parameter must be `mut`</text>
+<!-- caption -->
+<text x="400" y="338" text-anchor="middle" class="mut">Taking `&amp;mut F` rather than `F` is what lets the caller keep using the closure afterwards.</text>
+</svg>
+</div>
+
 ## Pitfalls
 
 - **Forgetting `mut`**:

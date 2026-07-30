@@ -120,6 +120,63 @@ let r2 = &data; // Another immutable borrow OK
 println!("{:?}, {:?}", r1, r2);
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm4-fig2" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Matrix of which borrow you can take depending on the borrows already live, highlighting that a mutable borrow is rejected while shared borrows exist">
+<style>
+.mm4-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm4-fig2,[data-theme="dark"] .mm4-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm4-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm4-fig2 .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm4-fig2 .title{font:700 14px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm4-fig2 .head{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm4-fig2 .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm4-fig2 .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm4-fig2 .ac{fill:var(--ac)}
+.mm4-fig2 path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm4b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm4b-arrow-ac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" text-anchor="middle" class="title">What the borrow checker allows next</text>
+<!-- column headers -->
+<text x="50" y="80" class="head">Borrows already live</text>
+<text x="425" y="80" text-anchor="middle" class="head">you ask for &amp;data</text>
+<text x="625" y="80" text-anchor="middle" class="head">you ask for &amp;mut data</text>
+<!-- row 1 -->
+<text x="50" y="130" class="body">none</text>
+<rect x="330" y="96" width="190" height="58" rx="8" class="box"/>
+<text x="425" y="122" text-anchor="middle" class="body">allowed</text>
+<text x="425" y="140" text-anchor="middle" class="cap">first shared borrow</text>
+<rect x="530" y="96" width="190" height="58" rx="8" class="box"/>
+<text x="625" y="122" text-anchor="middle" class="body">allowed</text>
+<text x="625" y="140" text-anchor="middle" class="cap">exclusive access</text>
+<!-- row 2 -->
+<text x="50" y="190" class="body">r1 = &amp;data, r2 = &amp;data</text>
+<text x="50" y="208" class="cap">any number of shared</text>
+<rect x="330" y="162" width="190" height="58" rx="8" class="box"/>
+<text x="425" y="188" text-anchor="middle" class="body">allowed</text>
+<text x="425" y="206" text-anchor="middle" class="cap">shared borrows stack up</text>
+<rect x="530" y="162" width="190" height="58" rx="8" class="acbox"/>
+<text x="625" y="188" text-anchor="middle" class="body ac">rejected</text>
+<text x="625" y="206" text-anchor="middle" class="cap">cannot borrow as mutable</text>
+<!-- row 3 -->
+<text x="50" y="256" class="body">m = &amp;mut data</text>
+<text x="50" y="274" class="cap">exactly one</text>
+<rect x="330" y="228" width="190" height="58" rx="8" class="box"/>
+<text x="425" y="254" text-anchor="middle" class="body">rejected</text>
+<text x="425" y="272" text-anchor="middle" class="cap">already mutably borrowed</text>
+<rect x="530" y="228" width="190" height="58" rx="8" class="box"/>
+<text x="625" y="254" text-anchor="middle" class="body">rejected</text>
+<text x="625" y="272" text-anchor="middle" class="cap">only one &amp;mut at a time</text>
+<!-- pointer to the highlighted cell -->
+<path d="M760,191 L720,191" style="stroke:var(--ac)" marker-end="url(#mm4b-arrow-ac)"/>
+<!-- caption -->
+<text x="400" y="308" text-anchor="middle" class="cap">In the example r1 and r2 are still live, so `let r3 = &amp;mut data;` lands in the highlighted cell.</text>
+</svg>
+</div>
+
 ## Key Takeaways
 
 ✅ **Ownership ensures**:

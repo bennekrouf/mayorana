@@ -115,6 +115,92 @@ unsafe fn count_bits(data: &[u64]) -> u64 {
 
 **Why `asm!`?**: Manual unrolling and register control maximize CPU pipeline efficiency, potentially outperforming `count_ones()` by avoiding function call overhead and leveraging instruction-level parallelism.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo5b-fig" viewBox="0 0 800 295" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Operand contract of the asm block: four chunk elements enter as in(reg) inputs, each popcnt result is added into the sum register, which leaves as out(reg) and is folded into total">
+<style>
+.lo5b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo5b-fig,[data-theme="dark"] .lo5b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo5b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo5b-fig .op{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo5b-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo5b-fig .hd{fill:var(--mut);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5b-fig .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo5b-fig line,.lo5b-fig path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="lo5b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+<marker id="lo5b-arrowac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"/>
+</marker>
+</defs>
+<!-- column headers -->
+<text x="100" y="28" class="hd">in(reg) inputs</text>
+<text x="300" y="28" class="hd">asm! body, unrolled 4×</text>
+<text x="520" y="28" class="hd">accumulate</text>
+<text x="715" y="28" class="hd">out(reg)</text>
+<!-- lane 0 -->
+<rect x="40" y="40" width="120" height="32" rx="5" class="box"/>
+<text x="100" y="61" class="tx">chunk[0]</text>
+<line x1="160" y1="56" x2="198" y2="56" marker-end="url(#lo5b-arrow)"/>
+<rect x="200" y="40" width="200" height="32" rx="5" class="op"/>
+<text x="300" y="61" class="tx">popcnt {tmp}, {x0}</text>
+<line x1="400" y1="56" x2="438" y2="56" marker-end="url(#lo5b-arrow)"/>
+<rect x="440" y="40" width="160" height="32" rx="5" class="op"/>
+<text x="520" y="61" class="tx">add {sum}, {tmp}</text>
+<!-- lane 1 -->
+<rect x="40" y="82" width="120" height="32" rx="5" class="box"/>
+<text x="100" y="103" class="tx">chunk[1]</text>
+<line x1="160" y1="98" x2="198" y2="98" marker-end="url(#lo5b-arrow)"/>
+<rect x="200" y="82" width="200" height="32" rx="5" class="op"/>
+<text x="300" y="103" class="tx">popcnt {tmp}, {x1}</text>
+<line x1="400" y1="98" x2="438" y2="98" marker-end="url(#lo5b-arrow)"/>
+<rect x="440" y="82" width="160" height="32" rx="5" class="op"/>
+<text x="520" y="103" class="tx">add {sum}, {tmp}</text>
+<!-- lane 2 -->
+<rect x="40" y="124" width="120" height="32" rx="5" class="box"/>
+<text x="100" y="145" class="tx">chunk[2]</text>
+<line x1="160" y1="140" x2="198" y2="140" marker-end="url(#lo5b-arrow)"/>
+<rect x="200" y="124" width="200" height="32" rx="5" class="op"/>
+<text x="300" y="145" class="tx">popcnt {tmp}, {x2}</text>
+<line x1="400" y1="140" x2="438" y2="140" marker-end="url(#lo5b-arrow)"/>
+<rect x="440" y="124" width="160" height="32" rx="5" class="op"/>
+<text x="520" y="145" class="tx">add {sum}, {tmp}</text>
+<!-- lane 3 -->
+<rect x="40" y="166" width="120" height="32" rx="5" class="box"/>
+<text x="100" y="187" class="tx">chunk[3]</text>
+<line x1="160" y1="182" x2="198" y2="182" marker-end="url(#lo5b-arrow)"/>
+<rect x="200" y="166" width="200" height="32" rx="5" class="op"/>
+<text x="300" y="187" class="tx">popcnt {tmp}, {x3}</text>
+<line x1="400" y1="182" x2="438" y2="182" marker-end="url(#lo5b-arrow)"/>
+<rect x="440" y="166" width="160" height="32" rx="5" class="op"/>
+<text x="520" y="187" class="tx">add {sum}, {tmp}</text>
+<!-- merge the four adds into one register -->
+<path class="ln" d="M600,56 L625,56"/>
+<path class="ln" d="M600,98 L625,98"/>
+<path class="ln" d="M600,140 L625,140"/>
+<path class="ln" d="M600,182 L625,182"/>
+<line x1="625" y1="56" x2="625" y2="182"/>
+<line x1="625" y1="119" x2="648" y2="119" marker-end="url(#lo5b-arrowac)"/>
+<rect x="650" y="40" width="130" height="158" rx="6" class="fin"/>
+<text x="715" y="105" class="ac">{sum}</text>
+<text x="715" y="128" class="mut">xor-zeroed first</text>
+<text x="715" y="146" class="mut">one live register</text>
+<!-- down to Rust -->
+<line x1="715" y1="198" x2="715" y2="220" marker-end="url(#lo5b-arrow)"/>
+<rect x="560" y="222" width="220" height="56" rx="6" class="box"/>
+<text x="670" y="246" class="tx">total += sum</text>
+<text x="670" y="266" class="mut">back in safe Rust, per chunk</text>
+<!-- constraints -->
+<rect x="20" y="222" width="500" height="56" rx="6" class="box"/>
+<text x="270" y="246" class="tx">tmp = out(reg) _ — scratch, declared so the caller is not clobbered</text>
+<text x="270" y="266" class="mut">options(nostack, pure) — touches no stack, same inputs give same result</text>
+</svg>
+</div>
+
 **Safe Abstraction**:
 ```rust
 pub fn total_bits(data: &[u64]) -> u64 {

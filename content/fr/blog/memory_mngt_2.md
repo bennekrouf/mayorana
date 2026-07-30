@@ -167,6 +167,55 @@ fn main() {
 }
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm2-fig2" viewBox="0 0 800 310" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Frise montrant les durées de vie de s1 et s2, où l'emprunt renvoyé par longest survit à s2 et est donc rejeté à la compilation">
+<style>
+.mm2-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm2-fig2,[data-theme="dark"] .mm2-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm2-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm2-fig2 .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm2-fig2 .title{font:700 14px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm2-fig2 .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm2-fig2 .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm2-fig2 .ac{fill:var(--ac)}
+.mm2-fig2 path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm2b-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm2b-arrow-ac-fr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" text-anchor="middle" class="title">Lifetime 'a : pourquoi cet emprunt est rejeté</text>
+<!-- s1 bar -->
+<text x="172" y="103" text-anchor="end" class="body">s1</text>
+<rect x="210" y="86" width="530" height="26" rx="6" class="box"/>
+<text x="222" y="103" class="cap">String — vit jusqu'à la fin de main</text>
+<!-- s2 bar -->
+<text x="172" y="143" text-anchor="end" class="body">s2</text>
+<rect x="340" y="126" width="260" height="26" rx="6" class="box"/>
+<text x="352" y="143" class="cap">String — scope interne seulement</text>
+<!-- result bar -->
+<text x="172" y="183" text-anchor="end" class="body ac">result</text>
+<rect x="470" y="166" width="240" height="26" rx="6" class="acbox"/>
+<text x="482" y="183" class="cap">&amp;'a str — doit rester valide</text>
+<!-- drop marker -->
+<path d="M600,78 L600,196" style="stroke:var(--ac);stroke-dasharray:5 4"/>
+<text x="608" y="74" class="cap ac">s2 supprimé ici</text>
+<!-- error callout -->
+<rect x="430" y="204" width="330" height="46" rx="8" class="acbox"/>
+<text x="595" y="223" text-anchor="middle" class="body ac">'a ne peut pas survivre à s2</text>
+<text x="595" y="240" text-anchor="middle" class="cap">result serait pendant — erreur de compilation</text>
+<path d="M595,192 L595,204" marker-end="url(#mm2b-arrow-ac-fr)"/>
+<!-- time axis -->
+<path d="M180,270 L756,270" marker-end="url(#mm2b-arrow-fr)"/>
+<text x="210" y="288" text-anchor="middle" class="cap">let s1</text>
+<text x="340" y="288" text-anchor="middle" class="cap">{ let s2</text>
+<text x="470" y="288" text-anchor="middle" class="cap">longest(&amp;s1, &amp;s2)</text>
+<text x="600" y="288" text-anchor="middle" class="cap">}</text>
+<text x="710" y="288" text-anchor="middle" class="cap">usage de result</text>
+</svg>
+</div>
+
 ## Pourquoi pas de garbage collector ?
 - **Abstractions sans coût** : Pas de surcharge à l'exécution.
 - **Performance prévisible** : La mémoire est libérée de façon déterministe.

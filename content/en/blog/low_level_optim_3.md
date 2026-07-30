@@ -162,6 +162,73 @@ This computes 8 dot product terms per iteration, reducing loop iterations by 8x.
 - **Correctness**: Floating-point associativity changes with SIMD summation order, risking numerical drift.
   - **Solution**: Test against scalar results with known inputs; use `fsum` or pairwise reduction for precision.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo3b-fig" viewBox="0 0 800 370" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Dispatch tree selecting an AVX2, SSE2, NEON or scalar matrix multiply kernel at runtime, all validated against the same scalar baseline">
+<style>
+.lo3b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo3b-fig,[data-theme="dark"] .lo3b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo3b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo3b-fig .fin{fill:var(--box);stroke:var(--ac);stroke-width:2.5}
+.lo3b-fig .hd{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo3b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3b-fig .ac{fill:var(--ac);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo3b-fig line,.lo3b-fig path.ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="lo3b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"/>
+</marker>
+<marker id="lo3b-arrowac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"/>
+</marker>
+</defs>
+<!-- single call site -->
+<rect x="280" y="18" width="240" height="46" rx="6" class="box"/>
+<text x="400" y="40" class="ti">matrix_mult(a, b, c)</text>
+<text x="400" y="56" class="mut">one call site in your code</text>
+<line x1="400" y1="64" x2="400" y2="86" marker-end="url(#lo3b-arrow)"/>
+<!-- dispatch -->
+<rect x="240" y="88" width="320" height="46" rx="6" class="hd"/>
+<text x="400" y="110" class="tx">Pick a kernel: cfg + feature detect</text>
+<text x="400" y="126" class="mut">first match wins, checked once at startup</text>
+<!-- fan-out bus -->
+<line x1="400" y1="134" x2="400" y2="158"/>
+<line x1="108" y1="158" x2="692" y2="158"/>
+<line x1="108" y1="158" x2="108" y2="178" marker-end="url(#lo3b-arrowac)"/>
+<line x1="303" y1="158" x2="303" y2="178" marker-end="url(#lo3b-arrow)"/>
+<line x1="497" y1="158" x2="497" y2="178" marker-end="url(#lo3b-arrow)"/>
+<line x1="692" y1="158" x2="692" y2="178" marker-end="url(#lo3b-arrow)"/>
+<!-- four kernels -->
+<rect x="20" y="180" width="176" height="70" rx="6" class="fin"/>
+<text x="108" y="203" class="ac">AVX2 — 8 × f32</text>
+<text x="108" y="222" class="mut">_mm256_mul_ps</text>
+<text x="108" y="240" class="mut">is_x86_feature_detected!</text>
+<rect x="215" y="180" width="176" height="70" rx="6" class="box"/>
+<text x="303" y="203" class="tx">SSE2 — 4 × f32</text>
+<text x="303" y="222" class="mut">_mm_mul_ps</text>
+<text x="303" y="240" class="mut">older x86_64 CPUs</text>
+<rect x="409" y="180" width="176" height="70" rx="6" class="box"/>
+<text x="497" y="203" class="tx">NEON — 4 × f32</text>
+<text x="497" y="222" class="mut">vmulq_f32</text>
+<text x="497" y="240" class="mut">cfg(target_arch aarch64)</text>
+<rect x="604" y="180" width="176" height="70" rx="6" class="box"/>
+<text x="692" y="203" class="tx">Scalar fallback</text>
+<text x="692" y="222" class="mut">c[i][j] += a * b</text>
+<text x="692" y="240" class="mut">compiles everywhere</text>
+<!-- merge bus back to one baseline check -->
+<path class="ln" d="M108,250 L108,274 L400,274"/>
+<path class="ln" d="M303,250 L303,274"/>
+<path class="ln" d="M497,250 L497,274"/>
+<path class="ln" d="M692,250 L692,274 L400,274"/>
+<line x1="400" y1="274" x2="400" y2="296" marker-end="url(#lo3b-arrow)"/>
+<rect x="170" y="298" width="460" height="58" rx="6" class="box"/>
+<text x="400" y="322" class="tx">Every kernel must match the scalar baseline</text>
+<text x="400" y="342" class="mut">SIMD reorders the sum — assert results within tolerance</text>
+</svg>
+</div>
+
 ## Verification
 
 - **Benchmarking**: Use `criterion` to compare SIMD vs. scalar:

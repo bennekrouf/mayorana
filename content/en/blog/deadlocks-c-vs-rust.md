@@ -125,6 +125,74 @@ Rust ensures that:
 - You can't access a mutex without locking it first
 - Captured references follow borrowing rules
 
+The difference from C shows up on the *unlock* side. In C the unlock is a statement you have to reach; in Rust it is a `Drop` impl that runs on every exit path out of the scope:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="dlockb-fig" viewBox="0 0 800 400" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Side-by-side scope walkthrough: an early return in C skips pthread_mutex_unlock and leaves the mutex locked, while in Rust dropping the MutexGuard unlocks on every exit path">
+<style>
+.dlockb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .dlockb-fig,[data-theme="dark"] .dlockb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.dlockb-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.dlockb-fig .title{font-size:13px;font-weight:700}
+.dlockb-fig .body{font-size:12px;font-weight:600}
+.dlockb-fig .cap{font-size:11px;fill:var(--mut)}
+.dlockb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.dlockb-fig .dead{fill:var(--bg);stroke:var(--mut);stroke-width:1.5;stroke-dasharray:5 4}
+.dlockb-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.dlockb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="dlockb-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+</defs>
+<!-- column titles -->
+<text x="210" y="28" text-anchor="middle" class="title">C — unlock is a statement</text>
+<text x="590" y="28" text-anchor="middle" class="title">Rust — unlock is a destructor</text>
+<!-- C step 1 -->
+<rect class="box" x="40" y="48" width="340" height="52" rx="8"></rect>
+<text x="210" y="70" text-anchor="middle" class="body">pthread_mutex_lock(&amp;m)</text>
+<text x="210" y="88" text-anchor="middle" class="cap">lock now held by this thread</text>
+<path class="ln" d="M210,100 L210,124" marker-end="url(#dlockb-arrow)"></path>
+<!-- C step 2 -->
+<rect class="box" x="40" y="124" width="340" height="52" rx="8"></rect>
+<text x="210" y="146" text-anchor="middle" class="body">if (err) return;</text>
+<text x="210" y="164" text-anchor="middle" class="cap">early exit jumps past the rest</text>
+<path class="ln" d="M210,176 L210,200" marker-end="url(#dlockb-arrow)"></path>
+<!-- C step 3 -->
+<rect class="dead" x="40" y="200" width="340" height="52" rx="8"></rect>
+<text x="210" y="222" text-anchor="middle" class="body" fill="var(--mut)">pthread_mutex_unlock(&amp;m)</text>
+<text x="210" y="240" text-anchor="middle" class="cap">never reached on the error path</text>
+<path class="ln" d="M210,252 L210,276" marker-end="url(#dlockb-arrow)"></path>
+<!-- C outcome -->
+<rect class="dead" x="40" y="276" width="340" height="58" rx="8"></rect>
+<text x="210" y="300" text-anchor="middle" class="title" fill="var(--mut)">Mutex stays locked</text>
+<text x="210" y="320" text-anchor="middle" class="cap">the next thread to lock it blocks forever</text>
+<!-- Rust step 1 -->
+<rect class="box" x="420" y="48" width="340" height="52" rx="8"></rect>
+<text x="590" y="70" text-anchor="middle" class="body">let g = m.lock().unwrap();</text>
+<text x="590" y="88" text-anchor="middle" class="cap">MutexGuard owns the lock</text>
+<path class="ln" d="M590,100 L590,124" marker-end="url(#dlockb-arrow)"></path>
+<!-- Rust step 2 -->
+<rect class="box" x="420" y="124" width="340" height="52" rx="8"></rect>
+<text x="590" y="146" text-anchor="middle" class="body">if err { return; }</text>
+<text x="590" y="164" text-anchor="middle" class="cap">early exit — or a panic — leaves the scope</text>
+<path class="ln" d="M590,176 L590,200" marker-end="url(#dlockb-arrow)"></path>
+<!-- Rust step 3 -->
+<rect class="box" x="420" y="200" width="340" height="52" rx="8"></rect>
+<text x="590" y="222" text-anchor="middle" class="body">drop(g) — inserted by the compiler</text>
+<text x="590" y="240" text-anchor="middle" class="cap">runs on every path out, including unwind</text>
+<path class="ln" d="M590,252 L590,276" marker-end="url(#dlockb-arrow)"></path>
+<!-- Rust outcome -->
+<rect class="acbox" x="420" y="276" width="340" height="58" rx="8"></rect>
+<text x="590" y="300" text-anchor="middle" class="title" fill="#ffffff">Released, always</text>
+<text x="590" y="320" text-anchor="middle" class="body" fill="#ffffff">one failure mode fewer to reason about</text>
+<!-- caption -->
+<text x="400" y="368" text-anchor="middle" class="cap">RAII removes the forgotten-unlock bug — it does not remove the lock-ordering bug</text>
+</svg>
+</div>
+
 But: **Rust cannot reason about lock acquisition order.** If thread A locks `a` then `b`, and thread B locks `b` then `a`, you can still deadlock.
 
 ## Compile-Time vs Runtime Safety

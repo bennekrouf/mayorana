@@ -137,6 +137,53 @@ let bytes = process_packets(&mut tcp, &packets); // Static dispatch
 - **Type Safety**: Trait bound `H: PacketHandler` ensures only compatible types are passed, checked at compile time—no runtime casts like Java's `instanceof`
 - **Encapsulation**: Each handler manages its state (`state` or `count`), with Rust's ownership enforcing mutation rules
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="td1-fig2" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="The H PacketHandler bound is checked at compile time, routing to monomorphized inlined code or to a compile error before any binary exists">
+<style>
+.td1-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .td1-fig2,[data-theme="dark"] .td1-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.td1-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.td1-fig2 .boxAc{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.td1-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td1-fig2 .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td1-fig2 .mut{fill:var(--mut);font:600 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.td1-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.td1-fig2 .lnAc{stroke:var(--ac);stroke-width:2;fill:none}
+</style>
+<!-- markers -->
+<defs>
+<marker id="td1b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="td1b-arrowAc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ac)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="26" class="ti">Where a wrong handler type gets caught</text>
+<!-- call site -->
+<rect class="box" x="40" y="110" width="210" height="60" rx="6"/>
+<text x="145" y="136" class="tx">process_packets(&amp;mut tcp)</text>
+<text x="145" y="156" class="mut">H inferred = TcpHandler</text>
+<!-- arrow into gate -->
+<path class="lnAc" d="M250,140 L300,140" marker-end="url(#td1b-arrowAc)"/>
+<!-- gate -->
+<rect class="boxAc" x="302" y="105" width="200" height="70" rx="6"/>
+<text x="402" y="132" class="tx">H: PacketHandler ?</text>
+<text x="402" y="152" class="mut">resolved at compile time</text>
+<!-- split from gate -->
+<path class="ln" d="M502,140 L532,140"/>
+<path class="ln" d="M532,140 L532,70 L560,70" marker-end="url(#td1b-arrow)"/>
+<path class="ln" d="M532,140 L532,215 L560,215" marker-end="url(#td1b-arrow)"/>
+<!-- accepted -->
+<rect class="box" x="562" y="45" width="208" height="50" rx="6"/>
+<text x="666" y="68" class="tx">impl found</text>
+<text x="666" y="85" class="mut">monomorphize, then inline</text>
+<!-- rejected -->
+<rect class="box" x="562" y="190" width="208" height="50" rx="6"/>
+<text x="666" y="213" class="tx">no impl for that type</text>
+<text x="666" y="230" class="mut">error[E0277] — nothing is built</text>
+<!-- caption -->
+<text x="400" y="275" class="mut">Java: the same mistake compiles and surfaces as an instanceof check or a cast failure at run time</text>
+</svg>
+</div>
+
 ## Contrast with Java/C#
 
 Java equivalent:

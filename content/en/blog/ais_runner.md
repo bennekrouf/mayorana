@@ -124,6 +124,81 @@ It runs natively on macOS, Windows, and Linux via Dioxus desktop (WebView).
 - **Secret masking** — hides sensitive keys with a reveal toggle
 - **Click-to-copy cells** with clipboard integration and detail popup
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="aisenv-fig2" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="The environment comparison grid puts local settings, Azure app settings and two DevOps variable groups side by side, flagging the cells that differ">
+<style>
+.aisenv-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .aisenv-fig2,[data-theme="dark"] .aisenv-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.aisenv-fig2 text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.aisenv-fig2 .title{font-size:13px;font-weight:700}
+.aisenv-fig2 .body{font-size:12px;font-weight:600}
+.aisenv-fig2 .cap{font-size:11px;fill:var(--mut)}
+.aisenv-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.aisenv-fig2 .hdr{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.aisenv-fig2 .acbox{fill:var(--ac);stroke:var(--ac)}
+.aisenv-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="aisenv2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"></path>
+</marker>
+</defs>
+<!-- header row -->
+<text x="20" y="28" class="title">Compare Environments — one row per key, one column per environment</text>
+<rect class="box" x="560" y="12" width="220" height="26" rx="13"></rect>
+<text x="670" y="30" text-anchor="middle" class="body" fill="var(--ac)">Differences only ✓</text>
+<!-- column headers -->
+<rect class="hdr" x="20" y="52" width="140" height="32" rx="6"></rect>
+<text x="90" y="73" text-anchor="middle" class="body">Key</text>
+<rect class="hdr" x="170" y="52" width="145" height="32" rx="6"></rect>
+<text x="243" y="73" text-anchor="middle" class="body">local.settings</text>
+<rect class="hdr" x="325" y="52" width="145" height="32" rx="6"></rect>
+<text x="398" y="73" text-anchor="middle" class="body">Azure settings</text>
+<rect class="hdr" x="480" y="52" width="145" height="32" rx="6"></rect>
+<text x="553" y="73" text-anchor="middle" class="body">DevOps VG · DEV</text>
+<rect class="hdr" x="635" y="52" width="145" height="32" rx="6"></rect>
+<text x="707" y="73" text-anchor="middle" class="body">DevOps VG · PROD</text>
+<!-- row 1: identical secret -->
+<rect class="box" x="20" y="92" width="140" height="34" rx="6"></rect>
+<text x="90" y="114" text-anchor="middle" class="cap">Sql:ConnStr</text>
+<rect class="box" x="170" y="92" width="145" height="34" rx="6"></rect>
+<text x="243" y="114" text-anchor="middle" class="cap">•••• masked</text>
+<rect class="box" x="325" y="92" width="145" height="34" rx="6"></rect>
+<text x="398" y="114" text-anchor="middle" class="cap">•••• masked</text>
+<rect class="box" x="480" y="92" width="145" height="34" rx="6"></rect>
+<text x="553" y="114" text-anchor="middle" class="cap">•••• masked</text>
+<rect class="box" x="635" y="92" width="145" height="34" rx="6"></rect>
+<text x="707" y="114" text-anchor="middle" class="cap">•••• masked</text>
+<!-- row 2: value drift in PROD -->
+<rect class="box" x="20" y="130" width="140" height="34" rx="6"></rect>
+<text x="90" y="152" text-anchor="middle" class="cap">ServiceBus:ns</text>
+<rect class="box" x="170" y="130" width="145" height="34" rx="6"></rect>
+<text x="243" y="152" text-anchor="middle" class="cap">sb-dev</text>
+<rect class="box" x="325" y="130" width="145" height="34" rx="6"></rect>
+<text x="398" y="152" text-anchor="middle" class="cap">sb-dev</text>
+<rect class="box" x="480" y="130" width="145" height="34" rx="6"></rect>
+<text x="553" y="152" text-anchor="middle" class="cap">sb-dev</text>
+<rect class="acbox" x="635" y="130" width="145" height="34" rx="6"></rect>
+<text x="707" y="152" text-anchor="middle" class="body" fill="#ffffff">sb-prod</text>
+<!-- row 3: key missing in one variable group -->
+<rect class="box" x="20" y="168" width="140" height="34" rx="6"></rect>
+<text x="90" y="190" text-anchor="middle" class="cap">Feature:Retry</text>
+<rect class="box" x="170" y="168" width="145" height="34" rx="6"></rect>
+<text x="243" y="190" text-anchor="middle" class="cap">true</text>
+<rect class="box" x="325" y="168" width="145" height="34" rx="6"></rect>
+<text x="398" y="190" text-anchor="middle" class="cap">true</text>
+<rect class="acbox" x="480" y="168" width="145" height="34" rx="6"></rect>
+<text x="553" y="190" text-anchor="middle" class="body" fill="#ffffff">— missing</text>
+<rect class="box" x="635" y="168" width="145" height="34" rx="6"></rect>
+<text x="707" y="190" text-anchor="middle" class="cap">true</text>
+<!-- filter points at the flagged cells -->
+<path class="ln" d="M670,38 L670,72 L707,72 L707,130" marker-end="url(#aisenv2-arrow)" stroke="var(--ac)" stroke-width="2"></path>
+<!-- caption -->
+<text x="400" y="230" text-anchor="middle" class="cap">Only the drifted cells stay visible — a wrong namespace or a missing flag surfaces before deployment</text>
+</svg>
+</div>
+
 ## ⚡ Event Grid
 
 - **Topic browser** — lists all custom and system Event Grid topics subscription-wide, with resource group badges

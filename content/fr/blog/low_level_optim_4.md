@@ -113,6 +113,115 @@ for x in data {
 
 Trier avec `sort_by` crée de longues séquences de branches "prises" ou "non prises", améliorant la précision du predictor.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="lo4b-fig" viewBox="0 0 800 275" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Bande de seize résultats de branche montrant que des données non triées alternent prise et non prise avec de nombreuses mauvaises prédictions, alors que des données triées forment deux longues séquences avec une seule mauvaise prédiction à la frontière">
+<style>
+.lo4b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .lo4b-fig,[data-theme="dark"] .lo4b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.lo4b-fig .cell{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo4b-fig .cellt{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.lo4b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.lo4b-fig .miss{fill:var(--ac)}
+.lo4b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif}
+.lo4b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.lo4b-fig .mutl{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}
+.lo4b-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+</style>
+<!-- titre ligne 1 -->
+<text x="20" y="22" class="ti">Données non triées — x &lt; threshold bascule sans cesse</text>
+<!-- ligne 1 : 16 résultats de branche -->
+<rect x="40" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="55" y="55" class="tx">P</text>
+<rect x="74" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="89" y="55" class="tx">N</text>
+<circle cx="89" cy="80" r="4" class="miss"/>
+<rect x="108" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="123" y="55" class="tx">P</text>
+<circle cx="123" cy="80" r="4" class="miss"/>
+<rect x="142" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="157" y="55" class="tx">P</text>
+<rect x="176" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="191" y="55" class="tx">N</text>
+<circle cx="191" cy="80" r="4" class="miss"/>
+<rect x="210" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="225" y="55" class="tx">P</text>
+<circle cx="225" cy="80" r="4" class="miss"/>
+<rect x="244" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="259" y="55" class="tx">N</text>
+<circle cx="259" cy="80" r="4" class="miss"/>
+<rect x="278" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="293" y="55" class="tx">N</text>
+<rect x="312" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="327" y="55" class="tx">P</text>
+<circle cx="327" cy="80" r="4" class="miss"/>
+<rect x="346" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="361" y="55" class="tx">P</text>
+<rect x="380" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="395" y="55" class="tx">N</text>
+<circle cx="395" cy="80" r="4" class="miss"/>
+<rect x="414" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="429" y="55" class="tx">P</text>
+<circle cx="429" cy="80" r="4" class="miss"/>
+<rect x="448" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="463" y="55" class="tx">N</text>
+<circle cx="463" cy="80" r="4" class="miss"/>
+<rect x="482" y="34" width="30" height="32" rx="4" class="cell"/>
+<text x="497" y="55" class="tx">N</text>
+<rect x="516" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="531" y="55" class="tx">P</text>
+<circle cx="531" cy="80" r="4" class="miss"/>
+<rect x="550" y="34" width="30" height="32" rx="4" class="cellt"/>
+<text x="565" y="55" class="tx">P</text>
+<text x="690" y="47" class="ac">10 sur 16 mal prédites</text>
+<text x="690" y="66" class="mut">~150 cycles jetés</text>
+<text x="690" y="84" class="mut">le predictor n'apprend rien</text>
+<!-- titre ligne 2 -->
+<text x="20" y="118" class="ti">Après sort_by — deux longues séquences</text>
+<!-- ligne 2 : 16 résultats de branche -->
+<rect x="40" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="55" y="151" class="tx">N</text>
+<rect x="74" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="89" y="151" class="tx">N</text>
+<rect x="108" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="123" y="151" class="tx">N</text>
+<rect x="142" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="157" y="151" class="tx">N</text>
+<rect x="176" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="191" y="151" class="tx">N</text>
+<rect x="210" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="225" y="151" class="tx">N</text>
+<rect x="244" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="259" y="151" class="tx">N</text>
+<rect x="278" y="130" width="30" height="32" rx="4" class="cell"/>
+<text x="293" y="151" class="tx">N</text>
+<rect x="312" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="327" y="151" class="tx">P</text>
+<circle cx="327" cy="176" r="4" class="miss"/>
+<rect x="346" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="361" y="151" class="tx">P</text>
+<rect x="380" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="395" y="151" class="tx">P</text>
+<rect x="414" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="429" y="151" class="tx">P</text>
+<rect x="448" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="463" y="151" class="tx">P</text>
+<rect x="482" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="497" y="151" class="tx">P</text>
+<rect x="516" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="531" y="151" class="tx">P</text>
+<rect x="550" y="130" width="30" height="32" rx="4" class="cellt"/>
+<text x="565" y="151" class="tx">P</text>
+<text x="690" y="143" class="ac">1 sur 16 mal prédite</text>
+<text x="690" y="162" class="mut">seulement à la frontière</text>
+<text x="690" y="180" class="mut">le predictor se stabilise</text>
+<!-- légende -->
+<rect x="120" y="200" width="560" height="60" rx="6" class="box"/>
+<text x="400" y="224" class="tx">P = branche prise · N = non prise · point orange = vidage du pipeline</text>
+<text x="400" y="244" class="mut">Le tri se paie une fois si le corps de boucle tourne souvent par élément</text>
+</svg>
+</div>
+
 ### 3. Mouvements Conditionnels avec Pattern Matching
 
 Utilise les enums et `match` de Rust pour structurer le code pour une optimisation potentielle sans branches.

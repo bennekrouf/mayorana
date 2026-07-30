@@ -124,6 +124,80 @@ println!("{}", x); // OK: original `x` still valid
 
 ### When You Need `move`
 
+Three situations force the keyword, and they all reduce to the same question — one JavaScript never asks you:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="jsrsb-fig" viewBox="0 0 800 420" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Decision tree: if a closure outlives its scope or must be Send, use move, then Copy types are copied while non-Copy types invalidate the original; otherwise a plain borrowing closure is enough">
+<style>
+.jsrsb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .jsrsb-fig,[data-theme="dark"] .jsrsb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.jsrsb-fig text{font-family:ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.jsrsb-fig .title{font-size:13px;font-weight:700}
+.jsrsb-fig .body{font-size:12px;font-weight:600}
+.jsrsb-fig .cap{font-size:11px;fill:var(--mut)}
+.jsrsb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.jsrsb-fig .qbox{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.jsrsb-fig .acbox{fill:var(--ac);stroke:var(--ac)}
+.jsrsb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.jsrsb-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}
+.jsrsb-fig .lbl{font-size:11px;font-weight:700;fill:var(--mut)}
+</style>
+<!-- defs -->
+<defs>
+<marker id="jsrsb-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ln)"></path>
+</marker>
+<marker id="jsrsb-arrowac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--ac)"></path>
+</marker>
+</defs>
+<!-- start -->
+<rect class="box" x="280" y="20" width="240" height="50" rx="8"></rect>
+<text x="400" y="42" text-anchor="middle" class="body">a closure captures a variable</text>
+<text x="400" y="60" text-anchor="middle" class="cap">count, data, state …</text>
+<path class="ln" d="M400,70 L400,94" marker-end="url(#jsrsb-arrow)"></path>
+<!-- question -->
+<rect class="qbox" x="180" y="94" width="440" height="58" rx="8"></rect>
+<text x="400" y="118" text-anchor="middle" class="title">Does it outlive the scope, or must it be Send?</text>
+<text x="400" y="138" text-anchor="middle" class="cap">thread::spawn · returned impl Fn · tokio::spawn</text>
+<!-- split -->
+<path class="ln" d="M400,152 L400,176"></path>
+<path class="ln" d="M205,176 L595,176"></path>
+<path class="ln" d="M205,176 L205,206" marker-end="url(#jsrsb-arrow)"></path>
+<path class="acln" d="M595,176 L595,206" marker-end="url(#jsrsb-arrowac)"></path>
+<text x="185" y="196" text-anchor="end" class="lbl">no</text>
+<text x="615" y="196" class="lbl" fill="var(--ac)">yes</text>
+<!-- borrow branch -->
+<rect class="box" x="60" y="206" width="290" height="56" rx="8"></rect>
+<text x="205" y="230" text-anchor="middle" class="title">plain closure — borrows</text>
+<text x="205" y="250" text-anchor="middle" class="cap">borrow checker picks &amp;, &amp;mut, or by-value</text>
+<path class="ln" d="M205,262 L205,300" marker-end="url(#jsrsb-arrow)"></path>
+<rect class="box" x="60" y="300" width="290" height="64" rx="8"></rect>
+<text x="205" y="324" text-anchor="middle" class="body">original stays usable</text>
+<text x="205" y="343" text-anchor="middle" class="cap">iterator adapters, short-lived</text>
+<text x="205" y="357" text-anchor="middle" class="cap">callbacks — the JS default</text>
+<!-- move branch -->
+<rect class="acbox" x="450" y="206" width="290" height="56" rx="8"></rect>
+<text x="595" y="230" text-anchor="middle" class="title" fill="#ffffff">move closure — owns</text>
+<text x="595" y="250" text-anchor="middle" class="body" fill="#ffffff">captures live as long as the closure</text>
+<!-- move branch split by Copy-ness -->
+<path class="ln" d="M595,262 L595,280"></path>
+<path class="ln" d="M505,280 L690,280"></path>
+<path class="ln" d="M505,280 L505,300" marker-end="url(#jsrsb-arrow)"></path>
+<path class="ln" d="M690,280 L690,300" marker-end="url(#jsrsb-arrow)"></path>
+<rect class="box" x="420" y="300" width="170" height="64" rx="8"></rect>
+<text x="505" y="324" text-anchor="middle" class="body">Copy: i32, bool</text>
+<text x="505" y="343" text-anchor="middle" class="cap">value copied —</text>
+<text x="505" y="357" text-anchor="middle" class="cap">original still valid</text>
+<rect class="box" x="610" y="300" width="170" height="64" rx="8"></rect>
+<text x="695" y="324" text-anchor="middle" class="body">String, Vec</text>
+<text x="695" y="343" text-anchor="middle" class="cap">moved —</text>
+<text x="695" y="357" text-anchor="middle" class="cap">original invalidated</text>
+<!-- caption -->
+<text x="400" y="396" text-anchor="middle" class="cap">The same question JavaScript answers for you with a garbage collector, Rust makes you answer with a keyword</text>
+</svg>
+</div>
+
 #### Threading
 
 In JavaScript, you'd share state across async operations without thinking:

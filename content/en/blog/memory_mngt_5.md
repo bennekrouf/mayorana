@@ -26,6 +26,66 @@ int* create_int() {
 }  // `x` is destroyed here (dangling pointer returned!)
 ```
 
+Step by step, here is what the stack does in that C function — and why the returned pointer is already garbage before the caller ever reads it:
+
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="mm5b-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Three stack snapshots showing create_int pushing a frame holding x, returning its address, then the frame being popped so the caller's pointer refers to reclaimed memory">
+<style>
+.mm5b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .mm5b-fig,[data-theme="dark"] .mm5b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.mm5b-fig .frame{fill:var(--bg);stroke:var(--ln);stroke-width:1.5}
+.mm5b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.mm5b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.mm5b-fig .deadbox{fill:none;stroke:var(--mut);stroke-width:1.5;stroke-dasharray:4 3}
+.mm5b-fig .title{font:700 13px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm5b-fig .body{font:600 12px ui-sans-serif,system-ui,sans-serif;fill:var(--tx)}
+.mm5b-fig .cap{font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--mut)}
+.mm5b-fig .ac{fill:var(--ac)}
+.mm5b-fig .mut{fill:var(--mut)}
+.mm5b-fig path{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<defs>
+<marker id="mm5b-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ln);stroke:none"/></marker>
+<marker id="mm5b-arrowac" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" style="fill:var(--ac);stroke:none"/></marker>
+</defs>
+<!-- step 1 -->
+<text x="135" y="26" text-anchor="middle" class="title">1. frame pushed</text>
+<rect x="22" y="42" width="226" height="138" rx="8" class="frame"/>
+<rect x="30" y="52" width="210" height="52" rx="6" class="box"/>
+<text x="135" y="72" text-anchor="middle" class="body">caller frame</text>
+<text x="135" y="90" text-anchor="middle" class="cap">int* p; not set yet</text>
+<rect x="30" y="118" width="210" height="52" rx="6" class="box"/>
+<text x="135" y="138" text-anchor="middle" class="body">create_int frame</text>
+<text x="135" y="156" text-anchor="middle" class="cap">x = 5 lives here</text>
+<!-- step 2 -->
+<text x="395" y="26" text-anchor="middle" class="title">2. return &amp;x</text>
+<rect x="282" y="42" width="226" height="138" rx="8" class="frame"/>
+<rect x="290" y="52" width="210" height="52" rx="6" class="box"/>
+<text x="395" y="72" text-anchor="middle" class="body">caller frame</text>
+<text x="395" y="90" text-anchor="middle" class="cap">p = address of x</text>
+<rect x="290" y="118" width="210" height="52" rx="6" class="box"/>
+<text x="395" y="138" text-anchor="middle" class="body">create_int frame</text>
+<text x="395" y="156" text-anchor="middle" class="cap">x = 5 still alive</text>
+<!-- step 3 -->
+<text x="655" y="26" text-anchor="middle" class="title">3. frame popped</text>
+<rect x="542" y="42" width="226" height="138" rx="8" class="frame"/>
+<rect x="550" y="52" width="210" height="52" rx="6" class="acbox"/>
+<text x="655" y="72" text-anchor="middle" class="body ac">p still holds the address</text>
+<text x="655" y="90" text-anchor="middle" class="cap">nothing marked it invalid</text>
+<rect x="550" y="118" width="210" height="52" rx="6" class="deadbox"/>
+<text x="655" y="138" text-anchor="middle" class="body mut">reclaimed slot</text>
+<text x="655" y="156" text-anchor="middle" class="cap">reused by the next call</text>
+<!-- transitions -->
+<path d="M248,111 L282,111" marker-end="url(#mm5b-arrow)"/>
+<path d="M508,111 L542,111" marker-end="url(#mm5b-arrow)"/>
+<!-- the dangling pointer itself -->
+<path d="M760,78 C792,78 792,144 762,144" style="stroke:var(--ac)" marker-end="url(#mm5b-arrowac)"/>
+<!-- caption -->
+<text x="400" y="208" text-anchor="middle" class="cap">C happily compiles this: the pointer outlives the frame it points into.</text>
+<text x="400" y="228" text-anchor="middle" class="cap">Rust rejects step 2 outright, so step 3 can never happen.</text>
+</svg>
+</div>
+
 Rust eliminates dangling pointers at compile time using its ownership model and lifetime system, ensuring memory safety without runtime overhead.
 
 <div class="svg-container" style="margin:2rem 0;">

@@ -98,6 +98,57 @@ fn main() {
 }
 ```
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cl3-fig2" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Two call sites with different closures cause the compiler to stamp out two specialized copies of the generic apply function">
+<!-- style -->
+<style>
+.cl3-fig2{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .cl3-fig2,[data-theme="dark"] .cl3-fig2{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cl3-fig2 .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cl3-fig2 .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.cl3-fig2 .ti{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}
+.cl3-fig2 .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}
+.cl3-fig2 .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif}
+.cl3-fig2 .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cl3b-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="18" text-anchor="middle" class="ti">One generic `apply`, one machine-code copy per closure type</text>
+<!-- call site A -->
+<rect x="40" y="44" width="250" height="54" rx="6" class="box"/>
+<text x="165" y="68" text-anchor="middle" class="tx">apply(add_five, 10)</text>
+<text x="165" y="87" text-anchor="middle" class="mut">closure type #1</text>
+<!-- call site B -->
+<rect x="40" y="118" width="250" height="54" rx="6" class="box"/>
+<text x="165" y="142" text-anchor="middle" class="tx">apply(|x| x * 2, 10)</text>
+<text x="165" y="161" text-anchor="middle" class="mut">closure type #2</text>
+<!-- merge into generic -->
+<path d="M290,71 L340,71 L340,108 L430,108" class="ln" marker-end="url(#cl3b-arrow)"/>
+<path d="M290,145 L340,145 L340,108" class="ln"/>
+<!-- generic -->
+<rect x="430" y="76" width="330" height="64" rx="6" class="boxac"/>
+<text x="595" y="102" text-anchor="middle" class="tx">fn apply&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32)</text>
+<text x="595" y="122" text-anchor="middle" class="mut">one source, F is a type parameter — no vtable</text>
+<!-- fan out -->
+<path d="M595,140 L595,170 L245,170 L245,200" class="ln" marker-end="url(#cl3b-arrow)"/>
+<path d="M595,170 L575,170 L575,200" class="ln" marker-end="url(#cl3b-arrow)"/>
+<text x="400" y="164" text-anchor="middle" class="mut">monomorphization</text>
+<!-- generated 1 -->
+<rect x="100" y="200" width="290" height="70" rx="6" class="box"/>
+<text x="245" y="226" text-anchor="middle" class="tx">apply::&lt;closure#1&gt;</text>
+<text x="245" y="246" text-anchor="middle" class="mut">f(x) becomes x + 5, inlined</text>
+<!-- generated 2 -->
+<rect x="430" y="200" width="290" height="70" rx="6" class="box"/>
+<text x="575" y="226" text-anchor="middle" class="tx">apply::&lt;closure#2&gt;</text>
+<text x="575" y="246" text-anchor="middle" class="mut">f(x) becomes x * 2, inlined</text>
+<!-- caption -->
+<text x="400" y="300" text-anchor="middle" class="mut">Every closure has its own anonymous type — that is why generics cost nothing at runtime, and why binary size grows.</text>
+</svg>
+</div>
+
 ## Closure as a Return Type
 
 Use `impl Trait` for static dispatch (zero-cost) or `Box<dyn Trait>` for dynamic dispatch (flexible).
