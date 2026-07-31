@@ -104,6 +104,71 @@ fn main() {
 - Iterator invalidation
 - Problèmes de thread safety
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="wr3b-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un nombre quelconque de références partagées est autorisé, ou exactement une référence mutable, mais mélanger une mutable et une partagée est rejeté à la compilation">
+<!-- style -->
+<style>
+.wr3b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .wr3b-fig,[data-theme="dark"] .wr3b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.wr3b-fig .panel{fill:none;stroke:var(--ln);stroke-width:1.5}
+.wr3b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.wr3b-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.wr3b-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2;stroke-dasharray:4 3}
+.wr3b-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.wr3b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.wr3b-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.wr3b-fig .bad{fill:var(--bad);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.wr3b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+.wr3b-fig .lnbad{stroke:var(--bad);stroke-width:1.5;fill:none;stroke-dasharray:4 3}
+</style>
+<!-- defs -->
+<defs>
+<marker id="wr3b-arrow-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+<marker id="wr3b-arrowbad-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--bad)"/></marker>
+</defs>
+<!-- panel 1: many readers -->
+<rect x="25" y="40" width="235" height="145" rx="8" class="panel"/>
+<text x="142" y="62" class="ti">Plusieurs lecteurs — OK</text>
+<rect x="40" y="76" width="60" height="26" rx="4" class="box"/>
+<text x="70" y="94" class="tx">&amp;s</text>
+<rect x="112" y="76" width="60" height="26" rx="4" class="box"/>
+<text x="142" y="94" class="tx">&amp;s</text>
+<rect x="184" y="76" width="60" height="26" rx="4" class="box"/>
+<text x="214" y="94" class="tx">&amp;s</text>
+<path d="M70,102 L70,112 L142,112" class="ln"/>
+<path d="M142,102 L142,112" class="ln"/>
+<path d="M214,102 L214,112 L142,112" class="ln"/>
+<path d="M142,112 L142,120" class="ln" marker-end="url(#wr3b-arrow-fr)"/>
+<rect x="72" y="120" width="140" height="30" rx="5" class="box"/>
+<text x="142" y="140" class="tx">String</text>
+<text x="142" y="172" class="mut">personne ne peut la modifier</text>
+<!-- panel 2: one writer -->
+<rect x="282" y="40" width="235" height="145" rx="8" class="panel"/>
+<text x="399" y="62" class="ti">Un seul écrivain — OK</text>
+<rect x="354" y="76" width="90" height="26" rx="4" class="boxac"/>
+<text x="399" y="94" class="tx">&amp;mut s</text>
+<path d="M399,102 L399,120" class="ln" marker-end="url(#wr3b-arrow-fr)"/>
+<rect x="329" y="120" width="140" height="30" rx="5" class="box"/>
+<text x="399" y="140" class="tx">String</text>
+<text x="399" y="172" class="mut">exclusif — personne d'autre ne regarde</text>
+<!-- panel 3: rejected -->
+<rect x="539" y="40" width="235" height="145" rx="8" class="panel"/>
+<text x="656" y="62" class="ti">Les deux ensemble — rejeté</text>
+<rect x="571" y="76" width="80" height="26" rx="4" class="boxbad"/>
+<text x="611" y="94" class="tx">&amp;mut s</text>
+<rect x="661" y="76" width="80" height="26" rx="4" class="boxbad"/>
+<text x="701" y="94" class="tx">&amp;s</text>
+<path d="M611,102 L611,112 L656,112" class="lnbad"/>
+<path d="M701,102 L701,112 L656,112" class="lnbad"/>
+<path d="M656,112 L656,120" class="lnbad" marker-end="url(#wr3b-arrowbad-fr)"/>
+<rect x="586" y="120" width="140" height="30" rx="5" class="boxbad"/>
+<text x="656" y="140" class="tx">String</text>
+<text x="656" y="172" class="bad">le lecteur verrait une valeur incohérente</text>
+<!-- footer -->
+<text x="400" y="222" class="mut">Une seule règle couvre les quatre bugs ci-dessus : autant de lecteurs qu'on veut, ou un seul écrivain — jamais les deux</text>
+</svg>
+</div>
+
 ## Comparaison Réelle
 
 ### La Même Logique dans Différents Langages

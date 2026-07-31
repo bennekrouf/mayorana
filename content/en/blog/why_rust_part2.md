@@ -218,6 +218,59 @@ $ ./a.out
 - **Runtime tools:** Only catch bugs that execute during testing
 - **Code review:** Human error, time-consuming
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="cmemb-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Static analysis, sanitizers and code review each cover only part of the bug space, so a residue of memory bugs still reaches production">
+<!-- style -->
+<style>
+.cmemb-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00;--bad:#e11d48}
+:root.dark .cmemb-fig,[data-theme="dark"] .cmemb-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.cmemb-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.cmemb-fig .boxbad{fill:var(--box);stroke:var(--bad);stroke-width:2}
+.cmemb-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .bad{fill:var(--bad);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .ac{fill:var(--ac);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.cmemb-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="cmemb-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" class="ti">Every C safety net has a hole in a different place</text>
+<!-- static analysis -->
+<rect x="25" y="40" width="235" height="100" rx="7" class="box"/>
+<text x="142" y="64" class="tx">Static analysis</text>
+<text x="142" y="88" class="mut">reads code, never runs it</text>
+<text x="142" y="108" class="mut">misses pointers whose path</text>
+<text x="142" y="126" class="mut">it cannot prove — plus noise</text>
+<!-- sanitizers -->
+<rect x="282" y="40" width="235" height="100" rx="7" class="box"/>
+<text x="399" y="64" class="tx">ASan / Valgrind</text>
+<text x="399" y="88" class="mut">runs the real program</text>
+<text x="399" y="108" class="mut">but only sees the lines</text>
+<text x="399" y="126" class="mut">your tests actually execute</text>
+<!-- code review -->
+<rect x="539" y="40" width="235" height="100" rx="7" class="box"/>
+<text x="656" y="64" class="tx">Code review</text>
+<text x="656" y="88" class="mut">understands intent</text>
+<text x="656" y="108" class="mut">but a freed pointer can be</text>
+<text x="656" y="126" class="mut">files away from its use</text>
+<!-- Y-merge -->
+<path d="M142,140 L142,164 L399,164" class="ln"/>
+<path d="M399,140 L399,164" class="ln"/>
+<path d="M656,140 L656,164 L399,164" class="ln"/>
+<path d="M399,164 L399,184" class="ln" marker-end="url(#cmemb-arrow)"/>
+<!-- residue -->
+<rect x="230" y="184" width="340" height="46" rx="6" class="boxbad"/>
+<text x="400" y="204" class="bad">the overlap is not the whole space</text>
+<text x="400" y="221" class="mut">what none of the three caught ships to production</text>
+<!-- footer -->
+<text x="400" y="256" class="ac">Rust deletes the category instead of hunting instances — none of these bugs compile</text>
+</svg>
+</div>
+
 ## Why C Persists Despite Risks
 
 ### Systems Programming Requirements

@@ -54,6 +54,70 @@ global.gc(); // Only available with --expose-gc flag
 
 V8 manages memory automatically with no developer control. Pauses happen when the engine decides.
 
+<div class="svg-container" style="margin:2rem 0;">
+<svg class="gcstrat-fig" viewBox="0 0 800 270" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Three garbage collection strategies each pay a different cost, while Rust frees at the closing brace with no collector at all">
+<!-- style -->
+<style>
+.gcstrat-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}
+:root.dark .gcstrat-fig,[data-theme="dark"] .gcstrat-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}
+.gcstrat-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}
+.gcstrat-fig .boxac{fill:var(--box);stroke:var(--ac);stroke-width:2}
+.gcstrat-fig .ti{fill:var(--tx);font:700 13px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .mut{fill:var(--mut);font:11px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .ac{fill:var(--ac);font:700 12px ui-sans-serif,system-ui,sans-serif;text-anchor:middle}
+.gcstrat-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}
+</style>
+<!-- defs -->
+<defs>
+<marker id="gcstrat-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ln)"/></marker>
+</defs>
+<!-- title -->
+<text x="400" y="24" class="ti">Who decides when the memory goes away?</text>
+<!-- java -->
+<rect x="20" y="42" width="180" height="112" rx="7" class="box"/>
+<text x="110" y="66" class="tx">Java</text>
+<text x="110" y="86" class="mut">stop-the-world</text>
+<text x="110" y="110" class="mut">app threads freeze</text>
+<text x="110" y="128" class="mut">while the GC sweeps</text>
+<text x="110" y="146" class="mut">cost: latency spikes</text>
+<!-- python -->
+<rect x="215" y="42" width="180" height="112" rx="7" class="box"/>
+<text x="305" y="66" class="tx">Python</text>
+<text x="305" y="86" class="mut">refcount + cycles</text>
+<text x="305" y="110" class="mut">every assignment</text>
+<text x="305" y="128" class="mut">bumps a counter</text>
+<text x="305" y="146" class="mut">cost: constant overhead</text>
+<!-- javascript -->
+<rect x="410" y="42" width="180" height="112" rx="7" class="box"/>
+<text x="500" y="66" class="tx">JavaScript</text>
+<text x="500" y="86" class="mut">generational, V8</text>
+<text x="500" y="110" class="mut">engine picks the</text>
+<text x="500" y="128" class="mut">moment, not you</text>
+<text x="500" y="146" class="mut">cost: no control</text>
+<!-- rust -->
+<rect x="605" y="42" width="175" height="112" rx="7" class="boxac"/>
+<text x="692" y="66" class="ac">Rust</text>
+<text x="692" y="86" class="mut">no collector</text>
+<text x="692" y="110" class="mut">freed at the closing</text>
+<text x="692" y="128" class="mut">brace, every time</text>
+<text x="692" y="146" class="mut">cost: none at runtime</text>
+<!-- Y-merge of the three GC languages -->
+<path d="M110,154 L110,178 L305,178" class="ln"/>
+<path d="M305,154 L305,178" class="ln"/>
+<path d="M500,154 L500,178 L305,178" class="ln"/>
+<path d="M305,178 L305,196" class="ln" marker-end="url(#gcstrat-arrow)"/>
+<rect x="140" y="196" width="330" height="38" rx="6" class="box"/>
+<text x="305" y="220" class="tx">a runtime decides — you find out afterwards</text>
+<!-- rust path -->
+<path d="M692,154 L692,196" class="ln" marker-end="url(#gcstrat-arrow)"/>
+<rect x="560" y="196" width="220" height="38" rx="6" class="boxac"/>
+<text x="670" y="220" class="tx">the compiler decides — you can read it</text>
+<!-- footer -->
+<text x="400" y="258" class="mut">All three GC strategies trade throughput or predictability for convenience; Rust moves the decision to compile time</text>
+</svg>
+</div>
+
 ## The Real-World Impact
 
 ### Elasticsearch Indexing Nightmare
