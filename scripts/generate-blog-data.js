@@ -107,7 +107,9 @@ async function generateBlogDataForLocale(locale) {
           title: data.title,
           date: data.date || new Date().toISOString().split('T')[0],
           excerpt: data.excerpt || '',
-          content: contentWithoutTitle,
+          // Raw markdown is deliberately NOT emitted: only `contentHtml` is
+          // rendered, and the admin editor reads the .md files from disk via
+          // /api/admin/files. Including it doubled the size of this payload.
           contentHtml,
           author: data.author || 'Anonymous',
           category: data.category || 'uncategorized',

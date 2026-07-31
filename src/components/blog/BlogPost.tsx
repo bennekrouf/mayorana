@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { BlogPost as BlogPostType, formatDate } from '../../lib/blog';
+import { type BlogPost as BlogPostType, formatDate } from '../../lib/blog-shared';
 import { motion } from '@/components/ui/Motion';
 import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';

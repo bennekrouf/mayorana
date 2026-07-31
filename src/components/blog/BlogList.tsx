@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { BlogPost, formatDate } from '../../lib/blog';
+import { type BlogPost, formatDate } from '../../lib/blog-shared';
 import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';

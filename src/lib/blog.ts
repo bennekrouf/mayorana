@@ -3,42 +3,13 @@
 
 import blogPostsEn from '../data/blog-posts-en.json';
 import blogPostsFr from '../data/blog-posts-fr.json';
+import type { BlogPost, PaginatedPosts } from './blog-shared';
 
-export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  date: string;
-  author: string;
-  excerpt: string;
-  content: string;
-  contentHtml: string;
-  tags: string[];
-  image?: string;
-  readingTime: string;
-  locale: string;
-  seo: {
-    title: string;
-    description: string;
-    keywords: string[] | string;
-    ogImage?: string;
-  };
-  headings: {
-    id: string;
-    text: string;
-    level: number;
-  }[];
-}
-
-export interface PaginatedPosts {
-  posts: BlogPost[];
-  pinnedPosts: BlogPost[];
-  currentPage: number;
-  totalPages: number;
-  totalPosts: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
+// Types and data-free helpers live in ./blog-shared so that client components
+// can import them without dragging the blog-posts-*.json payloads into the
+// browser bundle. Re-exported here to keep this module's public API unchanged.
+export type { BlogPost, PaginatedPosts };
+export { formatDate } from './blog-shared';
 
 const POSTS_PER_PAGE = 6;
 
@@ -150,16 +121,6 @@ export function getTagBySlug(tagSlug: string, locale: string = 'en'): string | n
     }
   }
   return null;
-}
-
-// Format date for display
-export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
 }
 
 // Search posts by title, excerpt, or tags for a specific locale only

@@ -58,6 +58,12 @@ const nextConfig = {
     return [];
   },
 
+  // Rewrite `react-icons/*` barrel imports to per-icon imports so a page that
+  // uses 4 icons doesn't pull in the whole set (the `fa` barrel alone is ~446KB).
+  experimental: {
+    optimizePackageImports: ['react-icons/fa', 'react-icons/fi', 'react-icons/tfi'],
+  },
+
   // Additional production optimizations
   poweredByHeader: false,
   compress: true,
