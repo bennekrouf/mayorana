@@ -40,6 +40,7 @@ interface DesktopApp {
 
 const runner  = 'https://github.com/Bennekrouf/ais-runner';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
+const tracing = 'https://github.com/bennekrouf/ais-tracing';
 const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
 const screens = 'https://github.com/bennekrouf/appscreens';
 
@@ -98,6 +99,33 @@ const desktopAppsConfig: DesktopAppConfig[] = [
         os: 'windows',
         label: 'Windows',
         href: `${monitor}/releases/latest/download/ais-monitor-setup.exe`,
+        icon: <FaWindows className="w-4 h-4" />,
+      },
+    ],
+  },
+  {
+    id: 'ais-tracing',
+    name: 'AIS Tracing',
+    tech: 'Rust · Dioxus · Azure Cosmos DB',
+    status: 'beta',
+    github: tracing,
+    downloads: [
+      {
+        os: 'mac',
+        label: 'macOS (Apple Silicon)',
+        href: `${tracing}/releases/latest/download/ais-tracing-macos-arm64.dmg`,
+        icon: <FaApple className="w-4 h-4" />,
+      },
+      {
+        os: 'linux',
+        label: 'Linux x86_64',
+        href: `${tracing}/releases/latest/download/ais-tracing-linux-x86_64.tar.gz`,
+        icon: <FaLinux className="w-4 h-4" />,
+      },
+      {
+        os: 'windows',
+        label: 'Windows',
+        href: `${tracing}/releases/latest/download/ais-tracing-setup.exe`,
         icon: <FaWindows className="w-4 h-4" />,
       },
     ],
@@ -162,6 +190,7 @@ const desktopAppsConfig: DesktopAppConfig[] = [
 const appI18nKey: Record<string, string> = {
   'ais-runner':   'ais_runner',
   'ais-monitor':  'ais_monitor',
+  'ais-tracing':  'ais_tracing',
   'blog-toolkit': 'blog_toolkit',
   'appscreens':   'appscreens',
 };
