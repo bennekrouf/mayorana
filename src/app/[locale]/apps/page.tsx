@@ -109,13 +109,16 @@ const desktopAppsConfig: DesktopAppConfig[] = [
     tech: 'Rust · Dioxus · Azure Cosmos DB',
     status: 'beta',
     github: tracing,
+    // No macOS entry yet: ais-tracing's release pipeline skips the .dmg until
+    // the Apple signing secrets are configured, so linking it would 404.
+    // Restore the block below once a signed build ships.
+    //   {
+    //     os: 'mac',
+    //     label: 'macOS (Apple Silicon)',
+    //     href: `${tracing}/releases/latest/download/ais-tracing-macos-arm64.dmg`,
+    //     icon: <FaApple className="w-4 h-4" />,
+    //   },
     downloads: [
-      {
-        os: 'mac',
-        label: 'macOS (Apple Silicon)',
-        href: `${tracing}/releases/latest/download/ais-tracing-macos-arm64.dmg`,
-        icon: <FaApple className="w-4 h-4" />,
-      },
       {
         os: 'linux',
         label: 'Linux x86_64',
