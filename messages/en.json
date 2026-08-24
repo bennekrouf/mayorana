@@ -90,6 +90,8 @@
     "ais_monitor_description": "Visualise how your Logic Apps connect to each other via Service Bus queues and Event Grid, inspect live run history per chain, trigger HTTP workflows with saved payloads, and monitor deployed workflow states — all from a single desktop view.",
     "ais_tracing_tagline": "Correlation-id tracer for Azure Cosmos DB",
     "ais_tracing_description": "Follow a single value — a correlation id, an order reference — through every container of an Azure Cosmos DB account, and see where it got to. Samples your containers, works out which field links documents together, then draws each step on a timeline. Empty rows matter as much as full ones: they show where the data hasn't arrived.",
+    "ais_analytics_tagline": "Correlation-id tracer for Azure Log Analytics",
+    "ais_analytics_description": "The same tracer, aimed at a Log Analytics workspace instead of Cosmos DB. Paste a correlation id and see every step it touched — it works out which column ties the steps of one flow together straight from the data, then draws where that value got to and where it didn't. An empty lane is as meaningful as a full one.",
     "blog_toolkit_tagline": "AI-powered blog post manager with queue-to-publish workflow",
     "blog_toolkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
     "appscreens_tagline": "The complete iOS & Android build and publish assistant",

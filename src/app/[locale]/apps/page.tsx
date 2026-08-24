@@ -6,7 +6,7 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
 import { FaGithub, FaApple, FaLinux, FaWindows } from 'react-icons/fa';
 import { FiExternalLink } from 'react-icons/fi';
-import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight } from 'lucide-react';
+import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight, Database, BarChart3 } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 
@@ -27,6 +27,13 @@ interface DownloadLink {
   icon: React.ReactNode;
 }
 
+interface DataSource {
+  label: string;
+  icon: React.ReactNode;
+  colorClasses: string;
+  borderClass: string;
+}
+
 interface DesktopApp {
   id: string;
   name: string;
@@ -36,13 +43,30 @@ interface DesktopApp {
   status: 'live' | 'beta' | 'wip';
   github: string;
   downloads: DownloadLink[];
+  // Set on sibling apps that share the same tool against a different data
+  // source, so the two cards read as one family at a glance.
+  dataSource?: DataSource;
 }
 
 const runner  = 'https://github.com/Bennekrouf/ais-runner';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 const tracing = 'https://github.com/bennekrouf/ais-tracing';
+const analytics = 'https://github.com/bennekrouf/ais-analytics';
 const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
 const screens = 'https://github.com/bennekrouf/appscreens';
+
+const cosmosSource: DataSource = {
+  label: 'Cosmos DB',
+  icon: <Database className="w-3.5 h-3.5" />,
+  colorClasses: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300',
+  borderClass: 'border-l-4 border-l-violet-500',
+};
+const logAnalyticsSource: DataSource = {
+  label: 'Log Analytics',
+  icon: <BarChart3 className="w-3.5 h-3.5" />,
+  colorClasses: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300',
+  borderClass: 'border-l-4 border-l-teal-500',
+};
 
 // Per-app static config. Translatable strings (tagline, description) live in
 // messages/{en,fr}.json under the "apps" namespace and are looked up by id.
@@ -109,6 +133,7 @@ const desktopAppsConfig: DesktopAppConfig[] = [
     tech: 'Rust · Dioxus · Azure Cosmos DB',
     status: 'beta',
     github: tracing,
+    dataSource: cosmosSource,
     // No macOS entry yet: ais-tracing's release pipeline skips the .dmg until
     // the Apple signing secrets are configured, so linking it would 404.
     // Restore the block below once a signed build ships.
@@ -129,6 +154,30 @@ const desktopAppsConfig: DesktopAppConfig[] = [
         os: 'windows',
         label: 'Windows',
         href: `${tracing}/releases/latest/download/ais-tracing-setup.exe`,
+        icon: <FaWindows className="w-4 h-4" />,
+      },
+    ],
+  },
+  {
+    id: 'ais-analytics',
+    name: 'AIS Analytics',
+    tech: 'Rust · Dioxus · Azure Log Analytics',
+    status: 'beta',
+    github: analytics,
+    dataSource: logAnalyticsSource,
+    // Same signing situation as ais-tracing: no macOS build until the Apple
+    // signing secrets are configured.
+    downloads: [
+      {
+        os: 'linux',
+        label: 'Linux x86_64',
+        href: `${analytics}/releases/latest/download/ais-analytics-linux-x86_64.tar.gz`,
+        icon: <FaLinux className="w-4 h-4" />,
+      },
+      {
+        os: 'windows',
+        label: 'Windows',
+        href: `${analytics}/releases/latest/download/ais-analytics-setup.exe`,
         icon: <FaWindows className="w-4 h-4" />,
       },
     ],
@@ -194,6 +243,7 @@ const appI18nKey: Record<string, string> = {
   'ais-runner':   'ais_runner',
   'ais-monitor':  'ais_monitor',
   'ais-tracing':  'ais_tracing',
+  'ais-analytics': 'ais_analytics',
   'blog-toolkit': 'blog_toolkit',
   'appscreens':   'appscreens',
 };
@@ -373,7 +423,7 @@ export default function AppsPage() {
               <motion.div
                 key={app.id}
                 id={app.id}
-                className="scroll-mt-24 rounded-2xl border border-border bg-background overflow-hidden"
+                className={`scroll-mt-24 rounded-2xl border border-border bg-background overflow-hidden ${app.dataSource?.borderClass ?? ''}`}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
@@ -385,6 +435,12 @@ export default function AppsPage() {
                     <span className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase ${statusBadge[app.status]}`}>
                       {app.status}
                     </span>
+                    {app.dataSource && (
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${app.dataSource.colorClasses}`}>
+                        {app.dataSource.icon}
+                        {app.dataSource.label}
+                      </span>
+                    )}
                   </div>
                   <a
                     href={app.github}
