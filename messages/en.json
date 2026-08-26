@@ -77,6 +77,8 @@
   "apps": {
     "page_title": "Apps & Tools",
     "page_subtitle": "Web platforms, SaaS tools, and open-source desktop apps — all built with Rust.",
+    "tools_heading": "All Tools",
+    "filter_all": "All",
     "web_apps_heading": "Web Apps & SaaS",
     "desktop_apps_heading": "Desktop Apps (Open Source)",
     "download_label": "Download",
