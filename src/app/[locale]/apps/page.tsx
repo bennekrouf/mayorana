@@ -204,6 +204,23 @@ const statusBadge: Record<string, string> = {
   coming_soon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
 };
 
+// The grid's display order, by tool id. Anything built above but missing
+// here simply wouldn't render — every id from desktopToolsConfig/webTools/
+// consultingTool must appear exactly once.
+const TOOL_ORDER: string[] = [
+  'gitagent',
+  'ais-runner',
+  'ais-monitor',
+  'ais-tracing',
+  'cvenom',
+  'ais-analytics',
+  'solanize',
+  'consulting',
+  'appscreens',
+  'api0',
+  'blog-toolkit',
+];
+
 // Display order and label for each filter chip. A tool can carry tags outside
 // this list — they just won't get a chip of their own or be filterable — but
 // every tag assigned to a tool above is expected to appear here.
@@ -401,7 +418,10 @@ export default function AppsPage() {
       action: { kind: 'internal', href: getLocalizedPath(locale, '/contact'), label: tPortfolio('consulting_cta') },
     };
 
-    return [...webTools, ...desktopTools, consultingTool];
+    const all = [...webTools, ...desktopTools, consultingTool];
+    return TOOL_ORDER
+      .map((id) => all.find((t) => t.id === id))
+      .filter((t): t is Tool => t !== undefined);
   }, [tApps, tPortfolio, locale]);
 
   const visibleTools = useMemo(() => {
