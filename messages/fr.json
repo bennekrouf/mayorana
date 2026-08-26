@@ -95,7 +95,10 @@
     "blog_toolkit_tagline": "Gestionnaire de billets de blog propulsé par l'IA avec flux file-vers-publication",
     "blog_toolkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
     "appscreens_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
-    "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native."
+    "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
+    "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
+    "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
+    "run_from_source": "Exécuter depuis les sources"
   },
   "services": {
     "services_title": "Ce que nous construisons",

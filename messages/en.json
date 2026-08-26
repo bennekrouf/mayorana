@@ -95,7 +95,10 @@
     "blog_toolkit_tagline": "AI-powered blog post manager with queue-to-publish workflow",
     "blog_toolkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
     "appscreens_tagline": "The complete iOS & Android build and publish assistant",
-    "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app."
+    "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
+    "gitagent_tagline": "Agentic graph for commit and deploy workflows",
+    "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or DeepSeek, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
+    "run_from_source": "Run from source"
   },
   "services": {
     "services_title": "What We Build",
