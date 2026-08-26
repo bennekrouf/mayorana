@@ -54,6 +54,7 @@ const tracing = 'https://github.com/bennekrouf/ais-tracing';
 const analytics = 'https://github.com/bennekrouf/ais-analytics';
 const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
 const screens = 'https://github.com/bennekrouf/appscreens';
+const gitagent = 'https://github.com/bennekrouf/gitagent';
 
 const cosmosSource: DataSource = {
   label: 'Cosmos DB',
@@ -236,6 +237,15 @@ const desktopAppsConfig: DesktopAppConfig[] = [
       },
     ],
   },
+  {
+    id: 'gitagent',
+    name: 'GitAgent',
+    tech: 'Rust · Dioxus · ollama / DeepSeek · git · gh',
+    status: 'wip',
+    github: gitagent,
+    // No release pipeline yet — the app only runs from source today.
+    downloads: [],
+  },
 ];
 
 // Map DesktopApp.id → translation key prefix in messages/{en,fr}.json "apps"
@@ -246,6 +256,7 @@ const appI18nKey: Record<string, string> = {
   'ais-analytics': 'ais_analytics',
   'blog-toolkit': 'blog_toolkit',
   'appscreens':   'appscreens',
+  'gitagent':     'gitagent',
 };
 
 const osColors: Record<string, string> = {
@@ -462,27 +473,41 @@ export default function AppsPage() {
                     <p className="text-xs text-muted-foreground/70 font-mono">{app.tech}</p>
                   </div>
                   <div className="md:w-64 flex flex-col gap-3">
-                    <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-1">
-                      {tApps('download_label')}
-                    </p>
-                    {app.downloads.map((dl) => (
+                    {app.downloads.length > 0 ? (
+                      <>
+                        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                          {tApps('download_label')}
+                        </p>
+                        {app.downloads.map((dl) => (
+                          <a
+                            key={dl.os}
+                            href={dl.href}
+                            className={`inline-flex items-center gap-3 px-5 py-3 rounded-lg text-sm font-medium transition-colors ${osColors[dl.os]}`}
+                          >
+                            {dl.icon}
+                            {dl.label}
+                          </a>
+                        ))}
+                        <a
+                          href={`${app.github}/releases/latest`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1 text-center"
+                        >
+                          {tApps('all_releases')}
+                        </a>
+                      </>
+                    ) : (
                       <a
-                        key={dl.os}
-                        href={dl.href}
-                        className={`inline-flex items-center gap-3 px-5 py-3 rounded-lg text-sm font-medium transition-colors ${osColors[dl.os]}`}
+                        href={app.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 px-5 py-3 rounded-lg text-sm font-medium transition-colors bg-secondary hover:bg-secondary/70 text-foreground border border-border"
                       >
-                        {dl.icon}
-                        {dl.label}
+                        <FaGithub className="w-4 h-4" />
+                        {tApps('run_from_source')}
                       </a>
-                    ))}
-                    <a
-                      href={`${app.github}/releases/latest`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1 text-center"
-                    >
-                      {tApps('all_releases')}
-                    </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
