@@ -119,9 +119,8 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['azure'],
     github: tracing,
     dataSource: cosmosSource,
-    // No macOS entry yet: ais-tracing's release pipeline skips the .dmg until
-    // the Apple signing secrets are configured, so linking it would 404.
     downloads: [
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${tracing}/releases/latest/download/ais-tracing-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
       { os: 'linux', label: 'Linux x86_64', href: `${tracing}/releases/latest/download/ais-tracing-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
       { os: 'windows', label: 'Windows', href: `${tracing}/releases/latest/download/ais-tracing-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
@@ -174,8 +173,11 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'wip',
     tags: ['git'],
     github: gitagent,
-    // No release pipeline yet — the app only runs from source today.
-    downloads: [],
+    downloads: [
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${gitagent}/releases/latest/download/gitagent-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${gitagent}/releases/latest/download/gitagent-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${gitagent}/releases/latest/download/gitagent-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+    ],
   },
 ];
 
