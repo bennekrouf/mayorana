@@ -316,6 +316,14 @@ step "10/11 — Install and configure nginx"
 # =============================================================================
 apt install -y nginx
 
+# Download root for released product binaries. Lives outside the app checkout
+# so a redeploy never wipes it and the artifacts never enter git. Release CI
+# rsyncs into it as $DEPLOY_USER; nginx only ever reads.
+mkdir -p /var/www/mayorana-downloads
+chown -R "$DEPLOY_USER:$DEPLOY_USER" /var/www/mayorana-downloads
+chmod 755 /var/www/mayorana-downloads
+log "download root ready at /var/www/mayorana-downloads (owner: $DEPLOY_USER)"
+
 # Write nginx config
 cat > /etc/nginx/sites-available/mayorana <<'NGINX'
 # Rate limiting zones
@@ -365,6 +373,40 @@ server {
         add_header X-XSS-Protection "1; mode=block" always;
         add_header Referrer-Policy "strict-origin-when-cross-origin" always;
         add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    }
+
+    # ── Product downloads ──────────────────────────────────────────────────
+    # Free-for-individuals builds, served straight off disk. These are 8-20 MB
+    # binaries; proxying them through Next would occupy a Node process for the
+    # length of every download and buy nothing, so nginx serves them itself —
+    # sendfile, and Range requests honoured so a dropped download resumes.
+    #
+    # Populated by each product's release CI over rsync, laid out as
+    #   /var/www/mayorana-downloads/<product>/<tag>/<file>     (immutable)
+    #   /var/www/mayorana-downloads/<product>/latest/<file>    (overwritten)
+    # so the site can link a stable /downloads/<product>/latest/<file> URL.
+    location /downloads/ {
+        alias /var/www/mayorana-downloads/;
+
+        # No burst limiter: a download is one long request, not a request
+        # flood, so the connection count is the cap that means anything. 20
+        # leaves room for a browser's parallel connections plus the page.
+        limit_conn addr 20;
+        limit_conn_status 429;
+
+        sendfile on;
+        tcp_nopush on;
+
+        # A directory request must 403, not list what else is published.
+        autoindex off;
+
+        # Binaries, never pages. octet-stream + nosniff keeps a .dmg from
+        # ever being interpreted, and latest/ is revalidated via Last-Modified
+        # rather than cached blind, since it is overwritten every release.
+        default_type application/octet-stream;
+        add_header Content-Disposition "attachment" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Cache-Control "public, must-revalidate" always;
     }
 
     # Block common scanner paths
