@@ -50,6 +50,10 @@ interface Tool {
 }
 
 const runner  = 'https://github.com/Bennekrouf/ais-runner';
+// AIS Runner ships its builds from mayorana.ch rather than GitHub Releases:
+// the source stays public, the signed/notarized binaries are distributed here.
+// `latest/` is overwritten by release CI, so this URL never needs bumping.
+const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 const tracing = 'https://github.com/bennekrouf/ais-tracing';
 const analytics = 'https://github.com/bennekrouf/ais-analytics';
@@ -93,9 +97,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['azure'],
     github: runner,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${runner}/releases/latest/download/ais-runner-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${runner}/releases/latest/download/ais-runner-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${runner}/releases/latest/download/ais-runner-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${runnerDl}/ais-runner-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${runnerDl}/ais-runner-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${runnerDl}/ais-runner-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
   {
@@ -133,9 +137,8 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['azure'],
     github: analytics,
     dataSource: logAnalyticsSource,
-    // Same signing situation as ais-tracing: no macOS build until the Apple
-    // signing secrets are configured.
     downloads: [
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${analytics}/releases/latest/download/ais-analytics-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
       { os: 'linux', label: 'Linux x86_64', href: `${analytics}/releases/latest/download/ais-analytics-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
       { os: 'windows', label: 'Windows', href: `${analytics}/releases/latest/download/ais-analytics-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
