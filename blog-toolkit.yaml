@@ -2,9 +2,8 @@ site_name: Mayorana
 site_url: https://mayorana.ch
 author: mayo
 default_tags:
-  - rust
-  - programming
-social_enabled: false
+- rust
+- programming
 system_prompt: |
   You are an expert technical writer specializing in Rust programming.
   You write comprehensive, engaging blog posts about Rust concepts, patterns, and best practices.
@@ -16,3 +15,12 @@ system_prompt: |
   Use tables, lists, and formatting to enhance readability.
   Include real-world context and practical implications.
   End with a "Points Clés" section using ✅ bullet points.
+social_enabled: false
+content_paths:
+  langs:
+    en:
+      queue: content/en/queue
+      blog: content/en/blog
+    fr:
+      queue: content/fr/queue
+      blog: content/fr/blog
