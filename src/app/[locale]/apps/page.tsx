@@ -58,6 +58,8 @@ const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
 const tracingDl = 'https://mayorana.ch/downloads/ais-tracing/latest';
 const analyticsDl = 'https://mayorana.ch/downloads/ais-analytics/latest';
 const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
+const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
+const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 const tracing = 'https://github.com/bennekrouf/ais-tracing';
 const analytics = 'https://github.com/bennekrouf/ais-analytics';
@@ -155,9 +157,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['blog'],
     github: blogtk,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtk}/releases/latest/download/blog-toolkit-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${blogtk}/releases/latest/download/blog-toolkit-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${blogtk}/releases/latest/download/blog-toolkit-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.tar.gz`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${blogtkDl}/blog-toolkit-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${blogtkDl}/blog-toolkit-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
   {
@@ -168,9 +170,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['tools'],
     github: screens,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screens}/releases/latest/download/appscreens-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${screens}/releases/latest/download/appscreens-linux-x86_64.deb`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${screens}/releases/latest/download/appscreens-windows-setup.msi`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screensDl}/appscreens-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${screensDl}/appscreens-linux-x86_64.deb`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${screensDl}/appscreens-windows-setup.msi`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
   {
