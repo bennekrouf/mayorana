@@ -54,6 +54,10 @@ const runner  = 'https://github.com/Bennekrouf/ais-runner';
 // the source stays public, the signed/notarized binaries are distributed here.
 // `latest/` is overwritten by release CI, so this URL never needs bumping.
 const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
+const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
+const tracingDl = 'https://mayorana.ch/downloads/ais-tracing/latest';
+const analyticsDl = 'https://mayorana.ch/downloads/ais-analytics/latest';
+const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
 const monitor = 'https://github.com/Bennekrouf/ais-monitor';
 const tracing = 'https://github.com/bennekrouf/ais-tracing';
 const analytics = 'https://github.com/bennekrouf/ais-analytics';
@@ -110,9 +114,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['azure'],
     github: monitor,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${monitor}/releases/latest/download/ais-monitor-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${monitor}/releases/latest/download/ais-monitor-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${monitor}/releases/latest/download/ais-monitor-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${monitorDl}/ais-monitor-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${monitorDl}/ais-monitor-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${monitorDl}/ais-monitor-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
   {
@@ -124,9 +128,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     github: tracing,
     dataSource: cosmosSource,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${tracing}/releases/latest/download/ais-tracing-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${tracing}/releases/latest/download/ais-tracing-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${tracing}/releases/latest/download/ais-tracing-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${tracingDl}/ais-tracing-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${tracingDl}/ais-tracing-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${tracingDl}/ais-tracing-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
   {
@@ -138,9 +142,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     github: analytics,
     dataSource: logAnalyticsSource,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${analytics}/releases/latest/download/ais-analytics-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${analytics}/releases/latest/download/ais-analytics-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${analytics}/releases/latest/download/ais-analytics-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${analyticsDl}/ais-analytics-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${analyticsDl}/ais-analytics-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${analyticsDl}/ais-analytics-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
   {
@@ -177,9 +181,9 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['git'],
     github: gitagent,
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${gitagent}/releases/latest/download/gitagent-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${gitagent}/releases/latest/download/gitagent-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${gitagent}/releases/latest/download/gitagent-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${gitagentDl}/gitagent-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
+      { os: 'linux', label: 'Linux x86_64', href: `${gitagentDl}/gitagent-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
+      { os: 'windows', label: 'Windows', href: `${gitagentDl}/gitagent-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
   },
 ];
