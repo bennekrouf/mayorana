@@ -133,9 +133,8 @@ const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['azure'],
     github: analytics,
     dataSource: logAnalyticsSource,
-    // Same signing situation as ais-tracing: no macOS build until the Apple
-    // signing secrets are configured.
     downloads: [
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${analytics}/releases/latest/download/ais-analytics-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
       { os: 'linux', label: 'Linux x86_64', href: `${analytics}/releases/latest/download/ais-analytics-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
       { os: 'windows', label: 'Windows', href: `${analytics}/releases/latest/download/ais-analytics-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
     ],
