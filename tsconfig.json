@@ -41,7 +41,9 @@
     ".next/types/**/*.ts",
     "src/types/**/*.d.ts" // Explicitly include your type declaration files
     ,
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    ".next-staging/types/**/*.ts",
+    ".next-staging/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

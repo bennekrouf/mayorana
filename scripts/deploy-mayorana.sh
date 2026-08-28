@@ -14,6 +14,10 @@
 # That mismatch is why the box silently sat two commits behind on 2026-08-28.
 #
 # Restarts only the `mayorana` PM2 app — the VPS hosts ~15 others.
+#
+# Builds into .next-staging and swaps it in behind a brief stop, so a deploy
+# never serves a half-replaced build (see the build step below), and keeps the
+# previous build in .next-previous to roll back to if the new one won't serve.
 
 set -euo pipefail
 
@@ -21,6 +25,10 @@ APP_DIR="${APP_DIR:-/var/www/mayorana}"
 PM2_APP="${PM2_APP:-mayorana}"
 BRANCH="${BRANCH:-master}"
 PORT="${PORT:-3006}"
+
+LIVE_DIR=".next"          # what `next start` serves
+STAGE_DIR=".next-staging" # built here, then swapped in
+PREV_DIR=".next-previous" # last good build, kept for rollback
 
 GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[1;33m'; NC='\033[0m'
 info() { echo -e "${YELLOW}▶  $1${NC}"; }
@@ -65,23 +73,61 @@ fi
 info "Installing dependencies..."
 yarn install --frozen-lockfile
 
+# Build into a staging directory rather than over the live one. Building in
+# place rewrites .next/server/chunks while the old process is still serving
+# from it, so every request in that window dies with ChunkLoadError /
+# MODULE_NOT_FOUND and a bare 500 (Next can't even render its own error page).
+# next.config.ts reads NEXT_DIST_DIR for exactly this.
+#
+# It also means a failed build leaves the running site completely untouched.
+#
 # `yarn build` also runs generate-blog-data (prebuild) and generate-sitemap
 # (postbuild), so the sitemap picks up any new routes.
-info "Building..."
-yarn build
+info "Building into $STAGE_DIR..."
+rm -rf "$STAGE_DIR"
+NEXT_DIST_DIR="$STAGE_DIR" yarn build
 
-info "Restarting PM2 app '$PM2_APP'..."
-pm2 restart "$PM2_APP" --update-env
+[ -f "$STAGE_DIR/BUILD_ID" ] || err "Build produced no $STAGE_DIR/BUILD_ID — refusing to swap"
+
+# Stop before swapping: `next start` resolves chunks lazily from disk by path,
+# so a live process would read the new directory through the old paths. A brief
+# clean stop beats serving corrupted responses.
+info "Swapping build in (brief downtime)..."
+pm2 stop "$PM2_APP" >/dev/null
+
+rm -rf "$PREV_DIR"
+[ -d "$LIVE_DIR" ] && mv "$LIVE_DIR" "$PREV_DIR"
+mv "$STAGE_DIR" "$LIVE_DIR"
+
+pm2 restart "$PM2_APP" --update-env >/dev/null
 
 info "Health check on :$PORT..."
-for _ in $(seq 1 10); do
+for _ in $(seq 1 15); do
   code="$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:$PORT/en" || true)"
   if [ "$code" = "200" ]; then
     ok "Deployed $AFTER — mayorana.ch responding 200"
+    echo "   previous build kept at $PREV_DIR"
     exit 0
   fi
   sleep 2
 done
 
+# The new build is bad; put the old one back rather than leaving the site down.
+err_msg="App did not return 200 on :$PORT after restart (last status: ${code:-none})"
+if [ -d "$PREV_DIR" ]; then
+  info "Rolling back to previous build..."
+  pm2 stop "$PM2_APP" >/dev/null
+  rm -rf "$LIVE_DIR"
+  mv "$PREV_DIR" "$LIVE_DIR"
+  pm2 restart "$PM2_APP" --update-env >/dev/null
+  sleep 3
+  rb="$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:$PORT/en" || true)"
+  if [ "$rb" = "200" ]; then
+    info "Rollback OK — site restored on the previous build"
+  else
+    info "Rollback did NOT restore the site (status: ${rb:-none})"
+  fi
+fi
+
 pm2 logs "$PM2_APP" --lines 30 --nostream || true
-err "App did not return 200 on :$PORT after restart (last status: ${code:-none})"
+err "$err_msg"
