@@ -16,6 +16,7 @@
   },
   "navigation": {
     "home": "Accueil",
+    "azure_tools": "Outils Azure",
     "portfolio": "Portfolio",
     "services": "Services",
     "blog": "Blog",
