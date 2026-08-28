@@ -6,6 +6,18 @@ const matter = require('gray-matter');
 
 const BASE_URL = 'https://mayorana.ch';
 
+// Non-blog routes, listed here so adding a page is a one-line change and the
+// URL count below stays in step with what actually gets written.
+const STATIC_PAGES = [
+  { path: '', changefreq: 'weekly', priority: '1.0' },
+  { path: '/solutions/azure', changefreq: 'weekly', priority: '0.9' },
+  { path: '/apps', changefreq: 'weekly', priority: '0.8' },
+  { path: '/services', changefreq: 'monthly', priority: '0.8' },
+  { path: '/about', changefreq: 'monthly', priority: '0.7' },
+  { path: '/contact', changefreq: 'monthly', priority: '0.7' },
+  { path: '/blog', changefreq: 'daily', priority: '0.9' },
+];
+
 async function generateSitemap() {
   console.log('🗺️  Generating sitemap...');
 
@@ -55,32 +67,16 @@ async function generateSitemap() {
   // Start XML content
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Static pages -->
+  <!-- Static pages -->`;
+
+  for (const page of STATIC_PAGES) {
+    sitemap += `
   <url>
-    <loc>${BASE_URL}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>${BASE_URL}/services</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${BASE_URL}/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${BASE_URL}/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${BASE_URL}/blog</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <loc>${BASE_URL}${page.path}</loc>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
   </url>`;
+  }
 
   // Add all blog posts
   for (const slug of blogSlugs) {
@@ -105,8 +101,8 @@ async function generateSitemap() {
   sitemap += `
 </urlset>`;
 
-  console.log(`✅ Generated sitemap with ${5 + blogSlugs.length + allTags.size} URLs`);
-  console.log(`   - Static pages: 5`);
+  console.log(`✅ Generated sitemap with ${STATIC_PAGES.length + blogSlugs.length + allTags.size} URLs`);
+  console.log(`   - Static pages: ${STATIC_PAGES.length}`);
   console.log(`   - Blog posts: ${blogSlugs.length}`);
   console.log(`   - Tag pages: ${allTags.size}`);
 
