@@ -27,8 +27,8 @@ Date: 2026-08-28
 | `/solutions/azure` full page | Critical | ✅ Built | AIS suite (Runner, Monitor, Tracing, Analytics); EN + FR |
 | `/solutions/ai-agents` page | Critical | ✅ Built | API0.AI deep dive; EN + FR |
 | Services page | High | ✅ Built | 3 offers + process; EN + FR; contact dropdown realigned |
-| Apps page intro paragraph | High | Rewrite | Ties `/apps` to primary positioning |
-| "Also built with our stack" section copy | Medium | New | CVENOM, SOLANIZE, AppScreens, Blog Toolkit |
+| Apps page intro paragraph | High | ✅ Built | Ties `/apps` to primary positioning |
+| "Also built with our stack" section copy | Medium | ✅ Built | CVENOM, AppScreens, Blog Toolkit, SOLANIZE, + consulting CTA |
 | Navigation labels | High | Update | `src/components/layout/Navbar.tsx` — add Services + Solutions |
 | Meta titles & descriptions (all key pages) | High | Rewrite | Include primary keywords + positioning |
 
@@ -63,7 +63,7 @@ Date: 2026-08-28
 - [x] Write Azure Solutions page (EN + FR, `messages/*.json` → `solutions_azure`)
 - [x] Write AI Agents / API0 page (EN + FR, `messages/*.json` → `solutions_ai_agents`)
 - [x] Write Services page (EN + FR; page moved off hardcoded English onto i18n keys)
-- [ ] Write new Apps page intro + secondary section
+- [x] Write new Apps page intro + secondary section (EN + FR)
 - [ ] Update all meta titles & descriptions
 - [ ] Prepare any new images/icons if needed
 
@@ -74,7 +74,7 @@ Date: 2026-08-28
 - [x] Extract `desktopToolsConfig` into `src/data/tools.ts` + shared `src/components/ui/ToolVisuals.tsx`
       (status/data-source badges, download row) so Apps and Solutions share one
       source of truth for download URLs — done as groundwork for the Azure page
-- [ ] Restructure Apps page (`src/app/[locale]/apps/page.tsx`) into primary + "also built with our stack" tiers
+- [x] Restructure Apps page (`src/app/[locale]/apps/page.tsx`) into primary + "also built with our stack" tiers
 - [x] Update global navigation (`src/components/layout/Navbar.tsx`): flat nav now
       `Home | Azure Tools | AI Agents | Apps | Services | Blog | Contact` (EN) /
       `Accueil | Outils Azure | Agents IA | Apps | Services | Blog | Contact` (FR).

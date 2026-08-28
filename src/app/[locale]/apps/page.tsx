@@ -41,21 +41,29 @@ interface Tool {
   action: ToolAction;
 }
 
-// The grid's display order, by tool id. Anything built above but missing
-// here simply wouldn't render — every id from desktopToolsConfig/webTools/
-// consultingTool must appear exactly once.
-const TOOL_ORDER: string[] = [
-  'gitagent',
+// Display order by tool id, split into the two sections the page renders.
+// Anything built below but missing from both lists simply wouldn't render —
+// every id from desktopToolsConfig/webTools/consultingTool must appear exactly
+// once across the two.
+
+// The tools that carry the positioning: Azure workflows and AI agents.
+const PRIMARY_ORDER: string[] = [
   'ais-runner',
   'ais-monitor',
   'ais-tracing',
-  'cvenom',
   'ais-analytics',
+  'api0',
+  'gitagent',
+];
+
+// Built on the same stack, but outside the core offer. `consulting` stays last
+// as the "your project" CTA card.
+const SECONDARY_ORDER: string[] = [
+  'cvenom',
+  'appscreens',
+  'blog-toolkit',
   'solanize',
   'consulting',
-  'appscreens',
-  'api0',
-  'blog-toolkit',
 ];
 
 // Display order and label for each filter chip. A tool can carry tags outside
@@ -148,6 +156,59 @@ function ToolActionButtons({ action, tApps }: { action: ToolAction; tApps: Retur
   }
 }
 
+// One card, used by both sections. `muted` gives the secondary section a
+// quieter surface — content and controls are identical either way.
+function ToolCard({
+  tool,
+  index,
+  tApps,
+  muted = false,
+}: {
+  tool: Tool;
+  index: number;
+  tApps: ReturnType<typeof useTranslations>;
+  muted?: boolean;
+}) {
+  const surface = muted
+    ? 'bg-background/60 hover:shadow-lg'
+    : 'bg-gradient-to-br from-secondary/50 to-secondary/20 hover:shadow-2xl';
+
+  return (
+    <motion.div
+      id={tool.id}
+      className={`scroll-mt-24 group relative overflow-hidden rounded-2xl border border-border p-6 transition-all duration-300 flex flex-col ${surface} ${tool.dataSource?.borderClass ?? ''}`}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
+    >
+      <div className="flex items-start justify-between mb-3 gap-2">
+        {tool.icon ? (
+          <div className="p-3 bg-primary/10 rounded-full text-primary">{tool.icon}</div>
+        ) : (
+          <h3 className="text-xl font-bold text-primary">{tool.name}</h3>
+        )}
+        <div className="flex flex-col items-end gap-1.5">
+          <StatusBadge status={tool.status} />
+          {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
+        </div>
+      </div>
+
+      {tool.icon && <h3 className="text-xl font-bold mb-1 text-primary">{tool.name}</h3>}
+      {tool.tagline && <p className="text-sm font-medium mb-1">{tool.tagline}</p>}
+      <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>
+      <p className="text-xs text-muted-foreground/70 font-mono mb-3">{tool.tech}</p>
+
+      <div className="mb-4">
+        <ToolTags tool={tool} />
+      </div>
+
+      <div className="mt-auto">
+        <ToolActionButtons action={tool.action} tApps={tApps} />
+      </div>
+    </motion.div>
+  );
+}
+
 export default function AppsPage() {
   const tPortfolio = useTranslations('portfolio');
   const tApps = useTranslations('apps');
@@ -158,7 +219,7 @@ export default function AppsPage() {
     setActiveTags((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
   };
 
-  const tools: Tool[] = useMemo(() => {
+  const tools = useMemo<{ primary: Tool[]; secondary: Tool[] }>(() => {
     const desktopTools: Tool[] = desktopToolsConfig.map((app) => ({
       id: app.id,
       name: app.name,
@@ -219,15 +280,25 @@ export default function AppsPage() {
     };
 
     const all = [...webTools, ...desktopTools, consultingTool];
-    return TOOL_ORDER
-      .map((id) => all.find((t) => t.id === id))
-      .filter((t): t is Tool => t !== undefined);
+    const inOrder = (order: string[]) =>
+      order
+        .map((id) => all.find((t) => t.id === id))
+        .filter((t): t is Tool => t !== undefined);
+
+    return { primary: inOrder(PRIMARY_ORDER), secondary: inOrder(SECONDARY_ORDER) };
   }, [tApps, tPortfolio, locale]);
 
-  const visibleTools = useMemo(() => {
-    if (activeTags.length === 0) return tools;
-    return tools.filter((tool) => tool.tags.some((t) => activeTags.includes(t)));
+  // Filters apply across both sections; a section with no matches is hidden
+  // rather than left as an empty heading.
+  const visible = useMemo(() => {
+    const match = (list: Tool[]) =>
+      activeTags.length === 0
+        ? list
+        : list.filter((tool) => tool.tags.some((t) => activeTags.includes(t)));
+    return { primary: match(tools.primary), secondary: match(tools.secondary) };
   }, [tools, activeTags]);
+
+  const nothingMatches = visible.primary.length === 0 && visible.secondary.length === 0;
 
   return (
     <LayoutTemplate>
@@ -256,69 +327,65 @@ export default function AppsPage() {
         </div>
       </section>
 
-      {/* All tools, filterable by tag */}
-      <section className="py-16 bg-background">
+      {/* Intro + filters */}
+      <section className="pt-12 bg-background">
         <div className="container max-w-6xl">
-          <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
-            <h2 className="text-2xl font-bold">{tApps('tools_heading')}</h2>
-            <div className="flex flex-wrap gap-2">
+          <p className="text-muted-foreground max-w-3xl mb-8">{tApps('intro')}</p>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            <button
+              onClick={() => setActiveTags([])}
+              className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${tagChipClasses(activeTags.length === 0)}`}
+            >
+              {tApps('filter_all')}
+            </button>
+            {FILTER_TAGS.map((tag) => (
               <button
-                onClick={() => setActiveTags([])}
-                className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${tagChipClasses(activeTags.length === 0)}`}
+                key={tag.id}
+                onClick={() => toggleTag(tag.id)}
+                className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${tagChipClasses(activeTags.includes(tag.id))}`}
               >
-                {tApps('filter_all')}
+                {tag.label}
               </button>
-              {FILTER_TAGS.map((tag) => (
-                <button
-                  key={tag.id}
-                  onClick={() => toggleTag(tag.id)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${tagChipClasses(activeTags.includes(tag.id))}`}
-                >
-                  {tag.label}
-                </button>
+            ))}
+          </div>
+
+          {nothingMatches && (
+            <p className="py-12 text-center text-muted-foreground">{tApps('no_matching_tools')}</p>
+          )}
+        </div>
+      </section>
+
+      {/* Primary tools — the ones carrying the positioning */}
+      {visible.primary.length > 0 && (
+        <section className="py-12 bg-background">
+          <div className="container max-w-6xl">
+            <h2 className="text-2xl font-bold mb-8">{tApps('primary_heading')}</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {visible.primary.map((tool, i) => (
+                <ToolCard key={tool.id} tool={tool} index={i} tApps={tApps} />
               ))}
             </div>
           </div>
+        </section>
+      )}
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visibleTools.map((tool, i) => (
-              <motion.div
-                key={tool.id}
-                id={tool.id}
-                className={`scroll-mt-24 group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/50 to-secondary/20 border border-border p-6 hover:shadow-2xl transition-all duration-300 flex flex-col ${tool.dataSource?.borderClass ?? ''}`}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: (i % 6) * 0.05 }}
-              >
-                <div className="flex items-start justify-between mb-3 gap-2">
-                  {tool.icon ? (
-                    <div className="p-3 bg-primary/10 rounded-full text-primary">{tool.icon}</div>
-                  ) : (
-                    <h3 className="text-xl font-bold text-primary">{tool.name}</h3>
-                  )}
-                  <div className="flex flex-col items-end gap-1.5">
-                    <StatusBadge status={tool.status} />
-                    {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
-                  </div>
-                </div>
-
-                {tool.icon && <h3 className="text-xl font-bold mb-1 text-primary">{tool.name}</h3>}
-                {tool.tagline && <p className="text-sm font-medium mb-1">{tool.tagline}</p>}
-                <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>
-                <p className="text-xs text-muted-foreground/70 font-mono mb-3">{tool.tech}</p>
-
-                <div className="mb-4">
-                  <ToolTags tool={tool} />
-                </div>
-
-                <div className="mt-auto">
-                  <ToolActionButtons action={tool.action} tApps={tApps} />
-                </div>
-              </motion.div>
-            ))}
+      {/* Also built with our stack — quieter treatment, same card content */}
+      {visible.secondary.length > 0 && (
+        <section className="py-12 bg-secondary/30 border-t border-border">
+          <div className="container max-w-6xl">
+            <h2 className="text-2xl font-bold mb-2">{tApps('secondary_heading')}</h2>
+            <p className="text-sm text-muted-foreground mb-8 max-w-2xl">
+              {tApps('secondary_intro')}
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {visible.secondary.map((tool, i) => (
+                <ToolCard key={tool.id} tool={tool} index={i} tApps={tApps} muted />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Footer CTA */}
       <section className="py-16 bg-secondary">

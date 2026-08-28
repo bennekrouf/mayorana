@@ -103,7 +103,7 @@
   },
   "apps": {
     "page_title": "Apps & Outils",
-    "page_subtitle": "Plateformes web, outils SaaS et apps de bureau open-source — le tout construit avec Rust.",
+    "page_subtitle": "Applications de bureau natives et outils web conçus avec Rust. Focalisés en priorité sur Azure Integration Services et l'infrastructure pour agents IA.",
     "tools_heading": "Tous les outils",
     "filter_all": "Tous",
     "web_apps_heading": "Apps Web & SaaS",
@@ -127,7 +127,12 @@
     "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
-    "run_from_source": "Exécuter depuis les sources"
+    "run_from_source": "Exécuter depuis les sources",
+    "intro": "Voici les outils que nous concevons et utilisons au quotidien. Ceux du haut portent notre positionnement principal — workflows Azure et agents IA. Le reste regroupe des travaux complémentaires bâtis sur la même stack.",
+    "primary_heading": "Outils principaux",
+    "secondary_heading": "Également bâtis sur notre stack",
+    "secondary_intro": "Des outils complémentaires qui reposent sur les mêmes fondations Rust. Ils ne font pas partie de l'offre principale, mais restent disponibles.",
+    "no_matching_tools": "Aucun outil ne correspond aux filtres sélectionnés."
   },
   "solutions_azure": {
     "hero_eyebrow": "Outils d'intégration Azure",
