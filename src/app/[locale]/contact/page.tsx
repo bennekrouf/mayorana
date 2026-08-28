@@ -86,12 +86,13 @@ function ContactFormWithParams() {
     }
   };
 
+  // Values must match the offer ids the Services page links with ?service=
+  // (src/app/[locale]/services/page.tsx), or the preselect silently no-ops.
   const services = [
-    { value: "rust-training", label: tServices('rust_training.title') },
-    { value: "llm-integration", label: tServices('llm_integration.title') },
-    { value: "chatbot", label: tServices('chatbot.title') },
-    { value: "api0", label: tServices('api0.title') },
-    { value: "other", label: "Other" }
+    { value: "ai-agents", label: tServices('ai_agents.title') },
+    { value: "azure", label: tServices('azure.title') },
+    { value: "rust", label: tServices('rust.title') },
+    { value: "other", label: tServices('other') }
   ];
 
   return (

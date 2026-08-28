@@ -201,45 +201,50 @@
   "services": {
     "services_title": "What We Build",
     "services_subtitle": "AI tools that actually work, powered by Rust 🦀",
-    "rust_training": {
-      "title": "Rust Adoption & Training",
-      "description": "We help your team adopt Rust for new applications or migrate existing systems. From initial assessment to hands-on training, we guide companies through their complete Rust transformation.",
-      "cta": "GET IN TOUCH",
-      "benefit1": "Assess which projects benefit most from Rust adoption",
-      "benefit2": "Plan migration strategies for existing applications",
-      "benefit3": "Train your team with hands-on, tailored guidance",
-      "benefit4": "Build production-ready Rust applications"
-    },
-    "llm_integration": {
-      "title": "LLM Integration",
-      "description": "Seamlessly connect large language models (LLMs) to your applications for enhanced automation, chatbots, and data processing. Custom solutions designed to integrate with your existing systems, ensuring scalability and performance.",
-      "cta": "GET IN TOUCH",
-      "benefit1": "Integrate leading LLMs into your existing products",
-      "benefit2": "Build custom knowledge bases for domain-specific applications",
-      "benefit3": "Implement scalable prompt engineering frameworks",
-      "benefit4": "Create robust evaluation systems for LLM outputs"
-    },
-    "chatbot": {
-      "title": "Chatbot Development",
-      "description": "Transform your apps with intelligent chatbots. From simple Q&A interfaces to complex conversational systems.",
-      "cta": "GET IN TOUCH",
-      "benefit1": "Transform any app into a conversational interface",
-      "benefit2": "Connect chatbots directly to your existing APIs",
-      "benefit3": "Handle complex user queries in natural language",
-      "benefit4": "Reduce support load with automated responses"
-    },
-    "api0": {
-      "title": "api0.ai — MCP Gateway",
-      "description": "An MCP gateway that turns your APIs into tools for AI agents. Connect any endpoint, define capabilities, and let LLMs orchestrate workflows — no glue code needed.",
-      "cta": "Try api0.ai now",
-      "benefit1": "Expose any API as an MCP tool for AI agents",
-      "benefit2": "Build multi-step agent workflows with zero glue code",
-      "benefit3": "Secure API key management with domain restrictions",
-      "benefit4": "Scale seamlessly for enterprise-level traffic"
-    },
     "key_benefits": "Key benefits",
     "ready_get_started": "Ready to get started?",
-    "contact_description": "Contact us to discuss your specific needs and how our services can help your business innovate and grow."
+    "contact_description": "Contact us to discuss your specific needs and how our services can help your business innovate and grow.",
+    "page_title": "Services",
+    "page_subtitle": "Custom AI agent systems, Azure integration tooling, and high-performance Rust development — built on the same stack as our products.",
+    "deliver_label": "What we typically deliver",
+    "ai_agents": {
+      "title": "Custom AI Agent & MCP Development",
+      "description": "Design and build production-grade AI agent systems and MCP gateways that securely connect to your existing APIs and internal systems. No glue code, proper key management, and architectures that scale.",
+      "cta": "Discuss your agent system",
+      "deliver1": "MCP gateway setup and custom tool development",
+      "deliver2": "Secure bridges between LLMs (Claude, GPT, etc.) and internal APIs",
+      "deliver3": "Agent orchestration and workflow design",
+      "deliver4": "Production hardening (auth, rate limiting, observability)"
+    },
+    "azure": {
+      "title": "Azure Integration Tooling & Consulting",
+      "description": "Help teams running Azure Integration Services move faster. Local development workflows, visibility into complex chains, correlation tracing, and custom tooling built on the same foundation as the AIS suite.",
+      "cta": "Talk about your Azure setup",
+      "deliver1": "Local development and testing improvements for Logic Apps",
+      "deliver2": "Workflow chain visibility and monitoring solutions",
+      "deliver3": "Correlation-id tracing across Cosmos DB / Log Analytics",
+      "deliver4": "Custom Azure tooling and automation"
+    },
+    "rust": {
+      "title": "High-Performance Rust Development & Training",
+      "description": "Rust systems work and team enablement. From greenfield high-performance services to helping your team adopt Rust with practical, production-focused training.",
+      "cta": "Start a Rust conversation",
+      "deliver1": "Custom high-performance services and tools in Rust",
+      "deliver2": "Architecture and performance reviews",
+      "deliver3": "Hands-on training workshops tailored to your domain",
+      "deliver4": "Migration support from other languages"
+    },
+    "process_heading": "How we work",
+    "process_1_title": "Discovery",
+    "process_1_body": "Understand the problem, constraints, and existing systems.",
+    "process_2_title": "Prototype",
+    "process_2_body": "Fast, working slice that proves the approach.",
+    "process_3_title": "Production",
+    "process_3_body": "Harden, document, and hand over — or keep supporting.",
+    "cta_heading": "Need something specific?",
+    "cta_body": "Whether it's a custom agent system, Azure tooling, or Rust work — we build on the same reliable stack we use for our own products.",
+    "cta_primary": "Book a free 30-min consult",
+    "other": "Other"
   },
   "about": {
     "hero_title": "About Us",
