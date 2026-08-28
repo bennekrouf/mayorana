@@ -13,9 +13,15 @@ export default function Footer() {
   const tCommon = useTranslations('common');
   const locale = useLocale();
 
+  // `badge` renders next to the name; Solanize used to appear twice here — once
+  // from this list and once from a hardcoded entry below, both pointing at
+  // ribh.io — so it is listed once, with its badge.
   const portfolioLinks = [
     { name: t('footer_api0'), url: 'https://api0.ai', external: true },
-    { name: t('footer_solanize'), url: 'https://ribh.io', external: true }
+    { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps#ais-runner'), external: false },
+    { name: 'cVenom', url: 'https://cvenom.com', external: true },
+    { name: t('footer_solanize'), url: 'https://ribh.io', external: true, badge: 'MVP' },
+    { name: t('footer_github'), url: 'https://github.com/Bennekrouf', external: true }
   ];
 
   const actionLinks = [
@@ -23,11 +29,17 @@ export default function Footer() {
     { name: t('footer_whatsapp'), url: 'https://wa.me/41764837540', external: true }
   ];
 
+  // Mirrors the header nav (src/components/layout/Navbar.tsx) so the two stay
+  // consistent, plus About which the header does not carry.
   const navigationLinks = isSwissRust ? [] : [
     { name: tNav('home'), url: getLocalizedPath(locale, '/') },
-    { name: tNav('about'), url: getLocalizedPath(locale, '/about') },
+    { name: tNav('azure_tools'), url: getLocalizedPath(locale, '/solutions/azure') },
+    { name: tNav('ai_agents'), url: getLocalizedPath(locale, '/solutions/ai-agents') },
+    { name: 'Apps', url: getLocalizedPath(locale, '/apps') },
+    { name: tNav('services'), url: getLocalizedPath(locale, '/services') },
+    { name: tNav('blog'), url: getLocalizedPath(locale, '/blog') },
     { name: tNav('contact'), url: getLocalizedPath(locale, '/contact') },
-    { name: tNav('blog'), url: getLocalizedPath(locale, '/blog') }
+    { name: tNav('about'), url: getLocalizedPath(locale, '/about') }
   ];
 
   return (
@@ -44,9 +56,14 @@ export default function Footer() {
               {isSwissRust ? "Swiss rust 🦀🇨🇭" : "Mayorana"}
             </Link>
             {!isSwissRust && (
-              <p className="mt-3 text-sm text-muted-foreground">
-                {t('footer_tagline')}
-              </p>
+              <>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {t('footer_tagline')}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {t('based_in_switzerland')}
+                </p>
+              </>
             )}
             <div className="mt-4">
               <Link
@@ -72,37 +89,17 @@ export default function Footer() {
                       className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
                     >
                       {link.name}
+                      {link.badge && (
+                        <span className="text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 px-2 py-0.5 rounded">
+                          {link.badge}
+                        </span>
+                      )}
                       {link.external && (
                         <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                       )}
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link
-                    href="https://cvenom.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
-                  >
-                    cVenom
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://ribh.io"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
-                  >
-                    Solanize
-                    <span className="text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 px-2 py-0.5 rounded ml-1">
-                      MVP
-                    </span>
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
               </ul>
             </div>
           )}
@@ -110,7 +107,7 @@ export default function Footer() {
           {/* Navigation */}
           {!isSwissRust && (
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Navigation</h3>
+              <h3 className="font-semibold text-foreground mb-4">{t('explore')}</h3>
               <ul className="space-y-3">
                 {navigationLinks.map((link) => (
                   <li key={link.name}>

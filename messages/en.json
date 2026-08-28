@@ -372,7 +372,10 @@
     "get_started": "Get started",
     "privacy": "Privacy",
     "terms": "Terms",
-    "built_with": "Built with"
+    "built_with": "Built with",
+    "explore": "Explore",
+    "based_in_switzerland": "Based in Switzerland",
+    "footer_github": "GitHub"
   },
   "common": {
     "loading": "Loading...",
