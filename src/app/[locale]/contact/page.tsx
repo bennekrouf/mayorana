@@ -53,12 +53,29 @@ function ContactFormWithParams() {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // Values must match the offer ids the Services page links with ?service=
+  // (src/app/[locale]/services/page.tsx), or the preselect silently no-ops.
+  const services = [
+    { value: "ai-agents", label: tServices('ai_agents.title') },
+    { value: "azure", label: tServices('azure.title') },
+    { value: "rust", label: tServices('rust.title') },
+    { value: "other", label: tServices('other') }
+  ];
+
+  // Links to the retired offers (?service=rust-training, llm-integration,
+  // chatbot, api0) are still out there in mail and search results. Falling back
+  // to "other" keeps those visitors on a form with a valid selection instead of
+  // a blank required field they have to notice and fix themselves.
+  const preselectedService = service
+    ? (services.some((s) => s.value === service) ? service : 'other')
+    : null;
+
   // Set the service field if it's provided in the query params
   useEffect(() => {
-    if (service) {
-      setValue('service', service as string);
+    if (preselectedService) {
+      setValue('service', preselectedService);
     }
-  }, [service, setValue]);
+  }, [preselectedService, setValue]);
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -85,15 +102,6 @@ function ContactFormWithParams() {
       alert('Failed to send message. Please try again later.');
     }
   };
-
-  // Values must match the offer ids the Services page links with ?service=
-  // (src/app/[locale]/services/page.tsx), or the preselect silently no-ops.
-  const services = [
-    { value: "ai-agents", label: tServices('ai_agents.title') },
-    { value: "azure", label: tServices('azure.title') },
-    { value: "rust", label: tServices('rust.title') },
-    { value: "other", label: tServices('other') }
-  ];
 
   return (
     <>
