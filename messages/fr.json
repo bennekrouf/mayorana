@@ -201,45 +201,50 @@
   "services": {
     "services_title": "Ce que nous construisons",
     "services_subtitle": "Des outils d'IA qui fonctionnent vraiment, renforcé par Rust 🦀",
-    "rust_training": {
-      "title": "Adoption & Formation Rust",
-      "description": "Nous accompagnons votre équipe dans l'adoption de Rust pour de nouvelles applications ou la migration de systèmes existants. De l'évaluation initiale à la formation pratique, nous guidons les entreprises dans leur transformation Rust complète.",
-      "cta": "NOUS CONTACTER",
-      "benefit1": "Évaluer quels projets bénéficient le plus de l'adoption de Rust",
-      "benefit2": "Planifier les stratégies de migration pour les applications existantes",
-      "benefit3": "Former votre équipe avec un accompagnement pratique et personnalisé",
-      "benefit4": "Construire des applications Rust prêtes pour la production"
-    },
-    "llm_integration": {
-      "title": "Intégration LLM",
-      "description": "Connectez de manière transparente les grands modèles de langage (LLM) à vos applications pour améliorer l'automatisation, les chatbots et le traitement des données. Solutions sur mesure conçues pour s'intégrer à vos systèmes existants, garantissant évolutivité et performance.",
-      "cta": "NOUS CONTACTER",
-      "benefit1": "Intégrer les LLM leaders dans vos produits existants",
-      "benefit2": "Construire des bases de connaissances sur mesure pour des applications spécifiques",
-      "benefit3": "Implémenter des frameworks d'ingénierie de prompts évolutifs",
-      "benefit4": "Créer des systèmes d'évaluation robustes pour les sorties LLM"
-    },
-    "chatbot": {
-      "title": "Développement de Chatbots",
-      "description": "Transformez vos applications avec des chatbots intelligents. Des interfaces simples de questions-réponses aux systèmes conversationnels complexes.",
-      "cta": "NOUS CONTACTER",
-      "benefit1": "Transformer n'importe quelle app en interface conversationnelle",
-      "benefit2": "Connecter les chatbots directement à vos APIs existantes",
-      "benefit3": "Gérer des requêtes utilisateurs complexes en langage naturel",
-      "benefit4": "Réduire la charge de support avec des réponses automatisées"
-    },
-    "api0": {
-      "title": "api0.ai — Passerelle MCP",
-      "description": "Une passerelle MCP qui transforme vos APIs en outils pour agents IA. Connectez vos endpoints, définissez les capacités, et laissez les LLMs orchestrer vos workflows — sans code intermédiaire.",
-      "cta": "Essayer api0.ai maintenant",
-      "benefit1": "Exposez n'importe quelle API comme outil MCP pour agents IA",
-      "benefit2": "Construisez des workflows d'agents multi-étapes sans code",
-      "benefit3": "Gestion sécurisée des clés API avec restrictions de domaine",
-      "benefit4": "Évoluer facilement pour un trafic de niveau enterprise"
-    },
     "key_benefits": "Avantages clés",
     "ready_get_started": "Prêt à commencer ?",
-    "contact_description": "Contactez-nous pour discuter de vos besoins spécifiques et voir comment nos services peuvent aider votre entreprise à innover et croître."
+    "contact_description": "Contactez-nous pour discuter de vos besoins spécifiques et voir comment nos services peuvent aider votre entreprise à innover et croître.",
+    "page_title": "Services",
+    "page_subtitle": "Systèmes d'agents IA sur mesure, outillage d'intégration Azure et développement Rust haute performance — bâtis sur la même stack que nos produits.",
+    "deliver_label": "Ce que nous livrons généralement",
+    "ai_agents": {
+      "title": "Développement d'agents IA et de solutions MCP sur mesure",
+      "description": "Concevez et déployez des systèmes d'agents IA et des passerelles MCP de niveau production, connectés en toute sécurité à vos APIs et systèmes internes existants. Sans code de liaison, avec une vraie gestion des clés et des architectures qui passent à l'échelle.",
+      "cta": "Parler de votre système d'agents",
+      "deliver1": "Mise en place d'une passerelle MCP et développement d'outils sur mesure",
+      "deliver2": "Passerelles sécurisées entre les LLM (Claude, GPT, etc.) et vos APIs internes",
+      "deliver3": "Orchestration d'agents et conception de workflows",
+      "deliver4": "Durcissement pour la production (authentification, limitation de débit, observabilité)"
+    },
+    "azure": {
+      "title": "Outillage et conseil pour l'intégration Azure",
+      "description": "Aidez vos équipes Azure Integration Services à avancer plus vite. Workflows de développement local, visibilité sur les chaînes complexes, traçage par corrélation et outillage sur mesure bâti sur les mêmes fondations que la suite AIS.",
+      "cta": "Parler de votre environnement Azure",
+      "deliver1": "Amélioration du développement et des tests en local pour les Logic Apps",
+      "deliver2": "Solutions de visibilité et de supervision des chaînes de workflows",
+      "deliver3": "Traçage d'identifiants de corrélation dans Cosmos DB / Log Analytics",
+      "deliver4": "Outillage et automatisation Azure sur mesure"
+    },
+    "rust": {
+      "title": "Développement Rust haute performance et formation",
+      "description": "Développement de systèmes en Rust et montée en compétences de vos équipes. Des services haute performance partant de zéro jusqu'à l'accompagnement de vos équipes vers Rust, avec une formation pratique orientée production.",
+      "cta": "Démarrer une discussion Rust",
+      "deliver1": "Services et outils haute performance sur mesure en Rust",
+      "deliver2": "Revues d'architecture et de performance",
+      "deliver3": "Ateliers de formation pratiques adaptés à votre domaine",
+      "deliver4": "Accompagnement à la migration depuis d'autres langages"
+    },
+    "process_heading": "Notre façon de travailler",
+    "process_1_title": "Découverte",
+    "process_1_body": "Comprendre le problème, les contraintes et les systèmes existants.",
+    "process_2_title": "Prototype",
+    "process_2_body": "Une tranche fonctionnelle livrée vite, qui valide l'approche.",
+    "process_3_title": "Production",
+    "process_3_body": "Durcir, documenter et transmettre — ou continuer à accompagner.",
+    "cta_heading": "Un besoin particulier ?",
+    "cta_body": "Système d'agents sur mesure, outillage Azure ou développement Rust — nous bâtissons sur la même stack fiable que celle de nos propres produits.",
+    "cta_primary": "Réserver 30 min de conseil gratuit",
+    "other": "Autre"
   },
   "about": {
     "hero_title": "À propos de nous",

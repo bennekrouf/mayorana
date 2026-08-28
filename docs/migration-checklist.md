@@ -26,7 +26,7 @@ Date: 2026-08-28
 | Homepage hero + structure | Critical | To write | New positioning statement; replaces current single API0.AI spotlight |
 | `/solutions/azure` full page | Critical | ✅ Built | AIS suite (Runner, Monitor, Tracing, Analytics); EN + FR |
 | `/solutions/ai-agents` page | Critical | ✅ Built | API0.AI deep dive; EN + FR |
-| Services page | High | Major rewrite | Existing page at `src/app/[locale]/services/`; 3 offers + process |
+| Services page | High | ✅ Built | 3 offers + process; EN + FR; contact dropdown realigned |
 | Apps page intro paragraph | High | Rewrite | Ties `/apps` to primary positioning |
 | "Also built with our stack" section copy | Medium | New | CVENOM, SOLANIZE, AppScreens, Blog Toolkit |
 | Navigation labels | High | Update | `src/components/layout/Navbar.tsx` — add Services + Solutions |
@@ -62,7 +62,7 @@ Date: 2026-08-28
 - [ ] Write full Homepage content
 - [x] Write Azure Solutions page (EN + FR, `messages/*.json` → `solutions_azure`)
 - [x] Write AI Agents / API0 page (EN + FR, `messages/*.json` → `solutions_ai_agents`)
-- [ ] Write Services page
+- [x] Write Services page (EN + FR; page moved off hardcoded English onto i18n keys)
 - [ ] Write new Apps page intro + secondary section
 - [ ] Update all meta titles & descriptions
 - [ ] Prepare any new images/icons if needed
