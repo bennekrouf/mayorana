@@ -18,10 +18,14 @@ const Navbar: React.FC = () => {
   const t = useTranslations('navigation');
   const locale = useLocale();
 
+  // Flat nav (see docs/content-architecture.md §F). "AI Agents" joins this list
+  // once /solutions/ai-agents exists.
   const allNavItems = [
     { name: t('home'), path: '/' },
-    { name: t('blog'), path: '/blog' },
+    { name: t('azure_tools'), path: '/solutions/azure' },
     { name: 'Apps', path: '/apps' },
+    { name: t('services'), path: '/services' },
+    { name: t('blog'), path: '/blog' },
     { name: t('contact'), path: '/contact' }
   ];
 

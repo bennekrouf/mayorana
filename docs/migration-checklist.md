@@ -75,7 +75,13 @@ Date: 2026-08-28
       (status/data-source badges, download row) so Apps and Solutions share one
       source of truth for download URLs — done as groundwork for the Azure page
 - [ ] Restructure Apps page (`src/app/[locale]/apps/page.tsx`) into primary + "also built with our stack" tiers
-- [ ] Update global navigation (`src/components/layout/Navbar.tsx`), incl. `isSwissRust` host-variant decision
+- [~] Update global navigation (`src/components/layout/Navbar.tsx`): flat nav now
+      `Home | Azure Tools | Apps | Services | Blog | Contact` (EN) /
+      `Accueil | Outils Azure | Apps | Services | Blog | Contact` (FR).
+      **"AI Agents" still to be added** once `/solutions/ai-agents` exists.
+      `isSwissRust` unchanged — nav stays empty there, as decided.
+- [ ] Footer "company" column (`src/components/layout/Footer.tsx`) still lists only
+      Home / About / Contact / Blog — Services and Azure Tools not yet added
 - [ ] Update footer links if relevant
 - [x] Add new routes to `scripts/generate-sitemap.js` (now a derived `STATIC_PAGES` list; also picked up `/apps`, which had been missing)
 - [ ] Internal links between pages: Homepage → Solutions → Apps → Services
