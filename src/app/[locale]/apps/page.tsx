@@ -4,26 +4,18 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { FaGithub, FaApple, FaLinux, FaWindows } from 'react-icons/fa';
-import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight, Database, BarChart3 } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
-
-type Status = 'live' | 'beta' | 'wip' | 'mvp' | 'coming_soon';
-
-interface DownloadLink {
-  os: 'mac' | 'linux' | 'windows';
-  label: string;
-  href: string;
-  icon: React.ReactNode;
-}
-
-interface DataSource {
-  label: string;
-  icon: React.ReactNode;
-  colorClasses: string;
-  borderClass: string;
-}
+import {
+  appI18nKey,
+  desktopToolsConfig,
+  type DataSource,
+  type DownloadLink,
+  type Status,
+} from '@/data/tools';
+import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
 
 // What the card's action area renders. One shape per kind, so a tool with a
 // GitHub build gets download buttons, a hosted product gets a single link,
@@ -48,172 +40,6 @@ interface Tool {
   dataSource?: DataSource;
   action: ToolAction;
 }
-
-const runner  = 'https://github.com/Bennekrouf/ais-runner';
-// AIS Runner ships its builds from mayorana.ch rather than GitHub Releases:
-// the source stays public, the signed/notarized binaries are distributed here.
-// `latest/` is overwritten by release CI, so this URL never needs bumping.
-const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
-const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
-const tracingDl = 'https://mayorana.ch/downloads/ais-tracing/latest';
-const analyticsDl = 'https://mayorana.ch/downloads/ais-analytics/latest';
-const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
-const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
-const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
-const monitor = 'https://github.com/Bennekrouf/ais-monitor';
-const tracing = 'https://github.com/bennekrouf/ais-tracing';
-const analytics = 'https://github.com/bennekrouf/ais-analytics';
-const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
-const screens = 'https://github.com/bennekrouf/appscreens';
-const gitagent = 'https://github.com/bennekrouf/gitagent';
-
-const cosmosSource: DataSource = {
-  label: 'Cosmos DB',
-  icon: <Database className="w-3.5 h-3.5" />,
-  colorClasses: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300',
-  borderClass: 'border-l-4 border-l-violet-500',
-};
-const logAnalyticsSource: DataSource = {
-  label: 'Log Analytics',
-  icon: <BarChart3 className="w-3.5 h-3.5" />,
-  colorClasses: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300',
-  borderClass: 'border-l-4 border-l-teal-500',
-};
-
-// Per-app static config. Translatable strings (tagline, description) live in
-// messages/{en,fr}.json under the "apps"/"portfolio" namespaces and are
-// looked up by id in the component below.
-type DesktopToolConfig = {
-  id: string;
-  name: string;
-  tech: string;
-  status: Status;
-  tags: string[];
-  github: string;
-  downloads: DownloadLink[];
-  dataSource?: DataSource;
-};
-
-const desktopToolsConfig: DesktopToolConfig[] = [
-  {
-    id: 'ais-runner',
-    name: 'AIS Runner',
-    tech: 'Rust · Dioxus · Azure CLI · Azurite · Azure Functions',
-    status: 'live',
-    tags: ['azure'],
-    github: runner,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${runnerDl}/ais-runner-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${runnerDl}/ais-runner-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${runnerDl}/ais-runner-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-  {
-    id: 'ais-monitor',
-    name: 'AIS Monitor',
-    tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
-    status: 'beta',
-    tags: ['azure'],
-    github: monitor,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${monitorDl}/ais-monitor-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${monitorDl}/ais-monitor-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${monitorDl}/ais-monitor-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-  {
-    id: 'ais-tracing',
-    name: 'AIS Tracing',
-    tech: 'Rust · Dioxus · Azure Cosmos DB',
-    status: 'beta',
-    tags: ['azure'],
-    github: tracing,
-    dataSource: cosmosSource,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${tracingDl}/ais-tracing-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${tracingDl}/ais-tracing-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${tracingDl}/ais-tracing-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-  {
-    id: 'ais-analytics',
-    name: 'AIS Analytics',
-    tech: 'Rust · Dioxus · Azure Log Analytics',
-    status: 'beta',
-    tags: ['azure'],
-    github: analytics,
-    dataSource: logAnalyticsSource,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${analyticsDl}/ais-analytics-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${analyticsDl}/ais-analytics-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${analyticsDl}/ais-analytics-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-  {
-    id: 'blog-toolkit',
-    name: 'Blog Toolkit',
-    tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
-    status: 'live',
-    tags: ['blog'],
-    github: blogtk,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${blogtkDl}/blog-toolkit-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${blogtkDl}/blog-toolkit-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-  {
-    id: 'appscreens',
-    name: 'AppScreens',
-    tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
-    status: 'beta',
-    tags: ['tools'],
-    github: screens,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screensDl}/appscreens-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${screensDl}/appscreens-linux-x86_64.deb`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${screensDl}/appscreens-windows-setup.msi`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-  {
-    id: 'gitagent',
-    name: 'GitAgent',
-    tech: 'Rust · Dioxus · ollama / DeepSeek · git · gh',
-    status: 'wip',
-    tags: ['git'],
-    github: gitagent,
-    downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${gitagentDl}/gitagent-macos-arm64.dmg`, icon: <FaApple className="w-4 h-4" /> },
-      { os: 'linux', label: 'Linux x86_64', href: `${gitagentDl}/gitagent-linux-x86_64.tar.gz`, icon: <FaLinux className="w-4 h-4" /> },
-      { os: 'windows', label: 'Windows', href: `${gitagentDl}/gitagent-setup.exe`, icon: <FaWindows className="w-4 h-4" /> },
-    ],
-  },
-];
-
-// Map DesktopToolConfig.id → translation key prefix in messages/{en,fr}.json "apps"
-const appI18nKey: Record<string, string> = {
-  'ais-runner':   'ais_runner',
-  'ais-monitor':  'ais_monitor',
-  'ais-tracing':  'ais_tracing',
-  'ais-analytics': 'ais_analytics',
-  'blog-toolkit': 'blog_toolkit',
-  'appscreens':   'appscreens',
-  'gitagent':     'gitagent',
-};
-
-const osColors: Record<string, string> = {
-  mac:     'bg-neutral-800 hover:bg-neutral-700 text-white',
-  linux:   'bg-orange-600  hover:bg-orange-500  text-white',
-  windows: 'bg-blue-600    hover:bg-blue-500    text-white',
-};
-
-const statusBadge: Record<string, string> = {
-  live: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-  beta: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-  mvp:  'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-  wip:  'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
-  coming_soon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300',
-};
 
 // The grid's display order, by tool id. Anything built above but missing
 // here simply wouldn't render — every id from desktopToolsConfig/webTools/
@@ -275,44 +101,7 @@ function ToolTags({ tool }: { tool: Tool }) {
 function ToolActionButtons({ action, tApps }: { action: ToolAction; tApps: ReturnType<typeof useTranslations> }) {
   switch (action.kind) {
     case 'downloads':
-      return (
-        <div className="flex flex-col gap-2">
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">
-            {tApps('download_label')}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {action.downloads.map((dl) => (
-              <a
-                key={dl.os}
-                href={dl.href}
-                title={dl.label}
-                aria-label={dl.label}
-                className={`inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${osColors[dl.os]}`}
-              >
-                {dl.icon}
-              </a>
-            ))}
-            <a
-              href={action.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="GitHub"
-              aria-label="GitHub"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-background hover:bg-secondary transition-colors"
-            >
-              <FaGithub className="w-4 h-4" />
-            </a>
-          </div>
-          <a
-            href={`${action.github}/releases/latest`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {tApps('all_releases')}
-          </a>
-        </div>
-      );
+      return <DownloadButtons downloads={action.downloads} github={action.github} />;
     case 'source':
       return (
         <a
@@ -508,15 +297,8 @@ export default function AppsPage() {
                     <h3 className="text-xl font-bold text-primary">{tool.name}</h3>
                   )}
                   <div className="flex flex-col items-end gap-1.5">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium uppercase whitespace-nowrap ${statusBadge[tool.status]}`}>
-                      {tool.status === 'coming_soon' ? 'COMING SOON' : tool.status}
-                    </span>
-                    {tool.dataSource && (
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${tool.dataSource.colorClasses}`}>
-                        {tool.dataSource.icon}
-                        {tool.dataSource.label}
-                      </span>
-                    )}
+                    <StatusBadge status={tool.status} />
+                    {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
                   </div>
                 </div>
 
