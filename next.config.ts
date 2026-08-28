@@ -4,6 +4,13 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Build output directory. Deploys set NEXT_DIST_DIR to build into a staging
+  // directory so the live `.next` is never rewritten while the server is still
+  // serving from it — doing that invalidates the chunk hashes the running
+  // process holds and returns 500s until the restart lands.
+  // See scripts/deploy-mayorana.sh.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
+
   // Common configuration
   trailingSlash: false,
   reactStrictMode: true,

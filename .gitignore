@@ -18,6 +18,9 @@ src/data/blog-categories-*.json
 
 # next.js
 /.next/
+# deploy build swap (scripts/deploy-mayorana.sh)
+/.next-staging/
+/.next-previous/
 /out/
 
 # production
