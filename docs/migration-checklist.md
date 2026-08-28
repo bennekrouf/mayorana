@@ -79,9 +79,8 @@ Date: 2026-08-28
       `Home | Azure Tools | AI Agents | Apps | Services | Blog | Contact` (EN) /
       `Accueil | Outils Azure | Agents IA | Apps | Services | Blog | Contact` (FR).
       `isSwissRust` unchanged — nav stays empty there, as decided.
-- [ ] Footer "company" column (`src/components/layout/Footer.tsx`) still lists only
-      Home / About / Contact / Blog — Services and Azure Tools not yet added
-- [ ] Update footer links if relevant
+- [x] Footer "Explore" column (`src/components/layout/Footer.tsx`) now mirrors the header nav
+- [x] Update footer links (Explore column, portfolio column, Swiss signal)
 - [x] Add new routes to `scripts/generate-sitemap.js` (now a derived `STATIC_PAGES` list; also picked up `/apps`, which had been missing)
 - [ ] Internal links between pages: Homepage → Solutions → Apps → Services
 
