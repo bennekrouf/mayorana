@@ -11,6 +11,7 @@ const BASE_URL = 'https://mayorana.ch';
 const STATIC_PAGES = [
   { path: '', changefreq: 'weekly', priority: '1.0' },
   { path: '/solutions/azure', changefreq: 'weekly', priority: '0.9' },
+  { path: '/solutions/ai-agents', changefreq: 'weekly', priority: '0.9' },
   { path: '/apps', changefreq: 'weekly', priority: '0.8' },
   { path: '/services', changefreq: 'monthly', priority: '0.8' },
   { path: '/about', changefreq: 'monthly', priority: '0.7' },

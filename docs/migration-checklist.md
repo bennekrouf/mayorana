@@ -25,7 +25,7 @@ Date: 2026-08-28
 |---|---|---|---|
 | Homepage hero + structure | Critical | To write | New positioning statement; replaces current single API0.AI spotlight |
 | `/solutions/azure` full page | Critical | ✅ Built | AIS suite (Runner, Monitor, Tracing, Analytics); EN + FR |
-| `/solutions/ai-agents` page | Critical | New page | API0.AI deep dive |
+| `/solutions/ai-agents` page | Critical | ✅ Built | API0.AI deep dive; EN + FR |
 | Services page | High | Major rewrite | Existing page at `src/app/[locale]/services/`; 3 offers + process |
 | Apps page intro paragraph | High | Rewrite | Ties `/apps` to primary positioning |
 | "Also built with our stack" section copy | Medium | New | CVENOM, SOLANIZE, AppScreens, Blog Toolkit |
@@ -61,7 +61,7 @@ Date: 2026-08-28
 **Phase B — Content Production**
 - [ ] Write full Homepage content
 - [x] Write Azure Solutions page (EN + FR, `messages/*.json` → `solutions_azure`)
-- [ ] Write AI Agents / API0 page
+- [x] Write AI Agents / API0 page (EN + FR, `messages/*.json` → `solutions_ai_agents`)
 - [ ] Write Services page
 - [ ] Write new Apps page intro + secondary section
 - [ ] Update all meta titles & descriptions
@@ -69,16 +69,15 @@ Date: 2026-08-28
 
 **Phase C — Implementation**
 - [x] Create route `src/app/[locale]/solutions/azure/` (+ localized metadata in its `layout.tsx`)
-- [ ] Create route `src/app/[locale]/solutions/ai-agents/`
+- [x] Create route `src/app/[locale]/solutions/ai-agents/` (+ localized metadata)
 - [ ] Update Homepage (`src/app/[locale]/page.tsx`, `src/components/home/ClientHomeSection.tsx`)
 - [x] Extract `desktopToolsConfig` into `src/data/tools.ts` + shared `src/components/ui/ToolVisuals.tsx`
       (status/data-source badges, download row) so Apps and Solutions share one
       source of truth for download URLs — done as groundwork for the Azure page
 - [ ] Restructure Apps page (`src/app/[locale]/apps/page.tsx`) into primary + "also built with our stack" tiers
-- [~] Update global navigation (`src/components/layout/Navbar.tsx`): flat nav now
-      `Home | Azure Tools | Apps | Services | Blog | Contact` (EN) /
-      `Accueil | Outils Azure | Apps | Services | Blog | Contact` (FR).
-      **"AI Agents" still to be added** once `/solutions/ai-agents` exists.
+- [x] Update global navigation (`src/components/layout/Navbar.tsx`): flat nav now
+      `Home | Azure Tools | AI Agents | Apps | Services | Blog | Contact` (EN) /
+      `Accueil | Outils Azure | Agents IA | Apps | Services | Blog | Contact` (FR).
       `isSwissRust` unchanged — nav stays empty there, as decided.
 - [ ] Footer "company" column (`src/components/layout/Footer.tsx`) still lists only
       Home / About / Contact / Blog — Services and Azure Tools not yet added
