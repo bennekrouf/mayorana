@@ -10,11 +10,11 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
   return {
-    title: t('about_title'),
-    description: t('about_description'),
+    title: t('apps_title'),
+    description: t('apps_description'),
   };
 }
 
-export default function AboutLayout({ children }: { children: React.ReactNode }) {
+export default function AppsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

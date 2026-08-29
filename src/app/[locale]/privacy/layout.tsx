@@ -1,15 +1,20 @@
-// File: src/app/[locale]/privacy/layout.tsx
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'Privacy policy for Mayorana - how we collect, use, and protect your personal information.',
-};
-
-export default function PrivacyLayout({
-  children,
+export async function generateMetadata({
+  params,
 }: {
-  children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  return {
+    title: t('privacy_title'),
+    description: t('privacy_description'),
+  };
+}
+
+export default function PrivacyLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

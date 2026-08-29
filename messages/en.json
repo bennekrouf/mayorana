@@ -1,20 +1,26 @@
 {
   "metadata": {
     "site_title": "AI Tools That Actually Work",
-    "site_description": "Live AI tools powered by Rust 🦀 + AI tech. Portfolio: api0.ai | cVenom | Solanize",
+    "site_description": "The reliable Rust layer for production AI agents and Azure workflows. Native desktop tools for Azure Integration Services, plus a plug-and-play MCP gateway.",
     "about_title": "About",
-    "about_description": "Discover Mayorana's live AI tools portfolio built with Rust 🦀",
-    "blog_title": "Blog - Mayorana",
-    "blog_description": "Insights and articles on Rust, AI and live tool development",
+    "about_description": "Mayorana builds the reliable Rust layer for production AI agents and Azure integration workflows. Swiss-built tools you can download today.",
+    "blog_title": "Blog",
+    "blog_description": "Insights and articles on Rust, AI agents and Azure integration tooling.",
     "blog_description_swissrust": "Swiss precision needs a language like Rust for the future.",
     "contact_title": "Contact",
-    "contact_description": "Get in touch to see how our live AI tools can power your business",
+    "contact_description": "Talk to us about custom AI agent systems, Azure integration tooling, or high-performance Rust development. Free 30-minute consult.",
     "services_title": "Services",
-    "services_description": "AI tools that actually work, built with Rust + AI",
+    "services_description": "Custom AI agent and MCP development, Azure integration tooling and consulting, and high-performance Rust development and training — built on the same stack as our products.",
     "azure_title": "Azure Integration Tools",
     "azure_description": "Develop, monitor and trace Azure Logic Apps locally. Four native Rust desktop tools for Azure Integration Services: AIS Runner, Monitor, Tracing and Analytics.",
     "ai_agents_title": "AI Agent Infrastructure",
-    "ai_agents_description": "Bridge any API to Claude, GPT and any LLM with API0.AI — a plug-and-play, MCP-native gateway built in Rust. No glue code, secure key management, production performance."
+    "ai_agents_description": "Bridge any API to Claude, GPT and any LLM with API0.AI — a plug-and-play, MCP-native gateway built in Rust. No glue code, secure key management, production performance.",
+    "apps_title": "Apps & Tools",
+    "apps_description": "Native desktop apps and web tools built with Rust. Primary focus on Azure Integration Services and AI agent infrastructure.",
+    "privacy_title": "Privacy Policy",
+    "privacy_description": "How Mayorana collects, uses and protects your personal information.",
+    "terms_title": "Terms of Service",
+    "terms_description": "Rules and guidelines for using the Mayorana website and services."
   },
   "navigation": {
     "home": "Home",
