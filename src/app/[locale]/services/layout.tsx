@@ -1,15 +1,20 @@
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Services',
-  description:
-    'Custom AI agent systems and MCP gateways, Azure integration tooling and consulting, and high-performance Rust development and training — Swiss-built on the same stack as our products.',
-};
-
-export default function ServicesLayout({
-  children,
+export async function generateMetadata({
+  params,
 }: {
-  children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  return {
+    title: t('services_title'),
+    description: t('services_description'),
+  };
+}
+
+export default function ServicesLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

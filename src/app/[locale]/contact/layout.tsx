@@ -1,14 +1,20 @@
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Get in touch for Rust training, LLM integration, AI agent development, and api0.ai solutions.',
-};
-
-export default function ContactLayout({
-  children,
+export async function generateMetadata({
+  params,
 }: {
-  children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  return {
+    title: t('contact_title'),
+    description: t('contact_description'),
+  };
+}
+
+export default function ContactLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

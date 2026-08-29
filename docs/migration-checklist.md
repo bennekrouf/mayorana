@@ -30,7 +30,7 @@ Date: 2026-08-28
 | Apps page intro paragraph | High | ✅ Built | Ties `/apps` to primary positioning |
 | "Also built with our stack" section copy | Medium | ✅ Built | CVENOM, AppScreens, Blog Toolkit, SOLANIZE, + consulting CTA |
 | Navigation labels | High | Update | `src/components/layout/Navbar.tsx` — add Services + Solutions |
-| Meta titles & descriptions (all key pages) | High | Rewrite | Include primary keywords + positioning |
+| Meta titles & descriptions (all key pages) | High | ✅ Built | EN + FR; per-route `generateMetadata` |
 
 ### Supporting content (soon after)
 
@@ -64,7 +64,7 @@ Date: 2026-08-28
 - [x] Write AI Agents / API0 page (EN + FR, `messages/*.json` → `solutions_ai_agents`)
 - [x] Write Services page (EN + FR; page moved off hardcoded English onto i18n keys)
 - [x] Write new Apps page intro + secondary section (EN + FR)
-- [ ] Update all meta titles & descriptions
+- [x] Update all meta titles & descriptions (EN + FR, all 10 routes)
 - [ ] Prepare any new images/icons if needed
 
 **Phase C — Implementation**

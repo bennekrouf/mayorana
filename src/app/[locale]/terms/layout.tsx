@@ -1,15 +1,20 @@
-// File: src/app/[locale]/terms/layout.tsx
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Terms of Service',
-  description: 'Terms of service for Mayorana - rules and guidelines for using our website and services.',
-};
-
-export default function TermsLayout({
-  children,
+export async function generateMetadata({
+  params,
 }: {
-  children: React.ReactNode;
-}) {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  return {
+    title: t('terms_title'),
+    description: t('terms_description'),
+  };
+}
+
+export default function TermsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
