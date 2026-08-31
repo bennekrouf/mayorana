@@ -50,16 +50,16 @@ export function DataSourceBadge({ dataSource }: { dataSource: DataSource }) {
 }
 
 /**
- * The per-OS download row plus GitHub link and "all releases" link. Shared by
- * the Apps catalogue and the Azure Solutions page so download URLs and the
- * releases/checksums link stay identical on both.
+ * The per-OS download row, shared by the Apps catalogue and the Azure Solutions
+ * page so download URLs stay identical on both. `github` is optional: pass it
+ * to add the source/releases links, omit it for products whose repo is private.
  */
 export function DownloadButtons({
   downloads,
   github,
 }: {
   downloads: DownloadLink[];
-  github: string;
+  github?: string;
 }) {
   const tApps = useTranslations('apps');
 
@@ -80,25 +80,29 @@ export function DownloadButtons({
             {osIcons[dl.os]}
           </a>
         ))}
+        {github && (
+          <a
+            href={github}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="GitHub"
+            aria-label="GitHub"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-background hover:bg-secondary transition-colors"
+          >
+            <FaGithub className="w-4 h-4" />
+          </a>
+        )}
+      </div>
+      {github && (
         <a
-          href={github}
+          href={`${github}/releases/latest`}
           target="_blank"
           rel="noopener noreferrer"
-          title="GitHub"
-          aria-label="GitHub"
-          className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-background hover:bg-secondary transition-colors"
+          className="text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
-          <FaGithub className="w-4 h-4" />
+          {tApps('all_releases')}
         </a>
-      </div>
-      <a
-        href={`${github}/releases/latest`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-      >
-        {tApps('all_releases')}
-      </a>
+      )}
     </div>
   );
 }

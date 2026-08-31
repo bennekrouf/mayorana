@@ -8,7 +8,7 @@ import { ArrowRight, Check, PlayCircle, Share2, Search } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { aisTools, appI18nKey } from '@/data/tools';
-import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
+import { DataSourceBadge, DownloadButtons } from '@/components/ui/ToolVisuals';
 
 // The three frictions, paired with the icon that stands for the fix. Order
 // matches the loop a team actually walks: build it, understand it, debug it.
@@ -134,10 +134,7 @@ export default function AzureSolutionsPage() {
               >
                 <div className="flex items-start justify-between mb-3 gap-2">
                   <h3 className="text-xl font-bold text-primary">{tool.name}</h3>
-                  <div className="flex flex-col items-end gap-1.5">
-                    <StatusBadge status={tool.status} />
-                    {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
-                  </div>
+                  {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
                 </div>
 
                 <p className="text-sm font-medium mb-2">
@@ -149,7 +146,7 @@ export default function AzureSolutionsPage() {
                 <p className="text-xs text-muted-foreground/70 font-mono mb-6">{tool.tech}</p>
 
                 <div className="mt-auto">
-                  <DownloadButtons downloads={tool.downloads} github={tool.github} />
+                  <DownloadButtons downloads={tool.downloads} />
                 </div>
               </motion.div>
             ))}
@@ -168,7 +165,6 @@ export default function AzureSolutionsPage() {
                 <tr>
                   <th className="px-5 py-3 text-sm font-semibold">{t('chooser_col_need')}</th>
                   <th className="px-5 py-3 text-sm font-semibold">{t('chooser_col_tool')}</th>
-                  <th className="px-5 py-3 text-sm font-semibold">{t('chooser_col_status')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -183,9 +179,6 @@ export default function AzureSolutionsPage() {
                         <a href={`#${tool.id}`} className="text-primary hover:underline">
                           {tool.name}
                         </a>
-                      </td>
-                      <td className="px-5 py-4">
-                        <StatusBadge status={tool.status} />
                       </td>
                     </tr>
                   );
