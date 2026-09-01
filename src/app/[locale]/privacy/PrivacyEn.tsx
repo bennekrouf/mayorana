@@ -117,7 +117,7 @@ export default function PrivacyEn() {
                 <p className="mb-4">Our website may contain links to third-party services:</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>api0.ai (our own service)</li>
-                  <li>Social media platforms (LinkedIn, GitHub)</li>
+                  <li>Social media platforms (LinkedIn)</li>
                   <li>WhatsApp (for contact)</li>
                 </ul>
                 <p>These services have their own privacy policies, and we are not responsible for their practices.</p>

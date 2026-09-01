@@ -4,7 +4,6 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { FaGithub } from 'react-icons/fa';
 import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
@@ -17,13 +16,11 @@ import {
 } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
 
-// What the card's action area renders. One shape per kind, so a tool with a
-// GitHub build gets download buttons, a hosted product gets a single link,
-// and a source-only project gets a "run from source" button — the card
-// doesn't need to know which of these it is beyond this tag.
+// What the card's action area renders. One shape per kind, so a desktop tool
+// gets its per-OS download buttons and a hosted product gets a single link —
+// the card doesn't need to know which of these it is beyond this tag.
 type ToolAction =
-  | { kind: 'downloads'; downloads: DownloadLink[]; github: string }
-  | { kind: 'source'; github: string }
+  | { kind: 'downloads'; downloads: DownloadLink[] }
   | { kind: 'external'; href: string; label: string }
   | { kind: 'internal'; href: string; label: string }
   | { kind: 'disabled'; label: string };
@@ -106,22 +103,10 @@ function ToolTags({ tool }: { tool: Tool }) {
   );
 }
 
-function ToolActionButtons({ action, tApps }: { action: ToolAction; tApps: ReturnType<typeof useTranslations> }) {
+function ToolActionButtons({ action }: { action: ToolAction }) {
   switch (action.kind) {
     case 'downloads':
-      return <DownloadButtons downloads={action.downloads} github={action.github} />;
-    case 'source':
-      return (
-        <a
-          href={action.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-secondary hover:bg-secondary/70 text-foreground border border-border"
-        >
-          <FaGithub className="w-4 h-4" />
-          {tApps('run_from_source')}
-        </a>
-      );
+      return <DownloadButtons downloads={action.downloads} />;
     case 'external':
       return (
         <a
@@ -161,12 +146,10 @@ function ToolActionButtons({ action, tApps }: { action: ToolAction; tApps: Retur
 function ToolCard({
   tool,
   index,
-  tApps,
   muted = false,
 }: {
   tool: Tool;
   index: number;
-  tApps: ReturnType<typeof useTranslations>;
   muted?: boolean;
 }) {
   const surface = muted
@@ -203,7 +186,7 @@ function ToolCard({
       </div>
 
       <div className="mt-auto">
-        <ToolActionButtons action={tool.action} tApps={tApps} />
+        <ToolActionButtons action={tool.action} />
       </div>
     </motion.div>
   );
@@ -229,10 +212,7 @@ export default function AppsPage() {
       status: app.status,
       tags: app.tags,
       dataSource: app.dataSource,
-      action:
-        app.downloads.length > 0
-          ? { kind: 'downloads', downloads: app.downloads, github: app.github }
-          : { kind: 'source', github: app.github },
+      action: { kind: 'downloads', downloads: app.downloads },
     }));
 
     const webTools: Tool[] = [
@@ -363,7 +343,7 @@ export default function AppsPage() {
             <h2 className="text-2xl font-bold mb-8">{tApps('primary_heading')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {visible.primary.map((tool, i) => (
-                <ToolCard key={tool.id} tool={tool} index={i} tApps={tApps} />
+                <ToolCard key={tool.id} tool={tool} index={i} />
               ))}
             </div>
           </div>
@@ -380,7 +360,7 @@ export default function AppsPage() {
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {visible.secondary.map((tool, i) => (
-                <ToolCard key={tool.id} tool={tool} index={i} tApps={tApps} muted />
+                <ToolCard key={tool.id} tool={tool} index={i} muted />
               ))}
             </div>
           </div>
@@ -394,15 +374,13 @@ export default function AppsPage() {
           <p className="text-muted-foreground mb-6">
             {tApps('more_coming_soon_subtitle')}
           </p>
-          <a
-            href="https://github.com/Bennekrouf"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={getLocalizedPath(locale, '/contact')}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
           >
-            <FaGithub className="w-5 h-5" />
-            github.com/Bennekrouf
-          </a>
+            {tApps('more_coming_soon_cta')}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
