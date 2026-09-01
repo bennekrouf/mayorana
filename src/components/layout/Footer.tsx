@@ -20,8 +20,7 @@ export default function Footer() {
     { name: t('footer_api0'), url: 'https://api0.ai', external: true },
     { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps#ais-runner'), external: false },
     { name: 'cVenom', url: 'https://cvenom.com', external: true },
-    { name: t('footer_solanize'), url: 'https://ribh.io', external: true, badge: 'MVP' },
-    { name: t('footer_github'), url: 'https://github.com/Bennekrouf', external: true }
+    { name: t('footer_solanize'), url: 'https://ribh.io', external: true, badge: 'MVP' }
   ];
 
   const actionLinks = [

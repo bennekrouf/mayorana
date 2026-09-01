@@ -120,7 +120,7 @@ export default function PrivacyFr() {
                 <p className="mb-4">Notre site peut contenir des liens vers des services tiers&nbsp;:</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>api0.ai (notre propre service)</li>
-                  <li>Plateformes de réseaux sociaux (LinkedIn, GitHub)</li>
+                  <li>Plateformes de réseaux sociaux (LinkedIn)</li>
                   <li>WhatsApp (pour nous contacter)</li>
                 </ul>
                 <p>Ces services disposent de leurs propres politiques de confidentialité, dont nous ne sommes pas responsables.</p>

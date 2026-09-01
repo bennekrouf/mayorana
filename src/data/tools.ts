@@ -30,21 +30,12 @@ export interface DesktopToolConfig {
   tech: string;
   status: Status;
   tags: string[];
-  github: string;
   downloads: DownloadLink[];
   dataSource?: DataSource;
 }
 
-const runner = 'https://github.com/Bennekrouf/ais-runner';
-const monitor = 'https://github.com/Bennekrouf/ais-monitor';
-const tracing = 'https://github.com/bennekrouf/ais-tracing';
-const analytics = 'https://github.com/bennekrouf/ais-analytics';
-const blogtk = 'https://github.com/Bennekrouf/blog-toolkit';
-const screens = 'https://github.com/bennekrouf/appscreens';
-const gitagent = 'https://github.com/bennekrouf/gitagent';
-
-// The AIS tools ship their builds from mayorana.ch rather than GitHub Releases:
-// the source stays public, the signed/notarized binaries are distributed here.
+// Every tool is distributed from mayorana.ch only — the repositories are
+// private, so there is no public source or GitHub Releases page to link to.
 // `latest/` is overwritten by release CI, so these URLs never need bumping.
 const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
 const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
@@ -78,7 +69,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Azure CLI · Azurite · Azure Functions',
     status: 'live',
     tags: ['azure'],
-    github: runner,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${runnerDl}/ais-runner-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${runnerDl}/ais-runner-linux-x86_64.tar.gz` },
@@ -91,7 +81,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
     status: 'beta',
     tags: ['azure'],
-    github: monitor,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${monitorDl}/ais-monitor-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${monitorDl}/ais-monitor-linux-x86_64.tar.gz` },
@@ -104,7 +93,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Azure Cosmos DB',
     status: 'beta',
     tags: ['azure'],
-    github: tracing,
     dataSource: cosmosSource,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${tracingDl}/ais-tracing-macos-arm64.dmg` },
@@ -118,7 +106,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Azure Log Analytics',
     status: 'beta',
     tags: ['azure'],
-    github: analytics,
     dataSource: logAnalyticsSource,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${analyticsDl}/ais-analytics-macos-arm64.dmg` },
@@ -132,7 +119,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
     status: 'live',
     tags: ['blog'],
-    github: blogtk,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${blogtkDl}/blog-toolkit-linux-x86_64.tar.gz` },
@@ -145,7 +131,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'beta',
     tags: ['tools'],
-    github: screens,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screensDl}/appscreens-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${screensDl}/appscreens-linux-x86_64.deb` },
@@ -158,7 +143,6 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · ollama / DeepSeek · git · gh',
     status: 'wip',
     tags: ['git'],
-    github: gitagent,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${gitagentDl}/gitagent-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${gitagentDl}/gitagent-linux-x86_64.tar.gz` },
