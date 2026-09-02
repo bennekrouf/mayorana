@@ -24,6 +24,7 @@ interface DayDetail {
 interface SiteStats {
   requests: number;
   bot_requests: number;
+  unverified_requests: number;
   visitor_days: number;
   by_country: Record<string, number>;
   top_paths: Record<string, number>;
@@ -75,8 +76,8 @@ function SiteCard({ name, site }: { name: string; site: SiteStats }) {
     <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
       <div className="flex items-baseline justify-between mb-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">{name}</h3>
-        <span className="text-xs text-gray-500 dark:text-gray-400">
-          {site.bot_requests.toLocaleString()} bot req filtered
+        <span className="text-xs text-gray-500 dark:text-gray-400" title="Declared crawlers, plus addresses that requested pages but never loaded a stylesheet or script">
+          {(site.bot_requests + (site.unverified_requests ?? 0)).toLocaleString()} bot req filtered
         </span>
       </div>
 
