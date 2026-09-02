@@ -96,16 +96,24 @@ DISTINCT_APPS_BOT_THRESHOLD = 4
 # that counts downloads can report visitors per product. Related logs are
 # grouped under one name: api0's dashboard, gateway and store are parts of
 # api0, not separate products.
+# Keyed by hostname rather than by product. Rolling the app in with its
+# marketing site hides the number that matters: people reading about cvenom
+# and people using the studio are different populations, and merging them
+# means neither can be seen. Names match nginx's server_name so a row can
+# always be traced back to a vhost.
 SITES: dict[str, list[str]] = {
-    'mayorana':  ['mayorana_access.log'],
-    'api0':      ['api0_access.log', 'api0_dashboard_access.log',
-                  'api0_gateway_access.log', 'api0_store_access.log'],
-    'cvenom':    ['cvenom_access.log', 'cvenom_api_access.log',
-                  'cvenom_studio_access.log'],
-    'tafseel':   ['tafseel_access.log'],
-    'solanize':  ['solanize_access.log', 'solanize_ribh_access.log'],
-    'swissrust': ['swissrust_access.log'],
-    'similar':   ['similar_access.log'],
+    'mayorana.ch':         ['mayorana_access.log'],
+    'api0.ai':             ['api0_access.log'],
+    'app.api0.ai':         ['api0_dashboard_access.log'],
+    'gateway.api0.ai':     ['api0_gateway_access.log'],
+    'store.api0.ai':       ['api0_store_access.log'],
+    'cvenom.com':          ['cvenom_access.log'],
+    'studio.cvenom.com':   ['cvenom_studio_access.log'],
+    'api.cvenom.com':      ['cvenom_api_access.log'],
+    'ribh.io':             ['solanize_access.log', 'solanize_ribh_access.log'],
+    'tafseel.ch':          ['tafseel_access.log'],
+    'swissrust.ch':        ['swissrust_access.log'],
+    'similar.mayorana.ch': ['similar_access.log'],
 }
 
 # Logs that serve programs, not browsers. A browser proves it is real by
@@ -113,11 +121,14 @@ SITES: dict[str, list[str]] = {
 # to fetch and would be discarded by that test, which is how ~20k genuine
 # cvenom calls first got written off as crawlers. These are counted as API
 # traffic instead: requests and distinct clients, no asset heuristic.
+#
+# Only the api/gateway/store hosts qualify. ribh.io was in this list by
+# mistake — it is a website with a homepage, so the browser test applies and
+# its traffic should be judged like any other site's.
 API_LOGS = {
     'api0_gateway_access.log',
     'api0_store_access.log',
     'cvenom_api_access.log',
-    'solanize_ribh_access.log',
 }
 
 # Vulnerability scanning: WordPress endpoints on a site that runs no
