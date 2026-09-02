@@ -312,7 +312,7 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
     days: dict[str, dict] = defaultdict(lambda: {
         'total': 0, 'installs': 0, 'updates': 0,
         'by_app': defaultdict(int), 'by_platform': defaultdict(int),
-        'by_app_version': defaultdict(int), 'by_country': defaultdict(int),
+        'by_country': defaultdict(int),
         'active_by_app': defaultdict(int),
         # Kept rather than silently dropped: a filter you cannot see is a
         # filter you cannot check.
@@ -332,7 +332,6 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
         bucket['updates' if event['updater'] else 'installs'] += 1
         bucket['by_app'][event['app']] += 1
         bucket['by_platform'][event['platform']] += 1
-        bucket['by_app_version'][f"{event['app']}@{event['version']}"] += 1
         bucket['by_country'][geo.country(event['ip'])] += 1
 
     for day, app in checkins:
@@ -552,7 +551,6 @@ def summarise(state: dict, geo_note: str) -> dict:
     totals = {'downloads': 0, 'installs': 0, 'updates': 0, 'excluded': 0}
     by_app: dict[str, int] = defaultdict(int)
     by_platform: dict[str, int] = defaultdict(int)
-    by_app_version: dict[str, int] = defaultdict(int)
     by_country: dict[str, int] = defaultdict(int)
     excluded_by_reason: dict[str, int] = defaultdict(int)
 
@@ -561,7 +559,7 @@ def summarise(state: dict, geo_note: str) -> dict:
         totals['installs'] += counts.get('installs', 0)
         totals['updates'] += counts.get('updates', 0)
         for name, target in (('by_app', by_app), ('by_platform', by_platform),
-                             ('by_app_version', by_app_version), ('by_country', by_country)):
+                             ('by_country', by_country)):
             for key, n in counts.get(name, {}).items():
                 target[key] += n
         for reason, n in counts.get('excluded', {}).items():
@@ -596,7 +594,6 @@ def summarise(state: dict, geo_note: str) -> dict:
         'by_app': ordered(by_app),
         'by_platform': ordered(by_platform),
         'by_country': ordered(by_country),
-        'by_app_version': ordered(by_app_version),
         'active_installs_daily_avg_7d': active_daily_avg,
         'daily': {
             day: {
