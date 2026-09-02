@@ -25,10 +25,13 @@ interface SiteStats {
   requests: number;
   bot_requests: number;
   unverified_requests: number;
+  api_requests: number;
+  api_clients_peak_day: number;
+  probe_requests: number;
   visitor_days: number;
   by_country: Record<string, number>;
   top_paths: Record<string, number>;
-  daily: Record<string, { visitors: number; requests: number }>;
+  daily: Record<string, { visitors: number; requests: number; api_requests?: number }>;
 }
 
 interface Stats {
@@ -67,10 +70,23 @@ function withCountryNames(data: Record<string, number>) {
 
 /** One hosted product. Downloads do not apply to these — the question is how
  *  many people came at all, so visitors and requests lead. */
-function SiteCard({ name, site }: { name: string; site: SiteStats }) {
-  const days = Object.entries(site.daily ?? {}).sort((a, b) => a[0].localeCompare(b[0]));
+function SiteCard({
+  name,
+  site,
+  rangeDays,
+}: {
+  name: string;
+  site: SiteStats;
+  rangeDays: number | null;
+}) {
+  const days = inRange(site.daily ?? {}, rangeDays);
   const peak = Math.max(1, ...days.map(([, d]) => d.visitors));
   const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
+
+  // Totals for the window, so a card never contradicts the range selector.
+  const visitorDays = days.reduce((n, [, d]) => n + (d.visitors ?? 0), 0);
+  const requests = days.reduce((n, [, d]) => n + (d.requests ?? 0), 0);
+  const apiRequests = days.reduce((n, [, d]) => n + (d.api_requests ?? 0), 0);
 
   return (
     <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
@@ -84,16 +100,27 @@ function SiteCard({ name, site }: { name: string; site: SiteStats }) {
       <div className="flex gap-6 mb-4">
         <div>
           <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
-            {site.visitor_days.toLocaleString()}
+            {visitorDays.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">visitor-days</p>
         </div>
         <div>
           <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
-            {site.requests.toLocaleString()}
+            {requests.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">requests</p>
         </div>
+        {apiRequests > 0 && (
+          <div>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+              {apiRequests.toLocaleString()}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              API calls · {site.api_clients_peak_day ?? 0} client
+              {site.api_clients_peak_day === 1 ? '' : 's'}
+            </p>
+          </div>
+        )}
       </div>
 
       {days.length > 0 && (
@@ -112,6 +139,12 @@ function SiteCard({ name, site }: { name: string; site: SiteStats }) {
         </div>
       )}
 
+      {(site.probe_requests ?? 0) > 0 && (
+        <p className="text-xs text-amber-700 dark:text-amber-400 mb-3">
+          {site.probe_requests.toLocaleString()} vulnerability probes blocked
+        </p>
+      )}
+
       {paths.length > 0 && (
         <ul className="space-y-1 text-xs">
           {paths.map(([path, n]) => (
@@ -124,6 +157,26 @@ function SiteCard({ name, site }: { name: string; site: SiteStats }) {
       )}
     </div>
   );
+}
+
+
+// Ranges are applied in the browser: the server ships a year of per-day
+// detail, so switching period is instant and costs no request.
+const RANGES: { label: string; days: number | null }[] = [
+  { label: 'Today', days: 1 },
+  { label: '7 days', days: 7 },
+  { label: '30 days', days: 30 },
+  { label: '90 days', days: 90 },
+  { label: 'All', days: null },
+];
+
+function inRange<T>(daily: Record<string, T>, days: number | null): [string, T][] {
+  const all = Object.entries(daily ?? {}).sort((a, b) => a[0].localeCompare(b[0]));
+  return days === null ? all : all.slice(-days);
+}
+
+function sumInto(target: Record<string, number>, source: Record<string, number> | undefined) {
+  for (const [key, n] of Object.entries(source ?? {})) target[key] = (target[key] ?? 0) + n;
 }
 
 function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
@@ -246,6 +299,7 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
 
 export default function StatsPage() {
   const [stats, setStats] = useState<Stats | null>(null);
+  const [rangeDays, setRangeDays] = useState<number | null>(7);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -282,12 +336,47 @@ export default function StatsPage() {
     load();
   }, [load]);
 
+  // Everything on the page is recomputed for the chosen window, so the tiles,
+  // the chart and the breakdowns can never disagree with each other.
+  const view = useMemo(() => {
+    if (!stats) return null;
+    const days = inRange(stats.daily ?? {}, rangeDays);
+    const totals = { downloads: 0, installs: 0, updates: 0, excluded: 0 };
+    const byApp: Record<string, number> = {};
+    const byPlatform: Record<string, number> = {};
+    const byCountry: Record<string, number> = {};
+    let activeSum = 0;
+
+    for (const [, d] of days) {
+      totals.downloads += d.total ?? 0;
+      totals.installs += d.installs ?? 0;
+      totals.updates += d.updates ?? 0;
+      totals.excluded += d.excluded ?? 0;
+      activeSum += d.active ?? 0;
+      sumInto(byApp, d.by_app);
+      sumInto(byPlatform, d.by_platform);
+      sumInto(byCountry, d.by_country);
+    }
+
+    return {
+      days,
+      totals,
+      byApp,
+      byPlatform,
+      byCountry,
+      // Averaged, not summed: the same install switched on every day is one
+      // install, not seven.
+      activeAvg: days.length ? Math.round(activeSum / days.length) : 0,
+      from: days.length ? days[0][0] : null,
+    };
+  }, [stats, rangeDays]);
+
   const chart = useMemo(() => {
     if (!stats) return [];
     // Tolerates an older stats.json: the page and the script that writes
     // the file deploy separately, so the shapes can lag each other.
-    return Object.entries(stats.daily ?? {}).sort((a, b) => a[0].localeCompare(b[0])).slice(-30);
-  }, [stats]);
+    return view?.days ?? [];
+  }, [view]);
   const peak = Math.max(1, ...chart.map(([, d]) => d.total));
 
   return (
@@ -298,14 +387,31 @@ export default function StatsPage() {
             <FiDownload className="h-6 w-6 text-primary" />
             Downloads
           </h1>
-          <button
-            onClick={() => load()}
-            disabled={loading}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
-          >
-            <FiRefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="flex rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+              {RANGES.map((r) => (
+                <button
+                  key={r.label}
+                  onClick={() => setRangeDays(r.days)}
+                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                    rangeDays === r.days
+                      ? 'bg-primary text-white'
+                      : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => load()}
+              disabled={loading}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
+            >
+              <FiRefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
+          </div>
         </div>
 
         {error && (
@@ -315,21 +421,21 @@ export default function StatsPage() {
           </div>
         )}
 
-        {stats && (
+        {stats && view && (
           <>
             <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Desktop downloads</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <Tile
                 label="Downloads"
-                value={stats.totals.downloads.toLocaleString()}
-                hint={stats.counting_since ? `since ${stats.counting_since}` : undefined}
+                value={view.totals.downloads.toLocaleString()}
+                hint={view.from ? `since ${view.from}` : undefined}
               />
-              <Tile label="First installs" value={stats.totals.installs.toLocaleString()} hint="from the website" />
-              <Tile label="Updates" value={stats.totals.updates.toLocaleString()} hint="from in-app banners" />
+              <Tile label="First installs" value={view.totals.installs.toLocaleString()} hint="from the website" />
+              <Tile label="Updates" value={view.totals.updates.toLocaleString()} hint="from in-app banners" />
               <Tile
                 label="Active installs"
-                value={stats.active_installs_daily_avg_7d.toLocaleString()}
-                hint="daily average, last 7 days"
+                value={view.activeAvg.toLocaleString()}
+                hint="daily average over the period"
               />
             </div>
 
@@ -355,16 +461,16 @@ export default function StatsPage() {
             )}
 
             <div className="mb-6">
-              <DailyTable daily={stats.daily ?? {}} />
+              <DailyTable daily={Object.fromEntries(view.days)} />
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
-              <Breakdown title="By app" data={stats.by_app} />
-              <Breakdown title="By platform" data={stats.by_platform} />
+              <Breakdown title="By app" data={view.byApp} />
+              <Breakdown title="By platform" data={view.byPlatform} />
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
-              <Breakdown title="By country" data={withCountryNames(stats.by_country ?? {})} />
+              <Breakdown title="By country" data={withCountryNames(view.byCountry)} />
               <Breakdown title="Filtered out (bots / self)" data={stats.excluded_by_reason ?? {}} />
             </div>
 
@@ -379,7 +485,7 @@ export default function StatsPage() {
                   {Object.entries(stats.sites)
                     .sort((a, b) => b[1].visitor_days - a[1].visitor_days)
                     .map(([name, site]) => (
-                      <SiteCard key={name} name={name} site={site} />
+                      <SiteCard key={name} name={name} site={site} rangeDays={rangeDays} />
                     ))}
                 </div>
               </div>
@@ -390,9 +496,11 @@ export default function StatsPage() {
             <Breakdown title="By version" data={stats.by_app_version} />
 
             <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
-              Generated {new Date(stats.generated_at).toLocaleString()} · {stats.days_recorded ?? 0} day
-              {stats.days_recorded === 1 ? '' : 's'} recorded · {stats.totals.excluded ?? 0} request
-              {stats.totals.excluded === 1 ? '' : 's'} filtered out · country data: {stats.geoip ?? 'disabled'}.
+              Generated {new Date(stats.generated_at).toLocaleString()} · showing {view.days.length} day
+              {view.days.length === 1 ? '' : 's'} of {stats.days_recorded ?? 0} recorded ·{' '}
+              {view.totals.excluded.toLocaleString()} request
+              {view.totals.excluded === 1 ? '' : 's'} filtered out in this period · country data:{' '}
+              {stats.geoip ?? 'disabled'}. Version and top-path breakdowns are all-time.
               Counts are unique IP per file per day, excluding bots, HEAD requests and checksum fetches —
               so they undercount shared networks and overcount anyone on a changing IP.
             </p>
