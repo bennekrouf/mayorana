@@ -59,3 +59,7 @@ public/sitemap.xml
 .publishing-paused
 .skip-today
 .queue-state.json
+
+# Python bytecode (scripts/)
+__pycache__/
+*.pyc
