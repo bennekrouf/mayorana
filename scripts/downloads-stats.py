@@ -11,14 +11,20 @@ logs is recomputed rather than added to. That also means a day is only final
 once it has rotated out — a run mid-day records a partial count and the next
 run corrects it.
 
+Country attribution is optional and offline: point --geoip at a MaxMind-format
+country database (DB-IP publish a free one) and install python3-maxminddb. No
+addresses are stored — only the per-country totals they roll up into.
+
 Usage:
-    downloads-stats.py [--state PATH] [--out PATH] [--logs GLOB ...] [--dry-run]
+    downloads-stats.py [--state PATH] [--out PATH] [--logs GLOB ...]
+                       [--geoip PATH] [--dry-run] [--reset]
 """
 
 from __future__ import annotations
 
 import argparse
 import gzip
+import ipaddress
 import json
 import os
 import re
@@ -27,6 +33,11 @@ import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from glob import glob
+
+try:  # Optional: country attribution is skipped cleanly when absent.
+    import maxminddb
+except ImportError:
+    maxminddb = None
 
 # nginx "combined": addr - user [time] "request" status bytes "referer" "ua"
 LINE = re.compile(
@@ -49,8 +60,7 @@ PLATFORM = [
     ('linux', re.compile(r'\.(tar\.gz|deb)$', re.I)),
 ]
 
-# Crawlers announce themselves; the ones that do not are largely filtered by
-# the unique-IP-per-file-per-day rule below.
+# Crawlers that announce themselves.
 BOT = re.compile(
     r'bot|crawl|spider|slurp|curl/|wget|python-requests|scrapy|headless|'
     r'monitoring|uptime|pingdom|semrush|ahrefs|facebookexternalhit',
@@ -62,10 +72,52 @@ BOT = re.compile(
 # browser — the updater's own agent never fetches the file.
 FROM_UPDATER = re.compile(r'[?&]src=updater(&|$)', re.I)
 
-# Set by the updater on its latest.json poll. That request is not a download,
-# but counting it separately answers a different and more useful question:
-# how many installs are still running.
+# Set by the updater on its latest.json poll. Not a download, but counting it
+# separately answers a more useful question: how many installs are running.
 UPDATER_UA = re.compile(r'\(updater\)', re.I)
+
+# A phone cannot install a .dmg, .exe or .tar.gz. A mobile user agent asking
+# for one is either a crawler in disguise or a mis-click; neither is a
+# download.
+MOBILE_UA = re.compile(r'iPhone|iPod|iPad|Android|Mobile Safari', re.I)
+
+# Hosting ranges. Traffic from a datacenter is a machine whatever its user
+# agent claims; these showed up pulling every product in lockstep.
+DATACENTRE_NETS = ['158.69.0.0/16']
+
+# An address that grabs this many *different* products in one day is not a
+# customer — it is us testing, or something enumerating the download tree.
+# Behavioural rather than address-based on purpose: excluding the ISP range we
+# happen to test from would also discard real customers on that ISP.
+DISTINCT_APPS_BOT_THRESHOLD = 4
+
+# ── Site traffic ───────────────────────────────────────────────────────────
+# Everything on this box writes its own nginx access log, so the same parser
+# that counts downloads can report visitors per product. Related logs are
+# grouped under one name: api0's dashboard, gateway and store are parts of
+# api0, not separate products.
+SITES: dict[str, list[str]] = {
+    'mayorana':  ['mayorana_access.log'],
+    'api0':      ['api0_access.log', 'api0_dashboard_access.log',
+                  'api0_gateway_access.log', 'api0_store_access.log'],
+    'cvenom':    ['cvenom_access.log', 'cvenom_api_access.log',
+                  'cvenom_studio_access.log'],
+    'tafseel':   ['tafseel_access.log'],
+    'solanize':  ['solanize_access.log', 'solanize_ribh_access.log'],
+    'swissrust': ['swissrust_access.log'],
+    'similar':   ['similar_access.log'],
+}
+
+# Static files say nothing about interest — one page view drags in dozens.
+ASSET = re.compile(
+    r'\.(js|mjs|css|map|png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf|eot|'
+    r'mp4|webm|txt|xml|wasm)$',
+    re.I,
+)
+
+# How many distinct paths to keep per site. Enough to see what people use,
+# bounded so the JSON stays small.
+TOP_PATHS = 15
 
 
 def platform_of(filename: str) -> str:
@@ -75,26 +127,58 @@ def platform_of(filename: str) -> str:
     return 'other'
 
 
-def parse_logs(patterns: list[str]) -> dict[str, dict]:
-    """Per-day counts keyed by ISO date, from whatever logs are still around."""
+class Geo:
+    """Country lookup, or a no-op when the database is unavailable."""
+
+    def __init__(self, path: str | None):
+        self.reader = None
+        self.note = 'disabled'
+        if not path:
+            return
+        if maxminddb is None:
+            self.note = 'maxminddb not installed (apt install python3-maxminddb)'
+            return
+        if not os.path.exists(path):
+            self.note = f'database not found at {path}'
+            return
+        try:
+            self.reader = maxminddb.open_database(path)
+            self.note = f'using {os.path.basename(path)}'
+        except Exception as exc:                       # pragma: no cover
+            self.note = f'could not open {path}: {exc}'
+
+    def country(self, ip: str) -> str:
+        if self.reader is None:
+            return 'unknown'
+        try:
+            record = self.reader.get(ip)
+        except (ValueError, TypeError):
+            return 'unknown'
+        if not record:
+            return 'unknown'
+        # DB-IP and MaxMind both nest the ISO code the same way.
+        return (record.get('country') or {}).get('iso_code') or 'unknown'
+
+
+def parse_logs(patterns: list[str], geo: Geo) -> dict[str, dict]:
+    """Per-day counts keyed by ISO date.
+
+    Two passes: the behavioural filter has to see a whole day before it can
+    judge an address, so events are collected first and counted second.
+    """
+    nets = []
+    for cidr in DATACENTRE_NETS:
+        try:
+            nets.append(ipaddress.ip_network(cidr, strict=False))
+        except ValueError:
+            print(f'warning: ignoring bad network {cidr}', file=sys.stderr)
+
+    events: list[dict] = []
+    checkins: list[tuple[str, str]] = []          # (day, app)
     # (date, ip, path) — one person pulling one file on one day is one
-    # download, however many requests their client actually made. Range
-    # requests and resumed transfers would otherwise each count separately.
+    # download, however many requests their client made. Range requests and
+    # resumed transfers would otherwise each count separately.
     seen: set[tuple[str, str, str]] = set()
-    days: dict[str, dict] = defaultdict(
-        lambda: {
-            'total': 0,
-            'installs': 0,
-            'updates': 0,
-            'by_app': defaultdict(int),
-            'by_platform': defaultdict(int),
-            'by_app_version': defaultdict(int),
-            # Distinct installs that phoned home that day. A lower bound on
-            # active users: a machine that was off, or behind a shared IP,
-            # does not show up.
-            'active_by_app': defaultdict(int),
-        }
-    )
 
     for pattern in patterns:
         for path in sorted(glob(pattern)):
@@ -102,14 +186,14 @@ def parse_logs(patterns: list[str]) -> dict[str, dict]:
             try:
                 with opener(path, 'rt', errors='replace') as fh:
                     for line in fh:
-                        _count_line(line, seen, days)
+                        _collect(line, seen, events, checkins, nets)
             except OSError as exc:
                 print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
 
-    return {day: _undefault(counts) for day, counts in days.items()}
+    return _aggregate(events, checkins, geo)
 
 
-def _count_line(line: str, seen: set, days: dict) -> None:
+def _collect(line, seen, events, checkins, nets) -> None:
     match = LINE.match(line)
     if not match:
         return
@@ -139,21 +223,81 @@ def _count_line(line: str, seen: set, days: dict) -> None:
     # an install that already exists.
     if download['file'] == 'latest.json':
         if UPDATER_UA.search(match['ua']):
-            days[day]['active_by_app'][download['app']] += 1
+            checkins.append((day, download['app']))
         return
 
     if not ARTIFACT.search(download['file']):
         return
 
-    bucket = days[day]
-    bucket['total'] += 1
-    if FROM_UPDATER.search(match['path']) or UPDATER_UA.search(match['ua']):
-        bucket['updates'] += 1
-    else:
-        bucket['installs'] += 1
-    bucket['by_app'][download['app']] += 1
-    bucket['by_platform'][platform_of(download['file'])] += 1
-    bucket['by_app_version'][f"{download['app']}@{download['version']}"] += 1
+    reason = None
+    if MOBILE_UA.search(match['ua']):
+        reason = 'mobile'
+    elif _in_nets(match['ip'], nets):
+        reason = 'datacentre'
+
+    events.append({
+        'day': day,
+        'ip': match['ip'],
+        'app': download['app'],
+        'version': download['version'],
+        'platform': platform_of(download['file']),
+        'updater': bool(FROM_UPDATER.search(match['path']) or UPDATER_UA.search(match['ua'])),
+        'excluded': reason,
+    })
+
+
+def _in_nets(ip: str, nets: list) -> bool:
+    if not nets:
+        return False
+    try:
+        address = ipaddress.ip_address(ip)
+    except ValueError:
+        return False
+    return any(address in net for net in nets)
+
+
+def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) -> dict[str, dict]:
+    # Second pass: an address that swept several products in a day is not a
+    # customer, so retire everything it did that day.
+    apps_per_ip: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for event in events:
+        if event['excluded'] is None:
+            apps_per_ip[(event['day'], event['ip'])].add(event['app'])
+    sweepers = {
+        key for key, apps in apps_per_ip.items()
+        if len(apps) >= DISTINCT_APPS_BOT_THRESHOLD
+    }
+
+    days: dict[str, dict] = defaultdict(lambda: {
+        'total': 0, 'installs': 0, 'updates': 0,
+        'by_app': defaultdict(int), 'by_platform': defaultdict(int),
+        'by_app_version': defaultdict(int), 'by_country': defaultdict(int),
+        'active_by_app': defaultdict(int),
+        # Kept rather than silently dropped: a filter you cannot see is a
+        # filter you cannot check.
+        'excluded': defaultdict(int),
+    })
+
+    for event in events:
+        bucket = days[event['day']]
+        reason = event['excluded']
+        if reason is None and (event['day'], event['ip']) in sweepers:
+            reason = 'swept_many_apps'
+        if reason:
+            bucket['excluded'][reason] += 1
+            continue
+
+        bucket['total'] += 1
+        bucket['updates' if event['updater'] else 'installs'] += 1
+        bucket['by_app'][event['app']] += 1
+        bucket['by_platform'][event['platform']] += 1
+        bucket['by_app_version'][f"{event['app']}@{event['version']}"] += 1
+        bucket['by_country'][geo.country(event['ip'])] += 1
+
+    for day, app in checkins:
+        days[day]['active_by_app'][app] += 1
+
+    return {day: _undefault(counts) for day, counts in days.items()}
 
 
 def _undefault(counts: dict) -> dict:
@@ -163,6 +307,120 @@ def _undefault(counts: dict) -> dict:
     }
 
 
+def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
+    """Per-site, per-day visitor and request counts.
+
+    Downloads answer "who took a build"; this answers "who looked at the
+    product at all", which is the only question that means anything for the
+    hosted ones. Visitors are unique addresses per day — an approximation
+    that undercounts offices behind one address and overcounts anyone whose
+    address moves.
+    """
+    sites: dict[str, dict] = {}
+
+    for site, filenames in SITES.items():
+        # ip sets per day, collapsed to counts once the day is complete
+        visitors: dict[str, set[str]] = defaultdict(set)
+        countries: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+        requests: dict[str, int] = defaultdict(int)
+        bots: dict[str, int] = defaultdict(int)
+        paths: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+
+        patterns = []
+        for name in filenames:
+            patterns += [os.path.join(log_dir, name),
+                         os.path.join(log_dir, name + '.1'),
+                         os.path.join(log_dir, name + '.*.gz')]
+
+        for pattern in patterns:
+            for path in sorted(glob(pattern)):
+                opener = gzip.open if path.endswith('.gz') else open
+                try:
+                    with opener(path, 'rt', errors='replace') as fh:
+                        for line in fh:
+                            match = LINE.match(line)
+                            if not match:
+                                continue
+                            if match['status'][0] not in ('2', '3'):
+                                continue
+                            request_path = match['path'].split('?')[0]
+                            if ASSET.search(request_path):
+                                continue
+
+                            try:
+                                stamp = datetime.strptime(
+                                    match['time'].split()[0], '%d/%b/%Y:%H:%M:%S')
+                            except ValueError:
+                                continue
+                            day = stamp.date().isoformat()
+
+                            if BOT.search(match['ua']):
+                                bots[day] += 1
+                                continue
+
+                            requests[day] += 1
+                            visitors[day].add(match['ip'])
+                            countries[day][geo.country(match['ip'])].add(match['ip'])
+                            paths[day][request_path] += 1
+                except OSError as exc:
+                    print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
+
+        sites[site] = {
+            'days': {
+                day: {
+                    'visitors': len(ips),
+                    'requests': requests[day],
+                    'bot_requests': bots.get(day, 0),
+                    'by_country': {c: len(s) for c, s in countries[day].items()},
+                    'top_paths': dict(sorted(paths[day].items(),
+                                             key=lambda kv: -kv[1])[:TOP_PATHS]),
+                }
+                for day, ips in visitors.items()
+            }
+        }
+
+    return sites
+
+
+def summarise_sites(sites: dict[str, dict]) -> dict:
+    """Totals per site, plus the recent daily series the page charts."""
+    out = {}
+    for site, data in sites.items():
+        days = data.get('days', {})
+        if not days:
+            continue
+        ordered_days = sorted(days)
+        by_country: dict[str, int] = defaultdict(int)
+        top_paths: dict[str, int] = defaultdict(int)
+        requests = bots = 0
+        for day in ordered_days:
+            entry = days[day]
+            requests += entry.get('requests', 0)
+            bots += entry.get('bot_requests', 0)
+            for country, n in entry.get('by_country', {}).items():
+                by_country[country] += n
+            for path, n in entry.get('top_paths', {}).items():
+                top_paths[path] += n
+
+        out[site] = {
+            'requests': requests,
+            'bot_requests': bots,
+            # Summed daily uniques: someone visiting on three days counts
+            # three times. It tracks engagement, not headcount.
+            'visitor_days': sum(days[d].get('visitors', 0) for d in ordered_days),
+            'by_country': dict(sorted(by_country.items(), key=lambda kv: -kv[1])[:20]),
+            'top_paths': dict(sorted(top_paths.items(), key=lambda kv: -kv[1])[:TOP_PATHS]),
+            'daily': {
+                d: {
+                    'visitors': days[d].get('visitors', 0),
+                    'requests': days[d].get('requests', 0),
+                }
+                for d in ordered_days[-30:]
+            },
+        }
+    return out
+
+
 def merge(state: dict, fresh: dict[str, dict]) -> dict:
     """Days still in the logs replace their stored copy; older days stand."""
     days = dict(state.get('days', {}))
@@ -170,27 +428,37 @@ def merge(state: dict, fresh: dict[str, dict]) -> dict:
     return {'days': days}
 
 
-def summarise(state: dict) -> dict:
-    totals = {'downloads': 0, 'installs': 0, 'updates': 0}
+def merge_sites(stored: dict, fresh: dict) -> dict:
+    """Same rule as downloads, applied per site."""
+    merged = {site: {'days': dict(data.get('days', {}))}
+              for site, data in stored.items()}
+    for site, data in fresh.items():
+        days = merged.setdefault(site, {'days': {}})['days']
+        days.update(data.get('days', {}))
+    return merged
+
+
+def summarise(state: dict, geo_note: str) -> dict:
+    totals = {'downloads': 0, 'installs': 0, 'updates': 0, 'excluded': 0}
     by_app: dict[str, int] = defaultdict(int)
     by_platform: dict[str, int] = defaultdict(int)
     by_app_version: dict[str, int] = defaultdict(int)
+    by_country: dict[str, int] = defaultdict(int)
+    excluded_by_reason: dict[str, int] = defaultdict(int)
 
     for counts in state.get('days', {}).values():
         totals['downloads'] += counts.get('total', 0)
         totals['installs'] += counts.get('installs', 0)
         totals['updates'] += counts.get('updates', 0)
-        for app, n in counts.get('by_app', {}).items():
-            by_app[app] += n
-        for platform, n in counts.get('by_platform', {}).items():
-            by_platform[platform] += n
-        for key, n in counts.get('by_app_version', {}).items():
-            by_app_version[key] += n
+        for name, target in (('by_app', by_app), ('by_platform', by_platform),
+                             ('by_app_version', by_app_version), ('by_country', by_country)):
+            for key, n in counts.get(name, {}).items():
+                target[key] += n
+        for reason, n in counts.get('excluded', {}).items():
+            excluded_by_reason[reason] += n
+            totals['excluded'] += n
 
     days = sorted(state.get('days', {}))
-    # Full per-day detail, not just a daily total: the dashboard is the only
-    # place these numbers are ever read, and "which platform, which app, on
-    # which day" is the question actually worth asking of them.
     recent = days[-90:]
 
     # Averaged over the last week rather than summed: summing would count the
@@ -201,25 +469,32 @@ def summarise(state: dict) -> dict:
     ]
     active_daily_avg = round(sum(active_recent) / len(active_recent)) if active_recent else 0
 
+    ordered = lambda d: dict(sorted(d.items(), key=lambda kv: -kv[1]))
+
     return {
         'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
         # Counting started when this script was first run, not when the site
         # went live — say so rather than implying the number is all-time.
         'counting_since': days[0] if days else None,
-        'totals': totals,
-        'by_app': dict(sorted(by_app.items(), key=lambda kv: -kv[1])),
-        'by_platform': dict(sorted(by_platform.items(), key=lambda kv: -kv[1])),
-        'by_app_version': dict(sorted(by_app_version.items(), key=lambda kv: -kv[1])),
-        'active_installs_daily_avg_7d': active_daily_avg,
         'days_recorded': len(days),
+        'geoip': geo_note,
+        'totals': totals,
+        'excluded_by_reason': ordered(excluded_by_reason),
+        'by_app': ordered(by_app),
+        'by_platform': ordered(by_platform),
+        'by_country': ordered(by_country),
+        'by_app_version': ordered(by_app_version),
+        'active_installs_daily_avg_7d': active_daily_avg,
         'daily': {
             day: {
                 'total': state['days'][day].get('total', 0),
                 'installs': state['days'][day].get('installs', 0),
                 'updates': state['days'][day].get('updates', 0),
                 'active': sum(state['days'][day].get('active_by_app', {}).values()),
+                'excluded': sum(state['days'][day].get('excluded', {}).values()),
                 'by_app': state['days'][day].get('by_app', {}),
                 'by_platform': state['days'][day].get('by_platform', {}),
+                'by_country': state['days'][day].get('by_country', {}),
             }
             for day in recent
         },
@@ -246,31 +521,46 @@ def main() -> int:
     parser.add_argument('--state', default='/var/lib/mayorana/download-stats.json',
                         help='cumulative per-day counts (survives log rotation)')
     parser.add_argument('--out', default='/var/lib/mayorana/stats.json',
-                        help='summary the admin dashboard reads. Kept out of '
-                             'the public download root on purpose: publishing '
-                             'a counter is a separate, deliberate decision, '
-                             'and a small number on the website is worse than '
-                             'no number at all')
+                        help='summary the /stats page reads')
     parser.add_argument('--logs', nargs='+',
                         default=['/var/log/nginx/mayorana_access.log',
                                  '/var/log/nginx/mayorana_access.log.1',
                                  '/var/log/nginx/mayorana_access.log.*.gz'],
                         help='log files or globs to read')
+    parser.add_argument('--geoip', default='/var/lib/mayorana/country.mmdb',
+                        help='MaxMind-format country database; skipped if absent')
+    parser.add_argument('--log-dir', default='/var/log/nginx',
+                        help='where the per-site access logs live')
+    parser.add_argument('--no-sites', action='store_true',
+                        help='count downloads only, skipping site traffic')
     parser.add_argument('--dry-run', action='store_true',
                         help='print the summary instead of writing it')
+    parser.add_argument('--reset', action='store_true',
+                        help='discard stored history and recount from the logs '
+                             'still on disk. Use once, after changing the '
+                             'filters, so old totals are not carried forward.')
     args = parser.parse_args()
 
-    try:
-        with open(args.state) as fh:
-            state = json.load(fh)
-    except FileNotFoundError:
+    if args.reset:
         state = {'days': {}}
-    except (OSError, json.JSONDecodeError) as exc:
-        print(f'error: cannot read state {args.state}: {exc}', file=sys.stderr)
-        return 1
+    else:
+        try:
+            with open(args.state) as fh:
+                state = json.load(fh)
+        except FileNotFoundError:
+            state = {'days': {}}
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f'error: cannot read state {args.state}: {exc}', file=sys.stderr)
+            return 1
 
-    state = merge(state, parse_logs(args.logs))
-    summary = summarise(state)
+    geo = Geo(args.geoip)
+    downloads_state = merge({'days': state.get('days', {})}, parse_logs(args.logs, geo))
+    sites_state = ({} if args.no_sites
+                   else merge_sites(state.get('sites', {}), parse_sites(args.log_dir, geo)))
+
+    state = {'days': downloads_state['days'], 'sites': sites_state}
+    summary = summarise(state, geo.note)
+    summary['sites'] = summarise_sites(sites_state)
 
     if args.dry_run:
         json.dump(summary, sys.stdout, indent=2, sort_keys=True)
@@ -279,8 +569,10 @@ def main() -> int:
 
     write_atomic(args.state, state)
     write_atomic(args.out, summary)
-    print(f"{summary['totals']['downloads']} downloads across "
+    print(f"{summary['totals']['downloads']} downloads "
+          f"({summary['totals']['excluded']} excluded) across "
           f"{len(state['days'])} day(s) → {args.out}")
+    print(f"geoip: {geo.note}")
     return 0
 
 

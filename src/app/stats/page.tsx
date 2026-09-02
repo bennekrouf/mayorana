@@ -15,20 +15,114 @@ interface DayDetail {
   installs: number;
   updates: number;
   active: number;
+  excluded: number;
   by_app: Record<string, number>;
   by_platform: Record<string, number>;
+  by_country: Record<string, number>;
+}
+
+interface SiteStats {
+  requests: number;
+  bot_requests: number;
+  visitor_days: number;
+  by_country: Record<string, number>;
+  top_paths: Record<string, number>;
+  daily: Record<string, { visitors: number; requests: number }>;
 }
 
 interface Stats {
+  sites?: Record<string, SiteStats>;
   generated_at: string;
   counting_since: string | null;
   days_recorded: number;
-  totals: { downloads: number; installs: number; updates: number };
+  geoip: string;
+  totals: { downloads: number; installs: number; updates: number; excluded: number };
+  excluded_by_reason: Record<string, number>;
   by_app: Record<string, number>;
   by_platform: Record<string, number>;
+  by_country: Record<string, number>;
   by_app_version: Record<string, number>;
   active_installs_daily_avg_7d: number;
   daily: Record<string, DayDetail>;
+}
+
+// ISO codes are terse; a name is easier to scan. Anything unmapped falls
+// through to the code itself rather than being hidden.
+const COUNTRY_NAMES: Record<string, string> = {
+  CH: 'Switzerland', FR: 'France', DE: 'Germany', US: 'United States',
+  GB: 'United Kingdom', IT: 'Italy', ES: 'Spain', NL: 'Netherlands',
+  BE: 'Belgium', AT: 'Austria', CA: 'Canada', IN: 'India', BR: 'Brazil',
+  PL: 'Poland', SE: 'Sweden', unknown: 'Unknown',
+};
+
+function withCountryNames(data: Record<string, number>) {
+  return Object.fromEntries(
+    Object.entries(data).map(([code, n]) => [
+      COUNTRY_NAMES[code] ? `${COUNTRY_NAMES[code]} (${code})` : code,
+      n,
+    ]),
+  );
+}
+
+/** One hosted product. Downloads do not apply to these — the question is how
+ *  many people came at all, so visitors and requests lead. */
+function SiteCard({ name, site }: { name: string; site: SiteStats }) {
+  const days = Object.entries(site.daily ?? {}).sort((a, b) => a[0].localeCompare(b[0]));
+  const peak = Math.max(1, ...days.map(([, d]) => d.visitors));
+  const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
+
+  return (
+    <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+      <div className="flex items-baseline justify-between mb-3">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">{name}</h3>
+        <span className="text-xs text-gray-500 dark:text-gray-400">
+          {site.bot_requests.toLocaleString()} bot req filtered
+        </span>
+      </div>
+
+      <div className="flex gap-6 mb-4">
+        <div>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+            {site.visitor_days.toLocaleString()}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">visitor-days</p>
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+            {site.requests.toLocaleString()}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">requests</p>
+        </div>
+      </div>
+
+      {days.length > 0 && (
+        <div className="flex items-end gap-0.5 h-12 mb-4">
+          {days.map(([day, d]) => (
+            <div key={day} className="flex-1 group relative flex flex-col justify-end h-full">
+              <div
+                className="w-full rounded-t bg-primary/70 group-hover:bg-primary"
+                style={{ height: `${Math.max(3, (d.visitors / peak) * 100)}%` }}
+              />
+              <span className="absolute -top-5 left-1/2 -translate-x-1/2 hidden group-hover:block whitespace-nowrap rounded bg-gray-900 px-1.5 py-0.5 text-[10px] text-white z-10">
+                {day}: {d.visitors}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {paths.length > 0 && (
+        <ul className="space-y-1 text-xs">
+          {paths.map(([path, n]) => (
+            <li key={path} className="flex justify-between gap-3">
+              <span className="text-gray-600 dark:text-gray-300 truncate font-mono">{path}</span>
+              <span className="text-gray-900 dark:text-white tabular-nums">{n}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
@@ -129,6 +223,13 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
                       <td colSpan={6} className="px-5 py-3 text-xs text-gray-600 dark:text-gray-300 space-y-1">
                         <div><span className="font-semibold">Apps:</span> {pairs(d.by_app) || '—'}</div>
                         <div><span className="font-semibold">Platforms:</span> {pairs(d.by_platform) || '—'}</div>
+                        <div><span className="font-semibold">Countries:</span> {pairs(withCountryNames(d.by_country ?? {})) || '—'}</div>
+                        {d.excluded > 0 && (
+                          <div className="text-gray-500 dark:text-gray-400">
+                            <span className="font-semibold">Filtered out:</span> {d.excluded} bot / self request
+                            {d.excluded === 1 ? '' : 's'}
+                          </div>
+                        )}
                       </td>
                     </tr>
                   )}
@@ -215,6 +316,7 @@ export default function StatsPage() {
 
         {stats && (
           <>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Desktop downloads</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <Tile
                 label="Downloads"
@@ -260,15 +362,38 @@ export default function StatsPage() {
               <Breakdown title="By platform" data={stats.by_platform} />
             </div>
 
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <Breakdown title="By country" data={withCountryNames(stats.by_country ?? {})} />
+              <Breakdown title="Filtered out (bots / self)" data={stats.excluded_by_reason ?? {}} />
+            </div>
+
+            {stats.sites && Object.keys(stats.sites).length > 0 && (
+              <div className="mb-4">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Products</h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  Site traffic for everything on this server. A visitor-day is one address on one
+                  day, so a weekly regular counts seven times — it tracks engagement, not headcount.
+                </p>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {Object.entries(stats.sites)
+                    .sort((a, b) => b[1].visitor_days - a[1].visitor_days)
+                    .map(([name, site]) => (
+                      <SiteCard key={name} name={name} site={site} />
+                    ))}
+                </div>
+              </div>
+            )}
+
             {/* Which versions are still being pulled — the number that says how
                 many people run a build with a bug that is already fixed. */}
             <Breakdown title="By version" data={stats.by_app_version} />
 
             <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
               Generated {new Date(stats.generated_at).toLocaleString()} · {stats.days_recorded ?? 0} day
-              {stats.days_recorded === 1 ? '' : 's'} recorded. Counts are unique IP per file per day,
-              excluding bots, HEAD requests and checksum fetches — so they undercount shared networks
-              and overcount anyone on a changing IP.
+              {stats.days_recorded === 1 ? '' : 's'} recorded · {stats.totals.excluded ?? 0} request
+              {stats.totals.excluded === 1 ? '' : 's'} filtered out · country data: {stats.geoip ?? 'disabled'}.
+              Counts are unique IP per file per day, excluding bots, HEAD requests and checksum fetches —
+              so they undercount shared networks and overcount anyone on a changing IP.
             </p>
           </>
         )}
