@@ -6,8 +6,14 @@ import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { desktopToolsConfig, appI18nKey, type Status } from '@/data/tools';
 import { StatusBadge } from '@/components/ui/ToolVisuals';
+import { FeaturedPromo } from '@/components/ui/FeaturedPromo';
 
 const API0_URL = 'https://api0.ai';
+
+// The tool given the promotion strip under the hero. Changing this id is the
+// whole edit needed to promote a different one — the copy and the per-OS
+// downloads both come from the shared tool data.
+const PROMOTED_TOOL_ID = 'gitagent';
 
 // The 3–4 primary tools surfaced on the home page. Desktop tools take their
 // one-liner from the shared `apps` namespace; API0.AI is hosted rather than
@@ -22,6 +28,8 @@ export default function ClientHomeSection() {
 
   const azureHref = getLocalizedPath(locale, '/solutions/azure');
   const contactHref = getLocalizedPath(locale, '/contact');
+
+  const promoted = desktopToolsConfig.find((tool) => tool.id === PROMOTED_TOOL_ID);
 
   const selectedTools = SELECTED_TOOL_IDS.map((id) => {
     const tool = desktopToolsConfig.find((candidate) => candidate.id === id);
@@ -95,6 +103,19 @@ export default function ClientHomeSection() {
           </div>
         </div>
       </section>
+
+      {/* Promoted tool — directly under the hero, before the solutions pitch,
+          so the one thing being pushed right now is the first thing after the
+          positioning statement. */}
+      {promoted && (
+        <FeaturedPromo
+          name={promoted.name}
+          tagline={tApps(`${appI18nKey[PROMOTED_TOOL_ID]}_tagline`)}
+          description={tApps(`${appI18nKey[PROMOTED_TOOL_ID]}_description`)}
+          downloads={promoted.downloads}
+          detailsHref={`${getLocalizedPath(locale, '/apps')}#${PROMOTED_TOOL_ID}`}
+        />
+      )}
 
       {/* Featured solutions — exactly two */}
       <section className="py-20 bg-secondary/30">

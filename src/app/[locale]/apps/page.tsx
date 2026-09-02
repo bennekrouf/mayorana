@@ -15,11 +15,6 @@ import {
   type Status,
 } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
-import { FeaturedPromo } from '@/components/ui/FeaturedPromo';
-
-// The tool given the promotion strip above the grid. It still appears in its
-// section below; the banner is an announcement, not a replacement.
-const FEATURED_ID = 'gitagent';
 
 // What the card's action area renders. One shape per kind, so a desktop tool
 // gets its per-OS download buttons and a hosted product gets a single link —
@@ -285,8 +280,6 @@ export default function AppsPage() {
 
   const nothingMatches = visible.primary.length === 0 && visible.secondary.length === 0;
 
-  const featured = desktopToolsConfig.find((app) => app.id === FEATURED_ID);
-
   return (
     <LayoutTemplate>
 
@@ -313,18 +306,6 @@ export default function AppsPage() {
           </div>
         </div>
       </section>
-
-      {/* Featured tool — above the grid, and only when nothing is filtered, so
-          a promotion never contradicts an active filter selection. */}
-      {featured && activeTags.length === 0 && (
-        <FeaturedPromo
-          name={featured.name}
-          tagline={tApps(`${appI18nKey[FEATURED_ID]}_tagline`)}
-          description={tApps(`${appI18nKey[FEATURED_ID]}_description`)}
-          downloads={featured.downloads}
-          detailsHref={`#${FEATURED_ID}`}
-        />
-      )}
 
       {/* Intro + filters */}
       <section className="pt-12 bg-background">
