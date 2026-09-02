@@ -325,6 +325,14 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
         requests: dict[str, int] = defaultdict(int)
         bots: dict[str, int] = defaultdict(int)
         paths: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+        # A real browser rendering a page also fetches its CSS and JS; a
+        # scraper usually takes the HTML and leaves. Assets are not counted as
+        # traffic, but they are the tell that someone real was behind it, so
+        # they are recorded here and used to filter afterwards.
+        fetched_assets: dict[str, set[str]] = defaultdict(set)
+        # Requests are held per (day, ip) so they can be dropped wholesale
+        # once an address turns out never to have loaded an asset.
+        pending: dict[tuple[str, str], list[tuple[str, str]]] = defaultdict(list)
 
         patterns = []
         for name in filenames:
@@ -344,8 +352,6 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                             if match['status'][0] not in ('2', '3'):
                                 continue
                             request_path = match['path'].split('?')[0]
-                            if ASSET.search(request_path):
-                                continue
 
                             try:
                                 stamp = datetime.strptime(
@@ -355,27 +361,45 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                             day = stamp.date().isoformat()
 
                             if BOT.search(match['ua']):
-                                bots[day] += 1
+                                if not ASSET.search(request_path):
+                                    bots[day] += 1
                                 continue
 
-                            requests[day] += 1
-                            visitors[day].add(match['ip'])
-                            countries[day][geo.country(match['ip'])].add(match['ip'])
-                            paths[day][request_path] += 1
+                            if ASSET.search(request_path):
+                                fetched_assets[day].add(match['ip'])
+                                continue
+
+                            pending[(day, match['ip'])].append((request_path, match['ua']))
                 except OSError as exc:
                     print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
 
+        # Second pass: keep only addresses that also pulled an asset that day.
+        # An API-only product would fail this test legitimately, which is why
+        # the discarded requests are reported rather than hidden.
+        unverified: dict[str, int] = defaultdict(int)
+        for (day, ip), entries in pending.items():
+            if ip not in fetched_assets.get(day, ()):
+                unverified[day] += len(entries)
+                continue
+            visitors[day].add(ip)
+            countries[day][geo.country(ip)].add(ip)
+            requests[day] += len(entries)
+            for request_path, _ua in entries:
+                paths[day][request_path] += 1
+
+        every_day = set(visitors) | set(bots) | set(unverified)
         sites[site] = {
             'days': {
                 day: {
-                    'visitors': len(ips),
-                    'requests': requests[day],
+                    'visitors': len(visitors.get(day, ())),
+                    'requests': requests.get(day, 0),
                     'bot_requests': bots.get(day, 0),
-                    'by_country': {c: len(s) for c, s in countries[day].items()},
-                    'top_paths': dict(sorted(paths[day].items(),
+                    'unverified_requests': unverified.get(day, 0),
+                    'by_country': {c: len(s) for c, s in countries.get(day, {}).items()},
+                    'top_paths': dict(sorted(paths.get(day, {}).items(),
                                              key=lambda kv: -kv[1])[:TOP_PATHS]),
                 }
-                for day, ips in visitors.items()
+                for day in sorted(every_day)
             }
         }
 
@@ -392,11 +416,12 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
         ordered_days = sorted(days)
         by_country: dict[str, int] = defaultdict(int)
         top_paths: dict[str, int] = defaultdict(int)
-        requests = bots = 0
+        requests = bots = unverified = 0
         for day in ordered_days:
             entry = days[day]
             requests += entry.get('requests', 0)
             bots += entry.get('bot_requests', 0)
+            unverified += entry.get('unverified_requests', 0)
             for country, n in entry.get('by_country', {}).items():
                 by_country[country] += n
             for path, n in entry.get('top_paths', {}).items():
@@ -405,6 +430,9 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
         out[site] = {
             'requests': requests,
             'bot_requests': bots,
+            # Asked for pages but never loaded a stylesheet or script —
+            # almost always a crawler wearing a browser's user agent.
+            'unverified_requests': unverified,
             # Summed daily uniques: someone visiting on three days counts
             # three times. It tracks engagement, not headcount.
             'visitor_days': sum(days[d].get('visitors', 0) for d in ordered_days),
