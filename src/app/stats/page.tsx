@@ -45,7 +45,6 @@ interface Stats {
   by_app: Record<string, number>;
   by_platform: Record<string, number>;
   by_country: Record<string, number>;
-  by_app_version: Record<string, number>;
   active_installs_daily_avg_7d: number;
   daily: Record<string, DayDetail>;
 }
@@ -491,16 +490,12 @@ export default function StatsPage() {
               </div>
             )}
 
-            {/* Which versions are still being pulled — the number that says how
-                many people run a build with a bug that is already fixed. */}
-            <Breakdown title="By version" data={stats.by_app_version} />
-
             <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
               Generated {new Date(stats.generated_at).toLocaleString()} · showing {view.days.length} day
               {view.days.length === 1 ? '' : 's'} of {stats.days_recorded ?? 0} recorded ·{' '}
               {view.totals.excluded.toLocaleString()} request
               {view.totals.excluded === 1 ? '' : 's'} filtered out in this period · country data:{' '}
-              {stats.geoip ?? 'disabled'}. Version and top-path breakdowns are all-time.
+              {stats.geoip ?? 'disabled'}. Top-path breakdowns are all-time.
               Counts are unique IP per file per day, excluding bots, HEAD requests and checksum fetches —
               so they undercount shared networks and overcount anyone on a changing IP.
             </p>
