@@ -6,7 +6,6 @@ import {
   FiDownload,
   FiRefreshCw,
   FiAlertCircle,
-  FiLock,
   FiChevronDown,
   FiChevronRight,
 } from 'react-icons/fi';
@@ -31,8 +30,6 @@ interface Stats {
   active_installs_daily_avg_7d: number;
   daily: Record<string, DayDetail>;
 }
-
-const KEY_STORAGE = 'stats-key';
 
 function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
@@ -146,16 +143,12 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
 }
 
 export default function StatsPage() {
-  const [key, setKey] = useState('');
-  const [authed, setAuthed] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchStats = useCallback(async (secret: string): Promise<string | null> => {
-    const response = await fetch('/api/stats', {
-      headers: { Authorization: `Bearer ${secret}` },
-    });
+  const fetchStats = useCallback(async (): Promise<string | null> => {
+    const response = await fetch('/api/stats');
 
     // Rate limiting and proxy errors reply in plain text, so parsing before
     // checking the status turns a clear 429 into an opaque JSON syntax error.
@@ -163,7 +156,6 @@ export default function StatsPage() {
     const body = isJson ? await response.json() : await response.text();
 
     if (!response.ok) {
-      if (response.status === 401) return 'Wrong key.';
       return (typeof body === 'string' ? body.trim() : body.message || body.error)
         || `Request failed (${response.status})`;
     }
@@ -172,32 +164,20 @@ export default function StatsPage() {
     return null;
   }, []);
 
-  const load = useCallback(
-    async (secret: string, remember: boolean) => {
-      setLoading(true);
-      setError(null);
-      try {
-        const failure = await fetchStats(secret);
-        if (failure) {
-          setError(failure);
-          if (remember) sessionStorage.removeItem(KEY_STORAGE);
-        } else {
-          setAuthed(true);
-          if (remember) sessionStorage.setItem(KEY_STORAGE, secret);
-        }
-      } catch (err) {
-        setError(`Could not reach the stats endpoint. ${err}`);
-      }
-      setLoading(false);
-    },
-    [fetchStats],
-  );
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const failure = await fetchStats();
+      if (failure) setError(failure);
+    } catch (err) {
+      setError(`Could not reach the stats endpoint. ${err}`);
+    }
+    setLoading(false);
+  }, [fetchStats]);
 
-  // Kept for the session only, so a shared or borrowed machine does not stay
-  // signed in after the browser closes.
   useEffect(() => {
-    const saved = sessionStorage.getItem(KEY_STORAGE);
-    if (saved) load(saved, true);
+    load();
   }, [load]);
 
   const chart = useMemo(() => {
@@ -208,47 +188,6 @@ export default function StatsPage() {
   }, [stats]);
   const peak = Math.max(1, ...chart.map(([, d]) => d.total));
 
-  if (!authed) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center p-4">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            load(key, true);
-          }}
-          className="w-full max-w-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8"
-        >
-          <div className="text-center mb-6">
-            <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FiLock className="h-7 w-7 text-primary" />
-            </div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white">Download statistics</h1>
-          </div>
-
-          <input
-            type="password"
-            value={key}
-            onChange={(e) => setKey(e.target.value)}
-            placeholder="Access key"
-            autoComplete="off"
-            required
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50 focus:border-primary"
-          />
-
-          {error && <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
-
-          <button
-            type="submit"
-            disabled={loading || !key.trim()}
-            className="mt-5 w-full py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 disabled:opacity-50"
-          >
-            {loading ? 'Checking…' : 'View'}
-          </button>
-        </form>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 p-6">
       <div className="max-w-5xl mx-auto">
@@ -258,7 +197,7 @@ export default function StatsPage() {
             Downloads
           </h1>
           <button
-            onClick={() => load(sessionStorage.getItem(KEY_STORAGE) || '', false)}
+            onClick={() => load()}
             disabled={loading}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
           >
