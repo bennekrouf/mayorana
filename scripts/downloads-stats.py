@@ -108,6 +108,29 @@ SITES: dict[str, list[str]] = {
     'similar':   ['similar_access.log'],
 }
 
+# Logs that serve programs, not browsers. A browser proves it is real by
+# fetching the stylesheet the page references; an API client has no stylesheet
+# to fetch and would be discarded by that test, which is how ~20k genuine
+# cvenom calls first got written off as crawlers. These are counted as API
+# traffic instead: requests and distinct clients, no asset heuristic.
+API_LOGS = {
+    'api0_gateway_access.log',
+    'api0_store_access.log',
+    'cvenom_api_access.log',
+    'solanize_ribh_access.log',
+}
+
+# Vulnerability scanning: WordPress endpoints on a site that runs no
+# WordPress, and the usual hunt for leaked credentials. nginx already answers
+# these 403/404, but they still reach the log and would otherwise crowd out
+# the paths customers actually use. Counted separately so the noise stays
+# visible without being mistaken for interest.
+PROBE = re.compile(
+    r'(wp-admin|wp-login|wp-content|wp-includes|xmlrpc\.php|phpmyadmin|'
+    r'/\.env|/\.git|/\.aws|/\.ssh|/vendor/|/cgi-bin/|\.php$)',
+    re.I,
+)
+
 # Static files say nothing about interest — one page view drags in dozens.
 ASSET = re.compile(
     r'\.(js|mjs|css|map|png|jpe?g|gif|svg|ico|webp|avif|woff2?|ttf|eot|'
@@ -118,6 +141,13 @@ ASSET = re.compile(
 # How many distinct paths to keep per site. Enough to see what people use,
 # bounded so the JSON stays small.
 TOP_PATHS = 15
+
+# Loading one page costs a browser at least four requests — the HTML, its
+# stylesheet, its script and a favicon — so even an instant bounce clears this.
+# Measured on real traffic, addresses making only two or three requests were
+# about a fifth of everything that passed the asset test, and behave like
+# crawlers that happened to take one asset rather than like readers.
+MIN_REQUESTS_PER_VISIT = 4
 
 
 def platform_of(filename: str) -> str:
@@ -333,14 +363,20 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
         # Requests are held per (day, ip) so they can be dropped wholesale
         # once an address turns out never to have loaded an asset.
         pending: dict[tuple[str, str], list[tuple[str, str]]] = defaultdict(list)
+        # Assets included: the threshold below is about how much of a page was
+        # actually fetched, and assets are most of a real page load.
+        hits: dict[tuple[str, str], int] = defaultdict(int)
+
+        api_requests: dict[str, int] = defaultdict(int)
+        api_clients: dict[str, set[str]] = defaultdict(set)
+        probes: dict[str, int] = defaultdict(int)
 
         patterns = []
         for name in filenames:
-            patterns += [os.path.join(log_dir, name),
-                         os.path.join(log_dir, name + '.1'),
-                         os.path.join(log_dir, name + '.*.gz')]
+            for candidate in (name, name + '.1', name + '.*.gz'):
+                patterns.append((os.path.join(log_dir, candidate), name in API_LOGS))
 
-        for pattern in patterns:
+        for pattern, is_api in patterns:
             for path in sorted(glob(pattern)):
                 opener = gzip.open if path.endswith('.gz') else open
                 try:
@@ -348,8 +384,6 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                         for line in fh:
                             match = LINE.match(line)
                             if not match:
-                                continue
-                            if match['status'][0] not in ('2', '3'):
                                 continue
                             request_path = match['path'].split('?')[0]
 
@@ -360,10 +394,30 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                                 continue
                             day = stamp.date().isoformat()
 
+                            # Counted before the status check: these are
+                            # answered 403/404 by design, and a filter you
+                            # cannot see is a filter you cannot check.
+                            if PROBE.search(request_path):
+                                probes[day] += 1
+                                continue
+
+                            # 2xx only: a 301 to https is not a page view.
+                            if match['status'][0] != '2':
+                                continue
+
                             if BOT.search(match['ua']):
                                 if not ASSET.search(request_path):
                                     bots[day] += 1
                                 continue
+
+                            # API surfaces answer programs, so the browser
+                            # test does not apply — count them directly.
+                            if is_api:
+                                api_requests[day] += 1
+                                api_clients[day].add(match['ip'])
+                                continue
+
+                            hits[(day, match['ip'])] += 1
 
                             if ASSET.search(request_path):
                                 fetched_assets[day].add(match['ip'])
@@ -373,12 +427,14 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                 except OSError as exc:
                     print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
 
-        # Second pass: keep only addresses that also pulled an asset that day.
-        # An API-only product would fail this test legitimately, which is why
-        # the discarded requests are reported rather than hidden.
+        # Second pass: an address counts as a visitor only if it pulled an
+        # asset that day *and* made enough requests to look like a page load.
+        # An API-only product fails both tests legitimately, which is why the
+        # discarded requests are reported rather than hidden.
         unverified: dict[str, int] = defaultdict(int)
         for (day, ip), entries in pending.items():
-            if ip not in fetched_assets.get(day, ()):
+            took_asset = ip in fetched_assets.get(day, ())
+            if not took_asset or hits[(day, ip)] < MIN_REQUESTS_PER_VISIT:
                 unverified[day] += len(entries)
                 continue
             visitors[day].add(ip)
@@ -387,7 +443,8 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
             for request_path, _ua in entries:
                 paths[day][request_path] += 1
 
-        every_day = set(visitors) | set(bots) | set(unverified)
+        every_day = (set(visitors) | set(bots) | set(unverified)
+                     | set(api_requests) | set(probes))
         sites[site] = {
             'days': {
                 day: {
@@ -395,6 +452,9 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                     'requests': requests.get(day, 0),
                     'bot_requests': bots.get(day, 0),
                     'unverified_requests': unverified.get(day, 0),
+                    'api_requests': api_requests.get(day, 0),
+                    'api_clients': len(api_clients.get(day, ())),
+                    'probe_requests': probes.get(day, 0),
                     'by_country': {c: len(s) for c, s in countries.get(day, {}).items()},
                     'top_paths': dict(sorted(paths.get(day, {}).items(),
                                              key=lambda kv: -kv[1])[:TOP_PATHS]),
@@ -416,12 +476,14 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
         ordered_days = sorted(days)
         by_country: dict[str, int] = defaultdict(int)
         top_paths: dict[str, int] = defaultdict(int)
-        requests = bots = unverified = 0
+        requests = bots = unverified = api_requests = probes = 0
         for day in ordered_days:
             entry = days[day]
             requests += entry.get('requests', 0)
             bots += entry.get('bot_requests', 0)
             unverified += entry.get('unverified_requests', 0)
+            api_requests += entry.get('api_requests', 0)
+            probes += entry.get('probe_requests', 0)
             for country, n in entry.get('by_country', {}).items():
                 by_country[country] += n
             for path, n in entry.get('top_paths', {}).items():
@@ -433,6 +495,14 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
             # Asked for pages but never loaded a stylesheet or script —
             # almost always a crawler wearing a browser's user agent.
             'unverified_requests': unverified,
+            'api_requests': api_requests,
+            # Vulnerability scans: WordPress paths, .env hunting and similar.
+            # All answered 403/404 by nginx; reported so the noise is visible.
+            'probe_requests': probes,
+            # Distinct callers on the busiest day, not summed: an integration
+            # polling every minute is one client, however many calls it makes.
+            'api_clients_peak_day': max(
+                (days[d].get('api_clients', 0) for d in ordered_days), default=0),
             # Summed daily uniques: someone visiting on three days counts
             # three times. It tracks engagement, not headcount.
             'visitor_days': sum(days[d].get('visitors', 0) for d in ordered_days),
@@ -442,8 +512,9 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
                 d: {
                     'visitors': days[d].get('visitors', 0),
                     'requests': days[d].get('requests', 0),
+                    'api_requests': days[d].get('api_requests', 0),
                 }
-                for d in ordered_days[-30:]
+                for d in ordered_days[-365:]
             },
         }
     return out
@@ -487,7 +558,10 @@ def summarise(state: dict, geo_note: str) -> dict:
             totals['excluded'] += n
 
     days = sorted(state.get('days', {}))
-    recent = days[-90:]
+    # Full per-day detail, not just a daily total: the page recomputes every
+    # figure it shows from this, so the date range can be changed without
+    # asking the server again. A year of days costs a few hundred kilobytes.
+    recent = days[-365:]
 
     # Averaged over the last week rather than summed: summing would count the
     # same machine once per day it was switched on.
