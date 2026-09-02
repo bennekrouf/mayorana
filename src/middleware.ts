@@ -55,6 +55,21 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // Download statistics. Unlike /admin this is reachable from the internet —
+    // it is an unlisted URL guarded by the admin key, not by network position,
+    // so the request must skip the locale redirect below (which would send
+    // /stats to /en/stats and 404) and instead be rate limited hard enough
+    // that the key cannot be guessed.
+    if (pathname === '/stats' || pathname.startsWith('/api/stats')) {
+        // The API is the only path where a key can be tried, so it gets the
+        // tighter budget; the page itself is fetched once per view.
+        const limit = pathname.startsWith('/api/stats') ? 10 : 60;
+        if (getRateLimit(`stats:${ip}`, limit)) {
+            return new NextResponse('Too Many Requests', { status: 429 });
+        }
+        return NextResponse.next();
+    }
+
     // Swissrust Domain Proxy Logic
     const hostname = request.headers.get('host') || '';
     // Inject hostname into request headers so layout.tsx can read it via headers()
