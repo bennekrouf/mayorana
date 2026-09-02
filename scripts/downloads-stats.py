@@ -188,7 +188,10 @@ def summarise(state: dict) -> dict:
             by_app_version[key] += n
 
     days = sorted(state.get('days', {}))
-    recent = days[-30:]
+    # Full per-day detail, not just a daily total: the dashboard is the only
+    # place these numbers are ever read, and "which platform, which app, on
+    # which day" is the question actually worth asking of them.
+    recent = days[-90:]
 
     # Averaged over the last week rather than summed: summing would count the
     # same machine once per day it was switched on.
@@ -208,7 +211,18 @@ def summarise(state: dict) -> dict:
         'by_platform': dict(sorted(by_platform.items(), key=lambda kv: -kv[1])),
         'by_app_version': dict(sorted(by_app_version.items(), key=lambda kv: -kv[1])),
         'active_installs_daily_avg_7d': active_daily_avg,
-        'last_30_days': {day: state['days'][day]['total'] for day in recent},
+        'days_recorded': len(days),
+        'daily': {
+            day: {
+                'total': state['days'][day].get('total', 0),
+                'installs': state['days'][day].get('installs', 0),
+                'updates': state['days'][day].get('updates', 0),
+                'active': sum(state['days'][day].get('active_by_app', {}).values()),
+                'by_app': state['days'][day].get('by_app', {}),
+                'by_platform': state['days'][day].get('by_platform', {}),
+            }
+            for day in recent
+        },
     }
 
 

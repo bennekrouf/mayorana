@@ -9,5 +9,6 @@ Sitemap: https://mayorana.ch/sitemap.xml
 # Prevent bots from crawling dev/staging areas if they exist
 User-agent: *
 Disallow: /admin/
+Disallow: /stats
 Disallow: /dev/
 Disallow: /staging/
