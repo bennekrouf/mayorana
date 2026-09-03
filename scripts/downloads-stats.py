@@ -109,7 +109,6 @@ SITES: dict[str, list[str]] = {
     'store.api0.ai':       ['api0_store_access.log'],
     'cvenom.com':          ['cvenom_access.log'],
     'studio.cvenom.com':   ['cvenom_studio_access.log'],
-    'api.cvenom.com':      ['cvenom_api_access.log'],
     'ribh.io':             ['solanize_access.log', 'solanize_ribh_access.log'],
     'tafseel.ch':          ['tafseel_access.log'],
     'swissrust.ch':        ['swissrust_access.log'],
@@ -118,17 +117,16 @@ SITES: dict[str, list[str]] = {
 
 # Logs that serve programs, not browsers. A browser proves it is real by
 # fetching the stylesheet the page references; an API client has no stylesheet
-# to fetch and would be discarded by that test, which is how ~20k genuine
-# cvenom calls first got written off as crawlers. These are counted as API
-# traffic instead: requests and distinct clients, no asset heuristic.
+# to fetch and would be discarded by that test, so genuine calls get written
+# off as crawlers. These are counted as API traffic instead: requests and
+# distinct clients, no asset heuristic.
 #
-# Only the api/gateway/store hosts qualify. ribh.io was in this list by
+# Only the gateway and store hosts qualify. ribh.io was in this list by
 # mistake — it is a website with a homepage, so the browser test applies and
 # its traffic should be judged like any other site's.
 API_LOGS = {
     'api0_gateway_access.log',
     'api0_store_access.log',
-    'cvenom_api_access.log',
 }
 
 # Vulnerability scanning: WordPress endpoints on a site that runs no
