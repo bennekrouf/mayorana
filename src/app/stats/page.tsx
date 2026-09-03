@@ -96,7 +96,7 @@ function SiteCard({
         </span>
       </div>
 
-      <div className="flex gap-6 mb-4">
+      <div className="flex flex-wrap gap-x-6 gap-y-3 mb-4">
         <div>
           <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
             {visitorDays.toLocaleString()}
@@ -242,7 +242,7 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
         </h2>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[480px] text-sm">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-slate-700">
               <th className="px-5 py-2 font-semibold">Day</th>
@@ -262,7 +262,7 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
                     className="border-b border-gray-100 dark:border-slate-700/50 hover:bg-gray-50 dark:hover:bg-slate-700/30 cursor-pointer"
                     onClick={() => setOpen(expanded ? null : day)}
                   >
-                    <td className="px-5 py-2.5 font-medium text-gray-900 dark:text-white">{day}</td>
+                    <td className="px-5 py-2.5 font-medium whitespace-nowrap text-gray-900 dark:text-white">{day}</td>
                     <td className="px-3 py-2.5 text-right tabular-nums text-gray-900 dark:text-white">{d.total}</td>
                     <td className="px-3 py-2.5 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.installs}</td>
                     <td className="px-3 py-2.5 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.updates}</td>
@@ -379,20 +379,20 @@ export default function StatsPage() {
   const peak = Math.max(1, ...chart.map(([, d]) => d.total));
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 p-4 sm:p-6">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <FiDownload className="h-6 w-6 text-primary" />
             Downloads
           </h1>
-          <div className="flex items-center gap-2">
-            <div className="flex rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+          <div className="flex items-center gap-2 overflow-x-auto sm:overflow-visible">
+            <div className="flex shrink-0 rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
               {RANGES.map((r) => (
                 <button
                   key={r.label}
                   onClick={() => setRangeDays(r.days)}
-                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`px-2.5 py-1.5 text-xs sm:px-3 sm:py-2 sm:text-sm font-medium whitespace-nowrap transition-colors ${
                     rangeDays === r.days
                       ? 'bg-primary text-white'
                       : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
@@ -405,7 +405,7 @@ export default function StatsPage() {
             <button
               onClick={() => load()}
               disabled={loading}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
+              className="inline-flex shrink-0 items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary text-white text-xs sm:text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
             >
               <FiRefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
               Refresh
