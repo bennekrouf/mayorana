@@ -149,3 +149,43 @@ export function searchPosts(query: string, locale: string = 'en'): BlogPost[] {
     ))
   );
 }
+
+/**
+ * The counterpart of a post in the other locale, or null when it has none.
+ *
+ * Mirrors the pairing rule in scripts/generate-sitemap.js: French posts either
+ * reuse the English id/slug or suffix it with '-fr'. The two must agree —
+ * the sitemap declaring /en/blog/x and /fr/blog/x-fr to be alternates while
+ * the pages themselves emit no hreflang is a contradictory signal, and a pair
+ * is only ever returned once both sides are known to exist.
+ */
+export function getPostCounterpart(slug: string, locale: string): BlogPost | null {
+  if (locale === 'en') {
+    const post = getPostBySlug(slug, 'en');
+    if (!post) return null;
+    const fr = getAllPosts('fr');
+    return (
+      fr.find((p) => p.id === `${post.id}-fr`) ||
+      fr.find((p) => p.id === post.id) ||
+      fr.find((p) => p.slug === `${post.slug}-fr`) ||
+      fr.find((p) => p.slug === post.slug) ||
+      null
+    );
+  }
+
+  if (locale === 'fr') {
+    const post = getPostBySlug(slug, 'fr');
+    if (!post) return null;
+    const strip = (value: string) => (value.endsWith('-fr') ? value.slice(0, -3) : value);
+    const en = getAllPosts('en');
+    return (
+      en.find((p) => p.id === strip(post.id)) ||
+      en.find((p) => p.id === post.id) ||
+      en.find((p) => p.slug === strip(post.slug)) ||
+      en.find((p) => p.slug === post.slug) ||
+      null
+    );
+  }
+
+  return null;
+}

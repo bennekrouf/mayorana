@@ -54,6 +54,12 @@ type BuildMetadataArgs = {
    * pointing at a 404 is worse than emitting none at all.
    */
   crossLocale?: boolean;
+  /**
+   * Explicit per-locale paths, for pages whose URL differs per locale — blog
+   * posts, whose French slugs do not follow from the English ones. Overrides
+   * the locale-swap that `crossLocale` performs.
+   */
+  alternatePaths?: Partial<Record<string, string>>;
 };
 
 /**
@@ -68,19 +74,33 @@ function alternatesFor(
   locale: string,
   path: string,
   crossLocale: boolean,
+  alternatePaths?: Partial<Record<string, string>>,
 ): Metadata['alternates'] {
   const canonical = `${SITE_URL}/${locale}${path}`;
-  if (!crossLocale) return { canonical };
+
+  // Explicit paths win: they are the only correct answer for pages whose URL
+  // differs per locale. Without them, fall back to swapping the locale
+  // segment, which is right for every fixed page on the site.
+  const paths = alternatePaths ?? (crossLocale
+    ? Object.fromEntries(locales.map((l) => [l, path]))
+    : null);
+
+  if (!paths) return { canonical };
+
+  const known = locales.filter((l) => paths[l]);
+  if (known.length < 2) return { canonical };
 
   const languages = Object.fromEntries(
-    locales.map((l) => [l, `${SITE_URL}/${l}${path}`]),
+    known.map((l) => [l, `${SITE_URL}/${l}${paths[l]}`]),
   ) as Record<string, string>;
 
   return {
     canonical,
     languages: {
       ...languages,
-      'x-default': `${SITE_URL}/${defaultLocale}${path}`,
+      ...(paths[defaultLocale]
+        ? { 'x-default': `${SITE_URL}/${defaultLocale}${paths[defaultLocale]}` }
+        : {}),
     },
   };
 }
@@ -94,6 +114,7 @@ export function buildMetadata({
   ogImagePath = '/opengraph-image',
   ogType = 'website',
   crossLocale = true,
+  alternatePaths,
 }: BuildMetadataArgs): Metadata {
   // Built once and set absolutely. The locale layout declares a
   // '%s | Mayorana' title template, but a template only reaches the segment
@@ -109,7 +130,7 @@ export function buildMetadata({
     metadataBase: new URL(SITE_URL),
     title: { absolute: fullTitle },
     description,
-    alternates: alternatesFor(locale, path, crossLocale),
+    alternates: alternatesFor(locale, path, crossLocale, alternatePaths),
     robots: noindex
       ? { index: false, follow: true }
       : {

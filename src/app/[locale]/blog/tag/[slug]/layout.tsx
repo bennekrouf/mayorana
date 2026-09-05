@@ -27,10 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // Note: there are 62 tag pages for 60 posts, so many list a single post and
-  // duplicate it. Passing `noindex: true` here is the usual remedy, but it is
-  // left indexed deliberately — dropping 62 live URLs out of the index is a
-  // call to make against Search Console data, not by default.
+  // Tag pages outnumber posts (188 across both locales for 139 posts), so many
+  // list a single post and largely duplicate it. `noindex: true` is the usual
+  // remedy and buildMetadata supports it — but these are deliberately left
+  // indexed: the pages already exist and rank on their own, and dropping live
+  // URLs out of the index costs weeks to undo if they were earning anything.
   return buildMetadata({
     locale,
     path: `/blog/tag/${slug}`,

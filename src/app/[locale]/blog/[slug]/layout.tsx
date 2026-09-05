@@ -1,4 +1,4 @@
-import { getPostBySlug } from '@/lib/blog';
+import { getPostBySlug, getPostCounterpart } from '@/lib/blog';
 import { buildMetadata } from '@/lib/seo';
 import type { Metadata } from 'next'
 
@@ -21,15 +21,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // French posts carry their own slugs, so the alternate cannot be derived by
+  // swapping the locale segment — it has to be looked up. This uses the same
+  // pairing rule as scripts/generate-sitemap.js so the page head and the
+  // sitemap agree; a post with no counterpart gets a canonical and no hreflang.
+  const counterpart = getPostCounterpart(slug, locale);
+  const alternatePaths = counterpart
+    ? {
+        [locale]: `/blog/${slug}`,
+        [locale === 'en' ? 'fr' : 'en']: `/blog/${counterpart.slug}`,
+      }
+    : undefined;
+
   return buildMetadata({
     locale,
     path: `/blog/${slug}`,
     title: post.title,
     description: post.excerpt,
     ogType: 'article',
-    // French posts carry their own slugs, so there is no locale-swapped URL
-    // for a post to point at. See the note in src/lib/seo.ts.
     crossLocale: false,
+    alternatePaths,
   });
 }
 
