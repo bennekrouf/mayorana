@@ -1,53 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!-- en: static pages -->
   <url>
     <loc>https://mayorana.ch/en</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/solutions/azure</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/azure"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/solutions/azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/solutions/azure"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/solutions/ai-agents</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/ai-agents"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/solutions/ai-agents"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/solutions/ai-agents"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/services</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/services"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/services"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/about</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/about"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/about"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/contact</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/contact"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog"/>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/privacy</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/privacy"/>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/terms</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/terms"/>
   </url>
   <!-- en: tool pages -->
   <url>
@@ -55,42 +98,63 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-runner"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/ais-monitor</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-monitor"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-monitor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-monitor"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/ais-tracing</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-tracing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-tracing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-tracing"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/ais-analytics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-analytics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-analytics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-analytics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/blog-toolkit</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/blog-toolkit"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/blog-toolkit"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/blog-toolkit"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/appscreens</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/appscreens"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/appscreens"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/appscreens"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/gitagent</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/gitagent"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/gitagent"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/gitagent"/>
   </url>
   <!-- en: blog posts -->
   <url>
@@ -98,156 +162,234 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/trace-correlation-id-log-analytics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/trace-correlation-id-log-analytics-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/trace-correlation-id-log-analytics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/logic-apps-workflow-chains</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/logic-apps-workflow-chains"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/logic-apps-workflow-chains-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/logic-apps-workflow-chains"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/trace-correlation-id-cosmos-db</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/trace-correlation-id-cosmos-db"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/trace-correlation-id-cosmos-db-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/trace-correlation-id-cosmos-db"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/ai-commit-messages-without-giving-up-control</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/ai-commit-messages-without-giving-up-control"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/ai-commit-messages-without-giving-up-control-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/ai-commit-messages-without-giving-up-control"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/ais-runner-intro</loc>
     <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/ais-runner-intro"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/ais-runner-intro-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/ais-runner-intro"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/clamp-rust</loc>
     <lastmod>2026-04-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/clamp-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/clamp-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/clamp-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/reborrow-rust</loc>
     <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/reborrow-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/reborrow-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/reborrow-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/instruction-level-optimization-inline-always</loc>
     <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/instruction-level-optimization-inline-always"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/instruction-level-optimization-inline-always"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/instruction-level-optimization-inline-always"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/cache-line-awareness-optimization</loc>
     <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/cache-line-awareness-optimization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/cache-line-awareness-optimization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/cache-line-awareness-optimization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/inline-assembly-rust</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/inline-assembly-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/inline-assembly-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/inline-assembly-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/move-closures-rust-javascript-developers</loc>
     <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/move-closures-rust-javascript-developers"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/move-closures-rust-javascript-developers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/move-closures-rust-javascript-developers"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/profiling-optimization-rust</loc>
     <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/profiling-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/profiling-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/profiling-optimization-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/branch-prediction-rust</loc>
     <lastmod>2025-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/branch-prediction-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/branch-prediction-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/branch-prediction-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/simd-matrix-mult-rust</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/simd-matrix-mult-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/simd-matrix-mult-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/simd-matrix-mult-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/zero-cost-abstractions-rust</loc>
     <lastmod>2025-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/zero-cost-abstractions-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/zero-cost-abstractions-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/zero-cost-abstractions-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/vec-push-vs-with-capacity-performance</loc>
     <lastmod>2025-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-push-vs-with-capacity-performance"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-push-vs-with-capacity-performance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-push-vs-with-capacity-performance"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/allocation-avoidance-real-time-rust</loc>
     <lastmod>2025-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/allocation-avoidance-real-time-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/allocation-avoidance-real-time-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/allocation-avoidance-real-time-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/blanket-implementations-coherence</loc>
     <lastmod>2025-08-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/blanket-implementations-coherence"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/blanket-implementations-coherence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/blanket-implementations-coherence"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/associated-types-io-driver-api</loc>
     <lastmod>2025-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/associated-types-io-driver-api"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/associated-types-io-driver-api"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/associated-types-io-driver-api"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/deadlocks-c-vs-rust</loc>
     <lastmod>2025-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/deadlocks-c-vs-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/deadlocks-c-vs-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/deadlocks-c-vs-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/sized-unsized-bounds-flexibility</loc>
     <lastmod>2025-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/sized-unsized-bounds-flexibility"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/sized-unsized-bounds-flexibility"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/sized-unsized-bounds-flexibility"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/supertraits-bounds-optimization</loc>
     <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/supertraits-bounds-optimization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/supertraits-bounds-optimization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/supertraits-bounds-optimization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/object-safety-rust</loc>
     <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/object-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/object-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/object-safety-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/dispatch-performance-rust</loc>
     <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/dispatch-performance-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/dispatch-performance-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/dispatch-performance-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/trait-bounds-rust</loc>
     <lastmod>2025-08-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/trait-bounds-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/trait-bounds-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/trait-bounds-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/borrowing-rules-rust</loc>
     <lastmod>2025-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/borrowing-rules-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/borrowing-rules-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/borrowing-rules-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/rust-comparison-operators-iterators</loc>
@@ -260,216 +402,324 @@
     <lastmod>2025-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/string-literals-memory-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/string-literals-memory-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/string-literals-memory-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/box-pointer-rust</loc>
     <lastmod>2025-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/box-pointer-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/box-pointer-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/box-pointer-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/string-str-mismatch-rust</loc>
     <lastmod>2025-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/string-str-mismatch-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/string-str-mismatch-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/string-str-mismatch-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/dangling-pointer-rust</loc>
     <lastmod>2025-08-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/dangling-pointer-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/dangling-pointer-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/dangling-pointer-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/ownership-safety-rust</loc>
     <lastmod>2025-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/ownership-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/ownership-safety-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/ownership-safety-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/stack-heap-allocation-rust</loc>
     <lastmod>2025-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/stack-heap-allocation-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/stack-heap-allocation-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/stack-heap-allocation-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/memory-safety-rust</loc>
     <lastmod>2025-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/memory-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/memory-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/memory-safety-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/cow-copy-on-write-rust</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/cow-copy-on-write-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/cow-copy-on-write-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/cow-copy-on-write-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/drop-trait-rust</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/drop-trait-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/drop-trait-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/drop-trait-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/concurrency-rust</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/concurrency-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/concurrency-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/concurrency-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/flatten-vec-iterators-performance</loc>
     <lastmod>2025-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/flatten-vec-iterators-performance"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/flatten-vec-iterators-performance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/flatten-vec-iterators-performance"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/vec-retain-vs-filter-collect</loc>
     <lastmod>2025-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-retain-vs-filter-collect"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-retain-vs-filter-collect"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-retain-vs-filter-collect"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/vec-drain-vs-truncate-clear</loc>
     <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-drain-vs-truncate-clear"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-drain-vs-truncate-clear"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-drain-vs-truncate-clear"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/box-slice-vs-vec-differences</loc>
     <lastmod>2025-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/box-slice-vs-vec-differences"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/box-slice-vs-vec-differences"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/box-slice-vs-vec-differences"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/efficient-duplicate-removal-vec</loc>
     <lastmod>2025-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/efficient-duplicate-removal-vec"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/efficient-duplicate-removal-vec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/efficient-duplicate-removal-vec"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/collect-method-rust</loc>
     <lastmod>2025-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/collect-method-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/collect-method-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/collect-method-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/storing-closures-in-structs</loc>
     <lastmod>2025-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/storing-closures-in-structs"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/storing-closures-in-structs-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/storing-closures-in-structs"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/into-iter-vs-iter-ownership</loc>
     <lastmod>2025-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/into-iter-vs-iter-ownership"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/into-iter-vs-iter-ownership-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/into-iter-vs-iter-ownership"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/higher-order-functions-rust</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/higher-order-functions-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/higher-order-functions-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/higher-order-functions-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/handling-lifetimes-returning-closures</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/handling-lifetimes-returning-closures"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/handling-lifetimes-returning-closures-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/handling-lifetimes-returning-closures"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/closure-performance-overhead-rust</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/closure-performance-overhead-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/closure-performance-overhead-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/closure-performance-overhead-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/stateful-closures-rust</loc>
     <lastmod>2025-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/stateful-closures-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/stateful-closures-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/stateful-closures-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/closure-dispatch-rust</loc>
     <lastmod>2025-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/closure-dispatch-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/closure-dispatch-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/closure-dispatch-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/move-closures-rust</loc>
     <lastmod>2025-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/move-closures-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/move-closures-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/move-closures-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/iter-methods-rust</loc>
     <lastmod>2025-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/iter-methods-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/iter-methods-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/iter-methods-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/fn-traits-rust</loc>
     <lastmod>2025-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/fn-traits-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/fn-traits-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/fn-traits-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/closure-parameter-rust</loc>
     <lastmod>2025-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/closure-parameter-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/closure-parameter-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/closure-parameter-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/rust-traits-vs-interfaces</loc>
     <lastmod>2025-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/rust-traits-vs-interfaces"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/rust-traits-vs-interfaces"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/rust-traits-vs-interfaces"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/string-vs-str-rust</loc>
     <lastmod>2025-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/string-vs-str-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/string-vs-str-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/string-vs-str-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/function-vs-closure-rust</loc>
     <lastmod>2025-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/function-vs-closure-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/function-vs-closure-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/function-vs-closure-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/memory-layout-optimization-rust</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/memory-layout-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/memory-layout-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/memory-layout-optimization-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/vec-new-vs-with-capacity</loc>
     <lastmod>2025-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-new-vs-with-capacity"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-new-vs-with-capacity"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-new-vs-with-capacity"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/getting-started-with-rust</loc>
     <lastmod>2025-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/getting-started-with-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/getting-started-with-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/getting-started-with-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/why-rust-memory-safe</loc>
     <lastmod>2025-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/why-rust-memory-safe"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/why-rust-memory-safe-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/why-rust-memory-safe"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/c-low-level-cost</loc>
     <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/c-low-level-cost"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/c-low-level-cost-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/c-low-level-cost"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/why-garbage-collector</loc>
     <lastmod>2025-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/why-garbage-collector"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/why-garbage-collector-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/why-garbage-collector"/>
   </url>
   <!-- en: tag pages -->
   <url>
@@ -477,330 +727,495 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/azure"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/azure"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/log-analytics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/log-analytics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/log-analytics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/log-analytics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/kql</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/kql"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/kql"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/kql"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/observability</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/observability"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/observability"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/observability"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/debugging</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/debugging"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/debugging"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/debugging"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/logic-apps</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/logic-apps"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/logic-apps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/logic-apps"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/service-bus</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/service-bus"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/service-bus"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/service-bus"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/event-grid</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/event-grid"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/event-grid"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/event-grid"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/integration</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/integration"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/integration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/integration"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/cosmos-db</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cosmos-db"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/cosmos-db"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/cosmos-db"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/git</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/git"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/git"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/git"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/ai</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ai"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/ai"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/ai"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/developer-tools</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/developer-tools"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/developer-tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/developer-tools"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/rust</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/llm</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/llm"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/llm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/llm"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dioxus</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dioxus"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dioxus"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dioxus"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/desktop</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/desktop"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/desktop"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/desktop"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/standard-library</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/standard-library"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/standard-library"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/standard-library"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/basics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/basics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/basics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/basics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/memory</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/memory"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/memory"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/memory"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/borrowing</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrowing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/borrowing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/borrowing"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/ownership</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ownership"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/ownership"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/ownership"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/borrow-checker</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrow-checker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/borrow-checker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/borrow-checker"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/optimization</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/optimization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/optimization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/optimization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/advanced</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/advanced"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/advanced"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/advanced"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/closures</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/closures"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/closures"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/closures"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/javascript</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/javascript"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/javascript"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/javascript"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/typescript</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/typescript"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/typescript"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/typescript"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/cache</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cache"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/cache"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/cache"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/simd</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/simd"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/simd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/simd"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/performance</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/performance"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/performance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/performance"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/collections</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/collections"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/collections"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/collections"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/blanket-implementations</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/blanket-implementations"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/blanket-implementations"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/blanket-implementations"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/trait-coherence</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-coherence"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/trait-coherence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/trait-coherence"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/code-duplication</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/code-duplication"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/code-duplication"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/code-duplication"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/traits</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/traits"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/traits"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/traits"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/library-design</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/library-design"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/library-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/library-design"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/associated-types</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/associated-types"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/associated-types"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/associated-types"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/io-drivers</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/io-drivers"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/io-drivers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/io-drivers"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/type-safety</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/type-safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/type-safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/type-safety"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/embedded</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/embedded"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/embedded"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/embedded"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/c</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/c"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/c"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/c"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/concurrency</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/concurrency"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/concurrency"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/concurrency"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/deadlock</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/deadlock"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/deadlock"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/deadlock"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/sized</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/sized"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/sized"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/sized"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/unsized</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/unsized"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/unsized"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/unsized"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/bounds</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/bounds"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/bounds"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/bounds"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/generics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/generics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/generics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/generics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/supertraits</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/supertraits"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/supertraits"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/supertraits"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/object-safety</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/object-safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/object-safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/object-safety"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dynamic-dispatch</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dynamic-dispatch"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dynamic-dispatch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dynamic-dispatch"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/plugins</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/plugins"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/plugins"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/plugins"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dispatch</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dispatch"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dispatch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dispatch"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/trait-bounds</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-bounds"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/trait-bounds"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/trait-bounds"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/monomorphization</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/monomorphization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/monomorphization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/monomorphization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/operators</loc>
@@ -813,108 +1228,162 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/iterators"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/iterators"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/iterators"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/string</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/string"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/string"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/string"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/box</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/box"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/box"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/box"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/heap</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/heap"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/heap"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/heap"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/str</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/str"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/str"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/str"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dangling-pointer</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dangling-pointer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dangling-pointer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dangling-pointer"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/lifetimes</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/lifetimes"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/lifetimes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/lifetimes"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/data-races</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/data-races"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/data-races"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/data-races"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/stack</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/stack"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/stack"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/stack"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/allocation</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/allocation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/allocation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/allocation"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/drop</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drop"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/drop"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/drop"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/vec</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/vec"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/vec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/vec"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/retain</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/retain"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/retain"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/retain"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/drain</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drain"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/drain"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/drain"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/higher-order-functions</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/higher-order-functions"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/higher-order-functions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/higher-order-functions"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/fnmut</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/fnmut"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/fnmut"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/fnmut"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/beginners</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/beginners"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/beginners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/beginners"/>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/gc</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/gc"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/gc"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/gc"/>
   </url>
   <!-- fr: static pages -->
   <url>
@@ -922,48 +1391,90 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/solutions/azure</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/azure"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/solutions/azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/solutions/azure"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/solutions/ai-agents</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/ai-agents"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/solutions/ai-agents"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/solutions/ai-agents"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/services</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/services"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/services"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/about</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/about"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/about"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/contact</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/contact"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog"/>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/privacy</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/privacy"/>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/terms</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/terms"/>
   </url>
   <!-- fr: tool pages -->
   <url>
@@ -971,42 +1482,63 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-runner"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/ais-monitor</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-monitor"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-monitor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-monitor"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/ais-tracing</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-tracing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-tracing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-tracing"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/ais-analytics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-analytics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-analytics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-analytics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/blog-toolkit</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/blog-toolkit"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/blog-toolkit"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/blog-toolkit"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/appscreens</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/appscreens"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/appscreens"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/appscreens"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/gitagent</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/gitagent"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/gitagent"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/gitagent"/>
   </url>
   <!-- fr: blog posts -->
   <url>
@@ -1014,72 +1546,108 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/trace-correlation-id-log-analytics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/trace-correlation-id-log-analytics-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/trace-correlation-id-log-analytics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/logic-apps-workflow-chains-fr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/logic-apps-workflow-chains"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/logic-apps-workflow-chains-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/logic-apps-workflow-chains"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/trace-correlation-id-cosmos-db-fr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/trace-correlation-id-cosmos-db"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/trace-correlation-id-cosmos-db-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/trace-correlation-id-cosmos-db"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/ai-commit-messages-without-giving-up-control-fr</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/ai-commit-messages-without-giving-up-control"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/ai-commit-messages-without-giving-up-control-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/ai-commit-messages-without-giving-up-control"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/ais-runner-intro-fr</loc>
     <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/ais-runner-intro"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/ais-runner-intro-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/ais-runner-intro"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/clamp-rust</loc>
     <lastmod>2026-04-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/clamp-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/clamp-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/clamp-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/reborrow-rust</loc>
     <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/reborrow-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/reborrow-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/reborrow-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/blanket-implementations-coherence</loc>
     <lastmod>2025-12-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/blanket-implementations-coherence"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/blanket-implementations-coherence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/blanket-implementations-coherence"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/associated-types-io-driver-api</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/associated-types-io-driver-api"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/associated-types-io-driver-api"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/associated-types-io-driver-api"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/sized-unsized-bounds-flexibility</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/sized-unsized-bounds-flexibility"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/sized-unsized-bounds-flexibility"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/sized-unsized-bounds-flexibility"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/supertraits-bounds-optimization</loc>
     <lastmod>2025-12-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/supertraits-bounds-optimization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/supertraits-bounds-optimization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/supertraits-bounds-optimization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/object-safety-rust</loc>
     <lastmod>2025-12-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/object-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/object-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/object-safety-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/dyn-mot-cle-rust-fr</loc>
@@ -1092,276 +1660,414 @@
     <lastmod>2025-11-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/borrowing-rules-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/borrowing-rules-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/borrowing-rules-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/string-literals-memory-rust-fr</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/string-literals-memory-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/string-literals-memory-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/string-literals-memory-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/box-pointer-rust-fr</loc>
     <lastmod>2025-11-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/box-pointer-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/box-pointer-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/box-pointer-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/ownership-safety-rust-fr</loc>
     <lastmod>2025-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/ownership-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/ownership-safety-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/ownership-safety-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/concurrency-rust-fr</loc>
     <lastmod>2025-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/concurrency-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/concurrency-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/concurrency-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/drop-trait-rust-fr</loc>
     <lastmod>2025-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/drop-trait-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/drop-trait-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/drop-trait-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/cow-copy-on-write-rust-fr</loc>
     <lastmod>2025-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/cow-copy-on-write-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/cow-copy-on-write-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/cow-copy-on-write-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/cache-line-awareness-optimization</loc>
     <lastmod>2025-11-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/cache-line-awareness-optimization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/cache-line-awareness-optimization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/cache-line-awareness-optimization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/instruction-level-optimization-inline-always</loc>
     <lastmod>2025-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/instruction-level-optimization-inline-always"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/instruction-level-optimization-inline-always"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/instruction-level-optimization-inline-always"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/allocation-avoidance-real-time-rust</loc>
     <lastmod>2025-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/allocation-avoidance-real-time-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/allocation-avoidance-real-time-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/allocation-avoidance-real-time-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/vec-push-vs-with-capacity-performance</loc>
     <lastmod>2025-11-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-push-vs-with-capacity-performance"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-push-vs-with-capacity-performance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-push-vs-with-capacity-performance"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/inline-assembly-rust</loc>
     <lastmod>2025-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/inline-assembly-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/inline-assembly-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/inline-assembly-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/branch-prediction-rust</loc>
     <lastmod>2025-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/branch-prediction-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/branch-prediction-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/branch-prediction-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/simd-matrix-mult-rust</loc>
     <lastmod>2025-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/simd-matrix-mult-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/simd-matrix-mult-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/simd-matrix-mult-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/zero-cost-abstractions-rust</loc>
     <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/zero-cost-abstractions-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/zero-cost-abstractions-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/zero-cost-abstractions-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/profiling-optimization-rust</loc>
     <lastmod>2025-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/profiling-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/profiling-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/profiling-optimization-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/memory-layout-optimization-rust</loc>
     <lastmod>2025-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/memory-layout-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/memory-layout-optimization-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/memory-layout-optimization-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/move-closures-rust-javascript-developers</loc>
     <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/move-closures-rust-javascript-developers"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/move-closures-rust-javascript-developers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/move-closures-rust-javascript-developers"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/storing-closures-in-structs-fr</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/storing-closures-in-structs"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/storing-closures-in-structs-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/storing-closures-in-structs"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/closure-performance-overhead-rust-fr</loc>
     <lastmod>2025-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/closure-performance-overhead-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/closure-performance-overhead-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/closure-performance-overhead-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/handling-lifetimes-returning-closures-fr</loc>
     <lastmod>2025-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/handling-lifetimes-returning-closures"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/handling-lifetimes-returning-closures-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/handling-lifetimes-returning-closures"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/stateful-closures-rust-fr</loc>
     <lastmod>2025-11-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/stateful-closures-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/stateful-closures-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/stateful-closures-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/higher-order-functions-rust-fr</loc>
     <lastmod>2025-11-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/higher-order-functions-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/higher-order-functions-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/higher-order-functions-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/move-closures-rust-fr</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/move-closures-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/move-closures-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/move-closures-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/closure-parameter-rust-fr</loc>
     <lastmod>2025-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/closure-parameter-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/closure-parameter-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/closure-parameter-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/closure-dispatch-rust-fr</loc>
     <lastmod>2025-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/closure-dispatch-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/closure-dispatch-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/closure-dispatch-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/flatten-vec-iterators-performance</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/flatten-vec-iterators-performance"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/flatten-vec-iterators-performance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/flatten-vec-iterators-performance"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/vec-retain-vs-filter-collect</loc>
     <lastmod>2025-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-retain-vs-filter-collect"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-retain-vs-filter-collect"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-retain-vs-filter-collect"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/vec-drain-vs-truncate-clear</loc>
     <lastmod>2025-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-drain-vs-truncate-clear"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-drain-vs-truncate-clear"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-drain-vs-truncate-clear"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/efficient-duplicate-removal-vec</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/efficient-duplicate-removal-vec"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/efficient-duplicate-removal-vec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/efficient-duplicate-removal-vec"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/box-slice-vs-vec-differences</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/box-slice-vs-vec-differences"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/box-slice-vs-vec-differences"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/box-slice-vs-vec-differences"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/collect-method-rust</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/collect-method-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/collect-method-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/collect-method-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/iter-methods-rust</loc>
     <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/iter-methods-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/iter-methods-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/iter-methods-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/vec-new-vs-with-capacity</loc>
     <lastmod>2025-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/vec-new-vs-with-capacity"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/vec-new-vs-with-capacity"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/vec-new-vs-with-capacity"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/dispatch-performance-rust</loc>
     <lastmod>2025-10-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/dispatch-performance-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/dispatch-performance-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/dispatch-performance-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/trait-bounds-rust</loc>
     <lastmod>2025-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/trait-bounds-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/trait-bounds-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/trait-bounds-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/rust-traits-vs-interfaces</loc>
     <lastmod>2025-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/rust-traits-vs-interfaces"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/rust-traits-vs-interfaces"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/rust-traits-vs-interfaces"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/stack-heap-allocation-rust-fr</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/stack-heap-allocation-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/stack-heap-allocation-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/stack-heap-allocation-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/fn-traits-rust-fr</loc>
     <lastmod>2025-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/fn-traits-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/fn-traits-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/fn-traits-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/function-vs-closure-rust-fr</loc>
     <lastmod>2025-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/function-vs-closure-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/function-vs-closure-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/function-vs-closure-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/string-str-mismatch-rust-fr</loc>
     <lastmod>2025-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/string-str-mismatch-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/string-str-mismatch-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/string-str-mismatch-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/deadlocks-c-vs-rust</loc>
     <lastmod>2025-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/deadlocks-c-vs-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/deadlocks-c-vs-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/deadlocks-c-vs-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/dangling-pointer-rust-fr</loc>
     <lastmod>2025-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/dangling-pointer-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/dangling-pointer-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/dangling-pointer-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/into-iter-vs-iter-ownership-fr</loc>
     <lastmod>2025-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/into-iter-vs-iter-ownership"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/into-iter-vs-iter-ownership-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/into-iter-vs-iter-ownership"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/why-rust-memory-safe-fr</loc>
     <lastmod>2025-08-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/why-rust-memory-safe"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/why-rust-memory-safe-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/why-rust-memory-safe"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/c-low-level-cost-fr</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/c-low-level-cost"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/c-low-level-cost-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/c-low-level-cost"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/rust-operateurs-iterateurs</loc>
@@ -1374,24 +2080,36 @@
     <lastmod>2025-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/why-garbage-collector"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/why-garbage-collector-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/why-garbage-collector"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/string-vs-str-rust-fr</loc>
     <lastmod>2025-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/string-vs-str-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/string-vs-str-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/string-vs-str-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/memory-safety-rust</loc>
     <lastmod>2025-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/memory-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/memory-safety-rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/memory-safety-rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/getting-started-with-rust-fr</loc>
     <lastmod>2025-04-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/getting-started-with-rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/getting-started-with-rust-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/getting-started-with-rust"/>
   </url>
   <!-- fr: tag pages -->
   <url>
@@ -1399,246 +2117,369 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/azure"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/azure"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/log-analytics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/log-analytics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/log-analytics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/log-analytics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/kql</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/kql"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/kql"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/kql"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/observability</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/observability"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/observability"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/observability"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/debugging</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/debugging"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/debugging"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/debugging"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/logic-apps</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/logic-apps"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/logic-apps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/logic-apps"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/service-bus</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/service-bus"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/service-bus"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/service-bus"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/event-grid</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/event-grid"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/event-grid"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/event-grid"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/integration</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/integration"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/integration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/integration"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/cosmos-db</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cosmos-db"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/cosmos-db"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/cosmos-db"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/git</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/git"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/git"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/git"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/ai</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ai"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/ai"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/ai"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/developer-tools</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/developer-tools"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/developer-tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/developer-tools"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/rust</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/rust"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/rust"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/rust"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/llm</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/llm"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/llm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/llm"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dioxus</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dioxus"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dioxus"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dioxus"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/desktop</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/desktop"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/desktop"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/desktop"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/standard-library</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/standard-library"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/standard-library"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/standard-library"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/basics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/basics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/basics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/basics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/memory</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/memory"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/memory"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/memory"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/borrowing</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrowing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/borrowing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/borrowing"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/ownership</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ownership"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/ownership"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/ownership"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/borrow-checker</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrow-checker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/borrow-checker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/borrow-checker"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/blanket-implementations</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/blanket-implementations"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/blanket-implementations"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/blanket-implementations"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/trait-coherence</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-coherence"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/trait-coherence"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/trait-coherence"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/code-duplication</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/code-duplication"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/code-duplication"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/code-duplication"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/traits</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/traits"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/traits"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/traits"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/library-design</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/library-design"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/library-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/library-design"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/associated-types</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/associated-types"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/associated-types"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/associated-types"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/io-drivers</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/io-drivers"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/io-drivers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/io-drivers"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/type-safety</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/type-safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/type-safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/type-safety"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/embedded</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/embedded"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/embedded"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/embedded"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/sized</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/sized"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/sized"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/sized"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/unsized</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/unsized"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/unsized"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/unsized"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/bounds</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/bounds"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/bounds"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/bounds"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/generics</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/generics"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/generics"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/generics"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/supertraits</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/supertraits"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/supertraits"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/supertraits"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/optimization</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/optimization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/optimization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/optimization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/object-safety</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/object-safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/object-safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/object-safety"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dynamic-dispatch</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dynamic-dispatch"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dynamic-dispatch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dynamic-dispatch"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/plugins</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/plugins"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/plugins"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/plugins"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/polymorphisme</loc>
@@ -1663,36 +2504,54 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/string"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/string"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/string"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/str</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/str"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/str"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/str"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/allocation</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/allocation"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/allocation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/allocation"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/box</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/box"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/box"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/box"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/heap</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/heap"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/heap"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/heap"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/data-races</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/data-races"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/data-races"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/data-races"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/beginner</loc>
@@ -1705,12 +2564,18 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/concurrency"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/concurrency"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/concurrency"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/drop</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drop"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/drop"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/drop"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/cow</loc>
@@ -1729,6 +2594,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/advanced"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/advanced"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/advanced"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/real-time</loc>
@@ -1741,6 +2609,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/performance"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/performance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/performance"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/stack-allocation</loc>
@@ -1759,6 +2630,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/vec"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/vec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/vec"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/memory-allocation</loc>
@@ -1771,6 +2645,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/collections"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/collections"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/collections"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/inline-assembly</loc>
@@ -1795,6 +2672,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/simd"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/simd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/simd"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/matrix-multiplication</loc>
@@ -1807,6 +2687,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/iterators"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/iterators"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/iterators"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/zero-cost-abstractions</loc>
@@ -1819,24 +2702,36 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cache"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/cache"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/cache"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/closures</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/closures"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/closures"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/closures"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/javascript</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/javascript"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/javascript"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/javascript"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/typescript</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/typescript"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/typescript"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/typescript"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/structs</loc>
@@ -1849,12 +2744,18 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-bounds"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/trait-bounds"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/trait-bounds"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/lifetimes</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/lifetimes"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/lifetimes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/lifetimes"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/generic-types</loc>
@@ -1891,18 +2792,27 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/fnmut"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/fnmut"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/fnmut"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/higher-order-functions</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/higher-order-functions"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/higher-order-functions"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/higher-order-functions"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dispatch</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dispatch"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dispatch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dispatch"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/flatten</loc>
@@ -1915,6 +2825,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/retain"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/retain"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/retain"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/filter</loc>
@@ -1927,6 +2840,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drain"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/drain"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/drain"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/truncate</loc>
@@ -1957,6 +2873,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/monomorphization"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/monomorphization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/monomorphization"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/interfaces</loc>
@@ -1969,6 +2888,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/stack"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/stack"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/stack"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/functions</loc>
@@ -1981,6 +2903,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/c"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/c"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/c"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/concurrence</loc>
@@ -1993,12 +2918,18 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/deadlock"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/deadlock"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/deadlock"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dangling-pointer</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dangling-pointer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/dangling-pointer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/dangling-pointer"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/into-iter</loc>
@@ -2053,6 +2984,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/gc"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/gc"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/gc"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/m%C3%A9moire</loc>
@@ -2071,6 +3005,9 @@
     <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/beginners"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/blog/tag/beginners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/blog/tag/beginners"/>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/tutorial</loc>
