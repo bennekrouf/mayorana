@@ -232,11 +232,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/vec-push-vs-with-capacity-performance-duplicate</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://mayorana.ch/blog/collect-method-rust</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -437,6 +432,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://mayorana.ch/blog/tag/collections</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://mayorana.ch/blog/tag/blanket-implementations</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -623,11 +623,6 @@
   </url>
   <url>
     <loc>https://mayorana.ch/blog/tag/drain</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://mayorana.ch/blog/tag/collections</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -33,6 +33,33 @@ function removeH1Title(content) {
   return content.replace(/^#\s+.*$/m, '').trim();
 }
 
+// Strip inline markdown (code spans, bold, italics, links) so a heading reads as
+// plain text in the table of contents rather than showing its backticks.
+function headingText(raw) {
+  return String(raw)
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/\*\*([^*]*)\*\*/g, '$1')
+    .replace(/\*([^*]*)\*/g, '$1')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .trim();
+}
+
+// The anchor a heading gets in the rendered HTML. The table of contents and the
+// renderer below must agree on this, or every in-page link 404s silently.
+function headingId(raw) {
+  return slugify(headingText(raw), { lower: true, strict: true });
+}
+
+// marked v15 no longer emits heading ids of its own, so supply them here.
+marked.use({
+  renderer: {
+    heading({ tokens, depth }) {
+      const inner = this.parser.parseInline(tokens);
+      return `<h${depth} id="${headingId(this.parser.parseInline(tokens, this.parser.textRenderer))}">${inner}</h${depth}>\n`;
+    }
+  }
+});
+
 // Function to extract headings from markdown content (excluding the first H1)
 function extractHeadings(content) {
   if (!content || typeof content !== 'string') {
@@ -40,11 +67,17 @@ function extractHeadings(content) {
   }
 
   const headings = [];
+  // Blank out fenced code blocks first: a shell comment like `# Profiling` is
+  // not a heading, and marked does not render it as one, so scraping it here
+  // put table-of-contents entries on the page that linked nowhere.
+  const scannable = content.replace(/^([ \t]*)(```|~~~)[\s\S]*?^\1?\2[ \t]*$/gm, (m) =>
+    m.replace(/[^\n]/g, ' ')
+  );
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   let match;
   let isFirstH1 = true;
 
-  while ((match = headingRegex.exec(content)) !== null) {
+  while ((match = headingRegex.exec(scannable)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
 
@@ -54,8 +87,7 @@ function extractHeadings(content) {
       continue;
     }
 
-    const id = slugify(text, { lower: true, strict: true });
-    headings.push({ id, text, level });
+    headings.push({ id: headingId(text), text: headingText(text), level });
   }
 
   return headings;
