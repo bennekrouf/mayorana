@@ -157,14 +157,14 @@ Si tu passes `x` directement à une fonction attendant `&mut T`, Rust déplace l
 <text x="595" y="74" class="tx">let x = &amp;mut value;</text>
 <path d="M595,86 L595,100" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
 <rect x="445" y="100" width="300" height="34" rx="5" class="boxac"/>
-<text x="595" y="118" class="tx">ajouter_un(&amp;mut *x) — inséré pour vous</text>
+<text x="595" y="118" class="tx">ajouter_un(&amp;mut *x) — inséré pour toi</text>
 <text x="595" y="130" class="mut">l'emprunt ne dure que l'appel</text>
 <path d="M595,134 L595,148" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
 <rect x="445" y="148" width="300" height="34" rx="5" class="box"/>
 <text x="595" y="170" class="tx">ajouter_un(x) à nouveau → OK, affiche 2</text>
 <text x="595" y="206" class="mut">le prêt revient quand l'appel se termine</text>
 <!-- footer -->
-<text x="400" y="248" class="mut">NLL écrit le &amp;mut *x pour vous — la forme explicite n'est que ce sucre syntaxique déplié</text>
+<text x="400" y="248" class="mut">NLL écrit le &amp;mut *x pour toi — la forme explicite n'est que ce sucre syntaxique déplié</text>
 </svg>
 </div>
 

@@ -141,8 +141,8 @@ println!("{:?}, {:?}", r1, r2);
 <text x="400" y="24" text-anchor="middle" class="title">Ce que le borrow checker autorise ensuite</text>
 <!-- column headers -->
 <text x="50" y="80" class="head">Emprunts déjà vivants</text>
-<text x="425" y="80" text-anchor="middle" class="head">vous demandez &amp;data</text>
-<text x="625" y="80" text-anchor="middle" class="head">vous demandez &amp;mut data</text>
+<text x="425" y="80" text-anchor="middle" class="head">tu demandes &amp;data</text>
+<text x="625" y="80" text-anchor="middle" class="head">tu demandes &amp;mut data</text>
 <!-- row 1 -->
 <text x="50" y="130" class="body">aucun</text>
 <rect x="330" y="96" width="190" height="58" rx="8" class="box"/>

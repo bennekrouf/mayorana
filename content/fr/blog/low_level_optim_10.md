@@ -135,7 +135,7 @@ fn process_points(points: &mut [Point]) {
 <path d="M717,110 L717,170 L209,170 L209,112" class="lnac" marker-end="url(#lo10b-arrowac-fr)"/>
 <text x="463" y="188" class="ac">toujours au-dessus de 1–2 % ? on refait un tour</text>
 <!-- footer -->
-<text x="400" y="222" class="mut">Chaque étape répond à une question différente — n'optimisez jamais avant que l'étape 2 prouve que le cache est en cause</text>
+<text x="400" y="222" class="mut">Chaque étape répond à une question différente — n'optimise jamais avant que l'étape 2 prouve que le cache est en cause</text>
 </svg>
 </div>
 

@@ -159,7 +159,7 @@ fn process(data: Box<[i32]>) { /* ... */ }
 <text x="400" y="187" text-anchor="middle" class="tx">Si cap &gt; len, le O(1) ne tient plus</text>
 <text x="400" y="205" text-anchor="middle" class="mut">into_boxed_slice() doit d'abord rétrécir : allouer la taille exacte, copier, libérer l'ancien bloc</text>
 <!-- pied -->
-<text x="400" y="238" text-anchor="middle" class="mut">Convertissez une seule fois, quand les modifications sont finies — l'aller-retour coûte une copie dans chaque sens.</text>
+<text x="400" y="238" text-anchor="middle" class="mut">Convertis une seule fois, quand les modifications sont finies — l'aller-retour coûte une copie dans chaque sens.</text>
 </svg>
 </div>
 

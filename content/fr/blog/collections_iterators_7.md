@@ -184,7 +184,7 @@ Cette paresse signifie que le travail intéressant s'étale sur la durée de vie
 <path class="ln" d="M300 68V86"/>
 <rect class="box" x="210" y="86" width="180" height="66" rx="6"/>
 <text x="300" y="108" text-anchor="middle" class="tx" font-size="11">2 · next() cède 'b', 'c'</text>
-<text x="300" y="126" text-anchor="middle" class="mut">la propriété vous revient,</text>
+<text x="300" y="126" text-anchor="middle" class="mut">la propriété te revient,</text>
 <text x="300" y="142" text-anchor="middle" class="mut">un élément à la fois</text>
 <!-- étape 3 -->
 <path class="ln" d="M495 68V86"/>

@@ -401,7 +401,7 @@ Rien n'est copié ici. `s1` et `s2` sont deux emplacements de pile, mais il n'ex
 <text x="595" y="249" text-anchor="middle" class="body" fill="#ffffff">le tampon est libéré — une seule fois</text>
 <text x="595" y="268" text-anchor="middle" class="cap" fill="#ffffff">pas de double free, pas de ramasse-miettes</text>
 <!-- caption -->
-<text x="400" y="312" text-anchor="middle" class="cap">La règle 2 (un seul propriétaire) et la règle 3 (drop en fin de scope) suppriment free() de votre code</text>
+<text x="400" y="312" text-anchor="middle" class="cap">La règle 2 (un seul propriétaire) et la règle 3 (drop en fin de scope) suppriment free() de tonre code</text>
 </svg>
 </div>
 

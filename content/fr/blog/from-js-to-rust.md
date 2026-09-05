@@ -193,7 +193,7 @@ Trois situations imposent le mot-clé, et toutes se ramènent à la même questi
 <text x="695" y="343" text-anchor="middle" class="cap">déplacé —</text>
 <text x="695" y="357" text-anchor="middle" class="cap">original invalidé</text>
 <!-- caption -->
-<text x="400" y="396" text-anchor="middle" class="cap">La question que JavaScript tranche pour vous avec un ramasse-miettes, Rust vous la fait trancher avec un mot-clé</text>
+<text x="400" y="396" text-anchor="middle" class="cap">La question que JavaScript tranche pour toi avec un ramasse-miettes, Rust te la fait trancher avec un mot-clé</text>
 </svg>
 </div>
 

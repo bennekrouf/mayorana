@@ -204,7 +204,7 @@ Le second cas surprend, car rien ne *semble* encore emprunter. L'emprunt mutable
 <text x="386" y="180" class="mut">push() peut réallouer et invalider les pointeurs d'iter</text>
 <text x="386" y="223" class="mut">dernière utilisation d'iter — l'emprunt se termine ici</text>
 <!-- caption -->
-<text x="400" y="252" text-anchor="middle" class="mut">Déplacez le push avant l'appel à iter_mut(), ou après la boucle, et les deux versions compilent</text>
+<text x="400" y="252" text-anchor="middle" class="mut">Déplace le push avant l'appel à iter_mut(), ou après la boucle, et les deux versions compilent</text>
 </svg>
 </div>
 
