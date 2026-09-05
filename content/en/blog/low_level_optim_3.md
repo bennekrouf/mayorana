@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Leveraging Rust’s SIMD support for accelerating matrix multiplication with
   considerations for portability and correctness
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 
 tags:
   - rust
@@ -229,8 +227,7 @@ This computes 8 dot product terms per iteration, reducing loop iterations by 8x.
 </svg>
 </div>
 
-## Verification
-
+## Benchmarking against the scalar version
 - **Benchmarking**: Use `criterion` to compare SIMD vs. scalar:
   ```rust
   use criterion::{black_box, Criterion};
@@ -251,5 +248,4 @@ This computes 8 dot product terms per iteration, reducing loop iterations by 8x.
 For a 1024x1024 matrix, AVX could reduce runtime from seconds to milliseconds on a modern CPU, assuming good data locality. Profiling should show an 8x instruction reduction in the inner loop, with benchmarks confirming significant speedups.
 
 ## Conclusion
-
 For maximum throughput on a known architecture (e.g., x86_64 with AVX), use `std::arch` to vectorize matrix multiplication’s inner loop, tiling for cache efficiency. For portability, switch to `packed_simd`, accepting some overhead. Address challenges like alignment and feature detection with conditional compilation and runtime checks, ensuring both speed and correctness in a production system.

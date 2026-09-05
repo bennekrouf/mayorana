@@ -1,13 +1,13 @@
 ---
 id: borrowing-rules-rust
-title: mutable vs. immutable borrows.
+title: 'Mutable vs. immutable borrows: the two rules'
 slug: borrowing-rules-rust
 locale: en
 date: '2025-08-10'
 author: mayo
-excerpt: Rust memory and string
-content_focus: rust memory and string
-technical_level: Expert technical discussion
+excerpt: >-
+  The two borrowing rules, why exclusivity is the one that matters, and what the
+  borrow checker actually rejects.
 
 tags:
   - rust
@@ -16,7 +16,7 @@ tags:
   - ownership
 ---
 
-# What are the rules for borrowing in Rust?
+# Mutable vs. immutable borrows: the two rules
 
 Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure memory safety and prevent data races without runtime overhead. These rules govern how data can be accessed via references, distinguishing between mutable (`&mut T`) and immutable (`&T`) borrows.
 
@@ -172,8 +172,7 @@ What the checker actually compares is not *whether* both borrows exist, but whet
 - **Prevents Data Races**: By disallowing concurrent mutable access, Rust ensures thread safety by default.
 - **Ensures Memory Safety**: No dangling pointers or iterator invalidation, as the borrow checker enforces valid references.
 
-## Key Takeaways
-
+## The two rules
 ✅ **Immutable borrows (`&T`)**:
 - Many allowed, but no mutation.
 ✅ **Mutable borrows (`&mut T`)**:
@@ -182,5 +181,6 @@ What the checker actually compares is not *whether* both borrows exist, but whet
 
 **Real-World Impact**: These rules enable fearless concurrency, as seen in crates like `Rayon` for parallel iteration.
 
-**Experiment**: Try creating a function that takes `&mut T` and call it twice with the same data.  
-**Answer**: The borrow checker won’t allow it unless the first borrow’s scope ends, preventing overlapping mutable borrows.
+Write a function taking `&mut T` and call it twice on the same value. It compiles — but only
+because the first borrow ends at the end of the call. Hold that borrow in a variable across
+both calls and you'll see the real error.

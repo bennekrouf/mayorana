@@ -41,7 +41,7 @@ Java's GC runs in background threads, pausing your application unpredictably. Ev
 ```python
 import gc
 gc.collect()  # Manual collection
-# Returns: number of objects collected
+# GC Pauses and Latency: The Hidden Cost of High-Level Languages
 ```
 
 Python counts references to objects, but needs a separate collector for circular references. Both add overhead to every operation.
@@ -199,8 +199,7 @@ During GC pause: 2000ms (40x slower!)
 **Requirement:** Process TBs efficiently  
 **Reality:** GC overhead grows with dataset size
 
-## Key Takeaways
-
+## The cost, summarised
 ✅ **GC makes development easier**  
 ❌ **Latency is unpredictable**  
 ❌ **Performance degrades under load**  
@@ -211,4 +210,4 @@ During GC pause: 2000ms (40x slower!)
 
 **The Question:** What if we could have memory safety *without* garbage collection?
 
-**➡️ Next:** "Manual Memory Management: Why C/C++ Isn't the Answer"
+**Next:** "Manual Memory Management: Why C/C++ Isn't the Answer"

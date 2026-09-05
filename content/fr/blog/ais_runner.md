@@ -7,8 +7,8 @@ date: '2026-05-29'
 author: mayo
 excerpt: >-
   AIS Runner est une application bureau basée sur Dioxus pour le développement
-  local d'Azure Logic Apps Standard — gérez, exécutez, déboguez et comparez
-  vos workflows sans quitter votre environnement de développement.
+  local d'Azure Logic Apps Standard — gère, exécute, débogue et compare tes
+  workflows sans quitter ton environnement de développement.
 tags:
   - azure
   - logic-apps
@@ -19,7 +19,7 @@ tags:
 
 # AIS Runner : une interface bureau pour le développement local d'Azure Logic Apps Standard
 
-Développer des Azure Logic Apps Standard en local oblige habituellement à jongler entre la CLI, les extensions VS Code, le portail Azure, les pipelines DevOps et plusieurs terminaux pour inspecter des files Service Bus ou comparer des paramètres d'environnement. **AIS Runner** regroupe tout cela dans une seule application bureau basée sur Dioxus — une interface graphique pour gérer, exécuter, déboguer et comparer vos workflows sans quitter votre environnement de développement.
+Développer des Azure Logic Apps Standard en local oblige habituellement à jongler entre la CLI, les extensions VS Code, le portail Azure, les pipelines DevOps et plusieurs terminaux pour inspecter des files Service Bus ou comparer des paramètres d'environnement. **AIS Runner** regroupe tout cela dans une seule application bureau basée sur Dioxus — une interface graphique pour gérer, exécuter, déboguer et comparer tes workflows sans quitter ton environnement de développement.
 
 L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (WebView).
 
@@ -81,10 +81,10 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 </svg>
 </div>
 
-## 🔧 Environnement de développement local
+## 🔧 environnement de développement local
 
 - **Auto-détection des prérequis** — vérifie la présence de Node.js, Azure Functions Core Tools, .NET et Java, et guide l'installation
-- **Gestion des workspaces de projet** — lie vos projets Logic Apps locaux à leurs équivalents Azure (souscription, groupe de ressources, nom de l'app, namespace Service Bus)
+- **Gestion des workspaces de projet** — lie tes projets Logic Apps locaux à leurs équivalents Azure (souscription, groupe de ressources, nom de l'app, namespace Service Bus)
 - **Éditeur de `local.settings.json`** — éditeur clé/valeur visuel avec masquage des secrets, regroupé par catégorie (Service Bus, chaînes de connexion, etc.)
 - **Support du thème système** — détection auto du mode sombre/clair de l'OS avec bascule manuelle
 
@@ -96,7 +96,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 - **Support des triggers Blob** — vérifications préalables de l'existence du conteneur Azurite
 - **Historique des exécutions** — inspection détaillée de chaque exécution, entrées/sorties par action
 
-## 📊 Visualisation des workflows
+## Visualisation des workflows
 
 - Liste des workflows avec indicateurs de type de trigger et statut
 - **Panneau graphique visuel** — rendu DAG des dépendances entre actions
@@ -117,7 +117,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 - **Auto-détection de l'URL DevOps** depuis le remote git
 - **Navigateur de groupes de variables** — liste tous les variable groups DevOps et inspecte leur contenu
 
-## ⊞ Comparaison d'environnements
+## ⊞ comparaison d'environnements
 
 - **Comparaison multi-colonnes** — compare `local.settings.json` avec les paramètres Azure et plusieurs variable groups DevOps côte à côte
 - **Filtrage des différences** — bascule « Différences seulement » avec cases par colonne pour comparer n'importe quel sous-ensemble d'environnements
@@ -199,7 +199,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 </svg>
 </div>
 
-## ⚡ Event Grid
+## Event Grid
 
 - **Navigateur de topics** — liste tous les topics Event Grid custom et système au niveau de la souscription, avec badges de groupe de ressources
 - **Inspecteur de souscriptions** — déploie un topic pour voir les event subscriptions avec leur type d'endpoint, filtres et types d'événements
@@ -230,6 +230,6 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 
 ## Pourquoi une application bureau native ?
 
-Construire AIS Runner avec Dioxus en Rust lui donne la réactivité d'une application native avec une couche UI moderne. Pas d'empreinte mémoire à la Electron, pas d'onglet de navigateur à perdre. L'app vit à côté de votre éditeur et de votre terminal, communique directement avec vos émulateurs locaux, et s'authentifie sur Azure avec la même session `az` CLI que vous utilisez déjà.
+Construire AIS Runner avec Dioxus en Rust lui donne la réactivité d'une application native avec une couche UI moderne. Pas d'empreinte mémoire à la Electron, pas d'onglet de navigateur à perdre. L'app vit à côté de ton éditeur et de ton terminal, communique directement avec tes émulateurs locaux, et s'authentifie sur Azure avec la même session `az` CLI que tu utilises déjà.
 
-Si vous travaillez quotidiennement avec Logic Apps Standard, AIS Runner est conçu pour supprimer les frictions entre écrire un workflow, l'exécuter en local, le comparer entre environnements et le livrer en production.
+Si tu travailles quotidiennement avec Logic Apps Standard, AIS Runner est conçu pour supprimer les frictions entre écrire un workflow, l'exécuter en local, le comparer entre environnements et le livrer en production.

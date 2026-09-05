@@ -7,7 +7,9 @@ slug: move-closures-rust
 locale: "en"
 date: '2025-07-08'
 author: mayo
-excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
+excerpt: >-
+  What move actually moves, when you genuinely need it (threads, returned
+  closures, async blocks), and how it interacts with ownership.
 tags:
   - rust
   - closures
@@ -223,15 +225,15 @@ println!("{}", count); // 0 (original unchanged)
 - **Overusing `move`**:
   Unnecessary copies/moves can hurt performance or cause compile errors.
 
-## Key Takeaways
-
-✅ **Use `move` closures when**:
+## When `move` is the answer
+**Use `move` closures when**:
 - The closure outlives its environment (e.g., threads).
 - You need explicit ownership to avoid borrow checker issues.
 
-✅ **Avoid `move` for**:
+**Avoid `move` for**:
 - Local, short-lived closures that don’t escape their scope.
 - `Copy` types where borrowing is sufficient.
 
-**Try This**: What happens if you use `move` with a closure that captures a mutable reference (`&mut T`)?  
-**Answer**: The reference itself is moved (but the data it points to isn’t owned). This is rarely useful and may lead to lifetime errors!
+`move` on a closure capturing `&mut T` moves the *reference*, not the data behind it. That's
+almost never what you wanted, and it usually surfaces later as a lifetime error rather than
+an error at the closure itself.

@@ -5,9 +5,9 @@ slug: ownership-safety-rust-fr
 locale: fr
 date: '2025-11-26'
 author: mayo
-excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
+excerpt: >-
+  Comment les règles d'ownership ferment la porte aux fuites mémoire et aux data
+  races avant même l'exécution — et où elles s'arrêtent.
 tags:
   - rust
   - memory
@@ -67,7 +67,7 @@ L'ownership est le système central de gestion mémoire de Rust, appliquant des 
 - Quand le propriétaire sort du scope, la valeur est **droppée** (trait `Drop` appelé).
 - L'ownership peut être **transféré** (moved), rendant la variable originale invalide.
 
-## Règles Clés
+## Règles clés
 
 ### Move Semantics
 
@@ -98,12 +98,12 @@ take_ownership(s); // Ownership moved dans la fonction
 // println!("{}", s); // Erreur: s est invalide
 ```
 
-## Comment l'Ownership Prévient les Memory Leaks
+## Comment l'Ownership prévient les Memory Leaks
 
 - **Cleanup Automatique** : Quand le propriétaire sort du scope, Rust appelle `drop` pour libérer la mémoire (pas de `free()` manuel nécessaire).
 - **Pas de Double Frees** : Puisque seul un propriétaire existe, la valeur est droppée exactement une fois.
 
-## Comment l'Ownership Prévient les Data Races
+## Comment l'Ownership prévient les Data Races
 
 - **Règles de Borrowing** :
   - **Emprunts immutables** (`&T`) : Plusieurs autorisés, mais aucun emprunt mutable ne peut coexister.
@@ -141,8 +141,8 @@ println!("{:?}, {:?}", r1, r2);
 <text x="400" y="24" text-anchor="middle" class="title">Ce que le borrow checker autorise ensuite</text>
 <!-- column headers -->
 <text x="50" y="80" class="head">Emprunts déjà vivants</text>
-<text x="425" y="80" text-anchor="middle" class="head">vous demandez &amp;data</text>
-<text x="625" y="80" text-anchor="middle" class="head">vous demandez &amp;mut data</text>
+<text x="425" y="80" text-anchor="middle" class="head">tu demandes &amp;data</text>
+<text x="625" y="80" text-anchor="middle" class="head">tu demandes &amp;mut data</text>
 <!-- row 1 -->
 <text x="50" y="130" class="body">aucun</text>
 <rect x="330" y="96" width="190" height="58" rx="8" class="box"/>
@@ -176,9 +176,8 @@ println!("{:?}, {:?}", r1, r2);
 </svg>
 </div>
 
-## Points Clés
-
-✅ **L'ownership assure** :
+## Points clés
+**L'ownership assure** :
 - Pas de dangling pointers (via lifetimes).
 - Pas de memory leaks (via `Drop`).
 - Pas de data races (via règles de borrowing).

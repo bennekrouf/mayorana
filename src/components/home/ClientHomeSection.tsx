@@ -113,7 +113,7 @@ export default function ClientHomeSection() {
           tagline={tApps(`${appI18nKey[PROMOTED_TOOL_ID]}_tagline`)}
           description={tApps(`${appI18nKey[PROMOTED_TOOL_ID]}_description`)}
           downloads={promoted.downloads}
-          detailsHref={`${getLocalizedPath(locale, '/apps')}#${PROMOTED_TOOL_ID}`}
+          detailsHref={getLocalizedPath(locale, `/apps/${PROMOTED_TOOL_ID}`)}
         />
       )}
 

@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Optimisation bas niveau en Rust, se concentrant sur l'utilisation d'inline
   assembly pour les tâches critiques en performance
-content_focus: optimisation bas niveau en Rust
-technical_level: Discussion technique experte
 tags:
   - rust
   - optimization
@@ -77,7 +75,7 @@ L'inline assembly est justifié dans ces cas :
 - **Optimisation Extrême** : Quand l'usage de registres ajusté à la main ou le cycle shaving dans une boucle chaude surpasse les optimisations de LLVM.
 - **Intégration Legacy** : Quand on interface avec des routines matérielles assembly-only (ex : gestionnaires d'interruption custom).
 
-## Scénario d'Exemple : Boucle de Comptage de Bits
+## Scénario d'Exemple : boucle de Comptage de Bits
 
 Considère optimiser une fonction de cryptographie qui compte les bits mis dans un tableau d'entiers 64-bit pour la distance de Hamming dans un système temps réel. Le `u64::count_ones()` de Rust utilise `popcnt` sur x86_64 si disponible, mais j'ai besoin d'une boucle custom avec unrolling manuel et pipelining pour un CPU spécifique (ex : Skylake avec AVX2 désactivé), où le profiling montre un goulot d'étranglement.
 
@@ -214,14 +212,14 @@ pub fn total_bits(data: &[u64]) -> u64 {
 }
 ```
 
-## Assurer la Sécurité
+## Assurer la sécurité
 
 - **Scope Unsafe** : Le bloc `asm!` est confiné à une fonction `unsafe`, signalant clairement le risque. Je documenterais les invariants (ex : "data doit être de la mémoire valide").
 - **Gestion de Registres** : Utilise `in(reg)` pour les entrées, `out(reg)` pour les sorties, et clobber `tmp` pour éviter de corrompre l'état de l'appelant. `options(nostack)` empêche l'interférence de stack.
 - **Pas de Comportement Indéfini** : Évite l'accès mémoire en assembly ; s'appuie sur Rust pour les loads vérifiés en bounds. Teste les cas limites (ex : chunks vides ou courts).
 - **Validation** : Tests unitaires avec entrées connues (ex : `0xFFFF_FFFF_FFFF_FFFF` → 64 bits) assurent la justesse contre la version scalaire.
 
-## Techniques Avancées d'Optimisation Assembly
+## Techniques avancées d'Optimisation Assembly
 
 ### Optimisation Multi-Architecture
 
@@ -357,7 +355,7 @@ mod arm_assembly {
 }
 ```
 
-### Optimisations Spécialisées par Domaine
+### Optimisations spécialisées par domaine
 
 ```rust
 // Crypto : Hamming distance optimisée
@@ -443,7 +441,7 @@ pub unsafe fn threshold_asm(data: &[u8], threshold: u8, output: &mut [u8]) {
 }
 ```
 
-### Gestion d'Erreurs et Sécurité Robuste
+### Gestion d'Erreurs et sécurité Robuste
 
 ```rust
 use std::fmt;
@@ -531,7 +529,7 @@ pub fn count_bits_with_fallback(data: &[u64]) -> (u64, &'static str) {
 }
 ```
 
-## Benchmarking et Validation Complets
+## Benchmarking et validation Complets
 
 ```rust
 use criterion::{BenchmarkId, Criterion, Throughput, black_box};
@@ -664,7 +662,7 @@ mod tests {
 }
 ```
 
-## Stratégie de Test & Validation
+## Stratégie de test & validation
 
 Parce que l'inline assembly contourne les vérifications de sécurité habituelles de Rust, des tests rigoureux sont non-négociables :
 
@@ -675,14 +673,13 @@ Parce que l'inline assembly contourne les vérifications de sécurité habituell
 | Performance | Benchmarker les deux versions avec `criterion` pour s'assurer que l'assembly gagne vraiment |
 | Comportement indéfini | Exécuter sous `miri` (bien que `asm!` soit partiellement non supporté) et Valgrind/ASan |
 
-## Quand Ne Pas Utiliser l'Inline Assembly
+## Quand ne pas utiliser l'inline assembly
+En note finale, résiste à la tentation de recourir à `asm!` quand :
 
-En note finale, résistez à la tentation de recourir à `asm!` quand :
-
-- Le compilateur génère déjà du code optimal (vérifiez avec `cargo asm` ou [Compiler Explorer](https://godbolt.org)).
+- Le compilateur génère déjà du code optimal (vérifie avec `cargo asm` ou [Compiler Explorer](https://godbolt.org)).
 - Un intrinsèque sûr ou une abstraction SIMD existe (`std::simd`, `packed_simd`, `core::arch::*`).
 - La portabilité importe plus qu'une micro-optimisation.
-- Vous écrivez du code de bibliothèque pour la consommation publique sans CI exhaustif sur plusieurs cibles.
+- Tu écris du code de bibliothèque pour la consommation publique sans CI exhaustif sur plusieurs cibles.
 
 ## Assurer la Portabilité
 
@@ -749,6 +746,5 @@ pub fn create_optimal_counter() -> Box<dyn BitCounter> {
 }
 ```
 
-## Conclusion
-
+## Avant de sortir `asm!`
 L'inline assembly en Rust est justifié pour l'optimisation extrême ou les instructions CPU uniques, comme montré avec le comptage de bits optimisé. J'assurerais la sécurité en confinant l'`unsafe`, gérant les registres soigneusement, et validant avec des tests exhaustifs. Pour la portabilité, j'utiliserais la compilation conditionnelle avec fallbacks, créant des abstractions qui cachent les détails d'architecture tout en livrant des performances maximales sur le matériel cible. L'assembly doit être le dernier recours après avoir épuisé les optimisations de haut niveau.

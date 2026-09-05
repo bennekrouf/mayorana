@@ -65,7 +65,7 @@ Rust gagne considérablement en popularité parmi les développeurs pour son foc
 </svg>
 </div>
 
-## Configuration de Ton Environnement
+## Configuration de Ton environnement
 
 D'abord, tu dois installer Rust. La façon la plus simple est d'utiliser rustup, l'installateur de toolchain Rust :
 
@@ -100,8 +100,7 @@ Pour une meilleure expérience de développement, configure ton éditeur préfé
 **Vim/Neovim :**
 - Utilise rust.vim et coc-rust-analyzer
 
-## Ton Premier Programme Rust
-
+## Ton premier programme Rust
 Créons un simple programme "Hello, World!". Créé un nouveau fichier appelé `hello.rs` avec le contenu suivant :
 
 ```rust
@@ -138,7 +137,7 @@ fn main() {           // Fonction principale - point d'entrée du programme
 
 Cargo est le système de build et gestionnaire de packages de Rust. Il gère de nombreuses tâches comme compilateur ton code, télécharger des libraries, et compilateur ces libraries.
 
-### Créer un Nouveau Projet
+### Créer un nouveau Projet
 
 Pour créer un nouveau projet avec Cargo :
 
@@ -158,8 +157,7 @@ hello_cargo/
     └── main.rs       # Code source principal
 ```
 
-### Le Fichier Cargo.toml
-
+### Le fichier Cargo.toml
 Le fichier `Cargo.toml` contient les métadonnées de ton projet :
 
 ```toml
@@ -172,8 +170,7 @@ edition = "2021"        # Édition de Rust à utiliser
 # Les dépendances seront listées ici
 ```
 
-### Commandes Cargo Essentielles
-
+### Commandes Cargo essentielles
 ```bash
 cargo build           # Compile le projet (debug mode)
 cargo build --release # Compile en mode optimisé (release)
@@ -184,7 +181,7 @@ cargo test            # Exécute les tests
 cargo doc             # Génère la documentation
 ```
 
-### Exemple Pratique avec une Dépendance
+### Exemple pratique avec une Dépendance
 
 Modifions notre projet pour utiliser une dépendance externe. Éditons `Cargo.toml` :
 
@@ -213,9 +210,9 @@ fn main() {
 
 Exécute avec `cargo run` - Cargo téléchargera et compilera automatiquement la dépendance `rand`.
 
-## Concepts Clés de Rust
+## Concepts clés de Rust
 
-### Variables et Mutabilité
+### Variables et mutabilité
 
 Par défaut, les variables en Rust sont **immutables** :
 
@@ -272,7 +269,7 @@ fn main() {
 }
 ```
 
-### Types de Données de Base
+### Types de données de base
 
 ```rust
 fn main() {
@@ -404,7 +401,7 @@ Rien n'est copié ici. `s1` et `s2` sont deux emplacements de pile, mais il n'ex
 <text x="595" y="249" text-anchor="middle" class="body" fill="#ffffff">le tampon est libéré — une seule fois</text>
 <text x="595" y="268" text-anchor="middle" class="cap" fill="#ffffff">pas de double free, pas de ramasse-miettes</text>
 <!-- caption -->
-<text x="400" y="312" text-anchor="middle" class="cap">La règle 2 (un seul propriétaire) et la règle 3 (drop en fin de scope) suppriment free() de votre code</text>
+<text x="400" y="312" text-anchor="middle" class="cap">La règle 2 (un seul propriétaire) et la règle 3 (drop en fin de scope) suppriment free() de tonre code</text>
 </svg>
 </div>
 
@@ -462,7 +459,7 @@ fn makes_copy(some_integer: i32) { // some_integer entre dans le scope
 } // some_integer sort du scope, mais rien de spécial ne se passe
 ```
 
-### Références et Emprunts
+### Références et emprunts
 
 Pour utiliser une valeur sans prendre l'ownership, utilise les **références** :
 
@@ -480,7 +477,7 @@ fn calculate_length(s: &String) -> usize { // s est une référence à String
 } // s sort du scope, mais ne possède pas la donnée, rien n'est supprimé
 ```
 
-### Références Mutables
+### Références mutables
 
 ```rust
 fn main() {
@@ -500,7 +497,7 @@ fn change(some_string: &mut String) {
 - Une seule référence mutable OU plusieurs références immutables
 - Les références doivent toujours être valides
 
-## Structures de Contrôle
+## Structures de contrôle
 
 ### Conditions avec if
 
@@ -594,7 +591,7 @@ fn minus_one(x: i32) -> i32 {
 }
 ```
 
-## Gestion d'Erreur de Base
+## Gestion d'Erreur de base
 
 ### Option
 
@@ -655,8 +652,7 @@ fn main() {
 }
 ```
 
-## Premier Projet Pratique : Jeu de Devinette
-
+## Premier projet pratique : un jeu de devinette
 Créons un jeu simple pour mettre en pratique ce que nous avons appris :
 
 ```rust
@@ -744,9 +740,9 @@ mod tests {
 
 Exécute avec `cargo test`.
 
-## Prochaines Étapes
+## Prochaines étapes
 
-Maintenant que tu as les bases, Essaie de construire un petit projet pour pratiquer vos compétences. Voici quelques suggestions :
+Maintenant que tu as les bases, essaie de construire un petit projet pour pratiquer tes compétences. Voici quelques suggestions :
 
 ### Projets Débutants
 1. **Calculatrice en ligne de commande**
@@ -756,7 +752,7 @@ Maintenant que tu as les bases, Essaie de construire un petit projet pour pratiq
 
 ### Ressources d'Apprentissage
 
-La documentation Rust est excellente pour approfondir vos connaissances :
+La documentation Rust est excellente pour approfondir tes connaissances :
 
 - [Le Livre Rust (The Rust Book)](https://doc.rust-lang.org/book/) - Guide complet et officiel
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/) - Apprendre par l'exemple
@@ -771,7 +767,7 @@ La documentation Rust est excellente pour approfondir vos connaissances :
 - [Discord Rust Community](https://discord.gg/rust-lang-community)
 - [This Week in Rust](https://this-week-in-rust.org/) - Newsletter hebdomadaire
 
-### Concepts Avancés à Explorer Ensuite
+### Concepts avancés à Explorer Ensuite
 
 1. **Structs et Enums**
 2. **Pattern Matching avancé**

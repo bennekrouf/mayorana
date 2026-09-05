@@ -14,7 +14,7 @@ tags:
 date: '2025-07-26'
 ---
 
-# How does Vec::drain() work, and when is it useful compared to Vec::truncate() or Vec::clear()?
+# Vec::drain() Vs Vec::truncate() or Vec::clear()?
 
 ## What is Vec::drain()?
 
@@ -93,8 +93,7 @@ where
 | `truncate()` | Yes (from index) | ❌ No | ✅ Yes | O(1) |
 | `clear()` | All | ❌ No | ✅ Yes | O(1) |
 
-## When to Use Each
-
+## Picking the right one
 ### 1. Vec::drain()
 
 **Use Case**: Process removed elements (e.g., filter, transform, or batch-delete).
@@ -211,16 +210,14 @@ vec.insert(0, "fresh");
 assert_eq!(vec, ["fresh", "new", "old"]);
 ```
 
-## Key Takeaways
-
-- ✅ **drain()**: Use when you need to process removed elements or batch-delete.
-- ✅ **truncate()/clear()**: Use for fast bulk removal without processing.
-- 🚀 **All preserve capacity**: No reallocation overhead for future ops.
+## Which one to reach for
+- **drain()**: Use when you need to process removed elements or batch-delete.
+- **truncate()/clear()**: Use for fast bulk removal without processing.
+- **All preserve capacity**: No reallocation overhead for future ops.
 
 ## Real-World Example
 
 In a game engine, `drain()` could efficiently remove expired entities while allowing cleanup logic (e.g., saving state).
 
-**Try This**: What happens if you `drain()` but don't consume the iterator?
-
-**Answer**: The elements are still removed when the Drain iterator is dropped (due to its Drop impl).
+One detail that surprises people: dropping a `Drain` without consuming it still removes the
+elements. The removal lives in `Drain`'s `Drop` impl, not in the iteration.

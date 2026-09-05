@@ -3,8 +3,10 @@ id: memory-safety-rust
 title: How does Rust ensure memory safety without a garbage collector?
 slug: memory-safety-rust
 author: mayo
+excerpt: >-
+  Ownership, borrowing and lifetimes give Rust memory safety at compile time,
+  with no collector and no runtime pauses to budget for.
 locale: en
-excerpt: Rust memory and string
 
 tags:
   - rust
@@ -221,9 +223,8 @@ fn main() {
 - **Predictable performance**: Memory is freed deterministically.
 - **No runtime pauses**: Unlike GC-based languages (Java, Go).
 
-## Key Takeaways
-✅ **Ownership**: Prevents memory leaks.  
-✅ **Borrowing**: Prevents data races.  
-✅ **Lifetimes**: Prevents dangling pointers.
+**Ownership**: Prevents memory leaks.  
+**Borrowing**: Prevents data races.  
+**Lifetimes**: Prevents dangling pointers.
 
 Rust's model ensures memory safety without runtime checks, making it both safe and fast.

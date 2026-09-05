@@ -15,7 +15,7 @@ tags:
   - cache
 ---
 
-# Memory Layout Optimization: How would you use Rust's repr attribute to optimize the memory layout of a struct for cache efficiency?
+# Rust's repr: Optimize Struct Memory for Cache Efficiency
 
 The `repr` attribute controls struct memory layout, which is critical for low-level optimization in high-throughput systems where cache locality drives performance.
 
@@ -206,11 +206,11 @@ If using `repr(packed)` (13 bytes), I'd save 3 bytes per packet, but unaligned `
 - Field reordering can optimize cache line usage without changing `repr`
 - Test trade-offs on target hardware, especially ARM vs x86_64
 
-## Key Takeaways
+## Layout rules worth remembering
+**`repr(C)`**: Choose for performance-critical code where cache efficiency matters  
+**`repr(packed)`**: Use for memory-constrained scenarios with infrequent access  
+Profile cache performance before and after to validate optimizations
 
-✅ **`repr(C)`**: Choose for performance-critical code where cache efficiency matters  
-✅ **`repr(packed)`**: Use for memory-constrained scenarios with infrequent access  
-🚀 Profile cache performance before and after to validate optimizations
-
-**Try This:** What happens if you access a field in a `repr(packed)` struct through a raw pointer?  
-**Answer:** Unaligned access through raw pointers can cause panics on strict architectures or performance penalties—always measure on your target platform!
+Reading a `repr(packed)` field through a raw pointer is where this stops being free. On x86
+you pay a penalty; on architectures that require alignment you get a fault. Measure on the
+target you actually ship to, not on your laptop.

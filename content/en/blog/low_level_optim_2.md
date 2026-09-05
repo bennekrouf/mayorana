@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Low-level optimization in Rust, focusing on iterator chains and zero-cost
   abstractions
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 
 tags:
   - rust
@@ -189,6 +187,5 @@ skip:
 
 This shows no extra iterator structs or calls—just raw arithmetic and memory ops, matching a manual implementation.
 
-## Conclusion
-
+## So is it actually zero-cost?
 Rust’s compiler transforms iterator chains into efficient loops via inlining and loop fusion, fulfilling the zero-cost abstraction promise. As a developer, I’d verify this with assembly analysis and benchmarks using tools like `cargo asm`, `godbolt.org`, and `criterion`, ensuring the abstraction doesn’t compromise performance in a production system. This allows writing clean, maintainable code without sacrificing speed.

@@ -5,9 +5,9 @@ slug: stack-heap-allocation-rust-fr
 locale: fr
 date: '2025-10-01'
 author: mayo
-excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
+excerpt: >-
+  Ce qui décide réellement qu'une valeur atterrit sur la stack ou sur le heap en
+  Rust, et ce que chaque choix coûte à l'exécution.
 
 tags:
   - rust
@@ -17,7 +17,7 @@ tags:
   - allocation
 ---
 
-# Quelle est la différence entre allocation stack et heap en Rust ? Comment Rust décide-t-il où allouer les données ?
+# Stack vs. Heap en Rust: Où Vivent tes Données ?
 
 Rust utilise l'allocation stack et heap pour gérer la mémoire, avec des caractéristiques distinctes pour chacune. Comprendre leurs différences et comment Rust décide où allouer les données est clé pour écrire du code efficace et sûr.
 
@@ -68,10 +68,8 @@ Rust utilise l'allocation stack et heap pour gérer la mémoire, avec des caract
 | Cleanup automatique (pas de `free()` nécessaire). | Gestion manuelle (via trait `Drop`). |
 | Utilisé pour types primitifs (`i32`, `bool`), petites structs. | Utilisé pour données larges, dynamiques (`String`, `Box<T>`). |
 
-## Comment Rust Décide Où Allouer
-
-### Par Défaut → Stack
-
+## Comment Rust décide où allouer
+### Par défaut → stack
 Si un type a une **taille fixe** (ex : `i32`, arrays, structs sans `String`/`Vec`), il est alloué sur le **stack**.
 
 **Exemple** :
@@ -79,8 +77,7 @@ Si un type a une **taille fixe** (ex : `i32`, arrays, structs sans `String`/`Vec
 let x = 5; // Stack (i32 est taille fixe)
 ```
 
-### Allocation Heap Explicite
-
+### Allocation heap explicite
 Utilise des types comme `Box<T>`, `String`, `Vec`, etc., pour allouer sur le **heap**.
 
 **Exemple** :
@@ -154,11 +151,10 @@ let s2 = s1; // Move ownership (données heap pas copiées)
 </svg>
 </div>
 
-## Points Clés
-
-✅ **Stack** : Rapide, taille fixe, automatique.  
-✅ **Heap** : Flexible, dynamique, manuel (via smart pointers).  
-✅ Rust privilégie le stack mais utilise le heap pour données extensibles/taille inconnue.
+## Où vivent réellement tes données
+**Stack** : Rapide, taille fixe, automatique.  
+**Heap** : Flexible, dynamique, manuel (via smart pointers).  
+Rust privilégie le stack mais utilise le heap pour données extensibles/taille inconnue.
 
 **Suivi** : Quand forcerais-tu l'allocation heap ?
 - Pour de grosses structs (éviter stack overflow).

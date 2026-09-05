@@ -5,7 +5,9 @@ slug: reborrow-rust
 locale: fr
 date: '2026-03-31'
 author: mayo
-excerpt: Rust mémoire et borrowing
+excerpt: >-
+  Un réemprunt duplique la référence, pas les données, et gèle l'originale le
+  temps de sa durée de vie. Ce que fait vraiment &mut *x.
 
 tags:
   - rust
@@ -15,7 +17,7 @@ tags:
   - borrow-checker
 ---
 
-# Qu'est-ce que `&mut *x` (réemprunt) en Rust, et pourquoi gèle-t-il la référence originale ?
+# Qu'est-ce que &mut *x (réemprunt) en Rust, et pourquoi gèle-t-il la référence originale ?
 
 En Rust, l'expression `&mut *x` correspond à ce qu'on appelle un **réemprunt** (*reborrow* en anglais). Elle permet de créer une nouvelle référence mutable à partir d'une référence existante sans la consommer — quelque chose que le borrow checker interdirait normalement. Comprendre les réemprunts est essentiel pour écrire du Rust idiomatique lorsqu'on manipule des références mutables à travers des frontières de fonctions.
 
@@ -89,7 +91,7 @@ C'est le point crucial : **tant que `y` est en vie, `x` est gelé**.
 
 Le borrow checker impose qu'on ne peut pas avoir deux références mutables actives vers les mêmes données en même temps. Pendant un réemprunt :
 
-- `y` est la référence mutable **active** — vous pouvez l'utiliser pour lire ou modifier la valeur.
+- `y` est la référence mutable **active** — tu peux l'utiliser pour lire ou modifier la valeur.
 - `x` est **gelé** — il existe toujours, mais il ne peut pas être utilisé tant que `y` est en vie.
 - Dès que `y` sort du scope, le gel est levé et `x` redevient utilisable.
 
@@ -112,7 +114,7 @@ Ce n'est pas un contournement des règles de sécurité de Rust — c'est ainsi 
 
 ## Pourquoi ne pas passer `x` directement ?
 
-Si vous passez `x` directement à une fonction attendant `&mut T`, Rust déplace l'emprunt dans la fonction. Sans réemprunt, vous perdriez l'accès à `x` pendant toute la durée de l'appel.
+Si tu passes `x` directement à une fonction attendant `&mut T`, Rust déplace l'emprunt dans la fonction. Sans réemprunt, tu perdrais l'accès à `x` pendant toute la durée de l'appel.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm13b-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Sans réemprunt le premier appel consommerait x et le second échouerait, mais le compilateur insère un réemprunt implicite si bien que l'emprunt revient et le second appel compile">
@@ -155,14 +157,14 @@ Si vous passez `x` directement à une fonction attendant `&mut T`, Rust déplace
 <text x="595" y="74" class="tx">let x = &amp;mut value;</text>
 <path d="M595,86 L595,100" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
 <rect x="445" y="100" width="300" height="34" rx="5" class="boxac"/>
-<text x="595" y="118" class="tx">ajouter_un(&amp;mut *x) — inséré pour vous</text>
+<text x="595" y="118" class="tx">ajouter_un(&amp;mut *x) — inséré pour toi</text>
 <text x="595" y="130" class="mut">l'emprunt ne dure que l'appel</text>
 <path d="M595,134 L595,148" class="ln" marker-end="url(#mm13b-arrow-fr)"/>
 <rect x="445" y="148" width="300" height="34" rx="5" class="box"/>
 <text x="595" y="170" class="tx">ajouter_un(x) à nouveau → OK, affiche 2</text>
 <text x="595" y="206" class="mut">le prêt revient quand l'appel se termine</text>
 <!-- footer -->
-<text x="400" y="248" class="mut">NLL écrit le &amp;mut *x pour vous — la forme explicite n'est que ce sucre syntaxique déplié</text>
+<text x="400" y="248" class="mut">NLL écrit le &amp;mut *x pour toi — la forme explicite n'est que ce sucre syntaxique déplié</text>
 </svg>
 </div>
 
@@ -181,7 +183,7 @@ fn main() {
 }
 ```
 
-Dans Rust moderne avec les **Non-Lexical Lifetimes (NLL)**, le compilateur effectue ce réemprunt implicitement lorsque vous passez un `&mut T` à une fonction. La forme explicite `&mut *x` est ce qui se produit sous le capot.
+Dans Rust moderne avec les **Non-Lexical Lifetimes (NLL)**, le compilateur effectue ce réemprunt implicitement lorsque tu passes un `&mut T` à une fonction. La forme explicite `&mut *x` est ce qui se produit sous le capot.
 
 ## Réemprunt implicite vs explicite
 
@@ -190,7 +192,7 @@ Dans Rust moderne avec les **Non-Lexical Lifetimes (NLL)**, le compilateur effec
 | Implicite (`x`) | Passer `&mut T` à une fonction | `ajouter_un(x)` → le compilateur insère `&mut *x` |
 | Explicite (`&mut *x`) | Scénarios complexes nécessitant un contrôle manuel | Chaînage de méthodes, adaptateurs d'itérateurs |
 
-Dans la plupart du code Rust quotidien, vous n'avez jamais besoin d'écrire `&mut *x` explicitement. Le borrow checker NLL le gère. Cependant, les réemprunts explicites sont parfois nécessaires pour :
+Dans la plupart du code Rust quotidien, tu n'as jamais besoin d'écrire `&mut *x` explicitement. Le borrow checker NLL le gère. Cependant, les réemprunts explicites sont parfois nécessaires pour :
 
 - **Chaînage de méthodes** : Lors de l'appel d'une méthode prenant `&mut self` sur un `&mut T`.
 - **Patterns d'itérateurs** : Lors d'une itération sur une slice mutable via une référence.
@@ -226,19 +228,19 @@ fn main() {
 | `*mut T` (pointeur brut) | Unsafe | Aucune garantie du borrow checker ; contrôle d'aliasing manuel |
 | `UnsafeCell<T>` | Unsafe intérieur | Désactivation explicite des règles d'emprunt |
 
-Les réemprunts vous offrent la flexibilité de travailler avec plusieurs handles de type référence à différentes étapes d'un calcul, tout en restant entièrement dans le modèle mémoire sûr de Rust.
+Les réemprunts t'offrent la flexibilité de travailler avec plusieurs handles de type référence à différentes étapes d'un calcul, tout en restant entièrement dans le modèle mémoire sûr de Rust.
 
-## Points clés
+## Les règles du réemprunt
+`&mut *x` crée une nouvelle référence mutable pointant vers les mêmes données que `x`, sans consommer `x`.
 
-✅ `&mut *x` crée une nouvelle référence mutable pointant vers les mêmes données que `x`, sans consommer `x`.
+Tant que le réemprunt `y` est en vie, `x` est gelé — le borrow checker empêche leur utilisation simultanée.
 
-✅ Tant que le réemprunt `y` est en vie, `x` est gelé — le borrow checker empêche leur utilisation simultanée.
+Dès que `y` sort du scope, le gel est levé et `x` est à nouveau utilisable.
 
-✅ Dès que `y` sort du scope, le gel est levé et `x` est à nouveau utilisable.
+Rust moderne effectue les réemprunts implicitement lors du passage de `&mut T` à des fonctions — tu as rarement besoin d'écrire `&mut *x` explicitement.
 
-✅ Rust moderne effectue les réemprunts implicitement lors du passage de `&mut T` à des fonctions — vous avez rarement besoin d'écrire `&mut *x` explicitement.
+Un réemprunt **n'est pas** un clone des données — aucune mémoire n'est copiée. Seule la référence (un pointeur) est dupliquée, avec son lifetime contraint par le borrow checker.
 
-🚫 Un réemprunt **n'est pas** un clone des données — aucune mémoire n'est copiée. Seule la référence (un pointeur) est dupliquée, avec son lifetime contraint par le borrow checker.
-
-**Expérience de pensée** : Que se passe-t-il si vous réempruntez `x` deux fois simultanément dans `y` et `z` ?
-**Réponse** : Le compilateur le rejette. Vous ne pouvez pas avoir deux réemprunts mutables actifs de la même référence en même temps — la même règle qui interdit deux références `&mut` vers les mêmes données en général.
+Réemprunter `x` dans `y` et `z` alors que les deux sont encore vivants est rejeté, et pour la
+raison même qui justifie la règle : deux chemins mutables vivants vers une même valeur, c'est
+exactement ce que l'exclusivité interdit.

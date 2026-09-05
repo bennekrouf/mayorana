@@ -14,7 +14,7 @@ tags:
 date: '2025-08-06'
 ---
 
-# Quelle est la différence entre String et str ?
+# String vs. &str – Lequel Utiliser et Quand ?
 
 Comprendre la différence entre `String` et `str` est fondamental pour une gestion efficace de la mémoire.
 
@@ -59,8 +59,7 @@ Comprendre la différence entre `String` et `str` est fondamental pour une gesti
 </svg>
 </div>
 
-## Différences Clés
-
+## `String` et `str`, côte à côte
 | `String` | `str` (habituellement `&str`) |
 |----------|-------------------------------|
 | String UTF-8 extensible, heap-allocated | Vue immutable, taille fixe dans string UTF-8 |
@@ -68,7 +67,7 @@ Comprendre la différence entre `String` et `str` est fondamental pour une gesti
 | Mutable (peut modifier le contenu) | Vue immutable |
 | Créé avec `String::from("...")` ou `"...".to_string()` | Depuis string literals (`"hello"`) ou emprunté depuis `String` (`&my_string`) |
 
-## Layout Mémoire
+## Layout mémoire
 
 **`String`** : Stocke les données sur la heap avec trois composants :
 - Pointeur vers buffer heap
@@ -120,7 +119,7 @@ fn main() {
 }
 ```
 
-## Considérations de Performance
+## Considérations de performance
 
 **Paramètres de Fonction** :
 ```rust
@@ -199,7 +198,7 @@ good("literal");  // &str direct
 - `&str` vers literals pointe vers le binaire du programme (zero allocation) 
 - `&str` depuis `String` partage l'allocation existante
 
-## Patterns Courants
+## Patterns courants
 
 **Renvoyer des "Owned"** :
 ```rust
@@ -229,12 +228,10 @@ fn process_good(s: &str) -> &str {
 }
 ```
 
-## Points Clés
+## Lequel écrire
+- **`String`** : Owned, mutable, heap-allocated  
+- **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
+Préfère `&str` pour les paramètres de fonction sauf si tu as besoin d'ownership ou mutation
 
-- ✅ **`String`** : Owned, mutable, heap-allocated  
-- ✅ **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
-🚀 Préfère `&str` pour les paramètres de fonction sauf si tu as besoin d'ownership ou mutation
-
-**Essaie Ceci :** Que se passe-t-il quand tu appelles `.to_string()` sur un string literal vs un `String` ?
-
-**Réponse :** Literal crée une nouvelle allocation heap ; `String` crée un clone des données de la heap existante. Donc les deux allouentde la mémoire, mais la source diffère !
+`.to_string()` alloue dans les deux cas, mais pas pour la même raison : sur un littéral il copie
+depuis les données en lecture seule du binaire, sur un `String` il clone un buffer heap existant.

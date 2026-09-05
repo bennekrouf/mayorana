@@ -5,7 +5,9 @@ slug: dangling-pointer-rust
 locale: en
 date: '2025-08-03'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Why a dangling pointer is a compile error in Rust rather than a crash in
+  production, and how lifetimes make that check possible.
 
 tags:
   - rust
@@ -15,7 +17,7 @@ tags:
   - lifetimes
 ---
 
-# What is a dangling pointer, and how does Rust prevent it at compile time?
+# How does Rust prevent dangling pointer at compile time?
 
 A **dangling pointer** occurs when a pointer references memory that has already been freed, leading to undefined behavior like crashes or security vulnerabilities. In languages like C/C++, this is a common issue:
 
@@ -179,9 +181,8 @@ fn main() {
 | C/C++        | High (manual memory mgmt) | None (programmer's responsibility) |
 | Rust         | Zero                      | Compile-time checks (ownership + lifetimes) |
 
-## Key Takeaways
-
-✅ Rust’s compiler guarantees:
+## Why this can never compile
+Rust’s compiler guarantees:
 - No references to freed memory.
 - No undefined behavior from dangling pointers.
 - Safety without runtime overhead.

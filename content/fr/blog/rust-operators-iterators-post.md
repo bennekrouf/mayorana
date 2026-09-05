@@ -15,11 +15,11 @@ tags:
   - itérateurs
 ---
 
-# Opérateurs & Itérateurs Rust : Ce Qu'il Faut Savoir
+# Opérateurs & Itérateurs Rust
 
 Voici quelques points d'attention autour de Rust, surtout qu'on vient avec des habitudes d'un autre language de programmation.
 
-## Opérateurs de Comparaison
+## Opérateurs de comparaison
 
 Rust est en mode keep it simple pour les opérateurs :
 ```rust

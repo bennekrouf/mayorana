@@ -1,8 +1,6 @@
 ---
 id: sized-unsized-bounds-flexibility
-title: >-
-  Écrire une fonction qui accepte à la fois des types sized (ex : [u8; 16]) et
-  unsized (ex : [u8] ou dyn Trait) avec un bound ?Sized
+title: '?Sized : une seule fonction pour les types sized et unsized'
 slug: sized-unsized-bounds-flexibility
 locale: fr
 author: mayo
@@ -10,8 +8,6 @@ excerpt: >-
   Comprendre le rôle des bounds ?Sized dans les définitions de traits Rust et
   les exploiter pour créer des fonctions flexibles qui fonctionnent efficacement
   avec des types sized et unsized
-content_focus: Sized et ?Sized
-technical_level: Discussion technique experte
 tags:
   - rust
   - sized
@@ -22,7 +18,7 @@ tags:
 date: '2025-12-03'
 ---
 
-# Quelle est la signification du bound ?Sized dans les définitions de traits, et comment l'utiliserais-tu pour écrire une fonction qui accepte à la fois des types sized (ex : [u8; 16]) et des types unsized (ex : [u8] ou dyn Trait) ?
+# ?Sized : une seule fonction pour les types sized et unsized
 
 Le bound `?Sized` dans les définitions de traits Rust relâche la contrainte `Sized` par défaut sur les types génériques, permettant à une fonction ou trait de fonctionner avec à la fois des types sized (taille connue pendant la compilation, comme `[u8; 16]`) et des types unsized (ex : `[u8]`, `str`, `dyn Trait`). Dans une bibliothèque de sérialisation de données, j'utiliserais `?Sized` pour écrire une fonction flexible qui traite à la fois les tableaux fixes et les slices dynamiques efficacement, améliorant la fonctionnalité sans sacrifier la performance.
 
@@ -74,7 +70,7 @@ Le bound `?Sized` dans les définitions de traits Rust relâche la contrainte `S
 - **Sized par Défaut** : Par défaut, les paramètres génériques (`T`) impliquent `T: Sized`, signifiant que la taille du type doit être connue pendant la compilation. Cela exclut les types unsized comme les slices (`[u8]`), chaînes (`str`), ou trait objects (`dyn Trait`), qui n'existent que derrière des pointeurs (ex : `&[u8]`, `Box<dyn Trait>`).
 - **Signification de ?Sized** : Ajouter `T: ?Sized` se retire de cette exigence, permettant à `T` d'être soit sized soit unsized. Cela active une applicabilité plus large, car la fonction peut accepter des références vers des types unsized (`&T`) ou des types sized directement.
 
-## Exemple : Fonction de Sérialisation
+## Exemple : fonction de Sérialisation
 
 Dans une bibliothèque de sérialisation, je définirais une fonction pour calculer une checksum sur n'importe quelles données contiguës de type byte :
 
@@ -199,9 +195,8 @@ Une fonction gère à la fois les tableaux fixes (`[u8; 16]`) et les slices (`[u
 - **Complexité** : Les appelants doivent comprendre `&T` vs `T`. Je documenterais que `compute_checksum` prend des références pour l'universalité.
 - **Alternative** : Si seules les slices sont nécessaires, `&[u8]` directement pourrait suffire, mais `?Sized` supporte un usage plus large (ex : `dyn Trait`).
 
-## Vérification
-
-### Test de Compilation
+## Confirmer que les deux cas passent
+### Test de compilation
 S'assurer que les types sized et unsized fonctionnent :
 
 ```rust
@@ -224,7 +219,7 @@ fn bench(c: &mut Criterion) {
 
 Attends-toi à des performances similaires aux appels directs, avec inlining.
 
-## Exemple Avancé : Support de Trait Objects
+## Exemple avancé : Support de Trait Objects
 
 Pour étendre encore plus la flexibilité :
 
@@ -245,9 +240,9 @@ for item in &items {
 }
 ```
 
-## Considérations Pratiques
+## Considérations pratiques
 
-### Quand Utiliser ?Sized
+### Quand utiliser ?Sized
 
 **Utilise `?Sized` quand :**
 - Tu veux une API unifiée pour types sized et unsized
@@ -259,7 +254,7 @@ for item in &items {
 - La performance est critique et l'indirection pose problème
 - La complexité supplémentaire n'apporte pas de valeur
 
-### Patterns Courants
+### Patterns courants
 
 ```rust
 // Pattern 1: Fonction générique flexible
@@ -276,6 +271,5 @@ struct Wrapper<T: ?Sized> {
 }
 ```
 
-## Conclusion
-
+## `?Sized` en pratique
 `?Sized` permet à `compute_checksum` de gérer à la fois les types sized et unsized en relâchant la contrainte `Sized`, ce qui en fait l'idéal pour une bibliothèque de sérialisation. Elle maintient l'efficacité via le dispatch statique et les références, offrant la flexibilité sans coût à l'exécution. J'utiliserais cela pour unifier les APIs à travers des types de données divers, assurant performance et scalabilité dans un système Rust.

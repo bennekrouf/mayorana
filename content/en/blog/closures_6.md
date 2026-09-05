@@ -186,14 +186,13 @@ The decorator is the subtle one: `log_call` both *accepts* a closure and *return
 3. **Stateful Logic**:
    Use `FnMut` for closures that mutate captured state (see previous answers on stateful closures).
 
-## Key Takeaways
-
-✅ **HOFs enable flexible, reusable patterns** by treating functions as first-class values.  
-✅ **Use `impl Fn`** for zero-cost static dispatch in performance-critical code.  
-✅ **Use `Box<dyn Fn>`** for dynamic behavior with multiple closure types.  
-🚀 **Use `move`** to ensure closures own captured data when returned.
+## What higher-order functions buy you
+**HOFs enable flexible, reusable patterns** by treating functions as first-class values.  
+**Use `impl Fn`** for zero-cost static dispatch in performance-critical code.  
+**Use `Box<dyn Fn>`** for dynamic behavior with multiple closure types.  
+**Use `move`** to ensure closures own captured data when returned.
 
 **Real-World Example**: HOFs are central to Rust’s iterator API (`map`, `filter`) and async frameworks like `tokio`, where closures define task behavior.
 
-**Experiment**: Modify `make_adder` to return a closure that multiplies instead.  
-**Answer**: The compiler accepts it seamlessly, as both closures implement `Fn(i32) -> i32`, maintaining type consistency.
+Change `make_adder` to multiply instead of add and nothing else has to change: both closures
+are `Fn(i32) -> i32`, and that's the whole contract the caller sees.

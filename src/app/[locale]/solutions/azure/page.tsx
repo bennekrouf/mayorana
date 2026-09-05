@@ -133,7 +133,14 @@ export default function AzureSolutionsPage() {
                 transition={{ duration: 0.4, delay: (i % 2) * 0.1 }}
               >
                 <div className="flex items-start justify-between mb-3 gap-2">
-                  <h3 className="text-xl font-bold text-primary">{tool.name}</h3>
+                  <h3 className="text-xl font-bold text-primary">
+                    <Link
+                      href={getLocalizedPath(locale, `/apps/${tool.id}`)}
+                      className="hover:underline underline-offset-4"
+                    >
+                      {tool.name}
+                    </Link>
+                  </h3>
                   {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
                 </div>
 
@@ -145,8 +152,15 @@ export default function AzureSolutionsPage() {
                 </p>
                 <p className="text-xs text-muted-foreground/70 font-mono mb-6">{tool.tech}</p>
 
-                <div className="mt-auto">
+                <div className="mt-auto space-y-3">
                   <DownloadButtons downloads={tool.downloads} />
+                  <Link
+                    href={getLocalizedPath(locale, `/apps/${tool.id}`)}
+                    className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {tApps('promo_details')}
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                 </div>
               </motion.div>
             ))}

@@ -5,7 +5,9 @@ slug: clamp-rust
 locale: fr
 date: '2026-04-14'
 author: mayo
-excerpt: Bibliothèque standard Rust
+excerpt: >-
+  Ce que fait clamp, pourquoi il panique sur un min et un max inversés, et en
+  quoi il diffère de l'arithmétique saturante à laquelle on le confond.
 
 tags:
   - rust
@@ -236,15 +238,15 @@ C'est plus lisible et plus sûr que d'écrire des `if` partout dans ton code.
 </svg>
 </div>
 
-## Points clés
+## Résumé
+`value.clamp(min, max)` borne une valeur en un seul appel — pas besoin de logique `if` manuelle.
 
-✅ `value.clamp(min, max)` borne une valeur en un seul appel — pas besoin de logique `if` manuelle.
+Disponible dans la bibliothèque standard de Rust depuis la version 1.50, pour les entiers et les flottants.
 
-✅ Disponible dans la bibliothèque standard de Rust depuis la version 1.50, pour les entiers et les flottants.
+C++ a l'équivalent depuis C++17 ; JavaScript et C nécessitent encore des implémentations manuelles.
 
-✅ C++ a l'équivalent depuis C++17 ; JavaScript et C nécessitent encore des implémentations manuelles.
+Ne pas confondre `clamp` avec `saturating_add` / `saturating_sub` — ceux-ci empêchent l'overflow d'entiers aux limites du type, pas des bornes personnalisées arbitraires.
 
-🚫 Ne pas confondre `clamp` avec `saturating_add` / `saturating_sub` — ceux-ci empêchent l'overflow d'entiers aux limites du type, pas des bornes personnalisées arbitraires.
-
-**Expérience de pensée** : Que se passe-t-il si on appelle `value.clamp(max, min)` — avec `min` et `max` inversés ?
-**Réponse** : Rust panique en mode debug (`min > max` est explicitement vérifié). Toujours s'assurer que `min ≤ max`.
+Inverser les arguments — `value.clamp(max, min)` — panique. `clamp` affirme `min <= max` au lieu
+d'en choisir un silencieusement, ce qui est le bon choix, mais signifie qu'une paire inversée est
+un échec à l'exécution et non à la compilation.

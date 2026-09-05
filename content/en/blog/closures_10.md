@@ -73,8 +73,7 @@ Rust’s closure system offers two ways to handle function-like behavior: `impl 
 | **Memory** | Stack-allocated (unless moved) | Heap-allocated (fat pointer + heap data) |
 | **Use Case** | Fixed closure type, performance-critical | Dynamic behavior, multiple closure types |
 
-## When to Use Each
-
+## Deciding in practice
 ### 1. impl Fn() (Static Dispatch)
 - **Use When**:
   - The closure type is fixed and known at compile time.
@@ -198,13 +197,12 @@ Notice that `create_op` is not merely *slower* with `impl Fn` — it is impossib
 | **Memory Overhead** | None (stack-allocated) | 16–24 bytes (fat pointer + heap data) |
 | **Code Bloat** | Possible (monomorphization) | Minimal (single vtable) |
 
-## Key Takeaways
-
-✅ **Choose `impl Fn()` for**:
+## Which dispatch to reach for
+**Choose `impl Fn()` for**:
 - Performance-sensitive code (e.g., iterator chains).
 - Single closure type (e.g., factory functions).
 
-✅ **Choose `Box<dyn Fn()>` for**:
+**Choose `Box<dyn Fn()>` for**:
 - Dynamic behavior (e.g., event handlers, plugins).
 - Storing mixed closure types (e.g., `Vec<Box<dyn Fn()>>`).
 
@@ -212,8 +210,7 @@ Notice that `create_op` is not merely *slower* with `impl Fn` — it is impossib
 - `impl Fn()`: Used in iterator adapters like `map` and `filter` for zero-cost performance.
 - `Box<dyn Fn()>`: Common in GUI frameworks for event callbacks where flexibility is key.
 
-## Verification
-
+## Measuring it
 To quantify the performance difference, benchmark with `criterion`:
 
 ```rust

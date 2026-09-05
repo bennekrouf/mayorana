@@ -5,7 +5,9 @@ slug: string-str-mismatch-rust
 locale: en
 date: '2025-08-04'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Why passing a &str where a &String is expected fails to compile, what deref
+  coercion does and doesn't do, and how to fix the mismatch.
 
 tags:
   - rust
@@ -15,7 +17,7 @@ tags:
   - ownership
 ---
 
-# Why can’t you pass a &str directly to a function expecting a &String?
+# Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!
 
 In Rust, you cannot pass a `&str` directly to a function expecting a `&String` due to their distinct types, which ensures type safety and prevents assumptions about memory ownership. Below, I explain why this mismatch occurs and how to handle it effectively.
 
@@ -183,15 +185,14 @@ fn main() {
 
 **Bonus**: Also accepts `Cow<str>`, `Box<str>`, etc.
 
-## Key Takeaways
-
-✅ **Preferred**: Use `&str` in function arguments (flexible and zero-cost).  
-✅ **If stuck with `&String`**: Convert `&str` to `String` (allocates).  
-✅ **For APIs**: Use `AsRef<str>` or `impl Deref<Target=str>` for maximum compatibility.
+## The fix, in short
+**Preferred**: Use `&str` in function arguments (flexible and zero-cost).  
+**If stuck with `&String`**: Convert `&str` to `String` (allocates).  
+**For APIs**: Use `AsRef<str>` or `impl Deref<Target=str>` for maximum compatibility.
 
 **Why Rust Enforces This**:
 - Prevents accidental allocations or assumptions about memory ownership.
 - Encourages efficient, borrow-friendly APIs.
 
-**Try This**: What happens if you pass a `String` to `print_str` without `&`?  
-**Answer**: It moves ownership, causing a compile error since `print_str` expects a reference (`&str`), not an owned `String`.
+Passing a `String` to `print_str` without the `&` is a type error, not a move error — deref
+coercion only fires through a reference, so there's nothing for the compiler to coerce.

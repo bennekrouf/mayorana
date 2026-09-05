@@ -42,8 +42,7 @@ pthread_mutex_lock(&a);
 pthread_mutex_lock(&b);  // risque de deadlock si un autre thread a bloqué `b` puis `a`
 ```
 
-### En Rust :
-
+### En Rust
 ```rust
 let a = Arc::new(Mutex::new(()));
 let b = Arc::new(Mutex::new(()));
@@ -208,17 +207,17 @@ Mais : **Rust ne vérifie pas l’ordre de verrouillage**. Si un thread verrouil
 
 ## Outils dynamiques pour détecter les deadlocks
 
-Rust ne vérifie pas l'ordre des locks à la compilation, mais vous pouvez utiliser :
+Rust ne vérifie pas l'ordre des locks à la compilation, mais tu peux utiliser :
 
 - [`loom`](https://docs.rs/loom) – test d'interleavings concurrents
 - [`deadlock`](https://docs.rs/deadlock) – détection de deadlocks en mode debug
 - Analyseurs statiques (en développement)
 
 ## Résumé
-
 ✅ **Rust** garantit la sûreté mémoire et empêche les erreurs classiques de synchronisation  
-❌ **Les deadlocks** sont toujours possibles — à vous de gérer l’ordre des verrous  
-🚀 Structurez vos locks proprement, et testez avec des outils comme `loom`
+❌ **Les deadlocks** sont toujours possibles — à toi de gérer l’ordre des verrous  
+Structure tes locks proprement, et teste avec des outils comme `loom`
 
-**À tester :** Que se passe-t-il si deux threads tentent de `lock()` des `Mutex<T>` dans un ordre opposé ?  
-**Réponse :** Si l’ordre forme un cycle, votre programme risque de se bloquer. Rust ne l’empêche pas — mais il rend tout le reste bien plus sûr.
+Deux threads qui verrouillent la même paire de `Mutex<T>` dans l'ordre inverse finiront par se
+bloquer, et Rust compilera ça sans broncher. C'est la limite de ce que le système de types
+t'achète : il exclut les data races, pas les deadlocks.

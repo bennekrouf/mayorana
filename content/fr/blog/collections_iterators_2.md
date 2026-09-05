@@ -5,11 +5,14 @@ slug: iter-methods-rust
 locale: fr
 date: '2025-10-25'
 author: mayo
-excerpt: 'Collections (comme Vec), itérateurs (into_iter, collect) et concepts associés'
+excerpt: >-
+  into_iter(), iter() et iter_mut() diffèrent par ce qu'ils cèdent : la valeur, une
+  référence partagée ou une référence exclusive.
 tags:
   - rust
   - iterators
   - collections
+  - ownership
 ---
 
 # Quelles sont les différences entre into_iter(), iter() et iter_mut() ?
@@ -74,7 +77,7 @@ Ces trois méthodes sont fondamentales pour travailler avec des collections en R
 </svg>
 </div>
 
-## 1. `into_iter()` - Itérateur qui consomme l'ownership
+## 1. `into_iter()` - itérateur qui consomme l'ownership
 
 - **Prend l'ownership** de la collection (`self`).
 - **Produit** des valeurs possédées (`T`) lors de l'itération.
@@ -89,10 +92,10 @@ for s in vec.into_iter() {  // `vec` est déplacé ici
 ```
 
 **Quand l'utiliser** :
-- Quand vous avez besoin de transformer ou consommer la collection définitivement.
+- Quand tu as besoin de transformer ou consommer la collection définitivement.
 - Pour enchaîner des adaptateurs d'itérateurs qui nécessitent l'ownership (ex: `.filter().collect()`).
 
-## 2. `iter()` - Itérateur d'emprunt immuable
+## 2. `iter()` - itérateur d'emprunt immuable
 
 - **Emprunte** la collection de manière immuable (`&self`).
 - **Produit** des références (`&T`).
@@ -107,10 +110,10 @@ println!("{:?}", vec);      // OK : `vec` toujours valide
 ```
 
 **Quand l'utiliser** :
-- Quand vous avez seulement besoin d'un accès en lecture seule aux éléments.
+- Quand tu as seulement besoin d'un accès en lecture seule aux éléments.
 - Pour des opérations comme la recherche (`.find()`) ou l'inspection.
 
-## 3. `iter_mut()` - Itérateur d'emprunt mutable
+## 3. `iter_mut()` - itérateur d'emprunt mutable
 
 - **Emprunte** la collection de manière mutable (`&mut self`).
 - **Produit** des références mutables (`&mut T`).
@@ -125,7 +128,7 @@ println!("{:?}", vec);       // [2, 4, 6]
 ```
 
 **Quand l'utiliser** :
-- Quand vous avez besoin de modifier les éléments sans réallocation.
+- Quand tu as besoin de modifier les éléments sans réallocation.
 - Pour des mises à jour en masse (ex: appliquer des transformations).
 
 ## Résumé des différences clés
@@ -136,8 +139,7 @@ println!("{:?}", vec);       // [2, 4, 6]
 | `iter()`      | Emprunte      | `&T`       | ❌                  | ✅             |
 | `iter_mut()`  | Emprunt mut   | `&mut T`   | ✅                  | ✅             |
 
-## Pièges courants
-
+## Ce qui coince en pratique
 - **Déplacements accidentels avec `into_iter()`** :
   ```rust
   let vec = vec![1, 2];
@@ -202,7 +204,7 @@ Le second cas surprend, car rien ne *semble* encore emprunter. L'emprunt mutable
 <text x="386" y="180" class="mut">push() peut réallouer et invalider les pointeurs d'iter</text>
 <text x="386" y="223" class="mut">dernière utilisation d'iter — l'emprunt se termine ici</text>
 <!-- caption -->
-<text x="400" y="252" text-anchor="middle" class="mut">Déplacez le push avant l'appel à iter_mut(), ou après la boucle, et les deux versions compilent</text>
+<text x="400" y="252" text-anchor="middle" class="mut">Déplace le push avant l'appel à iter_mut(), ou après la boucle, et les deux versions compilent</text>
 </svg>
 </div>
 
@@ -231,5 +233,5 @@ Le second cas surprend, car rien ne *semble* encore emprunter. L'emprunt mutable
 - `iter()` et `iter_mut()` sont des zero-cost abstractions (juste des pointeurs).
 - `into_iter()` peut impliquer des déplacements (mais optimisés pour les primitives comme `i32`).
 
-**Essayez ceci** : Que se passe-t-il si vous appelez `iter_mut()` sur un `Vec<T>` où `T` n'implémente pas `Copy`, puis essayez de modifier les éléments ?  
-**Réponse** : Cela fonctionne ! L'itérateur produit des `&mut T`, permettant une mutation directe (ex: `*item = new_value`).
+`Copy` n'a rien à voir ici : `iter_mut()` donne des `&mut T` dans tous les cas, donc
+`*item = new_value` fonctionne sur un `Vec<String>` exactement comme sur un `Vec<i32>`.

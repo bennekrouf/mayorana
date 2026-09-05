@@ -79,3 +79,25 @@ export function DownloadButtons({ downloads }: { downloads: DownloadLink[] }) {
     </div>
   );
 }
+
+/**
+ * The download row for a single tool's own page. Same URLs as DownloadButtons,
+ * but labelled and full-size: on a detail page the download is the point of the
+ * page, not one control on a card competing with ten siblings.
+ */
+export function DownloadButtonsLarge({ downloads }: { downloads: DownloadLink[] }) {
+  return (
+    <div className="flex flex-wrap gap-3">
+      {downloads.map((dl) => (
+        <a
+          key={dl.os}
+          href={dl.href}
+          className={`inline-flex items-center gap-2.5 px-5 py-3 rounded-lg font-medium text-sm transition-colors ${osColors[dl.os]}`}
+        >
+          {osIcons[dl.os]}
+          {dl.label}
+        </a>
+      ))}
+    </div>
+  );
+}

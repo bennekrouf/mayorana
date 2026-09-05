@@ -5,7 +5,9 @@ slug: box-pointer-rust
 locale: en
 date: '2025-08-05'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  What Box<T> is for, what the extra indirection costs, and when a heap
+  allocation is the right call rather than a reflex.
 
 tags:
   - rust
@@ -187,16 +189,16 @@ std::thread::spawn(move || {
 let arr = Box::new([0u8; 10_000_000]); // Safe
 ```
 
-## Key Takeaways
-
-✅ **Use `Box<T>` when you need**:
+## When to reach for `Box`
+**Use `Box<T>` when you need**:
 - Heap allocation for large or recursive data.
 - Trait objects (`dyn Trait`).
 - Explicit ownership with a fixed-size pointer.
 
-🚫 **Avoid if**:
+**Avoid if**:
 - You only need a reference (`&T`).
 - You need shared ownership (use `Rc` or `Arc` instead).
 
-**Thought Experiment**: What happens if you try to `Box` a value already on the heap?  
-**Answer**: It’s fine—just adds another pointer indirection, as the `Box` will point to the new heap allocation.
+Boxing something that already lives on the heap is legal and occasionally useful, but you're
+buying a second indirection — the `Box` points at a fresh allocation holding the original
+handle, not at the original data.

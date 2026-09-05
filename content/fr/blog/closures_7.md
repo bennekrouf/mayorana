@@ -63,7 +63,7 @@ Quand on retourne une closure qui capture des variables (spécialement des réf�
 </svg>
 </div>
 
-## Stratégies Clés
+## Stratégies clés
 
 ### Utiliser move pour Transférer l'Ownership
 
@@ -76,7 +76,7 @@ fn create_closure() -> impl Fn() -> String {
 }
 ```
 
-### Annote les Lifetimes pour les Références Capturées
+### Annote les Lifetimes pour les références Capturées
 
 Si tu captures des références, lie explicitement le lifetime de la closure aux données d'entrée :
 
@@ -132,7 +132,7 @@ Ce seul `'a` fait trois choses à la fois : il nomme la durée de validité de l
 </svg>
 </div>
 
-### Evite de Retourner des Closures Capturant des Références Courtes
+### Evite de retourner des Closures Capturant des références courtes
 
 Les closures capturant des références à des variables locales ne peuvent pas échapper à leur scope :
 
@@ -144,7 +144,7 @@ fn invalid_closure() -> impl Fn() -> &str {
 }
 ```
 
-## Exemples Avancés de Gestion de Lifetimes
+## Exemples avancés de gestion de Lifetimes
 
 ### 1. Ownership vs Borrowing
 
@@ -233,7 +233,7 @@ fn complex_lifetimes_example() {
 }
 ```
 
-### 3. Closures avec État et Lifetimes
+### 3. Closures avec état et Lifetimes
 
 ```rust
 use std::collections::HashMap;
@@ -303,9 +303,9 @@ fn stateful_lifetimes_example() {
 }
 ```
 
-## Gestion des Erreurs de Lifetime
+## Gestion des erreurs de Lifetime
 
-### 1. Diagnostic des Problèmes Courants
+### 1. Diagnostic des problèmes courants
 
 ```rust
 // Exemple d'erreurs communes et leurs solutions
@@ -412,7 +412,7 @@ fn workaround_patterns() {
 }
 ```
 
-## Exemple: Gestion Sûre des Lifetimes
+## Exemple: gestion sûre des Lifetimes
 
 ```rust
 // ✅ Correct: Closure possède les données capturées
@@ -518,7 +518,7 @@ fn lifetime_annotations_example() {
 }
 ```
 
-## Cas d'Usage Réels
+## Cas d'Usage réels
 
 ### 1. Web Framework Handlers
 
@@ -627,29 +627,26 @@ fn config_example() {
 }
 ```
 
-## Points Clés
-
+## Règles pour retourner une closure
 ✅ **Utilise move pour transférer l'ownership des variables capturées.**  
 ✅ **Annote les lifetimes quand les closures capturent des références.**  
 🚫 **Evite de retourner des closures qui capturent des références courtes.**
 
-### Règles de Décision
-
+### En pratique
 1. **Données locales** → `move` avec ownership transfer
 2. **Références d'entrée** → Explicit lifetime annotations
 3. **Données partagées** → `Arc<T>` ou `Rc<T>`
 4. **Configuration** → Tied to config object lifetime
 5. **Temporary data** → Convert to owned before capture
 
-## Cas d'Usage Réel
+## Cas d'Usage réel
 
 Dans les frameworks web comme actix-web, les handlers retournent souvent des closures capturant des données de requête avec des lifetimes explicitement gérés.
 
-**Essaie Ceci** : Que se passe-t-il si tu retires `move` de `capture_with_lifetime` ?  
-**Réponse** : Erreur du compilateur ! La closure essaierait d'emprunter `s`, qui ne vit pas assez longtemps.
+Retire le `move` de `capture_with_lifetime` et ça ne compile plus : la closure emprunterait `s`,
+qui a déjà disparu au moment où on l'appelle.
 
-## Exemple Pratique Complet
-
+## Le tout mis ensemble
 ```rust
 use std::collections::HashMap;
 

@@ -14,7 +14,7 @@ tags:
 date: '2025-07-29'
 ---
 
-# How would you flatten a Vec<Vec<T>> into a Vec<T> using iterators? Compare performance with manual concatenation.
+# Flatten a Vec<Vec<T>> into a Vec<T> using iterators
 
 ## Flattening with Iterators
 
@@ -192,8 +192,7 @@ println!("manual: {:?}", start.elapsed());
 - Manual with pre-allocation is ~10–20% faster for large Vecs.
 - Iterator version is more concise and equally fast for small data.
 
-## When to Use Each
-
+## The approaches compared
 | Approach | Best For | Pitfalls |
 |----------|----------|----------|
 | Iterator | Readability, chaining operations | Slightly slower without pre-allocation |
@@ -208,18 +207,15 @@ let slices: Vec<&[i32]> = vec![&[1, 2], &[3, 4]];
 let flat: Vec<i32> = slices.iter().flatten().copied().collect();
 ```
 
-## Key Takeaways
-
-✅ **Use .flatten() for**:
+**Use .flatten() for**:
 - Clean, idiomatic code.
 - Chaining with other iterator adapters (e.g., `.filter()`).
 
-✅ **Use manual extend for**:
+**Use manual extend for**:
 - Large datasets where pre-allocation matters.
 - Cases where you already know the total length.
 
-🚀 **Always pre-allocate for manual concatenation of large collections!**
+**Always pre-allocate for manual concatenation of large collections!**
 
-**Try This**: How would you flatten a `Vec<Vec<T>>` while removing duplicates?
-
-**Answer**: Combine `.flatten()` with `.collect::<HashSet<_>>()`.
+To flatten and deduplicate in one pass, collect into a `HashSet` instead of a `Vec` —
+`.flatten().collect::<HashSet<_>>()` — and accept that you lose the ordering.

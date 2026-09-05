@@ -7,9 +7,9 @@ slug: string-literals-memory-rust-fr
 locale: fr
 date: '2025-11-28'
 author: mayo
-excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
+excerpt: >-
+  Les string literals vivent dans les données en lecture seule du binaire avec
+  une lifetime 'static — ce que ça implique pour l'allocation et la copie.
 tags:
   - rust
   - memory
@@ -62,8 +62,7 @@ Les string literals (`&str`) en Rust sont gérées efficacement, avec des caract
 </svg>
 </div>
 
-## String Literals (&str) en Mémoire
-
+## Les string literals (&str) en mémoire
 ### Localisation de Stockage
 
 - Les string literals (ex : `"hello"`) sont stockées dans le **segment de données read-only** (`.rodata`) du binaire compilé, pas sur le heap ou stack.
@@ -85,7 +84,7 @@ let s: &'static str = "hello"; // Pointe vers mémoire static
   - Mémoire Exécutable : `"hello"` stocké dans section `.rodata`, ex : à l'adresse `0x1000`.
   - Variable `s` : Un pointeur (`0x1000`) + length (`5`), stocké sur le stack.
 
-## Propriétés Clés
+## Propriétés clés
 
 | **Propriété** | **Explication** |
 |---------------|-----------------|
@@ -102,7 +101,7 @@ let s: &'static str = "hello"; // Pointe vers mémoire static
 | **Lifetime** | `'static` | Scopé au propriétaire |
 | **Coût d'Allocation** | Aucun (compile-time) | Allocation runtime |
 
-## Cas d'Usage Courants
+## Cas d'Usage courants
 
 ### Constantes
 ```rust
@@ -116,7 +115,7 @@ fn print(s: &str) { /* ... */ }
 print("world"); // Pas de conversion nécessaire
 ```
 
-## Pourquoi Pas Toujours Utiliser &'static str ?
+## Pourquoi pas Toujours utiliser &'static str ?
 
 - Limité aux **strings connues au moment de la compilation**.
 - Ne peut pas dynamiquement les créer ou modifier (contrairement à `String`).
@@ -127,7 +126,7 @@ let name = "Alice".to_string(); // Copie heap-allocated
 name.push_str(" and Bob");      // Mutabilité possible
 ```
 
-## Le Problème : Risque de Dangling Pointer
+## Le problème : risque de Dangling Pointer
 
 Retourner une référence (`&str`) vers un `String` local crée un dangling pointer, car le `String` est droppé quand la fonction se termine.
 
@@ -150,8 +149,7 @@ error[E0106]: missing lifetime specifier
   = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
 ```
 
-### Pourquoi Rust Rejette Ceci
-
+### Pourquoi Rust rejette ceci
 - **Règles d'Ownership** : `String` (`s`) est possédé par la fonction et droppé quand le scope se termine. Retourner `&s` créerait une référence vers mémoire libérée.
 - **Application de Lifetime** : Rust nécessite des lifetimes explicites pour assurer que les références sont toujours valides. Ici, la référence (`&str`) n'a pas de propriétaire d'où emprunter après que la fonction sort.
 
@@ -209,21 +207,21 @@ Le correctif ne peut prendre que trois formes, et elles diffèrent par qui poss�
 </svg>
 </div>
 
-#### Option 1 : Retourner un `String` Owned (Pas de Référence)
+#### Option 1 : retourner un `String` Owned (Pas de référence)
 ```rust
 fn return_owned() -> String {  // Transfère ownership à l'appelant
     String::from("hello")      // Pas de référence, pas de problème lifetime
 }
 ```
 
-#### Option 2 : Retourner un `&'static str` (String Literal)
+#### Option 2 : retourner un `&'static str` (String Literal)
 ```rust
 fn return_static() -> &'static str {  // Vit pour toujours dans binaire
     "hello"                          // Mémoire static (pas heap)
 }
 ```
 
-#### Option 3 : Utiliser `Cow<str>` pour Flexibilité
+#### Option 3 : utiliser `Cow<str>` pour flexibilité
 ```rust
 use std::borrow::Cow;
 
@@ -236,20 +234,19 @@ fn return_cow(is_heap: bool) -> Cow<'static, str> {
 }
 ```
 
-## Points Clés
 
-✅ **String literals** :
+**String literals** :
 - Vivent en mémoire static (partie du binaire).
 - Sont immutables et zero-cost.
 - Ont un lifetime `'static`.
 
-🚀 **Quand les utiliser** :
+**Quand les utiliser** :
 - Pour strings fixes, read-only (ex : messages, constantes).
 - Pour éviter allocations dans APIs de fonction (`&str` plutôt que `&String`).
 
-✅ **Ne retourne jamais `&str` emprunté d'un `String` local**—c'est impossible en Rust safe.
+**Ne retourne jamais `&str` emprunté d'un `String` local**—c'est impossible en Rust safe.
 
-✅ **Solutions** :
+**Solutions** :
 - Retourner `String` (transfert d'ownership).
 - Utiliser `&'static str` (literals seulement).
 - Utiliser `Cow<str>` pour choix dynamiques.
@@ -261,6 +258,5 @@ let slice = &s[..]; // Pointe vers heap, pas mémoire static !
 ```
 Le compilateur peut élider les copies si le contenu est connu statiquement.
 
-**Expérimente** : Que se passe-t-il si tu essaies de retourner `&s[..]` au lieu de `&s` ?
-
-**Réponse** : Non—c'est le même problème ! La slice pointe encore vers le `String` condamné.
+Remplacer `&s` par `&s[..]` n'aide pas. La slice pointe toujours dans le même `String` qui est sur
+le point d'être libéré ; tu as changé le type, pas la lifetime.

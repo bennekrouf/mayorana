@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Designing cache-aligned data structures in multi-threaded Rust applications to
   prevent false sharing and optimize performance for large dataset processing
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
@@ -16,7 +14,7 @@ tags:
 date: '2025-11-04'
 ---
 
-# Cache Line Awareness: Suppose you're optimizing a multi-threaded Rust application that processes large datasets. How would you align data structures to cache lines, and what Rust features or techniques would you use to minimize false sharing?
+# Align data structures to cache lines
 
 In a multi-threaded Rust application processing large datasets, cache line awareness is key to maximizing performance. CPU cache lines (typically 64 bytes on modern x86_64 and ARM) dictate how data is fetched, and false sharing—where threads modify adjacent data on the same cache line—can tank throughput due to constant cache invalidation. I'd align data structures to cache lines and use Rust's features to eliminate false sharing, optimizing a multi-threaded workload.
 
@@ -221,8 +219,7 @@ thread_local! {
 - **Size Check**: `std::mem::size_of::<CacheAlignedCounter>()` returns 64, confirming alignment.
 - **Layout**: Avoid packing (e.g., `#[repr(packed)]`) unless explicitly needed—padding is our friend here.
 
-## Verification
-
+## Confirming it worked
 ### Profiling with perf
 Run `perf stat -e cache-misses,L1-dcache-load-misses ./target/release/app` on both versions:
 - **Naive**: High L1-dcache-load-misses (e.g., 10M) due to false sharing.
@@ -243,6 +240,5 @@ Expect 2-5x speedup (e.g., 50ms to 10ms) on a 4-core CPU.
 ### Memory Layout
 `std::mem::align_of::<CacheAlignedCounter>()` confirms 64-byte alignment.
 
-## Conclusion
-
+## What to take back to your own code
 I'd align data with `#[repr(align(64))]` and pad to 64 bytes, as in this counter example, ensuring each thread operates on its own cache line. Rust's type system and attributes make this precise and safe, while profiling with perf validates reduced cache misses. This eliminates false sharing, unlocking true parallelism in a multi-threaded dataset processor.

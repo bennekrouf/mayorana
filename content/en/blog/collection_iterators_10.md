@@ -15,7 +15,7 @@ tags:
 date: '2025-07-14'
 ---
 
-# When iterating over a Vec, why might you use .into_iter() instead of .iter()? What ownership implications does this have?
+# Implications of iterating over a Vec with .into_iter() instead of .iter()
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="ci10-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="into_iter consumes the Vec so it cannot be reused afterward, while iter borrows it and leaves it available for further use">
@@ -65,8 +65,7 @@ date: '2025-07-14'
 </svg>
 </div>
 
-## Key Differences
-
+## `.into_iter()` vs `.iter()`
 | .into_iter() | .iter() |
 |--------------|---------|
 | Consumes the Vec (takes ownership). | Borrows the Vec immutably. |
@@ -206,17 +205,16 @@ let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 - **Zero-cost for primitives (i32, bool)**: `.into_iter()` and `.iter()` compile to the same assembly if `T: Copy`.
 - **Avoids allocations** when chaining adapters (e.g., `.map().filter()`).
 
-## Key Takeaways
-
-✅ **Use .into_iter() to**:
+## Choosing between them
+**Use .into_iter() to**:
 - Move elements out of a Vec.
 - Optimize performance with owned data.
 - Destructively transform collections.
 
-🚫 **Avoid if you need to**:
+**Avoid if you need to**:
 - Reuse the Vec after iteration.
 - Share references across threads (`&T` is Sync; `T` might not be).
 
-**Try This**: What happens if you call `.into_iter()` on a Vec and then try to use the original Vec in a parallel iterator (e.g., rayon::iter)?
-
-**Answer**: Compile-time error! The Vec is already consumed. Use `.par_iter()` instead for parallel read-only access.
+A trap worth knowing about: call `.into_iter()` on a `Vec` and then hand the same `Vec` to
+`rayon` and you get a compile error, because the first call consumed it. For parallel
+read-only work reach for `.par_iter()` and never give up ownership in the first place.

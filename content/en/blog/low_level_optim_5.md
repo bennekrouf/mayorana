@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Low-level optimization in Rust, focusing on using inline assembly for
   performance-critical tasks
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
@@ -259,18 +257,17 @@ As a final note, resist the temptation to reach for `asm!` when:
 - Portability matters more than a micro-optimization.
 - You're writing library code for public consumption without extensive CI across multiple targets.
 
-## Conclusion
-
+## Before you reach for `asm!`
 Inline assembly in Rust is a precision tool — powerful, sharp, and rarely needed. It shines in niche scenarios where you must exploit unique CPU instructions, hand-tune pipelines, or interface with legacy hardware. By confining `unsafe` blocks, documenting invariants, providing safe abstractions, and testing thoroughly, you can harness that power without compromising Rust's safety guarantees.
 
 **Golden rules**:
 
-✅ **Measure first** — prove the compiler is losing.
+**Measure first** — prove the compiler is losing.
 
-✅ **Isolate** — hide assembly behind safe, tested APIs.
+**Isolate** — hide assembly behind safe, tested APIs.
 
-✅ **Fallback** — always provide a portable Rust version.
+**Fallback** — always provide a portable Rust version.
 
-✅ **Document** — explain *why* assembly is necessary, not just *how*.
+**Document** — explain *why* assembly is necessary, not just *how*.
 
 When followed, inline assembly becomes not a liability, but a legitimate optimization layer in your performance toolkit.

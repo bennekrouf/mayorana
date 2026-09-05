@@ -5,7 +5,9 @@ locale: "en"
 slug: closure-parameter-rust
 date: '2025-07-07'
 author: mayo
-excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
+excerpt: >-
+  Taking and returning closures: when impl Fn is enough, when you need Box<dyn
+  Fn>, and what each choice costs at the call site.
 tags:
   - rust
   - closures
@@ -186,8 +188,7 @@ fn main() {
 }
 ```
 
-## Key Differences
-
+## `impl Fn` vs `Box<dyn Fn>`
 | Approach            | `impl Fn` (Static)         | `Box<dyn Fn>` (Dynamic)    |
 |---------------------|----------------------------|----------------------------|
 | **Dispatch**        | Monomorphized (zero-cost)  | Vtable lookup (runtime cost) |
@@ -221,13 +222,11 @@ fn main() {
   }
   ```
 
-## Key Takeaways
-
-✅ **Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  
-✅ **Return Type**:  
+## Choosing the signature
+**Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  
+**Return Type**:  
 - `impl Fn` for static dispatch (fast, fixed type).  
 - `Box<dyn Fn>` for dynamic dispatch (flexible, multiple types).  
-🚀 Prefer `impl Fn` unless you need runtime polymorphism.
+Prefer `impl Fn` unless you need runtime polymorphism.
 
-**Try This**: What happens if you return a `FnOnce` closure?  
-**Answer**: It’s allowed, but the caller can only invoke it once!
+Returning a `FnOnce` is allowed — the caller just gets one shot at calling it.

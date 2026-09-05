@@ -5,7 +5,9 @@ slug: stack-heap-allocation-rust
 locale: en
 date: '2025-08-01'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  What actually decides whether a value lands on the stack or the heap in Rust,
+  and what each choice costs you at runtime.
 
 tags:
   - rust
@@ -15,7 +17,7 @@ tags:
   - allocation
 ---
 
-# What is the difference between stack and heap allocation in Rust?
+# Stack vs. Heap in Rust: Where Does Your Data Live?
 
 Rust uses stack and heap allocation to manage memory, with distinct characteristics for each. Understanding their differences and how Rust decides where to allocate data is key to writing efficient and safe code.
 
@@ -152,11 +154,10 @@ let s2 = s1; // Moves ownership (heap data not copied)
 </svg>
 </div>
 
-## Key Takeaways
-
-✅ **Stack**: Fast, fixed-size, automatic.  
-✅ **Heap**: Flexible, dynamic, manual (via smart pointers).  
-✅ Rust defaults to stack but uses heap for growable/unknown-size data.
+## Where your data actually lives
+**Stack**: Fast, fixed-size, automatic.  
+**Heap**: Flexible, dynamic, manual (via smart pointers).  
+Rust defaults to stack but uses heap for growable/unknown-size data.
 
 **Follow-Up**: When would you force heap allocation?  
 - For large structs (avoid stack overflow).  

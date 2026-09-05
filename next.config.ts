@@ -55,9 +55,23 @@ const nextConfig = {
     ];
   },
 
-  // Simplified redirects
+  // Retired duplicate blog posts. Each of these was published twice — the
+  // survivor is the fuller version — so the retired URL 301s to it rather
+  // than 404ing for anyone holding the old link.
   async redirects() {
-    return [];
+    return [
+      { source: '/fr/blog/vec-new-vs-with-capacity-fr', destination: '/fr/blog/vec-new-vs-with-capacity', permanent: true },
+      { source: '/fr/blog/iter-methods-rust-fr', destination: '/fr/blog/iter-methods-rust', permanent: true },
+      { source: '/fr/blog/collect-method-rust-fr', destination: '/fr/blog/collect-method-rust', permanent: true },
+      { source: '/fr/blog/vec-push-vs-with-capacity-performance-duplicate-fr', destination: '/fr/blog/vec-push-vs-with-capacity-performance', permanent: true },
+      { source: '/fr/blog/efficient-duplicate-removal-vec-fr', destination: '/fr/blog/efficient-duplicate-removal-vec', permanent: true },
+      { source: '/fr/blog/box-slice-vs-vec-differences-fr', destination: '/fr/blog/box-slice-vs-vec-differences', permanent: true },
+      { source: '/fr/blog/vec-drain-vs-truncate-clear-fr', destination: '/fr/blog/vec-drain-vs-truncate-clear', permanent: true },
+      { source: '/fr/blog/vec-retain-vs-filter-collect-fr', destination: '/fr/blog/vec-retain-vs-filter-collect', permanent: true },
+      { source: '/fr/blog/flatten-vec-iterators-performance-fr', destination: '/fr/blog/flatten-vec-iterators-performance', permanent: true },
+      { source: '/en/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/en/blog/vec-push-vs-with-capacity-performance', permanent: true },
+      { source: '/fr/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/fr/blog/vec-push-vs-with-capacity-performance', permanent: true },
+    ];
   },
 
   // Simplified rewrites

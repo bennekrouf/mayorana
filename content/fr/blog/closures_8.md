@@ -1,6 +1,6 @@
 ---
 id: closure-performance-overhead-rust-fr
-title: Utiliser des closures versus des functions régulières ?
+title: 'Closures ou fonctions : ce que coûte vraiment une closure'
 slug: closure-performance-overhead-rust-fr
 locale: fr
 author: mayo
@@ -18,9 +18,9 @@ tags:
 date: '2025-11-10'
 ---
 
-# Quel est l'overhead de performance d'utiliser des closures versus des functions régulières en Rust ? Quand les closures peuvent-elles être moins efficaces ?
+# Closures ou fonctions : ce que coûte vraiment une closure
 
-## Overhead de Performance
+## Overhead de performance
 
 Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâce au static dispatch et aux optimisations du compilateur. Cependant, des scénarios spécifiques peuvent introduire des coûts :
 
@@ -61,7 +61,7 @@ Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâc
 | Heap Allocation | Seulement si boxed (Box&lt;dyn Fn&gt;) | Jamais |
 | Optimisation | Inlined agressivement | Inlined agressivement |
 
-## Quand les Closures Peuvent Être Moins Efficaces
+## Quand les Closures Peuvent Être moins Efficaces
 
 ### Trait Objects Heap-Allocated (Box&lt;dyn Fn&gt;)
 
@@ -76,8 +76,7 @@ let closures: Vec<Box<dyn Fn(i32) -> i32>> = vec![
 ]; // Heap-allocated, plus lent à appeler
 ```
 
-### Environnements Capturés Volumineux
-
+### Environnements capturés volumineux
 Les closures stockant de gros structs (ex : buffer 1KB) augmentent l'usage mémoire et peuvent inhiber l'inlining :
 
 ```rust
@@ -161,7 +160,7 @@ Les closures génériques avec beaucoup d'instanciations (ex : dans une hot loop
 (0..1_000).for_each(|i| { /* Closure unique par itération */ });
 ```
 
-## Analyse Performance Détaillée
+## Analyse performance détaillée
 
 ### 1. Benchmarks Static vs Dynamic Dispatch
 
@@ -205,7 +204,7 @@ fn benchmark_dispatch() {
 }
 ```
 
-### 2. Impact de la Taille des Captures
+### 2. Impact de la taille des captures
 
 ```rust
 use std::mem;
@@ -235,7 +234,7 @@ fn capture_size_analysis() {
 }
 ```
 
-### 3. Memory Layout et Cache Performance
+### 3. Memory Layout et Cache performance
 
 ```rust
 // Test cache locality avec différents patterns
@@ -269,7 +268,7 @@ fn cache_performance_test() {
 }
 ```
 
-## Zero-Cost Abstractions en Pratique
+## Zero-Cost abstractions en pratique
 
 ### Static Dispatch (impl Fn)
 
@@ -384,7 +383,7 @@ fn hot_path_optimizations() {
 }
 ```
 
-### 3. Avoiding Allocation in Loops
+### 3. Avoiding allocation in Loops
 
 ```rust
 // Éviter les allocations dans les boucles
@@ -426,7 +425,7 @@ fn avoid_allocations() {
 
 ## Code Size et Binary Bloat
 
-### 1. Monomorphization Impact
+### 1. Monomorphization impact
 
 ```rust
 // Excessive monomorphization peut gonfler le binaire
@@ -571,8 +570,7 @@ fn memory_profiling() {
 }
 ```
 
-## Points Clés
-
+## Ce que coûte vraiment une closure
 ✅ **Utilise `impl Fn` pour un static dispatch zero-cost.**  
 🚫 **Evite `Box<dyn Fn>` dans le code critique en performance.**  
 ⚠️ **Optimise les captures volumineuses : Préfére le borrowing ou minimise les données capturées.**
@@ -585,15 +583,15 @@ fn memory_profiling() {
 4. **Profiling** → Mesure avant d'optimiser
 5. **Binary size matters** → Evite excessive monomorphization
 
-## Impact Réel
+## Impact réel
 
 - **rayon** utilise les closures avec static dispatch pour les iterators parallèles (pas d'overhead).
 - **Les frameworks GUI** comme iced exploitent les closures pour les event handlers efficacement.
 - **serde** utilise les closures pour la sérialisation zero-cost.
 
-**Essaie Ceci** : Compare la sortie assembly d'une closure et d'une fonction avec `cargo rustc -- --emit asm` !
-
-## Exemple Pratique Complet
+Si tu veux constater l'abstraction à coût nul plutôt que me croire sur parole :
+`cargo rustc -- --emit asm`, puis compare la closure et la fonction équivalente.
+## Exemple pratique complet
 
 ```rust
 use std::time::Instant;

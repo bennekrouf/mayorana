@@ -86,12 +86,12 @@ fn main() {
 }
 ```
 
-### Mécaniques Clés
+### Mécaniques clés
 
 - **Capture de Closure** : Le mot-clé `move` assure que la closure possède `x`, évitant les problèmes de lifetime après que `make_adder` se termine. Sans `move`, emprunter `x` causerait une erreur de compilation à cause du scope de `x` qui se termine.
 - **Type de Retour** : `impl Fn(i32) -> i32` spécifie que la closure implémente le trait `Fn`. Chaque closure a un type anonyme unique, donc `impl Trait` est utilisé pour l'abstraire.
 
-## Exemple Avancé : Retour de Closure Conditionnel
+## Exemple avancé : retour de Closure Conditionnel
 
 Pour un comportement dynamique, retourne un `Box<dyn Fn>` pour supporter différentes closures au runtime :
 
@@ -119,7 +119,7 @@ fn main() {
 
 Ceci utilise le dynamic dispatch pour gérer des types de closures variés, idéal pour des systèmes de type plugin.
 
-## Exemples Avancés de HOFs
+## Exemples avancés de HOFs
 
 ### 1. Composition de Functions
 
@@ -549,7 +549,7 @@ fn pipeline_example() {
 }
 ```
 
-## Performance et Optimisations
+## Performance et optimisations
 
 ### 1. Static vs Dynamic Dispatch
 
@@ -590,7 +590,7 @@ fn performance_comparison() {
 }
 ```
 
-### 2. Éviter les Allocations Inutiles
+### 2. Éviter les allocations inutiles
 
 ```rust
 // ❌ Mauvais - allocations répétées
@@ -608,15 +608,13 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 }
 ```
 
-## Points Clés
+## Ce que les higher-order functions apportent
+**Les HOFs permettent des patterns flexibles et réutilisables** en traitant les functions comme des valeurs de première classe.  
+**Utilise `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
+**Utilise `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
+**Utilise `move`** pour assurer que les closures possèdent les données capturées quand retournées.
 
-✅ **Les HOFs permettent des patterns flexibles et réutilisables** en traitant les functions comme des valeurs de première classe.  
-✅ **Utilise `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
-✅ **Utilise `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
-🚀 **Utilise `move`** pour assurer que les closures possèdent les données capturées quand retournées.
-
-### Règles de Décision
-
+### Ce qui guide le choix
 1. **Performance critique** → `impl Fn` (static dispatch)
 2. **Comportement dynamique** → `Box<dyn Fn>` (dynamic dispatch)
 3. **Composition simple** → Functions inline
@@ -625,10 +623,10 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 
 **Exemple Réel** : Les HOFs sont centrales à l'API iterator de Rust (`map`, `filter`) et aux frameworks async comme `tokio`, où les closures définissent le comportement des tâches.
 
-**Expérimente** : Modifie `make_adder` pour retourner une closure qui multiplie au lieu d'additionner.  
-**Réponse** : Le compilateur l'accepte parfaitement, car les deux closures implémentent `Fn(i32) -> i32`, maintenant la cohérence de type.
+Change `make_adder` pour multiplier au lieu d'additionner : rien d'autre ne bouge. Les deux
+closures sont des `Fn(i32) -> i32`, et c'est tout le contrat que voit l'appelant.
 
-## Exemple Pratique Complet
+## Exemple pratique complet
 
 ```rust
 use std::collections::HashMap;

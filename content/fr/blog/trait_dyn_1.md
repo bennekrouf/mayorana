@@ -17,7 +17,7 @@ tags:
   - dispatch
 ---
 
-# En quoi les traits Rust diffèrent-ils des interfaces dans des langages comme Java ou C#, et comment les utiliser pour définir un comportement partagé pour des types dans une bibliothèque critique en performance ?
+# Rust Traits vs. Interfaces Java/C# : Comportement partagé bien fait
 
 Les traits Rust et les interfaces définissent tous deux un comportement partagé, mais diffèrent fondamentalement en conception et exécution, particulièrement dans des contextes critiques en performance.
 
@@ -66,8 +66,7 @@ Les traits Rust et les interfaces définissent tous deux un comportement partag�
 </svg>
 </div>
 
-## Différences clés
-
+## Traits et interfaces, côte à côte
 | Aspect | Traits Rust | Interfaces Java/C# |
 |--------|-------------|-------------------|
 | **Dispatch** | Dispatch statique (generics) par défaut, dynamique (`dyn`) sur demande | Polymorphisme à l'exécution via vtables |
@@ -210,11 +209,11 @@ Chaque appel `process` passe par une vtable, empêchant la fusion de boucle et a
 - **Supertraits** : Composent le comportement sans complexité d'héritage
 - **Dispatch dynamique** : Utilise `Box<dyn PacketHandler>` quand l'effacement de type est nécessaire
 
-## Points clés à retenir
+## Traits et interfaces, en bref
+**Traits Rust** : Résolution pendant la compilation, abstraction à coût zéro, dispatch statique par défaut  
+**Interfaces Java/C#** : Polymorphisme à l'exécution, overhead vtable, dynamique par nature  
+Utilise les traits pour du code critique en performance où le dispatch statique élimine l'overhead
 
-✅ **Traits Rust** : Résolution pendant la compilation, abstraction à coût zéro, dispatch statique par défaut  
-✅ **Interfaces Java/C#** : Polymorphisme à l'exécution, overhead vtable, dynamique par nature  
-🚀 Utilise les traits pour du code critique en performance où le dispatch statique élimine l'overhead
-
-**Essaie ça :** Que se passe-t-il si tu utilises `&dyn PacketHandler` au lieu des generics ?  
-**Réponse :** Tu obtiens un dispatch dynamique avec overhead vtable—mesure la différence de performance dans tes chemins chauds !
+Passer à `&dyn PacketHandler` t'achète un binaire plus petit et une seule instance de la fonction,
+et te coûte un appel indirect que l'optimiseur ne traverse pas. Que ça compte ou non dépend
+entièrement de la chaleur du chemin — donc mesure avant de trancher.

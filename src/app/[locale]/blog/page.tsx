@@ -10,10 +10,32 @@ import {
 // import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
+import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+// Metadata lives on the page rather than in a layout because the listing is
+// paginated with ?page=, and only a page receives searchParams. Page 2 has to
+// canonicalise to itself: pointing every page at /blog would tell Google that
+// the only listing worth indexing is the first one.
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const page = parseInt((await searchParams).page as string) || 1;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  const headersList = await headers();
+  const isSwissRust = (headersList.get('x-hostname') || '').includes('swissrust');
+
+  return buildMetadata({
+    locale,
+    path: page > 1 ? `/blog?page=${page}` : '/blog',
+    title: page > 1 ? `${t('blog_title')} — ${page}` : t('blog_title'),
+    description: isSwissRust ? t('blog_description_swissrust') : t('blog_description'),
+  });
 }
 
 export default async function BlogPage({ params, searchParams }: Props) {

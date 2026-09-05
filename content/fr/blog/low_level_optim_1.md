@@ -16,7 +16,7 @@ tags:
   - cache
 ---
 
-# Optimisation Layout Mémoire : Comment utiliserais-tu l'attribut repr de Rust pour optimiser le layout mémoire d'une struct pour l'efficacité cache ?
+# Rust repr : Optimiser la Mémoire des Structs pour l'Efficacité Cache
 
 L'attribut `repr` contrôle le layout mémoire des structs, ce qui est critique pour l'optimisation bas niveau dans les systèmes à haut débit où la localité cache détermine les performances.
 
@@ -79,8 +79,7 @@ L'attribut `repr` contrôle le layout mémoire des structs, ce qui est critique 
 </svg>
 </div>
 
-## Comment Ils Fonctionnent
-
+## Comment ils fonctionnent
 **`repr(C)`** : Impose un layout compatible C avec des champs ordonnés séquentiellement comme déclarés, ajoutant du padding pour aligner chaque champ à son alignement naturel (ex : `u32` s'aligne sur 4 octets). Assure une interopérabilité prévisible et s'aligne typiquement bien avec les lignes de cache CPU (souvent 64 octets).
 
 **`repr(packed)`** : Supprime tout padding, empaquetant les champs étroitement ensemble indépendamment de l'alignement. Minimise l'usage mémoire mais peut mener à des accès mémoire non-alignés, qui sont plus lents sur la plupart des architectures.
@@ -200,8 +199,7 @@ Si j'utilisais `repr(packed)` (13 octets), j'économiserais 3 octets par paquet,
 </svg>
 </div>
 
-## Considérations Avancées
-
+## Les cas limites
 ### Techniques d'Optimisation Layout
 
 ```rust
@@ -248,7 +246,7 @@ struct PackedMetadata {
 }
 ```
 
-### Mesures et Validation
+### Mesures et validation
 
 ```rust
 // Validation des tailles et alignements
@@ -308,7 +306,7 @@ perf mem record ./app
 perf mem report
 ```
 
-## Stratégies par Domaine d'Application
+## Stratégies par domaine d'Application
 
 ### Systèmes Embarqués
 ```rust
@@ -323,7 +321,7 @@ struct SensorReading {
 // Total: 8 octets vs 12 avec repr(C)
 ```
 
-### Traitement Haute Performance
+### Traitement haute performance
 ```rust
 // Priorité: maximiser le débit
 #[repr(C, align(64))]
@@ -401,18 +399,18 @@ mod layout_tests {
 }
 ```
 
-## Considérations Avancées
+## Considérations avancées
 
 - Utilise des outils de profiling comme `perf` pour confirmer les réductions de cache miss
 - Considère `#[repr(C, packed)]` pour un layout compatible C mais packed
 - La réorganisation de champs peut optimiser l'usage de ligne de cache sans changer `repr`
 - Teste les compromis sur le matériel cible, particulièrement ARM vs x86_64
 
-## Points Clés à Retenir
+## Les règles de layout à retenir
+**`repr(C)`** : Choisis pour du code critique en performance où l'efficacité cache compte  
+**`repr(packed)`** : Utilise pour des scénarios contraints en mémoire avec accès peu fréquent  
+Profile les performances cache avant et après pour valider les optimisations
 
-✅ **`repr(C)`** : Choisis pour du code critique en performance où l'efficacité cache compte  
-✅ **`repr(packed)`** : Utilise pour des scénarios contraints en mémoire avec accès peu fréquent  
-🚀 Profile les performances cache avant et après pour valider les optimisations
-
-**Essaie ça :** Que se passe-t-il si tu accèdes à un champ dans une struct `repr(packed)` via un pointeur brut ?  
-**Réponse :** L'accès non-aligné via des pointeurs bruts peut causer des panics sur des architectures strictes ou des pénalités de performance—mesure toujours sur ta plateforme cible !
+Lire un champ `repr(packed)` via un pointeur brut, c'est là que ça cesse d'être gratuit. Sur x86
+tu paies une pénalité ; sur les architectures qui exigent l'alignement, tu prends une faute.
+Mesure sur la cible que tu livres, pas sur ton portable.

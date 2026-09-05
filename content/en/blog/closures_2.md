@@ -5,7 +5,9 @@ locale: "en"
 slug: fn-traits-rust
 date: '2025-07-07'
 author: mayo
-excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
+excerpt: >-
+  Fn, FnMut and FnOnce aren't traits you pick — the compiler derives them from
+  how the closure uses what it captured.
 tags:
   - rust
   - closures
@@ -193,12 +195,11 @@ let closure = move || println!("{}", s); // `s` is moved into the closure
 | `FnMut` | Zero-cost     | Stateful transformations       |
 | `FnOnce`| May allocate  | One-time operations (e.g., spawning threads) |
 
-## Key Takeaways
+## Which trait you actually get
+**`Fn`**: Read-only, reusable.  
+**`FnMut`**: Mutable, reusable.  
+**`FnOnce`**: Owned, single-use.  
+`move` forces ownership but doesn’t change the trait—usage determines the trait.
 
-✅ **`Fn`**: Read-only, reusable.  
-✅ **`FnMut`**: Mutable, reusable.  
-✅ **`FnOnce`**: Owned, single-use.  
-🚀 `move` forces ownership but doesn’t change the trait—usage determines the trait.
-
-**Try This:** What happens if a closure captures a mutable reference but doesn’t mutate it?  
-**Answer:** It still implements `FnMut` (since it *could* mutate), but you can pass it to a function expecting `FnMut`.
+A closure that captures `&mut` but never mutates still only implements `FnMut`. The trait
+follows what the capture *permits*, not what the body happens to do with it.
