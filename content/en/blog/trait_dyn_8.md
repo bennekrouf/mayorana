@@ -1,8 +1,6 @@
 ---
 id: associated-types-io-driver-api
-title: >-
-  Design a type-safe API for a low-level I/O driver with associated
-  type not generic
+title: 'Associated types vs. generics in a low-level I/O driver API'
 slug: associated-types-io-driver-api
 author: mayo
 locale: en
@@ -10,8 +8,6 @@ excerpt: >-
   Utilizing associated types in Rust traits to design flexible, type-safe APIs
   for low-level I/O drivers and comparing advantages over generic type
   parameters
-content_focus: Associated Types
-technical_level: Expert technical discussion
 
 tags:
   - rust
@@ -23,7 +19,7 @@ tags:
 date: '2025-08-16'
 ---
 
-# How would you use associated types in a trait to design a flexible, type-safe API for a low-level I/O driver ?
+# Associated types vs. generics in a low-level I/O driver API
 
 In a low-level I/O driver for an embedded system, I'd use associated types in a Rust trait to define a flexible, type-safe API that ties specific input/output types to each driver implementation. Unlike generic type parameters, associated types provide a cleaner, more constrained design, enhancing clarity and maintaining performance. Here's how I'd do it with an example.
 
@@ -249,13 +245,11 @@ let result = process_io(&mut uart, 42); // Works with u8
 </svg>
 </div>
 
-
 ### Flexibility
 
 Add associated types for errors or configs if needed (e.g., `type Error`).
 
-## Verification
-
+## Checking it compiles as intended
 ### Compile Check
 
 Ensure type mismatches fail:
@@ -277,7 +271,5 @@ fn bench(c: &mut Criterion) {
 ```
 
 Expect minimal cycles, matching raw hardware access.
-
-## Conclusion
 
 I'd use associated types in `IoDriver` to fix `Input` and `Output` per driver, as with `UartDriver`, ensuring type safety and a clear API over generics' over-flexibility. This avoids monomorphization bloat and runtime conversions, delivering efficient, inlined code for an embedded I/O system. This design balances usability and performance, leveraging Rust's type system for robust drivers.

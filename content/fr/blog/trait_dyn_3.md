@@ -1,15 +1,13 @@
 ---
 id: dispatch-performance-rust
-title: >-
-  fn process<T: MyTrait>(x: T)) VS utiliser dyn MyTrait pour le dispatch
-  dynamique.
+title: 'Borne de trait ou dyn Trait ? Dispatch statique et dynamique comparés'
 slug: dispatch-performance-rust
 locale: fr
 date: '2025-10-22'
 author: mayo
-excerpt: Dispatch Statique vs. Dynamique
-content_focus: Dispatch Statique vs. Dynamique
-technical_level: Discussion technique experte
+excerpt: >-
+  Les génériques avec borne de trait compilent en dispatch statique ; dyn Trait
+  compile en lookup de vtable. Ce que chacun coûte, et comment trancher.
 tags:
   - rust
   - dispatch
@@ -18,7 +16,7 @@ tags:
   - traits
 ---
 
-# Quel est le compromis de performance entre utiliser une fonction générique avec un trait bound (ex : fn process<T: MyTrait>(x: T)) versus utiliser dyn MyTrait pour le dispatch dynamique, et dans quels scénarios préférerais-tu l'un ou l'autre ?
+# Borne de trait ou dyn Trait ? Dispatch statique et dynamique comparés
 
 En Rust, le **dispatch statique** (via les generics avec trait bounds) et le **dispatch dynamique** (via `dyn Trait`) offrent des profils de performance distincts, critiques pour des systèmes comme les processeurs de données temps réel. Le dispatch statique exploite la monomorphization pour la vitesse, tandis que le dispatch dynamique utilise des vtables pour la flexibilité. Ci-dessous, je compare les deux avec un exemple et expose quand choisir chacun basé sur la performance, flexibilité et maintenabilité.
 
@@ -96,8 +94,7 @@ impl EventProcessor for LogProcessor {
 }
 ```
 
-### Version Dispatch Statique
-
+### Version à dispatch statique
 ```rust
 fn process_static<T: EventProcessor>(processor: &mut T, events: &[u32]) -> u32 {
     let mut result = 0;
@@ -116,8 +113,7 @@ fn main() {
 }
 ```
 
-### Version Dispatch Dynamique
-
+### Version à dispatch dynamique
 ```rust
 fn process_dynamic(processor: &mut dyn EventProcessor, events: &[u32]) -> u32 {
     let mut result = 0;
@@ -138,9 +134,9 @@ fn main() {
 }
 ```
 
-## Compromis de Performance
+## Compromis de performance
 
-### Dispatch Statique
+### Dispatch statique
 
 - **Mécanisme** : Le compilateur fait la monomorphization de `process_static` pour chaque type (ex : `FastProcessor`, `LogProcessor`), créant des fonctions séparées comme `process_static_fast` et `process_static_log`.
 - **Vitesse** : Aucun overhead à l'exécution—les appels à `process` sont inlinés, activant les optimisations (ex : unrolling de boucle, constant folding). Sur x86_64, ça pourrait compiler vers une boucle `add` serrée sans jumps.
@@ -156,7 +152,7 @@ fn main() {
     jnz loop
   ```
 
-### Dispatch Dynamique
+### Dispatch dynamique
 
 - **Mécanisme** : `dyn EventProcessor` utilise une vtable—un pointeur vers la table de méthodes du type—stockée avec l'objet (ex : `Box<dyn EventProcessor>` fait 16 octets : 8 pour les données, 8 pour la vtable).
 - **Vitesse** : Plus lent à cause des appels indirects via la vtable (1-2 cycles par appel sur x86_64) et pas d'inlining à travers les frontières de types. Les cache misses sur l'accès vtable ajoutent de la latence.
@@ -240,22 +236,21 @@ fn main() {
 
 ## Scénarios et Préférences
 
-### Choisir le Dispatch Statique
+### Choisir le Dispatch statique
 
 - **Scénario** : Boucles chaudes dans un processeur de données temps réel (ex : filtrage audio, routage de paquets) où chaque cycle compte.
 - **Pourquoi** : Overhead zéro, inlining, et potentiel d'optimisation. Dans `process_static`, le compilateur peut unroller ou SIMDifier la boucle pour des événements `f32`.
 - **Compromis** : Binaire plus large, mais acceptable pour un ensemble connu et petit de processeurs (ex : 2-5 types).
 - **Maintenabilité** : Moins flexible—ajouter un nouveau processeur nécessite une recompilation.
 
-### Choisir le Dispatch Dynamique
+### Choisir le Dispatch dynamique
 
 - **Scénario** : Système de plugins ou processeurs configurables à l'exécution (ex : les utilisateurs chargent des implémentations `EventProcessor` dynamiquement).
 - **Pourquoi** : Flexibilité—`dyn EventProcessor` permet à une seule fonction de gérer n'importe quel type sans recompiler. La taille du binaire reste gérable avec beaucoup de processeurs.
 - **Compromis** : Exécution plus lente, mais acceptable si `process` est complexe (l'overhead d'appel est une fraction plus petite) ou l'invocation est peu fréquente.
 - **Maintenabilité** : Plus facile à étendre—les nouveaux types implémentent juste le trait.
 
-## Vérification
-
+## Mesurer la différence
 - **Benchmark** :
   ```rust
   use criterion::{black_box, Criterion};
@@ -269,6 +264,5 @@ fn main() {
   Attends-toi à ce que statique soit 10-20% plus rapide.
 - **Taille** : `size target/release/app` montre statique qui gonfle `.text` par type.
 
-## Conclusion
-
+## Choisir entre les deux
 Dans un processeur de données temps réel, préfère le dispatch statique (`process_static`) pour les chemins chauds, échangeant la taille de code contre la vitesse et l'inlining. Pour la flexibilité (ex : processeurs pluggables), utilise `dyn EventProcessor`, acceptant les coûts vtable. Profile pour t'assurer que les gains de statique justifient son empreinte, équilibrant performance avec les objectifs de conception système.

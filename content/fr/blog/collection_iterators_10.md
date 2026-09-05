@@ -19,7 +19,7 @@ tags:
 date: '2025-08-21'
 ---
 
-# Lors de l'itération sur un Vec, pourquoi utiliser .into_iter() au lieu de .iter() ?
+# Implications d'itérer sur un Vec avec .into_iter() au lieu de .iter()
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="ci10-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="into_iter consomme le Vec qui devient donc inutilisable ensuite, tandis que iter l'emprunte et le laisse disponible pour un usage ultérieur">
@@ -69,15 +69,14 @@ date: '2025-08-21'
 </svg>
 </div>
 
-## Différences Clés
-
+## `.into_iter()` face à `.iter()`
 | .into_iter() | .iter() |
 |--------------|---------|
 | Consomme le Vec (prend ownership). | Emprunte le Vec en écriture (mut) |
 | Produit des valeurs owned (T). | Produit des références (&T). |
 | Le Vec original est inutilisable après. | Le Vec original reste intact. |
 
-## Quand Utiliser .into_iter()
+## Quand utiliser .into_iter()
 
 ### Besoin d'Ownership sur les éléments d'une liste
 
@@ -98,7 +97,7 @@ let mut vec = vec![3, 1, 2, 1];
 vec = vec.into_iter().unique().sorted().collect();  // Destructif mais efficace
 ```
 
-### Optimisation de Performance
+### Optimisation de performance
 
 Évite le cloning quand on travaille avec des données owned (ex : Vec<String>) :
 
@@ -184,9 +183,9 @@ let s = vec.into_iter().next().unwrap();  // Move le `String` dehors
 | Modifier les éléments | ❌ Non (consommé) | ✅ Oui (iter_mut()) |
 | Éviter le cloning de données owned | ✅ Oui | ❌ Non (nécessite clone()) |
 
-## Exemples Réels
+## Exemples réels
 
-### Transfert de Données
+### Transfert de données
 
 Déplacer un Vec dans une fonction qui prend ownership :
 
@@ -205,22 +204,20 @@ let vec = vec![1, 2, 3, 4];
 let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 ```
 
-## Considérations de Performance
-
+## Ce que ça coûte à l'exécution
 - **Zero-cost pour les primitives (i32, bool)** : `.into_iter()` et `.iter()` compilent vers le même code assembleur si le type implémente le trait copy (`T: Copy`).
 - **Évite les allocations** quand on chaîne des adaptateurs (ex : `.map().filter()`).
 
-## Points Clés
-
-✅ **Utilise .into_iter() pour** :
+## Choisir entre les deux
+**Utilise .into_iter() pour** :
 - Sortir des éléments d'un Vec.
 - Optimiser la performance avec des données owned.
 - Transformer destructivement des collections.
 
-🚫 **Evite si tu dois** :
+**Evite si tu dois** :
 - Réutiliser le Vec après itération.
 - Partager des références entre threads (`&T` est Sync; mais `T` pourrait ne pas l'être).
 
-**Essaie Ceci** : Que se passe-t-il si tu appelles `.into_iter()` sur un Vec et ensuite Essaie d'utiliser le Vec original dans un iterateur parallèle (ex : rayon::iter) ?
-
-**Réponse** : Erreur au moment de la compilation ! Le Vec est déjà consommé. Utilise `.par_iter()` à la place pour un accès parallèle read-only.
+Un piège à connaître : appelle `.into_iter()` sur un `Vec` puis passe le même `Vec` à `rayon` et
+tu obtiens une erreur de compilation, parce que le premier appel l'a consommé. Pour du parallèle
+en lecture seule, prends `.par_iter()` et ne cède jamais l'ownership.

@@ -80,6 +80,17 @@ export function getPaginatedPosts(page: number = 1, locale: string = 'en'): Pagi
 }
 
 // Get all unique tags from posts in a specific locale only
+// A tag slug reaches a route handler percent-encoded when the tag carries
+// accents ("mémoire" arrives as "m%C3%A9moire"), so decode before comparing —
+// otherwise every accented tag page 404s.
+function normalizeTagSlug(tagSlug: string): string {
+  try {
+    return decodeURIComponent(tagSlug);
+  } catch {
+    return tagSlug;
+  }
+}
+
 export function getAllTags(locale: string = 'en'): string[] {
   const posts = getAllPosts(locale);
   const allTags = posts.flatMap(post => post.tags || []);
@@ -90,9 +101,10 @@ export function getAllTags(locale: string = 'en'): string[] {
 // Get posts by tag for a specific locale only
 export function getPostsByTag(tagSlug: string, locale: string = 'en'): BlogPost[] {
   const posts = getAllPosts(locale);
+  const wanted = normalizeTagSlug(tagSlug);
   return posts.filter(post =>
     post.tags && post.tags.some(tag =>
-      tag.toLowerCase().replace(/\s+/g, '-') === tagSlug
+      tag.toLowerCase().replace(/\s+/g, '-') === wanted
     )
   );
 }
@@ -112,10 +124,11 @@ export function getRecentPosts(count: number = 3, locale: string = 'en'): BlogPo
 // Get tag display name from slug for a specific locale only
 export function getTagBySlug(tagSlug: string, locale: string = 'en'): string | null {
   const posts = getAllPosts(locale);
+  const wanted = normalizeTagSlug(tagSlug);
   for (const post of posts) {
     if (post.tags) {
       const tag = post.tags.find(tag =>
-        tag.toLowerCase().replace(/\s+/g, '-') === tagSlug
+        tag.toLowerCase().replace(/\s+/g, '-') === wanted
       );
       if (tag) return tag;
     }
@@ -135,4 +148,44 @@ export function searchPosts(query: string, locale: string = 'en'): BlogPost[] {
       tag.toLowerCase().includes(lowercaseQuery)
     ))
   );
+}
+
+/**
+ * The counterpart of a post in the other locale, or null when it has none.
+ *
+ * Mirrors the pairing rule in scripts/generate-sitemap.js: French posts either
+ * reuse the English id/slug or suffix it with '-fr'. The two must agree —
+ * the sitemap declaring /en/blog/x and /fr/blog/x-fr to be alternates while
+ * the pages themselves emit no hreflang is a contradictory signal, and a pair
+ * is only ever returned once both sides are known to exist.
+ */
+export function getPostCounterpart(slug: string, locale: string): BlogPost | null {
+  if (locale === 'en') {
+    const post = getPostBySlug(slug, 'en');
+    if (!post) return null;
+    const fr = getAllPosts('fr');
+    return (
+      fr.find((p) => p.id === `${post.id}-fr`) ||
+      fr.find((p) => p.id === post.id) ||
+      fr.find((p) => p.slug === `${post.slug}-fr`) ||
+      fr.find((p) => p.slug === post.slug) ||
+      null
+    );
+  }
+
+  if (locale === 'fr') {
+    const post = getPostBySlug(slug, 'fr');
+    if (!post) return null;
+    const strip = (value: string) => (value.endsWith('-fr') ? value.slice(0, -3) : value);
+    const en = getAllPosts('en');
+    return (
+      en.find((p) => p.id === strip(post.id)) ||
+      en.find((p) => p.id === post.id) ||
+      en.find((p) => p.slug === strip(post.slug)) ||
+      en.find((p) => p.slug === post.slug) ||
+      null
+    );
+  }
+
+  return null;
 }

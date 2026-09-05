@@ -8,8 +8,6 @@ excerpt: >-
   Strategic application of Rust's #[inline(always)] attribute for
   instruction-level optimization, covering effective usage patterns and risks of
   overuse
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 tags:
   - rust
   - optimization
@@ -17,7 +15,7 @@ tags:
 date: '2025-11-04'
 ---
 
-# Instruction-Level Optimization: How can you use Rust's #[inline(always)] attribute effectively, and what are the risks of overusing it in terms of code size and compile time?
+# Instruction-Level Optimization: #[inline(always)]
 
 Rust's `#[inline(always)]` attribute forces the compiler to inline a function's body at every call site, optimizing instruction-level performance by eliminating call overhead and exposing more optimization opportunities. I'd use it strategically in performance-critical code, but overuse carries risks to code size, compile time, and even runtime efficiency. Here's how I'd approach it.
 
@@ -176,8 +174,7 @@ fn parse_stream(data: &[u32]) -> u32 {
 - Loop unrolling or iterator fusion (Rust's zero-cost abstractions) can achieve similar gains without forced inlining.
 - **Example**: Rewrite `parse_stream` with `fold` to let the compiler inline implicitly.
 
-## Verification
-
+## Checking the result
 ### Benchmark
 With criterion:
 
@@ -197,6 +194,5 @@ Compare with and without `#[inline(always)]`—expect tighter latency.
 ### Size Check
 `ls -lh` on the binary confirms minimal growth.
 
-## Conclusion
-
+## When to use it, and when not to
 I'd use `#[inline(always)]` for small, hot functions like `extract_bits` in tight loops, ensuring call overhead vanishes and optimizations kick in. Overuse risks bloated binaries and slow compiles, so I'd profile to justify it, fallback to `#[inline]` elsewhere, and monitor I-cache effects. This balances performance gains with maintainability and scalability in a Rust codebase.

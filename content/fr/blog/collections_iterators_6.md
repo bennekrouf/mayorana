@@ -11,6 +11,10 @@ excerpt: >-
 tags:
   - rust
   - collections
+  - box
+  - vec
+  - memory
+  - performance
 date: '2025-10-28'
 ---
 
@@ -75,20 +79,20 @@ date: '2025-10-28'
 
 ## Quand utiliser chacun
 
-### Préférez Vec<T> quand :
+### Préfère Vec<T> quand :
 
-Vous avez besoin de redimensionnement dynamique :
+Tu as besoin de redimensionnement dynamique :
 
 ```rust
 let mut vec = vec![1, 2, 3];
 vec.push(4);  // Fonctionne
 ```
 
-Vous modifiez fréquemment la collection (par exemple, ajout/suppression d'éléments).
+Tu modifies fréquemment la collection (par exemple, ajout/suppression d'éléments).
 
-### Préférez Box<[T]> quand :
+### Préfère Box<[T]> quand :
 
-Vous voulez une collection de taille fixe et immuable :
+Tu veux une collection de taille fixe et immuable :
 
 ```rust
 let boxed_slice: Box<[i32]> = vec![1, 2, 3].into_boxed_slice();
@@ -155,7 +159,7 @@ fn process(data: Box<[i32]>) { /* ... */ }
 <text x="400" y="187" text-anchor="middle" class="tx">Si cap &gt; len, le O(1) ne tient plus</text>
 <text x="400" y="205" text-anchor="middle" class="mut">into_boxed_slice() doit d'abord rétrécir : allouer la taille exacte, copier, libérer l'ancien bloc</text>
 <!-- pied -->
-<text x="400" y="238" text-anchor="middle" class="mut">Convertissez une seule fois, quand les modifications sont finies — l'aller-retour coûte une copie dans chaque sens.</text>
+<text x="400" y="238" text-anchor="middle" class="mut">Convertis une seule fois, quand les modifications sont finies — l'aller-retour coûte une copie dans chaque sens.</text>
 </svg>
 </div>
 
@@ -180,12 +184,11 @@ let vec_again = Vec::from(boxed);                // Copie les données
   - Configurations chargées une fois et jamais modifiées.
   - Stockage de grands jeux de données immuables (par exemple, assets de jeu).
 
-## Points clés à retenir
+## Points clés
+Utilise Vec pour des séquences mutables et redimensionnables.
+Utilise Box<[T]> pour du stockage immuable et efficace en mémoire.
+Convertis facilement de Vec vers Box<[T]> quand tu as fini de modifier.
 
-✅ Utilisez Vec pour des séquences mutables et redimensionnables.
-✅ Utilisez Box<[T]> pour du stockage immuable et efficace en mémoire.
-⚡ Convertissez facilement de Vec vers Box<[T]> quand vous avez fini de modifier.
-
-**Essayez ceci** : Que se passe-t-il si vous convertissez un Vec avec de la capacité libre en Box<[T]> ?
-
-**Réponse** : `into_boxed_slice()` réduit l'allocation à la taille exacte (pas de capacité inutilisée).
+C'est sur un `Vec` qui traîne de la capacité libre que la conversion paie vraiment :
+`into_boxed_slice()` réalloue à la longueur exacte, et le rab retourne à l'allocateur au lieu
+d'être transporté.

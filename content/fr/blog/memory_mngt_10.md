@@ -5,9 +5,9 @@ slug: cow-copy-on-write-rust-fr
 locale: fr
 date: '2025-11-23'
 author: mayo
-excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
+excerpt: >-
+  Cow<'a, B> permet d'emprunter quand c'est possible et d'allouer seulement
+  quand il le faut. Comment marche le copy-on-write et quand il est rentable.
 tags:
   - rust
   - beginner
@@ -17,7 +17,7 @@ tags:
   - copy-on-write
 ---
 
-# Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? Quand l'utiliserais-tu pour les strings ou autres données ?
+# Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? Quand l'utiliser ?
 
 `Cow<'a, B>` (Copy-on-Write) est un smart pointer dans le module `std::borrow` de Rust qui fournit une abstraction sans clone sur les données borrowed et owned. Il permet une gestion efficace des données qui peuvent ou non nécessiter une modification, minimisant les allocations tout en maintenant la flexibilité.
 
@@ -155,7 +155,7 @@ Les deux appels retournent le même type, mais la valeur retournée contient phy
 </svg>
 </div>
 
-## Cas d'Usage Clés
+## Cas d'Usage clés
 
 ### 1. Optimiser les Opérations String
 
@@ -212,30 +212,30 @@ struct JsonValue<'a> {
 }
 ```
 
-## Quand Éviter Cow
+## Quand éviter Cow
 
 - **Données toujours mutées** : Utilise `String` ou `Vec` directement pour éviter l'overhead de `Cow`.
 - **Thread-safety** : `Cow` n'est pas thread-safe ; utilise `Arc` + `Mutex` pour accès concurrent.
 
-## Implications de Performance
+## Implications de performance
 
 | **Scénario** | **Comportement** | **Coût d'Allocation** |
 |--------------|------------------|-----------------------|
 | Pas de modification | Reste comme `Borrowed` | Zéro |
 | Modification | Convertit vers `Owned` | Une allocation |
 
-## Points Clés
-
-✅ **Utilise `Cow` quand** :
+## Quand `Cow` est rentable
+**Utilise `Cow` quand** :
 - Tu as besoin de modifier conditionnellement des données borrowed.
 - Tu veux éviter les allocations pour les chemins read-only.
 - Ton API devrait accepter `&str` et `String` efficacement.
 
-🚀 **Usages réels** :
+**Usages réels** :
 - `regex::Match` (emprunte les strings d'input).
 - Désérialisation `serde`.
 - Manipulation de path (`PathBuf` vs. `&Path`).
 
 **Note** : `Cow` fonctionne avec tout type `ToOwned` (ex : `[u8]` → `Vec<u8>`, `Path` → `PathBuf`).
 
-**Expérimente** : Modifier l'exemple `to_uppercase` pour gérer les chiffres (comme montré ci-dessus) démontre comment `Cow` évite les allocations sauf si des lettres minuscules *et* des chiffres sont présents, optimisant la performance.
+Étendre l'exemple `to_uppercase` aux chiffres montre où `Cow` gagne sa place : il n'alloue que
+sur les entrées qui ont réellement besoin d'être réécrites, et retourne un emprunt pour tout le reste.

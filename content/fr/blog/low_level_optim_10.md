@@ -10,8 +10,6 @@ excerpt: >-
   Optimisation bas niveau en Rust, se concentrant sur les outils de profiling
   pour identifier et corriger les goulots d'étranglement de performance comme
   les L1 cache misses
-content_focus: optimisation bas niveau en Rust
-technical_level: Discussion technique experte
 tags:
   - rust
   - profiling
@@ -80,7 +78,7 @@ fn process_points(points: &mut [Point]) {
 
 **Problème** : Le layout Array-of-Structs (AoS) cause une mauvaise localité, car accéder seulement à `x` tire les `y` et `z` inutiles dans la ligne de cache L1 de 64 octets, menant à des misses excessifs.
 
-## Workflow pour Optimiser les L1 Cache Misses
+## Workflow pour optimiser les L1 Cache Misses
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="lo10b-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Boucle de profiling en six étapes, de la reproduction à perf, flamegraph, criterion, optimisation et vérification, qui reboucle sur perf jusqu'à ce que le taux de miss baisse">
@@ -137,7 +135,7 @@ fn process_points(points: &mut [Point]) {
 <path d="M717,110 L717,170 L209,170 L209,112" class="lnac" marker-end="url(#lo10b-arrowac-fr)"/>
 <text x="463" y="188" class="ac">toujours au-dessus de 1–2 % ? on refait un tour</text>
 <!-- footer -->
-<text x="400" y="222" class="mut">Chaque étape répond à une question différente — n'optimisez jamais avant que l'étape 2 prouve que le cache est en cause</text>
+<text x="400" y="222" class="mut">Chaque étape répond à une question différente — n'optimise jamais avant que l'étape 2 prouve que le cache est en cause</text>
 </svg>
 </div>
 
@@ -201,7 +199,7 @@ fn process_points(points: &mut [Point]) {
 - **Flamegraph** : Le nouveau graphe montre `process` comme un pic plus étroit, moins memory-bound.
 - **criterion** : Le temps chute à 40ms, avec une variance plus serrée, confirmant l'efficacité du cache.
 
-## Étapes d'Optimisation Avancées
+## Étapes d'Optimisation avancées
 
 ### Techniques Supplémentaires
 
@@ -255,8 +253,7 @@ struct AlignedPoint {
 }
 ```
 
-### Mesures Détaillées avec `perf`
-
+### Mesures détaillées avec `perf`
 ```bash
 # Profiling détaillé
 perf record -e cache-misses,cache-references,cycles,instructions ./target/release/app
@@ -311,7 +308,7 @@ fn process_fused(points: &mut [Point]) {
 
 ## Workflow de Profiling Systématique
 
-### 1. Collecte de Données Baseline
+### 1. Collecte de données Baseline
 ```rust
 // Setup de benchmark complet
 use criterion::{BenchmarkId, Criterion, Throughput};
@@ -344,7 +341,7 @@ fn comprehensive_bench(c: &mut Criterion) {
 }
 ```
 
-### 2. Analyse de Régression
+### 2. Analyse de régression
 ```bash
 # Comparer avant/après
 criterion --save-baseline before
@@ -364,15 +361,15 @@ fn process_optimized() { /* Implémentation NEON */ }
 fn process_optimized() { /* Fallback générique */ }
 ```
 
-## Métriques de Validation
+## Métriques de validation
 
-### Métriques de Performance Clés
+### Métriques de performance clés
 - **IPC (Instructions Per Cycle)** : >2.0 indique une bonne utilisation CPU
 - **Cache Miss Rate** : <2% pour L1, <10% pour L2
 - **Memory Bandwidth** : % d'utilisation de la bande passante théorique
 - **Branch Misprediction Rate** : <5%
 
-### Outils de Mesure Avancés
+### Outils de mesure avancés
 ```bash
 # Intel VTune (commercial)
 vtune -collect memory-access ./app
@@ -384,6 +381,5 @@ AMDuProfCLI collect --config inst_based ./app
 valgrind --tool=cachegrind ./app
 ```
 
-## Conclusion
-
+## Où cela te laisse
 Pour résoudre les L1 cache misses dans une codebase Rust, j'utiliserais `perf` pour détecter les taux de miss élevés, `cargo flamegraph` pour cibler le coupable, et `criterion` pour mesurer les améliorations. Le workflow—reproduire, diagnostiquer, hypothèse, optimiser, vérifier—assure des résultats guidés par les données. Dans ce cas, passer à un layout SoA a réduit drastiquement les cache misses, boostant le débit, comme confirmé par les outils de profiling. Cette approche aide les développeurs à résoudre efficacement les goulots d'étranglement.

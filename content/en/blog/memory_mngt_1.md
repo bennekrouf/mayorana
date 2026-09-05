@@ -14,7 +14,7 @@ tags:
   - string
 ---
 
-# What is the difference between String and str in Rust? When would you use each?
+# String vs. &str – Which to Use and When?
 
 Understanding the distinction between `String` and `str` is fundamental to effective memory management and ownership in Rust.
 
@@ -60,8 +60,7 @@ Understanding the distinction between `String` and `str` is fundamental to effec
 </svg>
 </div>
 
-## Key Differences
-
+## `String` and `str`, side by side
 | `String` | `str` (usually `&str`) |
 |----------|------------------------|
 | Growable, heap-allocated UTF-8 string | Immutable, fixed-size view into UTF-8 string |
@@ -80,8 +79,7 @@ Understanding the distinction between `String` and `str` is fundamental to effec
 - Pointer to string data (heap, stack, or static memory)
 - Length of the slice
 
-## When to Use Each
-
+## Which one to declare
 Use **`String`** when:
 - You need to modify or grow the string
 - You need ownership (e.g., returning from a function)
@@ -230,11 +228,10 @@ fn process_good(s: &str) -> &str {
 }
 ```
 
-## Key Takeaways
+## Which one to write
+**`String`**: Owned, mutable, heap-allocated  
+**`str`**: Borrowed, immutable, flexible (heap/stack/static)  
+Prefer `&str` for function parameters unless you need ownership or mutation
 
-✅ **`String`**: Owned, mutable, heap-allocated  
-✅ **`str`**: Borrowed, immutable, flexible (heap/stack/static)  
-🚀 Prefer `&str` for function parameters unless you need ownership or mutation
-
-**Try This:** What happens when you call `.to_string()` on a string literal vs a `String`?  
-**Answer:** Literal creates new heap allocation; `String` creates a clone of existing heap data—both allocate, but the source differs!
+`.to_string()` allocates in both cases, but not for the same reason: on a literal it copies
+out of the binary's read-only data, on a `String` it clones an existing heap buffer.

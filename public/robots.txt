@@ -1,14 +1,19 @@
-# robots.txt for api0.ai
+# robots.txt for mayorana.ch
+
+# One group per user-agent. There used to be two "User-agent: *" blocks —
+# Google merges them, but not every crawler does, and the second one carried
+# all the Disallow rules.
 User-agent: *
 Allow: /
-
-# Allow all bots to access the site
-# Specify sitemap location
-Sitemap: https://mayorana.ch/sitemap.xml
-
-# Prevent bots from crawling dev/staging areas if they exist
-User-agent: *
 Disallow: /admin/
+Disallow: /api/
 Disallow: /stats
 Disallow: /dev/
 Disallow: /staging/
+
+# Tracking parameters (?utm_source=, ?ref=, ?from=) are deliberately NOT
+# disallowed. Every page now serves a canonical tag pointing at its clean URL,
+# which consolidates those duplicates — and unlike a Disallow, it still lets a
+# link arriving with tracking parameters pass its value to the real page.
+
+Sitemap: https://mayorana.ch/sitemap.xml

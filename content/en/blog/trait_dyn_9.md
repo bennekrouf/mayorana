@@ -1,16 +1,12 @@
 ---
 id: blanket-implementations-coherence
-title: >-
-  Blanket implementation (e.g., impl<T: SomeTrait>
-  AnotherTrait for T) to reduce code duplication ?
+title: 'Blanket implementations: one impl for every type that qualifies'
 slug: blanket-implementations-coherence
 author: mayo
 locale: en
 excerpt: >-
   Employing blanket implementations in Rust to minimize code duplication
   for maintainable libraries
-content_focus: Blanket Implementations
-technical_level: Expert technical discussion
 
 tags:
   - rust
@@ -22,7 +18,7 @@ tags:
 date: '2025-08-17'
 ---
 
-# Blanket implementation (e.g., impl<T: SomeTrait> AnotherTrait for T) are used to reduce code duplication in a library.
+# Blanket implementations: one impl for every type that qualifies
 
 In a Rust library providing utility functions, use a blanket implementation to automatically apply a trait to all types that satisfy a given constraint.
 
@@ -238,8 +234,7 @@ Only types I explicitly mark with `Sealed` get the blanket `Stats`.
 - **Generality**: Extend `Len` to other collections (e.g., `[T]`, `VecDeque<T>`).
 - **Safety**: Use where clauses to enforce invariants (e.g., non-empty collections).
 
-## Verification
-
+## Checking the expansion
 ### Tests
 
 Ensure blanket applies correctly:
@@ -259,6 +254,5 @@ assert_eq!(f.mean(), 2.0);
 
 Test invalid types (e.g., `Vec<String>`) to confirm coherence.
 
-## Conclusion
-
+## When a blanket impl is worth it
 I'd use a blanket `impl<T: Summable> Stats for T` to give `mean` to all `Summable` types, as shown to avoid duplications. This delivers a concise, safe API with minimal performance cost, leveraging Rust's type system.

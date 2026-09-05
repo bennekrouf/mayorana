@@ -1,8 +1,6 @@
 ---
 id: sized-unsized-bounds-flexibility
-title: >-
-  Write a function that accepts both sized types (e.g., [u8; 16]) and unsized
-  types (e.g., [u8] or dyn Trait) with ?Sized bound
+title: '?Sized: writing one function for both sized and unsized types'
 slug: sized-unsized-bounds-flexibility
 locale: en
 author: mayo
@@ -10,8 +8,6 @@ excerpt: >-
   Understanding the role of ?Sized bounds in Rust trait definitions and
   leveraging them to create flexible functions that work with both sized and
   unsized types efficiently
-content_focus: Sized and ?Sized
-technical_level: Expert technical discussion
 
 tags:
   - rust
@@ -23,7 +19,7 @@ tags:
 date: '2025-08-15'
 ---
 
-# What's the significance of the ?Sized bound in trait definitions, and how would you use it to write a function that accepts both sized types (e.g., [u8; 16]) and unsized types (e.g., [u8] or dyn Trait)?
+# ?Sized: writing one function for both sized and unsized types
 
 The `?Sized` bound in Rust trait definitions relaxes the default `Sized` constraint on generic types, allowing a function or trait to work with both sized types (known size at compile time, like `[u8; 16]`) and unsized types (e.g., `[u8]`, `str`, `dyn Trait`). In a data serialization library, I'd use `?Sized` to write a flexible function that processes both fixed arrays and dynamic slices efficiently, enhancing functionality without sacrificing performance.
 
@@ -200,8 +196,7 @@ One function handles both fixed arrays (`[u8; 16]`) and slices (`[u8]`), plus tr
 - **Complexity**: Callers must understand `&T` vs. `T`. I'd document that `compute_checksum` takes references for universality.
 - **Alternative**: If only slices are needed, `&[u8]` directly might suffice, but `?Sized` supports broader use (e.g., `dyn Trait`).
 
-## Verification
-
+## Confirming both cases work
 ### Compile Test
 Ensure both sized and unsized types work:
 
@@ -225,6 +220,5 @@ fn bench(c: &mut Criterion) {
 
 Expect similar performance to direct calls, with inlining.
 
-## Conclusion
-
+## `?Sized` in practice
 `?Sized` lets `compute_checksum` handle both sized and unsized types by relaxing the `Sized` constraint, making it ideal for a serialization library. It maintains efficiency via static dispatch and references, offering flexibility without runtime cost. I'd use this to unify APIs across diverse data types, ensuring performance and scalability in a Rust system.

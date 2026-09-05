@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Using trait bounds in Rust for type safety and performance in mathematical
   computations
-content_focus: 'trait bounds, generics, monomorphization'
-technical_level: Expert technical discussion
 
 tags:
   - rust
@@ -220,5 +218,4 @@ Monomorphization duplicates the generic function for each concrete type used:
 - **Assembly**: `cargo rustc --release -- --emit asm` shows optimized loops, no calls.
 
 ## Conclusion
-
 Trait bounds like `T: Add + Mul + Default + Copy` in `dot_product` enforce safety (only numeric types) and performance (static, inlined code). Monomorphization turns this into type-specific machine code, ideal for a math library. Balancing these bounds ensures a flexible yet efficient API, with profiling to avoid hidden costs.

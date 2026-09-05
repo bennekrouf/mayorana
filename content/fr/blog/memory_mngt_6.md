@@ -7,9 +7,9 @@ slug: string-str-mismatch-rust-fr
 locale: fr
 date: '2025-08-26'
 author: mayo
-excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
+excerpt: >-
+  Pourquoi passer un &str là où un &String est attendu ne compile pas, ce que la
+  coercition de déréférencement fait — et ne fait pas.
 
 tags:
   - rust
@@ -19,7 +19,7 @@ tags:
   - ownership
 ---
 
-# Pourquoi tu ne peux pas passer un &str directement à une fonction attendant un &String ? Comment gérerais-tu un tel scénario ?
+# Pourquoi &str Ne Rentre Pas dans &String en Rust: Fixes Sympas pour les String Mismatches !
 
 En Rust, tu ne peux pas passer un `&str` directement à une fonction attendant un `&String` à cause de leurs types distincts, ce qui assure la type safety et prévient les assumptions sur l'ownership mémoire. Ci-dessous, j'explique pourquoi ce mismatch survient et comment le gérer efficacement.
 
@@ -60,7 +60,7 @@ En Rust, tu ne peux pas passer un `&str` directement à une fonction attendant u
 </svg>
 </div>
 
-## Le Problème Central : Type Mismatch
+## Le problème Central : Type Mismatch
 
 - **`&String`** : Une référence vers un `String` heap-allocated, extensible.
 - **`&str`** : Une string slice qui peut pointer vers mémoire heap, stack, ou static.
@@ -152,7 +152,7 @@ fn main() {
 
 **Pourquoi ça marche** : `String` implémente `Deref<Target=str>`, permettant à `&String` de coercer vers `&str`.
 
-### 2. Conversion Explicite (Quand Tu As Besoin de &String)
+### 2. Conversion explicite (Quand Tu As Besoin de &String)
 
 Si la fonction doit prendre `&String`, convertis `&str` vers `String` d'abord :
 
@@ -169,7 +169,7 @@ fn main() {
 
 **Inconvénient** : Ceci alloue un nouveau buffer heap, ce qui devrait être évité si possible à cause des coûts de performance.
 
-### 3. Utilise `AsRef<str>` pour Flexibilité Maximum
+### 3. Utilise `AsRef<str>` pour flexibilité Maximum
 
 Pour des fonctions qui devraient marcher avec tout type string-like :
 
@@ -189,16 +189,15 @@ fn main() {
 
 **Bonus** : Accepte aussi `Cow<str>`, `Box<str>`, etc.
 
-## Points Clés
-
-✅ **Préféré** : Utilise `&str` dans les arguments de fonction (flexible et zero-cost).  
-✅ **Si coincé avec `&String`** : Convertis `&str` vers `String` (alloue).  
-✅ **Pour les APIs** : Utilise `AsRef<str>` ou `impl Deref<Target=str>` pour compatibilité maximum.
+## La correction, en bref
+**Préféré** : Utilise `&str` dans les arguments de fonction (flexible et zero-cost).  
+**Si coincé avec `&String`** : Convertis `&str` vers `String` (alloue).  
+**Pour les APIs** : Utilise `AsRef<str>` ou `impl Deref<Target=str>` pour compatibilité maximum.
 
 **Pourquoi Rust Applique Ceci** :
 - Prévient les allocations accidentelles ou assumptions sur l'ownership mémoire.
 - Encourage des APIs efficaces, borrow-friendly.
 
-**Essaie Ceci** : Que se passe-t-il si tu passes un `String` à `print_str` sans `&` ?
-
-**Réponse** : Ça move l'ownership, causant une erreur de compilation puisque `print_str` attend une référence (`&str`), pas un `String` owned.
+Passer un `String` à `print_str` sans le `&` est une erreur de type, pas une erreur de move : la
+coercition de déréférencement ne s'applique qu'à travers une référence, donc le compilateur n'a
+rien à coercer.

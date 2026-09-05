@@ -5,14 +5,16 @@ slug: concurrency-rust
 locale: en
 date: '2025-07-30'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Ownership and borrowing rule out data races at compile time. What Send and
+  Sync add, and why Rc can't cross a thread boundary.
 
 tags:
   - rust
   - concurrency
 ---
 
-# How do ownership and borrowing prevent data races?
+# How Rust's Ownership and Borrowing Ensure Safe Concurrency
 
 Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating data races without requiring a garbage collector. This approach ensures safe, high-performance parallelism with minimal runtime overhead.
 
@@ -217,16 +219,16 @@ println!("Result: {}", *counter.lock().unwrap());  // Outputs 10
 - **Fearless parallelism**: The compiler rejects unsafe patterns, enabling confident concurrent programming.
 
 ## Key Takeaways
-
-✅ **Ownership rules prevent**:
+**Ownership rules prevent**:
 - Concurrent mutable access (no data races).
 - Dangling references (via lifetimes).
 
-✅ **Send/Sync enforce** thread safety at compile time.
+**Send/Sync enforce** thread safety at compile time.
 
-🚀 **Use `Mutex`, `Arc`, or channels** for safe shared state.
+**Use `Mutex`, `Arc`, or channels** for safe shared state.
 
 **Real-World Impact**: Crates like `rayon` (parallel iterators) and `tokio` (async runtime) rely on these guarantees for robust concurrency.
 
-**Experiment**: What happens if you try to share an `Rc<T>` across threads?  
-**Answer**: Compile error! `Rc<T>` is not `Send` (not thread-safe). Use `Arc<T>` instead.
+Try to send an `Rc<T>` to another thread and the compiler stops you: `Rc` isn't `Send`,
+because its refcount isn't atomic. `Arc<T>` is the same shape with the atomic counter, and
+you pay for that on every clone.

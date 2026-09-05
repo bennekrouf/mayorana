@@ -14,7 +14,7 @@ tags:
   - c
 ---
 
-# C: Power Without Protection
+# C Gives You Control, But at What Cost?
 
 With C, there's no runtime, no GC. Just raw speed and control.
 
@@ -305,7 +305,6 @@ free(data);  // Easy to forget or double-free
 - Still possible to have memory leaks
 
 ## Key Takeaways
-
 ✅ **Predictable performance - no GC pauses**  
 ✅ **Complete control over memory layout**  
 ✅ **Minimal runtime overhead**  
@@ -320,4 +319,4 @@ free(data);  // Easy to forget or double-free
 
 **The Question:** What if the compiler could prevent memory bugs at compile time?
 
-**➡️ Next:** "Rust's Ownership: Memory Safety Without Garbage Collection"
+**Next:** "Rust's Ownership: Memory Safety Without Garbage Collection"

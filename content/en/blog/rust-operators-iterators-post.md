@@ -15,7 +15,7 @@ tags:
   - iterators
 ---
 
-# Rust Operators & Iterators: What You Need to Know
+# Rust Operators & Iterators: Quick Reference
 
 Quick reference for common Rust gotchas and patterns.
 

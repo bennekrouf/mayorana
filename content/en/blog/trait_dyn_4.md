@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Understanding object safety in Rust and refactoring traits for dynamic
   dispatch
-content_focus: Object Safety
-technical_level: Expert technical discussion
 
 tags:
   - rust

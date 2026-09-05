@@ -16,7 +16,7 @@ tags:
   - iterators
 ---
 
-# What is the difference between Vec::new() and Vec::with_capacity()? When would you use each?
+# Rust Vec::new() vs. with_capacity(): When to Use Each
 
 Understanding Vec allocation strategies is crucial for writing performant Rust code, especially when dealing with collections and iterators.
 
@@ -84,8 +84,7 @@ Understanding Vec allocation strategies is crucial for writing performant Rust c
 | Initial capacity is 0 (allocates on first push) | Initial capacity is exactly n (no early allocations) |
 | Grows dynamically (may reallocate multiple times) | Avoids reallocation until len() > n |
 
-## When to Use Each
-
+## Deciding at the call site
 Use `Vec::new()` when:
 - The number of elements is unknown or small
 - You want simplicity (e.g., short-lived vectors)
@@ -221,12 +220,11 @@ Pre-allocating is a hint, not a hard limit. `len` and `capacity` are two indepen
 </svg>
 </div>
 
-## Key Takeaways
-
-- ✅ Default to `Vec::new()` for simplicity.  
-- ✅ Use `with_capacity(n)` when:
+- Default to `Vec::new()` for simplicity.  
+- Use `with_capacity(n)` when:
 - You know the size upfront
 - Performance is critical (e.g., hot loops)
 
-**Try This:** What happens if you push beyond the pre-allocated capacity?  
-**Answer:** The Vec grows automatically (like `Vec::new()`), but only after exceeding n.
+Pushing past the capacity you reserved isn't an error — the `Vec` just grows the way
+`Vec::new()` would have all along. You get the one cheap allocation up to `n` and the usual
+doubling after that.

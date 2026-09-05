@@ -5,9 +5,9 @@ slug: string-literals-memory-rust
 locale: en
 date: '2025-08-06'
 author: mayo
-excerpt: Rust memory and string
-content_focus: rust memory and string
-technical_level: Expert technical discussion
+excerpt: >-
+  String literals live in the binary's read-only data with a 'static lifetime —
+  what that means for allocation, copying, and returning them.
 
 tags:
   - rust
@@ -15,7 +15,7 @@ tags:
   - string
 ---
 
-# How does Rust handle string literals (&str) in terms of memory allocation? Where do they live?
+# Where do string literals (&str) live?
 
 String literals (`&str`) in Rust are handled efficiently, with distinct memory characteristics compared to heap-allocated `String` types. Understanding their allocation and lifetime is key to writing performant and safe Rust code.
 
@@ -233,20 +233,18 @@ fn return_cow(is_heap: bool) -> Cow<'static, str> {
 }
 ```
 
-## Key Takeaways
-
-✅ **String literals**:
+**String literals**:
 - Live in static memory (part of the binary).
 - Are immutable and zero-cost.
 - Have `'static` lifetime.
 
-🚀 **When to use them**:
+**When to use them**:
 - For fixed, read-only strings (e.g., messages, constants).
 - To avoid allocations in function APIs (`&str` over `&String`).
 
-✅ **Never return `&str` borrowed from a local `String`**—it’s impossible in safe Rust.
+**Never return `&str` borrowed from a local `String`**—it’s impossible in safe Rust.
 
-✅ **Solutions**:
+**Solutions**:
 - Return `String` (ownership transfer).
 - Use `&'static str` (literals only).
 - Use `Cow<str>` for dynamic choices.
@@ -258,5 +256,5 @@ let slice = &s[..]; // Points to heap, not static memory!
 ```
 The compiler may elide copies if the content is known statically.
 
-**Experiment**: What happens if you try returning `&s[..]` instead of `&s`?  
-**Answer**: No—it’s the same issue! The slice still points to the doomed `String`.
+Swapping `&s` for `&s[..]` doesn't help. The slice still points into the same `String` that's
+about to be dropped; you've changed the type, not the lifetime.

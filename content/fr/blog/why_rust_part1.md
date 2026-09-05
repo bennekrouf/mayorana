@@ -17,7 +17,7 @@ tags:
   - memory
 ---
 
-# Garbage Collectors: Pratiques mais Coûteux
+# Partie 1 : GC Pauses et Latence: Le coût caché des langages de haut niveau
 
 Les langages de haut niveau comme Java, Python ou JavaScript gèrent la mémoire automatiquement. Mais cela vient avec des compromis.
 
@@ -29,7 +29,7 @@ String message = "hello";
 
 Cela crée un objet sur en mémoire (heap). Mais finalement, cette mémoire doit être récupérée. Et c'est là qu'intervient le Garbage Collector (GC).
 
-## Comment Chaque Langage Gère la Mémoire
+## Comment chaque Langage Gère la mémoire
 
 ### Java: Collections Stop-the-World
 Le runtime de Java a plusieurs mécanismes de garbage collection ou générationnel. La plupart ne sont pas bloquant. Mais à un moment donné il lui est nécessaire de s'exécuter en bloquant tous les autres thread ("Stop-the-world"). Et cela créé des blocages, ou latences non prévisibles. C'est pour cette raison que typiquement on n'utilisera jamais Java pour un système de freinage d'urgence mais plutôt un language système (C/C++ ou Rust) car n'a pas d'indisponibilité imprévisible. La trace "Full GC" suivante met en évidence cet évennement.
@@ -122,11 +122,11 @@ V8 gère la mémoire automatiquement sans contrôle développeur. Les pauses arr
 </svg>
 </div>
 
-## L'Impact Réel
+## L'Impact réel
 
 Concrétement, voici quelques expériences mettant en évidence ce problème.
 
-### Une Indexation Elasticsearch qui prend des dixaines d'heures en entreprise:
+### Une indexation Elasticsearch qui prend des dizaines d'heures en entreprise
 ```
 Exécution initiale:  200GB corpus → 2 heures
 Après pression mémoire: Mêmes données → 12 heures
@@ -134,7 +134,7 @@ Après pression mémoire: Mêmes données → 12 heures
 Cause: GC a passé 70% du temps à nettoyer
 ```
 
-### Pics de Latence Service Web : le CPU est sans arrêt occupé par le GC et introduit des latences dans les réponses aux appelles d'API
+### Pics de latence Service Web : le CPU est sans arrêt occupé par le GC et introduit des latences dans les réponses aux appelles d'API
 ```
 Réponse normale: 50ms
 Pendant pause GC: 2000ms (40x plus lent!)
@@ -174,7 +174,7 @@ Pendant pause GC: 2000ms (40x plus lent!)
 | Python     | Reference + Cycle | Module `gc`    | Très Faible    |
 | JavaScript | Generational      | Aucun          | Très Faible    |
 
-## Les Coûts Cachés
+## Les coûts Cachés
 
 **Overhead Mémoire:**
 - Java: 2-8 bytes par header d'objet
@@ -191,22 +191,21 @@ Pendant pause GC: 2000ms (40x plus lent!)
 - Pire sous pression mémoire
 - Impossible de garantir les temps de réponse
 
-## Quand le GC Devient un Problème
+## Quand le GC Devient un problème
 
 ### Les systèmes de trading
 **Exigence:** <1ms temps de réponse
 **Réalité:** N'importe quelle pause GC tue les performances
 
-### Les systèmes Temps Réel (automobile, automatismes..etc)
+### Les systèmes temps réel (automobile, automatismes..etc)
 **Exigence:** Budget constant de 16ms (60fps)  
 **Réalité:** Frame drops pendant la collection
 
-### Traitement de Données à Grande Échelle
+### Traitement de données à Grande Échelle
 **Exigence:** Traiter des TBs efficacement  
 **Réalité:** L'overhead GC grandit avec la taille du dataset
 
-## Points Clés
-
+## Le coût, en résumé
 ✅ **Le GC facilite le développement**  
 ❌ **La latence est imprévisible**  
 ❌ **Les performances se dégradent sous charge**  
@@ -217,4 +216,4 @@ Pendant pause GC: 2000ms (40x plus lent!)
 
 **La Question:** Quelles sont les alternatives si on ne veut pas de Garbabe collection ?
 
-**➡️ Voir mon autre post:** "Gestion Manuelle de la Mémoire: Pourquoi C/C++ N'est Pas la Réponse"
+**Voir mon autre post:** "Gestion Manuelle de la Mémoire: Pourquoi C/C++ N'est Pas la Réponse"

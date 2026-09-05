@@ -10,10 +10,11 @@ tags:
   - rust
   - iterators
   - collections
+  - ownership
 date: '2025-10-26'
 ---
 
-# Comment fonctionne collect() en Rust ? Montre comment convertir un itérateur en Vec, HashMap ou String.
+# La magie de collect() en Rust : Transformer des itérateurs en Vecs, HashMaps et Strings !
 
 `collect()` est une méthode qui convertit un itérateur en collection. Elle s'appuie sur le trait `FromIterator` de Rust, qui définit comment construire un type à partir d'un itérateur.
 
@@ -189,7 +190,7 @@ let evens: Vec<_> = (1..10).filter(|x| x % 2 == 0).collect(); // [2, 4, 6, 8]
 
 ### Types personnalisés
 
-Implémenter `FromIterator` pour vos types :
+Implémenter `FromIterator` pour tes types :
 ```rust
 struct MyCollection(Vec<i32>);
 
@@ -212,8 +213,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
 
 - **Abstractions à coût nul** : `collect()` est optimisé (par exemple, `Vec` à partir de ranges évite les vérifications de bornes).
 
-## Pièges courants
-
+## Les erreurs fréquentes
 - **Types ambigus** :
   Échoue si Rust ne peut pas inférer la cible :
   ```rust
@@ -228,12 +228,11 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
   // iter.next(); // ERREUR : iter consommé par collect()
   ```
 
-## Points clés à retenir
-
-✅ Utiliser `collect()` pour matérialiser des itérateurs en :
+## Ce que `collect()` attend de toi
+Utiliser `collect()` pour matérialiser des itérateurs en :
 - `Vec`, `HashMap`, `String`, ou tout type `FromIterator`.
-✅ Spécifier le type (ex: `let v: Vec<_> = ...`).
-🚀 Optimiser avec `with_capacity` pour les grandes collections.
+Spécifier le type (ex: `let v: Vec<_> = ...`).
+Optimiser avec `with_capacity` pour les grandes collections.
 
 **Exemple concret** :
 `serde_json::from_str` est souvent chaîné avec `collect()` pour construire des structures complexes :

@@ -14,7 +14,7 @@ tags:
   - traits
 ---
 
-# How do Rust traits differ from interfaces in languages like Java or C#, and how would you use them to define a shared behavior for types in a performance-critical library?
+# Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right
 
 Rust traits and interfaces both define shared behavior, but differ fundamentally in design and execution, especially in performance-critical contexts.
 
@@ -63,8 +63,7 @@ Rust traits and interfaces both define shared behavior, but differ fundamentally
 </svg>
 </div>
 
-## Key Differences
-
+## Traits and interfaces, side by side
 | Aspect | Rust Traits | Java/C# Interfaces |
 |--------|-------------|-------------------|
 | **Dispatch** | Static dispatch (generics) by default, opt-in dynamic (`dyn`) | Runtime polymorphism via vtables |
@@ -207,11 +206,11 @@ Every `process` call goes through a vtable, preventing loop fusion and adding in
 - **Supertraits**: Compose behavior without inheritance complexity
 - **Dynamic Dispatch**: Use `Box<dyn PacketHandler>` when type erasure is needed
 
-## Key Takeaways
+## Traits vs interfaces, in short
+**Rust traits**: Compile-time resolution, zero-cost abstraction, static dispatch by default  
+**Java/C# interfaces**: Runtime polymorphism, vtable overhead, dynamic by nature  
+Use traits for performance-critical code where static dispatch eliminates overhead
 
-✅ **Rust traits**: Compile-time resolution, zero-cost abstraction, static dispatch by default  
-✅ **Java/C# interfaces**: Runtime polymorphism, vtable overhead, dynamic by nature  
-🚀 Use traits for performance-critical code where static dispatch eliminates overhead
-
-**Try This:** What happens if you use `&dyn PacketHandler` instead of generics?  
-**Answer:** You get dynamic dispatch with vtable overhead—measure the performance difference in your hot paths!
+Switching to `&dyn PacketHandler` buys you a smaller binary and one implementation of the
+function, and costs you an indirect call the optimizer can't see through. Whether that
+matters depends entirely on how hot the path is — so measure before you decide.

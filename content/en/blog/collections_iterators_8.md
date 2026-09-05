@@ -14,7 +14,7 @@ tags:
 date: '2025-07-28'
 ---
 
-# What is the purpose of Vec::retain()? How does it compare to filtering with iter().filter().collect()?
+# Vec::retain() Vs filtering with iter().filter().collect()?
 
 ## Vec::retain(): In-Place Filtering
 
@@ -205,8 +205,7 @@ println!("filter.collect: {:?}", start.elapsed());
 
 **Typical Result**: `retain()` is 2–3x faster due to no allocations.
 
-## When to Use Each
-
+## When each is the right call
 ### Prefer retain() When:
 - You want to modify the Vec in-place.
 - Memory efficiency is critical (e.g., large Vecs).
@@ -234,15 +233,13 @@ assert_eq!(vec, [2, 4]);
 ### Stability:
 Both methods preserve the relative order of retained elements (stable filtering).
 
-## Key Takeaways
-
-✅ **retain()**: Faster, memory-efficient, and in-place. Ideal for bulk modifications.
-✅ **filter().collect()**: Flexible, non-destructive. Ideal for iterator pipelines.
+## When `retain()` wins
+**retain()**: Faster, memory-efficient, and in-place. Ideal for bulk modifications.
+**filter().collect()**: Flexible, non-destructive. Ideal for iterator pipelines.
 
 ## Real-World Use Case:
 - **retain()**: Cleaning up expired sessions in a server's session pool.
 - **filter().collect()**: Transforming API response data into a filtered subset.
 
-**Try This**: What happens if you `retain()` with a predicate that keeps all elements?
-
-**Answer**: No-op (no elements removed, no reallocations).
+A `retain()` whose predicate keeps everything costs one pass and nothing else — no removals,
+no reallocation, capacity untouched.

@@ -1,5 +1,5 @@
 ---
-id: move-closures-rust
+id: move-closures-rust-javascript-developers
 title: 'Understanding Rust Move Closures: A Guide for JavaScript Developers'
 slug: move-closures-rust-javascript-developers
 locale: en
@@ -318,7 +318,6 @@ fn create_handler() -> impl FnMut() -> i32 {
 This prevents data races and use-after-free at compile time—guarantees JavaScript can't make.
 
 ## Summary
-
 | Scenario | Use `move` | Reason |
 |----------|-----------|---------|
 | Threading | Yes | Thread may outlive scope |

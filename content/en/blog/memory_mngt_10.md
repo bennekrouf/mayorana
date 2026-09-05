@@ -5,14 +5,16 @@ slug: cow-copy-on-write-rust
 locale: en
 date: '2025-07-30'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Cow<'a, B> lets a function borrow when it can and allocate only when it must.
+  How copy-on-write works and when it pays for itself.
 
 tags:
   - rust
   - string
 ---
 
-# How does Cow<'a, B> (Copy-on-Write) work in Rust? When would you use it for strings or other data?
+# How does Cow<'a, B> (Copy-on-Write) work in Rust?
 
 `Cow<'a, B>` (Copy-on-Write) is a smart pointer in Rust’s `std::borrow` module that provides a clone-free abstraction over borrowed and owned data. It enables efficient handling of data that may or may not need modification, minimizing allocations while maintaining flexibility.
 
@@ -216,18 +218,18 @@ struct JsonValue<'a> {
 | No modification | Stays as `Borrowed` | Zero |
 | Modification | Converts to `Owned` | One allocation |
 
-## Key Takeaways
-
-✅ **Use `Cow` when**:
+## When `Cow` pays for itself
+**Use `Cow` when**:
 - You need to conditionally modify borrowed data.
 - You want to avoid allocations for read-only paths.
 - Your API should accept both `&str` and `String` efficiently.
 
-🚀 **Real-world uses**:
+**Real-world uses**:
 - `regex::Match` (borrows input strings).
 - `serde` deserialization.
 - Path manipulation (`PathBuf` vs. `&Path`).
 
 **Note**: `Cow` works with any `ToOwned` type (e.g., `[u8]` → `Vec<u8]`, `Path` → `PathBuf`).
 
-**Experiment**: Modifying the `to_uppercase` example to handle digits (as shown above) demonstrates how `Cow` avoids allocations unless both lowercase letters *and* digits are present, optimizing performance.
+Extending the `to_uppercase` example to digits shows where `Cow` earns its keep: it only
+allocates on inputs that actually need rewriting, and returns a borrow for everything else.

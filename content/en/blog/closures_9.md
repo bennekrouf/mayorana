@@ -1,7 +1,6 @@
 ---
 id: storing-closures-in-structs
-title: >-
-  How storing a closure in a struct?
+title: 'How do you store a closure in a struct?'
 slug: storing-closures-in-structs
 locale: "en"
 author: mayo
@@ -14,7 +13,7 @@ tags:
 date: '2025-07-14'
 ---
 
-# How can you store a closure in a struct? What trait bounds and lifetime annotations are required?
+# How do you store a closure in a struct?
 
 Storing a closure in a struct requires specifying trait bounds (Fn, FnMut, FnOnce) and potentially lifetimes if the closure captures references. Here's how to do it:
 
@@ -96,7 +95,7 @@ fn main() {
 }
 ```
 
-### Key Points
+### Bounds and lifetimes, summarised
 - **Zero runtime overhead**: Monomorphized for each closure type.
 - **Fixed closure type**: Can't store different closures in the same struct.
 
@@ -227,8 +226,7 @@ Choosing `Fn`, `FnMut` or `FnOnce` for the stored field is not a local decision 
 </svg>
 </div>
 
-## When to Use Each
-
+## Trade-offs at a glance
 | Approach | Use Case | Trade-Offs |
 |----------|----------|------------|
 | Generic (impl Fn) | High performance, fixed closure type | Less flexible, binary bloat |
@@ -237,10 +235,9 @@ Choosing `Fn`, `FnMut` or `FnOnce` for the stored field is not a local decision 
 
 ## Key Takeaways
 
-✅ Generic structs: Best for performance and static dispatch.
-✅ Trait objects: Use when storing heterogeneous closures.
-✅ Lifetimes: Required if the closure captures references.
+Generic structs: Best for performance and static dispatch.
+Trait objects: Use when storing heterogeneous closures.
+Lifetimes: Required if the closure captures references.
 
-**Try This**: What happens if a closure captures a &mut reference and is stored in a struct?
-
-**Answer**: The struct must be mut, and the closure must implement FnMut!
+Store a closure that captured `&mut` in a struct and the mutability propagates outward: the
+struct binding has to be `mut` too, and the field's bound has to be `FnMut`.

@@ -16,7 +16,7 @@ tags:
   - ownership
 ---
 
-# Quelle est la différence entre une function et une closure en Rust ?
+# Functions ou Closures en Rust ?
 
 Comprendre la distinction entre functions et closures est fondamental pour maîtriser le système d'ownership de Rust et ses caractéristiques de performance.
 
@@ -65,8 +65,7 @@ Comprendre la distinction entre functions et closures est fondamental pour maît
 </svg>
 </div>
 
-## Différences Clés
-
+## Fonctions et closures, côte à côte
 | Functions | Closures |
 |-----------|----------|
 | Définies au moment de la compilation avec `fn` | Anonymes, créées au runtime |
@@ -74,10 +73,9 @@ Comprendre la distinction entre functions et closures est fondamental pour maît
 | Ne peuvent pas capturer les variables d'environnement | Peuvent capturer les variables du scope englobant |
 | Ont toujours un type connu | Type unique et inféré (chaque closure a son propre type) |
 
-## Mécaniques Sous-jacentes
+## Mécaniques sous-jacentes
 
-### Les Closures Sont des Structs + Traits
-
+### Les closures sont des structs + traits
 Rust modélise les closures comme des structs qui :
 - Stockent les variables capturées (comme fields)
 - Implémentent l'un des closure traits (`Fn`, `FnMut`, ou `FnOnce`)
@@ -108,8 +106,7 @@ Quand les closures sont des trait objects (ex: `Box<dyn Fn(i32) -> i32>`), Rust 
 - **Vtable** : Une lookup table stockant des function pointers, permettant le polymorphisme runtime
 - **Overhead** : Appels de fonction indirects (~2–3x plus lent que le static dispatch)
 
-## Quand Utiliser Chacune
-
+## En choisir une
 Utilise les **Functions** quand :
 - Tu as besoin de zero-cost abstractions (ex : opérations mathématiques)
 - Aucune capture d'environnement n'est requise
@@ -187,8 +184,7 @@ let filter = |x: i32| x > threshold;  // Capture `threshold`
 </svg>
 </div>
 
-## Considérations de Performance
-
+## Le coût réel
 | Scénario | Static Dispatch (Closures) | Dynamic Dispatch (dyn Fn) |
 |----------|----------------------------|----------------------------|
 | Vitesse | Rapide (inlined) | Plus lent (vtable lookup) |
@@ -209,18 +205,16 @@ fn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {
 }
 ```
 
-## Points Clés
+## La différence en une ligne
+**Functions** : Performance prévisible, pas de captures  
+**Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
+Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
 
-✅ **Functions** : Performance prévisible, pas de captures  
-✅ **Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
-🚀 Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
+Capture une référence mutable puis appelle la closure deux fois : le borrow checker refuse.
+Le premier appel détient encore l'accès exclusif au moment où le second commence.
 
-**Essaie Ceci :** Que se passe-t-il si une closure capture une mutable reference et est appelée deux fois ?  
-**Réponse :** Le borrow checker assure un accès exclusif—ça ne compilera pas sauf si le premier appel se termine !
-
-## Exemples Avancés
-
-### Capture par Valeur vs Reference
+## Aller plus loin
+### Capture par valeur vs Reference
 
 ```rust
 fn main() {
@@ -240,8 +234,7 @@ fn main() {
 }
 ```
 
-### Move Semantics avec les Closures
-
+### Move semantics avec les closures
 ```rust
 use std::thread;
 
@@ -262,8 +255,7 @@ fn main() {
 }
 ```
 
-### Closure Traits en Action
-
+### Les closure traits en action
 ```rust
 fn demonstrate_closure_traits() {
     let x = String::from("hello");
@@ -293,7 +285,7 @@ fn demonstrate_closure_traits() {
 
 ## Optimisations du Compiler
 
-### Inline et Zero-Cost Abstractions
+### Inline et Zero-Cost abstractions
 
 ```rust
 // Cette closure sera probablement inlined
@@ -310,7 +302,7 @@ for x in &numbers {
 }
 ```
 
-### Éviter les Allocations Inutiles
+### Éviter les allocations inutiles
 
 ```rust
 // ❌ Mauvais - crée des String temporaires
@@ -329,7 +321,7 @@ let filtered: Vec<&str> = names
     .collect();
 ```
 
-## Patterns Avancés
+## Patterns avancés
 
 ### Higher-Order Functions
 
@@ -367,7 +359,7 @@ fn make_adder_static(x: i32) -> impl Fn(i32) -> i32 {
 }
 ```
 
-## Debugging et Introspection
+## Debugging et introspection
 
 ### Type de Closure
 
@@ -411,7 +403,7 @@ fn main() {
 }
 ```
 
-## Conseils de Performance
+## Conseils de performance
 
 ### Hot Paths
 

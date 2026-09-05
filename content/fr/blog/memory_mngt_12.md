@@ -7,9 +7,9 @@ slug: concurrency-rust-fr
 locale: fr
 date: '2025-11-25'
 author: mayo
-excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
+excerpt: >-
+  Ownership et borrowing excluent les data races à la compilation. Ce
+  qu'ajoutent Send et Sync, et pourquoi Rc ne franchit pas un thread.
 tags:
   - rust
   - beginner
@@ -19,7 +19,7 @@ tags:
   - borrowing
 ---
 
-# Comment l'ownership et le borrowing préviennent-ils les data races ?
+# Comment les mécanismes d'Ownership et de Borrowing Assurent une Concurrence Sûre
 
 Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowing pour garantir la thread safety au moment de la compilation, éliminant les data races sans nécessiter un garbage collector. Cette approche assure un parallélisme sûr et haute performance avec un overhead runtime minimal.
 
@@ -64,7 +64,7 @@ Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowi
 </svg>
 </div>
 
-## Modèle de Concurrence de Rust
+## Modèle de concurrence de Rust
 
 Rust utilise les mécanismes suivants pour gérer la concurrence :
 - **Ownership** : Assure l'accès mutable exclusif aux données.
@@ -81,7 +81,7 @@ Une **data race** survient quand :
 
 Les règles de Rust rendent les data races impossibles dans le code safe :
 
-### 1. Mutabilité Exclusive (`&mut T`)
+### 1. Mutabilité exclusive (`&mut T`)
 
 - Seule une référence mutable (`&mut T`) peut exister à la fois, appliquée par le borrow checker.
 - Ceci prévient plusieurs threads d'écrire aux mêmes données simultanément.
@@ -93,7 +93,7 @@ let r1 = &mut data;  // OK: Mutable borrow
 // let r2 = &mut data;  // ERREUR: Cannot borrow `data` as mutable more than once
 ```
 
-### 2. Pas de Mutabilité Partagée Sans Synchronisation
+### 2. Pas de mutabilité partagée Sans synchronisation
 
 - Les références partagées (`&T`) sont read-only, sûres pour l'accès concurrent.
 - Pour muter des données partagées, des primitives de synchronisation comme `Mutex` sont requises :
@@ -188,7 +188,7 @@ thread::spawn(move || {             // `move` transfère ownership
 }).join().unwrap();
 ```
 
-## Outils de Concurrence Courants
+## Outils de concurrence courants
 
 | **Outil** | **But** | **Mécanisme de Thread Safety** |
 |-----------|---------|--------------------------------|
@@ -219,24 +219,23 @@ for handle in handles {
 println!("Result: {}", *counter.lock().unwrap());  // Affiche 10
 ```
 
-## Pourquoi C'est Important
+## Pourquoi C'est important
 
 - **Pas d'overhead runtime** : Les vérifications de sécurité se produisent au moment de la compilation.
 - **Pas de garbage collector** : Concurrence sûre sans pauses GC.
 - **Parallélisme sans peur** : Le compilateur rejette les patterns unsafe, permettant une programmation concurrente confiante.
 
-## Points Clés
-
-✅ **Les règles d'ownership préviennent** :
+## Points clés
+**Les règles d'ownership préviennent** :
 - L'accès mutable concurrent (pas de data races).
 - Les dangling references (via lifetimes).
 
-✅ **Send/Sync appliquent** la thread safety au moment de la compilation.
+**Send/Sync appliquent** la thread safety au moment de la compilation.
 
-🚀 **Utilise `Mutex`, `Arc`, ou channels** pour un état partagé sûr.
+**Utilise `Mutex`, `Arc`, ou channels** pour un état partagé sûr.
 
 **Impact Réel** : Les crates comme `rayon` (iterators parallèles) et `tokio` (runtime async) s'appuient sur ces garanties pour une concurrence robuste.
 
-**Expérimente** : Que se passe-t-il si tu essaies de partager un `Rc<T>` entre threads ?
-
-**Réponse** : Erreur de compilation ! `Rc<T>` n'est pas `Send` (pas thread-safe). Utilise `Arc<T>` à la place.
+Essaie d'envoyer un `Rc<T>` vers un autre thread et le compilateur t'arrête : `Rc` n'est pas
+`Send`, parce que son compteur n'est pas atomique. `Arc<T>` a la même forme avec le compteur
+atomique, et tu paies pour ça à chaque clone.

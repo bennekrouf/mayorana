@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Low-level optimization in Rust, focusing on profiling tools to identify and
   fix performance bottlenecks like L1 cache misses
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 tags:
   - rust
   - advanced
@@ -203,8 +201,7 @@ fn process_points(points: &mut [Point]) {
 - **Fix**: Refactor to SoA for contiguous access.
 - **Iterate**: If misses persist, check alignment (`std::mem::align_of`), stride, or false sharing (e.g., in multi-threaded cases).
 
-## Conclusion
-
+## Where this leaves you
 To tackle L1 cache misses in a Rust codebase, I’d use `perf` to detect high miss rates, `cargo flamegraph` to pinpoint the culprit, and `criterion` to measure improvements.
 
 The workflow—reproduce, diagnose, hypothesize, optimize, verify—ensures data-driven results.

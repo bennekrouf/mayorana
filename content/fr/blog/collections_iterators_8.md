@@ -11,10 +11,14 @@ excerpt: >-
 tags:
   - rust
   - retain
+  - vec
+  - filter
+  - iterators
+  - performance
 date: '2025-10-30'
 ---
 
-# Quel est l'objectif de Vec::retain() ? Comment se compare-t-il au filtrage avec iter().filter().collect() ?
+# Vec::retain() vs filtrage avec iter().filter().collect() ?
 
 ## Vec::retain() : Filtrage en place
 
@@ -208,14 +212,14 @@ println!("filter.collect: {:?}", start.elapsed());
 ## Quand utiliser chaque méthode
 
 ### Préférer retain() quand :
-- Vous voulez modifier le Vec en place.
+- Tu veux modifier le Vec en place.
 - L'efficacité mémoire est critique (ex : Vec de grande taille).
 - L'ordre des éléments doit être préservé.
 
 ### Préférer filter().collect() quand :
-- Vous avez besoin que le Vec original reste intact.
-- Vous enchaînez plusieurs adaptateurs d'itérateur (ex : `.filter().map()`).
-- Vous travaillez avec des itérateurs non-Vec (ex : ranges, slices).
+- Tu as besoin que le Vec original reste intact.
+- Tu enchaînes plusieurs adaptateurs d'itérateur (ex : `.filter().map()`).
+- Tu travailles avec des itérateurs non-Vec (ex : ranges, slices).
 
 ## Notes avancées
 
@@ -234,15 +238,13 @@ assert_eq!(vec, [2, 4]);
 ### Stabilité :
 Les deux méthodes préservent l'ordre relatif des éléments conservés (filtrage stable).
 
-## Points clés à retenir
-
-✅ **retain()** : Plus rapide, efficace en mémoire et en place. Idéal pour les modifications en masse.
-✅ **filter().collect()** : Flexible, non destructif. Idéal pour les pipelines d'itérateurs.
+## Quand `retain()` l'emporte
+**retain()** : Plus rapide, efficace en mémoire et en place. Idéal pour les modifications en masse.
+**filter().collect()** : Flexible, non destructif. Idéal pour les pipelines d'itérateurs.
 
 ## Cas d'usage réel :
 - **retain()** : Nettoyer les sessions expirées dans un pool de sessions serveur.
 - **filter().collect()** : Transformer les données de réponse d'API en un sous-ensemble filtré.
 
-**Essayez ceci** : Que se passe-t-il si vous utilisez `retain()` avec un prédicat qui conserve tous les éléments ?
-
-**Réponse** : Aucune opération (aucun élément supprimé, pas de réallocations).
+Un `retain()` dont le prédicat garde tout coûte un parcours et rien d'autre — aucune suppression,
+aucune réallocation, capacité inchangée.

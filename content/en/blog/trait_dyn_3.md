@@ -1,13 +1,13 @@
 ---
 id: dispatch-performance-rust
-title: 'fn process<T: MyTrait>(x: T)) VS using dyn MyTrait for dynamic dispatch.'
+title: 'Trait bounds or dyn Trait? Static and dynamic dispatch compared'
 slug: dispatch-performance-rust
 locale: en
 date: '2025-08-12'
 author: mayo
-excerpt: Static vs. Dynamic Dispatch
-content_focus: Static vs. Dynamic Dispatch
-technical_level: Expert technical discussion
+excerpt: >-
+  Generics with a trait bound compile to static dispatch; dyn Trait compiles to
+  a vtable lookup. What each costs, and how to choose.
 
 tags:
   - rust
@@ -17,7 +17,7 @@ tags:
   - traits
 ---
 
-# What’s the performance trade-off between using a generic function with a trait bound (e.g., fn process<T: MyTrait>(x: T)) versus using dyn MyTrait for dynamic dispatch, and in what scenarios would you prefer one over the other?
+# Trait bounds or dyn Trait? Static and dynamic dispatch compared
 
 In Rust, **static dispatch** (via generics with trait bounds) and **dynamic dispatch** (via `dyn Trait`) offer distinct performance profiles, critical for systems like real-time data processors. Static dispatch leverages monomorphization for speed, while dynamic dispatch uses vtables for flexibility. Below, I compare the two with an example and outline when to choose each based on performance, flexibility, and maintainability.
 
@@ -253,8 +253,7 @@ fn main() {
 - **Trade-Off**: Slower runtime, but acceptable if `process` is complex (call overhead is a smaller fraction) or invocation is infrequent.
 - **Maintainability**: Easier to extend—new types just implement the trait.
 
-## Verification
-
+## Measuring the difference
 - **Benchmark**:
   ```rust
   use criterion::{black_box, Criterion};
@@ -268,6 +267,5 @@ fn main() {
   Expect static to be 10-20% faster.
 - **Size**: `size target/release/app` shows static bloating `.text` per type.
 
-## Conclusion
-
+## Choosing between them
 In a real-time data processor, prefer static dispatch (`process_static`) for hot paths, trading code size for speed and inlining. For flexibility (e.g., pluggable processors), use `dyn EventProcessor`, accepting vtable costs. Profile to ensure static’s gains justify its footprint, balancing performance with system design goals.

@@ -8,17 +8,16 @@ excerpt: >-
   Comparing performance of Vec::push() in loops versus pre-allocating with
   Vec::with_capacity(), analyzing memory reallocation costs and optimization
   strategies
-content_focus: 'collections (like Vec), iterators (into_iter, collect), and related concepts'
-technical_level: Expert technical discussion
 
 tags:
   - rust
   - performance
   - advanced
+  - collections
 date: '2025-08-27'
 ---
 
-# What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?
+# Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="lo6-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Vec::new() grows by repeated doubling and copying, while Vec::with_capacity(n) allocates the final size once">
@@ -202,21 +201,19 @@ let mut v = Vec::with_capacity(n);
 v.extend(0..n);  // Optimized for iterators (avoids bounds checks)
 ```
 
-## Key Takeaways
-
-✅ **Use with_capacity() for**:
+## Rules of thumb
+**Use with_capacity() for**:
 - Predictable element counts.
 - High-performance scenarios.
 
-✅ **Use Vec::new() for**:
+**Use Vec::new() for**:
 - Small/unknown sizes or prototyping.
 
-🚀 **Avoid unnecessary reallocations**—they dominate runtime for large Vecs.
+**Avoid unnecessary reallocations**—they dominate runtime for large Vecs.
 
 ## Real-World Impact
 
 In the regex crate, pre-allocation is used for capture groups to avoid reallocations during pattern matching.
 
-**Try This**: What happens if you pre-allocate too much (e.g., with_capacity(1000) but only use 10 elements)?
-
-**Answer**: Wasted memory. Use shrink_to_fit() to release unused capacity.
+Over-reserving has a cost too. `with_capacity(1000)` for ten elements holds the whole block
+until the `Vec` drops; `shrink_to_fit()` gives it back, at the price of one more copy.

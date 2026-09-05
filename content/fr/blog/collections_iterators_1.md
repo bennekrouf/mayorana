@@ -6,15 +6,17 @@ locale: fr
 date: '2025-10-24'
 author: mayo
 excerpt: >-
-  Stratégies d'allocation de Vec en Rust, comparant Vec::new() et
-  Vec::with_capacity() pour des performances optimales.
+  Vec::new() alloue à la première insertion, with_capacity(n) alloue une fois pour n
+  éléments. Quand la différence compte vraiment.
 tags:
   - rust
   - collections
   - iterators
+  - performance
+  - vec
 ---
 
-# Quelle est la différence entre Vec::new() et Vec::with_capacity() ? Quand utiliser chacune ?
+# Rust Vec::new() vs. with_capacity() : Quand utiliser chacune
 
 Comprendre les stratégies d'allocation de Vec est crucial pour écrire du code Rust performant, particulièrement lorsqu'on travaille avec des collections et des itérateurs.
 
@@ -82,20 +84,19 @@ Comprendre les stratégies d'allocation de Vec est crucial pour écrire du code 
 | La capacité initiale est 0 (alloue au premier push) | La capacité initiale est exactement n (pas d'allocations précoces) |
 | Croît dynamiquement (peut réallouer plusieurs fois) | Évite la réallocation jusqu'à ce que len() > n |
 
-## Quand utiliser chacune
-
-Utilisez `Vec::new()` quand :
+## Lequel déclarer
+Utilise `Vec::new()` quand :
 - Le nombre d'éléments est inconnu ou petit
-- Vous voulez de la simplicité (ex : vecteurs de courte durée)
+- Tu veux de la simplicité (ex : vecteurs de courte durée)
 
 ```rust
 let mut v = Vec::new(); // Bon pour un usage ad hoc
 v.push(1);
 ```
 
-Utilisez `Vec::with_capacity(n)` quand :
-- Vous connaissez le nombre exact ou maximum d'éléments à l'avance
-- Vous optimisez pour la performance (évite les réallocations)
+Utilise `Vec::with_capacity(n)` quand :
+- Tu connais le nombre exact ou maximum d'éléments à l'avance
+- Tu optimises pour la performance (évite les réallocations)
 
 ```rust
 let mut v = Vec::with_capacity(1000); // Pré-alloue pour 1000 éléments
@@ -219,12 +220,12 @@ Pré-allouer est une indication, pas une limite stricte. `len` et `capacity` son
 </svg>
 </div>
 
-## Points clés à retenir
 
-- ✅ Par défaut, utilisez `Vec::new()` pour la simplicité.  
-- ✅ Utilisez `with_capacity(n)` quand :
-- Vous connaissez la taille à l'avance
+- Par défaut, utilise `Vec::new()` pour la simplicité.  
+- Utilise `with_capacity(n)` quand :
+- Tu connais la taille à l'avance
 - La performance est critique (ex : boucles critiques)
 
-**Essayez ceci :** Que se passe-t-il si vous poussez au-delà de la capacité pré-allouée ?  
-**Réponse :** Le Vec croît automatiquement (comme `Vec::new()`), mais seulement après avoir dépassé n.
+Pousser au-delà de la capacité réservée n'est pas une erreur : le `Vec` croît comme `Vec::new()`
+l'aurait fait depuis le début. Tu gagnes l'allocation unique jusqu'à `n`, et le doublement
+habituel ensuite.

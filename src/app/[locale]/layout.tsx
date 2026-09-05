@@ -10,7 +10,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { locales } from '../../../i18n';
 import { notFound } from 'next/navigation';
-import CanonicalMeta from '@/components/seo/CanonicalMeta';
+import { buildMetadata } from '@/lib/seo';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,19 +29,18 @@ type Props = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-
-  // DEBUG: Log locale in metadata generation
-  // console.log('🔍 Metadata generation - locale:', locale);
-
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
-  return {
-    title: {
-      template: '%s | Mayorana',
-      default: t('site_title'),
-    },
+  // This is the home page's own metadata as well as the fallback for any
+  // segment below that does not set its own. buildMetadata sets titles
+  // absolutely, so there is no '%s | Mayorana' template to inherit — every
+  // page builds its full title through the same helper instead.
+  return buildMetadata({
+    locale,
+    path: '',
+    title: t('site_title'),
     description: t('site_description'),
-  };
+  });
 }
 
 export function generateStaticParams() {
@@ -101,10 +100,11 @@ export default async function LocaleLayout({
             }
           `}
         </Script>
-        <Script
-          id="organization-jsonld"
+        {/* Plain script tag rather than next/script: next/script pushes its
+            content into a client-side queue, so the JSON-LD never appears in
+            the served HTML as structured data a crawler can read. */}
+        <script
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
@@ -121,13 +121,15 @@ export default async function LocaleLayout({
                   addressCountry: 'CH',
                 },
               },
-              sameAs: ['https://mayorana.ch'],
+              // sameAs is for profiles on *other* sites — pointing it back at
+              // mayorana.ch told search engines nothing. The GitHub org hosts
+              // the source for every tool, which is a real entity link.
+              sameAs: ['https://github.com/bennekrouf'],
             }),
           }}
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <CanonicalMeta />
             <HostProvider isSwissRust={isSwissRust}>
               {children}
             </HostProvider>

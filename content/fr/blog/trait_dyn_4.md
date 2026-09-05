@@ -10,8 +10,6 @@ author: mayo
 excerpt: >-
   Comprendre l'object safety en Rust et refactoriser les traits pour le dispatch
   dynamique
-content_focus: Object Safety
-technical_level: Discussion technique experte
 tags:
   - rust
   - object-safety
@@ -209,7 +207,7 @@ fn main() {
 </svg>
 </div>
 
-## Comment Ça Active dyn Trait
+## Comment ça Active dyn Trait
 
 - **Construction de Vtable** : Le `Transformer` refactorisé a une méthode avec une signature fixe, activant une vtable comme :
   ```rust
@@ -222,8 +220,7 @@ fn main() {
 - **Sécurité** : Pas de generics ou `Self` assure que la vtable est type-agnostic, sûre pour tout implémenteur.
 - **Efficacité** : Le dispatch dynamique ajoute un lookup vtable (1-2 cycles), mais active le polymorphisme à l'exécution essentiel pour les plugins chargés dynamiquement.
 
-## Considérations Avancées
-
+## Là où ça se complique
 ### Gestion de Multiples Types d'Entrée
 
 Si tu as besoin de flexibilité de type, utilise des enums ou des traits helper :
@@ -258,7 +255,7 @@ impl Transformer for SquareTransformer {
 }
 ```
 
-### Système de Plugin Complet
+### Système de Plugin complet
 
 ```rust
 use std::collections::HashMap;
@@ -294,11 +291,10 @@ fn main() {
 }
 ```
 
-## Points Clés à Retenir
-
-✅ **Object Safety** : Élimine les generics, `Self` returns et méthodes statiques pour activer `dyn Trait`  
-✅ **Factory Pattern** : Utilise des fonctions factory au lieu de méthodes `new()` statiques  
-✅ **Compromis** : Moins de flexibilité de type contre la capacité de dispatch dynamique  
-🚀 Essentiels pour les systèmes de plugins où les types sont inconnus pendant la compilation
+## Ce qui rend un trait object-safe
+**Object Safety** : Élimine les generics, `Self` returns et méthodes statiques pour activer `dyn Trait`  
+**Factory Pattern** : Utilise des fonctions factory au lieu de méthodes `new()` statiques  
+**Compromis** : Moins de flexibilité de type contre la capacité de dispatch dynamique  
+Essentiels pour les systèmes de plugins où les types sont inconnus pendant la compilation
 
 **Astuce** : Utilise `cargo check` pour vérifier rapidement si tes traits sont object-safe avant d'essayer `dyn Trait` !

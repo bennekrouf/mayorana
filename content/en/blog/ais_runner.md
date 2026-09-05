@@ -96,7 +96,7 @@ It runs natively on macOS, Windows, and Linux via Dioxus desktop (WebView).
 - **Blob trigger support** — pre-flight checks for Azurite container existence
 - **Run history viewer** — inspect individual run details, inputs/outputs per action
 
-## 📊 Workflow Visualization
+## Workflow Visualization
 
 - Workflow list with trigger type indicators and status
 - **Visual graph panel** — DAG rendering of workflow action dependencies
@@ -199,7 +199,7 @@ It runs natively on macOS, Windows, and Linux via Dioxus desktop (WebView).
 </svg>
 </div>
 
-## ⚡ Event Grid
+## Event Grid
 
 - **Topic browser** — lists all custom and system Event Grid topics subscription-wide, with resource group badges
 - **Subscription inspector** — expand any topic to see event subscriptions with endpoint type, filters, and event types

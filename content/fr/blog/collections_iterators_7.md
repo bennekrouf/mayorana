@@ -11,14 +11,18 @@ excerpt: >-
 tags:
   - rust
   - drain
+  - vec
+  - truncate
+  - clear
+  - collections
 date: '2025-10-29'
 ---
 
-# Comment fonctionne Vec::drain(), et quand est-il utile comparé à Vec::truncate() ou Vec::clear() ?
+# Vec::drain() vs Vec::truncate() ou Vec::clear() ?
 
 ## Qu'est-ce que Vec::drain() ?
 
-`drain()` supprime une plage d'éléments d'un Vec tout en cédant leur ownership via un itérateur. Contrairement à `truncate()` ou `clear()`, il vous permet de traiter les éléments supprimés avant qu'ils ne soient libérés.
+`drain()` supprime une plage d'éléments d'un Vec tout en cédant leur ownership via un itérateur. Contrairement à `truncate()` ou `clear()`, il te permet de traiter les éléments supprimés avant qu'ils ne soient libérés.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="ci7-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un Vec peut être réduit avec drain, qui cède les éléments supprimés via un itérateur, ou avec truncate/clear, qui les libèrent sans céder l'ownership">
@@ -123,7 +127,7 @@ assert_eq!(vec, [1, 2]);
 
 ### 3. Vec::clear()
 
-**Cas d'usage** : Supprimer tous les éléments (plus rapide que `drain(..)` si vous n'en avez pas besoin).
+**Cas d'usage** : Supprimer tous les éléments (plus rapide que `drain(..)` si tu n'en as pas besoin).
 
 **Exemple** :
 ```rust
@@ -180,7 +184,7 @@ Cette paresse signifie que le travail intéressant s'étale sur la durée de vie
 <path class="ln" d="M300 68V86"/>
 <rect class="box" x="210" y="86" width="180" height="66" rx="6"/>
 <text x="300" y="108" text-anchor="middle" class="tx" font-size="11">2 · next() cède 'b', 'c'</text>
-<text x="300" y="126" text-anchor="middle" class="mut">la propriété vous revient,</text>
+<text x="300" y="126" text-anchor="middle" class="mut">la propriété te revient,</text>
 <text x="300" y="142" text-anchor="middle" class="mut">un élément à la fois</text>
 <!-- étape 3 -->
 <path class="ln" d="M495 68V86"/>
@@ -211,16 +215,14 @@ vec.insert(0, "fresh");
 assert_eq!(vec, ["fresh", "new", "old"]);
 ```
 
-## Points clés à retenir
-
-- ✅ **drain()** : À utiliser quand vous devez traiter les éléments supprimés ou supprimer par lots.
-- ✅ **truncate()/clear()** : À utiliser pour une suppression en masse rapide sans traitement.
-- 🚀 **Tous préservent la capacité** : Pas de surcoût de réallocation pour les opérations futures.
+## Lequel choisir
+- **drain()** : À utiliser quand tu dois traiter les éléments supprimés ou supprimer par lots.
+- **truncate()/clear()** : À utiliser pour une suppression en masse rapide sans traitement.
+- **Tous préservent la capacité** : Pas de surcoût de réallocation pour les opérations futures.
 
 ## Exemple concret
 
 Dans un moteur de jeu, `drain()` pourrait efficacement supprimer les entités expirées tout en permettant une logique de nettoyage (par exemple, sauvegarder l'état).
 
-**Essayez ceci** : Que se passe-t-il si vous utilisez `drain()` mais ne consommez pas l'itérateur ?
-
-**Réponse** : Les éléments sont quand même supprimés lorsque l'itérateur Drain est libéré (grâce à son implémentation de Drop).
+Un détail qui surprend : libérer un `Drain` sans le consommer supprime quand même les éléments.
+La suppression vit dans le `Drop` de `Drain`, pas dans l'itération.
