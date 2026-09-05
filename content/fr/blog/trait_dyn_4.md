@@ -10,8 +10,6 @@ author: mayo
 excerpt: >-
   Comprendre l'object safety en Rust et refactoriser les traits pour le dispatch
   dynamique
-content_focus: Object Safety
-technical_level: Discussion technique experte
 tags:
   - rust
   - object-safety

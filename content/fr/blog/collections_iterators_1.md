@@ -12,7 +12,9 @@ tags:
   - rust
   - collections
   - iterators
----
+  - 
+  - performance
+  - vec
 
 # Quelle est la différence entre Vec::new() et Vec::with_capacity() ? Quand utiliser chacune ?
 

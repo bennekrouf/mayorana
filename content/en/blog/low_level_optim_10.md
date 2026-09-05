@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Low-level optimization in Rust, focusing on profiling tools to identify and
   fix performance bottlenecks like L1 cache misses
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 tags:
   - rust
   - advanced

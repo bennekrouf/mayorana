@@ -11,6 +11,10 @@ excerpt: >-
 tags:
   - rust
   - collections
+  - vec
+  - deduplication
+  - hashset
+  - performance
 date: '2025-10-28'
 ---
 

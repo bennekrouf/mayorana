@@ -8,8 +8,6 @@ locale: fr
 date: '2025-10-22'
 author: mayo
 excerpt: Dispatch Statique vs. Dynamique
-content_focus: Dispatch Statique vs. Dynamique
-technical_level: Discussion technique experte
 tags:
   - rust
   - dispatch

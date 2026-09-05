@@ -6,8 +6,6 @@ locale: en
 date: '2025-08-12'
 author: mayo
 excerpt: Static vs. Dynamic Dispatch
-content_focus: Static vs. Dynamic Dispatch
-technical_level: Expert technical discussion
 
 tags:
   - rust

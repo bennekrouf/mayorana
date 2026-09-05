@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Exploiter le support SIMD de Rust pour accélérer la multiplication de matrices
   avec des considérations pour la portabilité et la justesse
-content_focus: optimisation bas niveau en Rust
-technical_level: Discussion technique experte
 tags:
   - rust
   - simd

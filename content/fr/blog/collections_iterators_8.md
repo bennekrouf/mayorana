@@ -11,6 +11,10 @@ excerpt: >-
 tags:
   - rust
   - retain
+  - vec
+  - filter
+  - iterators
+  - performance
 date: '2025-10-30'
 ---
 

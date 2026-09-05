@@ -7,8 +7,6 @@ author: mayo
 excerpt: >-
   Low-level optimization in Rust, focusing on iterator chains and zero-cost
   abstractions
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 
 tags:
   - rust

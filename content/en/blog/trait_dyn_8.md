@@ -10,8 +10,6 @@ excerpt: >-
   Utilizing associated types in Rust traits to design flexible, type-safe APIs
   for low-level I/O drivers and comparing advantages over generic type
   parameters
-content_focus: Associated Types
-technical_level: Expert technical discussion
 
 tags:
   - rust

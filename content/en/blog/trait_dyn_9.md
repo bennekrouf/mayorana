@@ -9,8 +9,6 @@ locale: en
 excerpt: >-
   Employing blanket implementations in Rust to minimize code duplication
   for maintainable libraries
-content_focus: Blanket Implementations
-technical_level: Expert technical discussion
 
 tags:
   - rust

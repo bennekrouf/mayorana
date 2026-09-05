@@ -10,8 +10,6 @@ excerpt: >-
   Exploiter les fonctionnalités stack-based de Rust comme les tableaux de taille
   fixe et Option pour éliminer les allocations heap dans les systèmes temps réel
   pour une exécution prévisible et faible latence
-content_focus: optimisation bas niveau en Rust
-technical_level: Discussion technique experte
 tags:
   - rust
   - real-time

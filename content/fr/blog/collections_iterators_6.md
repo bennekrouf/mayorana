@@ -11,6 +11,10 @@ excerpt: >-
 tags:
   - rust
   - collections
+  - box
+  - vec
+  - memory
+  - performance
 date: '2025-10-28'
 ---
 

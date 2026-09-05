@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Using trait bounds in Rust for type safety and performance in mathematical
   computations
-content_focus: 'trait bounds, generics, monomorphization'
-technical_level: Expert technical discussion
 
 tags:
   - rust

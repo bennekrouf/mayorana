@@ -10,8 +10,6 @@ excerpt: >-
   Employer les blanket implementations en Rust pour minimiser la duplication de
   code tout en adressant les pièges de cohérence de trait pour une conception de
   bibliothèque robuste et maintenable
-content_focus: Blanket Implementations
-technical_level: Discussion technique experte
 tags:
   - rust
   - blanket-implementations

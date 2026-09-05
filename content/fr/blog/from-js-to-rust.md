@@ -1,5 +1,5 @@
 ---
-id: move-closures-rust
+id: move-closures-rust-javascript-developers-fr
 title: 'Comprendre les Move Closures en Rust : Guide pour les Développeurs JavaScript'
 slug: move-closures-rust-javascript-developers
 locale: fr

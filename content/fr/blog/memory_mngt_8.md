@@ -8,8 +8,6 @@ locale: fr
 date: '2025-11-28'
 author: mayo
 excerpt: Rust memory et string
-content_focus: rust memory et string
-technical_level: Discussion technique expert
 tags:
   - rust
   - memory

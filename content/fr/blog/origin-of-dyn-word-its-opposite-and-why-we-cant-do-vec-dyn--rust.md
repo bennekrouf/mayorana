@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Exploration approfondie du mot-clé `dyn` en Rust, son origine, son opposé
   statique, et pourquoi Vec<dyn Trait> n'est pas possible
-content_focus: 'Polymorphisme dynamique, traits, dispatch, limitations de taille'
-technical_level: Discussion technique expert
 tags:
   - rust
   - traits

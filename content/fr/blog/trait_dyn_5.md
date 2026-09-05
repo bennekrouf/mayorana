@@ -8,8 +8,6 @@ excerpt: >-
   Exploiter les supertraits pour établir des hiérarchies de comportements et les
   combiner avec des clauses where pour optimiser des algorithmes génériques
   complexes pour la performance et la sécurité de type
-content_focus: Supertraits et Bounds
-technical_level: Discussion technique experte
 tags:
   - rust
   - supertraits

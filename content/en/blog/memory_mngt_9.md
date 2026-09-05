@@ -6,8 +6,6 @@ locale: en
 date: '2025-08-10'
 author: mayo
 excerpt: Rust memory and string
-content_focus: rust memory and string
-technical_level: Expert technical discussion
 
 tags:
   - rust

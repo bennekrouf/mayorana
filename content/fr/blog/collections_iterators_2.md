@@ -10,7 +10,8 @@ tags:
   - rust
   - iterators
   - collections
----
+  - 
+  - ownership
 
 # Quelles sont les différences entre into_iter(), iter() et iter_mut() ?
 

@@ -10,8 +10,6 @@ excerpt: >-
   Understanding the role of ?Sized bounds in Rust trait definitions and
   leveraging them to create flexible functions that work with both sized and
   unsized types efficiently
-content_focus: Sized and ?Sized
-technical_level: Expert technical discussion
 
 tags:
   - rust

@@ -10,8 +10,6 @@ excerpt: >-
   Utiliser les types associés dans les traits Rust pour concevoir des APIs
   flexibles et type-safe pour les drivers I/O bas niveau et comparer les
   avantages par rapport aux paramètres de type génériques
-content_focus: Types Associés
-technical_level: Discussion technique experte
 tags:
   - rust
   - associated-types

@@ -501,7 +501,7 @@
     ]
   },
   {
-    "id": "move-closures-rust",
+    "id": "move-closures-rust-javascript-developers",
     "slug": "move-closures-rust-javascript-developers",
     "title": "Understanding Rust Move Closures: A Guide for JavaScript Developers",
     "date": "2025-11-02",
@@ -861,7 +861,8 @@
     "tags": [
       "rust",
       "performance",
-      "advanced"
+      "advanced",
+      "collections"
     ],
     "readingTime": "6 min",
     "locale": "en",
@@ -871,7 +872,8 @@
       "keywords": [
         "rust",
         "performance",
-        "advanced"
+        "advanced",
+        "collections"
       ]
     },
     "headings": [
@@ -2992,87 +2994,6 @@
       {
         "id": "alternatives",
         "text": "Alternatives:",
-        "level": 2
-      }
-    ]
-  },
-  {
-    "id": "vec-push-vs-with-capacity-performance-duplicate",
-    "slug": "vec-push-vs-with-capacity-performance-duplicate",
-    "title": "What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?",
-    "date": "2025-07-19",
-    "excerpt": "Analyzing performance differences between Vec::push() in loops versus pre-allocating with Vec::with_capacity(), covering memory reallocation costs and optimization strategies",
-    "contentHtml": "<div class=\"svg-container\" style=\"margin:2rem 0;\">\n<svg class=\"ci4-fig\" viewBox=\"0 0 800 230\" width=\"100%\" style=\"height:auto;max-width:780px;display:block;margin:0 auto;\" role=\"img\" aria-label=\"Vec::push() in a loop frees and re-allocates memory blocks repeatedly, fragmenting the heap, while with_capacity() allocates one contiguous block\">\n<!-- style -->\n<style>\n.ci4-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}\n:root.dark .ci4-fig,[data-theme=\"dark\"] .ci4-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}\n.ci4-fig .bg{fill:var(--bg)}\n.ci4-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}\n.ci4-fig .ghost{fill:none;stroke:var(--ln);stroke-width:1.5;stroke-dasharray:3 3}\n.ci4-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}\n.ci4-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}\n.ci4-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}\n.ci4-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}\n.ci4-fig .ac{fill:var(--ac)}\n.ci4-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}\n.ci4-fig .acln{stroke:var(--ac);stroke-width:2;fill:none}\n</style>\n<!-- defs -->\n<defs>\n<marker id=\"ci4-arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0 0L10 5L0 10z\" fill=\"var(--ln)\"/></marker>\n<marker id=\"ci4-arrowac\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0 0L10 5L0 10z\" fill=\"var(--ac)\"/></marker>\n</defs>\n<!-- bg -->\n<rect class=\"bg\" x=\"0\" y=\"0\" width=\"800\" height=\"230\" rx=\"8\"/>\n<!-- title -->\n<text x=\"400\" y=\"26\" text-anchor=\"middle\" class=\"title\">Growth pattern: push() in a loop vs with_capacity()</text>\n<!-- row1: freed ghost blocks -->\n<text x=\"20\" y=\"65\" class=\"tx\">push() loop</text>\n<rect class=\"ghost\" x=\"110\" y=\"48\" width=\"30\" height=\"24\" rx=\"4\"/>\n<text x=\"125\" y=\"64\" text-anchor=\"middle\" class=\"mut\" font-size=\"9\">freed</text>\n<rect class=\"ghost\" x=\"170\" y=\"48\" width=\"60\" height=\"24\" rx=\"4\"/>\n<text x=\"200\" y=\"64\" text-anchor=\"middle\" class=\"mut\" font-size=\"9\">freed</text>\n<rect class=\"box\" x=\"260\" y=\"42\" width=\"120\" height=\"36\" rx=\"4\"/>\n<text x=\"320\" y=\"65\" text-anchor=\"middle\" class=\"tx\">contiguous block</text>\n<path class=\"ln\" d=\"M140 60H170\" marker-end=\"url(#ci4-arrow)\"/>\n<path class=\"ln\" d=\"M230 60H260\" marker-end=\"url(#ci4-arrow)\"/>\n<text x=\"500\" y=\"65\" class=\"mut\">scattered allocations → possible fragmentation</text>\n<!-- row2: single contiguous block -->\n<text x=\"20\" y=\"140\" class=\"tx\">with_capacity(n)</text>\n<rect class=\"acbox\" x=\"110\" y=\"120\" width=\"270\" height=\"36\" rx=\"4\"/>\n<text x=\"245\" y=\"143\" text-anchor=\"middle\" class=\"tx ac\">one block, sized for n, from the start</text>\n<path class=\"acln\" d=\"M380 138H460\" marker-end=\"url(#ci4-arrowac)\"/>\n<rect class=\"box\" x=\"460\" y=\"120\" width=\"130\" height=\"36\" rx=\"4\"/>\n<text x=\"525\" y=\"143\" text-anchor=\"middle\" class=\"tx\">push × n</text>\n<text x=\"400\" y=\"185\" text-anchor=\"middle\" class=\"mut\">push() loop: amortized O(n log n) with repeated copy+free · with_capacity(): O(n), single allocation</text>\n<text x=\"400\" y=\"210\" text-anchor=\"middle\" class=\"mut\">Pre-sizing avoids the copy-and-free churn that can fragment the heap</text>\n</svg>\n</div>\n\n<h2>Key Performance Differences</h2>\n<table>\n<thead>\n<tr>\n<th>Vec::push() in a Loop</th>\n<th>Vec::with_capacity() + push()</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>Reallocates memory multiple times (grows exponentially).</td>\n<td>Allocates once upfront.</td>\n</tr>\n<tr>\n<td>O(n log n) time complexity (amortized).</td>\n<td>O(n) time complexity.</td>\n</tr>\n<tr>\n<td>May fragment memory due to repeated allocations.</td>\n<td>Single contiguous block of memory.</td>\n</tr>\n</tbody></table>\n<h2>Why Reallocations Are Costly</h2>\n<h3>Growth Strategy</h3>\n<ul>\n<li>A Vec starts with capacity 0 and doubles its capacity when full (e.g., 0 → 4 → 8 → 16...).</li>\n<li>Each reallocation involves:<ul>\n<li>Allocating new memory.</li>\n<li>Copying all existing elements.</li>\n<li>Freeing the old memory.</li>\n</ul>\n</li>\n</ul>\n<h3>Example for 10 Elements</h3>\n<ul>\n<li><strong>push() with Vec::new()</strong>: 4 reallocations (capacity 0 → 4 → 8 → 16).</li>\n<li><strong>push() with with_capacity(10)</strong>: 0 reallocations.</li>\n</ul>\n<div class=\"svg-container\" style=\"margin:2rem 0;\">\n<svg class=\"ci4b-fig\" viewBox=\"0 0 800 210\" width=\"100%\" style=\"height:auto;max-width:780px;display:block;margin:0 auto;\" role=\"img\" aria-label=\"Capacity doubles from 0 to 4 to 8 to 16 while pushing ten elements, and each growth step copies the existing elements into the new block\">\n<!-- style -->\n<style>\n.ci4b-fig{--bg:#f8fafc;--box:#ffffff;--tx:#1e293b;--mut:#64748b;--ln:#cbd5e1;--ac:#FF6B00}\n:root.dark .ci4b-fig,[data-theme=\"dark\"] .ci4b-fig{--bg:#0f172a;--box:#1e293b;--tx:#f8fafc;--mut:#94a3b8;--ln:#475569}\n.ci4b-fig .bg{fill:var(--bg)}\n.ci4b-fig .box{fill:var(--box);stroke:var(--ln);stroke-width:1.5}\n.ci4b-fig .acbox{fill:var(--box);stroke:var(--ac);stroke-width:2}\n.ci4b-fig .tx{fill:var(--tx);font:600 12px ui-sans-serif,system-ui,sans-serif}\n.ci4b-fig .title{fill:var(--tx);font:700 14px ui-sans-serif,system-ui,sans-serif}\n.ci4b-fig .mut{fill:var(--mut);font:500 11px ui-sans-serif,system-ui,sans-serif}\n.ci4b-fig .ac{fill:var(--ac)}\n.ci4b-fig .ln{stroke:var(--ln);stroke-width:1.5;fill:none}\n</style>\n<!-- defs -->\n<defs>\n<marker id=\"ci4b-arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0 0L10 5L0 10z\" fill=\"var(--ln)\"/></marker>\n</defs>\n<!-- bg -->\n<rect class=\"bg\" x=\"0\" y=\"0\" width=\"800\" height=\"210\" rx=\"8\"/>\n<!-- title -->\n<text x=\"400\" y=\"26\" text-anchor=\"middle\" class=\"title\">Capacity timeline: pushing 10 elements onto Vec::new()</text>\n<!-- stage 1 -->\n<rect class=\"box\" x=\"40\" y=\"62\" width=\"140\" height=\"40\" rx=\"6\"/>\n<text x=\"110\" y=\"87\" text-anchor=\"middle\" class=\"tx\">cap 0</text>\n<text x=\"110\" y=\"122\" text-anchor=\"middle\" class=\"mut\">no heap block yet</text>\n<!-- step 1 to 2 -->\n<text x=\"205\" y=\"76\" text-anchor=\"middle\" class=\"mut\" font-size=\"10\">alloc</text>\n<path class=\"ln\" d=\"M180 88H230\" marker-end=\"url(#ci4b-arrow)\"/>\n<!-- stage 2 -->\n<rect class=\"box\" x=\"230\" y=\"62\" width=\"140\" height=\"40\" rx=\"6\"/>\n<text x=\"300\" y=\"87\" text-anchor=\"middle\" class=\"tx\">cap 4</text>\n<text x=\"300\" y=\"122\" text-anchor=\"middle\" class=\"mut\">pushes 1–4 fit</text>\n<!-- step 2 to 3 -->\n<text x=\"395\" y=\"76\" text-anchor=\"middle\" class=\"mut ac\" font-size=\"10\">copy 4</text>\n<path class=\"ln\" d=\"M370 88H420\" marker-end=\"url(#ci4b-arrow)\"/>\n<!-- stage 3 -->\n<rect class=\"box\" x=\"420\" y=\"62\" width=\"140\" height=\"40\" rx=\"6\"/>\n<text x=\"490\" y=\"87\" text-anchor=\"middle\" class=\"tx\">cap 8</text>\n<text x=\"490\" y=\"122\" text-anchor=\"middle\" class=\"mut\">pushes 5–8 fit</text>\n<!-- step 3 to 4 -->\n<text x=\"585\" y=\"76\" text-anchor=\"middle\" class=\"mut ac\" font-size=\"10\">copy 8</text>\n<path class=\"ln\" d=\"M560 88H610\" marker-end=\"url(#ci4b-arrow)\"/>\n<!-- stage 4 -->\n<rect class=\"acbox\" x=\"610\" y=\"62\" width=\"140\" height=\"40\" rx=\"6\"/>\n<text x=\"680\" y=\"87\" text-anchor=\"middle\" class=\"tx ac\">cap 16</text>\n<text x=\"680\" y=\"122\" text-anchor=\"middle\" class=\"mut\">pushes 9–10, 6 idle</text>\n<!-- footer -->\n<text x=\"400\" y=\"160\" text-anchor=\"middle\" class=\"mut\">Every growth step allocates a bigger block, copies the elements already stored, then frees the old block.</text>\n<text x=\"400\" y=\"182\" text-anchor=\"middle\" class=\"mut\">with_capacity(10) skips the whole row: one allocation, zero copies, exactly 10 slots.</text>\n</svg>\n</div>\n\n<h2>Benchmark Comparison</h2>\n<pre><code class=\"language-rust\">use std::time::Instant;\n\nfn main() {\n    // Test with 1 million elements\n    let n = 1_000_000;\n    \n    // Method 1: No pre-allocation\n    let start = Instant::now();\n    let mut v1 = Vec::new();\n    for i in 0..n {\n        v1.push(i);\n    }\n    println!(&quot;Vec::new(): {:?}&quot;, start.elapsed());\n    \n    // Method 2: Pre-allocate\n    let start = Instant::now();\n    let mut v2 = Vec::with_capacity(n);\n    for i in 0..n {\n        v2.push(i);\n    }\n    println!(&quot;Vec::with_capacity(): {:?}&quot;, start.elapsed());\n}\n</code></pre>\n<h3>Typical Results</h3>\n<pre><code>Vec::new(): 1.8ms  \nVec::with_capacity(): 0.4ms  // 4.5x faster\n</code></pre>\n<h2>When to Pre-Allocate</h2>\n<ul>\n<li><strong>Known Size</strong>: Use with_capacity(n) if you know the exact/maximum number of elements.</li>\n<li><strong>Performance-Critical Code</strong>: Avoid reallocations in hot loops.</li>\n<li><strong>Large Data</strong>: Prevent stack overflow for huge collections.</li>\n</ul>\n<h2>When Vec::new() is Acceptable</h2>\n<ul>\n<li><strong>Small/Unknown Sizes</strong>: For ad-hoc usage or short-lived vectors.</li>\n<li><strong>Code Simplicity</strong>: When performance isn&#39;t critical.</li>\n</ul>\n<h2>Advanced Optimization: extend()</h2>\n<p>If you have an iterator, extend() is often faster than a loop with push():</p>\n<pre><code class=\"language-rust\">let mut v = Vec::with_capacity(n);\nv.extend(0..n);  // Optimized for iterators (avoids bounds checks)\n</code></pre>\n<h2>Key Takeaways</h2>\n<p>✅ <strong>Use with_capacity() for</strong>:</p>\n<ul>\n<li>Predictable element counts.</li>\n<li>High-performance scenarios.</li>\n</ul>\n<p>✅ <strong>Use Vec::new() for</strong>:</p>\n<ul>\n<li>Small/unknown sizes or prototyping.</li>\n</ul>\n<p>🚀 <strong>Avoid unnecessary reallocations</strong>—they dominate runtime for large Vecs.</p>\n<h2>Real-World Impact</h2>\n<p>In the regex crate, pre-allocation is used for capture groups to avoid reallocations during pattern matching.</p>\n<p><strong>Try This</strong>: What happens if you pre-allocate too much (e.g., with_capacity(1000) but only use 10 elements)?</p>\n<p><strong>Answer</strong>: Wasted memory. Use shrink_to_fit() to release unused capacity.</p>\n",
-    "author": "mayo",
-    "category": "uncategorized",
-    "tags": [
-      "rust",
-      "collections"
-    ],
-    "readingTime": "5 min",
-    "locale": "en",
-    "seo": {
-      "title": "What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?",
-      "description": "Analyzing performance differences between Vec::push() in loops versus pre-allocating with Vec::with_capacity(), covering memory reallocation costs and optimization strategies",
-      "keywords": [
-        "rust",
-        "collections"
-      ]
-    },
-    "headings": [
-      {
-        "id": "key-performance-differences",
-        "text": "Key Performance Differences",
-        "level": 2
-      },
-      {
-        "id": "why-reallocations-are-costly",
-        "text": "Why Reallocations Are Costly",
-        "level": 2
-      },
-      {
-        "id": "growth-strategy",
-        "text": "Growth Strategy",
-        "level": 3
-      },
-      {
-        "id": "example-for-10-elements",
-        "text": "Example for 10 Elements",
-        "level": 3
-      },
-      {
-        "id": "benchmark-comparison",
-        "text": "Benchmark Comparison",
-        "level": 2
-      },
-      {
-        "id": "typical-results",
-        "text": "Typical Results",
-        "level": 3
-      },
-      {
-        "id": "when-to-pre-allocate",
-        "text": "When to Pre-Allocate",
-        "level": 2
-      },
-      {
-        "id": "when-vecnew-is-acceptable",
-        "text": "When Vec::new() is Acceptable",
-        "level": 2
-      },
-      {
-        "id": "advanced-optimization-extend",
-        "text": "Advanced Optimization: extend()",
-        "level": 2
-      },
-      {
-        "id": "key-takeaways",
-        "text": "Key Takeaways",
-        "level": 2
-      },
-      {
-        "id": "real-world-impact",
-        "text": "Real-World Impact",
         "level": 2
       }
     ]

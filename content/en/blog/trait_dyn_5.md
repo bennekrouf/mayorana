@@ -8,8 +8,6 @@ excerpt: >-
   Leveraging supertraits to establish behavior hierarchies and combining them
   with where clauses to optimize complex generic algorithms for performance and
   type safety
-content_focus: Supertraits and Bounds
-technical_level: Expert technical discussion
 
 tags:
   - rust

@@ -8,8 +8,6 @@ excerpt: >-
   Application stratégique de l'attribut #[inline(always)] de Rust pour
   l'optimisation au niveau des instructions, couvrant les modèles d'utilisation
   efficaces et les risques de surutilisation
-content_focus: optimisation bas niveau en Rust
-technical_level: Discussion technique experte
 tags:
   - rust
   - optimization

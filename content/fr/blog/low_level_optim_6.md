@@ -8,8 +8,6 @@ excerpt: >-
   Comparaison des performances de Vec::push() dans les boucles versus
   pré-allouer avec Vec::with_capacity(), analysant les coûts de réallocation
   mémoire et stratégies d'optimisation
-content_focus: 'collections (comme Vec), iterators (into_iter, collect), et concepts reliés'
-technical_level: Discussion technique experte
 tags:
   - rust
   - vec

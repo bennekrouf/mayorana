@@ -8,8 +8,6 @@ author: mayo
 excerpt: >-
   Utilisation des trait bounds en Rust pour la sécurité de type et les
   performances dans les calculs mathématiques
-content_focus: 'trait bounds, generics, monomorphization'
-technical_level: Discussion technique experte
 tags:
   - rust
   - generics

@@ -10,8 +10,6 @@ excerpt: >-
   Leveraging Rust's stack-based features like fixed-size arrays and Option to
   eliminate heap allocations in real-time systems for predictable, low-latency
   execution
-content_focus: low-level optimization in Rust
-technical_level: Expert technical discussion
 
 tags:
   - rust

@@ -10,6 +10,10 @@ excerpt: >-
 tags:
   - rust
   - vec
+  - flatten
+  - iterators
+  - performance
+  - collections
 date: '2025-10-31'
 ---
 

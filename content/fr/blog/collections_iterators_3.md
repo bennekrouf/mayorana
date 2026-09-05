@@ -10,6 +10,7 @@ tags:
   - rust
   - iterators
   - collections
+  - ownership
 date: '2025-10-26'
 ---
 

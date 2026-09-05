@@ -8,13 +8,12 @@ excerpt: >-
   Comparing performance of Vec::push() in loops versus pre-allocating with
   Vec::with_capacity(), analyzing memory reallocation costs and optimization
   strategies
-content_focus: 'collections (like Vec), iterators (into_iter, collect), and related concepts'
-technical_level: Expert technical discussion
 
 tags:
   - rust
   - performance
   - advanced
+  - collections
 date: '2025-08-27'
 ---
 
