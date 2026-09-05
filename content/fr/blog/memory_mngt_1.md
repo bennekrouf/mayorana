@@ -59,7 +59,7 @@ Comprendre la différence entre `String` et `str` est fondamental pour une gesti
 </svg>
 </div>
 
-## Différences Clés
+## Différences clés
 
 | `String` | `str` (habituellement `&str`) |
 |----------|-------------------------------|
@@ -68,7 +68,7 @@ Comprendre la différence entre `String` et `str` est fondamental pour une gesti
 | Mutable (peut modifier le contenu) | Vue immutable |
 | Créé avec `String::from("...")` ou `"...".to_string()` | Depuis string literals (`"hello"`) ou emprunté depuis `String` (`&my_string`) |
 
-## Layout Mémoire
+## Layout mémoire
 
 **`String`** : Stocke les données sur la heap avec trois composants :
 - Pointeur vers buffer heap
@@ -120,7 +120,7 @@ fn main() {
 }
 ```
 
-## Considérations de Performance
+## Considérations de performance
 
 **Paramètres de Fonction** :
 ```rust
@@ -199,7 +199,7 @@ good("literal");  // &str direct
 - `&str` vers literals pointe vers le binaire du programme (zero allocation) 
 - `&str` depuis `String` partage l'allocation existante
 
-## Patterns Courants
+## Patterns courants
 
 **Renvoyer des "Owned"** :
 ```rust
@@ -229,7 +229,7 @@ fn process_good(s: &str) -> &str {
 }
 ```
 
-## Points Clés
+## Points clés
 
 - **`String`** : Owned, mutable, heap-allocated  
 - **`str`** : Borrowed, immutable, flexible (heap/stack/static)  

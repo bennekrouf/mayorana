@@ -16,7 +16,7 @@ tags:
   - performance
 ---
 
-# Abstractions Zéro-Coût : Comment Rust Optimise les Chaînes d'Itérateurs
+# Abstractions Zéro-Coût : comment Rust Optimise les chaînes d'Itérateurs
 
 Les **abstractions zéro-coût** de Rust permettent aux constructs haut niveau, comme les chaînes d'itérateurs, de compiler vers du code machine aussi efficace que des boucles écrites à la main, sans overhead à l'exécution. C'est critique pour les systèmes sensibles aux performances. Ci-dessous, j'explique comment le compilateur Rust transforme une chaîne d'itérateurs (ex : utilisant `map`, `filter`, et `collect`) en boucle efficace, en me concentrant sur l'inlining et la fusion de boucles, et comment vérifier l'optimisation en pratique.
 
@@ -69,7 +69,7 @@ Les **abstractions zéro-coût** de Rust permettent aux constructs haut niveau, 
 </svg>
 </div>
 
-## Comment le Compilateur Optimise les Chaînes d'Itérateurs
+## Comment le Compilateur Optimise les chaînes d'Itérateurs
 
 Considère cet exemple :
 
@@ -98,7 +98,7 @@ Ce code haut niveau semble impliquer plusieurs passes sur les données, mais le 
 
 Le résultat est une boucle serrée sans pénalité d'abstraction, égalant les performances du code style C, car la sécurité de type et la conception d'itérateur de Rust donnent au compilateur une visibilité complète sur le flux de données.
 
-## Rôle de l'Inlining et la Fusion de Boucles
+## Rôle de l'Inlining et la Fusion de boucles
 
 - **Inlining** : La clé de voûte de l'optimisation, l'inlining élimine l'overhead d'appels de fonction séparés pour chaque adaptateur d'itérateur, exposant la logique pour une optimisation supplémentaire.
 - **Fusion de Boucles** : Fusionne plusieurs opérations d'itérateur en une seule boucle, exploitant la monomorphization (pour les itérateurs génériques) et les optimisations agressives de LLVM. Cela assure que l'abstraction n'encourt aucun coût à l'exécution—tu paies seulement pour les opérations que tu utilises.
@@ -168,9 +168,9 @@ Pour confirmer cette efficacité en pratique, utilise ces techniques :
 </svg>
 </div>
 
-## Techniques Avancées d'Optimisation
+## Techniques avancées d'Optimisation
 
-### Analyse Détaillée avec Outils
+### Analyse détaillée avec outils
 
 ```bash
 # Inspection assembleur détaillée
@@ -186,7 +186,7 @@ perf report --stdio
 perf stat -e cache-misses,instructions,cycles ./app
 ```
 
-### Patterns d'Optimisation Avancés
+### Patterns d'Optimisation avancés
 
 ```rust
 // Pattern 1: Iterator avec collect() optimisé
@@ -223,7 +223,7 @@ fn early_termination(data: &[i32]) -> Option<i32> {
 }
 ```
 
-### Micro-optimisations Spécialisées
+### Micro-optimisations spécialisées
 
 ```rust
 use std::simd::*;
@@ -262,7 +262,7 @@ fn buffer_reuse_optimization(data: &[i32], output: &mut Vec<i32>) {
 }
 ```
 
-### Benchmarking Complet
+### Benchmarking complet
 
 ```rust
 use criterion::{BenchmarkId, Criterion, Throughput, black_box};
@@ -332,7 +332,7 @@ fn comprehensive_bench(c: &mut Criterion) {
 
 ## Validation d'Optimisation
 
-### Tests de Régression Performance
+### Tests de régression performance
 
 ```rust
 #[cfg(test)]
@@ -368,7 +368,7 @@ mod performance_tests {
 }
 ```
 
-### Outils de Validation Automatisée
+### Outils de validation Automatisée
 
 ```rust
 // Macro pour vérifier l'optimisation
@@ -401,7 +401,7 @@ macro_rules! assert_zero_cost {
 }
 ```
 
-## Exemple de Résultat
+## Exemple de résultat
 
 Dans l'assembleur pour l'exemple, attends-toi à une boucle comme :
 
@@ -421,9 +421,9 @@ skip:
 
 Cela montre aucune struct d'itérateur extra ou appels—juste de l'arithmétique brute et des ops mémoire, égalant une implémentation manuelle.
 
-## Limitations et Considérations
+## Limitations et considérations
 
-### Quand les Optimisations Échouent
+### Quand les optimisations Échouent
 
 ```rust
 // Anti-pattern 1: Closures complexes

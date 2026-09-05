@@ -72,7 +72,7 @@ Dans un driver I/O bas niveau pour un système embarqué, j'utiliserais les type
 </svg>
 </div>
 
-## Concevoir le Trait avec des Types Associés
+## Concevoir le Trait avec des Types associés
 
 Pour un driver I/O gérant les interfaces matérielles (ex : UART, SPI), je définirais un trait comme ceci :
 
@@ -86,7 +86,7 @@ trait IoDriver {
 }
 ```
 
-### Types Associés :
+### Types associés :
 - **Input** : Le type que le driver accepte pour l'écriture (ex : `u8` pour les octets, `[u8]` pour les buffers).
 - **Output** : Le type retourné lors de la lecture (ex : `u8`, `Option<u8>`).
 
@@ -122,7 +122,7 @@ uart.write(42).unwrap();
 assert_eq!(uart.read(), Ok(42));
 ```
 
-## Comparaison avec les Paramètres de Type Génériques
+## Comparaison avec les paramètres de Type génériques
 
 Voici comment ça pourrait ressembler avec des generics à la place :
 
@@ -148,7 +148,7 @@ impl GenericIoDriver for UartDriver {
 - **T est trop flexible**—`write` pourrait recevoir un `String` ou `i32`, mais UART attend `u8`. Les bounds comme `T: Into<u8>` ajoutent un overhead de conversion et de la complexité.
 - **Monomorphization** génère du code pour chaque `T`, gonflant inutilement le binaire.
 
-## Avantages des Types Associés
+## Avantages des Types associés
 
 ### Sécurité de Type
 
@@ -160,7 +160,7 @@ uart.write("hello"); // Erreur de compilation : attendait u8, reçu &str
 
 **Generics** : Nécessite des vérifications à l'exécution ou des bounds complexes, risquant des erreurs ou de l'overhead.
 
-### Clarté de Conception
+### Clarté de conception
 
 **Types Associés** : Le trait déclare "ce driver fonctionne avec ces types spécifiques", rendant l'intention explicite. `UartDriver` est orienté octets, tandis qu'un `SpiDriver` pourrait utiliser `[u8]` :
 
@@ -182,9 +182,9 @@ impl IoDriver for SpiDriver {
 
 **Generics** : Fait la monomorphization pour chaque `T` utilisé, augmentant la taille du code (ex : `write<u8>`, `write<i32>`), même si le driver ne supporte qu'un type. Les bounds comme `T: Into<u8>` ajoutent des appels à l'exécution.
 
-## Améliorer le Système
+## Améliorer le système
 
-### Usage Générique
+### Usage générique
 
 Enveloppe dans une fonction générique pour la commodité :
 
@@ -251,7 +251,7 @@ let result = process_io(&mut uart, 42); // Fonctionne avec u8
 
 Ajoute des types associés pour les erreurs ou configs si nécessaire (ex : `type Error`).
 
-## Exemple Avancé : Système Multi-Driver
+## Exemple avancé : système Multi-Driver
 
 ```rust
 // Type d'erreur personnalisé
@@ -316,7 +316,7 @@ fn handle_io<D: AdvancedIoDriver>(
 
 ## Vérification
 
-### Vérification de Compilation
+### Vérification de compilation
 
 S'assurer que les incompatibilités de types échouent :
 
@@ -338,9 +338,9 @@ fn bench(c: &mut Criterion) {
 
 Attends-toi à des cycles minimaux, équivalents à l'accès matériel brut.
 
-## Quand Utiliser Chaque Approche
+## Quand utiliser chaque approche
 
-### Utilise les Types Associés quand :
+### Utilise les Types associés quand :
 - Chaque implémentation a des types I/O fixes
 - Tu veux une API claire et contrainte
 - La performance est critique (pas de monomorphization inutile)

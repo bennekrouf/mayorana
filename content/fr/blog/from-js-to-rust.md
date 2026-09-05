@@ -71,7 +71,7 @@ Vous venez de JavaScript ? Les closures fonctionnent différemment en Rust. Une 
 </svg>
 </div>
 
-## La Base JavaScript
+## La base JavaScript
 
 En JavaScript, les closures capturent les variables par référence automatiquement :
 
@@ -88,7 +88,7 @@ console.log(counter()); // 1
 
 La closure partage la même variable `count`. Pas de copie, pas de déplacement—juste une référence qui vit aussi longtemps que la closure.
 
-## Le Choix Explicite de Rust
+## Le choix explicite de Rust
 
 Rust vous oblige à choisir : emprunter ou posséder. Les closures régulières empruntent :
 
@@ -122,8 +122,7 @@ let closure = move || println!("{}", x); // `x` copié
 println!("{}", x); // OK : le `x` original est toujours valide
 ```
 
-### Quand Vous Avez Besoin de `move`
-
+### Quand vous avez besoin de `move`
 Trois situations imposent le mot-clé, et toutes se ramènent à la même question — celle que JavaScript ne vous pose jamais :
 
 <div class="svg-container" style="margin:2rem 0;">
@@ -261,7 +260,7 @@ let future = async move {
 tokio::spawn(future);
 ```
 
-### Emprunt vs Possession : La Différence Fondamentale
+### Emprunt vs Possession : La différence Fondamentale
 
 Les closures JavaScript partagent toujours :
 
@@ -292,8 +291,7 @@ increment();
 
 Le `count` déplacé est indépendant—les changements internes n'affectent pas l'original.
 
-## Le Changement de Paradigme depuis JavaScript
-
+## Le changement de paradigme depuis JavaScript
 JavaScript : les closures capturent par référence implicitement. Le GC gère la durée de vie. Vous ne pensez jamais à l'ownership :
 
 ```javascript

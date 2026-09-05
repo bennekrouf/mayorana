@@ -65,7 +65,7 @@ Comprendre la distinction entre functions et closures est fondamental pour maît
 </svg>
 </div>
 
-## Différences Clés
+## Différences clés
 
 | Functions | Closures |
 |-----------|----------|
@@ -74,10 +74,9 @@ Comprendre la distinction entre functions et closures est fondamental pour maît
 | Ne peuvent pas capturer les variables d'environnement | Peuvent capturer les variables du scope englobant |
 | Ont toujours un type connu | Type unique et inféré (chaque closure a son propre type) |
 
-## Mécaniques Sous-jacentes
+## Mécaniques sous-jacentes
 
-### Les Closures Sont des Structs + Traits
-
+### Les closures sont des structs + traits
 Rust modélise les closures comme des structs qui :
 - Stockent les variables capturées (comme fields)
 - Implémentent l'un des closure traits (`Fn`, `FnMut`, ou `FnOnce`)
@@ -108,7 +107,7 @@ Quand les closures sont des trait objects (ex: `Box<dyn Fn(i32) -> i32>`), Rust 
 - **Vtable** : Une lookup table stockant des function pointers, permettant le polymorphisme runtime
 - **Overhead** : Appels de fonction indirects (~2–3x plus lent que le static dispatch)
 
-## Quand Utiliser Chacune
+## Quand utiliser chacune
 
 Utilise les **Functions** quand :
 - Tu as besoin de zero-cost abstractions (ex : opérations mathématiques)
@@ -187,7 +186,7 @@ let filter = |x: i32| x > threshold;  // Capture `threshold`
 </svg>
 </div>
 
-## Considérations de Performance
+## Considérations de performance
 
 | Scénario | Static Dispatch (Closures) | Dynamic Dispatch (dyn Fn) |
 |----------|----------------------------|----------------------------|
@@ -209,7 +208,7 @@ fn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **Functions** : Performance prévisible, pas de captures  
 **Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
@@ -218,9 +217,9 @@ Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
 Capture une référence mutable puis appelle la closure deux fois : le borrow checker refuse.
 Le premier appel détient encore l'accès exclusif au moment où le second commence.
 
-## Exemples Avancés
+## Exemples avancés
 
-### Capture par Valeur vs Reference
+### Capture par valeur vs Reference
 
 ```rust
 fn main() {
@@ -240,8 +239,7 @@ fn main() {
 }
 ```
 
-### Move Semantics avec les Closures
-
+### Move semantics avec les closures
 ```rust
 use std::thread;
 
@@ -262,8 +260,7 @@ fn main() {
 }
 ```
 
-### Closure Traits en Action
-
+### Les closure traits en action
 ```rust
 fn demonstrate_closure_traits() {
     let x = String::from("hello");
@@ -293,7 +290,7 @@ fn demonstrate_closure_traits() {
 
 ## Optimisations du Compiler
 
-### Inline et Zero-Cost Abstractions
+### Inline et Zero-Cost abstractions
 
 ```rust
 // Cette closure sera probablement inlined
@@ -310,7 +307,7 @@ for x in &numbers {
 }
 ```
 
-### Éviter les Allocations Inutiles
+### Éviter les allocations inutiles
 
 ```rust
 // ❌ Mauvais - crée des String temporaires
@@ -329,7 +326,7 @@ let filtered: Vec<&str> = names
     .collect();
 ```
 
-## Patterns Avancés
+## Patterns avancés
 
 ### Higher-Order Functions
 
@@ -367,7 +364,7 @@ fn make_adder_static(x: i32) -> impl Fn(i32) -> i32 {
 }
 ```
 
-## Debugging et Introspection
+## Debugging et introspection
 
 ### Type de Closure
 
@@ -411,7 +408,7 @@ fn main() {
 }
 ```
 
-## Conseils de Performance
+## Conseils de performance
 
 ### Hot Paths
 

@@ -64,7 +64,7 @@ Dans une bibliothèque Rust sensible aux performances pour les calculs mathémat
 </svg>
 </div>
 
-## Exemple : Fonction de produit scalaire
+## Exemple : fonction de produit scalaire
 
 Considère une fonction de produit scalaire pour deux vecteurs, critique dans le traitement du signal ou l'apprentissage automatique :
 

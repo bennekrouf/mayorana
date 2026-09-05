@@ -84,7 +84,7 @@ trait AdvancedNumeric: Numeric + Mul<Self, Output = Self> {
 
 **Pourquoi** : Organise les comportements hiérarchiquement—les ops basiques sont fondamentales, les ops avancées s'appuient dessus, reflétant la structure mathématique.
 
-## Exemple : Multiplication de Matrices Générique
+## Exemple : multiplication de matrices générique
 
 J'écrirais un algorithme de multiplication de matrices générique utilisant ces traits :
 
@@ -127,7 +127,7 @@ let b = vec![5.0_f32, 6.0, 7.0, 8.0]; // matrice 2x2
 let result = matrix_multiply(&a, &b, 2, 2, 2); // [[19, 22], [43, 50]]
 ```
 
-## Comment les Supertraits et les Clauses where Améliorent la Conception
+## Comment les Supertraits et les Clauses where Améliorent la conception
 
 ### Organisation du Code
 - **Supertraits** : `AdvancedNumeric: Numeric` crée une hiérarchie claire. Les ops basiques (`+`, `zero`) sont universelles ; les ops avancées (`*`, `one`) sont pour les types spécialisés. Cela reflète les maths : tous les nombres s'additionnent, mais ne se multiplient pas tous (ex : quaternions vs matrices).

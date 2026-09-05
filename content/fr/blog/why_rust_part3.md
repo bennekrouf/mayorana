@@ -15,7 +15,7 @@ tags:
   - systems-programming
 ---
 
-# Rust: Sécurité Sans Sacrifice
+# Rust: sécurité Sans Sacrifice
 
 Rust n'a pas de GC. Il n'en a pas besoin.
 
@@ -27,9 +27,8 @@ L’allocation mémoire est gérée automatiquement — mais pas par un garbage 
 Grâce au système d’ownership, Rust vérifie à la compilation que chaque valeur a un seul propriétaire, et que la mémoire est libérée au bon moment.
 Zéro coût. Zéro surprise. Zéro fuite.
 
-## La Révolution "Ownership"
-
-### Gestion Automatique de la Mémoire
+## La révolution « ownership »
+### Gestion automatique de la mémoire
 ```rust
 fn greet() {
     let s = String::from("hello");
@@ -84,7 +83,7 @@ fn main() {
 }
 ```
 
-### Mutable Borrowing est soumis à certaines règles
+### Le mutable borrowing est soumis à certaines règles
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -169,9 +168,9 @@ fn main() {
 </svg>
 </div>
 
-## Comparaison Réelle
+## Comparaison réelle
 
-### La Même Logique dans Différents Langages
+### La même Logique dans Différents Langages
 
 **Version C (unsafe) :**
 ```c
@@ -219,9 +218,9 @@ fn main() {
 }
 ```
 
-## Caractéristiques Performance
+## Caractéristiques performance
 
-### Zero-Cost Abstractions
+### Zero-Cost abstractions
 Un code de haut niveau en apparence est traduit en code de bas niveau à la compilation.
 ```rust
 // Code haut niveau...
@@ -265,7 +264,7 @@ fn main() {
 }
 ```
 
-### Accès Concurrent Sécurisé
+### Accès concurrent sécurisé
 ```rust
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -309,7 +308,7 @@ fn main() {
 
 *\*Les langages GC peuvent avoir des memory leaks via les references*
 
-## La Garantie Rust
+## La garantie Rust
 
 ### Ce que Rust Élimine
 **Memory leaks** - cleanup automatique  
@@ -327,8 +326,7 @@ fn main() {
 🔒 **Thread safety**  
 🔧 **Capacités systems programming**  
 
-## Success Stories Réelles
-
+## Cas réels
 ### Dropbox Magic Pocket
 - Ils ont remplacé Python par Rust pour le système de stockage
 - **Performance :** 10x d'amélioration en efficacité CPU
@@ -346,8 +344,7 @@ fn main() {
 - **Sécurité :** Éliminé les vulnérabilités memory safety
 - **Performance :** Rendu plus rapide, usage mémoire plus bas
 
-## Le Changement de Paradigme
-
+## Le changement de paradigme
 ### Approche Traditionnelle
 ```
 Code rapide → Gestion manuelle mémoire → Bugs
@@ -404,7 +401,7 @@ Compilateur intelligent → Système ownership → Code rapide + sûr
 </svg>
 </div>
 
-## Points Clés
+## Points clés
 
 🦀 **Rust réunit le meilleur des deux mondes :**
 

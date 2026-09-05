@@ -16,7 +16,7 @@ tags:
   - lifetimes
 ---
 
-# Que sont les move closures (move || { ... }) ? Quand sont-elles nécessaires et comment interagissent-elles avec l'ownership ?
+# Que sont les move closures (move || { ... }) ? quand sont-elles nécessaires et comment interagissent-elles avec l'ownership ?
 
 Une `move` closure (définie avec le mot-clé `move`) force la closure à prendre ownership des variables qu'elle capture de l'environnement. Contrairement aux closures normales, qui capturent les variables par référence (immutable ou mutable) quand c'est possible, les `move` closures déplacent ou copient les variables dans la closure elle-même.
 
@@ -61,7 +61,7 @@ Une `move` closure (définie avec le mot-clé `move`) force la closure à prendr
 </svg>
 </div>
 
-## Mécaniques Clés
+## Mécaniques clés
 
 ### 1. Transfer d'Ownership
 
@@ -153,7 +153,7 @@ Le trait d'une `move` closure (`Fn`, `FnMut`, `FnOnce`) dépend de comment les v
 
 ## Quand les Move Closures Sont-elles Nécessaires ?
 
-### 1. Closures qui Survivent à leur Environnement
+### 1. Closures qui Survivent à leur environnement
 
 Quand une closure est utilisée dans un scope différent (ex : thread ou tâche async), elle doit posséder ses données pour éviter les dangling references :
 
@@ -166,7 +166,7 @@ thread::spawn(move || { // `move` force ownership de `data`
 }).join().unwrap();
 ```
 
-### 2. Casser les Cycles de Référence
+### 2. Casser les Cycles de référence
 
 Si une closure doit capturer une valeur qui est aussi empruntée ailleurs, `move` assure que l'ownership est transféré :
 
@@ -180,7 +180,7 @@ let closure = move || { // Prend ownership de `vec`
 closure();
 ```
 
-### 3. Contrôle Explicite d'Ownership
+### 3. Contrôle explicite d'Ownership
 
 Quand tu veux éviter les emprunts accidentels ou forcer une copie :
 
@@ -253,7 +253,7 @@ fn demonstrate_move_mutation() {
 }
 ```
 
-### 4. Move avec des Structures Complexes
+### 4. Move avec des structures complexes
 
 ```rust
 #[derive(Debug, Clone)]
@@ -289,9 +289,9 @@ fn demonstrate_struct_move() {
 }
 ```
 
-## Cas d'Usage Avancés
+## Cas d'Usage avancés
 
-### 1. Threads et Concurrence
+### 1. Threads et concurrence
 
 ```rust
 use std::thread;
@@ -382,7 +382,7 @@ fn event_handler_example() {
 }
 ```
 
-## Pièges Courants
+## Pièges courants
 
 ### 1. Moves Non Intentionnels
 
@@ -420,7 +420,7 @@ fn overusing_move() {
 }
 ```
 
-### 3. Move avec Mutable References
+### 3. Move avec mutable References
 
 ```rust
 fn move_with_mut_ref() {
@@ -526,7 +526,7 @@ fn builder_pattern_example() {
 }
 ```
 
-## Debugging et Introspection
+## Debugging et introspection
 
 ### 1. Vérifier ce qui est Moved
 
@@ -576,7 +576,7 @@ fn closure_sizes() {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **Utilise `move` closures quand** :
 - La closure survit à son environnement (ex : threads).
@@ -588,7 +588,7 @@ fn closure_sizes() {
 - Types `Copy` où l'emprunt est suffisant.
 - Quand tu as encore besoin des valeurs originales après.
 
-### Règles de Décision
+### Règles de décision
 
 1. **Thread ou async** → Toujours `move`
 2. **Closure stockée longtemps** → Probablement `move`
@@ -600,7 +600,7 @@ fn closure_sizes() {
 Ce n'est presque jamais ce que tu voulais, et ça ressort en général plus loin sous forme
 d'erreur de lifetime plutôt qu'à la closure elle-même.
 
-## Exemple Pratique Complet
+## Exemple pratique complet
 
 ```rust
 use std::thread;

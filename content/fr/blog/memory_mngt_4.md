@@ -65,7 +65,7 @@ L'ownership est le système central de gestion mémoire de Rust, appliquant des 
 - Quand le propriétaire sort du scope, la valeur est **droppée** (trait `Drop` appelé).
 - L'ownership peut être **transféré** (moved), rendant la variable originale invalide.
 
-## Règles Clés
+## Règles clés
 
 ### Move Semantics
 
@@ -96,12 +96,12 @@ take_ownership(s); // Ownership moved dans la fonction
 // println!("{}", s); // Erreur: s est invalide
 ```
 
-## Comment l'Ownership Prévient les Memory Leaks
+## Comment l'Ownership prévient les Memory Leaks
 
 - **Cleanup Automatique** : Quand le propriétaire sort du scope, Rust appelle `drop` pour libérer la mémoire (pas de `free()` manuel nécessaire).
 - **Pas de Double Frees** : Puisque seul un propriétaire existe, la valeur est droppée exactement une fois.
 
-## Comment l'Ownership Prévient les Data Races
+## Comment l'Ownership prévient les Data Races
 
 - **Règles de Borrowing** :
   - **Emprunts immutables** (`&T`) : Plusieurs autorisés, mais aucun emprunt mutable ne peut coexister.
@@ -174,7 +174,7 @@ println!("{:?}, {:?}", r1, r2);
 </svg>
 </div>
 
-## Points Clés
+## Points clés
 
 **L'ownership assure** :
 - Pas de dangling pointers (via lifetimes).

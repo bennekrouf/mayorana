@@ -66,7 +66,7 @@ Stocker une closure dans une struct nécessite de spécifier des trait bounds (`
 </svg>
 </div>
 
-## 1. Struct Générique (Static Dispatch)
+## 1. Struct générique (Static Dispatch)
 
 Utilise un paramètre de type générique avec des bounds `Fn`/`FnMut`/`FnOnce`. Idéal pour des types de closures fixes.
 
@@ -99,7 +99,7 @@ fn main() {
 }
 ```
 
-### Points Clés
+### Points clés
 - **Overhead runtime zéro** : Monomorphized pour chaque type de closure.
 - **Type de closure fixe** : Ne peut pas stocker différentes closures dans la même struct.
 
@@ -131,15 +131,14 @@ fn main() {
 }
 ```
 
-### Points Clés
+### Points clés
 - **Annotation de lifetime** : Requise si la closure capture des références (ex : `Box<dyn Fn() -> &str + 'a>`).
 - **Flexibilité** : Peut stocker n'importe quelle closure correspondant au trait.
 - **Overhead** : Vtable lookup (dynamic dispatch).
 
-## 3. Exemples Avancés de Storage
+## 3. Exemples avancés de Storage
 
-### Closures Stateful avec FnMut
-
+### Closures stateful avec FnMut
 ```rust
 struct Counter<F>
 where
@@ -180,8 +179,7 @@ fn counter_example() {
 }
 ```
 
-### Multiple Closures dans une Struct
-
+### Plusieurs closures dans une struct
 ```rust
 struct EventHandler<F1, F2, F3>
 where
@@ -284,7 +282,7 @@ fn pipeline_example() {
 }
 ```
 
-## 4. Capturer des Références (Lifetimes)
+## 4. Capturer des références (Lifetimes)
 
 Si la closure capture des références, la struct doit déclarer des lifetimes pour assurer la validité :
 
@@ -323,7 +321,7 @@ fn reference_example() {
 }
 ```
 
-### Exemple Plus Complexe avec Multiple Lifetimes
+### Exemple plus complexe avec Multiple Lifetimes
 
 ```rust
 struct DataTransformer<'a, 'b, F>
@@ -368,7 +366,7 @@ fn multiple_lifetimes_example() {
 }
 ```
 
-## 5. Patterns Avancés de Storage
+## 5. Patterns avancés de Storage
 
 ### Builder Pattern avec Closures
 
@@ -683,7 +681,7 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 </svg>
 </div>
 
-## Quand Utiliser Chaque Approche
+## Quand utiliser chaque approche
 
 | Approche | Cas d'Usage | Trade-Offs |
 |----------|-------------|------------|
@@ -691,7 +689,7 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 | Trait Object | Comportement dynamique, closures multiples | Overhead runtime, heap allocation |
 | Lifetime Annotated | Closures capturant des références | Assure la sécurité, ajoute complexité |
 
-### Matrice de Décision
+### Matrice de décision
 
 ```rust
 // Guide de décision pour stocker des closures
@@ -726,8 +724,7 @@ fn decision_guide() {
 }
 ```
 
-## Erreurs Courantes et Solutions
-
+## Erreurs courantes et solutions
 ### 1. Oublier le Trait Bound
 
 ```rust
@@ -802,13 +799,13 @@ fn mutable_example() {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **Structs génériques : Meilleures pour performance et static dispatch.**  
 **Trait objects : Utilise quand tu stockes des closures hétérogènes.**  
 **Lifetimes : Requis si la closure capture des références.**
 
-### Règles Pratiques
+### Règles pratiques
 
 1. **Performance first** → Generic avec trait bounds
 2. **Flexibilité needed** → Box<dyn Trait>
@@ -819,7 +816,7 @@ fn mutable_example() {
 Stocke dans une struct une closure qui a capturé `&mut` et la mutabilité remonte : le binding de
 la struct doit être `mut` lui aussi, et la borne du champ doit être `FnMut`.
 
-## Exemple Pratique Complet
+## Exemple pratique complet
 
 ```rust
 use std::collections::HashMap;

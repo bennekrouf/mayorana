@@ -132,8 +132,7 @@ Rust élimine les dangling pointers au moment de la compilation en utilisant son
 </svg>
 </div>
 
-## Comment Rust Prévient les Dangling Pointers
-
+## Comment Rust prévient les dangling pointers
 Rust utilise deux mécanismes clés pour prévenir les dangling pointers :
 
 ### 1. Règles d'Ownership + Borrowing
@@ -174,14 +173,14 @@ fn main() {
 }
 ```
 
-## Pourquoi C'est Important
+## Pourquoi C'est important
 
 | **Langage** | **Risque Dangling Pointer** | **Mécanisme de Sécurité** |
 |-------------|------------------------------|---------------------------|
 | C/C++       | Élevé (gestion mémoire manuelle) | Aucun (responsabilité du programmeur) |
 | Rust        | Zéro                         | Vérifications compile-time (ownership + lifetimes) |
 
-## Points Clés
+## Points clés
 
 Le compilateur de Rust garantit :
 - Pas de références vers mémoire libérée.

@@ -81,7 +81,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 </svg>
 </div>
 
-## 🔧 Environnement de développement local
+## 🔧 environnement de développement local
 
 - **Auto-détection des prérequis** — vérifie la présence de Node.js, Azure Functions Core Tools, .NET et Java, et guide l'installation
 - **Gestion des workspaces de projet** — lie vos projets Logic Apps locaux à leurs équivalents Azure (souscription, groupe de ressources, nom de l'app, namespace Service Bus)
@@ -117,7 +117,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 - **Auto-détection de l'URL DevOps** depuis le remote git
 - **Navigateur de groupes de variables** — liste tous les variable groups DevOps et inspecte leur contenu
 
-## ⊞ Comparaison d'environnements
+## ⊞ comparaison d'environnements
 
 - **Comparaison multi-colonnes** — compare `local.settings.json` avec les paramètres Azure et plusieurs variable groups DevOps côte à côte
 - **Filtrage des différences** — bascule « Différences seulement » avec cases par colonne pour comparer n'importe quel sous-ensemble d'environnements

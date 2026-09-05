@@ -16,7 +16,7 @@ tags:
   - performance
   - vec
 
-# Quelle est la différence entre Vec::new() et Vec::with_capacity() ? Quand utiliser chacune ?
+# Quelle est la différence entre Vec::new() et Vec::with_capacity() ? quand utiliser chacune ?
 
 Comprendre les stratégies d'allocation de Vec est crucial pour écrire du code Rust performant, particulièrement lorsqu'on travaille avec des collections et des itérateurs.
 

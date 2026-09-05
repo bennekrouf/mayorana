@@ -15,7 +15,7 @@ tags:
   - allocation
 ---
 
-# Quelle est la différence entre allocation stack et heap en Rust ? Comment Rust décide-t-il où allouer les données ?
+# Quelle est la différence entre allocation stack et heap en Rust ? comment Rust décide-t-il où allouer les données ?
 
 Rust utilise l'allocation stack et heap pour gérer la mémoire, avec des caractéristiques distinctes pour chacune. Comprendre leurs différences et comment Rust décide où allouer les données est clé pour écrire du code efficace et sûr.
 
@@ -66,10 +66,8 @@ Rust utilise l'allocation stack et heap pour gérer la mémoire, avec des caract
 | Cleanup automatique (pas de `free()` nécessaire). | Gestion manuelle (via trait `Drop`). |
 | Utilisé pour types primitifs (`i32`, `bool`), petites structs. | Utilisé pour données larges, dynamiques (`String`, `Box<T>`). |
 
-## Comment Rust Décide Où Allouer
-
-### Par Défaut → Stack
-
+## Comment Rust décide où allouer
+### Par défaut → stack
 Si un type a une **taille fixe** (ex : `i32`, arrays, structs sans `String`/`Vec`), il est alloué sur le **stack**.
 
 **Exemple** :
@@ -77,8 +75,7 @@ Si un type a une **taille fixe** (ex : `i32`, arrays, structs sans `String`/`Vec
 let x = 5; // Stack (i32 est taille fixe)
 ```
 
-### Allocation Heap Explicite
-
+### Allocation heap explicite
 Utilise des types comme `Box<T>`, `String`, `Vec`, etc., pour allouer sur le **heap**.
 
 **Exemple** :
@@ -152,7 +149,7 @@ let s2 = s1; // Move ownership (données heap pas copiées)
 </svg>
 </div>
 
-## Points Clés
+## Points clés
 
 **Stack** : Rapide, taille fixe, automatique.  
 **Heap** : Flexible, dynamique, manuel (via smart pointers).  

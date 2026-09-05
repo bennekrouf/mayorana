@@ -42,8 +42,7 @@ pthread_mutex_lock(&a);
 pthread_mutex_lock(&b);  // risque de deadlock si un autre thread a bloqué `b` puis `a`
 ```
 
-### En Rust :
-
+### En Rust
 ```rust
 let a = Arc::new(Mutex::new(()));
 let b = Arc::new(Mutex::new(()));

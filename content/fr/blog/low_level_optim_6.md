@@ -57,7 +57,7 @@ date: '2025-11-19'
 </svg>
 </div>
 
-## Différences Performance Clés
+## Différences performance clés
 
 | Vec::push() dans une Boucle | Vec::with_capacity() + push() |
 |-----------------------------|---------------------------------|
@@ -65,16 +65,16 @@ date: '2025-11-19'
 | Complexité temporelle O(n log n) (amortie). | Complexité temporelle O(n). |
 | Peut fragmenter la mémoire due aux allocations répétées. | Bloc mémoire contigu unique. |
 
-## Pourquoi les Réallocations Sont Coûteuses
+## Pourquoi les réallocations Sont Coûteuses
 
-### Stratégie de Croissance
+### Stratégie de croissance
 - Un Vec démarre avec une capacité 0 et double sa capacité quand plein (ex : 0 → 4 → 8 → 16...).
 - Chaque réallocation implique :
   - Allouer une nouvelle mémoire.
   - Copier tous les éléments existants.
   - Libérer l'ancienne mémoire.
 
-### Exemple pour 10 Éléments
+### Exemple pour 10 éléments
 - **push() avec Vec::new()** : 4 réallocations (capacité 0 → 4 → 8 → 16).
 - **push() avec with_capacity(10)** : 0 réallocation.
 
@@ -175,7 +175,7 @@ fn main() {
 }
 ```
 
-### Résultats Typiques
+### Résultats typiques
 ```
 Vec::new(): 1.8ms  
 Vec::with_capacity(): 0.4ms  // 4.5x plus rapide
@@ -192,9 +192,9 @@ Vec::with_capacity(): 0.4ms  // 4.5x plus rapide
 - **Tailles Petites/Inconnues** : Pour usage ad-hoc ou vecteurs de courte durée.
 - **Simplicité de Code** : Quand la performance n'est pas critique.
 
-## Optimisations Avancées et Patterns
+## Optimisations avancées et Patterns
 
-### 1. Utilisation d'extend() pour les Itérateurs
+### 1. Utilisation d'extend() pour les itérateurs
 
 Si tu as un itérateur, `extend()` est souvent plus rapide qu'une boucle avec `push()` :
 
@@ -227,7 +227,7 @@ fn benchmark_extend_vs_push() {
 }
 ```
 
-### 2. Techniques de Réservation Dynamique
+### 2. Techniques de Réservation dynamique
 
 ```rust
 // Pattern pour croissance adaptative
@@ -270,7 +270,7 @@ impl<T> AdaptiveVec<T> {
 }
 ```
 
-### 3. Optimisations Spécialisées par Domaine
+### 3. Optimisations spécialisées par domaine
 
 ```rust
 // Pattern pour traitement par batches
@@ -324,7 +324,7 @@ where
 }
 ```
 
-### 4. Benchmarking Complet et Métriques
+### 4. Benchmarking complet et Métriques
 
 ```rust
 use criterion::{BenchmarkId, Criterion, Throughput, black_box};
@@ -465,7 +465,7 @@ mod tests {
 }
 ```
 
-### 5. Patterns d'Optimisation Avancés
+### 5. Patterns d'Optimisation avancés
 
 ```rust
 // Pool de Vec réutilisables pour éviter les allocations
@@ -604,7 +604,7 @@ impl<T> VecBuilder<T> {
 }
 ```
 
-## Analyse de Performance Détaillée
+## Analyse de performance détaillée
 
 ### Complexité Temporelle
 
@@ -649,9 +649,9 @@ fn analyze_complexity() {
 }
 ```
 
-## Quand Utiliser Chaque Approche
+## Quand utiliser chaque approche
 
-### Matrice de Décision
+### Matrice de décision
 
 | Scénario | Recommandation | Justification |
 |----------|----------------|---------------|
@@ -662,7 +662,7 @@ fn analyze_complexity() {
 | **Ajouts par petits batches** | `reserve()` périodiquement | Équilibre performance/mémoire |
 | **Très gros volumes** | Pool + réutilisation | Évite la fragmentation |
 
-### Cas d'Usage Spécialisés
+### Cas d'Usage spécialisés
 
 ```rust
 // Parsing de fichiers - taille estimable
@@ -697,7 +697,7 @@ fn process_stream<T>(stream: impl Iterator<Item = T>) -> Vec<T> {
 }
 ```
 
-## Points Clés à Retenir
+## Points clés à retenir
 
 **Utilise with_capacity() pour** :
 - Nombres d'éléments prévisibles.
@@ -714,7 +714,7 @@ fn process_stream<T>(stream: impl Iterator<Item = T>) -> Vec<T> {
 - `shrink_to_fit()` pour optimiser la mémoire
 - Pools pour réutilisation intensive
 
-## Impact Monde Réel
+## Impact monde réel
 
 Dans la crate regex, la pré-allocation est utilisée pour les groupes de capture pour éviter les réallocations pendant le pattern matching. Dans serde_json, les buffers de sérialisation sont pré-alloués basés sur la taille estimée du JSON de sortie.
 

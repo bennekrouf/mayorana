@@ -17,7 +17,7 @@ tags:
 date: '2025-10-31'
 ---
 
-# Comment aplatir un Vec<Vec<T>> en Vec<T> avec des itérateurs ? Comparaison des performances avec la concaténation manuelle.
+# Comment aplatir un Vec<Vec<T>> en Vec<T> avec des itérateurs ? comparaison des performances avec la concaténation manuelle.
 
 ## Aplatissement avec les itérateurs
 

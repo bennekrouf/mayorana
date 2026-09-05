@@ -128,13 +128,13 @@ let floats = vec![1.5, 2.5, 3.5];
 let mean_f = floats.mean(); // 2.5
 ```
 
-## Comment Ça Réduit la Duplication de Code
+## Comment ça Réduit la Duplication de Code
 
 - **Implémentation Unique** : La blanket `impl<T: Summable>` applique `Stats` à tout type implémentant `Summable` (ex : `Vec<i32>`, `Vec<f64>`). Sans elle, j'aurais besoin d'`impl Stats for Vec<i32>`, `impl Stats for Vec<f64>` séparés, etc., dupliquant la logique de moyenne.
 - **Scalabilité** : Ajouter un nouveau type `Summable` (ex : `Vec<u64>`) octroie automatiquement `Stats` sans toucher au code de la bibliothèque.
 - **Clarté** : Les utilisateurs obtiennent `mean` gratuitement sur tout type `Summable`, simplifiant l'API.
 
-## Cohérence de Trait et Pièges
+## Cohérence de Trait et pièges
 
 La cohérence de trait assure qu'aucune implémentation de trait conflictuelle n'existe pour le même type. Les règles orphan de Rust l'imposent : tu ne peux implémenter un trait pour un type que si soit le trait soit le type est défini dans ta crate. Les blanket implementations amplifient les risques de cohérence :
 
@@ -210,21 +210,21 @@ Seuls les types que je marque explicitement avec `Sealed` obtiennent la blanket 
 
 **Atténuation** : Documenter clairement les bounds (ex : "T::Output doit implémenter Into<f64>") et tester avec des types divers. Alternativement, diviser `Stats` en traits plus étroits (ex : `NumericStats`) pour contraindre l'applicabilité.
 
-### 3. Violations de Règle Orphan
+### 3. Violations de règle Orphan
 
 **Problème** : Si `Stats` et `Summable` sont dans des crates différentes, la blanket impl pourrait violer les règles orphan sauf si l'un est local.
 
 **Atténuation** : Définir les deux traits dans la même crate, ou utiliser des newtype wrappers pour les types étrangers.
 
-### 4. Gonflage de Performance
+### 4. Gonflage de performance
 
 **Problème** : La blanket impl fait la monomorphization de `mean` pour chaque `T`, potentiellement augmentant la taille du code.
 
 **Atténuation** : Profiler avec `size target/release/lib` et considérer `dyn Stats` pour le dispatch dynamique si la taille du code croît excessivement, bien que cela ajoute un overhead de vtable.
 
-## Améliorer la Conception
+## Améliorer la conception
 
-### Exemple Avancé : Système de Stats Étendu
+### Exemple avancé : système de Stats Étendu
 
 ```rust
 // Trait plus robuste avec gestion d'erreur
@@ -286,7 +286,7 @@ impl<T> Len for [T] {
 }
 ```
 
-### Patterns de Conception Robustes
+### Patterns de conception Robustes
 
 ```rust
 // Pattern 1: Traits scellés pour contrôler l'extension
@@ -345,17 +345,17 @@ let empty: Vec<i32> = vec![];
 assert!(empty.safe_mean().is_none());
 ```
 
-### Vérification de Taille
+### Vérification de taille
 
 `cargo build --release; size target/release/lib` pour surveiller la croissance du binaire.
 
-### Erreurs de Compilation
+### Erreurs de compilation
 
 Tester les types invalides (ex : `Vec<String>`) pour confirmer la cohérence.
 
-## Meilleures Pratiques
+## Meilleures pratiques
 
-### Quand Utiliser les Blanket Implementations
+### Quand utiliser les Blanket Implementations
 
 **Utilise quand :**
 - Tu as une logique commune applicable à plusieurs types

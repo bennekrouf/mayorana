@@ -147,8 +147,7 @@ Trois événements différents convergent vers le même appel au destructeur —
 </svg>
 </div>
 
-## Quand Implémenter Drop Manuellement
-
+## Quand implémenter Drop manuellement
 ### 1. Cleanup de Ressources
 
 Pour gérer des ressources non-mémoire comme fichiers, sockets, ou locks :
@@ -165,7 +164,7 @@ impl Drop for DatabaseConnection {
 }
 ```
 
-### 2. Gestion Mémoire Personnalisée
+### 2. Gestion mémoire Personnalisée
 
 Pour intégrer avec FFI ou code unsafe :
 
@@ -197,7 +196,7 @@ impl Drop for MetricsTracker {
 }
 ```
 
-## Règles Clés
+## Règles clés
 
 - **Pas d'Appels Explicites** : Appelle rarement `drop` directement ; utilise `std::mem::drop` pour explicitement drop une valeur.
 - **Pas de Panics** : Évite de paniquer dans `drop`, car cela peut mener à des double-drops ou arrêts de programme.
@@ -221,12 +220,11 @@ unsafe impl<#[may_dangle] T> Drop for MyBox<T> {
 }
 ```
 
-## Quand Ne Pas Utiliser Drop
-
+## Quand ne pas utiliser Drop
 - **Données Simples** : Pas besoin de `Drop` si le cleanup est géré par d'autres types (ex : `Box`, `Vec`).
 - **Thread-Safety** : Utilise `Arc` + `Mutex` au lieu de locking manuel dans `drop`.
 
-## Points Clés
+## Points clés
 
 **Utilise `Drop` pour** :
 - Cleanup de ressources (fichiers, locks, mémoire).

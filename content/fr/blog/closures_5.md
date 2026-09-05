@@ -14,7 +14,7 @@ tags:
 date: '2025-11-08'
 ---
 
-# Closures avec État en Rust: Passer et Muter à Travers Plusieurs Appels
+# Closures avec état en Rust: Passer et Muter à Travers Plusieurs Appels
 
 Pour passer une closure à une fonction Rust qui doit l'appeler plusieurs fois tout en maintenant l'état entre les appels, la closure doit implémenter le trait `FnMut` pour permettre la mutation de son environnement capturé. Je vais expliquer comment concevoir cela, en utilisant l'ownership, les traits et les lifetimes de Rust, et mettre en évidence quand utiliser des closures simples versus des approches structurées.
 
@@ -62,7 +62,7 @@ Pour passer une closure à une fonction Rust qui doit l'appeler plusieurs fois t
 </svg>
 </div>
 
-## Solution: Utiliser FnMut et Closure Mutable
+## Solution: utiliser FnMut et Closure mutable
 
 Une closure qui mute l'état doit implémenter `FnMut`, qui permet plusieurs appels avec accès mutable aux variables capturées. La fonction qui reçoit la closure la prend comme `&mut impl FnMut` pour retenir l'ownership tout en permettant la mutation.
 
@@ -87,7 +87,7 @@ fn main() {
 }
 ```
 
-### Mécaniques Clés
+### Mécaniques clés
 
 - **État Mutable** : La closure capture `counter` via un mutable borrow (`&mut i32`). La closure elle-même est déclarée `mut` pour permettre la mutation.
 - **Signature de Function** : `fn call_repeatedly<F: FnMut() -> i32>(f: &mut F)` assure que la closure peut être appelée plusieurs fois avec accès mutable.
@@ -124,9 +124,9 @@ fn main() {
 }
 ```
 
-## Exemples Avancés
+## Exemples avancés
 
-### 1. État Complexe avec Plusieurs Variables
+### 1. État complexe avec Plusieurs Variables
 
 ```rust
 fn demonstrate_complex_state() {
@@ -160,7 +160,7 @@ fn demonstrate_complex_state() {
 }
 ```
 
-### 2. Closure avec État dans des Collections
+### 2. Closure avec état dans des Collections
 
 ```rust
 fn demonstrate_closure_collection() {
@@ -221,7 +221,7 @@ fn demonstrate_move_stateful() {
 }
 ```
 
-## Patterns Avancés
+## Patterns avancés
 
 ### 1. Builder Pattern avec Closures Stateful
 
@@ -324,7 +324,7 @@ fn state_machine_example() {
 }
 ```
 
-## Pourquoi Pas FnOnce ou Fn ?
+## Pourquoi pas FnOnce ou Fn ?
 
 - **`FnOnce`** : Ne peut être appelée qu'une fois, consommant la closure. Inapproprié pour plusieurs appels.
 - **`Fn`** : Utilise des emprunts immutables, empêchant la mutation d'état, donc ne peut pas modifier les variables capturées.
@@ -425,7 +425,7 @@ fn demonstrate_trait_differences() {
 }
 ```
 
-## Pièges Courants
+## Pièges courants
 
 ### 1. Oublier `mut`
 
@@ -578,9 +578,9 @@ fn debug_state_changes() {
 }
 ```
 
-## Performance et Optimisations
+## Performance et optimisations
 
-### 1. Éviter les Allocations Inutiles
+### 1. Éviter les allocations inutiles
 
 ```rust
 fn performance_considerations() {
@@ -618,13 +618,13 @@ fn performance_considerations() {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **Utilise `FnMut`** pour les closures qui mutent l'état à travers plusieurs appels.  
 **Marque les closures et paramètres comme `mut`** pour permettre la mutation.  
 **Préfére les closures simples** pour l'état basique ; utilise les structs pour la gestion d'état complexe.
 
-### Règles de Décision
+### Règles de décision
 
 1. **État simple (1-2 variables)** → Closure avec captures mutables
 2. **État complexe** → Struct avec méthodes
@@ -637,7 +637,7 @@ fn performance_considerations() {
 Essaie de passer une closure non-`mut` à `call_repeatedly` : ça ne compile pas — appeler à
 travers `FnMut` exige un binding mutable.
 
-## Exemple Pratique Complet
+## Exemple pratique complet
 
 ```rust
 use std::collections::VecDeque;

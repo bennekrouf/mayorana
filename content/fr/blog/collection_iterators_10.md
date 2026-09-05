@@ -69,7 +69,7 @@ date: '2025-08-21'
 </svg>
 </div>
 
-## Différences Clés
+## Différences clés
 
 | .into_iter() | .iter() |
 |--------------|---------|
@@ -77,7 +77,7 @@ date: '2025-08-21'
 | Produit des valeurs owned (T). | Produit des références (&T). |
 | Le Vec original est inutilisable après. | Le Vec original reste intact. |
 
-## Quand Utiliser .into_iter()
+## Quand utiliser .into_iter()
 
 ### Besoin d'Ownership sur les éléments d'une liste
 
@@ -98,7 +98,7 @@ let mut vec = vec![3, 1, 2, 1];
 vec = vec.into_iter().unique().sorted().collect();  // Destructif mais efficace
 ```
 
-### Optimisation de Performance
+### Optimisation de performance
 
 Évite le cloning quand on travaille avec des données owned (ex : Vec<String>) :
 
@@ -184,9 +184,9 @@ let s = vec.into_iter().next().unwrap();  // Move le `String` dehors
 | Modifier les éléments | ❌ Non (consommé) | ✅ Oui (iter_mut()) |
 | Éviter le cloning de données owned | ✅ Oui | ❌ Non (nécessite clone()) |
 
-## Exemples Réels
+## Exemples réels
 
-### Transfert de Données
+### Transfert de données
 
 Déplacer un Vec dans une fonction qui prend ownership :
 
@@ -205,12 +205,12 @@ let vec = vec![1, 2, 3, 4];
 let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 ```
 
-## Considérations de Performance
+## Considérations de performance
 
 - **Zero-cost pour les primitives (i32, bool)** : `.into_iter()` et `.iter()` compilent vers le même code assembleur si le type implémente le trait copy (`T: Copy`).
 - **Évite les allocations** quand on chaîne des adaptateurs (ex : `.map().filter()`).
 
-## Points Clés
+## Points clés
 
 **Utilise .into_iter() pour** :
 - Sortir des éléments d'un Vec.

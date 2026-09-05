@@ -72,7 +72,7 @@ Le bound `?Sized` dans les définitions de traits Rust relâche la contrainte `S
 - **Sized par Défaut** : Par défaut, les paramètres génériques (`T`) impliquent `T: Sized`, signifiant que la taille du type doit être connue pendant la compilation. Cela exclut les types unsized comme les slices (`[u8]`), chaînes (`str`), ou trait objects (`dyn Trait`), qui n'existent que derrière des pointeurs (ex : `&[u8]`, `Box<dyn Trait>`).
 - **Signification de ?Sized** : Ajouter `T: ?Sized` se retire de cette exigence, permettant à `T` d'être soit sized soit unsized. Cela active une applicabilité plus large, car la fonction peut accepter des références vers des types unsized (`&T`) ou des types sized directement.
 
-## Exemple : Fonction de Sérialisation
+## Exemple : fonction de Sérialisation
 
 Dans une bibliothèque de sérialisation, je définirais une fonction pour calculer une checksum sur n'importe quelles données contiguës de type byte :
 
@@ -199,7 +199,7 @@ Une fonction gère à la fois les tableaux fixes (`[u8; 16]`) et les slices (`[u
 
 ## Vérification
 
-### Test de Compilation
+### Test de compilation
 S'assurer que les types sized et unsized fonctionnent :
 
 ```rust
@@ -222,7 +222,7 @@ fn bench(c: &mut Criterion) {
 
 Attends-toi à des performances similaires aux appels directs, avec inlining.
 
-## Exemple Avancé : Support de Trait Objects
+## Exemple avancé : Support de Trait Objects
 
 Pour étendre encore plus la flexibilité :
 
@@ -243,9 +243,9 @@ for item in &items {
 }
 ```
 
-## Considérations Pratiques
+## Considérations pratiques
 
-### Quand Utiliser ?Sized
+### Quand utiliser ?Sized
 
 **Utilise `?Sized` quand :**
 - Tu veux une API unifiée pour types sized et unsized
@@ -257,7 +257,7 @@ for item in &items {
 - La performance est critique et l'indirection pose problème
 - La complexité supplémentaire n'apporte pas de valeur
 
-### Patterns Courants
+### Patterns courants
 
 ```rust
 // Pattern 1: Fonction générique flexible

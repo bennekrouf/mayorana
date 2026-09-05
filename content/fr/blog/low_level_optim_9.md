@@ -15,7 +15,7 @@ tags:
 date: '2025-11-22'
 ---
 
-# Conscience des Lignes de Cache : Supposons que vous optimisez une application Rust multi-threadée qui traite de grands ensembles de données. Comment aligneriez-vous les structures de données aux lignes de cache, et quelles fonctionnalités ou techniques Rust utiliseriez-vous pour minimiser le faux partage ?
+# Conscience des lignes de Cache : Supposons que vous optimisez une application Rust multi-threadée qui traite de grands ensembles de données. comment aligneriez-vous les structures de données aux lignes de cache, et quelles fonctionnalités ou techniques Rust utiliseriez-vous pour minimiser le faux partage ?
 
 Dans une application Rust multi-threadée traitant de grands ensembles de données, la conscience des lignes de cache est essentielle pour maximiser les performances. Les lignes de cache du CPU (généralement 64 octets sur les architectures x86_64 et ARM modernes) dictent la manière dont les données sont récupérées, et le faux partage - où les threads modifient des données adjacentes sur la même ligne de cache - peut dégrader considérablement le débit en raison des invalidations constantes du cache. J'alignerais les structures de données aux lignes de cache et utiliserais les fonctionnalités de Rust pour éliminer le faux partage, optimisant ainsi une charge de travail multi-threadée.
 
@@ -57,7 +57,7 @@ Dans une application Rust multi-threadée traitant de grands ensembles de donné
 </svg>
 </div>
 
-## Conception de Structures Alignées sur le Cache
+## Conception de structures Alignées sur le Cache
 
 - **Alignement** : S'assurer que les données de chaque thread commencent sur une nouvelle ligne de cache en utilisant `#[repr(align(64))]`.
 - **Remplissage** : Ajouter des octets factices pour séparer les données locales aux threads, évitant le chevauchement.
@@ -151,8 +151,7 @@ impl Counters {
 </svg>
 </div>
 
-## Version Restructurée Alignée sur le Cache
-
+## Version restructurée, alignée sur le cache
 ```rust
 #[repr(align(64))] // Alignement sur ligne de cache de 64 octets
 struct CacheAlignedCounter {
@@ -203,7 +202,7 @@ Force l'alignement des structures à une puissance de 2 (ex. 64), les alignant a
 ### Remplissage Manuel
 Des tableaux ou champs inutilisés (ex. `[u8; 56]`) garantissent que la taille correspond à la ligne de cache, évitant le chevauchement.
 
-### Données Par Thread
+### Données par thread
 Utiliser `thread_local!` ou un tableau indexé par ID de thread pour une séparation complète :
 
 ```rust
@@ -214,7 +213,7 @@ thread_local! {
 
 **Opérations Atomiques** : `fetch_add` avec l'ordre `Relaxed` est sûr ici (pas de dépendance de données), minimisant la surcharge de synchronisation.
 
-## Prévention du Faux Partage
+## Prévention du faux partage
 
 - **Séparation** : Chaque compteur est espacé de 64 octets, donc les écritures du Thread 0 sur `counts[0]` n'invalident pas `counts[1]`.
 - **Vérification de Taille** : `std::mem::size_of::<CacheAlignedCounter>()` retourne 64, confirmant l'alignement.
@@ -239,7 +238,7 @@ fn bench(c: &mut Criterion) {
 
 Attendre une accélération de 2-5x (ex. de 50ms à 10ms) sur un CPU 4 cœurs.
 
-### Disposition Mémoire
+### Disposition mémoire
 `std::mem::align_of::<CacheAlignedCounter>()` confirme l'alignement sur 64 octets.
 
 ## Conclusion

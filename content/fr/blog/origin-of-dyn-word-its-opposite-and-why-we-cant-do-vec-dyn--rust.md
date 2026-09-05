@@ -15,7 +15,7 @@ tags:
   - pointeurs-intelligents
 ---
 
-# Le mot-clé `dyn` : Origines, Signification et Limitations
+# Le mot-clé `dyn` : Origines, Signification et limitations
 
 En Rust, le mot-clé `dyn` est au cœur du polymorphisme dynamique, permettant d'écrire du code flexible qui peut travailler avec différents types à l'exécution. Mais d'où vient ce mot mystérieux, comment fonctionne-t-il, et pourquoi certaines constructions comme `Vec<dyn Trait>` sont-elles impossibles ? Plongeons dans les mécanismes internes du langage.
 
@@ -74,7 +74,7 @@ fn faire_parler(animal: &dyn Animal) {
 }
 ```
 
-## L'Opposé de `dyn` : Le Polymorphisme Statique
+## L'Opposé de `dyn` : Le Polymorphisme statique
 
 L'opposé conceptuel de `dyn` n'est pas un mot-clé spécifique, mais plutôt l'ensemble des mécanismes de polymorphisme statique :
 
@@ -103,11 +103,11 @@ fn creer_animal() -> impl Animal {
 | Flexibilité | Types multiples à l'exécution | Type unique à la compilation |
 | Taille | Pointeur gras (data + vtable) | Taille du type concret |
 
-## Le Problème de `Vec<dyn Trait>`
+## Le problème de `Vec<dyn Trait>`
 
 La limitation la plus surprenante pour les nouveaux Rustacés est l'impossibilité d'écrire `Vec<dyn Trait>`. Explorons les raisons techniques.
 
-### Le Système de Taille (Sized Trait)
+### Le système de taille (Sized Trait)
 
 En Rust, tous les types doivent avoir une taille connue à la compilation. C'est ce qu'exprime le trait `Sized`. Or, `dyn Trait` n'est pas `Sized`.
 
@@ -130,7 +130,7 @@ struct GrosChien {
 
 Comment stocker ces types de tailles différentes dans un `Vec` qui nécessite des éléments de taille uniforme ?
 
-### Les Solutions Pratiques
+### Les solutions pratiques
 
 #### 1. Pointeurs Intelligents (Box, Rc, Arc)
 
@@ -151,7 +151,7 @@ fn traiter_animaux(animaux: &[&dyn Animal]) {
 }
 ```
 
-#### 3. Enum (Alternative Statique)
+#### 3. Enum (Alternative statique)
 
 ```rust
 enum AnimalEnum {
@@ -169,7 +169,7 @@ impl Animal for AnimalEnum {
 }
 ```
 
-### Mécanisme des Pointeurs Gras
+### Mécanisme des pointeurs Gras
 
 Quand vous utilisez `Box<dyn Trait>`, vous utilisez un **pointeur gras** (fat pointer) :
 
@@ -181,9 +181,9 @@ Ce pointeur contient :
 - Un pointeur vers les données (Chien)
 - Un pointeur vers la vtable (table des méthodes Animal pour Chien)
 
-## Implications des Choix de Conception
+## Implications des choix de conception
 
-### Considérations de Performance
+### Considérations de performance
 
 ```rust
 // Dispatch statique - plus rapide
@@ -201,14 +201,14 @@ fn benchmark_dynamique(animaux: &[&dyn Animal]) {
 }
 ```
 
-### Trade-off Flexibilité vs Performance
+### Trade-off flexibilité vs performance
 
 Le choix entre `dyn` et les génériques représente un compromis classique :
 
 - **Génériques** : Performance maximale, moins de flexibilité
 - **`dyn`** : Flexibilité maximale, léger overhead
 
-## Points Clés
+## Points clés
 `dyn` signifie "dynamic" et permet le polymorphisme à l'exécution via les vtables
 L'opposé de `dyn` est le polymorphisme statique (génériques, impl Trait)
 `Vec<dyn Trait>` est impossible car `dyn Trait` n'a pas de taille connue à la compilation

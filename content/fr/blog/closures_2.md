@@ -68,7 +68,7 @@ Les closures Rust implémentent un ou plusieurs de ces traits :
 | `FnMut` | Mutable borrow (`&mut T`) | `&mut self`  | Multiple        |
 | `FnOnce`| Ownership (`T`)        | `self` (consomme closure) | Une fois |
 
-### Différences Clés
+### Différences clés
 
 - **`Fn`** :
   - Peut être appelée répétitivement.
@@ -167,7 +167,7 @@ let closure = move || println!("{}", s); // `s` est moved dans la closure
 
 ## Exemples Détaillés
 
-### 1. Immutable Capture (`Fn`)
+### 1. Immutable capture (`Fn`)
 ```rust
 let x = 5;
 let print_x = || println!("{}", x); // Fn
@@ -181,7 +181,7 @@ fn call_fn<F: Fn()>(f: F) {
 call_fn(print_x); // ✅ Marche
 ```
 
-### 2. Mutable Capture (`FnMut`)
+### 2. Mutable capture (`FnMut`)
 ```rust
 let mut x = 5;
 let mut add_one = || x += 1; // FnMut
@@ -195,7 +195,7 @@ fn call_fn_mut<F: FnMut()>(mut f: F) {
 call_fn_mut(add_one); // ✅ Marche
 ```
 
-### 3. Ownership Capture (`FnOnce`)
+### 3. Ownership capture (`FnOnce`)
 ```rust
 let x = String::from("hello");
 let consume_x = || { drop(x); }; // FnOnce
@@ -209,7 +209,7 @@ fn call_fn_once<F: FnOnce()>(f: F) {
 call_fn_once(consume_x); // ✅ Marche
 ```
 
-## Exemples Avancés
+## Exemples avancés
 
 ### Closure avec `move` et Différents Traits
 
@@ -235,7 +235,7 @@ fn demonstrate_move_semantics() {
 }
 ```
 
-### Capturing dans des Threads
+### Capturing dans des threads
 
 ```rust
 use std::thread;
@@ -263,7 +263,7 @@ fn thread_examples() {
 }
 ```
 
-### Closures avec État Complexe
+### Closures avec état complexe
 
 ```rust
 struct Counter {
@@ -317,7 +317,7 @@ fn trait_conversions() {
 }
 ```
 
-## Patterns Courants et Idiomes
+## Patterns courants et idiomes
 
 ### Iterator avec Closures
 
@@ -386,7 +386,7 @@ fn callback_example() {
 }
 ```
 
-## Performance et Cas d'Usage
+## Performance et cas d'Usage
 
 | Trait   | Overhead      | Cas d'Usage                        |
 |---------|---------------|------------------------------------|
@@ -422,7 +422,7 @@ fn benchmark_closure_traits() {
 }
 ```
 
-## Debugging et Introspection
+## Debugging et introspection
 
 ### Déterminer le Trait d'une Closure
 
@@ -444,14 +444,14 @@ fn analyze_closure_trait() {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **`Fn`** : Read-only, réutilisable.  
 **`FnMut`** : Mutable, réutilisable.  
 **`FnOnce`** : Owned, usage unique.  
 `move` force l'ownership mais ne change pas le trait—l'usage détermine le trait.
 
-### Règles à Retenir
+### Règles à retenir
 
 1. **Hiérarchie** : `Fn` ⊂ `FnMut` ⊂ `FnOnce`
 2. **Capture** : Le mode de capture détermine le trait minimum
@@ -462,7 +462,7 @@ fn analyze_closure_trait() {
 Une closure qui capture `&mut` sans jamais muter n'implémente quand même que `FnMut`. Le trait
 suit ce que la capture *autorise*, pas ce que le corps en fait réellement.
 
-## Exemples de Débogage Courants
+## Exemples de débogage courants
 
 ### Erreur : "Cannot borrow as mutable"
 

@@ -66,7 +66,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 </svg>
 </div>
 
-## Différences Clés
+## Différences clés
 
 | **Aspect** | **impl Fn() (Static Dispatch)** | **Box&lt;dyn Fn()&gt; (Dynamic Dispatch)** |
 |------------|--------------------------------|--------------------------------------|
@@ -76,7 +76,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 | **Mémoire** | Stack-allocated (sauf si moved) | Heap-allocated (fat pointer + heap data) |
 | **Cas d'Usage** | Type de closure fixe, critique en performance | Comportement dynamique, types de closures multiples |
 
-## Quand Utiliser Chacune
+## Quand utiliser chacune
 
 ### 1. impl Fn() (Static Dispatch)
 - **Utilise Quand** :
@@ -193,7 +193,7 @@ Remarque que `create_op` n'est pas seulement *plus lent* avec `impl Fn` — c'es
   ```
 - **impl Fn()** : Les lifetimes sont typiquement inférées sauf si des références sont capturées, simplifiant l'usage.
 
-## Trade-offs de Performance
+## Trade-offs de performance
 
 | **Scénario** | **impl Fn()** | **Box&lt;dyn Fn()&gt;** |
 |--------------|---------------|-------------------|
@@ -201,7 +201,7 @@ Remarque que `create_op` n'est pas seulement *plus lent* avec `impl Fn` — c'es
 | **Overhead Mémoire** | Aucun (stack-allocated) | 16–24 bytes (fat pointer + heap data) |
 | **Code Bloat** | Possible (monomorphization) | Minimal (vtable unique) |
 
-## Exemples Avancés
+## Exemples avancés
 
 ### Collection de Closures Hétérogènes
 
@@ -223,8 +223,7 @@ fn main() {
 }
 ```
 
-### Static Dispatch avec Générics
-
+### Static dispatch avec génériques
 ```rust
 // ✅ Static dispatch avec type parameter
 fn process_data<F>(data: &[i32], processor: F) -> Vec<i32>
@@ -380,7 +379,7 @@ criterion_group!(benches, bench_dispatch);
 criterion_main!(benches);
 ```
 
-### Résultats Typiques
+### Résultats typiques
 
 ```
 static_dispatch    time: [1.2345 ns 1.2456 ns 1.2567 ns]
@@ -419,7 +418,7 @@ fn analyze_dynamic() {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **Choisis `impl Fn()` pour** :
 - Code sensible aux performances (ex : chaînes d'iterators).
@@ -435,7 +434,7 @@ fn analyze_dynamic() {
 - `impl Fn()` : Utilisé dans les adaptateurs d'iterators comme `map` et `filter` pour une performance zero-cost.
 - `Box<dyn Fn()>` : Commun dans les frameworks GUI pour les callbacks d'événements où la flexibilité est clé.
 
-## Verification de Performance
+## Verification de performance
 
 Pour quantifier la différence de performance, benchmark avec `criterion` :
 

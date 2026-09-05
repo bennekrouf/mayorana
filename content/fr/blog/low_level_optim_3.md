@@ -16,7 +16,7 @@ tags:
   - performance
 ---
 
-# SIMD en Rust : Optimiser la Multiplication de Matrices
+# SIMD en Rust : optimiser la multiplication de matrices
 
 Les capacités **SIMD (Single Instruction, Multiple Data)** de Rust permettent le traitement parallèle de plusieurs éléments de données en une seule instruction CPU, idéal pour des tâches computationnellement intensives comme la multiplication de matrices. Je vais expliquer comment exploiter `std::arch` pour un débit maximum, adresser la portabilité à travers les architectures (ex : x86_64 avec SSE/AVX vs ARM avec NEON), et souligner les défis et solutions pour assurer justesse et performance.
 
@@ -74,7 +74,7 @@ Les capacités **SIMD (Single Instruction, Multiple Data)** de Rust permettent l
 </svg>
 </div>
 
-## Vectoriser la Multiplication de Matrices avec SIMD
+## Vectoriser la multiplication de matrices avec SIMD
 
 La multiplication de matrices (ex : \( C = A \times B \), où \( A \) est \( m \times n \), \( B \) est \( n \times p \), et \( C \) est \( m \times p \)) implique de calculer des produits scalaires de lignes et colonnes. Une implémentation scalaire naïve pour une matrice 4x4 est :
 
@@ -126,7 +126,7 @@ unsafe fn matrix_mult_simd(a: &[[f32; 8]; 8], b: &[[f32; 8]; 8], c: &mut [[f32; 
 
 Cela calcule 8 termes de produit scalaire par itération, réduisant les itérations de boucle par 8x. Enveloppe cela dans des boucles externes, optionnellement avec unrolling ou tiling (ex : blocs 8x8) pour un meilleur usage cache.
 
-## Utiliser les Outils SIMD de Rust
+## Utiliser les outils SIMD de Rust
 
 - **`std::arch`** : Fournit des intrinsiques brutes, nécessitant `unsafe` et un ciblage d'architecture manuel (ex : `#[cfg(target_arch = "x86_64")]`). Active AVX avec `--features avx2` dans `Cargo.toml`.
 - **Crates comme `packed_simd`** : Offre des abstractions portables :
@@ -228,7 +228,7 @@ Cela calcule 8 termes de produit scalaire par itération, réduisant les itérat
 </svg>
 </div>
 
-## Optimisations Avancées
+## Optimisations avancées
 
 ### Implémentation Multi-Architecture
 
@@ -415,7 +415,7 @@ fn matrix_mult_block_simd<const N: usize>(
 }
 ```
 
-### Benchmarking Complet
+### Benchmarking complet
 
 ```rust
 use criterion::{BenchmarkId, Criterion, Throughput, black_box};
@@ -585,13 +585,13 @@ mod correctness_tests {
 }
 ```
 
-## Exemple de Résultat Pratique
+## Exemple de résultat pratique
 
 Pour une matrice 1024x1024, AVX pourrait réduire le runtime de secondes à millisecondes sur un CPU moderne, en supposant une bonne localité de données. Le profiling devrait montrer une réduction d'instructions 8x dans la boucle interne, avec des benchmarks confirmant des speedups significatifs.
 
-## Considérations Pratiques
+## Considérations pratiques
 
-### Gestion Mémoire Optimisée
+### Gestion mémoire Optimisée
 
 ```rust
 // Allocation alignée pour performance SIMD optimale

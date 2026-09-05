@@ -18,7 +18,7 @@ tags:
   - plugins
 ---
 
-# Rendre les Traits Object-Safe pour dyn Trait de Rust dans les Systèmes de Plugins
+# Rendre les Traits Object-Safe pour dyn Trait de Rust dans les systèmes de Plugins
 
 Rust exige que les traits soient **object-safe** pour les utiliser avec `dyn Trait` pour le dispatch dynamique, car cela assure une vtable (table virtuelle) cohérente pour les appels de méthodes à l'exécution. Les traits non-object-safe, comme ceux avec des méthodes génériques ou des exigences statiques, ne peuvent pas être utilisés avec `dyn Trait`, mais ils peuvent être refactorisés pour les systèmes de plugins nécessitant du polymorphisme à l'exécution. Je vais expliquer pourquoi l'object safety est nécessaire et démontrer comment refactoriser un trait non-object-safe pour un système de plugins.
 
@@ -207,7 +207,7 @@ fn main() {
 </svg>
 </div>
 
-## Comment Ça Active dyn Trait
+## Comment ça Active dyn Trait
 
 - **Construction de Vtable** : Le `Transformer` refactorisé a une méthode avec une signature fixe, activant une vtable comme :
   ```rust
@@ -220,7 +220,7 @@ fn main() {
 - **Sécurité** : Pas de generics ou `Self` assure que la vtable est type-agnostic, sûre pour tout implémenteur.
 - **Efficacité** : Le dispatch dynamique ajoute un lookup vtable (1-2 cycles), mais active le polymorphisme à l'exécution essentiel pour les plugins chargés dynamiquement.
 
-## Considérations Avancées
+## Considérations avancées
 
 ### Gestion de Multiples Types d'Entrée
 
@@ -256,7 +256,7 @@ impl Transformer for SquareTransformer {
 }
 ```
 
-### Système de Plugin Complet
+### Système de Plugin complet
 
 ```rust
 use std::collections::HashMap;
@@ -292,7 +292,7 @@ fn main() {
 }
 ```
 
-## Points Clés à Retenir
+## Points clés à retenir
 
 **Object Safety** : Élimine les generics, `Self` returns et méthodes statiques pour activer `dyn Trait`  
 **Factory Pattern** : Utilise des fonctions factory au lieu de méthodes `new()` statiques  

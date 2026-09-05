@@ -14,7 +14,7 @@ tags:
   - ownership
 ---
 
-# Quel est le but de Box<T> en Rust ? Quand l'utiliserais-tu ?
+# Quel est le but de Box<T> en Rust ? quand l'utiliserais-tu ?
 
 `Box<T>` est un smart pointer en Rust qui fournit l'allocation heap pour une valeur de type `T`. C'est la façon la plus simple de stocker des données sur le heap, offrant des garanties d'ownership et memory safety sans overhead runtime.
 
@@ -65,7 +65,7 @@ tags:
 - **Ownership** : `Box<T>` possède les données et assure qu'elles sont droppées quand le `Box` sort du scope.
 - **Taille Fixe** : Le `Box` lui-même est un pointeur (`usize`) avec une taille stack connue, même si `T` est dynamically sized (ex : `Box<dyn Trait>`).
 
-## Quand Utiliser Box<T>
+## Quand utiliser Box<T>
 
 ### 1. Types Récursifs (ex : Listes Chaînées)
 
@@ -134,7 +134,7 @@ enum List {
 </svg>
 </div>
 
-### 2. Grosses Données (Éviter Stack Overflow)
+### 2. Grosses données (Éviter Stack Overflow)
 
 Déplacer de grosses structs (ex : buffer 1MB) vers le heap prévient les stack overflows.
 
@@ -157,7 +157,7 @@ impl Animal for Cat {
 let animals: Vec<Box<dyn Animal>> = vec![Box::new(Cat)]; // Dynamic dispatch
 ```
 
-### 4. Transférer Ownership Entre Threads
+### 4. Transférer Ownership Entre threads
 
 `Box` peut être utilisé avec `std::thread::spawn` pour move des données owned vers un autre thread.
 
@@ -168,7 +168,7 @@ std::thread::spawn(move || {
 });
 ```
 
-## Comment Box<T> Diffère d'Autres Pointeurs
+## Comment Box<T> Diffère d'Autres pointeurs
 
 | **Type** | **Ownership** | **Cas d'Usage** |
 |----------|---------------|-----------------|
@@ -183,7 +183,7 @@ std::thread::spawn(move || {
 - **Pas de null pointers** : `Box` ne peut pas être null (contrairement aux raw pointers).
 - **Pas de leaks** : Le compilateur applique les règles d'ownership.
 
-## Exemple : Box vs Stack Allocation
+## Exemple : Box vs Stack allocation
 
 ```rust
 // Stack (échoue si trop gros)
@@ -193,7 +193,7 @@ std::thread::spawn(move || {
 let arr = Box::new([0u8; 10_000_000]); // Sûr
 ```
 
-## Points Clés
+## Points clés
 
 **Utilise `Box<T>` quand tu as besoin** :
 - D'allocation heap pour données larges ou récursives.

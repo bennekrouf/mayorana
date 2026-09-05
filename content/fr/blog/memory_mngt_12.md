@@ -62,7 +62,7 @@ Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowi
 </svg>
 </div>
 
-## Modèle de Concurrence de Rust
+## Modèle de concurrence de Rust
 
 Rust utilise les mécanismes suivants pour gérer la concurrence :
 - **Ownership** : Assure l'accès mutable exclusif aux données.
@@ -79,7 +79,7 @@ Une **data race** survient quand :
 
 Les règles de Rust rendent les data races impossibles dans le code safe :
 
-### 1. Mutabilité Exclusive (`&mut T`)
+### 1. Mutabilité exclusive (`&mut T`)
 
 - Seule une référence mutable (`&mut T`) peut exister à la fois, appliquée par le borrow checker.
 - Ceci prévient plusieurs threads d'écrire aux mêmes données simultanément.
@@ -91,7 +91,7 @@ let r1 = &mut data;  // OK: Mutable borrow
 // let r2 = &mut data;  // ERREUR: Cannot borrow `data` as mutable more than once
 ```
 
-### 2. Pas de Mutabilité Partagée Sans Synchronisation
+### 2. Pas de mutabilité partagée Sans synchronisation
 
 - Les références partagées (`&T`) sont read-only, sûres pour l'accès concurrent.
 - Pour muter des données partagées, des primitives de synchronisation comme `Mutex` sont requises :
@@ -186,7 +186,7 @@ thread::spawn(move || {             // `move` transfère ownership
 }).join().unwrap();
 ```
 
-## Outils de Concurrence Courants
+## Outils de concurrence courants
 
 | **Outil** | **But** | **Mécanisme de Thread Safety** |
 |-----------|---------|--------------------------------|
@@ -217,13 +217,13 @@ for handle in handles {
 println!("Result: {}", *counter.lock().unwrap());  // Affiche 10
 ```
 
-## Pourquoi C'est Important
+## Pourquoi C'est important
 
 - **Pas d'overhead runtime** : Les vérifications de sécurité se produisent au moment de la compilation.
 - **Pas de garbage collector** : Concurrence sûre sans pauses GC.
 - **Parallélisme sans peur** : Le compilateur rejette les patterns unsafe, permettant une programmation concurrente confiante.
 
-## Points Clés
+## Points clés
 
 **Les règles d'ownership préviennent** :
 - L'accès mutable concurrent (pas de data races).

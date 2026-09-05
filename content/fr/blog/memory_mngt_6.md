@@ -17,7 +17,7 @@ tags:
   - ownership
 ---
 
-# Pourquoi tu ne peux pas passer un &str directement à une fonction attendant un &String ? Comment gérerais-tu un tel scénario ?
+# Pourquoi tu ne peux pas passer un &str directement à une fonction attendant un &String ? comment gérerais-tu un tel scénario ?
 
 En Rust, tu ne peux pas passer un `&str` directement à une fonction attendant un `&String` à cause de leurs types distincts, ce qui assure la type safety et prévient les assumptions sur l'ownership mémoire. Ci-dessous, j'explique pourquoi ce mismatch survient et comment le gérer efficacement.
 
@@ -58,7 +58,7 @@ En Rust, tu ne peux pas passer un `&str` directement à une fonction attendant u
 </svg>
 </div>
 
-## Le Problème Central : Type Mismatch
+## Le problème Central : Type Mismatch
 
 - **`&String`** : Une référence vers un `String` heap-allocated, extensible.
 - **`&str`** : Une string slice qui peut pointer vers mémoire heap, stack, ou static.
@@ -150,7 +150,7 @@ fn main() {
 
 **Pourquoi ça marche** : `String` implémente `Deref<Target=str>`, permettant à `&String` de coercer vers `&str`.
 
-### 2. Conversion Explicite (Quand Tu As Besoin de &String)
+### 2. Conversion explicite (Quand Tu As Besoin de &String)
 
 Si la fonction doit prendre `&String`, convertis `&str` vers `String` d'abord :
 
@@ -167,7 +167,7 @@ fn main() {
 
 **Inconvénient** : Ceci alloue un nouveau buffer heap, ce qui devrait être évité si possible à cause des coûts de performance.
 
-### 3. Utilise `AsRef<str>` pour Flexibilité Maximum
+### 3. Utilise `AsRef<str>` pour flexibilité Maximum
 
 Pour des fonctions qui devraient marcher avec tout type string-like :
 
@@ -187,7 +187,7 @@ fn main() {
 
 **Bonus** : Accepte aussi `Cow<str>`, `Box<str>`, etc.
 
-## Points Clés
+## Points clés
 
 **Préféré** : Utilise `&str` dans les arguments de fonction (flexible et zero-cost).  
 **Si coincé avec `&String`** : Convertis `&str` vers `String` (alloue).  

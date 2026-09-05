@@ -18,7 +18,7 @@ tags:
 date: '2025-10-30'
 ---
 
-# Quel est l'objectif de Vec::retain() ? Comment se compare-t-il au filtrage avec iter().filter().collect() ?
+# Quel est l'objectif de Vec::retain() ? comment se compare-t-il au filtrage avec iter().filter().collect() ?
 
 ## Vec::retain() : Filtrage en place
 

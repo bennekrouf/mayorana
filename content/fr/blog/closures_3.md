@@ -65,7 +65,7 @@ Les closures en Rust sont des types anonymes, donc tu dois utiliser des trait bo
 </svg>
 </div>
 
-## Closure comme Paramètre de Function
+## Closure comme paramètre de Function
 
 Utilise des paramètres de type générique avec trait bounds pour accepter des closures.
 
@@ -171,7 +171,7 @@ fn main() {
 </svg>
 </div>
 
-## Closures avec Paramètres Multiples
+## Closures avec paramètres Multiples
 
 ```rust
 // Closure qui prend plusieurs paramètres
@@ -191,11 +191,11 @@ fn main() {
 }
 ```
 
-## Closure comme Type de Retour
+## Closure comme Type de retour
 
 Utilise `impl Trait` pour le static dispatch (zero-cost) ou `Box<dyn Trait>` pour le dynamic dispatch (flexible).
 
-### Exemple : Retourner `impl Fn` (Static Dispatch)
+### Exemple : retourner `impl Fn` (Static Dispatch)
 
 ```rust
 // Retourne une closure qui ajoute une valeur fixe (capture immutable).
@@ -212,7 +212,7 @@ fn main() {
 }
 ```
 
-### Exemple : Retourner `impl FnMut` (Stateful Closure)
+### Exemple : retourner `impl FnMut` (Stateful Closure)
 
 ```rust
 // Retourne une closure avec état interne
@@ -233,7 +233,7 @@ fn main() {
 }
 ```
 
-### Exemple : Retourner `Box<dyn Fn>` (Dynamic Dispatch)
+### Exemple : retourner `Box<dyn Fn>` (Dynamic Dispatch)
 
 ```rust
 // Retourne un trait object pour des closures hétérogènes.
@@ -252,7 +252,7 @@ fn main() {
 }
 ```
 
-## Différences Clés
+## Différences clés
 
 | Approche            | `impl Fn` (Static)         | `Box<dyn Fn>` (Dynamic)    |
 |---------------------|----------------------------|----------------------------|
@@ -261,7 +261,7 @@ fn main() {
 | **Mémoire**         | Stack-allocated            | Heap-allocated (trait object) |
 | **Flexibilité**     | Moins (type fixe)          | Plus (toute closure `dyn Fn`) |
 
-## Exemples Avancés
+## Exemples avancés
 
 ### Factory Pattern avec Closures
 
@@ -348,7 +348,7 @@ fn main() {
 }
 ```
 
-## Quand Utiliser Chaque Approche
+## Quand utiliser chaque approche
 
 ### `impl Fn` - Recommandé pour :
 - Retourner un type unique de closure (ex : factory functions).
@@ -406,7 +406,7 @@ impl EventSystem {
 }
 ```
 
-## Pièges et Solutions
+## Pièges et solutions
 
 ### `FnMut` dans les Structs
 
@@ -439,7 +439,7 @@ fn main() {
 }
 ```
 
-### Lifetimes avec Captures
+### Lifetimes avec captures
 
 Les closures capturant des références peuvent nécessiter des lifetimes explicites :
 
@@ -458,8 +458,7 @@ fn main() {
 }
 ```
 
-### Erreur Commune : Return Type Mismatch
-
+### Erreur commune : return type mismatch
 ```rust
 // ❌ Ne compile pas - types de retour différents
 fn broken_factory(use_add: bool) -> impl Fn(i32) -> i32 {
@@ -480,9 +479,9 @@ fn fixed_factory(use_add: bool) -> Box<dyn Fn(i32) -> i32> {
 }
 ```
 
-## Patterns de Performance
+## Patterns de performance
 
-### Éviter les Allocations dans les Hot Paths
+### Éviter les allocations dans les Hot Paths
 
 ```rust
 // ❌ Mauvais - allocation dans hot path  
@@ -526,7 +525,7 @@ fn benchmark_dispatch() {
 }
 ```
 
-## Points Clés
+## Points clés
 
 **Paramètre** : Utilise les generics (`F: Fn(...)`) pour flexibilité et performance.  
 **Type de Retour** :  
@@ -534,7 +533,7 @@ fn benchmark_dispatch() {
 - `Box<dyn Fn>` pour dynamic dispatch (flexible, types multiples).  
 Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
-### Règles de Décision
+### Règles de décision
 
 1. **Un seul type de closure** → `impl Fn`
 2. **Plusieurs types possibles** → `Box<dyn Fn>`
@@ -544,7 +543,7 @@ Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
 Retourner une `FnOnce` est permis — l'appelant n'a simplement qu'une seule occasion de l'appeler.
 
-## Exemple Pratique Complet
+## Exemple pratique complet
 
 ```rust
 // Système de pipeline de traitement de données

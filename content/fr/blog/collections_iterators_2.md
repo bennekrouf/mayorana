@@ -75,7 +75,7 @@ Ces trois méthodes sont fondamentales pour travailler avec des collections en R
 </svg>
 </div>
 
-## 1. `into_iter()` - Itérateur qui consomme l'ownership
+## 1. `into_iter()` - itérateur qui consomme l'ownership
 
 - **Prend l'ownership** de la collection (`self`).
 - **Produit** des valeurs possédées (`T`) lors de l'itération.
@@ -93,7 +93,7 @@ for s in vec.into_iter() {  // `vec` est déplacé ici
 - Quand vous avez besoin de transformer ou consommer la collection définitivement.
 - Pour enchaîner des adaptateurs d'itérateurs qui nécessitent l'ownership (ex: `.filter().collect()`).
 
-## 2. `iter()` - Itérateur d'emprunt immuable
+## 2. `iter()` - itérateur d'emprunt immuable
 
 - **Emprunte** la collection de manière immuable (`&self`).
 - **Produit** des références (`&T`).
@@ -111,7 +111,7 @@ println!("{:?}", vec);      // OK : `vec` toujours valide
 - Quand vous avez seulement besoin d'un accès en lecture seule aux éléments.
 - Pour des opérations comme la recherche (`.find()`) ou l'inspection.
 
-## 3. `iter_mut()` - Itérateur d'emprunt mutable
+## 3. `iter_mut()` - itérateur d'emprunt mutable
 
 - **Emprunte** la collection de manière mutable (`&mut self`).
 - **Produit** des références mutables (`&mut T`).

@@ -17,7 +17,7 @@ tags:
   - undefined-behavior
 ---
 
-# C: La Puissance sans srotection
+# C: La puissance sans srotection
 
 Avec C, il n'y a pas de runtime, pas de GC.
 
@@ -76,7 +76,7 @@ printf("%s", msg); // ❌ Use after free
 </svg>
 </div>
 
-## Pièges Courants
+## Pièges courants
 
 | Problème | Code | Risque |
 |----------|------|--------|
@@ -85,7 +85,7 @@ printf("%s", msg); // ❌ Use after free
 | Buffer overflow | `char buf[4]; strcpy(buf, "long");` | Memory corruption |
 | Memory leak | `malloc(...)` sans `free` | Crashes lents |
 
-## Modèle de Mémoire Manuelle
+## Modèle de mémoire Manuelle
 
 Tu dois :
 - Allouer la mémoire
@@ -93,7 +93,7 @@ Tu dois :
 - La libérer manuellement
 - Éviter d'accéder à la mémoire freed ou invalide
 
-## Conséquences Réelles
+## Conséquences réelles
 
 Voici quelques bugs connus.
 
@@ -161,7 +161,7 @@ void destroy_buffer(Buffer* buf) {
 - Quand doit-il être liberé ?
 - Est-il encore valide ?
 
-### Debugging des Problèmes Mémoire
+### Debugging des problèmes mémoire
 ```bash
 $ valgrind ./my_program
 ==12345== Invalid read of size 4
@@ -172,9 +172,9 @@ $ valgrind ./my_program
 
 **Un des problèmes majeurs :** Les bugs sont découverts trop tard, au runtime, pas au moment de la compilation.
 
-## Trade-off Performance vs Sécurité
+## Trade-off performance vs sécurité
 
-### Caractéristiques Performance de C
+### Caractéristiques performance de C
 ```c
 // Zero overhead - accès mémoire direct
 int sum = 0;
@@ -199,7 +199,7 @@ Point* points = malloc(1000 * sizeof(Point)); // Allocation prévisible
 **Contrôle :** ✅ Contrôle complet de l'emprunte mémoire
 **Risque :** ❌ Gestion manuelle des lifetimes
 
-## Les Outils aident, mais ne suffisent pas
+## Les outils aident, mais ne suffisent pas
 
 ### Static Analysis
 ```c
@@ -283,12 +283,12 @@ $ ./a.out
 - **Systèmes embarqués :** Contraintes mémoire, pas de place pour un runtime
 - **Code critique en performance :** Chaque nanoseconde compte
 
-### Legacy et Écosystème
+### Legacy et écosystème
 - **Bases de code massives :** Décennies de code C en production
 - **Écosystème de librairies :** La plupart des librairies système écrites en C
 - **Connaissance développeur :** Générations de programmeurs C
 
-## Le Problème Fondamental
+## Le problème Fondamental
 
 C te donne deux mauvais choix :
 
@@ -309,7 +309,7 @@ free(data);  // Facile d'oublier ou de double-free
 - Perdre la prévisibilité des performances
 - Toujours possible d'avoir des fuites mémoires
 
-## Points Clés
+## Points clés
 
 ✅ **Performance prévisible - pas de pauses GC**  
 ✅ **Contrôle complet de l'emprunte mémoire**  
