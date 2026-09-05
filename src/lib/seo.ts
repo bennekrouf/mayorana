@@ -87,7 +87,10 @@ function alternatesFor(
 
   if (!paths) return { canonical };
 
-  const known = locales.filter((l) => paths[l]);
+  // Presence, not truthiness: the home page's path is '', which is falsy, and
+  // testing `paths[l]` dropped the alternates from the one URL on the site
+  // that most needs them.
+  const known = locales.filter((l) => paths[l] !== undefined);
   if (known.length < 2) return { canonical };
 
   const languages = Object.fromEntries(
@@ -98,7 +101,7 @@ function alternatesFor(
     canonical,
     languages: {
       ...languages,
-      ...(paths[defaultLocale]
+      ...(paths[defaultLocale] !== undefined
         ? { 'x-default': `${SITE_URL}/${defaultLocale}${paths[defaultLocale]}` }
         : {}),
     },

@@ -54,7 +54,11 @@
         "text": "The tool",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "trace-correlation-id-log-analytics-fr"
+    }
   },
   {
     "id": "logic-apps-workflow-chains",
@@ -111,7 +115,11 @@
         "text": "Where this sits",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "logic-apps-workflow-chains-fr"
+    }
   },
   {
     "id": "trace-correlation-id-cosmos-db",
@@ -168,7 +176,11 @@
         "text": "Putting it together",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "trace-correlation-id-cosmos-db-fr"
+    }
   },
   {
     "id": "ai-commit-messages-without-giving-up-control",
@@ -230,7 +242,11 @@
         "text": "The general shape",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "ai-commit-messages-without-giving-up-control-fr"
+    }
   },
   {
     "id": "ais-runner-intro",
@@ -317,7 +333,11 @@
         "text": "Why a Native Desktop App?",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "ais-runner-intro-fr"
+    }
   },
   {
     "id": "clamp-rust",
@@ -390,7 +410,11 @@
         "text": "Key Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "clamp-rust"
+    }
   },
   {
     "id": "reborrow-rust",
@@ -457,7 +481,11 @@
         "text": "The reborrow rules",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "reborrow-rust"
+    }
   },
   {
     "id": "instruction-level-optimization-inline-always",
@@ -570,7 +598,11 @@
         "text": "When to use it, and when not to",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "instruction-level-optimization-inline-always"
+    }
   },
   {
     "id": "cache-line-awareness-optimization",
@@ -663,7 +695,11 @@
         "text": "What to take back to your own code",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "cache-line-awareness-optimization"
+    }
   },
   {
     "id": "inline-assembly-rust",
@@ -731,7 +767,11 @@
         "text": "Before you reach for asm!",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "inline-assembly-rust"
+    }
   },
   {
     "id": "move-closures-rust-javascript-developers",
@@ -811,7 +851,11 @@
         "text": "Summary",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "move-closures-rust-javascript-developers"
+    }
   },
   {
     "id": "profiling-optimization-rust",
@@ -896,7 +940,11 @@
         "text": "Where this leaves you",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "profiling-optimization-rust"
+    }
   },
   {
     "id": "branch-prediction-rust",
@@ -959,7 +1007,11 @@
         "text": "Profiling Tools and Verification",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "branch-prediction-rust"
+    }
   },
   {
     "id": "simd-matrix-mult-rust",
@@ -1027,7 +1079,11 @@
         "text": "Conclusion",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "simd-matrix-mult-rust"
+    }
   },
   {
     "id": "zero-cost-abstractions-rust",
@@ -1080,7 +1136,11 @@
         "text": "So is it actually zero-cost?",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "zero-cost-abstractions-rust"
+    }
   },
   {
     "id": "vec-push-vs-with-capacity-performance",
@@ -1165,7 +1225,11 @@
         "text": "Real-World Impact",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "vec-push-vs-with-capacity-performance"
+    }
   },
   {
     "id": "allocation-avoidance-real-time-rust",
@@ -1236,7 +1300,11 @@
         "text": "Profiling",
         "level": 3
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "allocation-avoidance-real-time-rust"
+    }
   },
   {
     "id": "blanket-implementations-coherence",
@@ -1340,7 +1408,11 @@
         "text": "When a blanket impl is worth it",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "blanket-implementations-coherence"
+    }
   },
   {
     "id": "associated-types-io-driver-api",
@@ -1449,7 +1521,11 @@
         "text": "Benchmark",
         "level": 3
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "associated-types-io-driver-api"
+    }
   },
   {
     "id": "deadlocks-c-vs-rust",
@@ -1524,7 +1600,11 @@
         "text": "Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "deadlocks-c-vs-rust"
+    }
   },
   {
     "id": "sized-unsized-bounds-flexibility",
@@ -1618,7 +1698,11 @@
         "text": "?Sized in practice",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "sized-unsized-bounds-flexibility"
+    }
   },
   {
     "id": "supertraits-bounds-optimization",
@@ -1722,7 +1806,11 @@
         "text": "Where supertraits earn their place",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "supertraits-bounds-optimization"
+    }
   },
   {
     "id": "object-safety-rust",
@@ -1779,7 +1867,11 @@
         "text": "How It Enables dyn Trait",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "object-safety-rust"
+    }
   },
   {
     "id": "dispatch-performance-rust",
@@ -1866,7 +1958,11 @@
         "text": "Choosing between them",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "dispatch-performance-rust"
+    }
   },
   {
     "id": "trait-bounds-rust",
@@ -1938,7 +2034,11 @@
         "text": "Conclusion",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "trait-bounds-rust"
+    }
   },
   {
     "id": "borrowing-rules-rust",
@@ -1998,7 +2098,11 @@
         "text": "The two rules",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "borrowing-rules-rust-fr"
+    }
   },
   {
     "id": "rust-comparison-operators-iterators",
@@ -2159,7 +2263,11 @@
         "text": "Option 3: Use Cow<str> for Flexibility",
         "level": 4
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "string-literals-memory-rust-fr"
+    }
   },
   {
     "id": "box-pointer-rust",
@@ -2241,7 +2349,11 @@
         "text": "When to reach for Box",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "box-pointer-rust-fr"
+    }
   },
   {
     "id": "string-str-mismatch-rust",
@@ -2303,7 +2415,11 @@
         "text": "The fix, in short",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "string-str-mismatch-rust-fr"
+    }
   },
   {
     "id": "dangling-pointer-rust",
@@ -2360,7 +2476,11 @@
         "text": "Why this can never compile",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "dangling-pointer-rust-fr"
+    }
   },
   {
     "id": "ownership-safety-rust",
@@ -2432,7 +2552,11 @@
         "text": "Key Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "ownership-safety-rust-fr"
+    }
   },
   {
     "id": "stack-heap-allocation-rust",
@@ -2494,7 +2618,11 @@
         "text": "Where your data actually lives",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "stack-heap-allocation-rust-fr"
+    }
   },
   {
     "id": "memory-safety-rust",
@@ -2556,7 +2684,11 @@
         "text": "Why No Garbage Collector (GC)?",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "memory-safety-rust"
+    }
   },
   {
     "id": "cow-copy-on-write-rust",
@@ -2627,7 +2759,11 @@
         "text": "When Cow pays for itself",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "cow-copy-on-write-rust-fr"
+    }
   },
   {
     "id": "drop-trait-rust",
@@ -2708,7 +2844,11 @@
         "text": "Drop, summarised",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "drop-trait-rust-fr"
+    }
   },
   {
     "id": "concurrency-rust",
@@ -2774,7 +2914,11 @@
         "text": "Key Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "concurrency-rust-fr"
+    }
   },
   {
     "id": "flatten-vec-iterators-performance",
@@ -2845,7 +2989,11 @@
         "text": "Advanced: Zero-Copy Flattening",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "flatten-vec-iterators-performance"
+    }
   },
   {
     "id": "vec-retain-vs-filter-collect",
@@ -2956,7 +3104,11 @@
         "text": "Real-World Use Case:",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "vec-retain-vs-filter-collect"
+    }
   },
   {
     "id": "vec-drain-vs-truncate-clear",
@@ -3037,7 +3189,11 @@
         "text": "Real-World Example",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "vec-drain-vs-truncate-clear"
+    }
   },
   {
     "id": "box-slice-vs-vec-differences",
@@ -3108,7 +3264,11 @@
         "text": "Key Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "box-slice-vs-vec-differences"
+    }
   },
   {
     "id": "efficient-duplicate-removal-vec",
@@ -3204,7 +3364,11 @@
         "text": "Alternatives:",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "efficient-duplicate-removal-vec"
+    }
   },
   {
     "id": "collect-method-rust",
@@ -3292,7 +3456,11 @@
         "text": "What collect() needs from you",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "collect-method-rust"
+    }
   },
   {
     "id": "storing-closures-in-structs",
@@ -3368,7 +3536,11 @@
         "text": "Key Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "storing-closures-in-structs-fr"
+    }
   },
   {
     "id": "into-iter-vs-iter-ownership",
@@ -3466,7 +3638,11 @@
         "text": "Choosing between them",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "into-iter-vs-iter-ownership-fr"
+    }
   },
   {
     "id": "higher-order-functions-rust",
@@ -3524,7 +3700,11 @@
         "text": "What higher-order functions buy you",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "higher-order-functions-rust-fr"
+    }
   },
   {
     "id": "handling-lifetimes-returning-closures",
@@ -3600,7 +3780,11 @@
         "text": "Real-World Use Case",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "handling-lifetimes-returning-closures-fr"
+    }
   },
   {
     "id": "closure-performance-overhead-rust",
@@ -3676,7 +3860,11 @@
         "text": "Real-World Impact",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "closure-performance-overhead-rust-fr"
+    }
   },
   {
     "id": "stateful-closures-rust",
@@ -3729,7 +3917,11 @@
         "text": "Pitfalls",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "stateful-closures-rust-fr"
+    }
   },
   {
     "id": "closure-dispatch-rust",
@@ -3800,7 +3992,11 @@
         "text": "Conclusion",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "closure-dispatch-rust-fr"
+    }
   },
   {
     "id": "move-closures-rust",
@@ -3891,7 +4087,11 @@
         "text": "When move is the answer",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "move-closures-rust-fr"
+    }
   },
   {
     "id": "iter-methods-rust",
@@ -3954,7 +4154,11 @@
         "text": "Performance Notes",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "iter-methods-rust"
+    }
   },
   {
     "id": "fn-traits-rust",
@@ -4020,7 +4224,11 @@
         "text": "Which trait you actually get",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "fn-traits-rust-fr"
+    }
   },
   {
     "id": "closure-parameter-rust",
@@ -4096,7 +4304,11 @@
         "text": "Choosing the signature",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "closure-parameter-rust-fr"
+    }
   },
   {
     "id": "rust-traits-vs-interfaces",
@@ -4167,7 +4379,11 @@
         "text": "Traits vs interfaces, in short",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "rust-traits-vs-interfaces"
+    }
   },
   {
     "id": "string-vs-str-rust",
@@ -4228,7 +4444,11 @@
         "text": "Which one to write",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "string-vs-str-rust-fr"
+    }
   },
   {
     "id": "function-vs-closure-rust",
@@ -4294,7 +4514,11 @@
         "text": "The difference in one line",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "function-vs-closure-rust-fr"
+    }
   },
   {
     "id": "memory-layout-optimization-rust",
@@ -4350,7 +4574,11 @@
         "text": "Layout rules worth remembering",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "memory-layout-optimization-rust"
+    }
   },
   {
     "id": "vec-new-vs-with-capacity",
@@ -4403,7 +4631,11 @@
         "text": "Advanced Notes",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "vec-new-vs-with-capacity"
+    }
   },
   {
     "id": "getting-started-with-rust",
@@ -4464,7 +4696,11 @@
         "text": "Next Steps",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "getting-started-with-rust-fr"
+    }
   },
   {
     "id": "why-rust-memory-safe",
@@ -4625,7 +4861,11 @@
         "text": "TL;DR",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "why-rust-memory-safe-fr"
+    }
   },
   {
     "id": "c-low-level-cost",
@@ -4756,7 +4996,11 @@
         "text": "Key Takeaways",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "c-low-level-cost-fr"
+    }
   },
   {
     "id": "why-garbage-collector",
@@ -4862,6 +5106,10 @@
         "text": "The cost, summarised",
         "level": 2
       }
-    ]
+    ],
+    "counterpart": {
+      "locale": "fr",
+      "slug": "why-garbage-collector-fr"
+    }
   }
 ]

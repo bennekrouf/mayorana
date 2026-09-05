@@ -27,6 +27,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // A tag page only exists in a locale if some post there carries the tag, and
+  // the tag vocabularies are not the same: 'polymorphisme' and
+  // 'pointeurs-intelligents' are French-only, 'operators' English-only. Left at
+  // the default crossLocale, every tag page advertised a counterpart in the
+  // other locale and 42 of them pointed hreflang straight at a 404. Same rule
+  // as scripts/generate-sitemap.js, which pairs tag URLs only when the tag
+  // appears in both locales.
+  const otherLocale = locale === 'en' ? 'fr' : 'en';
+  const existsInBothLocales = Boolean(getTagBySlug(tagSlug, otherLocale));
+
   // Tag pages outnumber posts (188 across both locales for 139 posts), so many
   // list a single post and largely duplicate it. `noindex: true` is the usual
   // remedy and buildMetadata supports it — but these are deliberately left
@@ -37,6 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: `/blog/tag/${slug}`,
     title: `${tag} - Blog`,
     description: `Articles about ${tag}`,
+    crossLocale: existsInBothLocales,
   });
 }
 

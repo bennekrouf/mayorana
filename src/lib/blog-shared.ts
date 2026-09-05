@@ -30,6 +30,13 @@ export interface BlogPost {
     text: string;
     level: number;
   }[];
+  /**
+   * The same post in the other locale, when there is one. Written at build
+   * time by linkCounterparts() in scripts/generate-blog-data.js — the single
+   * place the en/fr pairing rule is defined — and read by both the page's
+   * hreflang and the sitemap's, so the two cannot disagree.
+   */
+  counterpart?: { locale: string; slug: string };
 }
 
 export interface PaginatedPosts {
