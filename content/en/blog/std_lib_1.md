@@ -5,7 +5,9 @@ slug: clamp-rust
 locale: en
 date: '2026-04-14'
 author: mayo
-excerpt: Rust standard library
+excerpt: >-
+  What clamp does, why it panics on a swapped min and max, and how it differs
+  from the saturating arithmetic it gets confused with.
 
 tags:
   - rust

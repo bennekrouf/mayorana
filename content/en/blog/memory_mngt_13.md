@@ -5,7 +5,9 @@ slug: reborrow-rust
 locale: en
 date: '2026-03-31'
 author: mayo
-excerpt: Rust memory and borrowing
+excerpt: >-
+  A reborrow duplicates the reference, not the data, and freezes the original
+  for its duration. What &mut *x really does.
 
 tags:
   - rust

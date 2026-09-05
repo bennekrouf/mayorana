@@ -5,7 +5,9 @@ slug: dispatch-performance-rust
 locale: en
 date: '2025-08-12'
 author: mayo
-excerpt: Static vs. Dynamic Dispatch
+excerpt: >-
+  Generics with a trait bound compile to static dispatch; dyn Trait compiles to
+  a vtable lookup. What each costs, and how to choose.
 
 tags:
   - rust

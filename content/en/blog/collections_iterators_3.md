@@ -4,7 +4,9 @@ title: 'Rust''s collect() Magic: Turning Iterators into Vecs, HashMaps, and Stri
 slug: collect-method-rust
 locale: "en"
 author: mayo
-excerpt: 'Collections (like Vec), iterators (into_iter, collect), and related concepts'
+excerpt: >-
+  How collect() decides what to build, what FromIterator asks of the target type,
+  and how to steer it towards a Vec, a HashMap or a String.
 tags:
   - rust
   - iterators

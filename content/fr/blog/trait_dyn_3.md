@@ -7,7 +7,9 @@ slug: dispatch-performance-rust
 locale: fr
 date: '2025-10-22'
 author: mayo
-excerpt: Dispatch Statique vs. Dynamique
+excerpt: >-
+  Les génériques avec borne de trait compilent en dispatch statique ; dyn Trait
+  compile en lookup de vtable. Ce que chacun coûte, et comment trancher.
 tags:
   - rust
   - dispatch

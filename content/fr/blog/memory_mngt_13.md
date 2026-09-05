@@ -5,7 +5,9 @@ slug: reborrow-rust
 locale: fr
 date: '2026-03-31'
 author: mayo
-excerpt: Rust mémoire et borrowing
+excerpt: >-
+  Un réemprunt duplique la référence, pas les données, et gèle l'originale le
+  temps de sa durée de vie. Ce que fait vraiment &mut *x.
 
 tags:
   - rust

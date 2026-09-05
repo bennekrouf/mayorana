@@ -5,7 +5,9 @@ slug: box-pointer-rust
 locale: en
 date: '2025-08-05'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  What Box<T> is for, what the extra indirection costs, and when a heap
+  allocation is the right call rather than a reflex.
 
 tags:
   - rust

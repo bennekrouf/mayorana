@@ -6,15 +6,15 @@ locale: fr
 date: '2025-10-24'
 author: mayo
 excerpt: >-
-  Stratégies d'allocation de Vec en Rust, comparant Vec::new() et
-  Vec::with_capacity() pour des performances optimales.
+  Vec::new() alloue à la première insertion, with_capacity(n) alloue une fois pour n
+  éléments. Quand la différence compte vraiment.
 tags:
   - rust
   - collections
   - iterators
-  - 
   - performance
   - vec
+---
 
 # Quelle est la différence entre Vec::new() et Vec::with_capacity() ? quand utiliser chacune ?
 

@@ -5,7 +5,9 @@ slug: string-str-mismatch-rust
 locale: en
 date: '2025-08-04'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Why passing a &str where a &String is expected fails to compile, what deref
+  coercion does and doesn't do, and how to fix the mismatch.
 
 tags:
   - rust

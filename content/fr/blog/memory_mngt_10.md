@@ -5,7 +5,9 @@ slug: cow-copy-on-write-rust-fr
 locale: fr
 date: '2025-11-23'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Cow<'a, B> permet d'emprunter quand c'est possible et d'allouer seulement
+  quand il le faut. Comment marche le copy-on-write et quand il est rentable.
 tags:
   - rust
   - beginner

@@ -5,7 +5,9 @@ slug: string-literals-memory-rust
 locale: en
 date: '2025-08-06'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  String literals live in the binary's read-only data with a 'static lifetime —
+  what that means for allocation, copying, and returning them.
 
 tags:
   - rust

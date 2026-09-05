@@ -5,7 +5,9 @@ locale: "en"
 slug: fn-traits-rust
 date: '2025-07-07'
 author: mayo
-excerpt: 'Functions and closures in Rust, covering ownership, traits, lifetimes'
+excerpt: >-
+  Fn, FnMut and FnOnce aren't traits you pick — the compiler derives them from
+  how the closure uses what it captured.
 tags:
   - rust
   - closures

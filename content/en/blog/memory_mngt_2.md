@@ -3,8 +3,10 @@ id: memory-safety-rust
 title: How does Rust ensure memory safety without a garbage collector?
 slug: memory-safety-rust
 author: mayo
+excerpt: >-
+  Ownership, borrowing and lifetimes give Rust memory safety at compile time,
+  with no collector and no runtime pauses to budget for.
 locale: en
-excerpt: Rust memory and string
 
 tags:
   - rust

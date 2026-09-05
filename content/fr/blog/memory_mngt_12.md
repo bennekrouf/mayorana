@@ -7,7 +7,9 @@ slug: concurrency-rust-fr
 locale: fr
 date: '2025-11-25'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Ownership et borrowing excluent les data races à la compilation. Ce
+  qu'ajoutent Send et Sync, et pourquoi Rc ne franchit pas un thread.
 tags:
   - rust
   - beginner

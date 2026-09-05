@@ -7,7 +7,9 @@ slug: move-closures-rust-fr
 locale: fr
 date: '2025-11-07'
 author: mayo
-excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
+excerpt: >-
+  Ce que move déplace réellement, quand on en a vraiment besoin (threads,
+  closures retournées, blocs async), et son interaction avec l'ownership.
 tags:
   - rust
   - closures

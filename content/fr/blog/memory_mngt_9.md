@@ -5,7 +5,9 @@ slug: borrowing-rules-rust-fr
 locale: fr
 date: '2025-11-29'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Les deux règles d'emprunt, pourquoi l'exclusivité est celle qui compte, et ce
+  que le borrow checker rejette réellement.
 tags:
   - rust
   - memory

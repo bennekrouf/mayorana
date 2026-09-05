@@ -7,7 +7,9 @@ slug: string-literals-memory-rust-fr
 locale: fr
 date: '2025-11-28'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Les string literals vivent dans les données en lecture seule du binaire avec
+  une lifetime 'static — ce que ça implique pour l'allocation et la copie.
 tags:
   - rust
   - memory

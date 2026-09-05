@@ -5,7 +5,9 @@ slug: clamp-rust
 locale: fr
 date: '2026-04-14'
 author: mayo
-excerpt: Bibliothèque standard Rust
+excerpt: >-
+  Ce que fait clamp, pourquoi il panique sur un min et un max inversés, et en
+  quoi il diffère de l'arithmétique saturante à laquelle on le confond.
 
 tags:
   - rust

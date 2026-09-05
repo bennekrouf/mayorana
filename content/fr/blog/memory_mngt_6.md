@@ -7,7 +7,9 @@ slug: string-str-mismatch-rust-fr
 locale: fr
 date: '2025-08-26'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Pourquoi passer un &str là où un &String est attendu ne compile pas, ce que la
+  coercition de déréférencement fait — et ne fait pas.
 
 tags:
   - rust

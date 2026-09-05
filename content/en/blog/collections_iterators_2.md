@@ -5,7 +5,9 @@ slug: iter-methods-rust
 locale: "en"
 date: '2025-07-08'
 author: mayo
-excerpt: 'Collections (like Vec), iterators (into_iter, collect), and related concepts'
+excerpt: >-
+  into_iter(), iter() and iter_mut() differ in what they hand you: the value, a
+  shared reference, or an exclusive one.
 
 tags:
   - rust

@@ -5,7 +5,9 @@ slug: concurrency-rust
 locale: en
 date: '2025-07-30'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Ownership and borrowing rule out data races at compile time. What Send and
+  Sync add, and why Rc can't cross a thread boundary.
 
 tags:
   - rust

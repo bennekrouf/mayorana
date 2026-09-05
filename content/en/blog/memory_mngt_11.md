@@ -5,7 +5,9 @@ slug: drop-trait-rust
 locale: en
 date: '2025-07-30'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  How the Drop trait works, when the destructor runs, and why implementing it by
+  hand is rarer than it looks.
 
 tags:
   - rust

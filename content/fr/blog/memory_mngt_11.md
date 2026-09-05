@@ -5,7 +5,9 @@ slug: drop-trait-rust-fr
 locale: fr
 date: '2025-11-24'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Comment fonctionne le trait Drop, quand le destructeur s'exécute, et pourquoi
+  l'implémenter à la main est plus rare qu'il n'y paraît.
 tags:
   - rust
   - beginner

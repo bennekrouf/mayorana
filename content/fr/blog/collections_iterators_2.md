@@ -5,13 +5,15 @@ slug: iter-methods-rust
 locale: fr
 date: '2025-10-25'
 author: mayo
-excerpt: 'Collections (comme Vec), itérateurs (into_iter, collect) et concepts associés'
+excerpt: >-
+  into_iter(), iter() et iter_mut() diffèrent par ce qu'ils cèdent : la valeur, une
+  référence partagée ou une référence exclusive.
 tags:
   - rust
   - iterators
   - collections
-  - 
   - ownership
+---
 
 # Quelles sont les différences entre into_iter(), iter() et iter_mut() ?
 

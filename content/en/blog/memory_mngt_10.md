@@ -5,7 +5,9 @@ slug: cow-copy-on-write-rust
 locale: en
 date: '2025-07-30'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Cow<'a, B> lets a function borrow when it can and allocate only when it must.
+  How copy-on-write works and when it pays for itself.
 
 tags:
   - rust

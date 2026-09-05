@@ -5,7 +5,9 @@ locale: fr
 slug: closure-parameter-rust-fr
 date: '2025-11-06'
 author: mayo
-excerpt: 'Functions et closures en Rust, couvrant ownership, traits, lifetimes'
+excerpt: >-
+  Prendre et retourner des closures : quand impl Fn suffit, quand il faut
+  Box<dyn Fn>, et ce que chaque choix coûte au point d'appel.
 tags:
   - rust
   - closures

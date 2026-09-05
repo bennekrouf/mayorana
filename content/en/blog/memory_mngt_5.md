@@ -5,7 +5,9 @@ slug: dangling-pointer-rust
 locale: en
 date: '2025-08-03'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  Why a dangling pointer is a compile error in Rust rather than a crash in
+  production, and how lifetimes make that check possible.
 
 tags:
   - rust

@@ -5,7 +5,9 @@ slug: borrowing-rules-rust
 locale: en
 date: '2025-08-10'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  The two borrowing rules, why exclusivity is the one that matters, and what the
+  borrow checker actually rejects.
 
 tags:
   - rust

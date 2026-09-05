@@ -5,7 +5,9 @@ slug: stack-heap-allocation-rust-fr
 locale: fr
 date: '2025-10-01'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Ce qui décide réellement qu'une valeur atterrit sur la stack ou sur le heap en
+  Rust, et ce que chaque choix coûte à l'exécution.
 
 tags:
   - rust

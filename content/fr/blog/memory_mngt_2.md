@@ -3,8 +3,10 @@ id: memory-safety-rust
 title: Comment Rust assure la sécurité mémoire sans garbage collector ?
 slug: memory-safety-rust
 author: mayo
+excerpt: >-
+  Ownership, borrowing et lifetimes donnent à Rust la sécurité mémoire à la
+  compilation, sans collecteur et sans pauses à budgéter.
 locale: fr
-excerpt: Mémoire et chaînes de caractères en Rust
 
 tags:
   - rust

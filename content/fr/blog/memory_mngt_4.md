@@ -5,7 +5,9 @@ slug: ownership-safety-rust-fr
 locale: fr
 date: '2025-11-26'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  Comment les règles d'ownership ferment la porte aux fuites mémoire et aux data
+  races avant même l'exécution — et où elles s'arrêtent.
 tags:
   - rust
   - memory

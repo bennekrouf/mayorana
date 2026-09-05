@@ -5,7 +5,9 @@ slug: ownership-safety-rust
 locale: en
 date: '2025-08-02'
 author: mayo
-excerpt: Rust memory and string
+excerpt: >-
+  How the ownership rules close off memory leaks and data races before the
+  program ever runs, and where they stop short.
 
 tags:
   - rust

@@ -79,6 +79,7 @@ async function generateBlogDataForLocale(locale) {
     return { posts: 0, categories: 0 };
   }
 
+  const skipped = [];
   const fileNames = fs.readdirSync(postsDirectory);
   const postsData = fileNames
     .filter(fileName => fileName.endsWith('.md'))
@@ -89,6 +90,10 @@ async function generateBlogDataForLocale(locale) {
         const { data, content } = matter(fileContents);
 
         if (!data.title) {
+          // A missing title almost always means malformed front matter (an
+          // unterminated `---` block parses as no data at all), which would
+          // otherwise drop the post from the site with no visible failure.
+          skipped.push(fileName);
           console.error(`❌ Missing title in ${fileName}, skipping...`);
           return null;
         }
@@ -132,6 +137,13 @@ async function generateBlogDataForLocale(locale) {
     })
     .filter(post => post !== null)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  if (skipped.length > 0) {
+    throw new Error(
+      `${locale}: ${skipped.length} post(s) could not be parsed and would be ` +
+      `missing from the site: ${skipped.join(', ')}`
+    );
+  }
 
   // Write the posts data
   fs.writeFileSync(outputPath, JSON.stringify(postsData, null, 2));

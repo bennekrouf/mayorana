@@ -5,7 +5,9 @@ slug: box-pointer-rust-fr
 locale: fr
 date: '2025-11-27'
 author: mayo
-excerpt: Rust memory et string
+excerpt: >-
+  À quoi sert Box<T>, ce que coûte l'indirection supplémentaire, et quand
+  l'allocation sur le heap est un vrai choix plutôt qu'un réflexe.
 tags:
   - rust
   - memory
