@@ -238,13 +238,14 @@ It is more readable and safer than scattering `if` checks throughout your code.
 
 ## Key Takeaways
 
-✅ `value.clamp(min, max)` bounds a value in one call — no manual `if` logic needed.
+`value.clamp(min, max)` bounds a value in one call — no manual `if` logic needed.
 
-✅ Available in Rust's standard library since version 1.50 for both integers and floats.
+Available in Rust's standard library since version 1.50 for both integers and floats.
 
-✅ C++ gained the equivalent in C++17; JavaScript and C still require manual implementations.
+C++ gained the equivalent in C++17; JavaScript and C still require manual implementations.
 
-🚫 Do not confuse `clamp` with `saturating_add` / `saturating_sub` — those prevent integer overflow at type boundaries, not arbitrary custom bounds.
+Do not confuse `clamp` with `saturating_add` / `saturating_sub` — those prevent integer overflow at type boundaries, not arbitrary custom bounds.
 
-**Thought Experiment**: What happens if you call `value.clamp(max, min)` — with `min` and `max` swapped?
-**Answer**: Rust panics in debug mode (`min > max` is explicitly checked). Always ensure `min ≤ max`.
+Getting the arguments backwards — `value.clamp(max, min)` — panics. `clamp` asserts
+`min <= max` rather than quietly picking one, which is the right call but does mean a swapped
+pair is a runtime failure, not a compile-time one.

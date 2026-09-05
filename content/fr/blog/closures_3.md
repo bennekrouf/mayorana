@@ -528,11 +528,11 @@ fn benchmark_dispatch() {
 
 ## Points Clés
 
-✅ **Paramètre** : Utilise les generics (`F: Fn(...)`) pour flexibilité et performance.  
-✅ **Type de Retour** :  
+**Paramètre** : Utilise les generics (`F: Fn(...)`) pour flexibilité et performance.  
+**Type de Retour** :  
 - `impl Fn` pour static dispatch (rapide, type fixe).  
 - `Box<dyn Fn>` pour dynamic dispatch (flexible, types multiples).  
-🚀 Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
+Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
 ### Règles de Décision
 
@@ -542,8 +542,7 @@ fn benchmark_dispatch() {
 4. **Flexibilité dynamique** → `Box<dyn Fn>`
 5. **Storage dans collections** → `Box<dyn Fn>`
 
-**Essaie Ceci** : Que se passe-t-il si tu retournes une closure `FnOnce` ?  
-**Réponse** : C'est permis, mais l'appelant ne peut l'invoquer qu'une fois !
+Retourner une `FnOnce` est permis — l'appelant n'a simplement qu'une seule occasion de l'appeler.
 
 ## Exemple Pratique Complet
 

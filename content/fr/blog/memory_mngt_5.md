@@ -183,7 +183,7 @@ fn main() {
 
 ## Points Clés
 
-✅ Le compilateur de Rust garantit :
+Le compilateur de Rust garantit :
 - Pas de références vers mémoire libérée.
 - Pas de comportement indéfini depuis dangling pointers.
 - Sécurité sans overhead runtime.

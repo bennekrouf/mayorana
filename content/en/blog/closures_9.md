@@ -237,10 +237,9 @@ Choosing `Fn`, `FnMut` or `FnOnce` for the stored field is not a local decision 
 
 ## Key Takeaways
 
-✅ Generic structs: Best for performance and static dispatch.
-✅ Trait objects: Use when storing heterogeneous closures.
-✅ Lifetimes: Required if the closure captures references.
+Generic structs: Best for performance and static dispatch.
+Trait objects: Use when storing heterogeneous closures.
+Lifetimes: Required if the closure captures references.
 
-**Try This**: What happens if a closure captures a &mut reference and is stored in a struct?
-
-**Answer**: The struct must be mut, and the closure must implement FnMut!
+Store a closure that captured `&mut` in a struct and the mutability propagates outward: the
+struct binding has to be `mut` too, and the field's bound has to be `FnMut`.

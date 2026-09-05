@@ -173,16 +173,16 @@ Ce que le checker compare n'est pas *l'existence* des deux emprunts, mais le che
 
 ## Points Clés
 
-✅ **Emprunts immutables (`&T`)** :
+**Emprunts immutables (`&T`)** :
 - Plusieurs autorisés, mais pas de mutation.
 
-✅ **Emprunts mutables (`&mut T`)** :
+**Emprunts mutables (`&mut T`)** :
 - Un seul autorisé, accès exclusif.
 
-🚫 **Violations attrapées au moment de la compilation** : Pas d'overhead runtime.
+**Violations attrapées au moment de la compilation** : Pas d'overhead runtime.
 
 **Impact Réel** : Ces règles permettent la concurrence sans peur, comme vu dans les crates comme `Rayon` pour l'itération parallèle.
 
-**Expérimente** : Essaie de créer une fonction qui prend `&mut T` et appelle-la deux fois avec les mêmes données.
-
-**Réponse** : Le borrow checker ne le permettra pas sauf si le scope du premier emprunt se termine, prévenant les emprunts mutables qui se chevauchent.
+Écris une fonction qui prend `&mut T` et appelle-la deux fois sur la même valeur. Ça compile —
+mais seulement parce que le premier emprunt se termine à la fin de l'appel. Garde cet emprunt
+dans une variable qui traverse les deux appels et tu verras la vraie erreur.

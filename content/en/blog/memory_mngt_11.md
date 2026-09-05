@@ -222,12 +222,12 @@ unsafe impl<#[may_dangle] T> Drop for MyBox<T> {
 
 ## Key Takeaways
 
-✅ **Use `Drop` for**:
+**Use `Drop` for**:
 - Resource cleanup (files, locks, memory).
 - FFI/safety-critical guarantees.
 - Debugging/profiling.
 
-🚫 **Avoid**:
+**Avoid**:
 - Reimplementing logic provided by Rust (e.g., `Box`’s deallocation).
 - Complex operations that could panic.
 
@@ -240,5 +240,6 @@ unsafe impl<#[may_dangle] T> Drop for MyBox<T> {
 }  // `guard` dropped here → lock released
 ```
 
-**Experiment**: What happens if you call `mem::forget` on a type with `Drop`?  
-**Answer**: The destructor won’t run, potentially causing a resource leak (e.g., unclosed files or unfreed memory).
+`mem::forget` on a type with a `Drop` impl skips the destructor entirely. That is safe Rust —
+leaking is not unsoundness — but it means an unclosed file or an unfreed buffer, so it's a
+deliberate tool rather than an escape hatch.

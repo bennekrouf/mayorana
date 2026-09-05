@@ -213,14 +213,13 @@ assert_eq!(vec, ["fresh", "new", "old"]);
 
 ## Key Takeaways
 
-- ✅ **drain()**: Use when you need to process removed elements or batch-delete.
-- ✅ **truncate()/clear()**: Use for fast bulk removal without processing.
-- 🚀 **All preserve capacity**: No reallocation overhead for future ops.
+- **drain()**: Use when you need to process removed elements or batch-delete.
+- **truncate()/clear()**: Use for fast bulk removal without processing.
+- **All preserve capacity**: No reallocation overhead for future ops.
 
 ## Real-World Example
 
 In a game engine, `drain()` could efficiently remove expired entities while allowing cleanup logic (e.g., saving state).
 
-**Try This**: What happens if you `drain()` but don't consume the iterator?
-
-**Answer**: The elements are still removed when the Drain iterator is dropped (due to its Drop impl).
+One detail that surprises people: dropping a `Drain` without consuming it still removes the
+elements. The removal lives in `Drain`'s `Drop` impl, not in the iteration.

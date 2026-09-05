@@ -223,11 +223,10 @@ fn main() {
 
 ## Key Takeaways
 
-✅ **Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  
-✅ **Return Type**:  
+**Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  
+**Return Type**:  
 - `impl Fn` for static dispatch (fast, fixed type).  
 - `Box<dyn Fn>` for dynamic dispatch (flexible, multiple types).  
-🚀 Prefer `impl Fn` unless you need runtime polymorphism.
+Prefer `impl Fn` unless you need runtime polymorphism.
 
-**Try This**: What happens if you return a `FnOnce` closure?  
-**Answer**: It’s allowed, but the caller can only invoke it once!
+Returning a `FnOnce` is allowed — the caller just gets one shot at calling it.

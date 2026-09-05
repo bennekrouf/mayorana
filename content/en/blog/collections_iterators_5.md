@@ -202,11 +202,11 @@ assert_eq!(vec, [1, 2, 3]); // Order changed
 
 ## Key Takeaways
 
-✅ **Use HashSet if**:
+**Use HashSet if**:
 - Order must be preserved.
 - You can tolerate O(n) space.
 
-✅ **Use Sort + Dedup if**:
+**Use Sort + Dedup if**:
 - Order doesn't matter.
 - Memory is tight (e.g., embedded systems).
 
@@ -214,6 +214,5 @@ assert_eq!(vec, [1, 2, 3]); // Order changed
 - For no_std environments, use a BTreeSet (slower but avoids hashing).
 - Use itertools::unique for iterator-based deduplication.
 
-**Try This**: What happens if T is Clone but not Hash?
-
-**Answer**: Use Vec::dedup_by with a custom equality check (no hashing).
+When `T` is `Clone` but not `Hash`, the `HashSet` route is closed. `Vec::dedup_by` with your
+own equality check still works, at the cost of needing the input sorted first.

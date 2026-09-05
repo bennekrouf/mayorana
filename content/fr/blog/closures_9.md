@@ -804,9 +804,9 @@ fn mutable_example() {
 
 ## Points Clés
 
-✅ **Structs génériques : Meilleures pour performance et static dispatch.**  
-✅ **Trait objects : Utilise quand tu stockes des closures hétérogènes.**  
-✅ **Lifetimes : Requis si la closure capture des références.**
+**Structs génériques : Meilleures pour performance et static dispatch.**  
+**Trait objects : Utilise quand tu stockes des closures hétérogènes.**  
+**Lifetimes : Requis si la closure capture des références.**
 
 ### Règles Pratiques
 
@@ -816,8 +816,8 @@ fn mutable_example() {
 4. **Mutable state** → FnMut avec &mut self
 5. **One-time use** → FnOnce avec Option<F>
 
-**Essaie Ceci** : Que se passe-t-il si une closure capture une référence `&mut` et est stockée dans une struct ?  
-**Réponse** : La struct doit être `mut`, et la closure doit implémenter `FnMut` !
+Stocke dans une struct une closure qui a capturé `&mut` et la mutabilité remonte : le binding de
+la struct doit être `mut` lui aussi, et la borne du champ doit être `FnMut`.
 
 ## Exemple Pratique Complet
 

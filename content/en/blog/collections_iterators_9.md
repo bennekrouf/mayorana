@@ -210,16 +210,15 @@ let flat: Vec<i32> = slices.iter().flatten().copied().collect();
 
 ## Key Takeaways
 
-✅ **Use .flatten() for**:
+**Use .flatten() for**:
 - Clean, idiomatic code.
 - Chaining with other iterator adapters (e.g., `.filter()`).
 
-✅ **Use manual extend for**:
+**Use manual extend for**:
 - Large datasets where pre-allocation matters.
 - Cases where you already know the total length.
 
-🚀 **Always pre-allocate for manual concatenation of large collections!**
+**Always pre-allocate for manual concatenation of large collections!**
 
-**Try This**: How would you flatten a `Vec<Vec<T>>` while removing duplicates?
-
-**Answer**: Combine `.flatten()` with `.collect::<HashSet<_>>()`.
+To flatten and deduplicate in one pass, collect into a `HashSet` instead of a `Vec` —
+`.flatten().collect::<HashSet<_>>()` — and accept that you lose the ordering.

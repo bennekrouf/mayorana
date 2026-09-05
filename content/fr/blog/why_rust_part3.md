@@ -312,18 +312,18 @@ fn main() {
 ## La Garantie Rust
 
 ### Ce que Rust Élimine
-✅ **Memory leaks** - cleanup automatique  
-✅ **Use-after-free** - tracking d'ownership  
-✅ **Double-free** - ownership unique  
-✅ **Dangling pointers** - analyse des lifetimes  
-✅ **Buffer overflows** - bounds checking  
-✅ **Data races** - règles de borrowing  
-✅ **Iterator invalidation** - vérifications compile-time  
+**Memory leaks** - cleanup automatique  
+**Use-after-free** - tracking d'ownership  
+**Double-free** - ownership unique  
+**Dangling pointers** - analyse des lifetimes  
+**Buffer overflows** - bounds checking  
+**Data races** - règles de borrowing  
+**Iterator invalidation** - vérifications compile-time  
 
 ### Ce que tu obtiens
-🚀 **Performance niveau C**  
-🛡️ **Memory safety**  
-⚡ **Zero runtime overhead**  
+**Performance niveau C**  
+**Memory safety**  
+**Zero runtime overhead**  
 🔒 **Thread safety**  
 🔧 **Capacités systems programming**  
 
@@ -408,11 +408,11 @@ Compilateur intelligent → Système ownership → Code rapide + sûr
 
 🦀 **Rust réunit le meilleur des deux mondes :**
 
-✅ **Performance prévisible** - pas de pauses GC, pas d'overhead runtime  
-✅ **Sécurité mémoire** - classes entières de bugs éliminées au moment de la compilation  
-✅ **Concurrence en mode zen** - data races préventées par le type system  
-✅ **Programmation systéme** - contrôle bas niveau quand nécessaire  
-✅ **Ergonomie moderne** - type system puissant, gestion de packages grâce à cargo  
+**Performance prévisible** - pas de pauses GC, pas d'overhead runtime  
+**Sécurité mémoire** - classes entières de bugs éliminées au moment de la compilation  
+**Concurrence en mode zen** - data races préventées par le type system  
+**Programmation systéme** - contrôle bas niveau quand nécessaire  
+**Ergonomie moderne** - type system puissant, gestion de packages grâce à cargo  
 
 ---
 

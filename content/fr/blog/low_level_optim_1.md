@@ -410,9 +410,10 @@ mod layout_tests {
 
 ## Points Clés à Retenir
 
-✅ **`repr(C)`** : Choisis pour du code critique en performance où l'efficacité cache compte  
-✅ **`repr(packed)`** : Utilise pour des scénarios contraints en mémoire avec accès peu fréquent  
-🚀 Profile les performances cache avant et après pour valider les optimisations
+**`repr(C)`** : Choisis pour du code critique en performance où l'efficacité cache compte  
+**`repr(packed)`** : Utilise pour des scénarios contraints en mémoire avec accès peu fréquent  
+Profile les performances cache avant et après pour valider les optimisations
 
-**Essaie ça :** Que se passe-t-il si tu accèdes à un champ dans une struct `repr(packed)` via un pointeur brut ?  
-**Réponse :** L'accès non-aligné via des pointeurs bruts peut causer des panics sur des architectures strictes ou des pénalités de performance—mesure toujours sur ta plateforme cible !
+Lire un champ `repr(packed)` via un pointeur brut, c'est là que ça cesse d'être gratuit. Sur x86
+tu paies une pénalité ; sur les architectures qui exigent l'alignement, tu prends une faute.
+Mesure sur la cible que tu livres, pas sur ton portable.

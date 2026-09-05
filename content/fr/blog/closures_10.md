@@ -421,12 +421,12 @@ fn analyze_dynamic() {
 
 ## Points Clés
 
-✅ **Choisis `impl Fn()` pour** :
+**Choisis `impl Fn()` pour** :
 - Code sensible aux performances (ex : chaînes d'iterators).
 - Type de closure unique (ex : factory functions).
 - Zero-cost abstractions.
 
-✅ **Choisis `Box<dyn Fn()>` pour** :
+**Choisis `Box<dyn Fn()>` pour** :
 - Comportement dynamique (ex : event handlers, plugins).
 - Stockage de types de closures mixtes (ex : `Vec<Box<dyn Fn()>>`).
 - Flexibilité runtime.

@@ -699,16 +699,16 @@ fn process_stream<T>(stream: impl Iterator<Item = T>) -> Vec<T> {
 
 ## Points Clés à Retenir
 
-✅ **Utilise with_capacity() pour** :
+**Utilise with_capacity() pour** :
 - Nombres d'éléments prévisibles.
 - Scénarios haute performance.
 
-✅ **Utilise Vec::new() pour** :
+**Utilise Vec::new() pour** :
 - Tailles petites/inconnues ou prototypage.
 
-🚀 **Évite les réallocations inutiles**—elles dominent le runtime pour les gros Vecs.
+**Évite les réallocations inutiles**—elles dominent le runtime pour les gros Vecs.
 
-✅ **Techniques avancées** :
+**Techniques avancées** :
 - `extend()` pour les itérateurs
 - `reserve()` pour croissance par batches  
 - `shrink_to_fit()` pour optimiser la mémoire
@@ -718,5 +718,5 @@ fn process_stream<T>(stream: impl Iterator<Item = T>) -> Vec<T> {
 
 Dans la crate regex, la pré-allocation est utilisée pour les groupes de capture pour éviter les réallocations pendant le pattern matching. Dans serde_json, les buffers de sérialisation sont pré-alloués basés sur la taille estimée du JSON de sortie.
 
-**Essaie ça :** Que se passe-t-il si tu pré-alloues trop (ex : with_capacity(1000) mais utilises seulement 10 éléments) ?  
-**Réponse :** Mémoire gaspillée. Utilise `shrink_to_fit()` pour libérer la capacité inutilisée, mais attention au coût de la réallocation !
+Sur-réserver a un coût aussi. `with_capacity(1000)` pour dix éléments retient tout le bloc
+jusqu'au drop du `Vec` ; `shrink_to_fit()` le rend, au prix d'une copie supplémentaire.

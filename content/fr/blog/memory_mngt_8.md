@@ -236,18 +236,18 @@ fn return_cow(is_heap: bool) -> Cow<'static, str> {
 
 ## Points Clés
 
-✅ **String literals** :
+**String literals** :
 - Vivent en mémoire static (partie du binaire).
 - Sont immutables et zero-cost.
 - Ont un lifetime `'static`.
 
-🚀 **Quand les utiliser** :
+**Quand les utiliser** :
 - Pour strings fixes, read-only (ex : messages, constantes).
 - Pour éviter allocations dans APIs de fonction (`&str` plutôt que `&String`).
 
-✅ **Ne retourne jamais `&str` emprunté d'un `String` local**—c'est impossible en Rust safe.
+**Ne retourne jamais `&str` emprunté d'un `String` local**—c'est impossible en Rust safe.
 
-✅ **Solutions** :
+**Solutions** :
 - Retourner `String` (transfert d'ownership).
 - Utiliser `&'static str` (literals seulement).
 - Utiliser `Cow<str>` pour choix dynamiques.
@@ -259,6 +259,5 @@ let slice = &s[..]; // Pointe vers heap, pas mémoire static !
 ```
 Le compilateur peut élider les copies si le contenu est connu statiquement.
 
-**Expérimente** : Que se passe-t-il si tu essaies de retourner `&s[..]` au lieu de `&s` ?
-
-**Réponse** : Non—c'est le même problème ! La slice pointe encore vers le `String` condamné.
+Remplacer `&s` par `&s[..]` n'aide pas. La slice pointe toujours dans le même `String` qui est sur
+le point d'être libéré ; tu as changé le type, pas la lifetime.

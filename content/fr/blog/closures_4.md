@@ -578,12 +578,12 @@ fn closure_sizes() {
 
 ## Points Clés
 
-✅ **Utilise `move` closures quand** :
+**Utilise `move` closures quand** :
 - La closure survit à son environnement (ex : threads).
 - Tu as besoin d'ownership explicite pour éviter les problèmes du borrow checker.
 - Tu veux découpler la closure de son environnement d'origine.
 
-✅ **Evite `move` pour** :
+**Evite `move` pour** :
 - Closures locales et courtes qui n'échappent pas leur scope.
 - Types `Copy` où l'emprunt est suffisant.
 - Quand tu as encore besoin des valeurs originales après.
@@ -596,8 +596,9 @@ fn closure_sizes() {
 4. **Éviter borrow checker conflicts** → `move` peut aider
 5. **Performance critique** → Éviter `move` inutile
 
-**Essaie Ceci** : Que se passe-t-il si tu utilises `move` avec une closure qui capture une mutable reference (`&mut T`) ?  
-**Réponse** : La référence elle-même est moved (mais pas les données qu'elle pointe). C'est rarement utile et peut mener à des erreurs de lifetime !
+`move` sur une closure qui capture `&mut T` déplace la *référence*, pas les données derrière elle.
+Ce n'est presque jamais ce que tu voulais, et ça ressort en général plus loin sous forme
+d'erreur de lifetime plutôt qu'à la closure elle-même.
 
 ## Exemple Pratique Complet
 

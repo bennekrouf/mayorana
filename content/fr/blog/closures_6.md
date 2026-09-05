@@ -610,10 +610,10 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 
 ## Points Clés
 
-✅ **Les HOFs permettent des patterns flexibles et réutilisables** en traitant les functions comme des valeurs de première classe.  
-✅ **Utilise `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
-✅ **Utilise `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
-🚀 **Utilise `move`** pour assurer que les closures possèdent les données capturées quand retournées.
+**Les HOFs permettent des patterns flexibles et réutilisables** en traitant les functions comme des valeurs de première classe.  
+**Utilise `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
+**Utilise `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
+**Utilise `move`** pour assurer que les closures possèdent les données capturées quand retournées.
 
 ### Règles de Décision
 
@@ -625,8 +625,8 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 
 **Exemple Réel** : Les HOFs sont centrales à l'API iterator de Rust (`map`, `filter`) et aux frameworks async comme `tokio`, où les closures définissent le comportement des tâches.
 
-**Expérimente** : Modifie `make_adder` pour retourner une closure qui multiplie au lieu d'additionner.  
-**Réponse** : Le compilateur l'accepte parfaitement, car les deux closures implémentent `Fn(i32) -> i32`, maintenant la cohérence de type.
+Change `make_adder` pour multiplier au lieu d'additionner : rien d'autre ne bouge. Les deux
+closures sont des `Fn(i32) -> i32`, et c'est tout le contrat que voit l'appelant.
 
 ## Exemple Pratique Complet
 

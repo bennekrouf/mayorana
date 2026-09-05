@@ -209,9 +209,9 @@ Le choix entre `dyn` et les génériques représente un compromis classique :
 - **`dyn`** : Flexibilité maximale, léger overhead
 
 ## Points Clés
-✅ `dyn` signifie "dynamic" et permet le polymorphisme à l'exécution via les vtables
-✅ L'opposé de `dyn` est le polymorphisme statique (génériques, impl Trait)
-✅ `Vec<dyn Trait>` est impossible car `dyn Trait` n'a pas de taille connue à la compilation
-✅ Utilisez `Box<dyn Trait>`, `&dyn Trait` ou des enums comme alternatives pratiques
+`dyn` signifie "dynamic" et permet le polymorphisme à l'exécution via les vtables
+L'opposé de `dyn` est le polymorphisme statique (génériques, impl Trait)
+`Vec<dyn Trait>` est impossible car `dyn Trait` n'a pas de taille connue à la compilation
+Utilisez `Box<dyn Trait>`, `&dyn Trait` ou des enums comme alternatives pratiques
 
 **Impact Réel** : Cette compréhension permet d'architecturer des systèmes Rust efficaces qui utilisent le bon type de polymorphisme selon les besoins - statique pour la performance critique, dynamique pour l'extensibilité et l'abstraction runtime.

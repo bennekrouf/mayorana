@@ -209,9 +209,10 @@ Every `process` call goes through a vtable, preventing loop fusion and adding in
 
 ## Key Takeaways
 
-✅ **Rust traits**: Compile-time resolution, zero-cost abstraction, static dispatch by default  
-✅ **Java/C# interfaces**: Runtime polymorphism, vtable overhead, dynamic by nature  
-🚀 Use traits for performance-critical code where static dispatch eliminates overhead
+**Rust traits**: Compile-time resolution, zero-cost abstraction, static dispatch by default  
+**Java/C# interfaces**: Runtime polymorphism, vtable overhead, dynamic by nature  
+Use traits for performance-critical code where static dispatch eliminates overhead
 
-**Try This:** What happens if you use `&dyn PacketHandler` instead of generics?  
-**Answer:** You get dynamic dispatch with vtable overhead—measure the performance difference in your hot paths!
+Switching to `&dyn PacketHandler` buys you a smaller binary and one implementation of the
+function, and costs you an indirect call the optimizer can't see through. Whether that
+matters depends entirely on how hot the path is — so measure before you decide.

@@ -620,9 +620,9 @@ fn performance_considerations() {
 
 ## Points Clés
 
-✅ **Utilise `FnMut`** pour les closures qui mutent l'état à travers plusieurs appels.  
-✅ **Marque les closures et paramètres comme `mut`** pour permettre la mutation.  
-✅ **Préfére les closures simples** pour l'état basique ; utilise les structs pour la gestion d'état complexe.
+**Utilise `FnMut`** pour les closures qui mutent l'état à travers plusieurs appels.  
+**Marque les closures et paramètres comme `mut`** pour permettre la mutation.  
+**Préfére les closures simples** pour l'état basique ; utilise les structs pour la gestion d'état complexe.
 
 ### Règles de Décision
 
@@ -634,8 +634,8 @@ fn performance_considerations() {
 
 **Exemple Réel** : Les closures stateful sont communes dans les event loops ou tâches async (ex : `tokio`) où une closure maintient des compteurs ou buffers à travers les itérations.
 
-**Expérimente** : Essaie de passer une closure non-`mut` à `call_repeatedly`.  
-**Réponse** : Erreur de compilation ! La closure doit être mutable pour implémenter `FnMut`.
+Essaie de passer une closure non-`mut` à `call_repeatedly` : ça ne compile pas — appeler à
+travers `FnMut` exige un binding mutable.
 
 ## Exemple Pratique Complet
 

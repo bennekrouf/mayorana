@@ -186,10 +186,10 @@ let vec_again = Vec::from(boxed);                // Copie les données
 
 ## Points clés à retenir
 
-✅ Utilisez Vec pour des séquences mutables et redimensionnables.
-✅ Utilisez Box<[T]> pour du stockage immuable et efficace en mémoire.
-⚡ Convertissez facilement de Vec vers Box<[T]> quand vous avez fini de modifier.
+Utilisez Vec pour des séquences mutables et redimensionnables.
+Utilisez Box<[T]> pour du stockage immuable et efficace en mémoire.
+Convertissez facilement de Vec vers Box<[T]> quand vous avez fini de modifier.
 
-**Essayez ceci** : Que se passe-t-il si vous convertissez un Vec avec de la capacité libre en Box<[T]> ?
-
-**Réponse** : `into_boxed_slice()` réduit l'allocation à la taille exacte (pas de capacité inutilisée).
+C'est sur un `Vec` qui traîne de la capacité libre que la conversion paie vraiment :
+`into_boxed_slice()` réalloue à la longueur exacte, et le rab retourne à l'allocateur au lieu
+d'être transporté.

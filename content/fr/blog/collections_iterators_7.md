@@ -217,14 +217,13 @@ assert_eq!(vec, ["fresh", "new", "old"]);
 
 ## Points clés à retenir
 
-- ✅ **drain()** : À utiliser quand vous devez traiter les éléments supprimés ou supprimer par lots.
-- ✅ **truncate()/clear()** : À utiliser pour une suppression en masse rapide sans traitement.
-- 🚀 **Tous préservent la capacité** : Pas de surcoût de réallocation pour les opérations futures.
+- **drain()** : À utiliser quand vous devez traiter les éléments supprimés ou supprimer par lots.
+- **truncate()/clear()** : À utiliser pour une suppression en masse rapide sans traitement.
+- **Tous préservent la capacité** : Pas de surcoût de réallocation pour les opérations futures.
 
 ## Exemple concret
 
 Dans un moteur de jeu, `drain()` pourrait efficacement supprimer les entités expirées tout en permettant une logique de nettoyage (par exemple, sauvegarder l'état).
 
-**Essayez ceci** : Que se passe-t-il si vous utilisez `drain()` mais ne consommez pas l'itérateur ?
-
-**Réponse** : Les éléments sont quand même supprimés lorsque l'itérateur Drain est libéré (grâce à son implémentation de Drop).
+Un détail qui surprend : libérer un `Drain` sans le consommer supprime quand même les éléments.
+La suppression vit dans le `Drop` de `Drain`, pas dans l'itération.

@@ -294,9 +294,9 @@ fn main() {
 
 ## Points Clés à Retenir
 
-✅ **Object Safety** : Élimine les generics, `Self` returns et méthodes statiques pour activer `dyn Trait`  
-✅ **Factory Pattern** : Utilise des fonctions factory au lieu de méthodes `new()` statiques  
-✅ **Compromis** : Moins de flexibilité de type contre la capacité de dispatch dynamique  
-🚀 Essentiels pour les systèmes de plugins où les types sont inconnus pendant la compilation
+**Object Safety** : Élimine les generics, `Self` returns et méthodes statiques pour activer `dyn Trait`  
+**Factory Pattern** : Utilise des fonctions factory au lieu de méthodes `new()` statiques  
+**Compromis** : Moins de flexibilité de type contre la capacité de dispatch dynamique  
+Essentiels pour les systèmes de plugins où les types sont inconnus pendant la compilation
 
 **Astuce** : Utilise `cargo check` pour vérifier rapidement si tes traits sont object-safe avant d'essayer `dyn Trait` !

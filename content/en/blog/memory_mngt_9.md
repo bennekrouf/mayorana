@@ -180,5 +180,6 @@ What the checker actually compares is not *whether* both borrows exist, but whet
 
 **Real-World Impact**: These rules enable fearless concurrency, as seen in crates like `Rayon` for parallel iteration.
 
-**Experiment**: Try creating a function that takes `&mut T` and call it twice with the same data.  
-**Answer**: The borrow checker won’t allow it unless the first borrow’s scope ends, preventing overlapping mutable borrows.
+Write a function taking `&mut T` and call it twice on the same value. It compiles — but only
+because the first borrow ends at the end of the call. Hold that borrow in a variable across
+both calls and you'll see the real error.

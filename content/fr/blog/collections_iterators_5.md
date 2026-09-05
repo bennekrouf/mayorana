@@ -207,11 +207,11 @@ assert_eq!(vec, [1, 2, 3]); // Ordre modifié
 
 ## Points clés
 
-✅ **Utilisez HashSet si** :
+**Utilisez HashSet si** :
 - L'ordre doit être préservé.
 - Vous pouvez tolérer un espace O(n).
 
-✅ **Utilisez Tri + Dedup si** :
+**Utilisez Tri + Dedup si** :
 - L'ordre n'a pas d'importance.
 - La mémoire est limitée (ex : systèmes embarqués).
 
@@ -219,6 +219,5 @@ assert_eq!(vec, [1, 2, 3]); // Ordre modifié
 - Pour les environnements no_std, utilisez un BTreeSet (plus lent mais évite le hachage).
 - Utilisez itertools::unique pour la déduplication basée sur les iterators.
 
-**Essayez ceci** : Que se passe-t-il si T est Clone mais pas Hash ?
-
-**Réponse** : Utilisez Vec::dedup_by avec une vérification d'égalité personnalisée (sans hachage).
+Quand `T` est `Clone` mais pas `Hash`, la voie du `HashSet` est fermée. `Vec::dedup_by` avec
+votre propre test d'égalité marche encore, à condition de trier l'entrée d'abord.

@@ -213,16 +213,15 @@ let flat: Vec<i32> = slices.iter().flatten().copied().collect();
 
 ## Points clés à retenir
 
-✅ **Utilisez .flatten() pour** :
+**Utilisez .flatten() pour** :
 - Un code propre et idiomatique.
 - Le chaînage avec d'autres adaptateurs d'itérateurs (ex: `.filter()`).
 
-✅ **Utilisez extend manuel pour** :
+**Utilisez extend manuel pour** :
 - Les grands jeux de données où la pré-allocation est importante.
 - Les cas où vous connaissez déjà la longueur totale.
 
-🚀 **Toujours pré-allouer pour la concaténation manuelle de grandes collections !**
+**Toujours pré-allouer pour la concaténation manuelle de grandes collections !**
 
-**Essayez ceci** : Comment aplatiriez-vous un `Vec<Vec<T>>` tout en supprimant les doublons ?
-
-**Réponse** : Combinez `.flatten()` avec `.collect::<HashSet<_>>()`.
+Pour aplatir et dédupliquer en une passe, collectez dans un `HashSet` plutôt que dans un `Vec` —
+`.flatten().collect::<HashSet<_>>()` — en acceptant de perdre l'ordre.

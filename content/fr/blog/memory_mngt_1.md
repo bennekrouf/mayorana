@@ -231,10 +231,9 @@ fn process_good(s: &str) -> &str {
 
 ## Points Clés
 
-- ✅ **`String`** : Owned, mutable, heap-allocated  
-- ✅ **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
-🚀 Préfère `&str` pour les paramètres de fonction sauf si tu as besoin d'ownership ou mutation
+- **`String`** : Owned, mutable, heap-allocated  
+- **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
+Préfère `&str` pour les paramètres de fonction sauf si tu as besoin d'ownership ou mutation
 
-**Essaie Ceci :** Que se passe-t-il quand tu appelles `.to_string()` sur un string literal vs un `String` ?
-
-**Réponse :** Literal crée une nouvelle allocation heap ; `String` crée un clone des données de la heap existante. Donc les deux allouentde la mémoire, mais la source diffère !
+`.to_string()` alloue dans les deux cas, mais pas pour la même raison : sur un littéral il copie
+depuis les données en lecture seule du binaire, sur un `String` il clone un buffer heap existant.

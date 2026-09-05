@@ -203,19 +203,18 @@ v.extend(0..n);  // Optimized for iterators (avoids bounds checks)
 
 ## Key Takeaways
 
-✅ **Use with_capacity() for**:
+**Use with_capacity() for**:
 - Predictable element counts.
 - High-performance scenarios.
 
-✅ **Use Vec::new() for**:
+**Use Vec::new() for**:
 - Small/unknown sizes or prototyping.
 
-🚀 **Avoid unnecessary reallocations**—they dominate runtime for large Vecs.
+**Avoid unnecessary reallocations**—they dominate runtime for large Vecs.
 
 ## Real-World Impact
 
 In the regex crate, pre-allocation is used for capture groups to avoid reallocations during pattern matching.
 
-**Try This**: What happens if you pre-allocate too much (e.g., with_capacity(1000) but only use 10 elements)?
-
-**Answer**: Wasted memory. Use shrink_to_fit() to release unused capacity.
+Over-reserving has a cost too. `with_capacity(1000)` for ten elements holds the whole block
+until the `Vec` drops; `shrink_to_fit()` gives it back, at the price of one more copy.

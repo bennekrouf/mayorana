@@ -217,7 +217,8 @@ Rust doesn't check for lock order at compile time, but you can use tools like:
 
 ✅ **Rust** gives memory and thread safety, and ownership helps avoid accidental misuse  
 ❌ **Deadlocks** are still possible — Rust doesn’t enforce lock order  
-🚀 Write predictable locking code and test interleavings using tools like `loom`
+Write predictable locking code and test interleavings using tools like `loom`
 
-**Try This:** What happens if two threads try to `lock()` `Mutex<T>`s in different orders?  
-**Answer:** If the acquisition order cycles, your program may hang due to a deadlock. Rust won't stop you—but it makes everything else much safer.
+Two threads locking the same pair of `Mutex<T>`s in opposite orders will eventually hang,
+and Rust will compile it without complaint. That's the boundary of what the type system
+buys you: it rules out data races, not deadlocks.

@@ -208,9 +208,10 @@ If using `repr(packed)` (13 bytes), I'd save 3 bytes per packet, but unaligned `
 
 ## Key Takeaways
 
-✅ **`repr(C)`**: Choose for performance-critical code where cache efficiency matters  
-✅ **`repr(packed)`**: Use for memory-constrained scenarios with infrequent access  
-🚀 Profile cache performance before and after to validate optimizations
+**`repr(C)`**: Choose for performance-critical code where cache efficiency matters  
+**`repr(packed)`**: Use for memory-constrained scenarios with infrequent access  
+Profile cache performance before and after to validate optimizations
 
-**Try This:** What happens if you access a field in a `repr(packed)` struct through a raw pointer?  
-**Answer:** Unaligned access through raw pointers can cause panics on strict architectures or performance penalties—always measure on your target platform!
+Reading a `repr(packed)` field through a raw pointer is where this stops being free. On x86
+you pay a penalty; on architectures that require alignment you get a fault. Measure on the
+target you actually ship to, not on your laptop.

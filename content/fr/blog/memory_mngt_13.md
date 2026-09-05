@@ -230,15 +230,16 @@ Les réemprunts vous offrent la flexibilité de travailler avec plusieurs handle
 
 ## Points clés
 
-✅ `&mut *x` crée une nouvelle référence mutable pointant vers les mêmes données que `x`, sans consommer `x`.
+`&mut *x` crée une nouvelle référence mutable pointant vers les mêmes données que `x`, sans consommer `x`.
 
-✅ Tant que le réemprunt `y` est en vie, `x` est gelé — le borrow checker empêche leur utilisation simultanée.
+Tant que le réemprunt `y` est en vie, `x` est gelé — le borrow checker empêche leur utilisation simultanée.
 
-✅ Dès que `y` sort du scope, le gel est levé et `x` est à nouveau utilisable.
+Dès que `y` sort du scope, le gel est levé et `x` est à nouveau utilisable.
 
-✅ Rust moderne effectue les réemprunts implicitement lors du passage de `&mut T` à des fonctions — vous avez rarement besoin d'écrire `&mut *x` explicitement.
+Rust moderne effectue les réemprunts implicitement lors du passage de `&mut T` à des fonctions — vous avez rarement besoin d'écrire `&mut *x` explicitement.
 
-🚫 Un réemprunt **n'est pas** un clone des données — aucune mémoire n'est copiée. Seule la référence (un pointeur) est dupliquée, avec son lifetime contraint par le borrow checker.
+Un réemprunt **n'est pas** un clone des données — aucune mémoire n'est copiée. Seule la référence (un pointeur) est dupliquée, avec son lifetime contraint par le borrow checker.
 
-**Expérience de pensée** : Que se passe-t-il si vous réempruntez `x` deux fois simultanément dans `y` et `z` ?
-**Réponse** : Le compilateur le rejette. Vous ne pouvez pas avoir deux réemprunts mutables actifs de la même référence en même temps — la même règle qui interdit deux références `&mut` vers les mêmes données en général.
+Réemprunter `x` dans `y` et `z` alors que les deux sont encore vivants est rejeté, et pour la
+raison même qui justifie la règle : deux chemins mutables vivants vers une même valeur, c'est
+exactement ce que l'exclusivité interdit.

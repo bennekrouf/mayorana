@@ -176,7 +176,7 @@ println!("{:?}, {:?}", r1, r2);
 
 ## Points Clés
 
-✅ **L'ownership assure** :
+**L'ownership assure** :
 - Pas de dangling pointers (via lifetimes).
 - Pas de memory leaks (via `Drop`).
 - Pas de data races (via règles de borrowing).

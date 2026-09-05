@@ -446,10 +446,10 @@ fn analyze_closure_trait() {
 
 ## Points Clés
 
-✅ **`Fn`** : Read-only, réutilisable.  
-✅ **`FnMut`** : Mutable, réutilisable.  
-✅ **`FnOnce`** : Owned, usage unique.  
-🚀 `move` force l'ownership mais ne change pas le trait—l'usage détermine le trait.
+**`Fn`** : Read-only, réutilisable.  
+**`FnMut`** : Mutable, réutilisable.  
+**`FnOnce`** : Owned, usage unique.  
+`move` force l'ownership mais ne change pas le trait—l'usage détermine le trait.
 
 ### Règles à Retenir
 
@@ -459,8 +459,8 @@ fn analyze_closure_trait() {
 4. **`move`** : Change le mode de capture, pas nécessairement le trait
 5. **Performance** : Tous les traits sont zero-cost quand possible
 
-**Essaie Ceci :** Que se passe-t-il si une closure capture une mutable reference mais ne la mute pas ?  
-**Réponse :** Elle implémente toujours `FnMut` (puisqu'elle *pourrait* muter), mais Tu peux la passer à une fonction attendant `FnMut`.
+Une closure qui capture `&mut` sans jamais muter n'implémente quand même que `FnMut`. Le trait
+suit ce que la capture *autorise*, pas ce que le corps en fait réellement.
 
 ## Exemples de Débogage Courants
 

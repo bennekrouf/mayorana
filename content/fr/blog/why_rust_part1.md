@@ -217,4 +217,4 @@ Pendant pause GC: 2000ms (40x plus lent!)
 
 **La Question:** Quelles sont les alternatives si on ne veut pas de Garbabe collection ?
 
-**➡️ Voir mon autre post:** "Gestion Manuelle de la Mémoire: Pourquoi C/C++ N'est Pas la Réponse"
+**Voir mon autre post:** "Gestion Manuelle de la Mémoire: Pourquoi C/C++ N'est Pas la Réponse"

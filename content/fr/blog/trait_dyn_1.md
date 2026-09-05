@@ -212,9 +212,10 @@ Chaque appel `process` passe par une vtable, empêchant la fusion de boucle et a
 
 ## Points clés à retenir
 
-✅ **Traits Rust** : Résolution pendant la compilation, abstraction à coût zéro, dispatch statique par défaut  
-✅ **Interfaces Java/C#** : Polymorphisme à l'exécution, overhead vtable, dynamique par nature  
-🚀 Utilise les traits pour du code critique en performance où le dispatch statique élimine l'overhead
+**Traits Rust** : Résolution pendant la compilation, abstraction à coût zéro, dispatch statique par défaut  
+**Interfaces Java/C#** : Polymorphisme à l'exécution, overhead vtable, dynamique par nature  
+Utilise les traits pour du code critique en performance où le dispatch statique élimine l'overhead
 
-**Essaie ça :** Que se passe-t-il si tu utilises `&dyn PacketHandler` au lieu des generics ?  
-**Réponse :** Tu obtiens un dispatch dynamique avec overhead vtable—mesure la différence de performance dans tes chemins chauds !
+Passer à `&dyn PacketHandler` t'achète un binaire plus petit et une seule instance de la fonction,
+et te coûte un appel indirect que l'optimiseur ne traverse pas. Que ça compte ou non dépend
+entièrement de la chaleur du chemin — donc mesure avant de trancher.

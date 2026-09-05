@@ -195,15 +195,15 @@ let arr = Box::new([0u8; 10_000_000]); // Sûr
 
 ## Points Clés
 
-✅ **Utilise `Box<T>` quand tu as besoin** :
+**Utilise `Box<T>` quand tu as besoin** :
 - D'allocation heap pour données larges ou récursives.
 - De trait objects (`dyn Trait`).
 - D'ownership explicite avec pointeur taille fixe.
 
-🚫 **Évite si** :
+**Évite si** :
 - Tu as seulement besoin d'une référence (`&T`).
 - Tu as besoin d'ownership partagé (utilise `Rc` ou `Arc` à la place).
 
-**Expérience de Pensée** : Que se passe-t-il si tu essaies de `Box` une valeur déjà sur le heap ?
-
-**Réponse** : C'est ok—ça ajoute juste une autre indirection de pointeur, car le `Box` pointera vers la nouvelle allocation heap.
+Boxer quelque chose qui vit déjà sur le heap est légal et parfois utile, mais tu achètes une
+seconde indirection — le `Box` pointe vers une nouvelle allocation contenant le handle d'origine,
+pas vers les données d'origine.

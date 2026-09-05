@@ -224,16 +224,17 @@ struct JsonValue<'a> {
 
 ## Points Clés
 
-✅ **Utilise `Cow` quand** :
+**Utilise `Cow` quand** :
 - Tu as besoin de modifier conditionnellement des données borrowed.
 - Tu veux éviter les allocations pour les chemins read-only.
 - Ton API devrait accepter `&str` et `String` efficacement.
 
-🚀 **Usages réels** :
+**Usages réels** :
 - `regex::Match` (emprunte les strings d'input).
 - Désérialisation `serde`.
 - Manipulation de path (`PathBuf` vs. `&Path`).
 
 **Note** : `Cow` fonctionne avec tout type `ToOwned` (ex : `[u8]` → `Vec<u8>`, `Path` → `PathBuf`).
 
-**Expérimente** : Modifier l'exemple `to_uppercase` pour gérer les chiffres (comme montré ci-dessus) démontre comment `Cow` évite les allocations sauf si des lettres minuscules *et* des chiffres sont présents, optimisant la performance.
+Étendre l'exemple `to_uppercase` aux chiffres montre où `Cow` gagne sa place : il n'alloue que
+sur les entrées qui ont réellement besoin d'être réécrites, et retourne un emprunt pour tout le reste.

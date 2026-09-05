@@ -263,12 +263,12 @@ Inline assembly in Rust is a precision tool — powerful, sharp, and rarely need
 
 **Golden rules**:
 
-✅ **Measure first** — prove the compiler is losing.
+**Measure first** — prove the compiler is losing.
 
-✅ **Isolate** — hide assembly behind safe, tested APIs.
+**Isolate** — hide assembly behind safe, tested APIs.
 
-✅ **Fallback** — always provide a portable Rust version.
+**Fallback** — always provide a portable Rust version.
 
-✅ **Document** — explain *why* assembly is necessary, not just *how*.
+**Document** — explain *why* assembly is necessary, not just *how*.
 
 When followed, inline assembly becomes not a liability, but a legitimate optimization layer in your performance toolkit.

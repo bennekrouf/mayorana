@@ -204,11 +204,11 @@ The trait you get is not something you pick — the compiler derives it from how
 
 ## Key Takeaways
 
-✅ **Use `FnMut`** for closures that mutate state across multiple calls.  
-✅ **Mark closures and parameters as `mut`** to enable mutation.  
-✅ **Prefer simple closures** for basic state; use structs for complex state management.
+**Use `FnMut`** for closures that mutate state across multiple calls.  
+**Mark closures and parameters as `mut`** to enable mutation.  
+**Prefer simple closures** for basic state; use structs for complex state management.
 
 **Real-World Example**: Stateful closures are common in event loops or async tasks (e.g., `tokio`) where a closure maintains counters or buffers across iterations.
 
-**Experiment**: Try passing a non-`mut` closure to `call_repeatedly`.  
-**Answer**: Compile error! The closure must be mutable to implement `FnMut`.
+Try passing a non-`mut` closure to `call_repeatedly`. It won't compile — calling through
+`FnMut` needs a mutable binding.

@@ -223,10 +223,11 @@ Pré-allouer est une indication, pas une limite stricte. `len` et `capacity` son
 
 ## Points clés à retenir
 
-- ✅ Par défaut, utilisez `Vec::new()` pour la simplicité.  
-- ✅ Utilisez `with_capacity(n)` quand :
+- Par défaut, utilisez `Vec::new()` pour la simplicité.  
+- Utilisez `with_capacity(n)` quand :
 - Vous connaissez la taille à l'avance
 - La performance est critique (ex : boucles critiques)
 
-**Essayez ceci :** Que se passe-t-il si vous poussez au-delà de la capacité pré-allouée ?  
-**Réponse :** Le Vec croît automatiquement (comme `Vec::new()`), mais seulement après avoir dépassé n.
+Pousser au-delà de la capacité réservée n'est pas une erreur : le `Vec` croît comme `Vec::new()`
+l'aurait fait depuis le début. Vous gagnez l'allocation unique jusqu'à `n`, et le doublement
+habituel ensuite.

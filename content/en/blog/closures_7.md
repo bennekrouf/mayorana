@@ -190,6 +190,5 @@ fn process<'a>(data: &'a [i32]) -> impl Fn(usize) -> &'a i32 + 'a {
 
 In web frameworks like actix-web, handlers often return closures capturing request data with explicitly managed lifetimes.
 
-**Try This**: What happens if you remove move from capture_with_lifetime?
-
-**Answer**: Compiler error! The closure would try to borrow s, which doesn't live long enough.
+Drop the `move` from `capture_with_lifetime` and it stops compiling — the closure would be
+borrowing `s`, which is gone by the time anyone calls it.

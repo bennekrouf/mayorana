@@ -645,8 +645,8 @@ fn config_example() {
 
 Dans les frameworks web comme actix-web, les handlers retournent souvent des closures capturant des données de requête avec des lifetimes explicitement gérés.
 
-**Essaie Ceci** : Que se passe-t-il si tu retires `move` de `capture_with_lifetime` ?  
-**Réponse** : Erreur du compilateur ! La closure essaierait d'emprunter `s`, qui ne vit pas assez longtemps.
+Retire le `move` de `capture_with_lifetime` et ça ne compile plus : la closure emprunterait `s`,
+qui a déjà disparu au moment où on l'appelle.
 
 ## Exemple Pratique Complet
 

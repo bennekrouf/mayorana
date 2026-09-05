@@ -189,14 +189,14 @@ fn main() {
 
 ## Points Clés
 
-✅ **Préféré** : Utilise `&str` dans les arguments de fonction (flexible et zero-cost).  
-✅ **Si coincé avec `&String`** : Convertis `&str` vers `String` (alloue).  
-✅ **Pour les APIs** : Utilise `AsRef<str>` ou `impl Deref<Target=str>` pour compatibilité maximum.
+**Préféré** : Utilise `&str` dans les arguments de fonction (flexible et zero-cost).  
+**Si coincé avec `&String`** : Convertis `&str` vers `String` (alloue).  
+**Pour les APIs** : Utilise `AsRef<str>` ou `impl Deref<Target=str>` pour compatibilité maximum.
 
 **Pourquoi Rust Applique Ceci** :
 - Prévient les allocations accidentelles ou assumptions sur l'ownership mémoire.
 - Encourage des APIs efficaces, borrow-friendly.
 
-**Essaie Ceci** : Que se passe-t-il si tu passes un `String` à `print_str` sans `&` ?
-
-**Réponse** : Ça move l'ownership, causant une erreur de compilation puisque `print_str` attend une référence (`&str`), pas un `String` owned.
+Passer un `String` à `print_str` sans le `&` est une erreur de type, pas une erreur de move : la
+coercition de déréférencement ne s'applique qu'à travers une référence, donc le compilateur n'a
+rien à coercer.

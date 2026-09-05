@@ -232,5 +232,5 @@ Le second cas surprend, car rien ne *semble* encore emprunter. L'emprunt mutable
 - `iter()` et `iter_mut()` sont des zero-cost abstractions (juste des pointeurs).
 - `into_iter()` peut impliquer des déplacements (mais optimisés pour les primitives comme `i32`).
 
-**Essayez ceci** : Que se passe-t-il si vous appelez `iter_mut()` sur un `Vec<T>` où `T` n'implémente pas `Copy`, puis essayez de modifier les éléments ?  
-**Réponse** : Cela fonctionne ! L'itérateur produit des `&mut T`, permettant une mutation directe (ex: `*item = new_value`).
+`Copy` n'a rien à voir ici : `iter_mut()` donne des `&mut T` dans tous les cas, donc
+`*item = new_value` fonctionne sur un `Vec<String>` exactement comme sur un `Vec<i32>`.

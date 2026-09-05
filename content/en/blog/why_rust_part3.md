@@ -308,18 +308,18 @@ fn main() {
 ## The Rust Guarantee
 
 ### What Rust Eliminates
-✅ **Memory leaks** - automatic cleanup  
-✅ **Use-after-free** - ownership tracking  
-✅ **Double-free** - single ownership  
-✅ **Dangling pointers** - lifetime analysis  
-✅ **Buffer overflows** - bounds checking  
-✅ **Data races** - borrowing rules  
-✅ **Iterator invalidation** - compile-time checks  
+**Memory leaks** - automatic cleanup  
+**Use-after-free** - ownership tracking  
+**Double-free** - single ownership  
+**Dangling pointers** - lifetime analysis  
+**Buffer overflows** - bounds checking  
+**Data races** - borrowing rules  
+**Iterator invalidation** - compile-time checks  
 
 ### What You Get
-🚀 **C-level performance**  
-🛡️ **Memory safety**  
-⚡ **Zero runtime overhead**  
+**C-level performance**  
+**Memory safety**  
+**Zero runtime overhead**  
 🔒 **Thread safety**  
 🔧 **Systems programming capabilities**  
 
@@ -404,11 +404,11 @@ Smart compiler → Ownership system → Fast + Safe code
 
 🦀 **Rust gives you the best of both worlds:**
 
-✅ **Predictable performance** - no GC pauses, no runtime overhead  
-✅ **Memory safety** - entire bug classes eliminated at compile time  
-✅ **Fearless concurrency** - data races prevented by type system  
-✅ **Systems programming** - low-level control when needed  
-✅ **Modern ergonomics** - powerful type system, package management  
+**Predictable performance** - no GC pauses, no runtime overhead  
+**Memory safety** - entire bug classes eliminated at compile time  
+**Fearless concurrency** - data races prevented by type system  
+**Systems programming** - low-level control when needed  
+**Modern ergonomics** - powerful type system, package management  
 
 ---
 

@@ -232,5 +232,5 @@ The second one surprises people because nothing *looks* like it is still borrowi
 - `iter()` and `iter_mut()` are zero-cost (just pointers).
 - `into_iter()` may involve moves (but optimized for primitives like `i32`).
 
-**Try This**: What happens if you call `iter_mut()` on a `Vec<T>` where `T` doesn’t implement `Copy`, then try to modify the elements?  
-**Answer**: It works! The iterator yields `&mut T`, allowing direct mutation (e.g., `*item = new_value`).
+`Copy` has nothing to do with it: `iter_mut()` hands you `&mut T` either way, so
+`*item = new_value` works on a `Vec<String>` exactly like it does on a `Vec<i32>`.

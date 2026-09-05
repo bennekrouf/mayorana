@@ -232,9 +232,9 @@ fn process_good(s: &str) -> &str {
 
 ## Key Takeaways
 
-✅ **`String`**: Owned, mutable, heap-allocated  
-✅ **`str`**: Borrowed, immutable, flexible (heap/stack/static)  
-🚀 Prefer `&str` for function parameters unless you need ownership or mutation
+**`String`**: Owned, mutable, heap-allocated  
+**`str`**: Borrowed, immutable, flexible (heap/stack/static)  
+Prefer `&str` for function parameters unless you need ownership or mutation
 
-**Try This:** What happens when you call `.to_string()` on a string literal vs a `String`?  
-**Answer:** Literal creates new heap allocation; `String` creates a clone of existing heap data—both allocate, but the source differs!
+`.to_string()` allocates in both cases, but not for the same reason: on a literal it copies
+out of the binary's read-only data, on a `String` it clones an existing heap buffer.

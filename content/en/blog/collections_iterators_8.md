@@ -236,13 +236,12 @@ Both methods preserve the relative order of retained elements (stable filtering)
 
 ## Key Takeaways
 
-✅ **retain()**: Faster, memory-efficient, and in-place. Ideal for bulk modifications.
-✅ **filter().collect()**: Flexible, non-destructive. Ideal for iterator pipelines.
+**retain()**: Faster, memory-efficient, and in-place. Ideal for bulk modifications.
+**filter().collect()**: Flexible, non-destructive. Ideal for iterator pipelines.
 
 ## Real-World Use Case:
 - **retain()**: Cleaning up expired sessions in a server's session pool.
 - **filter().collect()**: Transforming API response data into a filtered subset.
 
-**Try This**: What happens if you `retain()` with a predicate that keeps all elements?
-
-**Answer**: No-op (no elements removed, no reallocations).
+A `retain()` whose predicate keeps everything costs one pass and nothing else — no removals,
+no reallocation, capacity untouched.

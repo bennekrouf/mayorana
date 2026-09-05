@@ -222,8 +222,8 @@ fn main() {
 - **No runtime pauses**: Unlike GC-based languages (Java, Go).
 
 ## Key Takeaways
-✅ **Ownership**: Prevents memory leaks.  
-✅ **Borrowing**: Prevents data races.  
-✅ **Lifetimes**: Prevents dangling pointers.
+**Ownership**: Prevents memory leaks.  
+**Borrowing**: Prevents data races.  
+**Lifetimes**: Prevents dangling pointers.
 
 Rust's model ensures memory safety without runtime checks, making it both safe and fast.

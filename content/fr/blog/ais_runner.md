@@ -96,7 +96,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 - **Support des triggers Blob** — vérifications préalables de l'existence du conteneur Azurite
 - **Historique des exécutions** — inspection détaillée de chaque exécution, entrées/sorties par action
 
-## 📊 Visualisation des workflows
+## Visualisation des workflows
 
 - Liste des workflows avec indicateurs de type de trigger et statut
 - **Panneau graphique visuel** — rendu DAG des dépendances entre actions
@@ -199,7 +199,7 @@ L'application est native sur macOS, Windows et Linux grâce à Dioxus desktop (W
 </svg>
 </div>
 
-## ⚡ Event Grid
+## Event Grid
 
 - **Navigateur de topics** — liste tous les topics Event Grid custom et système au niveau de la souscription, avec badges de groupe de ressources
 - **Inspecteur de souscriptions** — déploie un topic pour voir les event subscriptions avec leur type d'endpoint, filtres et types d'événements

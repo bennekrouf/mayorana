@@ -182,10 +182,10 @@ let vec_again = Vec::from(boxed);                // Copies data
 
 ## Key Takeaways
 
-✅ Use Vec for mutable, growable sequences.
-✅ Use Box<[T]> for immutable, memory-efficient storage.
-⚡ Convert cheaply from Vec to Box<[T]> when done modifying.
+Use Vec for mutable, growable sequences.
+Use Box<[T]> for immutable, memory-efficient storage.
+Convert cheaply from Vec to Box<[T]> when done modifying.
 
-**Try This**: What happens if you convert a Vec with spare capacity to Box<[T]>?
-
-**Answer**: `into_boxed_slice()` shrinks the allocation to exact size (no unused capacity).
+Converting a `Vec` that's sitting on spare capacity is where this actually pays:
+`into_boxed_slice()` reallocates down to the exact length, so the slack goes back to the
+allocator instead of being carried around.

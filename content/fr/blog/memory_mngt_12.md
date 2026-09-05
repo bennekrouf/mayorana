@@ -225,16 +225,16 @@ println!("Result: {}", *counter.lock().unwrap());  // Affiche 10
 
 ## Points Clés
 
-✅ **Les règles d'ownership préviennent** :
+**Les règles d'ownership préviennent** :
 - L'accès mutable concurrent (pas de data races).
 - Les dangling references (via lifetimes).
 
-✅ **Send/Sync appliquent** la thread safety au moment de la compilation.
+**Send/Sync appliquent** la thread safety au moment de la compilation.
 
-🚀 **Utilise `Mutex`, `Arc`, ou channels** pour un état partagé sûr.
+**Utilise `Mutex`, `Arc`, ou channels** pour un état partagé sûr.
 
 **Impact Réel** : Les crates comme `rayon` (iterators parallèles) et `tokio` (runtime async) s'appuient sur ces garanties pour une concurrence robuste.
 
-**Expérimente** : Que se passe-t-il si tu essaies de partager un `Rc<T>` entre threads ?
-
-**Réponse** : Erreur de compilation ! `Rc<T>` n'est pas `Send` (pas thread-safe). Utilise `Arc<T>` à la place.
+Essaie d'envoyer un `Rc<T>` vers un autre thread et le compilateur t'arrête : `Rc` n'est pas
+`Send`, parce que son compteur n'est pas atomique. `Arc<T>` a la même forme avec le compteur
+atomique, et tu paies pour ça à chaque clone.

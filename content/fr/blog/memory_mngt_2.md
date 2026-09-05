@@ -222,8 +222,8 @@ fn main() {
 - **Pas de pauses** : Contrairement aux langages avec GC (Java, Go).
 
 ## Points clés
-✅ **Ownership** : Évite les fuites mémoire.  
-✅ **Borrowing** : Évite les data races.  
-✅ **Lifetimes** : Évite les pointeurs pendants.
+**Ownership** : Évite les fuites mémoire.  
+**Borrowing** : Évite les data races.  
+**Lifetimes** : Évite les pointeurs pendants.
 
 Le modèle de Rust assure la sécurité mémoire sans vérifications à l'exécution, ce qui le rend à la fois sûr et rapide.

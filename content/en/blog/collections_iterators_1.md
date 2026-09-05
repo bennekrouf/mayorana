@@ -223,10 +223,11 @@ Pre-allocating is a hint, not a hard limit. `len` and `capacity` are two indepen
 
 ## Key Takeaways
 
-- ✅ Default to `Vec::new()` for simplicity.  
-- ✅ Use `with_capacity(n)` when:
+- Default to `Vec::new()` for simplicity.  
+- Use `with_capacity(n)` when:
 - You know the size upfront
 - Performance is critical (e.g., hot loops)
 
-**Try This:** What happens if you push beyond the pre-allocated capacity?  
-**Answer:** The Vec grows automatically (like `Vec::new()`), but only after exceeding n.
+Pushing past the capacity you reserved isn't an error — the `Vec` just grows the way
+`Vec::new()` would have all along. You get the one cheap allocation up to `n` and the usual
+doubling after that.

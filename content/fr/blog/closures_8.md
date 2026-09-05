@@ -591,8 +591,8 @@ fn memory_profiling() {
 - **Les frameworks GUI** comme iced exploitent les closures pour les event handlers efficacement.
 - **serde** utilise les closures pour la sérialisation zero-cost.
 
-**Essaie Ceci** : Compare la sortie assembly d'une closure et d'une fonction avec `cargo rustc -- --emit asm` !
-
+Si tu veux constater l'abstraction à coût nul plutôt que me croire sur parole :
+`cargo rustc -- --emit asm`, puis compare la closure et la fonction équivalente.
 ## Exemple Pratique Complet
 
 ```rust

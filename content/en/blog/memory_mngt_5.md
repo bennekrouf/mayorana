@@ -181,7 +181,7 @@ fn main() {
 
 ## Key Takeaways
 
-✅ Rust’s compiler guarantees:
+Rust’s compiler guarantees:
 - No references to freed memory.
 - No undefined behavior from dangling pointers.
 - Safety without runtime overhead.

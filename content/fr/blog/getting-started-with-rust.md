@@ -746,7 +746,7 @@ Exécute avec `cargo test`.
 
 ## Prochaines Étapes
 
-Maintenant que tu as les bases, Essaie de construire un petit projet pour pratiquer vos compétences. Voici quelques suggestions :
+Maintenant que tu as les bases, essaie de construire un petit projet pour pratiquer tes compétences. Voici quelques suggestions :
 
 ### Projets Débutants
 1. **Calculatrice en ligne de commande**

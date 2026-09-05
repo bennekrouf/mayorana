@@ -200,11 +200,11 @@ Notice that `create_op` is not merely *slower* with `impl Fn` — it is impossib
 
 ## Key Takeaways
 
-✅ **Choose `impl Fn()` for**:
+**Choose `impl Fn()` for**:
 - Performance-sensitive code (e.g., iterator chains).
 - Single closure type (e.g., factory functions).
 
-✅ **Choose `Box<dyn Fn()>` for**:
+**Choose `Box<dyn Fn()>` for**:
 - Dynamic behavior (e.g., event handlers, plugins).
 - Storing mixed closure types (e.g., `Vec<Box<dyn Fn()>>`).
 

@@ -195,10 +195,10 @@ let closure = move || println!("{}", s); // `s` is moved into the closure
 
 ## Key Takeaways
 
-✅ **`Fn`**: Read-only, reusable.  
-✅ **`FnMut`**: Mutable, reusable.  
-✅ **`FnOnce`**: Owned, single-use.  
-🚀 `move` forces ownership but doesn’t change the trait—usage determines the trait.
+**`Fn`**: Read-only, reusable.  
+**`FnMut`**: Mutable, reusable.  
+**`FnOnce`**: Owned, single-use.  
+`move` forces ownership but doesn’t change the trait—usage determines the trait.
 
-**Try This:** What happens if a closure captures a mutable reference but doesn’t mutate it?  
-**Answer:** It still implements `FnMut` (since it *could* mutate), but you can pass it to a function expecting `FnMut`.
+A closure that captures `&mut` but never mutates still only implements `FnMut`. The trait
+follows what the capture *permits*, not what the body happens to do with it.

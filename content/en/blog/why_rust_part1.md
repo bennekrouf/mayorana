@@ -211,4 +211,4 @@ During GC pause: 2000ms (40x slower!)
 
 **The Question:** What if we could have memory safety *without* garbage collection?
 
-**➡️ Next:** "Manual Memory Management: Why C/C++ Isn't the Answer"
+**Next:** "Manual Memory Management: Why C/C++ Isn't the Answer"

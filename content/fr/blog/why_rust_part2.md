@@ -325,4 +325,4 @@ free(data);  // Facile d'oublier ou de double-free
 
 **La Question :** Et si le compilateur pouvait prévenir les bugs mémoire au moment de la compilation ?
 
-**➡️ Suivant :** "Voir la partie 3 de cette article"
+**Suivant :** "Voir la partie 3 de cette article"

@@ -218,7 +218,8 @@ Rust ne vérifie pas l'ordre des locks à la compilation, mais vous pouvez utili
 
 ✅ **Rust** garantit la sûreté mémoire et empêche les erreurs classiques de synchronisation  
 ❌ **Les deadlocks** sont toujours possibles — à vous de gérer l’ordre des verrous  
-🚀 Structurez vos locks proprement, et testez avec des outils comme `loom`
+Structurez vos locks proprement, et testez avec des outils comme `loom`
 
-**À tester :** Que se passe-t-il si deux threads tentent de `lock()` des `Mutex<T>` dans un ordre opposé ?  
-**Réponse :** Si l’ordre forme un cycle, votre programme risque de se bloquer. Rust ne l’empêche pas — mais il rend tout le reste bien plus sûr.
+Deux threads qui verrouillent la même paire de `Mutex<T>` dans l'ordre inverse finiront par se
+bloquer, et Rust compilera ça sans broncher. C'est la limite de ce que le système de types vous
+achète : il exclut les data races, pas les deadlocks.

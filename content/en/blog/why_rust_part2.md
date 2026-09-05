@@ -320,4 +320,4 @@ free(data);  // Easy to forget or double-free
 
 **The Question:** What if the compiler could prevent memory bugs at compile time?
 
-**➡️ Next:** "Rust's Ownership: Memory Safety Without Garbage Collection"
+**Next:** "Rust's Ownership: Memory Safety Without Garbage Collection"

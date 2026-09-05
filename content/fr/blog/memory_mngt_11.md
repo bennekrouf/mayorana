@@ -228,12 +228,12 @@ unsafe impl<#[may_dangle] T> Drop for MyBox<T> {
 
 ## Points Clés
 
-✅ **Utilise `Drop` pour** :
+**Utilise `Drop` pour** :
 - Cleanup de ressources (fichiers, locks, mémoire).
 - Garanties FFI/safety-critical.
 - Debugging/profiling.
 
-🚫 **Évite** :
+**Évite** :
 - Réimplémenter de la logique fournie par Rust (ex : désallocation de `Box`).
 - Opérations complexes qui pourraient paniquer.
 
@@ -246,6 +246,6 @@ unsafe impl<#[may_dangle] T> Drop for MyBox<T> {
 }  // `guard` dropped ici → lock libéré
 ```
 
-**Expérimente** : Que se passe-t-il si tu appelles `mem::forget` sur un type avec `Drop` ?
-
-**Réponse** : Le destructeur ne s'exécutera pas, causant potentiellement une fuite de ressource (ex : fichiers non fermés ou mémoire non libérée).
+`mem::forget` sur un type qui implémente `Drop` saute complètement le destructeur. C'est du Rust
+safe — fuir n'est pas de l'unsoundness — mais ça veut dire un fichier non fermé ou un buffer non
+libéré, donc c'est un outil délibéré et non une échappatoire.

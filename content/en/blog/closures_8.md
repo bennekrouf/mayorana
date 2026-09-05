@@ -191,4 +191,5 @@ fn main() {
 - **rayon** uses closures with static dispatch for parallel iterators (no overhead).
 - **GUI frameworks** like iced leverage closures for event handlers efficiently.
 
-**Try This**: Compare the assembly output of a closure and a function with `cargo rustc -- --emit asm`!
+If you want to see the zero-cost claim rather than take my word for it:
+`cargo rustc -- --emit asm` and diff the closure against the equivalent function.

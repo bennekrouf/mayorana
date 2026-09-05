@@ -240,13 +240,12 @@ Les deux méthodes préservent l'ordre relatif des éléments conservés (filtra
 
 ## Points clés à retenir
 
-✅ **retain()** : Plus rapide, efficace en mémoire et en place. Idéal pour les modifications en masse.
-✅ **filter().collect()** : Flexible, non destructif. Idéal pour les pipelines d'itérateurs.
+**retain()** : Plus rapide, efficace en mémoire et en place. Idéal pour les modifications en masse.
+**filter().collect()** : Flexible, non destructif. Idéal pour les pipelines d'itérateurs.
 
 ## Cas d'usage réel :
 - **retain()** : Nettoyer les sessions expirées dans un pool de sessions serveur.
 - **filter().collect()** : Transformer les données de réponse d'API en un sous-ensemble filtré.
 
-**Essayez ceci** : Que se passe-t-il si vous utilisez `retain()` avec un prédicat qui conserve tous les éléments ?
-
-**Réponse** : Aucune opération (aucun élément supprimé, pas de réallocations).
+Un `retain()` dont le prédicat garde tout coûte un parcours et rien d'autre — aucune suppression,
+aucune réallocation, capacité inchangée.

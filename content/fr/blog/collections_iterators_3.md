@@ -231,10 +231,10 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
 
 ## Points clés à retenir
 
-✅ Utiliser `collect()` pour matérialiser des itérateurs en :
+Utiliser `collect()` pour matérialiser des itérateurs en :
 - `Vec`, `HashMap`, `String`, ou tout type `FromIterator`.
-✅ Spécifier le type (ex: `let v: Vec<_> = ...`).
-🚀 Optimiser avec `with_capacity` pour les grandes collections.
+Spécifier le type (ex: `let v: Vec<_> = ...`).
+Optimiser avec `with_capacity` pour les grandes collections.
 
 **Exemple concret** :
 `serde_json::from_str` est souvent chaîné avec `collect()` pour construire des structures complexes :

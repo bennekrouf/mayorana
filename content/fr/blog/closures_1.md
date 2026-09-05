@@ -211,12 +211,12 @@ fn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {
 
 ## Points Clés
 
-✅ **Functions** : Performance prévisible, pas de captures  
-✅ **Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
-🚀 Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
+**Functions** : Performance prévisible, pas de captures  
+**Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
+Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
 
-**Essaie Ceci :** Que se passe-t-il si une closure capture une mutable reference et est appelée deux fois ?  
-**Réponse :** Le borrow checker assure un accès exclusif—ça ne compilera pas sauf si le premier appel se termine !
+Capture une référence mutable puis appelle la closure deux fois : le borrow checker refuse.
+Le premier appel détient encore l'accès exclusif au moment où le second commence.
 
 ## Exemples Avancés
 

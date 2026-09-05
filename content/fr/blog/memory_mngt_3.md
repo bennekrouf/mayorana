@@ -154,9 +154,9 @@ let s2 = s1; // Move ownership (données heap pas copiées)
 
 ## Points Clés
 
-✅ **Stack** : Rapide, taille fixe, automatique.  
-✅ **Heap** : Flexible, dynamique, manuel (via smart pointers).  
-✅ Rust privilégie le stack mais utilise le heap pour données extensibles/taille inconnue.
+**Stack** : Rapide, taille fixe, automatique.  
+**Heap** : Flexible, dynamique, manuel (via smart pointers).  
+Rust privilégie le stack mais utilise le heap pour données extensibles/taille inconnue.
 
 **Suivi** : Quand forcerais-tu l'allocation heap ?
 - Pour de grosses structs (éviter stack overflow).

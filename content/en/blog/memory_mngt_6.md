@@ -185,13 +185,13 @@ fn main() {
 
 ## Key Takeaways
 
-✅ **Preferred**: Use `&str` in function arguments (flexible and zero-cost).  
-✅ **If stuck with `&String`**: Convert `&str` to `String` (allocates).  
-✅ **For APIs**: Use `AsRef<str>` or `impl Deref<Target=str>` for maximum compatibility.
+**Preferred**: Use `&str` in function arguments (flexible and zero-cost).  
+**If stuck with `&String`**: Convert `&str` to `String` (allocates).  
+**For APIs**: Use `AsRef<str>` or `impl Deref<Target=str>` for maximum compatibility.
 
 **Why Rust Enforces This**:
 - Prevents accidental allocations or assumptions about memory ownership.
 - Encourages efficient, borrow-friendly APIs.
 
-**Try This**: What happens if you pass a `String` to `print_str` without `&`?  
-**Answer**: It moves ownership, causing a compile error since `print_str` expects a reference (`&str`), not an owned `String`.
+Passing a `String` to `print_str` without the `&` is a type error, not a move error — deref
+coercion only fires through a reference, so there's nothing for the compiler to coerce.
