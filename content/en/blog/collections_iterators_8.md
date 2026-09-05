@@ -14,7 +14,7 @@ tags:
 date: '2025-07-28'
 ---
 
-# What is the purpose of Vec::retain()? How does it compare to filtering with iter().filter().collect()?
+# Vec::retain() Vs filtering with iter().filter().collect()?
 
 ## Vec::retain(): In-Place Filtering
 

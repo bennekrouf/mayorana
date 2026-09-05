@@ -16,7 +16,7 @@ tags:
   - performance
 ---
 
-# SIMD en Rust : optimiser la multiplication de matrices
+# SIMD en Rust : Optimiser la Multiplication de Matrices
 
 Les capacités **SIMD (Single Instruction, Multiple Data)** de Rust permettent le traitement parallèle de plusieurs éléments de données en une seule instruction CPU, idéal pour des tâches computationnellement intensives comme la multiplication de matrices. Je vais expliquer comment exploiter `std::arch` pour un débit maximum, adresser la portabilité à travers les architectures (ex : x86_64 avec SSE/AVX vs ARM avec NEON), et souligner les défis et solutions pour assurer justesse et performance.
 

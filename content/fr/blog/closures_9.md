@@ -17,7 +17,7 @@ tags:
 date: '2025-11-11'
 ---
 
-# Comment stocker une closure dans une struct ? Quels trait bounds et annotations de lifetime sont requis ?
+# Comment stocker une closure dans une struct ?
 
 Stocker une closure dans une struct nécessite de spécifier des trait bounds (`Fn`, `FnMut`, `FnOnce`) et potentiellement des lifetimes si la closure capture des références. Voici comment faire :
 

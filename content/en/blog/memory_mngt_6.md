@@ -17,7 +17,7 @@ tags:
   - ownership
 ---
 
-# Why can’t you pass a &str directly to a function expecting a &String?
+# Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!
 
 In Rust, you cannot pass a `&str` directly to a function expecting a `&String` due to their distinct types, which ensures type safety and prevents assumptions about memory ownership. Below, I explain why this mismatch occurs and how to handle it effectively.
 

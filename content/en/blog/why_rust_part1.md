@@ -41,7 +41,7 @@ Java's GC runs in background threads, pausing your application unpredictably. Ev
 ```python
 import gc
 gc.collect()  # Manual collection
-# Returns: number of objects collected
+# GC Pauses and Latency: The Hidden Cost of High-Level Languages
 ```
 
 Python counts references to objects, but needs a separate collector for circular references. Both add overhead to every operation.

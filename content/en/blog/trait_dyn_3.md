@@ -1,6 +1,6 @@
 ---
 id: dispatch-performance-rust
-title: 'fn process<T: MyTrait>(x: T)) VS using dyn MyTrait for dynamic dispatch.'
+title: 'Trait bounds or dyn Trait? Static and dynamic dispatch compared'
 slug: dispatch-performance-rust
 locale: en
 date: '2025-08-12'
@@ -17,7 +17,7 @@ tags:
   - traits
 ---
 
-# What’s the performance trade-off between using a generic function with a trait bound (e.g., fn process<T: MyTrait>(x: T)) versus using dyn MyTrait for dynamic dispatch, and in what scenarios would you prefer one over the other?
+# Trait bounds or dyn Trait? Static and dynamic dispatch compared
 
 In Rust, **static dispatch** (via generics with trait bounds) and **dynamic dispatch** (via `dyn Trait`) offer distinct performance profiles, critical for systems like real-time data processors. Static dispatch leverages monomorphization for speed, while dynamic dispatch uses vtables for flexibility. Below, I compare the two with an example and outline when to choose each based on performance, flexibility, and maintainability.
 

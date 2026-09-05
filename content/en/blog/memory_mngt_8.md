@@ -15,7 +15,7 @@ tags:
   - string
 ---
 
-# How does Rust handle string literals (&str) in terms of memory allocation? Where do they live?
+# Where do string literals (&str) live?
 
 String literals (`&str`) in Rust are handled efficiently, with distinct memory characteristics compared to heap-allocated `String` types. Understanding their allocation and lifetime is key to writing performant and safe Rust code.
 

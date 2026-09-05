@@ -1,8 +1,6 @@
 ---
 id: allocation-avoidance-real-time-rust
-title: >-
-  Utiliser des tableaux de taille fixe ou Option pour éviter les allocations
-  dans un chemin critique en performance
+title: "Éviter l'allocation heap sur un chemin temps réel"
 slug: allocation-avoidance-real-time-rust
 locale: fr
 author: mayo
@@ -20,7 +18,7 @@ tags:
 date: '2025-11-20'
 ---
 
-# Évitement d'Allocations : Dans un système temps réel, les allocations heap peuvent introduire de la latence. comment utiliserais-tu les fonctionnalités stack-based de Rust (ex : tableaux de taille fixe ou Option) pour éviter les allocations dans un chemin critique en performance ?
+# Éviter l'allocation heap sur un chemin temps réel
 
 Dans un système temps réel, les allocations heap via Box, Vec, ou autres structures dynamiques introduisent de la latence due à l'overhead de gestion mémoire et aux pauses potentielles de garbage collection (bien que Rust évite le GC, allocation/désallocation varie encore). J'utiliserais les fonctionnalités stack-based de Rust comme les tableaux de taille fixe, Option, et structs custom pour éliminer celles-ci dans un chemin critique en performance, assurant une exécution prévisible et faible latence.
 

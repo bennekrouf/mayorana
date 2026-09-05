@@ -14,7 +14,7 @@ tags:
   - string
 ---
 
-# How does Cow<'a, B> (Copy-on-Write) work in Rust? When would you use it for strings or other data?
+# How does Cow<'a, B> (Copy-on-Write) work in Rust?
 
 `Cow<'a, B>` (Copy-on-Write) is a smart pointer in Rust’s `std::borrow` module that provides a clone-free abstraction over borrowed and owned data. It enables efficient handling of data that may or may not need modification, minimizing allocations while maintaining flexibility.
 

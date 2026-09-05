@@ -1,8 +1,6 @@
 ---
 id: blanket-implementations-coherence
-title: >-
-  Comment peux-tu utiliser une blanket implementation (ex : impl<T: SomeTrait>
-  AnotherTrait for T) pour réduire la duplication de code ?
+title: 'Les blanket implementations : une seule impl pour tous les types qui qualifient'
 slug: blanket-implementations-coherence
 author: mayo
 locale: fr
@@ -20,7 +18,7 @@ tags:
 date: '2025-12-05'
 ---
 
-# Comment peux-tu utiliser une blanket implementation (ex : impl<T: SomeTrait> AnotherTrait for T) pour réduire la duplication de code dans une bibliothèque, et quels pièges surveiller concernant la cohérence de trait ?
+# Les blanket implementations : une seule impl pour tous les types qui qualifient
 
 Dans une bibliothèque Rust fournissant des fonctions utilitaires, j'utiliserais une blanket implementation (`impl<T: SomeTrait> AnotherTrait for T`) pour réduire la duplication de code en appliquant automatiquement un trait à tous les types qui satisfont une contrainte donnée. Cela simplifie l'API mais nécessite une gestion attentive de la cohérence de trait pour éviter les conflits et assurer la maintenabilité. Voici comment je procéderais avec un exemple, en me concentrant sur une conception robuste.
 

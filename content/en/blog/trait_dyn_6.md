@@ -1,8 +1,6 @@
 ---
 id: sized-unsized-bounds-flexibility
-title: >-
-  Write a function that accepts both sized types (e.g., [u8; 16]) and unsized
-  types (e.g., [u8] or dyn Trait) with ?Sized bound
+title: '?Sized: writing one function for both sized and unsized types'
 slug: sized-unsized-bounds-flexibility
 locale: en
 author: mayo
@@ -21,7 +19,7 @@ tags:
 date: '2025-08-15'
 ---
 
-# What's the significance of the ?Sized bound in trait definitions, and how would you use it to write a function that accepts both sized types (e.g., [u8; 16]) and unsized types (e.g., [u8] or dyn Trait)?
+# ?Sized: writing one function for both sized and unsized types
 
 The `?Sized` bound in Rust trait definitions relaxes the default `Sized` constraint on generic types, allowing a function or trait to work with both sized types (known size at compile time, like `[u8; 16]`) and unsized types (e.g., `[u8]`, `str`, `dyn Trait`). In a data serialization library, I'd use `?Sized` to write a flexible function that processes both fixed arrays and dynamic slices efficiently, enhancing functionality without sacrificing performance.
 

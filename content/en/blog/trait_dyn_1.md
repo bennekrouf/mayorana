@@ -14,7 +14,7 @@ tags:
   - traits
 ---
 
-# How do Rust traits differ from interfaces in languages like Java or C#, and how would you use them to define a shared behavior for types in a performance-critical library?
+# Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right
 
 Rust traits and interfaces both define shared behavior, but differ fundamentally in design and execution, especially in performance-critical contexts.
 

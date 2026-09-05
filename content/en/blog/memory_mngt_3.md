@@ -17,7 +17,7 @@ tags:
   - allocation
 ---
 
-# What is the difference between stack and heap allocation in Rust?
+# Stack vs. Heap in Rust: Where Does Your Data Live?
 
 Rust uses stack and heap allocation to manage memory, with distinct characteristics for each. Understanding their differences and how Rust decides where to allocate data is key to writing efficient and safe code.
 

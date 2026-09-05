@@ -14,7 +14,7 @@ tags:
   - ownership
 ---
 
-# Rust: Safety Without Sacrifice
+# Rust: Memory Safety Without Garbage Collection
 
 Rust doesn't have a GC. It doesn't need one.
 

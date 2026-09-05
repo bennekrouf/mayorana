@@ -17,7 +17,7 @@ tags:
   - lifetimes
 ---
 
-# Quelles sont les différences entre Fn, FnMut, et FnOnce ?
+# Quelle est la différence entre Fn, FnMut, et FnOnce ?
 
 Distinguer les traits `Fn`, `FnMut`, et `FnOnce` est crucial pour maîtriser le système de closures de Rust.
 

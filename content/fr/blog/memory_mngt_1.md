@@ -14,7 +14,7 @@ tags:
 date: '2025-08-06'
 ---
 
-# Quelle est la différence entre String et str ?
+# String vs. &str – Lequel Utiliser et Quand ?
 
 Comprendre la différence entre `String` et `str` est fondamental pour une gestion efficace de la mémoire.
 

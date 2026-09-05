@@ -1,6 +1,6 @@
 ---
 id: borrowing-rules-rust
-title: mutable vs. immutable borrows.
+title: 'Mutable vs. immutable borrows: the two rules'
 slug: borrowing-rules-rust
 locale: en
 date: '2025-08-10'
@@ -16,7 +16,7 @@ tags:
   - ownership
 ---
 
-# What are the rules for borrowing in Rust?
+# Mutable vs. immutable borrows: the two rules
 
 Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure memory safety and prevent data races without runtime overhead. These rules govern how data can be accessed via references, distinguishing between mutable (`&mut T`) and immutable (`&T`) borrows.
 

@@ -17,7 +17,7 @@ tags:
   - copy-on-write
 ---
 
-# Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? quand l'utiliserais-tu pour les strings ou autres données ?
+# Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? Quand l'utiliser ?
 
 `Cow<'a, B>` (Copy-on-Write) est un smart pointer dans le module `std::borrow` de Rust qui fournit une abstraction sans clone sur les données borrowed et owned. Il permet une gestion efficace des données qui peuvent ou non nécessiter une modification, minimisant les allocations tout en maintenant la flexibilité.
 

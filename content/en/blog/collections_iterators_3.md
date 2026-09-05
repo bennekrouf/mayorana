@@ -14,7 +14,7 @@ tags:
 date: '2025-07-16'
 ---
 
-# How does collect() work in Rust? Show how to convert an iterator into a Vec, HashMap, or String.
+# Rust's collect() Magic: Turning Iterators into Vecs, HashMaps, and Strings!
 
 `collect()` is a method that converts an iterator into a collection. It relies on Rust’s `FromIterator` trait, which defines how to build a type from an iterator.
 

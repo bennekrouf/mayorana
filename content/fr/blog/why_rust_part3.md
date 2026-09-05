@@ -15,7 +15,7 @@ tags:
   - systems-programming
 ---
 
-# Rust: sécurité Sans Sacrifice
+# Partie 3 : Rust: Memory safety sans garabe collector
 
 Rust n'a pas de GC. Il n'en a pas besoin.
 

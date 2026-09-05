@@ -16,7 +16,7 @@ tags:
   - safety
 ---
 
-# Maîtriser l'Inline Assembly en Rust : quand et comment optimiser en sécurité
+# Maîtriser l'Inline Assembly en Rust : Quand et Comment Optimiser en Sécurité
 
 L'inline assembly en Rust, via la macro `asm!` ou les intrinsèques `core::arch`, est un outil puissant mais rare pour optimiser du code critique en performance quand le compilateur ou les bibliothèques standard tombent à court. Je vais exposer quand l'utiliser, fournir un exemple d'implémentation, et détailler les stratégies pour assurer sécurité et portabilité à travers les architectures.
 

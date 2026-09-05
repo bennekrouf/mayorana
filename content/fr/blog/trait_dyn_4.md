@@ -18,7 +18,7 @@ tags:
   - plugins
 ---
 
-# Rendre les Traits Object-Safe pour dyn Trait de Rust dans les systèmes de Plugins
+# Rendre les Traits Object-Safe pour dyn Trait de Rust dans les Systèmes de Plugins
 
 Rust exige que les traits soient **object-safe** pour les utiliser avec `dyn Trait` pour le dispatch dynamique, car cela assure une vtable (table virtuelle) cohérente pour les appels de méthodes à l'exécution. Les traits non-object-safe, comme ceux avec des méthodes génériques ou des exigences statiques, ne peuvent pas être utilisés avec `dyn Trait`, mais ils peuvent être refactorisés pour les systèmes de plugins nécessitant du polymorphisme à l'exécution. Je vais expliquer pourquoi l'object safety est nécessaire et démontrer comment refactoriser un trait non-object-safe pour un système de plugins.
 

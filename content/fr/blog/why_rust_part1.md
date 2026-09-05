@@ -17,7 +17,7 @@ tags:
   - memory
 ---
 
-# Garbage Collectors: pratiques mais Coûteux
+# Partie 1 : GC Pauses et Latence: Le coût caché des langages de haut niveau
 
 Les langages de haut niveau comme Java, Python ou JavaScript gèrent la mémoire automatiquement. Mais cela vient avec des compromis.
 

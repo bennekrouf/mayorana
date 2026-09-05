@@ -15,7 +15,7 @@ tags:
   - itérateurs
 ---
 
-# Opérateurs & itérateurs Rust : ce Qu'il Faut Savoir
+# Opérateurs & Itérateurs Rust
 
 Voici quelques points d'attention autour de Rust, surtout qu'on vient avec des habitudes d'un autre language de programmation.
 

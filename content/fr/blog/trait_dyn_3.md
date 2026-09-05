@@ -1,8 +1,6 @@
 ---
 id: dispatch-performance-rust
-title: >-
-  fn process<T: MyTrait>(x: T)) VS utiliser dyn MyTrait pour le dispatch
-  dynamique.
+title: 'Borne de trait ou dyn Trait ? Dispatch statique et dynamique comparés'
 slug: dispatch-performance-rust
 locale: fr
 date: '2025-10-22'
@@ -18,7 +16,7 @@ tags:
   - traits
 ---
 
-# Quel est le compromis de performance entre utiliser une fonction générique avec un trait bound (ex : fn process<T: MyTrait>(x: T)) versus utiliser dyn MyTrait pour le dispatch dynamique, et dans quels scénarios préférerais-tu l'un ou l'autre ?
+# Borne de trait ou dyn Trait ? Dispatch statique et dynamique comparés
 
 En Rust, le **dispatch statique** (via les generics avec trait bounds) et le **dispatch dynamique** (via `dyn Trait`) offrent des profils de performance distincts, critiques pour des systèmes comme les processeurs de données temps réel. Le dispatch statique exploite la monomorphization pour la vitesse, tandis que le dispatch dynamique utilise des vtables pour la flexibilité. Ci-dessous, je compare les deux avec un exemple et expose quand choisir chacun basé sur la performance, flexibilité et maintenabilité.
 

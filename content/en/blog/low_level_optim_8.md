@@ -15,7 +15,7 @@ tags:
 date: '2025-11-04'
 ---
 
-# Instruction-Level Optimization: How can you use Rust's #[inline(always)] attribute effectively, and what are the risks of overusing it in terms of code size and compile time?
+# Instruction-Level Optimization: #[inline(always)]
 
 Rust's `#[inline(always)]` attribute forces the compiler to inline a function's body at every call site, optimizing instruction-level performance by eliminating call overhead and exposing more optimization opportunities. I'd use it strategically in performance-critical code, but overuse carries risks to code size, compile time, and even runtime efficiency. Here's how I'd approach it.
 

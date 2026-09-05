@@ -16,7 +16,7 @@ tags:
   - ownership
 ---
 
-# Quelle est la différence entre une function et une closure en Rust ?
+# Functions ou Closures en Rust ?
 
 Comprendre la distinction entre functions et closures est fondamental pour maîtriser le système d'ownership de Rust et ses caractéristiques de performance.
 

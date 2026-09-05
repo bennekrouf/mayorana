@@ -1,6 +1,6 @@
 ---
 id: supertraits-bounds-optimization
-title: Utiliser les supertraits pour imposer une hiérarchie de comportements
+title: 'Les supertraits : imposer une hiérarchie de comportements'
 slug: supertraits-bounds-optimization
 locale: fr
 author: mayo
@@ -18,7 +18,7 @@ tags:
 date: '2025-12-02'
 ---
 
-# Comment utiliserais-tu les supertraits (ex : trait Advanced: Basic) pour imposer une hiérarchie de comportements dans un système, et comment les combinerais-tu avec des clauses where pour optimiser un algorithme générique complexe ?
+# Les supertraits : imposer une hiérarchie de comportements
 
 Dans une bibliothèque de calcul numérique Rust, j'utiliserais les supertraits pour créer une hiérarchie de comportements, m'assurant que les opérations avancées s'appuient sur les basiques, et les combiner avec des clauses where pour écrire un algorithme générique complexe qui soit type-safe et performant. Cette approche organise le code logiquement, impose la justesse pendant la compilation, et optimise pour l'efficacité via le dispatch statique.
 

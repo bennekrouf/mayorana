@@ -18,7 +18,7 @@ tags:
   - lifetimes
 ---
 
-# Que sont les move closures (move || { ... }) ? quand sont-elles nécessaires et comment interagissent-elles avec l'ownership ?
+# Que sont les move closures (move || { ... }) ? Quand sont-elles nécessaires et comment interagissent-elles avec l'ownership ?
 
 Une `move` closure (définie avec le mot-clé `move`) force la closure à prendre ownership des variables qu'elle capture de l'environnement. Contrairement aux closures normales, qui capturent les variables par référence (immutable ou mutable) quand c'est possible, les `move` closures déplacent ou copient les variables dans la closure elle-même.
 

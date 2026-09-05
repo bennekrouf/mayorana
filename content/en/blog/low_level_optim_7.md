@@ -1,8 +1,6 @@
 ---
 id: allocation-avoidance-real-time-rust
-title: >-
-  Use fixed-size arrays or Option to avoid allocations in a performance-critical
-  path
+title: 'Avoiding heap allocation on a real-time path'
 slug: allocation-avoidance-real-time-rust
 locale: en
 author: mayo
@@ -17,7 +15,7 @@ tags:
 date: '2025-08-27'
 ---
 
-# Allocation Avoidance: In a real-time system, heap allocations can introduce latency. How would you use Rust's stack-based features (e.g., fixed-size arrays or Option) to avoid allocations in a performance-critical path?
+# Avoiding heap allocation on a real-time path
 
 In a real-time system, heap allocations via Box, Vec, or other dynamic structures introduce latency due to memory management overhead and potential garbage collection pauses (though Rust avoids GC, allocation/deallocation still varies). I'd use Rust's stack-based features like fixed-size arrays, Option, and custom structs to eliminate these in a performance-critical path, ensuring predictable, low-latency execution.
 

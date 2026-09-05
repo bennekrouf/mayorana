@@ -1,8 +1,6 @@
 ---
 id: associated-types-io-driver-api
-title: >-
-  Concevoir une API flexible et type-safe pour un driver I/O bas niveau avec des
-  types associés et non génériques
+title: 'Types associés ou génériques dans une API de driver I/O'
 slug: associated-types-io-driver-api
 author: mayo
 locale: fr
@@ -20,7 +18,7 @@ tags:
 date: '2025-12-04'
 ---
 
-# Comment utiliserais-tu les types associés dans un trait pour concevoir une API flexible et type-safe pour un driver I/O bas niveau, et en quoi diffèrent-ils des paramètres de type génériques dans ce contexte ?
+# Types associés ou génériques dans une API de driver I/O
 
 Dans un driver I/O bas niveau pour un système embarqué, j'utiliserais les types associés dans un trait Rust pour définir une API flexible et type-safe qui lie des types d'entrée/sortie spécifiques à chaque implémentation de driver. Contrairement aux paramètres de type génériques, les types associés fournissent une conception plus claire et plus contrainte, améliorant la clarté et maintenant les performances. Voici comment je procéderais avec un exemple.
 

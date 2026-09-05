@@ -1,6 +1,6 @@
 ---
 id: supertraits-bounds-optimization
-title: Use supertraits to enforce a hierarchy of behaviors
+title: 'Supertraits: enforcing a hierarchy of behaviours'
 slug: supertraits-bounds-optimization
 locale: en
 author: mayo
@@ -19,7 +19,7 @@ tags:
 date: '2025-08-14'
 ---
 
-# How would you use supertraits (e.g., trait Advanced: Basic) to enforce a hierarchy of behaviors in a system, and how would you combine them with where clauses to optimize a complex generic algorithm?
+# Supertraits: enforcing a hierarchy of behaviours
 
 In a Rust numerical computation library, I'd use supertraits to create a hierarchy of behaviors, ensuring that advanced operations build on basic ones, and combine them with where clauses to write a complex generic algorithm that's type-safe and performant. This approach organizes code logically, enforces correctness at compile time, and optimizes for efficiency through static dispatch.
 

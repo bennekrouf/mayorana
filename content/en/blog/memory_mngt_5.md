@@ -17,7 +17,7 @@ tags:
   - lifetimes
 ---
 
-# What is a dangling pointer, and how does Rust prevent it at compile time?
+# How does Rust prevent dangling pointer at compile time?
 
 A **dangling pointer** occurs when a pointer references memory that has already been freed, leading to undefined behavior like crashes or security vulnerabilities. In languages like C/C++, this is a common issue:
 

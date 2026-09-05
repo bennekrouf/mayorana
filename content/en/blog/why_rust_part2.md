@@ -14,7 +14,7 @@ tags:
   - c
 ---
 
-# C: Power Without Protection
+# C Gives You Control, But at What Cost?
 
 With C, there's no runtime, no GC. Just raw speed and control.
 

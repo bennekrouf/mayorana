@@ -16,7 +16,7 @@ tags:
   - cache
 ---
 
-# Optimisation Layout mémoire : comment utiliserais-tu l'attribut repr de Rust pour optimiser le layout mémoire d'une struct pour l'efficacité cache ?
+# Rust repr : Optimiser la Mémoire des Structs pour l'Efficacité Cache
 
 L'attribut `repr` contrôle le layout mémoire des structs, ce qui est critique pour l'optimisation bas niveau dans les systèmes à haut débit où la localité cache détermine les performances.
 

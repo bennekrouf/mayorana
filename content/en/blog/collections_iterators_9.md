@@ -14,7 +14,7 @@ tags:
 date: '2025-07-29'
 ---
 
-# How would you flatten a Vec<Vec<T>> into a Vec<T> using iterators? Compare performance with manual concatenation.
+# Flatten a Vec<Vec<T>> into a Vec<T> using iterators
 
 ## Flattening with Iterators
 

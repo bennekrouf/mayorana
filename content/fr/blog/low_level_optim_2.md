@@ -16,7 +16,7 @@ tags:
   - performance
 ---
 
-# Abstractions Zéro-Coût : comment Rust Optimise les chaînes d'Itérateurs
+# Abstractions Zéro-Coût : Comment Rust Optimise les Chaînes d'Itérateurs
 
 Les **abstractions zéro-coût** de Rust permettent aux constructs haut niveau, comme les chaînes d'itérateurs, de compiler vers du code machine aussi efficace que des boucles écrites à la main, sans overhead à l'exécution. C'est critique pour les systèmes sensibles aux performances. Ci-dessous, j'explique comment le compilateur Rust transforme une chaîne d'itérateurs (ex : utilisant `map`, `filter`, et `collect`) en boucle efficace, en me concentrant sur l'inlining et la fusion de boucles, et comment vérifier l'optimisation en pratique.
 

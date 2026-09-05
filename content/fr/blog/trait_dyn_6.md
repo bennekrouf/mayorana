@@ -1,8 +1,6 @@
 ---
 id: sized-unsized-bounds-flexibility
-title: >-
-  Écrire une fonction qui accepte à la fois des types sized (ex : [u8; 16]) et
-  unsized (ex : [u8] ou dyn Trait) avec un bound ?Sized
+title: '?Sized : une seule fonction pour les types sized et unsized'
 slug: sized-unsized-bounds-flexibility
 locale: fr
 author: mayo
@@ -20,7 +18,7 @@ tags:
 date: '2025-12-03'
 ---
 
-# Quelle est la signification du bound ?Sized dans les définitions de traits, et comment l'utiliserais-tu pour écrire une fonction qui accepte à la fois des types sized (ex : [u8; 16]) et des types unsized (ex : [u8] ou dyn Trait) ?
+# ?Sized : une seule fonction pour les types sized et unsized
 
 Le bound `?Sized` dans les définitions de traits Rust relâche la contrainte `Sized` par défaut sur les types génériques, permettant à une fonction ou trait de fonctionner avec à la fois des types sized (taille connue pendant la compilation, comme `[u8; 16]`) et des types unsized (ex : `[u8]`, `str`, `dyn Trait`). Dans une bibliothèque de sérialisation de données, j'utiliserais `?Sized` pour écrire une fonction flexible qui traite à la fois les tableaux fixes et les slices dynamiques efficacement, améliorant la fonctionnalité sans sacrifier la performance.
 

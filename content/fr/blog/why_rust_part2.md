@@ -1,6 +1,6 @@
 ---
 id: c-low-level-cost-fr
-title: 'Partie 2 : Les languages comme C/C++ ou Zig permettent de contrôler la mémoire mais à quel prix ?'
+title: 'Partie 2 : Les langages comme C/C++ ou Zig permettent de contrôler la mémoire mais à quel prix ?'
 locale: fr
 slug: c-low-level-cost-fr
 date: '2025-08-08'
@@ -17,7 +17,7 @@ tags:
   - undefined-behavior
 ---
 
-# C: La puissance sans srotection
+# Partie 2 : Les langages comme C/C++ ou Zig permettent de contrôler la mémoire mais à quel prix ?
 
 Avec C, il n'y a pas de runtime, pas de GC.
 

@@ -1,6 +1,6 @@
 ---
 id: borrowing-rules-rust-fr
-title: emprunts mutables vs. immutables.
+title: 'Emprunts mutables et immutables : les deux règles'
 slug: borrowing-rules-rust-fr
 locale: fr
 date: '2025-11-29'
@@ -16,7 +16,7 @@ tags:
   - safety
 ---
 
-# Quelles sont les règles de borrowing en Rust ? Explique les emprunts mutables vs. immutables.
+# Emprunts mutables et immutables : les deux règles
 
 Les règles de borrowing de Rust, appliquées par le borrow checker au moment de la compilation, assurent la memory safety et préviennent les data races sans overhead runtime. Ces règles gouvernent comment les données peuvent être accédées via des références, distinguant entre emprunts mutables (`&mut T`) et immutables (`&T`).
 

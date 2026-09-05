@@ -17,7 +17,7 @@ tags:
   - borrow-checker
 ---
 
-# Qu'est-ce que `&mut *x` (réemprunt) en Rust, et pourquoi gèle-t-il la référence originale ?
+# Qu'est-ce que &mut *x (réemprunt) en Rust, et pourquoi gèle-t-il la référence originale ?
 
 En Rust, l'expression `&mut *x` correspond à ce qu'on appelle un **réemprunt** (*reborrow* en anglais). Elle permet de créer une nouvelle référence mutable à partir d'une référence existante sans la consommer — quelque chose que le borrow checker interdirait normalement. Comprendre les réemprunts est essentiel pour écrire du Rust idiomatique lorsqu'on manipule des références mutables à travers des frontières de fonctions.
 

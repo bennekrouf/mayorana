@@ -16,7 +16,7 @@ tags:
   - ownership
 ---
 
-# Quel est le but de Box<T> en Rust ? quand l'utiliserais-tu ?
+# Quel est le but de Box<T> en Rust ?
 
 `Box<T>` est un smart pointer en Rust qui fournit l'allocation heap pour une valeur de type `T`. C'est la façon la plus simple de stocker des données sur le heap, offrant des garanties d'ownership et memory safety sans overhead runtime.
 

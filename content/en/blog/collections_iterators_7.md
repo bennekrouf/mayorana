@@ -14,7 +14,7 @@ tags:
 date: '2025-07-26'
 ---
 
-# How does Vec::drain() work, and when is it useful compared to Vec::truncate() or Vec::clear()?
+# Vec::drain() Vs Vec::truncate() or Vec::clear()?
 
 ## What is Vec::drain()?
 

@@ -17,7 +17,7 @@ tags:
   - dispatch
 ---
 
-# En quoi les traits Rust diffèrent-ils des interfaces dans des langages comme Java ou C#, et comment les utiliser pour définir un comportement partagé pour des types dans une bibliothèque critique en performance ?
+# Rust Traits vs. Interfaces Java/C# : Comportement partagé bien fait
 
 Les traits Rust et les interfaces définissent tous deux un comportement partagé, mais diffèrent fondamentalement en conception et exécution, particulièrement dans des contextes critiques en performance.
 

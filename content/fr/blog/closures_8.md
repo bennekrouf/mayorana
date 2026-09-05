@@ -1,6 +1,6 @@
 ---
 id: closure-performance-overhead-rust-fr
-title: Utiliser des closures versus des functions régulières ?
+title: 'Closures ou fonctions : ce que coûte vraiment une closure'
 slug: closure-performance-overhead-rust-fr
 locale: fr
 author: mayo
@@ -18,7 +18,7 @@ tags:
 date: '2025-11-10'
 ---
 
-# Quel est l'overhead de performance d'utiliser des closures versus des functions régulières en Rust ? quand les closures peuvent-elles être moins efficaces ?
+# Closures ou fonctions : ce que coûte vraiment une closure
 
 ## Overhead de performance
 

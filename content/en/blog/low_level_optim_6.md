@@ -17,7 +17,7 @@ tags:
 date: '2025-08-27'
 ---
 
-# What is the performance impact of using Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?
+# Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="lo6-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Vec::new() grows by repeated doubling and copying, while Vec::with_capacity(n) allocates the final size once">

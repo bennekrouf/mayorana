@@ -19,7 +19,7 @@ tags:
   - borrowing
 ---
 
-# Comment l'ownership et le borrowing préviennent-ils les data races ?
+# Comment les mécanismes d'Ownership et de Borrowing Assurent une Concurrence Sûre
 
 Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowing pour garantir la thread safety au moment de la compilation, éliminant les data races sans nécessiter un garbage collector. Cette approche assure un parallélisme sûr et haute performance avec un overhead runtime minimal.
 

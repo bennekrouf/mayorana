@@ -1,7 +1,6 @@
 ---
 id: storing-closures-in-structs
-title: >-
-  How storing a closure in a struct?
+title: 'How do you store a closure in a struct?'
 slug: storing-closures-in-structs
 locale: "en"
 author: mayo
@@ -14,7 +13,7 @@ tags:
 date: '2025-07-14'
 ---
 
-# How can you store a closure in a struct? What trait bounds and lifetime annotations are required?
+# How do you store a closure in a struct?
 
 Storing a closure in a struct requires specifying trait bounds (Fn, FnMut, FnOnce) and potentially lifetimes if the closure captures references. Here's how to do it:
 

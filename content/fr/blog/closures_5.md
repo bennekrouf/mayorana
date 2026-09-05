@@ -14,7 +14,7 @@ tags:
 date: '2025-11-08'
 ---
 
-# Closures avec état en Rust: Passer et Muter à Travers Plusieurs Appels
+# Closures avec État en Rust: Passer et Muter à Travers Plusieurs Appels
 
 Pour passer une closure à une fonction Rust qui doit l'appeler plusieurs fois tout en maintenant l'état entre les appels, la closure doit implémenter le trait `FnMut` pour permettre la mutation de son environnement capturé. Je vais expliquer comment concevoir cela, en utilisant l'ownership, les traits et les lifetimes de Rust, et mettre en évidence quand utiliser des closures simples versus des approches structurées.
 

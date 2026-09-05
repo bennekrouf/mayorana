@@ -15,7 +15,7 @@ tags:
   - pointeurs-intelligents
 ---
 
-# Le mot-clé `dyn` : Origines, Signification et limitations
+# Le mot-clé `dyn` : Origines, Signification et Limitations
 
 En Rust, le mot-clé `dyn` est au cœur du polymorphisme dynamique, permettant d'écrire du code flexible qui peut travailler avec différents types à l'exécution. Mais d'où vient ce mot mystérieux, comment fonctionne-t-il, et pourquoi certaines constructions comme `Vec<dyn Trait>` sont-elles impossibles ? Plongeons dans les mécanismes internes du langage.
 

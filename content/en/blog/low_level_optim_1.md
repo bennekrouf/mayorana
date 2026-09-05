@@ -15,7 +15,7 @@ tags:
   - cache
 ---
 
-# Memory Layout Optimization: How would you use Rust's repr attribute to optimize the memory layout of a struct for cache efficiency?
+# Rust's repr: Optimize Struct Memory for Cache Efficiency
 
 The `repr` attribute controls struct memory layout, which is critical for low-level optimization in high-throughput systems where cache locality drives performance.
 

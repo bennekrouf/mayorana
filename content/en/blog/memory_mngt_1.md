@@ -14,7 +14,7 @@ tags:
   - string
 ---
 
-# What is the difference between String and str in Rust? When would you use each?
+# String vs. &str – Which to Use and When?
 
 Understanding the distinction between `String` and `str` is fundamental to effective memory management and ownership in Rust.
 

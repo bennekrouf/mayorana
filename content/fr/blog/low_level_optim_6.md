@@ -18,7 +18,7 @@ tags:
 date: '2025-11-19'
 ---
 
-# Quel est l'impact performance d'utiliser Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
+# Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="lo6-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Vec::new() croît par doublements et copies répétés, tandis que Vec::with_capacity(n) alloue la taille finale une seule fois">

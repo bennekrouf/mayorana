@@ -1,8 +1,6 @@
 ---
 id: blanket-implementations-coherence
-title: >-
-  Blanket implementation (e.g., impl<T: SomeTrait>
-  AnotherTrait for T) to reduce code duplication ?
+title: 'Blanket implementations: one impl for every type that qualifies'
 slug: blanket-implementations-coherence
 author: mayo
 locale: en
@@ -20,7 +18,7 @@ tags:
 date: '2025-08-17'
 ---
 
-# Blanket implementation (e.g., impl<T: SomeTrait> AnotherTrait for T) are used to reduce code duplication in a library.
+# Blanket implementations: one impl for every type that qualifies
 
 In a Rust library providing utility functions, use a blanket implementation to automatically apply a trait to all types that satisfy a given constraint.
 

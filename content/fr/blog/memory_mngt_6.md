@@ -19,7 +19,7 @@ tags:
   - ownership
 ---
 
-# Pourquoi tu ne peux pas passer un &str directement à une fonction attendant un &String ? comment gérerais-tu un tel scénario ?
+# Pourquoi &str Ne Rentre Pas dans &String en Rust: Fixes Sympas pour les String Mismatches !
 
 En Rust, tu ne peux pas passer un `&str` directement à une fonction attendant un `&String` à cause de leurs types distincts, ce qui assure la type safety et prévient les assumptions sur l'ownership mémoire. Ci-dessous, j'explique pourquoi ce mismatch survient et comment le gérer efficacement.
 

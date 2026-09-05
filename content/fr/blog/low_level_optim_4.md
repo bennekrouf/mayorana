@@ -16,7 +16,7 @@ tags:
 date: '2025-11-17'
 ---
 
-# Booster les boucles Chaudes Rust : Réduire les Branch Mispredictions
+# Booster les Boucles Chaudes Rust : Réduire les Branch Mispredictions
 
 Les branch mispredictions surviennent quand le branch predictor du CPU devine incorrectement si un saut conditionnel (ex : d'un `if`) est pris, causant des stalls de pipeline et coûtant des cycles (10-20 cycles par misprediction sur les CPUs modernes). Dans une boucle chaude critique en performance en Rust, je restructurerais le code pour minimiser ou éliminer les branches, exploitant les fonctionnalités de Rust, et utiliserais des outils de profiling pour confirmer des améliorations mesurables dans l'efficacité du pipeline CPU.
 

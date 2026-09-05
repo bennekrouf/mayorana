@@ -19,7 +19,7 @@ tags:
 date: '2025-08-21'
 ---
 
-# Lors de l'itération sur un Vec, pourquoi utiliser .into_iter() au lieu de .iter() ?
+# Implications d'itérer sur un Vec avec .into_iter() au lieu de .iter()
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="ci10-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="into_iter consomme le Vec qui devient donc inutilisable ensuite, tandis que iter l'emprunte et le laisse disponible pour un usage ultérieur">

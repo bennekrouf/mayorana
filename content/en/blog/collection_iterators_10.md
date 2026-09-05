@@ -15,7 +15,7 @@ tags:
 date: '2025-07-14'
 ---
 
-# When iterating over a Vec, why might you use .into_iter() instead of .iter()? What ownership implications does this have?
+# Implications of iterating over a Vec with .into_iter() instead of .iter()
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="ci10-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="into_iter consumes the Vec so it cannot be reused afterward, while iter borrows it and leaves it available for further use">

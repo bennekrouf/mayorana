@@ -16,7 +16,7 @@ tags:
   - iterators
 ---
 
-# What is the difference between Vec::new() and Vec::with_capacity()? When would you use each?
+# Rust Vec::new() vs. with_capacity(): When to Use Each
 
 Understanding Vec allocation strategies is crucial for writing performant Rust code, especially when dealing with collections and iterators.
 

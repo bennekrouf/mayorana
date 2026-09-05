@@ -15,7 +15,7 @@ tags:
 date: '2025-11-21'
 ---
 
-# Optimisation au niveau des instructions : comment utiliser efficacement l'attribut #[inline(always)] de Rust et quels sont les risques de surutilisation en termes de taille de code et de temps de compilation ?
+# Optimisation au niveau des instructions : #[inline(always)]
 
 L'attribut `#[inline(always)]` de Rust force le compilateur à intégrer le corps d'une fonction à chaque site d'appel, optimisant les performances au niveau des instructions en éliminant la surcharge des appels et en exposant davantage d'opportunités d'optimisation. Je l'utiliserais stratégiquement dans du code critique pour les performances, mais la surutilisation comporte des risques pour la taille du code, le temps de compilation et même l'efficacité à l'exécution. Voici comment je l'aborderais.
 
