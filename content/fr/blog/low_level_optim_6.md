@@ -649,8 +649,7 @@ fn analyze_complexity() {
 }
 ```
 
-## Quand utiliser chaque approche
-
+## Décider au point d'appel
 ### Matrice de décision
 
 | Scénario | Recommandation | Justification |
@@ -697,8 +696,7 @@ fn process_stream<T>(stream: impl Iterator<Item = T>) -> Vec<T> {
 }
 ```
 
-## Points clés à retenir
-
+## Règles empiriques
 **Utilise with_capacity() pour** :
 - Nombres d'éléments prévisibles.
 - Scénarios haute performance.

@@ -221,7 +221,7 @@ fn main() {
 - **Performance prévisible** : La mémoire est libérée de façon déterministe.
 - **Pas de pauses** : Contrairement aux langages avec GC (Java, Go).
 
-## Points clés
+
 **Ownership** : Évite les fuites mémoire.  
 **Borrowing** : Évite les data races.  
 **Lifetimes** : Évite les pointeurs pendants.

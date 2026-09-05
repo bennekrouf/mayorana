@@ -66,8 +66,7 @@ Les traits Rust et les interfaces définissent tous deux un comportement partag�
 </svg>
 </div>
 
-## Différences clés
-
+## Traits et interfaces, côte à côte
 | Aspect | Traits Rust | Interfaces Java/C# |
 |--------|-------------|-------------------|
 | **Dispatch** | Dispatch statique (generics) par défaut, dynamique (`dyn`) sur demande | Polymorphisme à l'exécution via vtables |
@@ -210,8 +209,7 @@ Chaque appel `process` passe par une vtable, empêchant la fusion de boucle et a
 - **Supertraits** : Composent le comportement sans complexité d'héritage
 - **Dispatch dynamique** : Utilise `Box<dyn PacketHandler>` quand l'effacement de type est nécessaire
 
-## Points clés à retenir
-
+## Traits et interfaces, en bref
 **Traits Rust** : Résolution pendant la compilation, abstraction à coût zéro, dispatch statique par défaut  
 **Interfaces Java/C#** : Polymorphisme à l'exécution, overhead vtable, dynamique par nature  
 Utilise les traits pour du code critique en performance où le dispatch statique élimine l'overhead

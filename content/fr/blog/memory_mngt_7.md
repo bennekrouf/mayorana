@@ -193,8 +193,7 @@ std::thread::spawn(move || {
 let arr = Box::new([0u8; 10_000_000]); // Sûr
 ```
 
-## Points clés
-
+## Quand sortir `Box`
 **Utilise `Box<T>` quand tu as besoin** :
 - D'allocation heap pour données larges ou récursives.
 - De trait objects (`dyn Trait`).

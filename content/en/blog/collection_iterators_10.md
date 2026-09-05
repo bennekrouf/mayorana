@@ -65,8 +65,7 @@ date: '2025-07-14'
 </svg>
 </div>
 
-## Key Differences
-
+## `.into_iter()` vs `.iter()`
 | .into_iter() | .iter() |
 |--------------|---------|
 | Consumes the Vec (takes ownership). | Borrows the Vec immutably. |
@@ -206,8 +205,7 @@ let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 - **Zero-cost for primitives (i32, bool)**: `.into_iter()` and `.iter()` compile to the same assembly if `T: Copy`.
 - **Avoids allocations** when chaining adapters (e.g., `.map().filter()`).
 
-## Key Takeaways
-
+## Choosing between them
 **Use .into_iter() to**:
 - Move elements out of a Vec.
 - Optimize performance with owned data.

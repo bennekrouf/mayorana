@@ -236,8 +236,7 @@ C'est plus lisible et plus sûr que d'écrire des `if` partout dans ton code.
 </svg>
 </div>
 
-## Points clés
-
+## Résumé
 `value.clamp(min, max)` borne une valeur en un seul appel — pas besoin de logique `if` manuelle.
 
 Disponible dans la bibliothèque standard de Rust depuis la version 1.50, pour les entiers et les flottants.

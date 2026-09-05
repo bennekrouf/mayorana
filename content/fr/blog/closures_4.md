@@ -382,8 +382,7 @@ fn event_handler_example() {
 }
 ```
 
-## Pièges courants
-
+## Là où ça dérape
 ### 1. Moves Non Intentionnels
 
 ```rust
@@ -576,8 +575,7 @@ fn closure_sizes() {
 }
 ```
 
-## Points clés
-
+## Quand `move` est la réponse
 **Utilise `move` closures quand** :
 - La closure survit à son environnement (ex : threads).
 - Tu as besoin d'ownership explicite pour éviter les problèmes du borrow checker.
@@ -588,8 +586,7 @@ fn closure_sizes() {
 - Types `Copy` où l'emprunt est suffisant.
 - Quand tu as encore besoin des valeurs originales après.
 
-### Règles de décision
-
+### La règle simple
 1. **Thread ou async** → Toujours `move`
 2. **Closure stockée longtemps** → Probablement `move`
 3. **Closure locale temporaire** → Rarement `move`

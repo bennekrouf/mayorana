@@ -746,6 +746,5 @@ pub fn create_optimal_counter() -> Box<dyn BitCounter> {
 }
 ```
 
-## Conclusion
-
+## Avant de sortir `asm!`
 L'inline assembly en Rust est justifié pour l'optimisation extrême ou les instructions CPU uniques, comme montré avec le comptage de bits optimisé. J'assurerais la sécurité en confinant l'`unsafe`, gérant les registres soigneusement, et validant avec des tests exhaustifs. Pour la portabilité, j'utiliserais la compilation conditionnelle avec fallbacks, créant des abstractions qui cachent les détails d'architecture tout en livrant des performances maximales sur le matériel cible. L'assembly doit être le dernier recours après avoir épuisé les optimisations de haut niveau.

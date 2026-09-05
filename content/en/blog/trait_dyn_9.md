@@ -236,8 +236,7 @@ Only types I explicitly mark with `Sealed` get the blanket `Stats`.
 - **Generality**: Extend `Len` to other collections (e.g., `[T]`, `VecDeque<T>`).
 - **Safety**: Use where clauses to enforce invariants (e.g., non-empty collections).
 
-## Verification
-
+## Checking the expansion
 ### Tests
 
 Ensure blanket applies correctly:
@@ -257,6 +256,5 @@ assert_eq!(f.mean(), 2.0);
 
 Test invalid types (e.g., `Vec<String>`) to confirm coherence.
 
-## Conclusion
-
+## When a blanket impl is worth it
 I'd use a blanket `impl<T: Summable> Stats for T` to give `mean` to all `Summable` types, as shown to avoid duplications. This delivers a concise, safe API with minimal performance cost, leveraging Rust's type system.

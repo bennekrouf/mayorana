@@ -506,8 +506,7 @@ fn matrix_mult_scalar_generic(
 }
 ```
 
-## Vérification
-
+## Benchmark face à la version scalaire
 - **Benchmarking** : Utilise `criterion` pour comparer SIMD vs scalaire :
   ```rust
   use criterion::{black_box, Criterion};
@@ -631,5 +630,4 @@ impl<const N: usize> Drop for AlignedMatrix<N> {
 ```
 
 ## Conclusion
-
 Pour un débit maximum sur une architecture connue (ex : x86_64 avec AVX), utilise `std::arch` pour vectoriser la boucle interne de multiplication de matrices, avec tiling pour l'efficacité cache. Pour la portabilité, passe à `packed_simd`, acceptant un certain overhead. Adresse les défis comme l'alignement et la détection de fonctionnalités avec compilation conditionnelle et vérifications runtime, assurant à la fois vitesse et justesse dans un système de production.

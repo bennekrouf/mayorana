@@ -209,8 +209,7 @@ fn call_fn_once<F: FnOnce()>(f: F) {
 call_fn_once(consume_x); // ✅ Marche
 ```
 
-## Exemples avancés
-
+## Plus loin
 ### Closure avec `move` et Différents Traits
 
 ```rust
@@ -444,8 +443,7 @@ fn analyze_closure_trait() {
 }
 ```
 
-## Points clés
-
+## Quel trait tu obtiens réellement
 **`Fn`** : Read-only, réutilisable.  
 **`FnMut`** : Mutable, réutilisable.  
 **`FnOnce`** : Owned, usage unique.  

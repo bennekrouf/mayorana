@@ -64,8 +64,7 @@ date: '2025-07-24'
 </svg>
 </div>
 
-## Key Differences
-
+## `Vec<T>` vs `Box<[T]>`
 | Feature | Vec<T> | Box<[T]> |
 |---------|--------|----------|
 | Size Mutability | Growable/shrinkable (push, pop) | Fixed-size (immutable after creation) |
@@ -181,7 +180,6 @@ let vec_again = Vec::from(boxed);                // Copies data
   - Storing large immutable datasets (e.g., game assets).
 
 ## Key Takeaways
-
 Use Vec for mutable, growable sequences.
 Use Box<[T]> for immutable, memory-efficient storage.
 Convert cheaply from Vec to Box<[T]> when done modifying.

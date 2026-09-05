@@ -195,8 +195,7 @@ println!("manual: {:?}", start.elapsed());
 - La méthode manuelle avec pré-allocation est ~10–20% plus rapide pour les grands Vec.
 - La version avec itérateur est plus concise et aussi rapide pour les petites données.
 
-## Quand utiliser chaque approche
-
+## Les approches comparées
 | Approche | Convient le mieux pour | Pièges |
 |----------|----------|----------|
 | Itérateur | Lisibilité, chaînage d'opérations | Légèrement plus lent sans pré-allocation |
@@ -211,7 +210,6 @@ let slices: Vec<&[i32]> = vec![&[1, 2], &[3, 4]];
 let flat: Vec<i32> = slices.iter().flatten().copied().collect();
 ```
 
-## Points clés à retenir
 
 **Utilisez .flatten() pour** :
 - Un code propre et idiomatique.

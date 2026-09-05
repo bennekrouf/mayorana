@@ -205,8 +205,7 @@ Pendant pause GC: 2000ms (40x plus lent!)
 **Exigence:** Traiter des TBs efficacement  
 **Réalité:** L'overhead GC grandit avec la taille du dataset
 
-## Points clés
-
+## Le coût, en résumé
 ✅ **Le GC facilite le développement**  
 ❌ **La latence est imprévisible**  
 ❌ **Les performances se dégradent sous charge**  

@@ -217,7 +217,6 @@ println!("Result: {}", *counter.lock().unwrap());  // Outputs 10
 - **Fearless parallelism**: The compiler rejects unsafe patterns, enabling confident concurrent programming.
 
 ## Key Takeaways
-
 **Ownership rules prevent**:
 - Concurrent mutable access (no data races).
 - Dangling references (via lifetimes).

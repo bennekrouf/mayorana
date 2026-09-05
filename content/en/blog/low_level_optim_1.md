@@ -206,8 +206,7 @@ If using `repr(packed)` (13 bytes), I'd save 3 bytes per packet, but unaligned `
 - Field reordering can optimize cache line usage without changing `repr`
 - Test trade-offs on target hardware, especially ARM vs x86_64
 
-## Key Takeaways
-
+## Layout rules worth remembering
 **`repr(C)`**: Choose for performance-critical code where cache efficiency matters  
 **`repr(packed)`**: Use for memory-constrained scenarios with infrequent access  
 Profile cache performance before and after to validate optimizations

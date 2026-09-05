@@ -201,8 +201,7 @@ let mut v = Vec::with_capacity(n);
 v.extend(0..n);  // Optimized for iterators (avoids bounds checks)
 ```
 
-## Key Takeaways
-
+## Rules of thumb
 **Use with_capacity() for**:
 - Predictable element counts.
 - High-performance scenarios.

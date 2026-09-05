@@ -183,8 +183,7 @@ fn main() {
 
 **Bonus**: Also accepts `Cow<str>`, `Box<str>`, etc.
 
-## Key Takeaways
-
+## The fix, in short
 **Preferred**: Use `&str` in function arguments (flexible and zero-cost).  
 **If stuck with `&String`**: Convert `&str` to `String` (allocates).  
 **For APIs**: Use `AsRef<str>` or `impl Deref<Target=str>` for maximum compatibility.

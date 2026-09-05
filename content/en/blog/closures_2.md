@@ -193,8 +193,7 @@ let closure = move || println!("{}", s); // `s` is moved into the closure
 | `FnMut` | Zero-cost     | Stateful transformations       |
 | `FnOnce`| May allocate  | One-time operations (e.g., spawning threads) |
 
-## Key Takeaways
-
+## Which trait you actually get
 **`Fn`**: Read-only, reusable.  
 **`FnMut`**: Mutable, reusable.  
 **`FnOnce`**: Owned, single-use.  

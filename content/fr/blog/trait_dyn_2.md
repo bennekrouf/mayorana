@@ -202,8 +202,7 @@ La monomorphization duplique la fonction générique pour chaque type concret ut
 - **Temps de compilation** : Plus d'instances monomorphisées signifient des builds plus longs, bien que ce soit un coût unique.
 - **Atténuation** : Utilise les bounds judicieusement—ex : `T: Copy` évite les références pour les primitives mais exclut les types complexes. Pour un usage plus large, considère `T: Clone` comme alternative, avec un compromis de performance.
 
-## Vérification
-
+## Vérifier le résultat
 - **Benchmark** : Utilise `criterion` pour confirmer les performances :
   ```rust
   use criterion::{black_box, Criterion};
@@ -217,5 +216,4 @@ La monomorphization duplique la fonction générique pour chaque type concret ut
 - **Assembleur** : `cargo rustc --release -- --emit asm` montre des boucles optimisées, pas d'appels.
 
 ## Conclusion
-
 Les trait bounds comme `T: Add + Mul + Default + Copy` dans `dot_product` appliquent la sécurité (seulement les types numériques) et les performances (code statique, inlined). La monomorphization transforme cela en code machine spécifique au type, idéal pour une bibliothèque mathématique. Équilibrer ces bounds assure une API flexible mais efficace, avec du profiling pour éviter les coûts cachés.

@@ -232,7 +232,6 @@ fn return_cow(is_heap: bool) -> Cow<'static, str> {
 }
 ```
 
-## Points clés
 
 **String literals** :
 - Vivent en mémoire static (partie du binaire).

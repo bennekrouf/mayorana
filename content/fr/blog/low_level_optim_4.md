@@ -691,6 +691,5 @@ macro_rules! assert_performance_improvement {
 }
 ```
 
-## Conclusion
-
+## Ce qu'il faut retenir sur les branches
 Pour réduire les branch mispredictions dans une boucle chaude Rust, j'utiliserais l'élimination de branches arithmétiques, le tri de données, et les mouvements conditionnels avec pattern matching, comme montré. Les fonctionnalités de Rust (ownership, iterators) supportent naturellement ces optimisations. Je confirmerais les améliorations avec `perf stat` surveillant `branch-misses`, visant une réduction de 10% à <2%, et Valgrind pour l'analyse détaillée. Ces techniques peuvent améliorer les performances de 20-50% dans les boucles intensives en branches.

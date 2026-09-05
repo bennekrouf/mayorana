@@ -400,8 +400,7 @@ Smart compiler → Ownership system → Fast + Safe code
 </svg>
 </div>
 
-## Key Takeaways
-
+## What Rust actually buys you
 🦀 **Rust gives you the best of both worlds:**
 
 **Predictable performance** - no GC pauses, no runtime overhead  

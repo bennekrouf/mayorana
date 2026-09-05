@@ -179,8 +179,7 @@ fn main() {
 | C/C++        | High (manual memory mgmt) | None (programmer's responsibility) |
 | Rust         | Zero                      | Compile-time checks (ownership + lifetimes) |
 
-## Key Takeaways
-
+## Why this can never compile
 Rust’s compiler guarantees:
 - No references to freed memory.
 - No undefined behavior from dangling pointers.

@@ -227,8 +227,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
   // iter.next(); // ERROR: iter consumed by collect()
   ```
 
-## Key Takeaways
-
+## What `collect()` needs from you
 Use `collect()` to materialize iterators into:
 - `Vec`, `HashMap`, `String`, or any `FromIterator` type.
 Specify the type (e.g., `let v: Vec<_> = ...`).

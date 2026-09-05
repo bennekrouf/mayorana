@@ -99,7 +99,7 @@ fn main() {
 }
 ```
 
-### Points clés
+### Bornes et lifetimes, en résumé
 - **Overhead runtime zéro** : Monomorphized pour chaque type de closure.
 - **Type de closure fixe** : Ne peut pas stocker différentes closures dans la même struct.
 
@@ -681,8 +681,7 @@ Choisir `Fn`, `FnMut` ou `FnOnce` pour le champ stocké n'est pas une décision 
 </svg>
 </div>
 
-## Quand utiliser chaque approche
-
+## Compromis en un coup d'œil
 | Approche | Cas d'Usage | Trade-Offs |
 |----------|-------------|------------|
 | Générique (impl Fn) | Haute performance, type de closure fixe | Moins flexible, binary bloat |
@@ -816,8 +815,7 @@ fn mutable_example() {
 Stocke dans une struct une closure qui a capturé `&mut` et la mutabilité remonte : le binding de
 la struct doit être `mut` lui aussi, et la borne du champ doit être `FnMut`.
 
-## Exemple pratique complet
-
+## Un cas complet
 ```rust
 use std::collections::HashMap;
 

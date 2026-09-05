@@ -175,7 +175,6 @@ println!("{:?}, {:?}", r1, r2);
 </div>
 
 ## Points clés
-
 **L'ownership assure** :
 - Pas de dangling pointers (via lifetimes).
 - Pas de memory leaks (via `Drop`).

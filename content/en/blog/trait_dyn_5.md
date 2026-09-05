@@ -274,6 +274,5 @@ Expect tight performance due to inlining.
 ### Assembly
 `cargo rustc --release -- --emit asm` confirms native ops.
 
-## Conclusion
-
+## Where supertraits earn their place
 I'd use supertraits (`AdvancedNumeric: Numeric`) to structure a numerical library, ensuring `matrix_multiply` gets both basic and advanced ops, with where clauses adding flexibility and clarity. This enforces safety, organizes code, and optimizes via static dispatch, ideal for performance.

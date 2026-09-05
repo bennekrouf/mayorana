@@ -84,8 +84,7 @@ Comprendre les stratégies d'allocation de Vec est crucial pour écrire du code 
 | La capacité initiale est 0 (alloue au premier push) | La capacité initiale est exactement n (pas d'allocations précoces) |
 | Croît dynamiquement (peut réallouer plusieurs fois) | Évite la réallocation jusqu'à ce que len() > n |
 
-## Quand utiliser chacune
-
+## Lequel déclarer
 Utilisez `Vec::new()` quand :
 - Le nombre d'éléments est inconnu ou petit
 - Vous voulez de la simplicité (ex : vecteurs de courte durée)
@@ -221,7 +220,6 @@ Pré-allouer est une indication, pas une limite stricte. `len` et `capacity` son
 </svg>
 </div>
 
-## Points clés à retenir
 
 - Par défaut, utilisez `Vec::new()` pour la simplicité.  
 - Utilisez `with_capacity(n)` quand :

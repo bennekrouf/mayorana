@@ -216,8 +216,7 @@ struct JsonValue<'a> {
 | No modification | Stays as `Borrowed` | Zero |
 | Modification | Converts to `Owned` | One allocation |
 
-## Key Takeaways
-
+## When `Cow` pays for itself
 **Use `Cow` when**:
 - You need to conditionally modify borrowed data.
 - You want to avoid allocations for read-only paths.

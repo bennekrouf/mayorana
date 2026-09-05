@@ -246,7 +246,6 @@ let result = process_io(&mut uart, 42); // Fonctionne avec u8
 </svg>
 </div>
 
-
 ### Flexibilité
 
 Ajoute des types associés pour les erreurs ou configs si nécessaire (ex : `type Error`).
@@ -314,8 +313,7 @@ fn handle_io<D: AdvancedIoDriver>(
 }
 ```
 
-## Vérification
-
+## Vérifier que ça compile comme prévu
 ### Vérification de compilation
 
 S'assurer que les incompatibilités de types échouent :
@@ -338,8 +336,7 @@ fn bench(c: &mut Criterion) {
 
 Attends-toi à des cycles minimaux, équivalents à l'accès matériel brut.
 
-## Quand utiliser chaque approche
-
+## Quand chacune est le bon choix
 ### Utilise les Types associés quand :
 - Chaque implémentation a des types I/O fixes
 - Tu veux une API claire et contrainte
@@ -352,6 +349,5 @@ Attends-toi à des cycles minimaux, équivalents à l'accès matériel brut.
 - Tu implémentes des algorithmes génériques
 - L'uniformité n'est pas requise par implémentation
 
-## Conclusion
 
 J'utiliserais les types associés dans `IoDriver` pour fixer `Input` et `Output` par driver, comme avec `UartDriver`, assurant la sécurité de type et une API claire plutôt que la sur-flexibilité des generics. Cela évite le gonflage de monomorphization et les conversions à l'exécution, délivrant du code efficace et inliné pour un système I/O embarqué. Cette conception équilibre utilisabilité et performance, exploitant le système de types de Rust pour des drivers robustes.

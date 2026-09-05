@@ -425,8 +425,7 @@ fn demonstrate_trait_differences() {
 }
 ```
 
-## Pièges courants
-
+## Là où ça dérape
 ### 1. Oublier `mut`
 
 ```rust
@@ -618,14 +617,12 @@ fn performance_considerations() {
 }
 ```
 
-## Points clés
 
 **Utilise `FnMut`** pour les closures qui mutent l'état à travers plusieurs appels.  
 **Marque les closures et paramètres comme `mut`** pour permettre la mutation.  
 **Préfére les closures simples** pour l'état basique ; utilise les structs pour la gestion d'état complexe.
 
-### Règles de décision
-
+### Quand l'appliquer
 1. **État simple (1-2 variables)** → Closure avec captures mutables
 2. **État complexe** → Struct avec méthodes
 3. **État partagé** → Arc<Mutex<T>> ou RefCell<T>
@@ -637,8 +634,7 @@ fn performance_considerations() {
 Essaie de passer une closure non-`mut` à `call_repeatedly` : ça ne compile pas — appeler à
 travers `FnMut` exige un binding mutable.
 
-## Exemple pratique complet
-
+## Un exemple de bout en bout
 ```rust
 use std::collections::VecDeque;
 

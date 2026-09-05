@@ -220,8 +220,7 @@ fn main() {
 - **Sécurité** : Pas de generics ou `Self` assure que la vtable est type-agnostic, sûre pour tout implémenteur.
 - **Efficacité** : Le dispatch dynamique ajoute un lookup vtable (1-2 cycles), mais active le polymorphisme à l'exécution essentiel pour les plugins chargés dynamiquement.
 
-## Considérations avancées
-
+## Là où ça se complique
 ### Gestion de Multiples Types d'Entrée
 
 Si tu as besoin de flexibilité de type, utilise des enums ou des traits helper :
@@ -292,8 +291,7 @@ fn main() {
 }
 ```
 
-## Points clés à retenir
-
+## Ce qui rend un trait object-safe
 **Object Safety** : Élimine les generics, `Self` returns et méthodes statiques pour activer `dyn Trait`  
 **Factory Pattern** : Utilise des fonctions factory au lieu de méthodes `new()` statiques  
 **Compromis** : Moins de flexibilité de type contre la capacité de dispatch dynamique  

@@ -180,8 +180,7 @@ fn main() {
 }
 ```
 
-## Key Takeaways
-
+## What the overhead actually is
 ✅ Use impl Fn for zero-cost static dispatch.
 🚫 Avoid Box<dyn Fn> in performance-critical code.
 ⚠️ Optimize large captures: Prefer borrowing or minimizing captured data.

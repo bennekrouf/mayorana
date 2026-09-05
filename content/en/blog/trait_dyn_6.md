@@ -198,8 +198,7 @@ One function handles both fixed arrays (`[u8; 16]`) and slices (`[u8]`), plus tr
 - **Complexity**: Callers must understand `&T` vs. `T`. I'd document that `compute_checksum` takes references for universality.
 - **Alternative**: If only slices are needed, `&[u8]` directly might suffice, but `?Sized` supports broader use (e.g., `dyn Trait`).
 
-## Verification
-
+## Confirming both cases work
 ### Compile Test
 Ensure both sized and unsized types work:
 
@@ -223,6 +222,5 @@ fn bench(c: &mut Criterion) {
 
 Expect similar performance to direct calls, with inlining.
 
-## Conclusion
-
+## `?Sized` in practice
 `?Sized` lets `compute_checksum` handle both sized and unsized types by relaxing the `Sized` constraint, making it ideal for a serialization library. It maintains efficiency via static dispatch and references, offering flexibility without runtime cost. I'd use this to unify APIs across diverse data types, ensuring performance and scalability in a Rust system.

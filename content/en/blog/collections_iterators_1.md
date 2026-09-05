@@ -84,8 +84,7 @@ Understanding Vec allocation strategies is crucial for writing performant Rust c
 | Initial capacity is 0 (allocates on first push) | Initial capacity is exactly n (no early allocations) |
 | Grows dynamically (may reallocate multiple times) | Avoids reallocation until len() > n |
 
-## When to Use Each
-
+## Deciding at the call site
 Use `Vec::new()` when:
 - The number of elements is unknown or small
 - You want simplicity (e.g., short-lived vectors)
@@ -220,8 +219,6 @@ Pre-allocating is a hint, not a hard limit. `len` and `capacity` are two indepen
 <text x="400" y="206" text-anchor="middle" class="mut">with_capacity(n) only postpones growth; pushing past n resumes the doubling schedule</text>
 </svg>
 </div>
-
-## Key Takeaways
 
 - Default to `Vec::new()` for simplicity.  
 - Use `with_capacity(n)` when:

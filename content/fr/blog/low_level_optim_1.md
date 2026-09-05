@@ -199,8 +199,7 @@ Si j'utilisais `repr(packed)` (13 octets), j'économiserais 3 octets par paquet,
 </svg>
 </div>
 
-## Considérations avancées
-
+## Les cas limites
 ### Techniques d'Optimisation Layout
 
 ```rust
@@ -407,8 +406,7 @@ mod layout_tests {
 - La réorganisation de champs peut optimiser l'usage de ligne de cache sans changer `repr`
 - Teste les compromis sur le matériel cible, particulièrement ARM vs x86_64
 
-## Points clés à retenir
-
+## Les règles de layout à retenir
 **`repr(C)`** : Choisis pour du code critique en performance où l'efficacité cache compte  
 **`repr(packed)`** : Utilise pour des scénarios contraints en mémoire avec accès peu fréquent  
 Profile les performances cache avant et après pour valider les optimisations

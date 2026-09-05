@@ -93,8 +93,7 @@ where
 | `truncate()` | Yes (from index) | ❌ No | ✅ Yes | O(1) |
 | `clear()` | All | ❌ No | ✅ Yes | O(1) |
 
-## When to Use Each
-
+## Picking the right one
 ### 1. Vec::drain()
 
 **Use Case**: Process removed elements (e.g., filter, transform, or batch-delete).
@@ -211,8 +210,7 @@ vec.insert(0, "fresh");
 assert_eq!(vec, ["fresh", "new", "old"]);
 ```
 
-## Key Takeaways
-
+## Which one to reach for
 - **drain()**: Use when you need to process removed elements or batch-delete.
 - **truncate()/clear()**: Use for fast bulk removal without processing.
 - **All preserve capacity**: No reallocation overhead for future ops.

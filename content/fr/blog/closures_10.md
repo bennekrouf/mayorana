@@ -66,8 +66,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 </svg>
 </div>
 
-## Différences clés
-
+## `impl Fn()` face à `Box<dyn Fn()>`
 | **Aspect** | **impl Fn() (Static Dispatch)** | **Box&lt;dyn Fn()&gt; (Dynamic Dispatch)** |
 |------------|--------------------------------|--------------------------------------|
 | **Mécanisme de Dispatch** | Monomorphized au moment de la compilation (zero-cost) | Utilise des vtables (runtime lookup) |
@@ -76,8 +75,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 | **Mémoire** | Stack-allocated (sauf si moved) | Heap-allocated (fat pointer + heap data) |
 | **Cas d'Usage** | Type de closure fixe, critique en performance | Comportement dynamique, types de closures multiples |
 
-## Quand utiliser chacune
-
+## Décider en pratique
 ### 1. impl Fn() (Static Dispatch)
 - **Utilise Quand** :
   - Le type de closure est fixe et connu au moment de la compilation.
@@ -201,8 +199,7 @@ Remarque que `create_op` n'est pas seulement *plus lent* avec `impl Fn` — c'es
 | **Overhead Mémoire** | Aucun (stack-allocated) | 16–24 bytes (fat pointer + heap data) |
 | **Code Bloat** | Possible (monomorphization) | Minimal (vtable unique) |
 
-## Exemples avancés
-
+## Plus loin
 ### Collection de Closures Hétérogènes
 
 ```rust
@@ -418,8 +415,7 @@ fn analyze_dynamic() {
 }
 ```
 
-## Points clés
-
+## Quel dispatch choisir
 **Choisis `impl Fn()` pour** :
 - Code sensible aux performances (ex : chaînes d'iterators).
 - Type de closure unique (ex : factory functions).

@@ -137,8 +137,7 @@ println!("{:?}", vec);       // [2, 4, 6]
 | `iter()`      | Emprunte      | `&T`       | ❌                  | ✅             |
 | `iter_mut()`  | Emprunt mut   | `&mut T`   | ✅                  | ✅             |
 
-## Pièges courants
-
+## Ce qui coince en pratique
 - **Déplacements accidentels avec `into_iter()`** :
   ```rust
   let vec = vec![1, 2];

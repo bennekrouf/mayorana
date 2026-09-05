@@ -213,8 +213,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
 
 - **Abstractions à coût nul** : `collect()` est optimisé (par exemple, `Vec` à partir de ranges évite les vérifications de bornes).
 
-## Pièges courants
-
+## Les erreurs fréquentes
 - **Types ambigus** :
   Échoue si Rust ne peut pas inférer la cible :
   ```rust
@@ -229,8 +228,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
   // iter.next(); // ERREUR : iter consommé par collect()
   ```
 
-## Points clés à retenir
-
+## Ce que `collect()` attend de vous
 Utiliser `collect()` pour matérialiser des itérateurs en :
 - `Vec`, `HashMap`, `String`, ou tout type `FromIterator`.
 Spécifier le type (ex: `let v: Vec<_> = ...`).

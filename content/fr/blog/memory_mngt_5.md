@@ -180,8 +180,7 @@ fn main() {
 | C/C++       | Élevé (gestion mémoire manuelle) | Aucun (responsabilité du programmeur) |
 | Rust        | Zéro                         | Vérifications compile-time (ownership + lifetimes) |
 
-## Points clés
-
+## Pourquoi ça ne peut jamais compiler
 Le compilateur de Rust garantit :
 - Pas de références vers mémoire libérée.
 - Pas de comportement indéfini depuis dangling pointers.

@@ -221,7 +221,6 @@ fn main() {
 - **Predictable performance**: Memory is freed deterministically.
 - **No runtime pauses**: Unlike GC-based languages (Java, Go).
 
-## Key Takeaways
 **Ownership**: Prevents memory leaks.  
 **Borrowing**: Prevents data races.  
 **Lifetimes**: Prevents dangling pointers.

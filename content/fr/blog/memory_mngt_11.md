@@ -224,8 +224,7 @@ unsafe impl<#[may_dangle] T> Drop for MyBox<T> {
 - **Données Simples** : Pas besoin de `Drop` si le cleanup est géré par d'autres types (ex : `Box`, `Vec`).
 - **Thread-Safety** : Utilise `Arc` + `Mutex` au lieu de locking manuel dans `drop`.
 
-## Points clés
-
+## `Drop`, en résumé
 **Utilise `Drop` pour** :
 - Cleanup de ressources (fichiers, locks, mémoire).
 - Garanties FFI/safety-critical.

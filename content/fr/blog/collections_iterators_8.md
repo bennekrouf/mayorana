@@ -238,8 +238,7 @@ assert_eq!(vec, [2, 4]);
 ### Stabilité :
 Les deux méthodes préservent l'ordre relatif des éléments conservés (filtrage stable).
 
-## Points clés à retenir
-
+## Quand `retain()` l'emporte
 **retain()** : Plus rapide, efficace en mémoire et en place. Idéal pour les modifications en masse.
 **filter().collect()** : Flexible, non destructif. Idéal pour les pipelines d'itérateurs.
 

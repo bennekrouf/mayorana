@@ -316,7 +316,6 @@ fn create_handler() -> impl FnMut() -> i32 {
 Cela empêche les data races et les use-after-free au moment de la compilation—des garanties que JavaScript ne peut pas offrir.
 
 ## Résumé
-
 | Scénario | Utiliser `move` | Raison |
 |----------|-----------|---------|
 | Threading | Oui | Le thread peut survivre à la portée |

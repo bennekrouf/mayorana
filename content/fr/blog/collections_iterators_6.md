@@ -184,8 +184,7 @@ let vec_again = Vec::from(boxed);                // Copie les données
   - Configurations chargées une fois et jamais modifiées.
   - Stockage de grands jeux de données immuables (par exemple, assets de jeu).
 
-## Points clés à retenir
-
+## Points clés
 Utilisez Vec pour des séquences mutables et redimensionnables.
 Utilisez Box<[T]> pour du stockage immuable et efficace en mémoire.
 Convertissez facilement de Vec vers Box<[T]> quand vous avez fini de modifier.

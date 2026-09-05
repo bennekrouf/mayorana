@@ -328,8 +328,7 @@ where
 }
 ```
 
-## Vérification
-
+## Vérifier l'expansion
 ### Tests
 
 S'assurer que la blanket s'applique correctement :
@@ -376,6 +375,5 @@ Tester les types invalides (ex : `Vec<String>`) pour confirmer la cohérence.
 3. **Traits scellés** : Contrôle qui peut implémenter tes traits
 4. **Versioning soigneux** : Les blanket impls peuvent casser la compatibilité
 
-## Conclusion
-
+## Quand une blanket impl en vaut la peine
 J'utiliserais une blanket `impl<T: Summable> Stats for T` pour donner `mean` à tous les types `Summable`, comme montré, réduisant drastiquement la duplication dans une bibliothèque utilitaire. Les pièges de cohérence—chevauchements, erreurs en aval—sont atténués avec des traits scellés et des bounds clairs. Cela délivre une API concise et sûre avec un coût de performance minimal, exploitant le système de types de Rust pour la maintenabilité et la scalabilité.

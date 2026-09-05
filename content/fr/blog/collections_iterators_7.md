@@ -215,8 +215,7 @@ vec.insert(0, "fresh");
 assert_eq!(vec, ["fresh", "new", "old"]);
 ```
 
-## Points clés à retenir
-
+## Lequel choisir
 - **drain()** : À utiliser quand vous devez traiter les éléments supprimés ou supprimer par lots.
 - **truncate()/clear()** : À utiliser pour une suppression en masse rapide sans traitement.
 - **Tous préservent la capacité** : Pas de surcoût de réallocation pour les opérations futures.

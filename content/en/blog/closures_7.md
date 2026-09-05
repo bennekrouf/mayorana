@@ -180,8 +180,7 @@ fn process<'a>(data: &'a [i32]) -> impl Fn(usize) -> &'a i32 + 'a {
 }
 ```
 
-## Key Takeaways
-
+## Rules for returning a closure
 ✅ Use move to transfer ownership of captured variables.
 ✅ Annotate lifetimes when closures capture references.
 🚫 Avoid returning closures that capture short-lived references.

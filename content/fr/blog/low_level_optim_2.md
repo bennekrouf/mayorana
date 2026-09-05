@@ -451,6 +451,5 @@ fn complex_predicate(x: i32) -> bool {
 }
 ```
 
-## Conclusion
-
+## Alors, vraiment zéro coût ?
 Le compilateur Rust transforme les chaînes d'itérateurs en boucles efficaces via l'inlining et la fusion de boucles, accomplissant la promesse d'abstraction zéro-coût. En tant que développeur, je vérifierais cela avec l'analyse d'assembleur et des benchmarks utilisant des outils comme `cargo asm`, `godbolt.org`, et `criterion`, assurant que l'abstraction ne compromet pas les performances dans un système de production. Cela permet d'écrire du code propre et maintenable sans sacrifier la vitesse.

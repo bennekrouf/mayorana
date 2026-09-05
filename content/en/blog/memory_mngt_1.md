@@ -60,8 +60,7 @@ Understanding the distinction between `String` and `str` is fundamental to effec
 </svg>
 </div>
 
-## Key Differences
-
+## `String` and `str`, side by side
 | `String` | `str` (usually `&str`) |
 |----------|------------------------|
 | Growable, heap-allocated UTF-8 string | Immutable, fixed-size view into UTF-8 string |
@@ -80,8 +79,7 @@ Understanding the distinction between `String` and `str` is fundamental to effec
 - Pointer to string data (heap, stack, or static memory)
 - Length of the slice
 
-## When to Use Each
-
+## Which one to declare
 Use **`String`** when:
 - You need to modify or grow the string
 - You need ownership (e.g., returning from a function)
@@ -230,8 +228,7 @@ fn process_good(s: &str) -> &str {
 }
 ```
 
-## Key Takeaways
-
+## Which one to write
 **`String`**: Owned, mutable, heap-allocated  
 **`str`**: Borrowed, immutable, flexible (heap/stack/static)  
 Prefer `&str` for function parameters unless you need ownership or mutation

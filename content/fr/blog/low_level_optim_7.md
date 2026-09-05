@@ -716,6 +716,5 @@ Attends-toi à des temps cohérents, sub-microseconde vs les pics occasionnels d
 - **perf stat -e cycles** confirme l'absence de stalls liés à l'allocation.
 - **Usage Stack** : Vérifie la taille binaire ou utilise `#[inline(never)]` sur un wrapper pour inspecter la stack frame avec gdb.
 
-## Conclusion
 
 Je remplacerais les allocations heap par des tableaux et indices basés stack, comme dans ce processeur audio, assurant un overhead zéro-latence dans un chemin temps réel. Le système de types de Rust et le dimensionnement pendant la compilation garantissent la sécurité, tandis que les boucles serrées et l'accès cache-friendly maintiennent les performances. Cette approche délivre le comportement déterministe critique pour les applications temps réel, avec le profiling validant le gain.

@@ -205,8 +205,7 @@ println!("filter.collect: {:?}", start.elapsed());
 
 **Typical Result**: `retain()` is 2–3x faster due to no allocations.
 
-## When to Use Each
-
+## When each is the right call
 ### Prefer retain() When:
 - You want to modify the Vec in-place.
 - Memory efficiency is critical (e.g., large Vecs).
@@ -234,8 +233,7 @@ assert_eq!(vec, [2, 4]);
 ### Stability:
 Both methods preserve the relative order of retained elements (stable filtering).
 
-## Key Takeaways
-
+## When `retain()` wins
 **retain()**: Faster, memory-efficient, and in-place. Ideal for bulk modifications.
 **filter().collect()**: Flexible, non-destructive. Ideal for iterator pipelines.
 

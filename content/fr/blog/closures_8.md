@@ -570,8 +570,7 @@ fn memory_profiling() {
 }
 ```
 
-## Points clés
-
+## Ce que coûte vraiment une closure
 ✅ **Utilise `impl Fn` pour un static dispatch zero-cost.**  
 🚫 **Evite `Box<dyn Fn>` dans le code critique en performance.**  
 ⚠️ **Optimise les captures volumineuses : Préfére le borrowing ou minimise les données capturées.**

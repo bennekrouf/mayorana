@@ -247,13 +247,11 @@ let result = process_io(&mut uart, 42); // Works with u8
 </svg>
 </div>
 
-
 ### Flexibility
 
 Add associated types for errors or configs if needed (e.g., `type Error`).
 
-## Verification
-
+## Checking it compiles as intended
 ### Compile Check
 
 Ensure type mismatches fail:
@@ -275,7 +273,5 @@ fn bench(c: &mut Criterion) {
 ```
 
 Expect minimal cycles, matching raw hardware access.
-
-## Conclusion
 
 I'd use associated types in `IoDriver` to fix `Input` and `Output` per driver, as with `UartDriver`, ensuring type safety and a clear API over generics' over-flexibility. This avoids monomorphization bloat and runtime conversions, delivering efficient, inlined code for an embedded I/O system. This design balances usability and performance, leveraging Rust's type system for robust drivers.

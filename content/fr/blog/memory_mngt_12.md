@@ -224,7 +224,6 @@ println!("Result: {}", *counter.lock().unwrap());  // Affiche 10
 - **Parallélisme sans peur** : Le compilateur rejette les patterns unsafe, permettant une programmation concurrente confiante.
 
 ## Points clés
-
 **Les règles d'ownership préviennent** :
 - L'accès mutable concurrent (pas de data races).
 - Les dangling references (via lifetimes).

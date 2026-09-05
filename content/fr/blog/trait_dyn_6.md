@@ -197,8 +197,7 @@ Une fonction gère à la fois les tableaux fixes (`[u8; 16]`) et les slices (`[u
 - **Complexité** : Les appelants doivent comprendre `&T` vs `T`. Je documenterais que `compute_checksum` prend des références pour l'universalité.
 - **Alternative** : Si seules les slices sont nécessaires, `&[u8]` directement pourrait suffire, mais `?Sized` supporte un usage plus large (ex : `dyn Trait`).
 
-## Vérification
-
+## Confirmer que les deux cas passent
 ### Test de compilation
 S'assurer que les types sized et unsized fonctionnent :
 
@@ -274,6 +273,5 @@ struct Wrapper<T: ?Sized> {
 }
 ```
 
-## Conclusion
-
+## `?Sized` en pratique
 `?Sized` permet à `compute_checksum` de gérer à la fois les types sized et unsized en relâchant la contrainte `Sized`, ce qui en fait l'idéal pour une bibliothèque de sérialisation. Elle maintient l'efficacité via le dispatch statique et les références, offrant la flexibilité sans coût à l'exécution. J'utiliserais cela pour unifier les APIs à travers des types de données divers, assurant performance et scalabilité dans un système Rust.

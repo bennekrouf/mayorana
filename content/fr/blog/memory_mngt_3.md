@@ -149,8 +149,7 @@ let s2 = s1; // Move ownership (données heap pas copiées)
 </svg>
 </div>
 
-## Points clés
-
+## Où vivent réellement tes données
 **Stack** : Rapide, taille fixe, automatique.  
 **Heap** : Flexible, dynamique, manuel (via smart pointers).  
 Rust privilégie le stack mais utilise le heap pour données extensibles/taille inconnue.

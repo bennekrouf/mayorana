@@ -273,6 +273,5 @@ Attends-toi à des performances serrées grâce à l'inlining.
 ### Assembleur
 `cargo rustc --release -- --emit asm` confirme les ops natives.
 
-## Conclusion
-
+## Où les supertraits gagnent leur place
 J'utiliserais les supertraits (`AdvancedNumeric: Numeric`) pour structurer une bibliothèque numérique, m'assurant que `matrix_multiply` obtient les ops basiques et avancées, avec des clauses where ajoutant flexibilité et clarté. Cela impose la sécurité, organise le code, et optimise via le dispatch statique, idéal pour la performance.

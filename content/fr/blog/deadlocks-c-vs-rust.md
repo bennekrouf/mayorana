@@ -214,7 +214,6 @@ Rust ne vérifie pas l'ordre des locks à la compilation, mais vous pouvez utili
 - Analyseurs statiques (en développement)
 
 ## Résumé
-
 ✅ **Rust** garantit la sûreté mémoire et empêche les erreurs classiques de synchronisation  
 ❌ **Les deadlocks** sont toujours possibles — à vous de gérer l’ordre des verrous  
 Structurez vos locks proprement, et testez avec des outils comme `loom`

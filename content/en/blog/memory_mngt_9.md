@@ -170,8 +170,7 @@ What the checker actually compares is not *whether* both borrows exist, but whet
 - **Prevents Data Races**: By disallowing concurrent mutable access, Rust ensures thread safety by default.
 - **Ensures Memory Safety**: No dangling pointers or iterator invalidation, as the borrow checker enforces valid references.
 
-## Key Takeaways
-
+## The two rules
 ✅ **Immutable borrows (`&T`)**:
 - Many allowed, but no mutation.
 ✅ **Mutable borrows (`&mut T`)**:

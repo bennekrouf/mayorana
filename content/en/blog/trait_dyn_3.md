@@ -251,8 +251,7 @@ fn main() {
 - **Trade-Off**: Slower runtime, but acceptable if `process` is complex (call overhead is a smaller fraction) or invocation is infrequent.
 - **Maintainability**: Easier to extend—new types just implement the trait.
 
-## Verification
-
+## Measuring the difference
 - **Benchmark**:
   ```rust
   use criterion::{black_box, Criterion};
@@ -266,6 +265,5 @@ fn main() {
   Expect static to be 10-20% faster.
 - **Size**: `size target/release/app` shows static bloating `.text` per type.
 
-## Conclusion
-
+## Choosing between them
 In a real-time data processor, prefer static dispatch (`process_static`) for hot paths, trading code size for speed and inlining. For flexibility (e.g., pluggable processors), use `dyn EventProcessor`, accepting vtable costs. Profile to ensure static’s gains justify its footprint, balancing performance with system design goals.

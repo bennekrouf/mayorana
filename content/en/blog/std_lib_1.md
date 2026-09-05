@@ -159,7 +159,6 @@ float clampf(float value, float min, float max) {
 ```
 
 ## Summary
-
 | **Language** | **Native `clamp`?** | **How** |
 |---|---|---|
 | Rust | ✅ Yes (std, since 1.50) | `value.clamp(min, max)` |

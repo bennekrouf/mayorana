@@ -199,8 +199,7 @@ During GC pause: 2000ms (40x slower!)
 **Requirement:** Process TBs efficiently  
 **Reality:** GC overhead grows with dataset size
 
-## Key Takeaways
-
+## The cost, summarised
 ✅ **GC makes development easier**  
 ❌ **Latency is unpredictable**  
 ❌ **Performance degrades under load**  

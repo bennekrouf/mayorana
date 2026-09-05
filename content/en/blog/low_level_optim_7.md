@@ -196,8 +196,7 @@ impl AudioProcessor {
 - **Flexibility Loss**: No resizing, but real-time systems often prioritize predictability over adaptability.
 - **Custom Stack Structures**: For complex needs (e.g., a stack-allocated queue), I'd use a struct with arrays and indices, avoiding VecDeque's heap use.
 
-## Verification
-
+## Confirming there are no allocations
 ### Benchmarking
 
 Use criterion to measure latency:
@@ -216,7 +215,5 @@ Expect consistent, sub-microsecond times vs. Vec's occasional spikes.
 
 - **perf stat -e cycles** confirms no allocation-related stalls.
 - **Stack Usage**: Check binary size or use `#[inline(never)]` on a wrapper to inspect stack frame with gdb.
-
-## Conclusion
 
 I'd replace heap allocations with stack-based arrays and indices, as in this audio processor, ensuring zero-latency overhead in a real-time path. Rust's type system and compile-time sizing guarantee safety, while tight loops and cache-friendly access maintain performance. This approach delivers deterministic behavior critical for real-time applications, with profiling validating the win.

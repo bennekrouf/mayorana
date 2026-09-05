@@ -96,7 +96,7 @@ fn main() {
 }
 ```
 
-### Key Points
+### Bounds and lifetimes, summarised
 - **Zero runtime overhead**: Monomorphized for each closure type.
 - **Fixed closure type**: Can't store different closures in the same struct.
 
@@ -227,8 +227,7 @@ Choosing `Fn`, `FnMut` or `FnOnce` for the stored field is not a local decision 
 </svg>
 </div>
 
-## When to Use Each
-
+## Trade-offs at a glance
 | Approach | Use Case | Trade-Offs |
 |----------|----------|------------|
 | Generic (impl Fn) | High performance, fixed closure type | Less flexible, binary bloat |

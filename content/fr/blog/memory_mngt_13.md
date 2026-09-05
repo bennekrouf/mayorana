@@ -228,8 +228,7 @@ fn main() {
 
 Les réemprunts vous offrent la flexibilité de travailler avec plusieurs handles de type référence à différentes étapes d'un calcul, tout en restant entièrement dans le modèle mémoire sûr de Rust.
 
-## Points clés
-
+## Les règles du réemprunt
 `&mut *x` crée une nouvelle référence mutable pointant vers les mêmes données que `x`, sans consommer `x`.
 
 Tant que le réemprunt `y` est en vie, `x` est gelé — le borrow checker empêche leur utilisation simultanée.

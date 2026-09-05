@@ -305,7 +305,6 @@ free(data);  // Easy to forget or double-free
 - Still possible to have memory leaks
 
 ## Key Takeaways
-
 ✅ **Predictable performance - no GC pauses**  
 ✅ **Complete control over memory layout**  
 ✅ **Minimal runtime overhead**  

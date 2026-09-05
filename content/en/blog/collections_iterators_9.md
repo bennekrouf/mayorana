@@ -192,8 +192,7 @@ println!("manual: {:?}", start.elapsed());
 - Manual with pre-allocation is ~10–20% faster for large Vecs.
 - Iterator version is more concise and equally fast for small data.
 
-## When to Use Each
-
+## The approaches compared
 | Approach | Best For | Pitfalls |
 |----------|----------|----------|
 | Iterator | Readability, chaining operations | Slightly slower without pre-allocation |
@@ -207,8 +206,6 @@ If you have `Vec<&[T]>` instead of `Vec<Vec<T>>`, use `.flatten().copied()` to a
 let slices: Vec<&[i32]> = vec![&[1, 2], &[3, 4]];
 let flat: Vec<i32> = slices.iter().flatten().copied().collect();
 ```
-
-## Key Takeaways
 
 **Use .flatten() for**:
 - Clean, idiomatic code.

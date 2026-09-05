@@ -200,8 +200,7 @@ assert_eq!(vec, [1, 2, 3]); // Order changed
 | HashSet | O(n) | O(n) | ✅ Yes | Order matters, no sorting allowed. |
 | Sort + Dedup | O(n log n) | O(1) | ❌ No | Order irrelevant, memory-constrained. |
 
-## Key Takeaways
-
+## Picking a dedup strategy
 **Use HashSet if**:
 - Order must be preserved.
 - You can tolerate O(n) space.

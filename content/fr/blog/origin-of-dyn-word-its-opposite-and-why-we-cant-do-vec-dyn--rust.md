@@ -208,7 +208,7 @@ Le choix entre `dyn` et les génériques représente un compromis classique :
 - **Génériques** : Performance maximale, moins de flexibilité
 - **`dyn`** : Flexibilité maximale, léger overhead
 
-## Points clés
+## Ce que `dyn` dit vraiment
 `dyn` signifie "dynamic" et permet le polymorphisme à l'exécution via les vtables
 L'opposé de `dyn` est le polymorphisme statique (génériques, impl Trait)
 `Vec<dyn Trait>` est impossible car `dyn Trait` n'a pas de taille connue à la compilation

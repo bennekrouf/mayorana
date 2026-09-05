@@ -219,8 +219,7 @@ thread_local! {
 - **Vérification de Taille** : `std::mem::size_of::<CacheAlignedCounter>()` retourne 64, confirmant l'alignement.
 - **Disposition** : Éviter le compactage (ex. `#[repr(packed)]`) sauf besoin explicite - le remplissage est notre allié ici.
 
-## Vérification
-
+## Confirmer que ça a marché
 ### Profilage avec perf
 Exécuter `perf stat -e cache-misses,L1-dcache-load-misses ./target/release/app` sur les deux versions :
 - **Naïf** : Nombre élevé de L1-dcache-load-misses (ex. 10M) dû au faux partage.
@@ -241,6 +240,5 @@ Attendre une accélération de 2-5x (ex. de 50ms à 10ms) sur un CPU 4 cœurs.
 ### Disposition mémoire
 `std::mem::align_of::<CacheAlignedCounter>()` confirme l'alignement sur 64 octets.
 
-## Conclusion
-
+## Ce qu'il faut ramener dans ton propre code
 J'alignerais les données avec `#[repr(align(64))]` et les remplirais jusqu'à 64 octets, comme dans cet exemple de compteur, garantissant que chaque thread opère sur sa propre ligne de cache. Le système de types et les attributs de Rust rendent cela précis et sûr, tandis que le profilage avec perf valide la réduction des défauts de cache. Cela élimine le faux partage, débloquant le vrai parallélisme dans un processeur d'ensembles de données multi-threadé.

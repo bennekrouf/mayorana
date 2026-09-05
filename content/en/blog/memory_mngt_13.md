@@ -228,8 +228,7 @@ fn main() {
 
 Reborrows give you the flexibility of working with multiple reference-like handles at different stages of a computation, while staying entirely within Rust's safe memory model.
 
-## Key Takeaways
-
+## The reborrow rules
 `&mut *x` creates a new mutable reference pointing to the same data as `x`, without consuming `x`.
 
 While the reborrow `y` is alive, `x` is frozen — the borrow checker prevents both from being used simultaneously.

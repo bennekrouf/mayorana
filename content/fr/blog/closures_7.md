@@ -627,14 +627,12 @@ fn config_example() {
 }
 ```
 
-## Points clés
-
+## Règles pour retourner une closure
 ✅ **Utilise move pour transférer l'ownership des variables capturées.**  
 ✅ **Annote les lifetimes quand les closures capturent des références.**  
 🚫 **Evite de retourner des closures qui capturent des références courtes.**
 
-### Règles de décision
-
+### En pratique
 1. **Données locales** → `move` avec ownership transfer
 2. **Références d'entrée** → Explicit lifetime annotations
 3. **Données partagées** → `Arc<T>` ou `Rc<T>`
@@ -648,8 +646,7 @@ Dans les frameworks web comme actix-web, les handlers retournent souvent des clo
 Retire le `move` de `capture_with_lifetime` et ça ne compile plus : la closure emprunterait `s`,
 qui a déjà disparu au moment où on l'appelle.
 
-## Exemple pratique complet
-
+## Le tout mis ensemble
 ```rust
 use std::collections::HashMap;
 

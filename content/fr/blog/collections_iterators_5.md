@@ -205,8 +205,7 @@ assert_eq!(vec, [1, 2, 3]); // Ordre modifié
 | HashSet | O(n) | O(n) | ✅ Oui | L'ordre est important, tri non autorisé. |
 | Tri + Dedup | O(n log n) | O(1) | ❌ Non | L'ordre est sans importance, mémoire limitée. |
 
-## Points clés
-
+## Choisir une stratégie de déduplication
 **Utilisez HashSet si** :
 - L'ordre doit être préservé.
 - Vous pouvez tolérer un espace O(n).

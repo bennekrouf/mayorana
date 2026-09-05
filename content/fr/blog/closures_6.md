@@ -608,15 +608,13 @@ fn good_hof_pattern() -> impl Fn(i32) -> i32 {
 }
 ```
 
-## Points clés
-
+## Ce que les higher-order functions apportent
 **Les HOFs permettent des patterns flexibles et réutilisables** en traitant les functions comme des valeurs de première classe.  
 **Utilise `impl Fn`** pour le static dispatch zero-cost dans le code critique en performance.  
 **Utilise `Box<dyn Fn>`** pour un comportement dynamique avec multiple types de closures.  
 **Utilise `move`** pour assurer que les closures possèdent les données capturées quand retournées.
 
-### Règles de décision
-
+### Ce qui guide le choix
 1. **Performance critique** → `impl Fn` (static dispatch)
 2. **Comportement dynamique** → `Box<dyn Fn>` (dynamic dispatch)
 3. **Composition simple** → Functions inline

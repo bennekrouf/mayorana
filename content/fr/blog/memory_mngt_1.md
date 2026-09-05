@@ -59,8 +59,7 @@ Comprendre la différence entre `String` et `str` est fondamental pour une gesti
 </svg>
 </div>
 
-## Différences clés
-
+## `String` et `str`, côte à côte
 | `String` | `str` (habituellement `&str`) |
 |----------|-------------------------------|
 | String UTF-8 extensible, heap-allocated | Vue immutable, taille fixe dans string UTF-8 |
@@ -229,8 +228,7 @@ fn process_good(s: &str) -> &str {
 }
 ```
 
-## Points clés
-
+## Lequel écrire
 - **`String`** : Owned, mutable, heap-allocated  
 - **`str`** : Borrowed, immutable, flexible (heap/stack/static)  
 Préfère `&str` pour les paramètres de fonction sauf si tu as besoin d'ownership ou mutation

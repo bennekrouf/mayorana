@@ -401,8 +401,7 @@ Compilateur intelligent → Système ownership → Code rapide + sûr
 </svg>
 </div>
 
-## Points clés
-
+## Ce que Rust apporte réellement
 🦀 **Rust réunit le meilleur des deux mondes :**
 
 **Performance prévisible** - pas de pauses GC, pas d'overhead runtime  

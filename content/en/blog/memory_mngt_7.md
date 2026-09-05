@@ -187,8 +187,7 @@ std::thread::spawn(move || {
 let arr = Box::new([0u8; 10_000_000]); // Safe
 ```
 
-## Key Takeaways
-
+## When to reach for `Box`
 **Use `Box<T>` when you need**:
 - Heap allocation for large or recursive data.
 - Trait objects (`dyn Trait`).

@@ -174,8 +174,7 @@ fn parse_stream(data: &[u32]) -> u32 {
 - Le déroulage de boucles ou la fusion d'itérateurs (abstractions à coût nul de Rust) peuvent obtenir des gains similaires sans inlining forcé.
 - **Exemple** : Réécrivez `parse_stream` avec `fold` pour laisser le compilateur intégrer implicitement.
 
-## Vérification
-
+## Vérifier le résultat
 ### Benchmark
 Avec criterion :
 
@@ -195,6 +194,5 @@ Comparez avec et sans `#[inline(always)]` — attendez une latence plus serrée.
 ### Vérification de la taille
 `ls -lh` sur le binaire confirme une croissance minimale.
 
-## Conclusion
-
+## Quand l'utiliser, et quand s'abstenir
 J'utiliserais `#[inline(always)]` pour les petites fonctions chaudes comme `extract_bits` dans des boucles serrées, garantissant que la surcharge d'appel disparaît et que les optimisations se déclenchent. La surutilisation risque de gonfler les binaires et de ralentir les compilations, donc je profilerais pour la justifier, reviendrais à `#[inline]` ailleurs et surveillerais les effets sur le I-cache. Cela équilibre les gains de performance avec la maintenabilité et l'évolutivité dans une base de code Rust.

@@ -187,8 +187,7 @@ fn main() {
 
 **Bonus** : Accepte aussi `Cow<str>`, `Box<str>`, etc.
 
-## Points clés
-
+## La correction, en bref
 **Préféré** : Utilise `&str` dans les arguments de fonction (flexible et zero-cost).  
 **Si coincé avec `&String`** : Convertis `&str` vers `String` (alloue).  
 **Pour les APIs** : Utilise `AsRef<str>` ou `impl Deref<Target=str>` pour compatibilité maximum.

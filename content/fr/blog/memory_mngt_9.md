@@ -169,8 +169,7 @@ Ce que le checker compare n'est pas *l'existence* des deux emprunts, mais le che
 - **Prévient les Data Races** : En interdisant l'accès mutable concurrent, Rust assure la thread safety par défaut.
 - **Assure Memory Safety** : Pas de dangling pointers ou invalidation d'iterator, car le borrow checker applique les références valides.
 
-## Points clés
-
+## Les deux règles
 **Emprunts immutables (`&T`)** :
 - Plusieurs autorisés, mais pas de mutation.
 

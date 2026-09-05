@@ -252,8 +252,7 @@ fn main() {
 }
 ```
 
-## Différences clés
-
+## `impl Fn` face à `Box<dyn Fn>`
 | Approche            | `impl Fn` (Static)         | `Box<dyn Fn>` (Dynamic)    |
 |---------------------|----------------------------|----------------------------|
 | **Dispatch**        | Monomorphized (zero-cost)  | Vtable lookup (runtime cost) |
@@ -261,8 +260,7 @@ fn main() {
 | **Mémoire**         | Stack-allocated            | Heap-allocated (trait object) |
 | **Flexibilité**     | Moins (type fixe)          | Plus (toute closure `dyn Fn`) |
 
-## Exemples avancés
-
+## Cas moins évidents
 ### Factory Pattern avec Closures
 
 ```rust
@@ -348,8 +346,7 @@ fn main() {
 }
 ```
 
-## Quand utiliser chaque approche
-
+## Choisir la bonne forme
 ### `impl Fn` - Recommandé pour :
 - Retourner un type unique de closure (ex : factory functions).
 - Code critique en performance (pas d'allocation heap).
@@ -525,16 +522,14 @@ fn benchmark_dispatch() {
 }
 ```
 
-## Points clés
-
+## Choisir la signature
 **Paramètre** : Utilise les generics (`F: Fn(...)`) pour flexibilité et performance.  
 **Type de Retour** :  
 - `impl Fn` pour static dispatch (rapide, type fixe).  
 - `Box<dyn Fn>` pour dynamic dispatch (flexible, types multiples).  
 Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
-### Règles de décision
-
+### Comment trancher
 1. **Un seul type de closure** → `impl Fn`
 2. **Plusieurs types possibles** → `Box<dyn Fn>`
 3. **Performance critique** → `impl Fn`
@@ -543,8 +538,7 @@ Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 
 Retourner une `FnOnce` est permis — l'appelant n'a simplement qu'une seule occasion de l'appeler.
 
-## Exemple pratique complet
-
+## Le tout, en situation
 ```rust
 // Système de pipeline de traitement de données
 struct DataPipeline {

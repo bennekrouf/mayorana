@@ -310,7 +310,6 @@ free(data);  // Facile d'oublier ou de double-free
 - Toujours possible d'avoir des fuites mémoires
 
 ## Points clés
-
 ✅ **Performance prévisible - pas de pauses GC**  
 ✅ **Contrôle complet de l'emprunte mémoire**  
 ✅ **Overhead runtime minimal**  

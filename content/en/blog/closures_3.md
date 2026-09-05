@@ -186,8 +186,7 @@ fn main() {
 }
 ```
 
-## Key Differences
-
+## `impl Fn` vs `Box<dyn Fn>`
 | Approach            | `impl Fn` (Static)         | `Box<dyn Fn>` (Dynamic)    |
 |---------------------|----------------------------|----------------------------|
 | **Dispatch**        | Monomorphized (zero-cost)  | Vtable lookup (runtime cost) |
@@ -221,8 +220,7 @@ fn main() {
   }
   ```
 
-## Key Takeaways
-
+## Choosing the signature
 **Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  
 **Return Type**:  
 - `impl Fn` for static dispatch (fast, fixed type).  

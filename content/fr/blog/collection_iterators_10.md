@@ -69,8 +69,7 @@ date: '2025-08-21'
 </svg>
 </div>
 
-## Différences clés
-
+## `.into_iter()` face à `.iter()`
 | .into_iter() | .iter() |
 |--------------|---------|
 | Consomme le Vec (prend ownership). | Emprunte le Vec en écriture (mut) |
@@ -205,13 +204,11 @@ let vec = vec![1, 2, 3, 4];
 let evens: Vec<_> = vec.into_iter().filter(|x| x % 2 == 0).collect();
 ```
 
-## Considérations de performance
-
+## Ce que ça coûte à l'exécution
 - **Zero-cost pour les primitives (i32, bool)** : `.into_iter()` et `.iter()` compilent vers le même code assembleur si le type implémente le trait copy (`T: Copy`).
 - **Évite les allocations** quand on chaîne des adaptateurs (ex : `.map().filter()`).
 
-## Points clés
-
+## Choisir entre les deux
 **Utilise .into_iter() pour** :
 - Sortir des éléments d'un Vec.
 - Optimiser la performance avec des données owned.

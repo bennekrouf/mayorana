@@ -202,8 +202,6 @@ The trait you get is not something you pick — the compiler derives it from how
   }
   ```
 
-## Key Takeaways
-
 **Use `FnMut`** for closures that mutate state across multiple calls.  
 **Mark closures and parameters as `mut`** to enable mutation.  
 **Prefer simple closures** for basic state; use structs for complex state management.

@@ -186,8 +186,7 @@ The decorator is the subtle one: `log_call` both *accepts* a closure and *return
 3. **Stateful Logic**:
    Use `FnMut` for closures that mutate captured state (see previous answers on stateful closures).
 
-## Key Takeaways
-
+## What higher-order functions buy you
 **HOFs enable flexible, reusable patterns** by treating functions as first-class values.  
 **Use `impl Fn`** for zero-cost static dispatch in performance-critical code.  
 **Use `Box<dyn Fn>`** for dynamic behavior with multiple closure types.  

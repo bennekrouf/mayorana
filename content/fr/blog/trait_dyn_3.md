@@ -250,8 +250,7 @@ fn main() {
 - **Compromis** : Exécution plus lente, mais acceptable si `process` est complexe (l'overhead d'appel est une fraction plus petite) ou l'invocation est peu fréquente.
 - **Maintenabilité** : Plus facile à étendre—les nouveaux types implémentent juste le trait.
 
-## Vérification
-
+## Mesurer la différence
 - **Benchmark** :
   ```rust
   use criterion::{black_box, Criterion};
@@ -265,6 +264,5 @@ fn main() {
   Attends-toi à ce que statique soit 10-20% plus rapide.
 - **Taille** : `size target/release/app` montre statique qui gonfle `.text` par type.
 
-## Conclusion
-
+## Choisir entre les deux
 Dans un processeur de données temps réel, préfère le dispatch statique (`process_static`) pour les chemins chauds, échangeant la taille de code contre la vitesse et l'inlining. Pour la flexibilité (ex : processeurs pluggables), utilise `dyn EventProcessor`, acceptant les coûts vtable. Profile pour t'assurer que les gains de statique justifient son empreinte, équilibrant performance avec les objectifs de conception système.

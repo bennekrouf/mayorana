@@ -223,8 +223,7 @@ println!("{}", count); // 0 (original unchanged)
 - **Overusing `move`**:
   Unnecessary copies/moves can hurt performance or cause compile errors.
 
-## Key Takeaways
-
+## When `move` is the answer
 **Use `move` closures when**:
 - The closure outlives its environment (e.g., threads).
 - You need explicit ownership to avoid borrow checker issues.

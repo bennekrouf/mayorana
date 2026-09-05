@@ -257,8 +257,7 @@ As a final note, resist the temptation to reach for `asm!` when:
 - Portability matters more than a micro-optimization.
 - You're writing library code for public consumption without extensive CI across multiple targets.
 
-## Conclusion
-
+## Before you reach for `asm!`
 Inline assembly in Rust is a precision tool — powerful, sharp, and rarely needed. It shines in niche scenarios where you must exploit unique CPU instructions, hand-tune pipelines, or interface with legacy hardware. By confining `unsafe` blocks, documenting invariants, providing safe abstractions, and testing thoroughly, you can harness that power without compromising Rust's safety guarantees.
 
 **Golden rules**:

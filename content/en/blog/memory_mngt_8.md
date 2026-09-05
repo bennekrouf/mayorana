@@ -231,8 +231,6 @@ fn return_cow(is_heap: bool) -> Cow<'static, str> {
 }
 ```
 
-## Key Takeaways
-
 **String literals**:
 - Live in static memory (part of the binary).
 - Are immutable and zero-cost.
