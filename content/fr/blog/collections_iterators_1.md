@@ -85,18 +85,18 @@ Comprendre les stratégies d'allocation de Vec est crucial pour écrire du code 
 | Croît dynamiquement (peut réallouer plusieurs fois) | Évite la réallocation jusqu'à ce que len() > n |
 
 ## Lequel déclarer
-Utilisez `Vec::new()` quand :
+Utilise `Vec::new()` quand :
 - Le nombre d'éléments est inconnu ou petit
-- Vous voulez de la simplicité (ex : vecteurs de courte durée)
+- Tu veux de la simplicité (ex : vecteurs de courte durée)
 
 ```rust
 let mut v = Vec::new(); // Bon pour un usage ad hoc
 v.push(1);
 ```
 
-Utilisez `Vec::with_capacity(n)` quand :
-- Vous connaissez le nombre exact ou maximum d'éléments à l'avance
-- Vous optimisez pour la performance (évite les réallocations)
+Utilise `Vec::with_capacity(n)` quand :
+- Tu connais le nombre exact ou maximum d'éléments à l'avance
+- Tu optimises pour la performance (évite les réallocations)
 
 ```rust
 let mut v = Vec::with_capacity(1000); // Pré-alloue pour 1000 éléments
@@ -221,11 +221,11 @@ Pré-allouer est une indication, pas une limite stricte. `len` et `capacity` son
 </div>
 
 
-- Par défaut, utilisez `Vec::new()` pour la simplicité.  
-- Utilisez `with_capacity(n)` quand :
-- Vous connaissez la taille à l'avance
+- Par défaut, utilise `Vec::new()` pour la simplicité.  
+- Utilise `with_capacity(n)` quand :
+- Tu connais la taille à l'avance
 - La performance est critique (ex : boucles critiques)
 
 Pousser au-delà de la capacité réservée n'est pas une erreur : le `Vec` croît comme `Vec::new()`
-l'aurait fait depuis le début. Vous gagnez l'allocation unique jusqu'à `n`, et le doublement
+l'aurait fait depuis le début. Tu gagnes l'allocation unique jusqu'à `n`, et le doublement
 habituel ensuite.

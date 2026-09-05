@@ -206,17 +206,17 @@ assert_eq!(vec, [1, 2, 3]); // Ordre modifié
 | Tri + Dedup | O(n log n) | O(1) | ❌ Non | L'ordre est sans importance, mémoire limitée. |
 
 ## Choisir une stratégie de déduplication
-**Utilisez HashSet si** :
+**Utilise HashSet si** :
 - L'ordre doit être préservé.
-- Vous pouvez tolérer un espace O(n).
+- Tu peux tolérer un espace O(n).
 
-**Utilisez Tri + Dedup si** :
+**Utilise Tri + Dedup si** :
 - L'ordre n'a pas d'importance.
 - La mémoire est limitée (ex : systèmes embarqués).
 
 ## Alternatives :
-- Pour les environnements no_std, utilisez un BTreeSet (plus lent mais évite le hachage).
-- Utilisez itertools::unique pour la déduplication basée sur les iterators.
+- Pour les environnements no_std, utilise un BTreeSet (plus lent mais évite le hachage).
+- Utilise itertools::unique pour la déduplication basée sur les iterators.
 
 Quand `T` est `Clone` mais pas `Hash`, la voie du `HashSet` est fermée. `Vec::dedup_by` avec
-votre propre test d'égalité marche encore, à condition de trier l'entrée d'abord.
+ton propre test d'égalité marche encore, à condition de trier l'entrée d'abord.

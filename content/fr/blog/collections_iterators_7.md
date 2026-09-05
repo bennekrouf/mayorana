@@ -22,7 +22,7 @@ date: '2025-10-29'
 
 ## Qu'est-ce que Vec::drain() ?
 
-`drain()` supprime une plage d'éléments d'un Vec tout en cédant leur ownership via un itérateur. Contrairement à `truncate()` ou `clear()`, il vous permet de traiter les éléments supprimés avant qu'ils ne soient libérés.
+`drain()` supprime une plage d'éléments d'un Vec tout en cédant leur ownership via un itérateur. Contrairement à `truncate()` ou `clear()`, il te permet de traiter les éléments supprimés avant qu'ils ne soient libérés.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="ci7-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un Vec peut être réduit avec drain, qui cède les éléments supprimés via un itérateur, ou avec truncate/clear, qui les libèrent sans céder l'ownership">
@@ -127,7 +127,7 @@ assert_eq!(vec, [1, 2]);
 
 ### 3. Vec::clear()
 
-**Cas d'usage** : Supprimer tous les éléments (plus rapide que `drain(..)` si vous n'en avez pas besoin).
+**Cas d'usage** : Supprimer tous les éléments (plus rapide que `drain(..)` si tu n'en as pas besoin).
 
 **Exemple** :
 ```rust
@@ -216,7 +216,7 @@ assert_eq!(vec, ["fresh", "new", "old"]);
 ```
 
 ## Lequel choisir
-- **drain()** : À utiliser quand vous devez traiter les éléments supprimés ou supprimer par lots.
+- **drain()** : À utiliser quand tu dois traiter les éléments supprimés ou supprimer par lots.
 - **truncate()/clear()** : À utiliser pour une suppression en masse rapide sans traitement.
 - **Tous préservent la capacité** : Pas de surcoût de réallocation pour les opérations futures.
 

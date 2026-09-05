@@ -5,7 +5,7 @@ slug: move-closures-rust-javascript-developers
 locale: fr
 author: mayo
 excerpt: >-
-  Apprenez comment fonctionnent les move closures en Rust comparé aux closures
+  Apprends comment fonctionnent les move closures en Rust comparé aux closures
   JavaScript - ownership, threading et quand utiliser le mot-clé move
 tags:
   - rust
@@ -17,7 +17,7 @@ date: '2025-11-12'
 
 # Comprendre les Move Closures en Rust : Guide pour les Développeurs JavaScript
 
-Vous venez de JavaScript ? Les closures fonctionnent différemment en Rust. Une closure `move` force le transfert d'ownership des variables capturées—pas de références partagées comme en JS. C'est le pont entre les closures automatiques de JavaScript et le modèle d'ownership de Rust.
+Tu viens de JavaScript ? Les closures fonctionnent différemment en Rust. Une closure `move` force le transfert d'ownership des variables capturées—pas de références partagées comme en JS. C'est le pont entre les closures automatiques de JavaScript et le modèle d'ownership de Rust.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="moveclo-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Les closures JavaScript partagent une référence vers la variable capturée, alors que les closures move de Rust prennent l'ownership et l'original devient inaccessible">
@@ -90,7 +90,7 @@ La closure partage la même variable `count`. Pas de copie, pas de déplacement�
 
 ## Le choix explicite de Rust
 
-Rust vous oblige à choisir : emprunter ou posséder. Les closures régulières empruntent :
+Rust t'oblige à choisir : emprunter ou posséder. Les closures régulières empruntent :
 
 ```rust
 let mut count = 0;
@@ -122,8 +122,8 @@ let closure = move || println!("{}", x); // `x` copié
 println!("{}", x); // OK : le `x` original est toujours valide
 ```
 
-### Quand vous avez besoin de `move`
-Trois situations imposent le mot-clé, et toutes se ramènent à la même question — celle que JavaScript ne vous pose jamais :
+### Quand tu as besoin de `move`
+Trois situations imposent le mot-clé, et toutes se ramènent à la même question — celle que JavaScript ne te pose jamais :
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="jsrsb-fig" viewBox="0 0 800 420" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Arbre de décision : si une closure survit à son scope ou doit être Send, il faut move, puis les types Copy sont copiés tandis que les types non-Copy invalident l'original ; sinon une closure emprunteuse suffit">
@@ -199,7 +199,7 @@ Trois situations imposent le mot-clé, et toutes se ramènent à la même questi
 
 #### Threading
 
-En JavaScript, vous partageriez l'état entre opérations async sans y penser :
+En JavaScript, tu partagerais l'état entre opérations async sans y penser :
 
 ```javascript
 const data = [1, 2, 3];
@@ -292,7 +292,7 @@ increment();
 Le `count` déplacé est indépendant—les changements internes n'affectent pas l'original.
 
 ## Le changement de paradigme depuis JavaScript
-JavaScript : les closures capturent par référence implicitement. Le GC gère la durée de vie. Vous ne pensez jamais à l'ownership :
+JavaScript : les closures capturent par référence implicitement. Le GC gère la durée de vie. Tu ne penses jamais à l'ownership :
 
 ```javascript
 const createHandler = () => {
@@ -301,7 +301,7 @@ const createHandler = () => {
 };
 ```
 
-Rust : vous choisissez explicitement. Empruntez pour un usage local. Déplacez pour un transfert d'ownership :
+Rust : tu choisis explicitement. Emprunte pour un usage local. Déplace pour un transfert d'ownership :
 
 ```rust
 fn create_handler() -> impl FnMut() -> i32 {
@@ -323,6 +323,6 @@ Cela empêche les data races et les use-after-free au moment de la compilation�
 | Tâches async | Souvent | La tâche a besoin d'une durée de vie 'static |
 | Usage local | Non | L'emprunt est suffisant |
 
-**Principe fondamental :** Si une closure survit à son environnement ou doit être `Send`, utilisez `move`. Sinon, laissez le borrow checker choisir le mode de capture minimal.
+**Principe fondamental :** Si une closure survit à son environnement ou doit être `Send`, utilise `move`. Sinon, laisse le borrow checker choisir le mode de capture minimal.
 
 Le mot-clé `move` est la façon de Rust de dire : "Cette closure possède maintenant ces variables." Ce n'est pas juste de la syntaxe—c'est un contrat appliqué au moment de la compilation, éliminant des classes entières d'erreurs runtime qui affectent les langages avec garbage collection.

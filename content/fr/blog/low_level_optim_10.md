@@ -381,5 +381,5 @@ AMDuProfCLI collect --config inst_based ./app
 valgrind --tool=cachegrind ./app
 ```
 
-## Où cela vous laisse
+## Où cela te laisse
 Pour résoudre les L1 cache misses dans une codebase Rust, j'utiliserais `perf` pour détecter les taux de miss élevés, `cargo flamegraph` pour cibler le coupable, et `criterion` pour mesurer les améliorations. Le workflow—reproduire, diagnostiquer, hypothèse, optimiser, vérifier—assure des résultats guidés par les données. Dans ce cas, passer à un layout SoA a réduit drastiquement les cache misses, boostant le débit, comme confirmé par les outils de profiling. Cette approche aide les développeurs à résoudre efficacement les goulots d'étranglement.

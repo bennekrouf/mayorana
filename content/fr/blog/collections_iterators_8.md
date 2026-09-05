@@ -212,14 +212,14 @@ println!("filter.collect: {:?}", start.elapsed());
 ## Quand utiliser chaque méthode
 
 ### Préférer retain() quand :
-- Vous voulez modifier le Vec en place.
+- Tu veux modifier le Vec en place.
 - L'efficacité mémoire est critique (ex : Vec de grande taille).
 - L'ordre des éléments doit être préservé.
 
 ### Préférer filter().collect() quand :
-- Vous avez besoin que le Vec original reste intact.
-- Vous enchaînez plusieurs adaptateurs d'itérateur (ex : `.filter().map()`).
-- Vous travaillez avec des itérateurs non-Vec (ex : ranges, slices).
+- Tu as besoin que le Vec original reste intact.
+- Tu enchaînes plusieurs adaptateurs d'itérateur (ex : `.filter().map()`).
+- Tu travailles avec des itérateurs non-Vec (ex : ranges, slices).
 
 ## Notes avancées
 

@@ -915,4 +915,4 @@ fn main() {
 
 ---
 
-**Conclusion :** Stocker des closures dans des structs offre une flexibilité énorme pour créer des architectures modulaires et expressives. Choisis l'approche selon vos besoins de performance, flexibilité et sécurité des lifetimes !
+**Conclusion :** Stocker des closures dans des structs offre une flexibilité énorme pour créer des architectures modulaires et expressives. Choisis l'approche selon tes besoins de performance, flexibilité et sécurité des lifetimes !

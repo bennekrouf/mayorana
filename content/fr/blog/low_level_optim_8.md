@@ -160,19 +160,19 @@ fn parse_stream(data: &[u32]) -> u32 {
 ## Stratégies d'atténuation
 
 ### Utilisation sélective
-- Réservez `#[inline(always)]` pour les fonctions minuscules et fréquemment appelées dans les chemins chauds. Utilisez `#[inline]` (une suggestion) pour les plus grandes, en faisant confiance au jugement de LLVM.
-- **Exemple** : N'intégrez pas un parseur complexe, mais intégrez un accesseur de 2 lignes.
+- Réserve `#[inline(always)]` pour les fonctions minuscules et fréquemment appelées dans les chemins chauds. Utilise `#[inline]` (une suggestion) pour les plus grandes, en faisant confiance au jugement de LLVM.
+- **Exemple** : N'intègre pas un parseur complexe, mais intègre un accesseur de 2 lignes.
 
 ### Profilage
-- Utilisez `perf stat -e instructions,cycles` ou `cargo flamegraph` pour identifier la surcharge d'appel. Appliquez `#[inline(always)]` uniquement là où les données montrent un gain (par exemple, réduction de 10 %+ des cycles).
-- Après optimisation, vérifiez les défauts de I-cache (`perf stat -e iTLB-load-misses`) pour garantir l'absence de régression.
+- Utilise `perf stat -e instructions,cycles` ou `cargo flamegraph` pour identifier la surcharge d'appel. Applique `#[inline(always)]` uniquement là où les données montrent un gain (par exemple, réduction de 10 %+ des cycles).
+- Après optimisation, vérifie les défauts de I-cache (`perf stat -e iTLB-load-misses`) pour garantir l'absence de régression.
 
 ### Mesurer la taille du code
-- Exécutez `size target/release/myapp` avant et après. Si la section `.text` gonfle (par exemple, de 10 Ko à 100 Ko), reconsidérez l'inlining des grandes fonctions.
+- Exécute `size target/release/myapp` avant et après. Si la section `.text` gonfle (par exemple, de 10 Ko à 100 Ko), reconsidère l'inlining des grandes fonctions.
 
 ### Alternatives
 - Le déroulage de boucles ou la fusion d'itérateurs (abstractions à coût nul de Rust) peuvent obtenir des gains similaires sans inlining forcé.
-- **Exemple** : Réécrivez `parse_stream` avec `fold` pour laisser le compilateur intégrer implicitement.
+- **Exemple** : Réécris `parse_stream` avec `fold` pour laisser le compilateur intégrer implicitement.
 
 ## Vérifier le résultat
 ### Benchmark
@@ -186,7 +186,7 @@ fn bench(c: &mut Criterion) {
 }
 ```
 
-Comparez avec et sans `#[inline(always)]` — attendez une latence plus serrée.
+Compare avec et sans `#[inline(always)]` — attends une latence plus serrée.
 
 ### Assembleur
 `cargo rustc --release -- --emit asm` montre `shr` et `and` dans la boucle, pas d'instructions d'appel.

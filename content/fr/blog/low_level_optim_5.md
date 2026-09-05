@@ -674,12 +674,12 @@ Parce que l'inline assembly contourne les vérifications de sécurité habituell
 | Comportement indéfini | Exécuter sous `miri` (bien que `asm!` soit partiellement non supporté) et Valgrind/ASan |
 
 ## Quand ne pas utiliser l'inline assembly
-En note finale, résistez à la tentation de recourir à `asm!` quand :
+En note finale, résiste à la tentation de recourir à `asm!` quand :
 
-- Le compilateur génère déjà du code optimal (vérifiez avec `cargo asm` ou [Compiler Explorer](https://godbolt.org)).
+- Le compilateur génère déjà du code optimal (vérifie avec `cargo asm` ou [Compiler Explorer](https://godbolt.org)).
 - Un intrinsèque sûr ou une abstraction SIMD existe (`std::simd`, `packed_simd`, `core::arch::*`).
 - La portabilité importe plus qu'une micro-optimisation.
-- Vous écrivez du code de bibliothèque pour la consommation publique sans CI exhaustif sur plusieurs cibles.
+- Tu écris du code de bibliothèque pour la consommation publique sans CI exhaustif sur plusieurs cibles.
 
 ## Assurer la Portabilité
 

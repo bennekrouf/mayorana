@@ -190,7 +190,7 @@ let evens: Vec<_> = (1..10).filter(|x| x % 2 == 0).collect(); // [2, 4, 6, 8]
 
 ### Types personnalisés
 
-Implémenter `FromIterator` pour vos types :
+Implémenter `FromIterator` pour tes types :
 ```rust
 struct MyCollection(Vec<i32>);
 
@@ -228,7 +228,7 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
   // iter.next(); // ERREUR : iter consommé par collect()
   ```
 
-## Ce que `collect()` attend de vous
+## Ce que `collect()` attend de toi
 Utiliser `collect()` pour matérialiser des itérateurs en :
 - `Vec`, `HashMap`, `String`, ou tout type `FromIterator`.
 Spécifier le type (ex: `let v: Vec<_> = ...`).

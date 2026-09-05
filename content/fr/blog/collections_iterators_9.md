@@ -84,7 +84,7 @@ let flat: Vec<_> = nested.into_iter().flat_map(|v| v).collect();
 
 ## Concaténation manuelle
 
-Pour comparaison, voici comment vous pourriez le faire manuellement :
+Pour comparaison, voici comment tu pourrais le faire manuellement :
 
 ```rust
 let mut flat = Vec::new();
@@ -104,7 +104,7 @@ for subvec in nested {
 
 ### Avantage de la pré-allocation (Manuel)
 
-Vous pouvez pré-allouer le Vec cible si la taille totale est connue :
+Tu peux pré-allouer le Vec cible si la taille totale est connue :
 
 ```rust
 let total_len: usize = nested.iter().map(|v| v.len()).sum();
@@ -203,7 +203,7 @@ println!("manual: {:?}", start.elapsed());
 
 ## Avancé : Aplatissement sans copie
 
-Si vous avez `Vec<&[T]>` au lieu de `Vec<Vec<T>>`, utilisez `.flatten().copied()` pour éviter le clonage :
+Si tu as `Vec<&[T]>` au lieu de `Vec<Vec<T>>`, utilise `.flatten().copied()` pour éviter le clonage :
 
 ```rust
 let slices: Vec<&[i32]> = vec![&[1, 2], &[3, 4]];
@@ -211,15 +211,15 @@ let flat: Vec<i32> = slices.iter().flatten().copied().collect();
 ```
 
 
-**Utilisez .flatten() pour** :
+**Utilise .flatten() pour** :
 - Un code propre et idiomatique.
 - Le chaînage avec d'autres adaptateurs d'itérateurs (ex: `.filter()`).
 
-**Utilisez extend manuel pour** :
+**Utilise extend manuel pour** :
 - Les grands jeux de données où la pré-allocation est importante.
-- Les cas où vous connaissez déjà la longueur totale.
+- Les cas où tu connais déjà la longueur totale.
 
 **Toujours pré-allouer pour la concaténation manuelle de grandes collections !**
 
-Pour aplatir et dédupliquer en une passe, collectez dans un `HashSet` plutôt que dans un `Vec` —
+Pour aplatir et dédupliquer en une passe, collecte dans un `HashSet` plutôt que dans un `Vec` —
 `.flatten().collect::<HashSet<_>>()` — en acceptant de perdre l'ordre.

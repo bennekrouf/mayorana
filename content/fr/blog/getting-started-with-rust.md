@@ -752,7 +752,7 @@ Maintenant que tu as les bases, essaie de construire un petit projet pour pratiq
 
 ### Ressources d'Apprentissage
 
-La documentation Rust est excellente pour approfondir vos connaissances :
+La documentation Rust est excellente pour approfondir tes connaissances :
 
 - [Le Livre Rust (The Rust Book)](https://doc.rust-lang.org/book/) - Guide complet et officiel
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/) - Apprendre par l'exemple

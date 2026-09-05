@@ -92,7 +92,7 @@ for s in vec.into_iter() {  // `vec` est déplacé ici
 ```
 
 **Quand l'utiliser** :
-- Quand vous avez besoin de transformer ou consommer la collection définitivement.
+- Quand tu as besoin de transformer ou consommer la collection définitivement.
 - Pour enchaîner des adaptateurs d'itérateurs qui nécessitent l'ownership (ex: `.filter().collect()`).
 
 ## 2. `iter()` - itérateur d'emprunt immuable
@@ -110,7 +110,7 @@ println!("{:?}", vec);      // OK : `vec` toujours valide
 ```
 
 **Quand l'utiliser** :
-- Quand vous avez seulement besoin d'un accès en lecture seule aux éléments.
+- Quand tu as seulement besoin d'un accès en lecture seule aux éléments.
 - Pour des opérations comme la recherche (`.find()`) ou l'inspection.
 
 ## 3. `iter_mut()` - itérateur d'emprunt mutable
@@ -128,7 +128,7 @@ println!("{:?}", vec);       // [2, 4, 6]
 ```
 
 **Quand l'utiliser** :
-- Quand vous avez besoin de modifier les éléments sans réallocation.
+- Quand tu as besoin de modifier les éléments sans réallocation.
 - Pour des mises à jour en masse (ex: appliquer des transformations).
 
 ## Résumé des différences clés

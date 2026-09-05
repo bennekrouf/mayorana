@@ -79,20 +79,20 @@ date: '2025-10-28'
 
 ## Quand utiliser chacun
 
-### Préférez Vec<T> quand :
+### Préfère Vec<T> quand :
 
-Vous avez besoin de redimensionnement dynamique :
+Tu as besoin de redimensionnement dynamique :
 
 ```rust
 let mut vec = vec![1, 2, 3];
 vec.push(4);  // Fonctionne
 ```
 
-Vous modifiez fréquemment la collection (par exemple, ajout/suppression d'éléments).
+Tu modifies fréquemment la collection (par exemple, ajout/suppression d'éléments).
 
-### Préférez Box<[T]> quand :
+### Préfère Box<[T]> quand :
 
-Vous voulez une collection de taille fixe et immuable :
+Tu veux une collection de taille fixe et immuable :
 
 ```rust
 let boxed_slice: Box<[i32]> = vec![1, 2, 3].into_boxed_slice();
@@ -185,9 +185,9 @@ let vec_again = Vec::from(boxed);                // Copie les données
   - Stockage de grands jeux de données immuables (par exemple, assets de jeu).
 
 ## Points clés
-Utilisez Vec pour des séquences mutables et redimensionnables.
-Utilisez Box<[T]> pour du stockage immuable et efficace en mémoire.
-Convertissez facilement de Vec vers Box<[T]> quand vous avez fini de modifier.
+Utilise Vec pour des séquences mutables et redimensionnables.
+Utilise Box<[T]> pour du stockage immuable et efficace en mémoire.
+Convertis facilement de Vec vers Box<[T]> quand tu as fini de modifier.
 
 C'est sur un `Vec` qui traîne de la capacité libre que la conversion paie vraiment :
 `into_boxed_slice()` réalloue à la longueur exacte, et le rab retourne à l'allocateur au lieu
