@@ -1,5 +1,238 @@
 [
   {
+    "id": "trace-correlation-id-log-analytics",
+    "slug": "trace-correlation-id-log-analytics",
+    "title": "Following a Correlation ID Through Log Analytics Without Writing KQL",
+    "date": "2026-09-05",
+    "excerpt": "A Log Analytics workspace holds the answer to where your integration flow stopped. Getting it out normally means a KQL query per table and knowing which column ties the steps together. It does not have to.",
+    "contentHtml": "<p>Most Azure integration telemetry ends up in a Log Analytics workspace. That is the right place for it. It is also a place where a simple question — where did this flow stop? — turns into a research project.</p>\n<h2 id=\"the-workspace-nobody-knows-the-shape-of\">The workspace nobody knows the shape of</h2>\n<p>A workspace that has been running for a year has tables from everywhere: <code>AzureDiagnostics</code> carrying Logic Apps run data, custom tables from whatever the application team decided to emit, Application Insights tables, Service Bus diagnostics, function traces.</p>\n<p>Nobody has a complete mental model of it. The people who do have partial models each know a different third.</p>\n<p>So tracing one correlation id means: work out which tables could be relevant, work out what the correlating column is called in each of them, write a query per table, and hold the results in your head while comparing timestamps.</p>\n<h2 id=\"kql-is-not-the-hard-part\">KQL is not the hard part</h2>\n<p>It is tempting to treat this as a skills gap — if everyone knew KQL, the problem would go away.</p>\n<p>It would not. KQL is a good query language and the syntax is learnable in an afternoon. The hard part is not expressing the query, it is knowing what to express it against. <code>union *</code> across a large workspace is slow and expensive enough that nobody does it twice. Targeting specific tables requires knowing which ones matter, which is the knowledge you are missing.</p>\n<p>The bottleneck is schema discovery, not syntax. Which is good news, because schema discovery is mechanical.</p>\n<h2 id=\"letting-the-data-name-its-own-key\">Letting the data name its own key</h2>\n<p>The linking column can be derived rather than declared. Across the tables of a workspace, the column that ties the steps of a single flow together has a distinctive shape: it repeats across tables, its values are high-cardinality, and the same value shows up in several tables within a short time window. Columns that merely look similar — a timestamp, a resource id, a severity level — do not behave that way.</p>\n<p>Determine that column from the workspace itself and the whole query-per-table problem collapses. You paste a value; the tool works out where to look and what to look for.</p>\n<h2 id=\"read-the-gaps\">Read the gaps</h2>\n<p>As with tracing through a document store, the useful output is not a list of matching rows. It is a timeline with lanes, including the lanes that are empty.</p>\n<pre><code>http-trigger        ✓  14:31:02\ntransform           ✓  14:31:03\npublish-to-queue    ✓  14:31:04\nqueue-consumer      —\npersist             —\n</code></pre>\n<p>The flow reached the publish step and nothing consumed the message. That is a Service Bus problem, not a transform problem, and the timeline told you in one glance rather than after four queries.</p>\n<p>Presenting the empty lanes is a deliberate choice. A query that returns nothing looks like a mistake; a lane that is drawn and empty looks like a finding — which is what it is.</p>\n<h2 id=\"the-tool\">The tool</h2>\n<p><a href=\"/en/apps/ais-analytics\">AIS Analytics</a> is a native desktop app that does this against a Log Analytics workspace: paste a correlation id, it works out the linking column from the data, follows the value across the tables, and lays out the steps — present and absent — on a timeline. It runs read-only queries and nothing else.</p>\n<p>It has a sibling, <a href=\"/en/apps/ais-tracing\">AIS Tracing</a>, which is the same idea aimed at an Azure Cosmos DB account, for flows that persist state as documents rather than as logs. Teams running both usually use both.</p>\n<p>If the gap you are looking at turns out to be a workflow that never fired at all, <a href=\"/en/apps/ais-monitor\">AIS Monitor</a> shows how your deployed Logic Apps chain together — and <a href=\"/en/apps/ais-runner\">AIS Runner</a> runs the whole thing locally when you want to reproduce it.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "azure",
+      "log-analytics",
+      "kql",
+      "observability",
+      "debugging"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "Following a Correlation ID Through Log Analytics Without Writing KQL",
+      "description": "A Log Analytics workspace holds the answer to where your integration flow stopped. Getting it out normally means a KQL query per table and knowing which column ties the steps together. It does not have to.",
+      "keywords": [
+        "azure",
+        "log-analytics",
+        "kql",
+        "observability",
+        "debugging"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-workspace-nobody-knows-the-shape-of",
+        "text": "The workspace nobody knows the shape of",
+        "level": 2
+      },
+      {
+        "id": "kql-is-not-the-hard-part",
+        "text": "KQL is not the hard part",
+        "level": 2
+      },
+      {
+        "id": "letting-the-data-name-its-own-key",
+        "text": "Letting the data name its own key",
+        "level": 2
+      },
+      {
+        "id": "read-the-gaps",
+        "text": "Read the gaps",
+        "level": 2
+      },
+      {
+        "id": "the-tool",
+        "text": "The tool",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "logic-apps-workflow-chains",
+    "slug": "logic-apps-workflow-chains",
+    "title": "Your Logic Apps Are a Graph, and the Azure Portal Only Shows You a List",
+    "date": "2026-09-05",
+    "excerpt": "Past a dozen workflows, an Azure Logic Apps estate stops being a list and becomes a graph connected by Service Bus queues and Event Grid topics. Here is why the portal cannot show you that graph, and what to do about it.",
+    "contentHtml": "<p>Ask anyone who has inherited an Azure Integration Services estate what the hardest part of the first week was. It is almost never the code. It is working out what calls what.</p>\n<h2 id=\"the-portal-shows-workflows-not-connections\">The portal shows workflows, not connections</h2>\n<p>Open Logic Apps in the Azure portal and you get a list. Each workflow has a definition, a run history and a set of triggers. Every one of those views is scoped to a single workflow.</p>\n<p>But the workflows are not independent. One receives an HTTP request and drops a message on a Service Bus queue. A second is triggered by that queue, transforms the payload, and publishes an Event Grid event. A third subscribes to the topic and writes to Cosmos DB. The business process is the chain. The portal only ever shows you one link at a time.</p>\n<p>This produces a specific and very common failure mode: an order goes missing, and the first thirty minutes of the investigation are spent not debugging, but reconstructing which workflows were even supposed to be involved.</p>\n<h2 id=\"why-the-connection-is-hard-to-see\">Why the connection is hard to see</h2>\n<p>The link between two workflows is indirect by design. Workflow A does not call workflow B. Workflow A writes to a queue named <code>orders-inbound</code>, and workflow B happens to have a trigger bound to <code>orders-inbound</code>. Nothing in either definition names the other.</p>\n<p>That indirection is the whole point of message-based integration — it is what lets you deploy the two independently. It also means the topology exists only as an emergent property of the definitions, which is exactly the kind of thing documentation gets wrong within a month of being written.</p>\n<p>The usual answers are all partial:</p>\n<ul>\n<li><strong>A Visio diagram.</strong> Correct on the day it was drawn. There is no mechanism that keeps it correct.</li>\n<li><strong>Naming conventions.</strong> Helpful until the one workflow that predates the convention breaks the pattern, which is invariably the one you are debugging.</li>\n<li><strong>Application Insights maps.</strong> These show what called what during a sampled window. Useful, but they show observed traffic, not the topology — a chain that has not run recently simply is not there.</li>\n</ul>\n<h2 id=\"deriving-the-graph-instead-of-drawing-it\">Deriving the graph instead of drawing it</h2>\n<p>The definitions contain everything needed. Each workflow declares the queues and topics it writes to in its actions, and the ones it listens to in its triggers. Match the outputs of one against the inputs of another and the graph falls out.</p>\n<p>Once you have the graph, several questions that were previously archaeology become one lookup:</p>\n<ul>\n<li>Which workflows does this chain touch, in order?</li>\n<li>If I change the schema on this queue, what breaks downstream?</li>\n<li>This chain has three steps — which of them last ran successfully?</li>\n<li>Is anything writing to a queue that nothing reads?</li>\n</ul>\n<p>That last one finds real bugs surprisingly often. A workflow was renamed, its consumer was pointed at the old queue name, and messages have been quietly accumulating for weeks.</p>\n<h2 id=\"walking-a-chain-rather-than-a-workflow\">Walking a chain rather than a workflow</h2>\n<p>The second thing the graph buys you is a better unit for run history. The portal gives you run history per workflow, which means investigating a failed business process is a matter of opening four blades and comparing timestamps by eye.</p>\n<p>Run history per <em>chain</em> — every run of every workflow in the chain, in the order they happened — is the view the investigation actually wants. The failure is usually visible immediately, because the chain simply stops.</p>\n<p>This is what <a href=\"/en/apps/ais-monitor\">AIS Monitor</a> does: it builds the chain graph from your deployed workflow definitions, renders it, and lets you follow run history along a chain instead of a workflow. It also keeps the HTTP payloads you test with next to the workflow they belong to, so re-triggering an entry point does not mean rebuilding the request from memory each time.</p>\n<p>Read-only use needs only the Reader role. The desktop console can also change Azure state — trigger workflows, reset app settings, purge and requeue Service Bus messages, assign RBAC roles — and every one of those sits behind a confirm dialog showing the exact <code>az</code> command before it runs.</p>\n<h2 id=\"where-this-sits\">Where this sits</h2>\n<p>Monitoring a deployed estate is one problem. Developing against it locally is a different one — for that, <a href=\"/en/apps/ais-runner\">AIS Runner</a> runs Logic Apps Standard on your own machine without deploying to Azure.</p>\n<p>And when the question is not &quot;which workflows are involved&quot; but &quot;how far did this specific order get&quot;, that is a tracing problem: <a href=\"/en/apps/ais-tracing\">AIS Tracing</a> follows one correlation id across every container of a Cosmos DB account, and <a href=\"/en/apps/ais-analytics\">AIS Analytics</a> does the same against a Log Analytics workspace.</p>\n<p>All of them are native desktop apps built in Rust, source-available on GitHub, and free for personal, educational and non-profit use — commercial use requires a licence.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "azure",
+      "logic-apps",
+      "service-bus",
+      "event-grid",
+      "integration"
+    ],
+    "readingTime": "5 min",
+    "locale": "en",
+    "seo": {
+      "title": "Your Logic Apps Are a Graph, and the Azure Portal Only Shows You a List",
+      "description": "Past a dozen workflows, an Azure Logic Apps estate stops being a list and becomes a graph connected by Service Bus queues and Event Grid topics. Here is why the portal cannot show you that graph, and what to do about it.",
+      "keywords": [
+        "azure",
+        "logic-apps",
+        "service-bus",
+        "event-grid",
+        "integration"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-portal-shows-workflows-not-connections",
+        "text": "The portal shows workflows, not connections",
+        "level": 2
+      },
+      {
+        "id": "why-the-connection-is-hard-to-see",
+        "text": "Why the connection is hard to see",
+        "level": 2
+      },
+      {
+        "id": "deriving-the-graph-instead-of-drawing-it",
+        "text": "Deriving the graph instead of drawing it",
+        "level": 2
+      },
+      {
+        "id": "walking-a-chain-rather-than-a-workflow",
+        "text": "Walking a chain rather than a workflow",
+        "level": 2
+      },
+      {
+        "id": "where-this-sits",
+        "text": "Where this sits",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "trace-correlation-id-cosmos-db",
+    "slug": "trace-correlation-id-cosmos-db",
+    "title": "How Far Did That Order Get? Tracing a Correlation ID Across Cosmos DB",
+    "date": "2026-09-05",
+    "excerpt": "A customer says their order never arrived. You have a correlation id and an Azure Cosmos DB account with more containers than anyone remembers. Here is why the empty results matter more than the full ones.",
+    "contentHtml": "<p>The support ticket says order <code>SO-44192</code> never arrived. You have the reference, and you have a Cosmos DB account holding the state of every step of the integration flow. The question is a single sentence: how far did it get?</p>\n<p>Answering it is rarely a single step.</p>\n<h2 id=\"the-shape-of-the-problem\">The shape of the problem</h2>\n<p>A typical integration flow persists state as it goes. The intake step writes a document. The validation step writes another. Enrichment, routing, delivery confirmation — each leaves a trace, often in its own container, sometimes in its own database.</p>\n<p>To follow one value through that, you need to know three things:</p>\n<ol>\n<li>Which containers might hold a document for this flow.</li>\n<li>Which field in each container carries the correlating value.</li>\n<li>What &quot;not present&quot; looks like, as distinct from &quot;I queried it wrong&quot;.</li>\n</ol>\n<p>The third is where most of the time goes.</p>\n<h2 id=\"why-this-is-worse-than-it-sounds\">Why this is worse than it sounds</h2>\n<p>Each container was designed by whoever built that step, at the time they built it. The correlating value is <code>correlationId</code> in one, <code>orderRef</code> in another, nested under <code>metadata.trackingId</code> in a third, and in the container someone added last quarter it is the partition key.</p>\n<p>So the honest version of the task is: open Data Explorer, write a query, get zero results, wonder whether that means the data is not there or the field name is wrong, check the schema, rewrite the query, repeat — once per container.</p>\n<p>Twenty containers in, you have lost an hour and your confidence in the negatives. And the negatives are the answer you came for.</p>\n<h2 id=\"empty-results-are-the-finding\">Empty results are the finding</h2>\n<p>This is the part worth being explicit about, because it inverts how these queries are usually read.</p>\n<p>When you trace a value across a flow, a container with <strong>no</strong> matching document is not a failed query to skip past. It is a data point. The pattern you are looking for is:</p>\n<pre><code>intake        ✓  10:02:11\nvalidation    ✓  10:02:14\nenrichment    ✓  10:02:19\nrouting       —\ndelivery      —\n</code></pre>\n<p>The break between enrichment and routing <em>is</em> the answer. The order got as far as enrichment and stopped. You now know which step to open logs for, and you got there without reading a single log.</p>\n<p>A tool that hides its empty results throws away half of what the trace tells you.</p>\n<h2 id=\"inferring-the-link-field\">Inferring the link field</h2>\n<p>The one genuinely awkward part — the field name differing per container — turns out to be solvable without configuration.</p>\n<p>Sample a container. Look at the values across its documents. Fields that correlate documents to each other have a recognisable signature: high cardinality, consistent format, appearing across most documents, and — critically — sharing values with fields in other containers. A <code>createdAt</code> timestamp does not look like that. A correlation id does.</p>\n<p>Doing that inference from the data means you never have to describe your schema to the tool, and it keeps working when someone adds a container next quarter with yet another field name.</p>\n<h2 id=\"putting-it-together\">Putting it together</h2>\n<p><a href=\"/en/apps/ais-tracing\">AIS Tracing</a> does exactly this: it samples the containers of a Cosmos DB account, works out which field links documents of one flow, follows the value you give it across all of them, and draws each step on a timeline with the gaps left visible.</p>\n<p>It is read-only against your account, and it is a native desktop app — no agent to deploy, nothing to install into your subscription.</p>\n<p>If your flow state lives in a Log Analytics workspace rather than in Cosmos DB, <a href=\"/en/apps/ais-analytics\">AIS Analytics</a> is the same tracer aimed at that instead, inferring the linking column rather than the linking field.</p>\n<p>And if the question you actually have is &quot;which workflows were supposed to be involved&quot; rather than &quot;how far did this get&quot;, that is a topology problem — <a href=\"/en/apps/ais-monitor\">AIS Monitor</a> builds the chain graph from your deployed Logic Apps.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "azure",
+      "cosmos-db",
+      "observability",
+      "integration",
+      "debugging"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "How Far Did That Order Get? Tracing a Correlation ID Across Cosmos DB",
+      "description": "A customer says their order never arrived. You have a correlation id and an Azure Cosmos DB account with more containers than anyone remembers. Here is why the empty results matter more than the full ones.",
+      "keywords": [
+        "azure",
+        "cosmos-db",
+        "observability",
+        "integration",
+        "debugging"
+      ]
+    },
+    "headings": [
+      {
+        "id": "the-shape-of-the-problem",
+        "text": "The shape of the problem",
+        "level": 2
+      },
+      {
+        "id": "why-this-is-worse-than-it-sounds",
+        "text": "Why this is worse than it sounds",
+        "level": 2
+      },
+      {
+        "id": "empty-results-are-the-finding",
+        "text": "Empty results are the finding",
+        "level": 2
+      },
+      {
+        "id": "inferring-the-link-field",
+        "text": "Inferring the link field",
+        "level": 2
+      },
+      {
+        "id": "putting-it-together",
+        "text": "Putting it together",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "ai-commit-messages-without-giving-up-control",
+    "slug": "ai-commit-messages-without-giving-up-control",
+    "title": "AI Commit Messages Without Handing Over Your Git History",
+    "date": "2026-09-05",
+    "excerpt": "AI git tooling tends to come in two shapes: a text box you copy out of, or an agent that runs commands and tells you afterwards. There is a third option, and it comes down to where the approval sits.",
+    "contentHtml": "<p>There are two common shapes for AI tooling around git, and both of them are uncomfortable for different reasons.</p>\n<h2 id=\"shape-one-the-text-box\">Shape one: the text box</h2>\n<p>You paste a diff into a chat window, get a commit message back, and copy it into your terminal. It works. It is also three context switches for a task that should be one, and it means the model only ever sees what you remembered to paste.</p>\n<h2 id=\"shape-two-the-autonomous-agent\">Shape two: the autonomous agent</h2>\n<p>You give a tool repository access and it commits, pushes and opens the pull request. Faster, until the first time it force-pushes a branch, rewrites a commit you had not finished, or opens a PR against the wrong base.</p>\n<p>The pitch for these tools is autonomy. But autonomy is not what anyone actually wants from git tooling. Git is the one part of the workflow where an unwanted action is genuinely expensive — history is shared state, and undoing a bad push is a conversation with your team, not a keystroke.</p>\n<h2 id=\"the-thing-that-actually-matters-is-where-approval-sits\">The thing that actually matters is where approval sits</h2>\n<p>The useful distinction is not &quot;how smart is the model&quot; but &quot;what happens between the proposal and the effect&quot;.</p>\n<p>Writing a commit message is a text problem, and models are good at it. Running <code>git push</code> is not a text problem — it is an irreversible action against shared state. Bundling them into one autonomous step means the quality of the first determines whether the second happens, which is exactly the wrong coupling.</p>\n<p>Separate them and both get better:</p>\n<ul>\n<li><strong>Drafting</strong> can be generous. Let the model read the whole working tree, propose a message, propose a PR body. Nothing is at stake; it is text on screen.</li>\n<li><strong>Effects</strong> are gated individually. Commit is one approval. Push is another. Opening the PR is another. Each shows you the exact command before it runs.</li>\n</ul>\n<p>This is not a compromise between the two shapes. It is strictly better than both: you get the model&#39;s drafting without the copy-paste, and you get command execution without surrendering the decision.</p>\n<h2 id=\"the-diff-is-the-sensitive-part\">The diff is the sensitive part</h2>\n<p>There is a second reason to care about the boundary, and it is about what leaves the machine.</p>\n<p>A diff is one of the more revealing artefacts a private repository produces. It contains not just code but the shape of what you are currently working on — unreleased features, security fixes before they ship, the internals of whatever is proprietary.</p>\n<p>Sending that to a hosted API is a real decision, and for a lot of teams it is a decision that has already been made for them by policy. Running the drafting model locally through <a href=\"https://ollama.com\">ollama</a> removes the question entirely: the diff is read, the message is drafted, and nothing crosses the network. Local models are more than adequate for summarising a diff, which is a well-scoped task with the answer sitting right there in the input.</p>\n<p>A hosted model stays available for teams who prefer it. The point is that it is a choice rather than a requirement.</p>\n<h2 id=\"what-the-flow-looks-like\">What the flow looks like</h2>\n<p>The path from a dirty working tree to an open pull request is a sequence, and it is the same sequence every time:</p>\n<ol>\n<li>Scan the working tree — what actually changed?</li>\n<li>Draft a commit message from that diff.</li>\n<li>Commit. <em>(approval)</em></li>\n<li>Push. <em>(approval)</em></li>\n<li>Draft a PR description from the commits on the branch.</li>\n<li>Open the pull request. <em>(approval)</em></li>\n</ol>\n<p>Modelling it explicitly as a graph of steps, rather than as a single &quot;do the thing&quot; button, is what makes each gate a natural place to stop rather than an interruption bolted onto an autonomous loop.</p>\n<p><a href=\"/en/apps/gitagent\">GitAgent</a> implements exactly that. It is a native desktop app in Rust, it drafts with a local ollama model or with DeepSeek, and nothing touches git history or the remote without an explicit go-ahead on that specific step. PR creation goes through the GitHub CLI, so that step is GitHub-only for now; commit and push work against any remote.</p>\n<p>It is marked work in progress — the commit-to-PR path works, but the interface is still moving. <a href=\"/en/apps/gitagent\">Download it</a> for macOS, Windows or Linux: free for personal, educational and non-profit use, with a licence required for commercial use.</p>\n<h2 id=\"the-general-shape\">The general shape</h2>\n<p>The interesting part of this is not really about git. It is that &quot;AI tool&quot; and &quot;autonomous agent&quot; have quietly become synonyms, and they should not be.</p>\n<p>Plenty of useful tooling is a model doing the drafting and a human keeping the decision — not because the model is untrustworthy, but because the cost of a wrong action is asymmetric. Git is a clean example. It will not be the last one.</p>\n",
+    "author": "mayo",
+    "category": "uncategorized",
+    "tags": [
+      "git",
+      "ai",
+      "developer-tools",
+      "rust",
+      "llm"
+    ],
+    "readingTime": "4 min",
+    "locale": "en",
+    "seo": {
+      "title": "AI Commit Messages Without Handing Over Your Git History",
+      "description": "AI git tooling tends to come in two shapes: a text box you copy out of, or an agent that runs commands and tells you afterwards. There is a third option, and it comes down to where the approval sits.",
+      "keywords": [
+        "git",
+        "ai",
+        "developer-tools",
+        "rust",
+        "llm"
+      ]
+    },
+    "headings": [
+      {
+        "id": "shape-one-the-text-box",
+        "text": "Shape one: the text box",
+        "level": 2
+      },
+      {
+        "id": "shape-two-the-autonomous-agent",
+        "text": "Shape two: the autonomous agent",
+        "level": 2
+      },
+      {
+        "id": "the-thing-that-actually-matters-is-where-approval-sits",
+        "text": "The thing that actually matters is where approval sits",
+        "level": 2
+      },
+      {
+        "id": "the-diff-is-the-sensitive-part",
+        "text": "The diff is the sensitive part",
+        "level": 2
+      },
+      {
+        "id": "what-the-flow-looks-like",
+        "text": "What the flow looks like",
+        "level": 2
+      },
+      {
+        "id": "the-general-shape",
+        "text": "The general shape",
+        "level": 2
+      }
+    ]
+  },
+  {
     "id": "ais-runner-intro",
     "slug": "ais-runner-intro",
     "title": "AIS Runner: A Desktop GUI for Local Azure Logic Apps Standard Development",

@@ -36,6 +36,8 @@ interface Tool {
   icon?: React.ReactNode;
   dataSource?: DataSource;
   action: ToolAction;
+  /** Desktop tools have a page of their own; the web products live off-site. */
+  detailHref?: string;
 }
 
 // Display order by tool id, split into the two sections the page renders.
@@ -152,6 +154,7 @@ function ToolCard({
   index: number;
   muted?: boolean;
 }) {
+  const tApps = useTranslations('apps');
   const surface = muted
     ? 'bg-background/60 hover:shadow-lg'
     : 'bg-gradient-to-br from-secondary/50 to-secondary/20 hover:shadow-2xl';
@@ -168,7 +171,15 @@ function ToolCard({
         {tool.icon ? (
           <div className="p-3 bg-primary/10 rounded-full text-primary">{tool.icon}</div>
         ) : (
-          <h3 className="text-xl font-bold text-primary">{tool.name}</h3>
+          <h3 className="text-xl font-bold text-primary">
+            {tool.detailHref ? (
+              <Link href={tool.detailHref} className="hover:underline underline-offset-4">
+                {tool.name}
+              </Link>
+            ) : (
+              tool.name
+            )}
+          </h3>
         )}
         <div className="flex flex-col items-end gap-1.5">
           <StatusBadge status={tool.status} />
@@ -185,8 +196,17 @@ function ToolCard({
         <ToolTags tool={tool} />
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto space-y-3">
         <ToolActionButtons action={tool.action} />
+        {tool.detailHref && (
+          <Link
+            href={tool.detailHref}
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {tApps('promo_details')}
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        )}
       </div>
     </motion.div>
   );
@@ -213,6 +233,7 @@ export default function AppsPage() {
       tags: app.tags,
       dataSource: app.dataSource,
       action: { kind: 'downloads', downloads: app.downloads },
+      detailHref: getLocalizedPath(locale, `/apps/${app.id}`),
     }));
 
     const webTools: Tool[] = [

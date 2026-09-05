@@ -32,11 +32,14 @@ export interface DesktopToolConfig {
   tags: string[];
   downloads: DownloadLink[];
   dataSource?: DataSource;
+  /** Public source repository. All seven are source-available on GitHub. */
+  source: string;
 }
 
-// Every tool is distributed from mayorana.ch only — the repositories are
-// private, so there is no public source or GitHub Releases page to link to.
-// `latest/` is overwritten by release CI, so these URLs never need bumping.
+// Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
+// so these URLs never need bumping. The repositories themselves are public and
+// source-available under PolyForm Noncommercial 1.0.0, so each tool also links
+// to its source — see `source` on each entry and LICENCE_URL below.
 const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
 const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
 const tracingDl = 'https://mayorana.ch/downloads/ais-tracing/latest';
@@ -65,6 +68,7 @@ export const logAnalyticsSource: DataSource = {
 export const desktopToolsConfig: DesktopToolConfig[] = [
   {
     id: 'ais-runner',
+    source: 'https://github.com/Bennekrouf/ais-runner',
     name: 'AIS Runner',
     tech: 'Rust · Dioxus · Azure CLI · Azurite · Azure Functions',
     status: 'live',
@@ -77,6 +81,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'ais-monitor',
+    source: 'https://github.com/Bennekrouf/ais-monitor',
     name: 'AIS Monitor',
     tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
     status: 'beta',
@@ -89,6 +94,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'ais-tracing',
+    source: 'https://github.com/Bennekrouf/ais-tracing',
     name: 'AIS Tracing',
     tech: 'Rust · Dioxus · Azure Cosmos DB',
     status: 'beta',
@@ -102,6 +108,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'ais-analytics',
+    source: 'https://github.com/Bennekrouf/ais-analytics',
     name: 'AIS Analytics',
     tech: 'Rust · Dioxus · Azure Log Analytics',
     status: 'beta',
@@ -115,6 +122,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'blog-toolkit',
+    source: 'https://github.com/Bennekrouf/blog-toolkit',
     name: 'Blog Toolkit',
     tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
     status: 'live',
@@ -127,6 +135,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'appscreens',
+    source: 'https://github.com/Bennekrouf/appscreens',
     name: 'AppScreens',
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'beta',
@@ -139,6 +148,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'gitagent',
+    source: 'https://github.com/Bennekrouf/gitagent',
     name: 'GitAgent',
     tech: 'Rust · Dioxus · ollama / DeepSeek · git · gh',
     status: 'wip',
@@ -172,6 +182,11 @@ export const aisTools = AIS_TOOL_IDS.map((id) => {
   return tool;
 });
 
+// Every tool ships under the same licence: free for personal, educational and
+// non-profit use, commercial use requires a licence. The site must not describe
+// the downloads as simply "free" — that is only half of it.
+export const LICENCE_URL = 'https://polyformproject.org/licenses/noncommercial/1.0.0/';
+
 export const osColors: Record<OS, string> = {
   mac: 'bg-neutral-800 hover:bg-neutral-700 text-white',
   linux: 'bg-orange-600  hover:bg-orange-500  text-white',
@@ -187,3 +202,24 @@ export const statusBadge: Record<Status, string> = {
 };
 
 export const statusLabel = (status: Status) => (status === 'coming_soon' ? 'COMING SOON' : status);
+
+// Every desktop tool gets its own page at /{locale}/apps/{id}. The id is
+// already URL-safe and stable, so it doubles as the route slug — no separate
+// slug field to keep in sync.
+export const toolSlugs = desktopToolsConfig.map((t) => t.id);
+
+export function getToolBySlug(slug: string): DesktopToolConfig | undefined {
+  return desktopToolsConfig.find((t) => t.id === slug);
+}
+
+// Sibling tools for the "related" strip on a detail page: same tag first
+// (the AIS suite hangs together this way), topped up to `limit` with whatever
+// else is in the catalogue so a single-tag tool never renders an empty strip.
+export function getRelatedTools(slug: string, limit = 3): DesktopToolConfig[] {
+  const tool = getToolBySlug(slug);
+  if (!tool) return [];
+  const others = desktopToolsConfig.filter((t) => t.id !== slug);
+  const sameTag = others.filter((t) => t.tags.some((tag) => tool.tags.includes(tag)));
+  const rest = others.filter((t) => !sameTag.includes(t));
+  return [...sameTag, ...rest].slice(0, limit);
+}

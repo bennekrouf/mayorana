@@ -1,649 +1,2081 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Static pages -->
+  <!-- en: static pages -->
   <url>
-    <loc>https://mayorana.ch</loc>
+    <loc>https://mayorana.ch/en</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/solutions/azure</loc>
+    <loc>https://mayorana.ch/en/solutions/azure</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/solutions/ai-agents</loc>
+    <loc>https://mayorana.ch/en/solutions/ai-agents</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/apps</loc>
+    <loc>https://mayorana.ch/en/apps</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/services</loc>
+    <loc>https://mayorana.ch/en/services</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/about</loc>
+    <loc>https://mayorana.ch/en/about</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/contact</loc>
+    <loc>https://mayorana.ch/en/contact</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog</loc>
+    <loc>https://mayorana.ch/en/blog</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- en: tool pages -->
   <url>
-    <loc>https://mayorana.ch/blog/ais-runner-intro</loc>
+    <loc>https://mayorana.ch/en/apps/ais-runner</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/ais-monitor</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/ais-tracing</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/ais-analytics</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/blog-toolkit</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/appscreens</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/gitagent</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- en: blog posts -->
+  <url>
+    <loc>https://mayorana.ch/en/blog/trace-correlation-id-log-analytics</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/clamp-rust</loc>
+    <loc>https://mayorana.ch/en/blog/logic-apps-workflow-chains</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/reborrow-rust</loc>
+    <loc>https://mayorana.ch/en/blog/trace-correlation-id-cosmos-db</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/instruction-level-optimization-inline-always</loc>
+    <loc>https://mayorana.ch/en/blog/ai-commit-messages-without-giving-up-control</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/cache-line-awareness-optimization</loc>
+    <loc>https://mayorana.ch/en/blog/ais-runner-intro</loc>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/inline-assembly-rust</loc>
+    <loc>https://mayorana.ch/en/blog/clamp-rust</loc>
+    <lastmod>2026-04-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/move-closures-rust-javascript-developers</loc>
+    <loc>https://mayorana.ch/en/blog/reborrow-rust</loc>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/profiling-optimization-rust</loc>
+    <loc>https://mayorana.ch/en/blog/instruction-level-optimization-inline-always</loc>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/branch-prediction-rust</loc>
+    <loc>https://mayorana.ch/en/blog/cache-line-awareness-optimization</loc>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/simd-matrix-mult-rust</loc>
+    <loc>https://mayorana.ch/en/blog/inline-assembly-rust</loc>
+    <lastmod>2025-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/zero-cost-abstractions-rust</loc>
+    <loc>https://mayorana.ch/en/blog/move-closures-rust-javascript-developers</loc>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/vec-push-vs-with-capacity-performance</loc>
+    <loc>https://mayorana.ch/en/blog/profiling-optimization-rust</loc>
+    <lastmod>2025-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/allocation-avoidance-real-time-rust</loc>
+    <loc>https://mayorana.ch/en/blog/branch-prediction-rust</loc>
+    <lastmod>2025-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/blanket-implementations-coherence</loc>
+    <loc>https://mayorana.ch/en/blog/simd-matrix-mult-rust</loc>
+    <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/associated-types-io-driver-api</loc>
+    <loc>https://mayorana.ch/en/blog/zero-cost-abstractions-rust</loc>
+    <lastmod>2025-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/deadlocks-c-vs-rust</loc>
+    <loc>https://mayorana.ch/en/blog/vec-push-vs-with-capacity-performance</loc>
+    <lastmod>2025-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/sized-unsized-bounds-flexibility</loc>
+    <loc>https://mayorana.ch/en/blog/allocation-avoidance-real-time-rust</loc>
+    <lastmod>2025-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/supertraits-bounds-optimization</loc>
+    <loc>https://mayorana.ch/en/blog/blanket-implementations-coherence</loc>
+    <lastmod>2025-08-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/object-safety-rust</loc>
+    <loc>https://mayorana.ch/en/blog/associated-types-io-driver-api</loc>
+    <lastmod>2025-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/dispatch-performance-rust</loc>
+    <loc>https://mayorana.ch/en/blog/deadlocks-c-vs-rust</loc>
+    <lastmod>2025-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/trait-bounds-rust</loc>
+    <loc>https://mayorana.ch/en/blog/sized-unsized-bounds-flexibility</loc>
+    <lastmod>2025-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/borrowing-rules-rust</loc>
+    <loc>https://mayorana.ch/en/blog/supertraits-bounds-optimization</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/rust-comparison-operators-iterators</loc>
+    <loc>https://mayorana.ch/en/blog/object-safety-rust</loc>
+    <lastmod>2025-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/string-literals-memory-rust</loc>
+    <loc>https://mayorana.ch/en/blog/dispatch-performance-rust</loc>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/box-pointer-rust</loc>
+    <loc>https://mayorana.ch/en/blog/trait-bounds-rust</loc>
+    <lastmod>2025-08-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/string-str-mismatch-rust</loc>
+    <loc>https://mayorana.ch/en/blog/borrowing-rules-rust</loc>
+    <lastmod>2025-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/dangling-pointer-rust</loc>
+    <loc>https://mayorana.ch/en/blog/rust-comparison-operators-iterators</loc>
+    <lastmod>2025-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/ownership-safety-rust</loc>
+    <loc>https://mayorana.ch/en/blog/string-literals-memory-rust</loc>
+    <lastmod>2025-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/stack-heap-allocation-rust</loc>
+    <loc>https://mayorana.ch/en/blog/box-pointer-rust</loc>
+    <lastmod>2025-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/memory-safety-rust</loc>
+    <loc>https://mayorana.ch/en/blog/string-str-mismatch-rust</loc>
+    <lastmod>2025-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/cow-copy-on-write-rust</loc>
+    <loc>https://mayorana.ch/en/blog/dangling-pointer-rust</loc>
+    <lastmod>2025-08-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/drop-trait-rust</loc>
+    <loc>https://mayorana.ch/en/blog/ownership-safety-rust</loc>
+    <lastmod>2025-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/concurrency-rust</loc>
+    <loc>https://mayorana.ch/en/blog/stack-heap-allocation-rust</loc>
+    <lastmod>2025-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/flatten-vec-iterators-performance</loc>
+    <loc>https://mayorana.ch/en/blog/memory-safety-rust</loc>
+    <lastmod>2025-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/vec-retain-vs-filter-collect</loc>
+    <loc>https://mayorana.ch/en/blog/cow-copy-on-write-rust</loc>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/vec-drain-vs-truncate-clear</loc>
+    <loc>https://mayorana.ch/en/blog/drop-trait-rust</loc>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/box-slice-vs-vec-differences</loc>
+    <loc>https://mayorana.ch/en/blog/concurrency-rust</loc>
+    <lastmod>2025-07-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/efficient-duplicate-removal-vec</loc>
+    <loc>https://mayorana.ch/en/blog/flatten-vec-iterators-performance</loc>
+    <lastmod>2025-07-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/collect-method-rust</loc>
+    <loc>https://mayorana.ch/en/blog/vec-retain-vs-filter-collect</loc>
+    <lastmod>2025-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/storing-closures-in-structs</loc>
+    <loc>https://mayorana.ch/en/blog/vec-drain-vs-truncate-clear</loc>
+    <lastmod>2025-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/into-iter-vs-iter-ownership</loc>
+    <loc>https://mayorana.ch/en/blog/box-slice-vs-vec-differences</loc>
+    <lastmod>2025-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/higher-order-functions-rust</loc>
+    <loc>https://mayorana.ch/en/blog/efficient-duplicate-removal-vec</loc>
+    <lastmod>2025-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/handling-lifetimes-returning-closures</loc>
+    <loc>https://mayorana.ch/en/blog/collect-method-rust</loc>
+    <lastmod>2025-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/closure-performance-overhead-rust</loc>
+    <loc>https://mayorana.ch/en/blog/storing-closures-in-structs</loc>
+    <lastmod>2025-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/stateful-closures-rust</loc>
+    <loc>https://mayorana.ch/en/blog/into-iter-vs-iter-ownership</loc>
+    <lastmod>2025-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/closure-dispatch-rust</loc>
+    <loc>https://mayorana.ch/en/blog/higher-order-functions-rust</loc>
+    <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/move-closures-rust</loc>
+    <loc>https://mayorana.ch/en/blog/handling-lifetimes-returning-closures</loc>
+    <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/iter-methods-rust</loc>
+    <loc>https://mayorana.ch/en/blog/closure-performance-overhead-rust</loc>
+    <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/fn-traits-rust</loc>
+    <loc>https://mayorana.ch/en/blog/stateful-closures-rust</loc>
+    <lastmod>2025-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/closure-parameter-rust</loc>
+    <loc>https://mayorana.ch/en/blog/closure-dispatch-rust</loc>
+    <lastmod>2025-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/rust-traits-vs-interfaces</loc>
+    <loc>https://mayorana.ch/en/blog/move-closures-rust</loc>
+    <lastmod>2025-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/string-vs-str-rust</loc>
+    <loc>https://mayorana.ch/en/blog/iter-methods-rust</loc>
+    <lastmod>2025-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/function-vs-closure-rust</loc>
+    <loc>https://mayorana.ch/en/blog/fn-traits-rust</loc>
+    <lastmod>2025-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/memory-layout-optimization-rust</loc>
+    <loc>https://mayorana.ch/en/blog/closure-parameter-rust</loc>
+    <lastmod>2025-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/vec-new-vs-with-capacity</loc>
+    <loc>https://mayorana.ch/en/blog/rust-traits-vs-interfaces</loc>
+    <lastmod>2025-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/getting-started-with-rust</loc>
+    <loc>https://mayorana.ch/en/blog/string-vs-str-rust</loc>
+    <lastmod>2025-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/why-rust-memory-safe</loc>
+    <loc>https://mayorana.ch/en/blog/function-vs-closure-rust</loc>
+    <lastmod>2025-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/c-low-level-cost</loc>
+    <loc>https://mayorana.ch/en/blog/memory-layout-optimization-rust</loc>
+    <lastmod>2025-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/why-garbage-collector</loc>
+    <loc>https://mayorana.ch/en/blog/vec-new-vs-with-capacity</loc>
+    <lastmod>2025-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/azure</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://mayorana.ch/en/blog/getting-started-with-rust</loc>
+    <lastmod>2025-04-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/logic-apps</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://mayorana.ch/en/blog/why-rust-memory-safe</loc>
+    <lastmod>2025-04-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/dioxus</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://mayorana.ch/en/blog/c-low-level-cost</loc>
+    <lastmod>2025-04-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/rust</loc>
+    <loc>https://mayorana.ch/en/blog/why-garbage-collector</loc>
+    <lastmod>2025-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- en: tag pages -->
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/azure</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/desktop</loc>
+    <loc>https://mayorana.ch/en/blog/tag/log-analytics</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/standard-library</loc>
+    <loc>https://mayorana.ch/en/blog/tag/kql</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/basics</loc>
+    <loc>https://mayorana.ch/en/blog/tag/observability</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/memory</loc>
+    <loc>https://mayorana.ch/en/blog/tag/debugging</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/borrowing</loc>
+    <loc>https://mayorana.ch/en/blog/tag/logic-apps</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/ownership</loc>
+    <loc>https://mayorana.ch/en/blog/tag/service-bus</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/borrow-checker</loc>
+    <loc>https://mayorana.ch/en/blog/tag/event-grid</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/optimization</loc>
+    <loc>https://mayorana.ch/en/blog/tag/integration</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/advanced</loc>
+    <loc>https://mayorana.ch/en/blog/tag/cosmos-db</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/closures</loc>
+    <loc>https://mayorana.ch/en/blog/tag/git</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/javascript</loc>
+    <loc>https://mayorana.ch/en/blog/tag/ai</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/typescript</loc>
+    <loc>https://mayorana.ch/en/blog/tag/developer-tools</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/cache</loc>
+    <loc>https://mayorana.ch/en/blog/tag/rust</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/simd</loc>
+    <loc>https://mayorana.ch/en/blog/tag/llm</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/performance</loc>
+    <loc>https://mayorana.ch/en/blog/tag/dioxus</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/collections</loc>
+    <loc>https://mayorana.ch/en/blog/tag/desktop</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/blanket-implementations</loc>
+    <loc>https://mayorana.ch/en/blog/tag/standard-library</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/trait-coherence</loc>
+    <loc>https://mayorana.ch/en/blog/tag/basics</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/code-duplication</loc>
+    <loc>https://mayorana.ch/en/blog/tag/memory</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/traits</loc>
+    <loc>https://mayorana.ch/en/blog/tag/borrowing</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/library-design</loc>
+    <loc>https://mayorana.ch/en/blog/tag/ownership</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/associated-types</loc>
+    <loc>https://mayorana.ch/en/blog/tag/borrow-checker</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/io-drivers</loc>
+    <loc>https://mayorana.ch/en/blog/tag/optimization</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/type-safety</loc>
+    <loc>https://mayorana.ch/en/blog/tag/advanced</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/embedded</loc>
+    <loc>https://mayorana.ch/en/blog/tag/closures</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/c</loc>
+    <loc>https://mayorana.ch/en/blog/tag/javascript</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/concurrency</loc>
+    <loc>https://mayorana.ch/en/blog/tag/typescript</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/deadlock</loc>
+    <loc>https://mayorana.ch/en/blog/tag/cache</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/sized</loc>
+    <loc>https://mayorana.ch/en/blog/tag/simd</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/unsized</loc>
+    <loc>https://mayorana.ch/en/blog/tag/performance</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/bounds</loc>
+    <loc>https://mayorana.ch/en/blog/tag/collections</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/generics</loc>
+    <loc>https://mayorana.ch/en/blog/tag/blanket-implementations</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/supertraits</loc>
+    <loc>https://mayorana.ch/en/blog/tag/trait-coherence</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/object-safety</loc>
+    <loc>https://mayorana.ch/en/blog/tag/code-duplication</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/dynamic-dispatch</loc>
+    <loc>https://mayorana.ch/en/blog/tag/traits</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/plugins</loc>
+    <loc>https://mayorana.ch/en/blog/tag/library-design</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/dispatch</loc>
+    <loc>https://mayorana.ch/en/blog/tag/associated-types</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/trait-bounds</loc>
+    <loc>https://mayorana.ch/en/blog/tag/io-drivers</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/monomorphization</loc>
+    <loc>https://mayorana.ch/en/blog/tag/type-safety</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/operators</loc>
+    <loc>https://mayorana.ch/en/blog/tag/embedded</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/iterators</loc>
+    <loc>https://mayorana.ch/en/blog/tag/c</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/string</loc>
+    <loc>https://mayorana.ch/en/blog/tag/concurrency</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/box</loc>
+    <loc>https://mayorana.ch/en/blog/tag/deadlock</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/heap</loc>
+    <loc>https://mayorana.ch/en/blog/tag/sized</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/str</loc>
+    <loc>https://mayorana.ch/en/blog/tag/unsized</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/dangling-pointer</loc>
+    <loc>https://mayorana.ch/en/blog/tag/bounds</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/lifetimes</loc>
+    <loc>https://mayorana.ch/en/blog/tag/generics</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/data-races</loc>
+    <loc>https://mayorana.ch/en/blog/tag/supertraits</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/stack</loc>
+    <loc>https://mayorana.ch/en/blog/tag/object-safety</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/allocation</loc>
+    <loc>https://mayorana.ch/en/blog/tag/dynamic-dispatch</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/drop</loc>
+    <loc>https://mayorana.ch/en/blog/tag/plugins</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/vec</loc>
+    <loc>https://mayorana.ch/en/blog/tag/dispatch</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/retain</loc>
+    <loc>https://mayorana.ch/en/blog/tag/trait-bounds</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/drain</loc>
+    <loc>https://mayorana.ch/en/blog/tag/monomorphization</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/higher-order-functions</loc>
+    <loc>https://mayorana.ch/en/blog/tag/operators</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/fnmut</loc>
+    <loc>https://mayorana.ch/en/blog/tag/iterators</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/beginners</loc>
+    <loc>https://mayorana.ch/en/blog/tag/string</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mayorana.ch/blog/tag/gc</loc>
+    <loc>https://mayorana.ch/en/blog/tag/box</loc>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/heap</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/str</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/dangling-pointer</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/lifetimes</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/data-races</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/stack</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/allocation</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/drop</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/vec</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/retain</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/drain</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/higher-order-functions</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/fnmut</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/beginners</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/blog/tag/gc</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <!-- fr: static pages -->
+  <url>
+    <loc>https://mayorana.ch/fr</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/solutions/azure</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/solutions/ai-agents</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/services</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/about</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/contact</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- fr: tool pages -->
+  <url>
+    <loc>https://mayorana.ch/fr/apps/ais-runner</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/ais-monitor</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/ais-tracing</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/ais-analytics</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/blog-toolkit</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/appscreens</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/gitagent</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- fr: blog posts -->
+  <url>
+    <loc>https://mayorana.ch/fr/blog/trace-correlation-id-log-analytics-fr</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/logic-apps-workflow-chains-fr</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/trace-correlation-id-cosmos-db-fr</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/ai-commit-messages-without-giving-up-control-fr</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/ais-runner-intro-fr</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/clamp-rust</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/reborrow-rust</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/blanket-implementations-coherence</loc>
+    <lastmod>2025-12-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/associated-types-io-driver-api</loc>
+    <lastmod>2025-12-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/sized-unsized-bounds-flexibility</loc>
+    <lastmod>2025-12-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/supertraits-bounds-optimization</loc>
+    <lastmod>2025-12-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/object-safety-rust</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/dyn-mot-cle-rust-fr</loc>
+    <lastmod>2025-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/borrowing-rules-rust-fr</loc>
+    <lastmod>2025-11-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/string-literals-memory-rust-fr</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/box-pointer-rust-fr</loc>
+    <lastmod>2025-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/ownership-safety-rust-fr</loc>
+    <lastmod>2025-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/concurrency-rust-fr</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/drop-trait-rust-fr</loc>
+    <lastmod>2025-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/cow-copy-on-write-rust-fr</loc>
+    <lastmod>2025-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/cache-line-awareness-optimization</loc>
+    <lastmod>2025-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/instruction-level-optimization-inline-always</loc>
+    <lastmod>2025-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/allocation-avoidance-real-time-rust</loc>
+    <lastmod>2025-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/vec-push-vs-with-capacity-performance</loc>
+    <lastmod>2025-11-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/inline-assembly-rust</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/branch-prediction-rust</loc>
+    <lastmod>2025-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/simd-matrix-mult-rust</loc>
+    <lastmod>2025-11-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/zero-cost-abstractions-rust</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/profiling-optimization-rust</loc>
+    <lastmod>2025-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/memory-layout-optimization-rust</loc>
+    <lastmod>2025-11-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/move-closures-rust-javascript-developers</loc>
+    <lastmod>2025-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/storing-closures-in-structs-fr</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/closure-performance-overhead-rust-fr</loc>
+    <lastmod>2025-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/handling-lifetimes-returning-closures-fr</loc>
+    <lastmod>2025-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/stateful-closures-rust-fr</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/higher-order-functions-rust-fr</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/move-closures-rust-fr</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/closure-parameter-rust-fr</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/closure-dispatch-rust-fr</loc>
+    <lastmod>2025-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/flatten-vec-iterators-performance</loc>
+    <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/vec-retain-vs-filter-collect</loc>
+    <lastmod>2025-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/vec-drain-vs-truncate-clear</loc>
+    <lastmod>2025-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/efficient-duplicate-removal-vec</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/box-slice-vs-vec-differences</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/collect-method-rust</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/iter-methods-rust</loc>
+    <lastmod>2025-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/vec-new-vs-with-capacity</loc>
+    <lastmod>2025-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/dispatch-performance-rust</loc>
+    <lastmod>2025-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/trait-bounds-rust</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/rust-traits-vs-interfaces</loc>
+    <lastmod>2025-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/stack-heap-allocation-rust-fr</loc>
+    <lastmod>2025-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/fn-traits-rust-fr</loc>
+    <lastmod>2025-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/function-vs-closure-rust-fr</loc>
+    <lastmod>2025-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/string-str-mismatch-rust-fr</loc>
+    <lastmod>2025-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/deadlocks-c-vs-rust</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/dangling-pointer-rust-fr</loc>
+    <lastmod>2025-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/into-iter-vs-iter-ownership-fr</loc>
+    <lastmod>2025-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/why-rust-memory-safe-fr</loc>
+    <lastmod>2025-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/c-low-level-cost-fr</loc>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/rust-operateurs-iterateurs</loc>
+    <lastmod>2025-08-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/why-garbage-collector-fr</loc>
+    <lastmod>2025-08-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/string-vs-str-rust-fr</loc>
+    <lastmod>2025-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/memory-safety-rust</loc>
+    <lastmod>2025-07-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/getting-started-with-rust-fr</loc>
+    <lastmod>2025-04-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- fr: tag pages -->
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/azure</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/log-analytics</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/kql</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/observability</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/debugging</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/logic-apps</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/service-bus</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/event-grid</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/integration</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/cosmos-db</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/git</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/ai</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/developer-tools</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/rust</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/llm</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/dioxus</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/desktop</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/standard-library</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/basics</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/memory</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/borrowing</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/ownership</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/borrow-checker</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/blanket-implementations</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/trait-coherence</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/code-duplication</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/traits</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/library-design</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/associated-types</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/io-drivers</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/type-safety</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/embedded</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/sized</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/unsized</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/bounds</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/generics</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/supertraits</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/optimization</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/object-safety</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/dynamic-dispatch</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/plugins</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/polymorphisme</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/pointeurs-intelligents</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/safety</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/string</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/str</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/allocation</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/box</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/heap</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/data-races</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/beginner</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/concurrency</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/drop</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/cow</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/copy-on-write</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/advanced</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/real-time</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/performance</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/stack-allocation</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/heap-allocation</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/vec</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/memory-allocation</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/collections</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/inline-assembly</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/branch-prediction</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/profiling</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/simd</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/matrix-multiplication</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/iterators</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/zero-cost-abstractions</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/cache</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/closures</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/javascript</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/typescript</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/structs</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/trait-bounds</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/lifetimes</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/generic-types</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/static-dispatch</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/move</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/references</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/state</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/fnmut</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/higher-order-functions</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/dispatch</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/flatten</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/retain</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/filter</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/drain</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/truncate</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/clear</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/deduplication</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/hashset</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/monomorphization</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/interfaces</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/stack</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/functions</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/c</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/concurrence</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/deadlock</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/dangling-pointer</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/into-iter</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/memory-safety</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/systems-programming</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/undefined-behavior</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/op%C3%A9rateurs</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/it%C3%A9rateurs</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/java</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/python</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/gc</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/m%C3%A9moire</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/programming</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/beginners</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/blog/tag/tutorial</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

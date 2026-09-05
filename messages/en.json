@@ -412,5 +412,425 @@
       "quote": "api0.ai lets us build AI agents on our own APIs in hours instead of weeks. A real game-changer.",
       "author": "E-commerce Solution CTO"
     }
+  },
+  "app_detail": {
+    "back_to_apps": "All apps & tools",
+    "overview_heading": "Overview",
+    "features_heading": "What it does",
+    "requirements_heading": "Requirements",
+    "tech_heading": "Built with",
+    "download_heading": "Download",
+    "download_intro": "Free for personal, educational and non-profit use. Commercial use — including a solo consultant on client work — requires a licence. Every build is produced by release CI and served from mayorana.ch.",
+    "faq_heading": "Questions",
+    "related_heading": "Related tools",
+    "cta_heading": "Need this adapted to your stack?",
+    "cta_body": "These tools came out of real Azure integration work. If yours needs a variant — a different data source, your own conventions, an on-prem build — that is the kind of work we take on.",
+    "cta_button": "Get in touch",
+    "status_note_wip": "This app is still in active development. It is usable today, but expect rough edges and frequent releases.",
+    "status_note_beta": "This app is in beta. The core workflow is stable; some panels are still being refined.",
+    "apps": {
+      "ais_runner": {
+        "seo_title": "AIS Runner — Run Azure Logic Apps Locally",
+        "seo_description": "Desktop app for local Azure Logic Apps Standard development. One-click Azurite and Functions Core Tools, live run history, Liquid template testing and workflow chain graphs — without deploying to Azure.",
+        "overview": [
+          "Developing Azure Logic Apps Standard normally means a slow loop: change a workflow, deploy it, trigger it, dig through the Azure portal to find out what happened, repeat. AIS Runner collapses that loop onto your own machine.",
+          "It starts the local stack for you — Azurite for storage emulation, Azure Functions Core Tools to host the workflow runtime — and then gives you the views the portal makes you hunt for: run history as it happens, how your workflows chain together, and what is sitting in your Service Bus queues.",
+          "It is a native desktop app written in Rust with Dioxus, so it starts instantly and stays out of the way of the rest of your toolchain."
+        ],
+        "features": [
+          {
+            "title": "Local stack from the toolbar",
+            "body": "Azurite, the Service Bus Docker emulator, func start for Node.js workflows and mvn azure-functions:run for Java apps, each a button. func start runs pre-flight fixes first: package.json, connections.json ARM syntax, and stubs for missing settings."
+          },
+          {
+            "title": "Mock APIs",
+            "body": "Scans every workflow.json, builds a contract of the outbound HTTP calls from adjacent Parse_JSON schemas, serves stubbed responses locally, and repoints the URL app settings at them. Stopping restores local.settings.json."
+          },
+          {
+            "title": "Record and replay tests",
+            "body": "Capture a multi-step scenario — create a container, send a message, trigger a workflow — as plain JSON committed next to the workflows, then replay it with a live pass/fail per step, including waiting on a triggered run and asserting its outcome."
+          },
+          {
+            "title": "Live run history",
+            "body": "Trigger any workflow with an auto-generated payload and watch the action timeline update in real time, with app logs filtered to just the workflow you selected."
+          },
+          {
+            "title": "Workflow analysis bar",
+            "body": "Per workflow: trigger type, the Service Bus queues it reads and writes, blob containers, outbound HTTP calls and Liquid maps — so a workflow that silently never fires is visible rather than assumed working."
+          },
+          {
+            "title": "Connections and Liquid maps",
+            "body": "Service Bus queues with message and dead-letter counts plus test sends, Cosmos DB, SQL, SFTP and blob browsing, and a maps tab that tests .liquid and .xslt templates against auto-suggested input on either DotLiquid or Liquid."
+          },
+          {
+            "title": "Azure DevOps view",
+            "body": "Build pipelines grouped by folder, and a grid of build runs against release environments showing what is deployed where — queue a build from any branch, or click through to re-deploy a superseded run."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon, Windows, or Linux x86_64",
+          "The installers handle the runtime dependencies: setup-linux.sh installs WebKitGTK, Node.js 20, Azure CLI, Azurite and Functions Core Tools on Debian/Ubuntu, Fedora and Arch; the Windows wizard offers the same in one step",
+          "Azure CLI signed in (az login) for the subscription-backed panels",
+          "A Logic Apps Standard project on disk, with a logic_apps/ folder",
+          "Docker, if you want the Service Bus emulator"
+        ],
+        "faq": [
+          {
+            "q": "Does it need an Azure subscription?",
+            "a": "Not for local running — Azurite, the Service Bus emulator and Functions Core Tools cover that offline. The Connections and DevOps panels do read a real subscription through the Azure CLI, so those need az login."
+          },
+          {
+            "q": "Does it change my workflow files?",
+            "a": "It reads and runs your Logic Apps Standard project. Two things it does write: starting Mock APIs rewrites the URL-shaped values in local.settings.json to point at the local mocks and restores the file on stop, and MSI connections are patched to local connection-string auth on every func start."
+          },
+          {
+            "q": "How is this different from running func start myself?",
+            "a": "You can run func start yourself. What a terminal does not give you is the run history, the analysis bar, queue counts, the Liquid tester, the mock server and replayable scenarios in one place, refreshing as runs land."
+          },
+          {
+            "q": "Can I verify what I downloaded?",
+            "a": "Yes. Each GitHub release carries a latest.json with the sha256 of every artifact."
+          }
+        ],
+        "article_slug": "ais-runner-intro"
+      },
+      "ais_monitor": {
+        "seo_title": "AIS Monitor — Azure Logic Apps Workflow Chain Explorer",
+        "seo_description": "An operational console for Azure Logic Apps Standard workflow chains: chain graph, run history, config drift, RBAC and live diagnostics — as a desktop app and as a terminal companion for SSH sessions.",
+        "overview": [
+          "A Logic Apps estate of any size stops being a list of workflows and becomes a graph: this workflow drops a message on a queue, that one picks it up, a third reacts to an Event Grid topic. The Azure portal shows you the workflows. It does not show you the graph.",
+          "AIS Monitor builds that graph from your deployed workflows and lets you walk it — pick a chain, see every run that flowed through it, drill into a run's action timeline, and trigger the entry point yourself with a payload you saved earlier.",
+          "It ships in two editions sharing one Azure backend and one on-disk cache: a desktop console with twelve tabs, and ais-monitor-tui, a single static binary for SSH sessions, jumpboxes and Windows Server where there is no desktop to run."
+        ],
+        "features": [
+          {
+            "title": "Workflow chain graph",
+            "body": "Renders how deployed Logic Apps connect via Service Bus queues and Event Grid subscriptions, derived from the definitions by ais-chain rather than hand-drawn. Workflows linked by something undetectable, like a dynamic queue name, can be joined with a .ais-chain hint file."
+          },
+          {
+            "title": "Run history per chain",
+            "body": "Follow one chain and see the runs of every workflow in it, in order, with per-run action timelines and KPIs — success rate, average and p95 duration, failure streak."
+          },
+          {
+            "title": "A terminal edition",
+            "body": "ais-monitor-tui is a single static binary for machines with no desktop: chain browsing, run history and triggering over SSH, with a watch mode that auto-refreshes the focused step. Device-code sign-in covers hosts with no browser."
+          },
+          {
+            "title": "Config drift and health",
+            "body": "Live app-settings values compared against App Configuration, managed-identity and app-setting health checks, and resource health across the whole group."
+          },
+          {
+            "title": "RBAC and cost",
+            "body": "Managed identity role assignments in one view, plus a live log tail and month-to-date cost."
+          },
+          {
+            "title": "A dashboard that stays current",
+            "body": "The home tab — failing workflows, live runs, dead letters, drift, RBAC gaps and cost together — polls in the background with adaptive backoff when Azure throttles, so it works unattended as a wall display."
+          },
+          {
+            "title": "Trigger panel",
+            "body": "Fetch the callback URL for any HTTP-triggered workflow, edit the JSON payload in place, save named payloads per workflow, and watch the resulting run status appear live."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon, Windows, or Linux x86_64 for the desktop console; the terminal edition runs anywhere its static binary does",
+          "Azure CLI signed in (az login) — both editions use your existing session",
+          "Reader on the resource group for read-only use: chains, KPIs, run and action detail, resources, observability, diagnostics",
+          "Contributor for the actions that change Azure state, plus User Access Administrator for the RBAC tab",
+          "A deployed Logic Apps Standard environment"
+        ],
+        "faq": [
+          {
+            "q": "Can it change things in my Azure environment?",
+            "a": "Yes — this is not a read-only tool. The desktop console can trigger workflows, reset app settings, purge and requeue Service Bus messages, and assign RBAC roles. Each of those is gated behind a confirm dialog that shows the exact az command it is about to run, and read-only use needs only Reader."
+          },
+          {
+            "q": "What is the difference between the desktop and terminal editions?",
+            "a": "The desktop console is the full twelve-tab tool. The terminal edition is deliberately smaller — chain browsing, run history and triggering for when there is no GUI available — not a shrunken copy of every tab. They share one Azure backend and one on-disk cache."
+          },
+          {
+            "q": "Does it work against local workflows too?",
+            "a": "The desktop edition can scan a local logic_apps/ folder as well as a subscription, but it is aimed at deployed environments. For the local development loop, AIS Runner is the tool that covers that."
+          },
+          {
+            "q": "How does it work out the chains?",
+            "a": "ais-chain reads the workflow definitions and matches the queues and topics one workflow writes to against the ones another triggers on. Nothing is configured by hand, though you can add a .ais-chain hint for links it cannot see."
+          },
+          {
+            "q": "Why is run history slower than the rest?",
+            "a": "It goes through the Logic App's hostruntime API, which needs more than Reader and is throttled per subscription. The dashboard's background poll backs off automatically when it gets rate-limited."
+          }
+        ],
+        "article_slug": "logic-apps-workflow-chains"
+      },
+      "ais_tracing": {
+        "seo_title": "AIS Tracing — Correlation ID Tracer for Azure Cosmos DB",
+        "seo_description": "Follow one correlation id or order reference through every container in an Azure Cosmos DB account and see exactly where it stopped. Automatic link-field detection, timeline view, missing steps shown as gaps.",
+        "overview": [
+          "Something did not arrive. You have a correlation id, an order reference, or a customer number, and a Cosmos DB account with more containers than anyone remembers the shape of. The question is simple — how far did this value get? — and answering it usually means writing a query per container.",
+          "AIS Tracing answers it in one step. It samples your containers, works out on its own which field links documents to each other, then follows your value across all of them and draws each step on a timeline.",
+          "The gaps are the point. A step with no document is not an empty result to scroll past — it is the answer, showing you exactly which hop the data never reached."
+        ],
+        "features": [
+          {
+            "title": "Automatic link-field detection",
+            "body": "Samples the containers and infers which field ties documents of one flow together, so you do not have to describe your schema to it first."
+          },
+          {
+            "title": "Account-wide search",
+            "body": "One value, every container in the account, in a single pass — rather than a query per container written by hand."
+          },
+          {
+            "title": "Timeline view",
+            "body": "Each step the value touched, in the order it happened, so latency between hops is visible rather than inferred from timestamps you compare manually."
+          },
+          {
+            "title": "Gaps as first-class results",
+            "body": "Containers where the value never appeared are drawn as empty lanes. Where the trail stops is usually the whole answer."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon, Windows, or Linux x86_64",
+          "Azure CLI signed in (az login) — the app has no login of its own and uses your existing session",
+          "An Azure Cosmos DB account you can read, including the separate Cosmos data-plane grant",
+          "Containers that carry some correlating field across documents"
+        ],
+        "faq": [
+          {
+            "q": "Do I have to tell it my schema?",
+            "a": "No. It samples the containers and infers the linking field from the data, proposes a correlation key, and you paste a value to follow."
+          },
+          {
+            "q": "A scan failed with 403 — what does that mean?",
+            "a": "Cosmos DB data access is a separate grant from normal Azure RBAC, so an account that can see the database still cannot read its contents. The app offers a button to give yourself the Built-in Data Reader role."
+          },
+          {
+            "q": "Does it write to Cosmos DB?",
+            "a": "No. It is read-only against your account."
+          },
+          {
+            "q": "What if my data is in Log Analytics rather than Cosmos DB?",
+            "a": "AIS Analytics is the same tracer pointed at a Log Analytics workspace."
+          },
+          {
+            "q": "Will it work on a large account?",
+            "a": "It samples rather than scanning everything, so container count matters more than total document count. Very wide accounts take longer on the first pass."
+          }
+        ],
+        "article_slug": "trace-correlation-id-cosmos-db"
+      },
+      "ais_analytics": {
+        "seo_title": "AIS Analytics — Correlation ID Tracer for Azure Log Analytics",
+        "seo_description": "Paste a correlation id and see every step it touched across an Azure Log Analytics workspace. Works out the linking column from the data itself, then draws where the value got to and where it did not.",
+        "overview": [
+          "The same problem as tracing through Cosmos DB, in the place most Azure integration telemetry actually lands: a Log Analytics workspace with more tables than anyone queries regularly.",
+          "Paste a correlation id. AIS Analytics works out from the data which column ties the steps of one flow together, then follows that value across the workspace and lays the result out as a timeline.",
+          "As with the Cosmos DB tracer, an empty lane carries as much information as a full one — it tells you which step never logged, which is usually the step that broke."
+        ],
+        "features": [
+          {
+            "title": "Column inference from data",
+            "body": "Determines which column correlates the steps of a single flow by looking at the workspace, not at a configuration file you maintain."
+          },
+          {
+            "title": "Workspace-wide trace",
+            "body": "One correlation id followed across the tables that matter, without composing a KQL query per table."
+          },
+          {
+            "title": "Timeline of steps",
+            "body": "Every step the value touched, in order, so where time was spent is visible at a glance."
+          },
+          {
+            "title": "Two kinds of nothing, told apart",
+            "body": "A lane with no rows is shown rather than omitted, and the view distinguishes a step the value has not reached yet from one that was never on its path — the difference between waiting and broken."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon, Windows, or Linux x86_64",
+          "Azure CLI signed in (az login) — the app uses your existing session rather than its own login",
+          "An Azure Log Analytics workspace and read access to it"
+        ],
+        "faq": [
+          {
+            "q": "Do I need to know KQL?",
+            "a": "No. Writing the queries is what the tool removes. Knowing KQL helps you interpret the tables, but you do not write anything to get a trace."
+          },
+          {
+            "q": "How is this different from AIS Tracing?",
+            "a": "Same tracer, different backend. AIS Tracing reads an Azure Cosmos DB account; AIS Analytics reads a Log Analytics workspace. Teams that use both usually run both."
+          },
+          {
+            "q": "Does it modify the workspace?",
+            "a": "No. It only runs read queries."
+          }
+        ],
+        "article_slug": "trace-correlation-id-log-analytics"
+      },
+      "gitagent": {
+        "seo_title": "GitAgent — AI Commit Messages and Pull Requests, Gated by You",
+        "seo_description": "Turns a dirty working tree into an open pull request one approved step at a time. Drafts commit messages and PR descriptions with a local ollama model or DeepSeek — nothing touches git history or the remote without your explicit approval.",
+        "overview": [
+          "Most AI git tooling has the same problem: it is either a text generator that hands you a commit message to paste, or an agent that runs commands on your repository and tells you afterwards. Neither is what you want on a repo you care about.",
+          "GitAgent models the work as a graph of steps — scan the tree, draft the commit message, commit, push, draft the PR description, open the PR — and stops at each one. You see what it proposes and what command it will run before it runs.",
+          "Drafting can run entirely on a local ollama model, which means the diff of a private repository never leaves your machine. DeepSeek is there if you would rather use a hosted model."
+        ],
+        "features": [
+          {
+            "title": "Approval at every step",
+            "body": "Nothing touches git history or the remote without an explicit go-ahead on that specific step. The agent proposes; you approve."
+          },
+          {
+            "title": "Commit messages from the actual diff",
+            "body": "Scans the working tree and drafts a message describing what changed, rather than restating the branch name."
+          },
+          {
+            "title": "PR descriptions",
+            "body": "Drafts the pull request body from the commits on the branch, then opens the PR through the gh CLI."
+          },
+          {
+            "title": "Local model support",
+            "body": "Point it at an ollama model running on your own machine and the contents of a private repository never leave it. DeepSeek is available as a hosted alternative."
+          },
+          {
+            "title": "The whole path in one place",
+            "body": "Scan, commit, push and open the PR without switching between a terminal, a browser and a chat window."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon, Windows, or Linux x86_64",
+          "git, and the GitHub CLI (gh) authenticated, for opening pull requests",
+          "Either ollama running locally, or a DeepSeek API key"
+        ],
+        "faq": [
+          {
+            "q": "Can it push or rewrite history on its own?",
+            "a": "No. Every step that touches git history or the remote is gated behind an explicit approval for that step."
+          },
+          {
+            "q": "Does my code get sent to a third party?",
+            "a": "Only if you choose a hosted model. With a local ollama model, drafting happens on your machine and the diff never leaves it."
+          },
+          {
+            "q": "Does it work with GitLab or Bitbucket?",
+            "a": "Pull request creation goes through the GitHub CLI, so PR opening is GitHub-only today. The commit and push steps work on any git remote."
+          },
+          {
+            "q": "It is marked work in progress — is it usable?",
+            "a": "Yes, the commit-to-PR path works. It is marked WIP because the interface is still moving and releases are frequent."
+          }
+        ],
+        "article_slug": "ai-commit-messages-without-giving-up-control"
+      },
+      "blog_toolkit": {
+        "seo_title": "Blog Toolkit — Desktop Blog Manager with AI Drafting",
+        "seo_description": "Write, generate and schedule blog posts from a native desktop app. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow and weekly auto-publish in French and English.",
+        "overview": [
+          "A blog that publishes on a schedule needs two things a text editor does not give you: somewhere for finished-but-unpublished posts to wait, and something that publishes them when the day comes.",
+          "Blog Toolkit is a native desktop app built around that queue. You draft in markdown with a live preview, optionally with an AI model doing the first pass, then move posts into a queue that publishes on its own schedule.",
+          "It handles both language versions of a post as part of the same flow, which is what makes a bilingual blog sustainable rather than something you keep meaning to catch up on."
+        ],
+        "features": [
+          {
+            "title": "Queue-to-publish flow",
+            "body": "Finished posts wait in a queue instead of in a folder you forget about, and go out on the schedule you set."
+          },
+          {
+            "title": "Weekly auto-publish",
+            "body": "Set the cadence once and the queue drains on its own. A week you do not write is a week the queue covers for you."
+          },
+          {
+            "title": "AI drafting",
+            "body": "First drafts via DeepSeek or Claude, in the editor rather than in a separate chat window you copy out of."
+          },
+          {
+            "title": "Markdown editor with live preview",
+            "body": "Write in markdown and see the rendered result as you type, including the code blocks that usually break in generic editors."
+          },
+          {
+            "title": "French and English side by side",
+            "body": "Both locale versions of a post are managed together, so a translation does not drift a month behind the original."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon, Windows, or Linux x86_64",
+          "A blog project laid out as content/{en,fr}/{queue,blog} — the app is asked for the project root on first launch",
+          "Node.js 18 or newer: publishing shells out to Node to rebuild the site index (the Windows installer and the macOS setup script handle this)",
+          "A DeepSeek or Anthropic API key, if you want AI drafting — pasted in Settings or read from DEEPSEEK_API_KEY / ANTHROPIC_API_KEY"
+        ],
+        "faq": [
+          {
+            "q": "Does it lock my content into a proprietary format?",
+            "a": "No. Posts are markdown files with frontmatter on your own disk. Publishing moves a file from the queue folder to the blog folder, sets its status and date, and rebuilds the index. The app manages the files; it does not own them."
+          },
+          {
+            "q": "Can I use it without the AI features?",
+            "a": "Yes. The editor, queue and scheduler work with no model configured."
+          },
+          {
+            "q": "Which models does it use?",
+            "a": "DeepSeek or Claude, chosen in Settings."
+          }
+        ],
+        "article_slug": ""
+      },
+      "appscreens": {
+        "seo_title": "AppScreens — iOS and Android Build, Screenshot and Publish Assistant",
+        "seo_description": "Build and run iOS and Android apps locally, then package release artifacts for the App Store and Google Play. Handles bundle IDs, signing, version bumps, store screenshots in every required size and device-frame marketing assets.",
+        "overview": [
+          "Shipping a mobile app release is a long list of small, exacting steps: bump the version, get the signing config right, produce a screenshot in each size the store demands, wrap them in device frames so the listing does not look amateur, then package the artifact the store will accept.",
+          "AppScreens does that list from one native desktop app, for both platforms, without the usual pile of shell scripts and half-remembered Xcode settings.",
+          "The screenshot generation alone is the part most teams do by hand every release, in every required size, for both stores."
+        ],
+        "features": [
+          {
+            "title": "Local build and run",
+            "body": "Build, run and iterate on iOS and Android from one place, driving Xcode and Gradle underneath."
+          },
+          {
+            "title": "Release packaging",
+            "body": "Produces the artifacts the App Store and Google Play accept, rather than leaving you to work out which archive format each one wants this year."
+          },
+          {
+            "title": "Bundle IDs, signing and version bumps",
+            "body": "The configuration that breaks a release at the last minute, handled as part of the flow instead of remembered per release."
+          },
+          {
+            "title": "Store screenshots in every size",
+            "body": "Generates the screenshot set both stores require, at every required resolution, from one capture."
+          },
+          {
+            "title": "Assets uploaded, not just generated",
+            "body": "Device-framed screenshots go straight into App Store Connect and Google Play through their APIs, landing in the correct display type and screenshot set rather than waiting in a folder for someone to drag in."
+          }
+        ],
+        "requirements": [
+          "macOS on Apple Silicon for iOS builds; Windows or Linux x86_64 for Android-only use",
+          "Xcode, for building and packaging iOS",
+          "The Android SDK and Gradle, for Android",
+          "An App Store Connect or Google Play account to publish the artifacts"
+        ],
+        "faq": [
+          {
+            "q": "Can I use it for Android only?",
+            "a": "Yes. The Android path does not need macOS. iOS builds do, because Xcode does."
+          },
+          {
+            "q": "Does it upload to the stores for me?",
+            "a": "Yes, for store assets: it talks to the App Store Connect and Google Play Developer APIs directly to upload screenshots into the right display types and sets. You supply the API credentials."
+          }
+        ],
+        "article_slug": ""
+      }
+    },
+    "article_heading": "Read more",
+    "licence_heading": "Licence",
+    "licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions. Companies using it for work buy a licence.",
+    "licence_link": "Read the licence",
+    "licence_cta": "Enquire about a commercial licence",
+    "source_heading": "Source",
+    "source_body": "The source is public and readable. Fork it and rebrand it — the name and logo are trademarks and are not covered by the licence.",
+    "source_link": "View on GitHub",
+    "signing_note_mac": "The macOS build is signed with an Apple Developer ID and notarized, so it opens with a normal double-click.",
+    "signing_note_windows_unsigned": "The Windows installer is not code-signed yet, so SmartScreen may warn that the publisher is unknown — choose More info → Run anyway."
   }
 }
