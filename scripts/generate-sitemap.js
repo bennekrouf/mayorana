@@ -131,28 +131,21 @@ function urlEntry({ loc, changefreq, priority, lastmod, alternates }) {
   </url>`;
 }
 
-// Match an English post to its French counterpart. The French posts either
-// reuse the English id/slug or suffix it with '-fr'; both forms are checked and
-// the pair is only used once the counterpart is known to exist.
+// Read the en/fr pairing that linkCounterparts() in scripts/generate-blog-data.js
+// wrote onto each post. That script is the single place the rule lives; deriving
+// the '-fr' suffix a second time here is how the sitemap and the pages' own
+// hreflang drifted apart in the first place. Posts coming from the front-matter
+// fallback scan carry no counterpart, so that path simply emits no alternates.
 function pairPosts(byLocale) {
   const pairs = new Map(); // `${locale}:${slug}` -> { en, fr }
-  const fr = byLocale.fr || [];
-  const frById = new Map(fr.map((p) => [p.id, p]));
-  const frBySlug = new Map(fr.map((p) => [p.slug, p]));
-
-  for (const post of byLocale.en || []) {
-    const match =
-      frById.get(`${post.id}-fr`) ||
-      frById.get(post.id) ||
-      frBySlug.get(`${post.slug}-fr`) ||
-      frBySlug.get(post.slug);
-    if (!match) continue;
-    const alt = {
-      en: `${BASE_URL}/en/blog/${post.slug}`,
-      fr: `${BASE_URL}/fr/blog/${match.slug}`,
-    };
-    pairs.set(`en:${post.slug}`, alt);
-    pairs.set(`fr:${match.slug}`, alt);
+  for (const locale of LOCALES) {
+    for (const post of byLocale[locale] || []) {
+      if (!post.counterpart) continue;
+      pairs.set(`${locale}:${post.slug}`, {
+        [locale]: `${BASE_URL}/${locale}/blog/${post.slug}`,
+        [post.counterpart.locale]: `${BASE_URL}/${post.counterpart.locale}/blog/${post.counterpart.slug}`,
+      });
+    }
   }
   return pairs;
 }

@@ -108,7 +108,7 @@ async function generateBlogDataForLocale(locale) {
     // Create empty data files for missing locales
     fs.writeFileSync(outputPath, JSON.stringify([], null, 2));
     console.log(`📝 Created empty data files for ${locale}`);
-    return { posts: 0, categories: 0 };
+    return { posts: [], categories: 0 };
   }
 
   const skipped = [];
@@ -189,8 +189,49 @@ async function generateBlogDataForLocale(locale) {
   }, {});
   // console.log(`🔍 Locale verification for ${locale}:`, localeCheck);
 
-  return { posts: postsData.length, categories: 0 };
+  return { posts: postsData, categories: 0 };
 }
+/**
+ * Link each post to its counterpart in the other locale, in place.
+ *
+ * This is the single definition of the pairing rule: French posts either reuse
+ * the English id/slug or suffix it with '-fr'. It used to be written out twice
+ * — once in src/lib/blog.ts for the page's hreflang, once in
+ * scripts/generate-sitemap.js for the sitemap's — and the two agreeing was a
+ * matter of keeping them in step by hand. Both now read `counterpart` from the
+ * generated data instead, so they cannot drift apart.
+ *
+ * A pair is written on both posts or on neither, so the alternates are always
+ * symmetric and never point at a post that does not exist.
+ */
+function linkCounterparts(byLocale) {
+  const en = byLocale.en || [];
+  const fr = byLocale.fr || [];
+  const frById = new Map(fr.map((p) => [p.id, p]));
+  const frBySlug = new Map(fr.map((p) => [p.slug, p]));
+  const taken = new Set();
+  let paired = 0;
+
+  for (const post of en) {
+    const match =
+      frById.get(`${post.id}-fr`) ||
+      frById.get(post.id) ||
+      frBySlug.get(`${post.slug}-fr`) ||
+      frBySlug.get(post.slug);
+    // One English post per French post: without this a second English post
+    // sharing an id would claim a counterpart already spoken for, and the
+    // French side would disagree about who its partner is.
+    if (!match || taken.has(match.slug)) continue;
+    taken.add(match.slug);
+    post.counterpart = { locale: 'fr', slug: match.slug };
+    match.counterpart = { locale: 'en', slug: post.slug };
+    paired++;
+  }
+
+  console.log(`\u{1F517} Linked ${paired} post pair(s) across locales`);
+  return paired;
+}
+
 // Main function to generate blog data for all locales
 async function generateBlogData() {
   console.log('🚀 Starting i18n blog data generation...\n');
@@ -204,11 +245,24 @@ async function generateBlogData() {
   let totalPosts = 0;
   let totalCategories = 0;
 
-  // Generate data for each locale
+  // Build every locale first, link the pairs, then write: the counterpart of a
+  // post lives in the other locale's set, so nothing can be written until both
+  // sets exist.
+  const byLocale = {};
   for (const locale of locales) {
     const result = await generateBlogDataForLocale(locale);
-    totalPosts += result.posts;
+    byLocale[locale] = result.posts;
+    totalPosts += result.posts.length;
     totalCategories += result.categories;
+  }
+
+  linkCounterparts(byLocale);
+
+  for (const locale of locales) {
+    fs.writeFileSync(
+      path.join(process.cwd(), `src/data/blog-posts-${locale}.json`),
+      JSON.stringify(byLocale[locale], null, 2)
+    );
   }
 
   // Create fallback files (posts only)
