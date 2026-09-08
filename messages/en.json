@@ -118,6 +118,7 @@
     "promo_cta": "Download",
     "promo_other_platforms": "Also for",
     "promo_details": "See details",
+    "releases_link": "Release notes",
     "more_coming_soon": "More coming soon",
     "more_coming_soon_subtitle": "Reach out if you have a tool idea, or need one of these adapted to your stack.",
     "more_coming_soon_cta": "Get in touch",
@@ -831,6 +832,26 @@
     "source_body": "The source is public and readable. Fork it and rebrand it — the name and logo are trademarks and are not covered by the licence.",
     "source_link": "View on GitHub",
     "signing_note_mac": "The macOS build is signed with an Apple Developer ID and notarized, so it opens with a normal double-click.",
-    "signing_note_windows_unsigned": "The Windows installer is not code-signed yet, so SmartScreen may warn that the publisher is unknown — choose More info → Run anyway."
+    "signing_note_windows_unsigned": "The Windows installer is not code-signed yet, so SmartScreen may warn that the publisher is unknown — choose More info → Run anyway.",
+    "releases_heading": "What's new",
+    "releases_body": "Version {version}, released {date}. {name} ships often; every version and what it changed is listed on the release notes page.",
+    "releases_link": "Read the release notes"
+  },
+  "app_releases": {
+    "breadcrumb": "Release notes",
+    "seo_title": "{name} release notes — every version, and what changed",
+    "seo_description": "Release notes for {name}, version {version} ({date}). All {count} releases, newest first, with the fix or feature each one shipped.",
+    "seo_description_empty": "Release notes for {name}: every version, newest first.",
+    "h1": "{name} release notes",
+    "intro": "Every released version of {name}, newest first, with what changed in it — written at the moment the release was cut, not reconstructed afterwards.",
+    "back_to_tool": "{name} overview",
+    "release_count": "{count, plural, =1 {# release} other {# releases}}",
+    "latest_heading": "Current version",
+    "latest_line": "Version {version}, released {date}. This is what the download buttons below install.",
+    "history_heading": "All versions",
+    "jump_label": "Jump to a version",
+    "permalink": "Link to version",
+    "feed_heading": "The same history, as JSON",
+    "feed_body": "This page is generated from a feed published beside the builds — the same file {name} reads when it checks for an update. Point a script at it if you track versions across a team."
   }
 }

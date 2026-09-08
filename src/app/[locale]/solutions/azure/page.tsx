@@ -7,7 +7,7 @@ import { motion } from '@/components/ui/Motion';
 import { ArrowRight, Check, PlayCircle, Share2, Search } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
-import { aisTools, appI18nKey } from '@/data/tools';
+import { aisTools, appI18nKey, hasReleaseNotes } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons } from '@/components/ui/ToolVisuals';
 
 // The three frictions, paired with the icon that stands for the fix. Order
@@ -154,13 +154,26 @@ export default function AzureSolutionsPage() {
 
                 <div className="mt-auto space-y-3">
                   <DownloadButtons downloads={tool.downloads} />
-                  <Link
-                    href={getLocalizedPath(locale, `/apps/${tool.id}`)}
-                    className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {tApps('promo_details')}
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+                    <Link
+                      href={getLocalizedPath(locale, `/apps/${tool.id}`)}
+                      className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {tApps('promo_details')}
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                    {/* The page that proves the tool is alive, from the page
+                        that has to argue it is. */}
+                    {hasReleaseNotes(tool.id) && (
+                      <Link
+                        href={getLocalizedPath(locale, `/apps/${tool.id}/releases`)}
+                        className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        {tApps('releases_link')}
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             ))}

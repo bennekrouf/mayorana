@@ -1,0 +1,262 @@
+{
+  "name": "ais-runner",
+  "product": "AIS Runner",
+  "page": "https://mayorana.ch/en/apps/ais-runner",
+  "generated_at": "2026-09-08T07:25:32Z",
+  "releases": [
+    {
+      "version": "0.5.49",
+      "tag": "v0.5.49",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Ctrl-C, `kill`, a logout or a cancelled CI step now run the same teardown as quitting the app: `connections.json` and `workflow.json` are restored to the committed versions, `local.settings.json` is returned to its pre-scenario state, and every emulator or `func` process the app started is stopped. Previously a signal took the process out between two instructions and left patched files patched and Azurite reparented to init."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.48",
+      "tag": "v0.5.48",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Opening a project heals patches left behind by a session that did not exit cleanly. `connections.json` and `workflow.json` files still carrying local run patches are restored from their snapshots instead of staying dirty in the working tree indefinitely."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "A failed run now explains itself one level down: instead of the runtime's \"An action failed. No dependent actions succeeded.\", the panel walks into the `Foreach` repetition and the invoked workflow's response body to report the action that actually broke."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.47",
+      "tag": "v0.5.47",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Release pipeline only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.46",
+      "tag": "v0.5.46",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Window titles no longer carry a \"Local\" prefix, so two AIS windows are distinguishable in the macOS window list."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.45",
+      "tag": "v0.5.45",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Overlap analysis for Event Grid subscriptions. Two subscriptions on the same system topic whose filters overlap deliver the same event twice, and nothing in the Azure portal says so — the Event Grid panel now flags the overlapping pairs, along with subscriptions that have no dead-letter destination and so discard events once the retry policy is exhausted."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.44",
+      "tag": "v0.5.44",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Event Grid subscriptions are grouped by topic in the panel, with the overlapping ones drawn together rather than scattered down a flat list."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.43",
+      "tag": "v0.5.43",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "JDK selection for Java function apps. AIS Runner detects the JDKs installed on the machine and lets you pick which one `mvn package` and `mvn azure-functions:run` use, instead of inheriting whatever `JAVA_HOME` happens to hold.",
+            "Workflow authentication patching for local runs. HTTP actions that authenticate with `ActiveDirectoryOAuth` cannot resolve their tenant, client id and secret locally — the parameters come from app settings that only exist in Azure — so the action failed before it ever reached a stub. The auth block is now stripped for the local run and restored when `func` stops."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.42",
+      "tag": "v0.5.42",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "`connections.json` is snapshotted before a local run and restored when `func` stops. The Logic Apps runtime reads that file and only that file, so the patched version has to land there — but it no longer *stays* there, and the working tree is dirty only while `func` is running."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.41",
+      "tag": "v0.5.41",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The update check sends a versioned User-Agent, so per-version adoption is visible in the download logs — the number that says how many people are still on a build with a bug that is already fixed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.40",
+      "tag": "v0.5.40",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Ports held by a leftover process are reclaimed automatically. Starting Azurite or `func` after a previous session was killed no longer fails with a bind error that names no owner."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.39",
+      "tag": "v0.5.39",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Port conflicts name the process holding the port, instead of reporting \"address already in use\" and leaving you to find it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.38",
+      "tag": "v0.5.38",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "KPI chips on scenario groups: pass rate and verdict on the group header, with a running scenario held out of the count until it settles."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.37",
+      "tag": "v0.5.37",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.36",
+      "tag": "v0.5.36",
+      "date": "2026-09-01",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Every process the app spawned — Azurite, the Service Bus emulator, `func`, `mvn` — is terminated when the app exits. They used to survive it and hold their ports."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.35",
+      "tag": "v0.5.35",
+      "date": "2026-09-01",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "macOS notifications are initialised at startup, so the first notification no longer raises the system's \"Where is use_default?\" dialog."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.34",
+      "tag": "v0.5.34",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Installer permissions on Windows, and port handling for scenario runs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.33",
+      "tag": "v0.5.33",
+      "date": "2026-08-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A scenario run or a full sweep can be cancelled. Cancellation is cooperative: the step in flight finishes, nothing further starts, and the teardown still runs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.32",
+      "tag": "v0.5.32",
+      "date": "2026-08-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "`function_apps/local.settings.json` is seeded with the keys a Java function app needs, so `mvn azure-functions:run` starts on a fresh clone instead of failing on a missing setting."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.31",
+      "tag": "v0.5.31",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Internal: the Azure integration was split into `azure::auth` and `azure::servicebus`, and moved under a single `azure` module. No behaviour change."
+          ]
+        }
+      ]
+    }
+  ]
+}

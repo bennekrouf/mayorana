@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/generate-blog-data.js && next dev -p 3006",
-    "prebuild": "node scripts/generate-blog-data.js",
+    "prebuild": "node scripts/generate-blog-data.js && node scripts/fetch-releases.js",
     "build": "next build && node scripts/generate-sitemap.js",
     "postbuild": "echo '✅ Build completed - sitemap generated'",
     "start": "next start -p 3006",
     "lint": "next lint",
     "deploy-fix": "chmod +x scripts/deploy-fix.sh && ./scripts/deploy-fix.sh",
     "sitemap": "node scripts/generate-sitemap.js",
-    "blog-data": "node scripts/generate-blog-data.js"
+    "blog-data": "node scripts/generate-blog-data.js",
+    "releases": "node scripts/fetch-releases.js"
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.9",
