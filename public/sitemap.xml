@@ -4,7 +4,7 @@
   <!-- en: static pages -->
   <url>
     <loc>https://mayorana.ch/en</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en"/>
@@ -13,7 +13,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/solutions/azure</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/azure"/>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/solutions/ai-agents</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/ai-agents"/>
@@ -31,7 +31,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps"/>
@@ -40,7 +40,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/services</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/services"/>
@@ -49,7 +49,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/about</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/about"/>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/contact</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/contact"/>
@@ -67,7 +67,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog"/>
@@ -76,7 +76,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/privacy</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/privacy"/>
@@ -85,7 +85,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/terms</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/terms"/>
@@ -95,7 +95,7 @@
   <!-- en: tool pages -->
   <url>
     <loc>https://mayorana.ch/en/apps/ais-runner</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-runner"/>
@@ -103,8 +103,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-runner"/>
   </url>
   <url>
-    <loc>https://mayorana.ch/en/apps/ais-monitor</loc>
+    <loc>https://mayorana.ch/en/apps/ais-runner/releases</loc>
     <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-runner/releases"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-runner/releases"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-runner/releases"/>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/en/apps/ais-monitor</loc>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-monitor"/>
@@ -113,7 +122,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/ais-tracing</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-tracing"/>
@@ -122,7 +131,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/ais-analytics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-analytics"/>
@@ -131,7 +140,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/blog-toolkit</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/blog-toolkit"/>
@@ -140,7 +149,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/appscreens</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/appscreens"/>
@@ -149,7 +158,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/apps/gitagent</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/gitagent"/>
@@ -724,7 +733,7 @@
   <!-- en: tag pages -->
   <url>
     <loc>https://mayorana.ch/en/blog/tag/azure</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/azure"/>
@@ -733,7 +742,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/log-analytics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/log-analytics"/>
@@ -742,7 +751,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/kql</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/kql"/>
@@ -751,7 +760,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/observability</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/observability"/>
@@ -760,7 +769,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/debugging</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/debugging"/>
@@ -769,7 +778,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/logic-apps</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/logic-apps"/>
@@ -778,7 +787,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/service-bus</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/service-bus"/>
@@ -787,7 +796,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/event-grid</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/event-grid"/>
@@ -796,7 +805,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/integration</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/integration"/>
@@ -805,7 +814,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/cosmos-db</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cosmos-db"/>
@@ -814,7 +823,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/git</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/git"/>
@@ -823,7 +832,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/ai</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ai"/>
@@ -832,7 +841,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/developer-tools</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/developer-tools"/>
@@ -841,7 +850,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/rust</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/rust"/>
@@ -850,7 +859,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/llm</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/llm"/>
@@ -859,7 +868,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dioxus</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dioxus"/>
@@ -868,7 +877,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/desktop</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/desktop"/>
@@ -877,7 +886,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/standard-library</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/standard-library"/>
@@ -886,7 +895,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/basics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/basics"/>
@@ -895,7 +904,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/memory</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/memory"/>
@@ -904,7 +913,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/borrowing</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrowing"/>
@@ -913,7 +922,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/ownership</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ownership"/>
@@ -922,7 +931,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/borrow-checker</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrow-checker"/>
@@ -931,7 +940,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/optimization</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/optimization"/>
@@ -940,7 +949,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/advanced</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/advanced"/>
@@ -949,7 +958,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/closures</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/closures"/>
@@ -958,7 +967,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/javascript</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/javascript"/>
@@ -967,7 +976,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/typescript</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/typescript"/>
@@ -976,7 +985,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/cache</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cache"/>
@@ -985,7 +994,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/simd</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/simd"/>
@@ -994,7 +1003,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/performance</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/performance"/>
@@ -1003,7 +1012,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/collections</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/collections"/>
@@ -1012,7 +1021,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/blanket-implementations</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/blanket-implementations"/>
@@ -1021,7 +1030,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/trait-coherence</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-coherence"/>
@@ -1030,7 +1039,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/code-duplication</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/code-duplication"/>
@@ -1039,7 +1048,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/traits</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/traits"/>
@@ -1048,7 +1057,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/library-design</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/library-design"/>
@@ -1057,7 +1066,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/associated-types</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/associated-types"/>
@@ -1066,7 +1075,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/io-drivers</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/io-drivers"/>
@@ -1075,7 +1084,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/type-safety</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/type-safety"/>
@@ -1084,7 +1093,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/embedded</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/embedded"/>
@@ -1093,7 +1102,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/c</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/c"/>
@@ -1102,7 +1111,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/concurrency</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/concurrency"/>
@@ -1111,7 +1120,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/deadlock</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/deadlock"/>
@@ -1120,7 +1129,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/sized</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/sized"/>
@@ -1129,7 +1138,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/unsized</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/unsized"/>
@@ -1138,7 +1147,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/bounds</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/bounds"/>
@@ -1147,7 +1156,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/generics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/generics"/>
@@ -1156,7 +1165,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/supertraits</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/supertraits"/>
@@ -1165,7 +1174,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/object-safety</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/object-safety"/>
@@ -1174,7 +1183,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dynamic-dispatch</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dynamic-dispatch"/>
@@ -1183,7 +1192,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/plugins</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/plugins"/>
@@ -1192,7 +1201,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dispatch</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dispatch"/>
@@ -1201,7 +1210,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/trait-bounds</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-bounds"/>
@@ -1210,7 +1219,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/monomorphization</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/monomorphization"/>
@@ -1219,13 +1228,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/operators</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/iterators</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/iterators"/>
@@ -1234,7 +1243,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/string</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/string"/>
@@ -1243,7 +1252,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/box</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/box"/>
@@ -1252,7 +1261,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/heap</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/heap"/>
@@ -1261,7 +1270,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/str</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/str"/>
@@ -1270,7 +1279,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/dangling-pointer</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dangling-pointer"/>
@@ -1279,7 +1288,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/lifetimes</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/lifetimes"/>
@@ -1288,7 +1297,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/data-races</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/data-races"/>
@@ -1297,7 +1306,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/stack</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/stack"/>
@@ -1306,7 +1315,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/allocation</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/allocation"/>
@@ -1315,7 +1324,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/drop</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drop"/>
@@ -1324,7 +1333,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/vec</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/vec"/>
@@ -1333,7 +1342,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/retain</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/retain"/>
@@ -1342,7 +1351,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/drain</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drain"/>
@@ -1351,7 +1360,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/higher-order-functions</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/higher-order-functions"/>
@@ -1360,7 +1369,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/fnmut</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/fnmut"/>
@@ -1369,7 +1378,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/beginners</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/beginners"/>
@@ -1378,7 +1387,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/en/blog/tag/gc</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/gc"/>
@@ -1388,7 +1397,7 @@
   <!-- fr: static pages -->
   <url>
     <loc>https://mayorana.ch/fr</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en"/>
@@ -1397,7 +1406,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/solutions/azure</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/azure"/>
@@ -1406,7 +1415,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/solutions/ai-agents</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/solutions/ai-agents"/>
@@ -1415,7 +1424,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps"/>
@@ -1424,7 +1433,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/services</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/services"/>
@@ -1433,7 +1442,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/about</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/about"/>
@@ -1442,7 +1451,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/contact</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/contact"/>
@@ -1451,7 +1460,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog"/>
@@ -1460,7 +1469,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/privacy</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/privacy"/>
@@ -1469,7 +1478,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/terms</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/terms"/>
@@ -1479,7 +1488,7 @@
   <!-- fr: tool pages -->
   <url>
     <loc>https://mayorana.ch/fr/apps/ais-runner</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-runner"/>
@@ -1487,8 +1496,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-runner"/>
   </url>
   <url>
-    <loc>https://mayorana.ch/fr/apps/ais-monitor</loc>
+    <loc>https://mayorana.ch/fr/apps/ais-runner/releases</loc>
     <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-runner/releases"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mayorana.ch/fr/apps/ais-runner/releases"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mayorana.ch/en/apps/ais-runner/releases"/>
+  </url>
+  <url>
+    <loc>https://mayorana.ch/fr/apps/ais-monitor</loc>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-monitor"/>
@@ -1497,7 +1515,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/ais-tracing</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-tracing"/>
@@ -1506,7 +1524,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/ais-analytics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/ais-analytics"/>
@@ -1515,7 +1533,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/blog-toolkit</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/blog-toolkit"/>
@@ -1524,7 +1542,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/appscreens</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/appscreens"/>
@@ -1533,7 +1551,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/apps/gitagent</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/apps/gitagent"/>
@@ -2114,7 +2132,7 @@
   <!-- fr: tag pages -->
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/azure</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/azure"/>
@@ -2123,7 +2141,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/log-analytics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/log-analytics"/>
@@ -2132,7 +2150,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/kql</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/kql"/>
@@ -2141,7 +2159,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/observability</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/observability"/>
@@ -2150,7 +2168,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/debugging</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/debugging"/>
@@ -2159,7 +2177,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/logic-apps</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/logic-apps"/>
@@ -2168,7 +2186,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/service-bus</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/service-bus"/>
@@ -2177,7 +2195,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/event-grid</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/event-grid"/>
@@ -2186,7 +2204,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/integration</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/integration"/>
@@ -2195,7 +2213,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/cosmos-db</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cosmos-db"/>
@@ -2204,7 +2222,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/git</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/git"/>
@@ -2213,7 +2231,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/ai</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ai"/>
@@ -2222,7 +2240,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/developer-tools</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/developer-tools"/>
@@ -2231,7 +2249,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/rust</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/rust"/>
@@ -2240,7 +2258,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/llm</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/llm"/>
@@ -2249,7 +2267,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dioxus</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dioxus"/>
@@ -2258,7 +2276,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/desktop</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/desktop"/>
@@ -2267,7 +2285,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/standard-library</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/standard-library"/>
@@ -2276,7 +2294,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/basics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/basics"/>
@@ -2285,7 +2303,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/memory</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/memory"/>
@@ -2294,7 +2312,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/borrowing</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrowing"/>
@@ -2303,7 +2321,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/ownership</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/ownership"/>
@@ -2312,7 +2330,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/borrow-checker</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/borrow-checker"/>
@@ -2321,7 +2339,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/blanket-implementations</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/blanket-implementations"/>
@@ -2330,7 +2348,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/trait-coherence</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-coherence"/>
@@ -2339,7 +2357,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/code-duplication</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/code-duplication"/>
@@ -2348,7 +2366,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/traits</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/traits"/>
@@ -2357,7 +2375,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/library-design</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/library-design"/>
@@ -2366,7 +2384,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/associated-types</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/associated-types"/>
@@ -2375,7 +2393,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/io-drivers</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/io-drivers"/>
@@ -2384,7 +2402,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/type-safety</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/type-safety"/>
@@ -2393,7 +2411,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/embedded</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/embedded"/>
@@ -2402,7 +2420,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/sized</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/sized"/>
@@ -2411,7 +2429,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/unsized</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/unsized"/>
@@ -2420,7 +2438,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/bounds</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/bounds"/>
@@ -2429,7 +2447,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/generics</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/generics"/>
@@ -2438,7 +2456,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/supertraits</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/supertraits"/>
@@ -2447,7 +2465,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/optimization</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/optimization"/>
@@ -2456,7 +2474,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/object-safety</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/object-safety"/>
@@ -2465,7 +2483,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dynamic-dispatch</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dynamic-dispatch"/>
@@ -2474,7 +2492,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/plugins</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/plugins"/>
@@ -2483,25 +2501,25 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/polymorphisme</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/pointeurs-intelligents</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/safety</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/string</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/string"/>
@@ -2510,7 +2528,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/str</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/str"/>
@@ -2519,7 +2537,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/allocation</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/allocation"/>
@@ -2528,7 +2546,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/box</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/box"/>
@@ -2537,7 +2555,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/heap</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/heap"/>
@@ -2546,7 +2564,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/data-races</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/data-races"/>
@@ -2555,13 +2573,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/beginner</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/concurrency</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/concurrency"/>
@@ -2570,7 +2588,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/drop</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drop"/>
@@ -2579,19 +2597,19 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/cow</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/copy-on-write</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/advanced</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/advanced"/>
@@ -2600,13 +2618,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/real-time</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/performance</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/performance"/>
@@ -2615,19 +2633,19 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/stack-allocation</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/heap-allocation</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/vec</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/vec"/>
@@ -2636,13 +2654,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/memory-allocation</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/collections</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/collections"/>
@@ -2651,25 +2669,25 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/inline-assembly</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/branch-prediction</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/profiling</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/simd</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/simd"/>
@@ -2678,13 +2696,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/matrix-multiplication</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/iterators</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/iterators"/>
@@ -2693,13 +2711,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/zero-cost-abstractions</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/cache</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/cache"/>
@@ -2708,7 +2726,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/closures</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/closures"/>
@@ -2717,7 +2735,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/javascript</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/javascript"/>
@@ -2726,7 +2744,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/typescript</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/typescript"/>
@@ -2735,13 +2753,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/structs</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/trait-bounds</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/trait-bounds"/>
@@ -2750,7 +2768,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/lifetimes</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/lifetimes"/>
@@ -2759,37 +2777,37 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/generic-types</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/static-dispatch</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/move</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/references</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/state</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/fnmut</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/fnmut"/>
@@ -2798,7 +2816,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/higher-order-functions</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/higher-order-functions"/>
@@ -2807,7 +2825,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dispatch</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dispatch"/>
@@ -2816,13 +2834,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/flatten</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/retain</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/retain"/>
@@ -2831,13 +2849,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/filter</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/drain</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/drain"/>
@@ -2846,31 +2864,31 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/truncate</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/clear</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/deduplication</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/hashset</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/monomorphization</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/monomorphization"/>
@@ -2879,13 +2897,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/interfaces</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/stack</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/stack"/>
@@ -2894,13 +2912,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/functions</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/c</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/c"/>
@@ -2909,13 +2927,13 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/concurrence</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/deadlock</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/deadlock"/>
@@ -2924,7 +2942,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/dangling-pointer</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/dangling-pointer"/>
@@ -2933,55 +2951,55 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/into-iter</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/memory-safety</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/systems-programming</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/undefined-behavior</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/op%C3%A9rateurs</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/it%C3%A9rateurs</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/java</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/python</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/gc</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/gc"/>
@@ -2990,19 +3008,19 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/m%C3%A9moire</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/programming</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/beginners</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://mayorana.ch/en/blog/tag/beginners"/>
@@ -3011,7 +3029,7 @@
   </url>
   <url>
     <loc>https://mayorana.ch/fr/blog/tag/tutorial</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

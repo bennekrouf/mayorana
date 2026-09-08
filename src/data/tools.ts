@@ -203,6 +203,15 @@ export const statusBadge: Record<Status, string> = {
 
 export const statusLabel = (status: Status) => (status === 'coming_soon' ? 'COMING SOON' : status);
 
+// Tools that publish release notes, and so have a page at
+// /{locale}/apps/{id}/releases. Kept here, as ids only, because the pages that
+// link to it run on the client — importing the notes themselves to answer
+// "is there a page?" would ship every release of every tool in the bundle.
+// src/lib/releases.ts holds the notes and checks itself against this list.
+export const releaseNotesTools: string[] = ['ais-runner'];
+
+export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);
+
 // Every desktop tool gets its own page at /{locale}/apps/{id}. The id is
 // already URL-safe and stable, so it doubles as the route slug — no separate
 // slug field to keep in sync.

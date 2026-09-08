@@ -118,6 +118,7 @@
     "promo_cta": "Télécharger",
     "promo_other_platforms": "Aussi pour",
     "promo_details": "Voir les détails",
+    "releases_link": "Notes de version",
     "more_coming_soon": "D'autres à venir",
     "more_coming_soon_subtitle": "Contactez-nous si vous avez une idée d'outil, ou si l'un d'eux doit être adapté à votre stack.",
     "more_coming_soon_cta": "Nous contacter",
@@ -831,6 +832,26 @@
     "source_body": "Le code est public et lisible. Forkez-le et rebrandez-le — le nom et le logo sont des marques et ne sont pas couverts par la licence.",
     "source_link": "Voir sur GitHub",
     "signing_note_mac": "Le build macOS est signé avec un Apple Developer ID et notarisé : il s'ouvre d'un double-clic normal.",
-    "signing_note_windows_unsigned": "L'installeur Windows n'est pas encore signé : SmartScreen peut signaler un éditeur inconnu — choisissez Informations complémentaires → Exécuter quand même."
+    "signing_note_windows_unsigned": "L'installeur Windows n'est pas encore signé : SmartScreen peut signaler un éditeur inconnu — choisissez Informations complémentaires → Exécuter quand même.",
+    "releases_heading": "Nouveautés",
+    "releases_body": "Version {version}, publiée le {date}. {name} évolue souvent : chaque version et ce qu’elle a changé sont listés sur la page des notes de version.",
+    "releases_link": "Lire les notes de version"
+  },
+  "app_releases": {
+    "breadcrumb": "Notes de version",
+    "seo_title": "{name} — notes de version : chaque version et ce qui a changé",
+    "seo_description": "Notes de version de {name}, version {version} ({date}). Les {count} versions publiées, de la plus récente à la plus ancienne, avec le correctif ou la fonctionnalité livrée par chacune.",
+    "seo_description_empty": "Notes de version de {name} : chaque version, de la plus récente à la plus ancienne.",
+    "h1": "{name} — notes de version",
+    "intro": "Chaque version publiée de {name}, de la plus récente à la plus ancienne, avec ce qui a changé — écrit au moment de la release, pas reconstitué après coup. Les notes elles-mêmes sont publiées en anglais.",
+    "back_to_tool": "Présentation de {name}",
+    "release_count": "{count, plural, =1 {# version} other {# versions}}",
+    "latest_heading": "Version actuelle",
+    "latest_line": "Version {version}, publiée le {date}. C’est celle qu’installent les boutons de téléchargement ci-dessous.",
+    "history_heading": "Toutes les versions",
+    "jump_label": "Aller à une version",
+    "permalink": "Lien vers la version",
+    "feed_heading": "Le même historique, en JSON",
+    "feed_body": "Cette page est générée à partir d’un flux publié à côté des builds — le fichier que {name} lit lui-même pour vérifier les mises à jour. Branchez-y un script si vous suivez les versions à l’échelle d’une équipe."
   }
 }
