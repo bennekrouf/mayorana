@@ -1,0 +1,237 @@
+{
+  "name": "ais-tracing",
+  "product": "AIS Tracing",
+  "page": "https://mayorana.ch/en/apps/ais-tracing",
+  "generated_at": "2026-09-08T18:33:17Z",
+  "releases": [
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Error handling and feedback across the scan, trace and account screens: a failure says what failed and what to do about it, instead of leaving a view empty.",
+            "Long lane names are truncated cleanly rather than pushing the timeline out of shape."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The Windows build script handles cross-compilation correctly, and CI now blocks on clippy warnings."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "CI pipeline only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "\"AIS Tracing\" is capitalised the same way in the window title and the in-app headers."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.19",
+      "tag": "v0.1.19",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The update check sends a versioned User-Agent, which is what makes per-version adoption visible in the download logs — the number that says how many people are still on a build with a bug that is already fixed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.18",
+      "tag": "v0.1.18",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Internal: Azure sign-in consolidated into one `start_login` path shared by every screen that can trigger it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.17",
+      "tag": "v0.1.17",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Windows support: a signed installer, the Azure CLI installed for you if it is missing, and a Start menu entry."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The update check resolves the artifact for the platform it is running on, so the banner offers the macOS, Windows or Linux build directly instead of the download page."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Long lane names and field names wrap instead of overflowing their column."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Scanning a Cosmos DB account reports why it failed: an expired Azure session is named as one, rather than surfacing as an account with no containers."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Release safety: the pipeline fails outright when the deploy secrets are missing, rather than reporting success for a release nobody can download."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Builds are distributed from mayorana.ch instead of GitHub Releases. Every release publishes a `latest.json` carrying the `sha256` of each artifact, so a download can be verified against a source that does not deliver it.",
+            "Licensed under PolyForm Noncommercial 1.0.0: free for personal, educational and non-profit use; commercial use requires a licence."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The macOS binary is signed before packaging and checksummed after, so the published `sha256` matches the file you actually download."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The app adopts the login shell's `PATH`, so `az` is found when it is launched from Finder rather than from a terminal."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A release started from the Actions UI tags the version it prepared, instead of the branch it was dispatched from."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-08-26",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Multi-window support: several traces open side by side, each in its own window."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-08-26",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The release script no longer hangs waiting for a confirmation prompt when it runs without a terminal."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.6",
+      "tag": "v0.1.6",
+      "date": "2026-08-25",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A lightweight update check at startup, with a banner when a newer build is available. It reads the manifest published beside the builds, so it keeps working regardless of where the source lives."
+          ]
+        }
+      ]
+    }
+  ]
+}

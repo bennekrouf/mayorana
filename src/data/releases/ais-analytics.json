@@ -1,0 +1,197 @@
+{
+  "name": "ais-analytics",
+  "product": "AIS Analytics",
+  "page": "https://mayorana.ch/en/apps/ais-analytics",
+  "generated_at": "2026-09-08T18:33:17Z",
+  "releases": [
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-09-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Each running copy of the app gets its own webview data directory, so two windows opened at once no longer fight over one profile — on Windows the engine takes an exclusive lock on it, and the second instance would fail to start. Directories from past runs are pruned on launch, using a lock file each instance holds open rather than the directory's timestamp: a session left open overnight looks untouched from the outside."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Signing in no longer leaves a zombie `az login` process behind on every attempt. The child is reaped, and its exit is also what tells the app the browser flow finished — or was abandoned.",
+            "A corrupt cache file costs a cold start and nothing else, instead of a nonsensical \"scanned N ago\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.25",
+      "tag": "v0.1.25",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "CI pipeline only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.24",
+      "tag": "v0.1.24",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Windows support: an installer, and CI that builds and publishes it with every release."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The update check identifies itself with a versioned User-Agent and marks the request as coming from the updater, which is what separates a new install from an existing user updating in the download logs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Long lane names are truncated with a tooltip carrying the full name, instead of overflowing the trace view."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A correlation id is bound to the field it was found in. Matching the same value in an unrelated column used to pull steps into a trace that were never part of it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The update check resolves the artifact for the platform it is running on, so the banner offers the macOS, Windows or Linux build directly instead of the download page."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.19",
+      "tag": "v0.1.19",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Internal: Azure sign-in consolidated into one `start_login` path, so the welcome screen and the session check no longer implement it twice."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.18",
+      "tag": "v0.1.18",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The Windows installer runs with the lowest privileges by default, so it installs per-user without a UAC prompt. Machine-wide installation stays available through a command-line option."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.17",
+      "tag": "v0.1.17",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The app adopts the login shell's `PATH`, so `az` is found when it is launched from Finder or the Start menu rather than from a terminal."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Subscriptions that cannot be read, and sessions that have expired, are reported as what they are instead of showing as an empty workspace list."
+          ]
+        }
+      ]
+    }
+  ]
+}
