@@ -185,7 +185,9 @@ export const aisTools = AIS_TOOL_IDS.map((id) => {
 // Every tool ships under the same licence: free for personal, educational and
 // non-profit use, commercial use requires a licence. The site must not describe
 // the downloads as simply "free" — that is only half of it.
-export const LICENCE_URL = 'https://polyformproject.org/licenses/noncommercial/1.0.0/';
+// No trailing slash: polyformproject.org serves the licence at the bare path
+// and 404s on `.../1.0.0/`.
+export const LICENCE_URL = 'https://polyformproject.org/licenses/noncommercial/1.0.0';
 
 export const osColors: Record<OS, string> = {
   mac: 'bg-neutral-800 hover:bg-neutral-700 text-white',
