@@ -48,6 +48,30 @@ function readToolSlugs() {
   }
 }
 
+// Release-notes pages, dated by the day the tool last shipped rather than by
+// the day the site was built. That date is the whole point of these URLs: it is
+// what tells a crawler this page changed since it last looked, and a build date
+// on every page says the opposite of what is true. Snapshots come from
+// scripts/fetch-releases.js.
+function readReleaseDates() {
+  const dir = path.join(process.cwd(), 'src/data/releases');
+  const dates = {};
+  if (!fs.existsSync(dir)) return dates;
+
+  for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.json'))) {
+    const id = file.replace(/\.json$/, '');
+    try {
+      const feed = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+      const newest = (feed.releases || [])[0];
+      if (newest && newest.date) dates[id] = String(newest.date).split('T')[0];
+    } catch (error) {
+      console.warn(`⚠️  Could not read releases for ${id}:`, error.message);
+    }
+  }
+  console.log(`✅ Found release notes for ${Object.keys(dates).length} tools`);
+  return dates;
+}
+
 // Posts per locale. The unsuffixed blog-posts.json is an English-only fallback
 // copy, so it is read last and only if the real per-locale file is missing.
 function readPostsForLocale(locale) {
@@ -159,6 +183,7 @@ async function generateSitemap() {
   console.log('🗺️  Generating sitemap...');
 
   const toolSlugs = readToolSlugs();
+  const releaseDates = readReleaseDates();
   const postsByLocale = Object.fromEntries(
     LOCALES.map((locale) => [locale, readPostsForLocale(locale)]),
   );
@@ -175,7 +200,7 @@ async function generateSitemap() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
 
-  const counts = { static: 0, tools: 0, posts: 0, tags: 0 };
+  const counts = { static: 0, tools: 0, releases: 0, posts: 0, tags: 0 };
 
   for (const locale of LOCALES) {
     const prefix = `${BASE_URL}/${locale}`;
@@ -202,6 +227,19 @@ async function generateSitemap() {
         alternates: sameInEveryLocale(`/apps/${slug}`),
       });
       counts.tools++;
+
+      // Only tools that actually publish notes: the route 404s for the others,
+      // and a sitemap must not list a URL the site will not serve.
+      if (releaseDates[slug]) {
+        sitemap += urlEntry({
+          loc: `${prefix}/apps/${slug}/releases`,
+          changefreq: 'weekly',
+          priority: '0.7',
+          lastmod: releaseDates[slug],
+          alternates: sameInEveryLocale(`/apps/${slug}/releases`),
+        });
+        counts.releases++;
+      }
     }
 
     const posts = postsByLocale[locale];
@@ -237,10 +275,11 @@ async function generateSitemap() {
   sitemap += `
 </urlset>`;
 
-  const total = counts.static + counts.tools + counts.posts + counts.tags;
+  const total = counts.static + counts.tools + counts.releases + counts.posts + counts.tags;
   console.log(`✅ Generated sitemap with ${total} URLs across ${LOCALES.length} locales`);
   console.log(`   - Static pages: ${counts.static}`);
   console.log(`   - Tool pages:   ${counts.tools}`);
+  console.log(`   - Release notes:${counts.releases}`);
   console.log(`   - Blog posts:   ${counts.posts}`);
   console.log(`   - Tag pages:    ${counts.tags}`);
 

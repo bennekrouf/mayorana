@@ -4,12 +4,13 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight } from 'lucide-react';
+import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight, History } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import {
   appI18nKey,
   desktopToolsConfig,
+  hasReleaseNotes,
   type DataSource,
   type DownloadLink,
   type Status,
@@ -38,6 +39,8 @@ interface Tool {
   action: ToolAction;
   /** Desktop tools have a page of their own; the web products live off-site. */
   detailHref?: string;
+  /** Set only for tools that publish release notes — see releaseNotesTools. */
+  releasesHref?: string;
 }
 
 // Display order by tool id, split into the two sections the page renders.
@@ -198,14 +201,30 @@ function ToolCard({
 
       <div className="mt-auto space-y-3">
         <ToolActionButtons action={tool.action} />
-        {tool.detailHref && (
-          <Link
-            href={tool.detailHref}
-            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {tApps('promo_details')}
-            <ArrowRight className="w-3 h-3" />
-          </Link>
+        {(tool.detailHref || tool.releasesHref) && (
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+            {tool.detailHref && (
+              <Link
+                href={tool.detailHref}
+                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {tApps('promo_details')}
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+            )}
+            {/* Someone checking what changed before updating starts here, not on
+                the detail page — this index was the only step in that path with
+                no sign the notes exist. */}
+            {tool.releasesHref && (
+              <Link
+                href={tool.releasesHref}
+                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <History className="w-3 h-3" />
+                {tApps('releases_link')}
+              </Link>
+            )}
+          </div>
         )}
       </div>
     </motion.div>
@@ -234,6 +253,9 @@ export default function AppsPage() {
       dataSource: app.dataSource,
       action: { kind: 'downloads', downloads: app.downloads },
       detailHref: getLocalizedPath(locale, `/apps/${app.id}`),
+      releasesHref: hasReleaseNotes(app.id)
+        ? getLocalizedPath(locale, `/apps/${app.id}/releases`)
+        : undefined,
     }));
 
     const webTools: Tool[] = [

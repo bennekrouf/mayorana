@@ -10,6 +10,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('footer');
   const tNav = useTranslations('navigation');
+  const tApps = useTranslations('apps');
   const tCommon = useTranslations('common');
   const locale = useLocale();
 
@@ -19,6 +20,13 @@ export default function Footer() {
   const portfolioLinks = [
     { name: t('footer_api0'), url: 'https://api0.ai', external: true },
     { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps#ais-runner'), external: false },
+    // Directly under the app it belongs to: the notes page is otherwise three
+    // clicks deep and signposted nowhere a visitor would think to look.
+    {
+      name: tApps('releases_link'),
+      url: getLocalizedPath(locale, '/apps/ais-runner/releases'),
+      external: false,
+    },
     { name: 'cVenom', url: 'https://cvenom.com', external: true },
     { name: t('footer_solanize'), url: 'https://ribh.io', external: true, badge: 'MVP' }
   ];

@@ -29,6 +29,7 @@ import {
   type DesktopToolConfig,
 } from '@/data/tools';
 import { getPostBySlug } from '@/lib/blog';
+import { formatReleaseDate, getReleaseFeed, releaseAnchor } from '@/lib/releases';
 import { buildMetadata, SITE_URL } from '@/lib/seo';
 import { locales } from '../../../../../i18n';
 
@@ -102,6 +103,12 @@ export default async function ToolDetailPage({ params }: Props) {
   // other. Slugs differ per locale, so the lookup is locale-scoped.
   const article = articleSlug ? getPostBySlug(articleSlug, locale) : null;
 
+  // The versions this tool has shipped, when it publishes them. A tool that
+  // does not simply renders none of this — nothing here is required.
+  const feed = await getReleaseFeed(slug);
+  const latest = feed?.releases[0];
+  const recent = feed?.releases.slice(0, 4) ?? [];
+
   const pageUrl = `${SITE_URL}/${locale}/apps/${slug}`;
   const related = getRelatedTools(slug);
 
@@ -123,6 +130,16 @@ export default async function ToolDetailPage({ params }: Props) {
       softwareRequirements: requirements.join('; '),
       inLanguage: locale,
       codeRepository: tool.source,
+      // A version and a date are what tell an answer engine this is a live
+      // product rather than a page written once, so they are stated here as
+      // well as on the release-notes page they come from.
+      ...(latest
+        ? {
+            softwareVersion: latest.version,
+            datePublished: latest.date,
+            releaseNotes: `${pageUrl}/releases`,
+          }
+        : {}),
       // No `offers` block. These are dual-licensed: free for personal and
       // non-profit use, paid for commercial use. Declaring price 0 would be a
       // false claim to the majority of the people searching for them, and
@@ -198,6 +215,16 @@ export default async function ToolDetailPage({ params }: Props) {
           <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('download_intro')}</p>
           <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
 
+          {latest && (
+            <Link
+              href={`/${locale}/apps/${slug}/releases`}
+              className="inline-flex items-center gap-1.5 mt-5 text-sm text-primary hover:underline underline-offset-4"
+            >
+              {t('releases_link')}
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          )}
+
           {statusNote && (
             <p className="mt-6 text-sm text-muted-foreground border-l-2 border-border pl-4">
               {statusNote}
@@ -252,6 +279,46 @@ export default async function ToolDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* What shipped recently. The dates are the point: a visitor deciding
+          whether a tool is maintained looks for them, and so does a crawler
+          working out how often this corner of the site changes. */}
+      {latest && (
+        <section className="py-14 bg-background border-t border-border">
+          <div className="container max-w-4xl">
+            <h2 className="text-2xl font-bold mb-4">{t('releases_heading')}</h2>
+            <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+              {t('releases_body', {
+                version: latest.version,
+                date: formatReleaseDate(latest.date, locale),
+                name: tool.name,
+              })}
+            </p>
+            <ul className="space-y-2.5 mb-6">
+              {recent.map((release) => (
+                <li key={release.version} className="flex flex-wrap items-baseline gap-x-3 text-sm">
+                  <Link
+                    href={`/${locale}/apps/${slug}/releases#${releaseAnchor(release.version)}`}
+                    className="font-mono text-primary hover:underline underline-offset-4"
+                  >
+                    {release.version}
+                  </Link>
+                  <time dateTime={release.date} className="text-xs text-muted-foreground">
+                    {formatReleaseDate(release.date, locale)}
+                  </time>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={`/${locale}/apps/${slug}/releases`}
+              className="inline-flex items-center gap-2 text-sm text-primary hover:underline underline-offset-4"
+            >
+              {t('releases_link')}
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* Licence and source. The licence is not a footnote for these tools —
           "free" is only true for personal and non-profit use, so a visitor

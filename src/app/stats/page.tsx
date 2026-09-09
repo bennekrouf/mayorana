@@ -67,6 +67,61 @@ function withCountryNames(data: Record<string, number>) {
   );
 }
 
+/** A row of bars that also works without a mouse. A hover tooltip is
+ *  unreachable on a touch screen, so tapping a bar names it in the caption
+ *  below, which otherwise carries the first and last day of the window. */
+function Bars<T>({
+  days,
+  value,
+  heightClass,
+}: {
+  days: [string, T][];
+  value: (d: T) => number;
+  heightClass: string;
+}) {
+  const [picked, setPicked] = useState<string | null>(null);
+  const peak = Math.max(1, ...days.map(([, d]) => value(d)));
+  // Past roughly one bar per 3px the gaps consume the whole row and every bar
+  // collapses to zero width — a year of history on a phone drew nothing at all.
+  const gap = days.length > 60 ? 'gap-px' : days.length > 24 ? 'gap-0.5' : 'gap-1';
+  const shown = days.find(([day]) => day === picked);
+
+  return (
+    <>
+      <div className={`flex items-end ${gap} ${heightClass}`}>
+        {days.map(([day, d]) => (
+          <button
+            key={day}
+            type="button"
+            onClick={() => setPicked(picked === day ? null : day)}
+            aria-label={`${day}: ${value(d)}`}
+            className="flex h-full min-w-0 flex-1 flex-col justify-end"
+          >
+            <div
+              className={`w-full rounded-t transition-colors ${
+                picked === day ? 'bg-primary' : 'bg-primary/70 hover:bg-primary'
+              }`}
+              style={{ height: `${Math.max(2, (value(d) / peak) * 100)}%` }}
+            />
+          </button>
+        ))}
+      </div>
+      <p className="mt-2 flex justify-between gap-2 text-[11px] tabular-nums text-gray-500 dark:text-gray-400">
+        {shown ? (
+          <span className="text-gray-900 dark:text-white">
+            {shown[0]} · {value(shown[1])}
+          </span>
+        ) : (
+          <>
+            <span>{days[0][0]}</span>
+            <span>{days[days.length - 1][0]}</span>
+          </>
+        )}
+      </p>
+    </>
+  );
+}
+
 /** One hosted product. Downloads do not apply to these — the question is how
  *  many people came at all, so visitors and requests lead. */
 function SiteCard({
@@ -79,7 +134,6 @@ function SiteCard({
   rangeDays: number | null;
 }) {
   const days = inRange(site.daily ?? {}, rangeDays);
-  const peak = Math.max(1, ...days.map(([, d]) => d.visitors));
   const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
 
   // Totals for the window, so a card never contradicts the range selector.
@@ -88,30 +142,30 @@ function SiteCard({
   const apiRequests = days.reduce((n, [, d]) => n + (d.api_requests ?? 0), 0);
 
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
-      <div className="flex items-baseline justify-between mb-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">{name}</h3>
-        <span className="text-xs text-gray-500 dark:text-gray-400" title="Declared crawlers, plus addresses that requested pages but never loaded a stylesheet or script">
+    <div className="min-w-0 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 sm:p-5">
+      <div className="flex items-baseline justify-between gap-3 mb-3">
+        <h3 className="min-w-0 truncate text-base font-bold text-gray-900 dark:text-white">{name}</h3>
+        <span className="shrink-0 text-xs text-gray-500 dark:text-gray-400" title="Declared crawlers, plus addresses that requested pages but never loaded a stylesheet or script">
           {(site.bot_requests + (site.unverified_requests ?? 0)).toLocaleString()} bot req filtered
         </span>
       </div>
 
       <div className="flex flex-wrap gap-x-6 gap-y-3 mb-4">
         <div>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+          <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
             {visitorDays.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">visitor-days</p>
         </div>
         <div>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+          <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
             {requests.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">requests</p>
         </div>
         {apiRequests > 0 && (
           <div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
+            <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tabular-nums">
               {apiRequests.toLocaleString()}
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -123,18 +177,8 @@ function SiteCard({
       </div>
 
       {days.length > 0 && (
-        <div className="flex items-end gap-0.5 h-12 mb-4">
-          {days.map(([day, d]) => (
-            <div key={day} className="flex-1 group relative flex flex-col justify-end h-full">
-              <div
-                className="w-full rounded-t bg-primary/70 group-hover:bg-primary"
-                style={{ height: `${Math.max(3, (d.visitors / peak) * 100)}%` }}
-              />
-              <span className="absolute -top-5 left-1/2 -translate-x-1/2 hidden group-hover:block whitespace-nowrap rounded bg-gray-900 px-1.5 py-0.5 text-[10px] text-white z-10">
-                {day}: {d.visitors}
-              </span>
-            </div>
-          ))}
+        <div className="mb-4">
+          <Bars days={days} value={(d) => d.visitors} heightClass="h-12" />
         </div>
       )}
 
@@ -148,8 +192,10 @@ function SiteCard({
         <ul className="space-y-1 text-xs">
           {paths.map(([path, n]) => (
             <li key={path} className="flex justify-between gap-3">
-              <span className="text-gray-600 dark:text-gray-300 truncate font-mono">{path}</span>
-              <span className="text-gray-900 dark:text-white tabular-nums">{n}</span>
+              {/* min-w-0, or the un-breakable path sets the card's minimum width
+                  and the whole page scrolls sideways on a phone. */}
+              <span className="min-w-0 flex-1 truncate font-mono text-gray-600 dark:text-gray-300">{path}</span>
+              <span className="shrink-0 text-gray-900 dark:text-white tabular-nums">{n}</span>
             </li>
           ))}
         </ul>
@@ -169,6 +215,9 @@ const RANGES: { label: string; days: number | null }[] = [
   { label: 'All', days: null },
 ];
 
+/** Rows the daily table shows before asking. */
+const DAILY_ROWS = 30;
+
 function inRange<T>(daily: Record<string, T>, days: number | null): [string, T][] {
   const all = Object.entries(daily ?? {}).sort((a, b) => a[0].localeCompare(b[0]));
   return days === null ? all : all.slice(-days);
@@ -180,11 +229,11 @@ function sumInto(target: Record<string, number>, source: Record<string, number> 
 
 function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+    <div className="min-w-0 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 sm:p-5">
       <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
         {label}
       </p>
-      <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white tabular-nums">{value}</p>
+      <p className="mt-2 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tabular-nums">{value}</p>
       {hint && <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{hint}</p>}
     </div>
   );
@@ -197,7 +246,7 @@ function Breakdown({ title, data }: { title: string; data: Record<string, number
   const max = Math.max(1, ...entries.map(([, n]) => n));
 
   return (
-    <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+    <div className="min-w-0 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 sm:p-5">
       <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">{title}</h2>
       {entries.length === 0 ? (
         <p className="text-sm text-gray-500 dark:text-gray-400">Nothing recorded yet.</p>
@@ -205,9 +254,9 @@ function Breakdown({ title, data }: { title: string; data: Record<string, number
         <ul className="space-y-2.5">
           {entries.map(([key, n]) => (
             <li key={key}>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-700 dark:text-gray-300 truncate pr-3">{key}</span>
-                <span className="font-medium text-gray-900 dark:text-white tabular-nums">{n}</span>
+              <div className="flex justify-between gap-3 text-sm mb-1">
+                <span className="min-w-0 flex-1 truncate text-gray-700 dark:text-gray-300">{key}</span>
+                <span className="shrink-0 font-medium text-gray-900 dark:text-white tabular-nums">{n}</span>
               </div>
               <div className="h-1.5 rounded-full bg-gray-100 dark:bg-slate-700 overflow-hidden">
                 <div className="h-full rounded-full bg-primary" style={{ width: `${(n / max) * 100}%` }} />
@@ -231,49 +280,60 @@ function pairs(data: Record<string, number>) {
  *  that day — the daily view the totals cannot answer on their own. */
 function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
   const [open, setOpen] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
   // Newest first: the question is almost always "what happened recently".
   const rows = Object.entries(daily).sort((a, b) => b[0].localeCompare(a[0]));
+  // A year of rows is eight metres of scrolling on a phone before the
+  // breakdowns below come into reach, so the tail is behind a button.
+  const visible = showAll ? rows : rows.slice(0, DAILY_ROWS);
 
   return (
     <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden">
-      <div className="px-5 py-4 border-b border-gray-200 dark:border-slate-700">
+      <div className="px-4 sm:px-5 py-4 border-b border-gray-200 dark:border-slate-700">
         <h2 className="text-sm font-semibold text-gray-900 dark:text-white">
           Daily ({rows.length} day{rows.length === 1 ? '' : 's'})
         </h2>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[480px] text-sm">
+        <table className="w-full min-w-[340px] text-xs sm:text-sm">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-slate-700">
-              <th className="px-5 py-2 font-semibold">Day</th>
-              <th className="px-3 py-2 font-semibold text-right">Total</th>
-              <th className="px-3 py-2 font-semibold text-right">Installs</th>
-              <th className="px-3 py-2 font-semibold text-right">Updates</th>
-              <th className="px-3 py-2 py-2 font-semibold text-right">Active</th>
-              <th className="px-5 py-2" />
+            <tr className="text-left text-[10px] sm:text-xs uppercase tracking-normal sm:tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-slate-700">
+              <th className="px-2.5 sm:px-5 py-2 font-semibold">Day</th>
+              <th className="px-1.5 sm:px-3 py-2 font-semibold text-right">Total</th>
+              <th className="px-1.5 sm:px-3 py-2 font-semibold text-right">Installs</th>
+              <th className="px-1.5 sm:px-3 py-2 font-semibold text-right">Updates</th>
+              <th className="px-2.5 sm:px-5 py-2 font-semibold text-right">Active</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map(([day, d]) => {
+            {visible.map(([day, d]) => {
               const expanded = open === day;
               return (
                 <React.Fragment key={day}>
                   <tr
                     className="border-b border-gray-100 dark:border-slate-700/50 hover:bg-gray-50 dark:hover:bg-slate-700/30 cursor-pointer"
                     onClick={() => setOpen(expanded ? null : day)}
+                    aria-expanded={expanded}
                   >
-                    <td className="px-5 py-2.5 font-medium whitespace-nowrap text-gray-900 dark:text-white">{day}</td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-gray-900 dark:text-white">{d.total}</td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.installs}</td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.updates}</td>
-                    <td className="px-3 py-2.5 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.active}</td>
-                    <td className="px-5 py-2.5 text-gray-400">
-                      {expanded ? <FiChevronDown className="h-4 w-4" /> : <FiChevronRight className="h-4 w-4" />}
+                    {/* The chevron shares the day cell rather than taking a
+                        column of its own — on a 375px screen that column was
+                        the one pushed off the edge. */}
+                    <td className="px-2.5 sm:px-5 py-3 font-medium whitespace-nowrap text-gray-900 dark:text-white">
+                      <span className="flex items-center gap-1">
+                        {expanded
+                          ? <FiChevronDown className="h-4 w-4 shrink-0 text-gray-400" />
+                          : <FiChevronRight className="h-4 w-4 shrink-0 text-gray-400" />}
+                        {day}
+                      </span>
                     </td>
+                    <td className="px-1.5 sm:px-3 py-3 text-right tabular-nums text-gray-900 dark:text-white">{d.total}</td>
+                    <td className="px-1.5 sm:px-3 py-3 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.installs}</td>
+                    <td className="px-1.5 sm:px-3 py-3 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.updates}</td>
+                    <td className="px-2.5 sm:px-5 py-3 text-right tabular-nums text-gray-600 dark:text-gray-300">{d.active}</td>
                   </tr>
                   {expanded && (
                     <tr className="bg-gray-50 dark:bg-slate-700/20">
-                      <td colSpan={6} className="px-5 py-3 text-xs text-gray-600 dark:text-gray-300 space-y-1">
+                      <td colSpan={5} className="px-3 sm:px-5 py-3 text-xs text-gray-600 dark:text-gray-300 space-y-1 break-words">
                         <div><span className="font-semibold">Apps:</span> {pairs(d.by_app) || '—'}</div>
                         <div><span className="font-semibold">Platforms:</span> {pairs(d.by_platform) || '—'}</div>
                         <div><span className="font-semibold">Countries:</span> {pairs(withCountryNames(d.by_country ?? {})) || '—'}</div>
@@ -292,6 +352,15 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
           </tbody>
         </table>
       </div>
+      {rows.length > visible.length && (
+        <button
+          type="button"
+          onClick={() => setShowAll(true)}
+          className="w-full border-t border-gray-200 dark:border-slate-700 px-4 py-3 text-sm font-medium text-primary hover:bg-gray-50 dark:hover:bg-slate-700/30"
+        >
+          Show all {rows.length} days
+        </button>
+      )}
     </div>
   );
 }
@@ -370,46 +439,43 @@ export default function StatsPage() {
     };
   }, [stats, rangeDays]);
 
-  const chart = useMemo(() => {
-    if (!stats) return [];
-    // Tolerates an older stats.json: the page and the script that writes
-    // the file deploy separately, so the shapes can lag each other.
-    return view?.days ?? [];
-  }, [view]);
-  const peak = Math.max(1, ...chart.map(([, d]) => d.total));
+  // Tolerates an older stats.json: the page and the script that writes the
+  // file deploy separately, so the shapes can lag each other.
+  const chart = view?.days ?? [];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 p-4 sm:p-6">
       <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+        {/* Wraps rather than scrolls sideways: in one scrolling strip the
+            Refresh button sat off the right edge of a phone screen. On mobile
+            the range picker takes its own full-width row. */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
+          <h1 className="mr-auto text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <FiDownload className="h-6 w-6 text-primary" />
             Downloads
           </h1>
-          <div className="flex items-center gap-2 overflow-x-auto sm:overflow-visible">
-            <div className="flex shrink-0 rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
-              {RANGES.map((r) => (
-                <button
-                  key={r.label}
-                  onClick={() => setRangeDays(r.days)}
-                  className={`px-2.5 py-1.5 text-xs sm:px-3 sm:py-2 sm:text-sm font-medium whitespace-nowrap transition-colors ${
-                    rangeDays === r.days
-                      ? 'bg-primary text-white'
-                      : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
-                  }`}
-                >
-                  {r.label}
-                </button>
-              ))}
-            </div>
-            <button
-              onClick={() => load()}
-              disabled={loading}
-              className="inline-flex shrink-0 items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary text-white text-xs sm:text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
-            >
-              <FiRefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-              Refresh
-            </button>
+          <button
+            onClick={() => load()}
+            disabled={loading}
+            className="order-1 sm:order-last inline-flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] sm:min-h-0 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
+          >
+            <FiRefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </button>
+          <div className="order-2 flex w-full sm:w-auto rounded-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+            {RANGES.map((r) => (
+              <button
+                key={r.label}
+                onClick={() => setRangeDays(r.days)}
+                className={`flex-1 sm:flex-none px-2 sm:px-3 py-2 min-h-[44px] sm:min-h-0 text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
+                  rangeDays === r.days
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
+                }`}
+              >
+                {r.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -439,23 +505,11 @@ export default function StatsPage() {
             </div>
 
             {chart.length > 0 && (
-              <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 mb-6">
+              <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 sm:p-5 mb-6">
                 <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
                   Last {chart.length} day{chart.length === 1 ? '' : 's'}
                 </h2>
-                <div className="flex items-end gap-1 h-32">
-                  {chart.map(([day, d]) => (
-                    <div key={day} className="flex-1 group relative flex flex-col justify-end h-full">
-                      <div
-                        className="w-full rounded-t bg-primary/80 group-hover:bg-primary transition-colors"
-                        style={{ height: `${Math.max(2, (d.total / peak) * 100)}%` }}
-                      />
-                      <span className="absolute -top-6 left-1/2 -translate-x-1/2 hidden group-hover:block whitespace-nowrap rounded bg-gray-900 px-1.5 py-0.5 text-[11px] text-white z-10">
-                        {day}: {d.total}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <Bars days={chart} value={(d) => d.total} heightClass="h-32" />
               </div>
             )}
 
