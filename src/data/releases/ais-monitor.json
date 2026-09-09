@@ -1,0 +1,223 @@
+{
+  "name": "ais-monitor",
+  "product": "AIS Monitor",
+  "page": "https://mayorana.ch/en/apps/ais-monitor",
+  "generated_at": "2026-09-08T18:33:17Z",
+  "releases": [
+    {
+      "version": "0.3.32",
+      "tag": "v0.3.32",
+      "date": "2026-09-08",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Dead-letter messages: handling reworked and the panel's layout with it, so a queue with a large dead-letter backlog stays readable and stays responsive."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.31",
+      "tag": "v0.3.31",
+      "date": "2026-09-06",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Internal: the services the desktop app and `ais-monitor-tui` both use moved into a shared `ais-monitor-core` crate, so the two editions read Azure through one implementation instead of two that drift."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.30",
+      "tag": "v0.3.30",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Delivery summary on Event Grid subscriptions: how many events were retried and how many were dead-lettered, next to the subscription they belong to."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.29",
+      "tag": "v0.3.29",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "CI pipeline only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.28",
+      "tag": "v0.3.28",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The update banner spells the product name the way the product does."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.27",
+      "tag": "v0.3.27",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The update check sends a versioned User-Agent, which is what makes per-version adoption visible in the download logs — the number that says how many people are still on a build with a bug that is already fixed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.26",
+      "tag": "v0.3.26",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The update check resolves the artifact for the platform it is running on, so the banner offers the macOS, Windows or Linux build directly instead of the download page."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.25",
+      "tag": "v0.3.25",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Internal: sign-in moved behind one shared hook, so every screen that can start an Azure login now does it the same way."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.24",
+      "tag": "v0.3.24",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Tenant handling on sign-in: two logins can no longer race each other, and the app stops opening a browser window it does not need."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.23",
+      "tag": "v0.3.23",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Internal: the wait-for-login step was extracted so the desktop app and the TUI share it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.22",
+      "tag": "v0.3.22",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The Windows installer runs with the lowest privileges by default, so a developer can install it per-user without a UAC prompt. IT can still install it machine-wide with a command-line option, and the desktop shortcut lands in the right place either way."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.21",
+      "tag": "v0.3.21",
+      "date": "2026-08-30",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A profile with its own subscription set now uses it, instead of falling back to whatever subscription `az` had selected."
+          ]
+        },
+        {
+          "heading": "Added",
+          "items": [
+            "The new-profile form validates what you type before saving it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.20",
+      "tag": "v0.3.20",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The app adopts the login shell's `PATH`, so `az` and the other tools it shells out to are found when it is launched from Finder or the Start menu rather than from a terminal."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.19",
+      "tag": "v0.3.19",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Release tooling only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.18",
+      "tag": "v0.3.18",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Release safety: the pipeline refuses to tag a release with no version bump, and fails outright when the deploy secrets are missing rather than reporting success for a release nobody can download."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.17",
+      "tag": "v0.3.17",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Builds are distributed from mayorana.ch instead of GitHub Releases. Every release publishes a `latest.json` carrying the `sha256` of each artifact, so a download can be verified against a source that does not deliver it.",
+            "Licensed under PolyForm Noncommercial 1.0.0: free for personal, educational and non-profit use; commercial use requires a licence."
+          ]
+        }
+      ]
+    }
+  ]
+}

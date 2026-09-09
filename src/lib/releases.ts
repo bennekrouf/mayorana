@@ -21,6 +21,9 @@
 
 import { releaseNotesTools } from '@/data/tools';
 import aisRunner from '@/data/releases/ais-runner.json';
+import aisMonitor from '@/data/releases/ais-monitor.json';
+import aisTracing from '@/data/releases/ais-tracing.json';
+import aisAnalytics from '@/data/releases/ais-analytics.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -46,6 +49,9 @@ export interface ReleaseFeed {
 
 const snapshots: Record<string, ReleaseFeed> = {
   'ais-runner': aisRunner as ReleaseFeed,
+  'ais-monitor': aisMonitor as ReleaseFeed,
+  'ais-tracing': aisTracing as ReleaseFeed,
+  'ais-analytics': aisAnalytics as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client

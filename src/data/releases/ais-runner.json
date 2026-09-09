@@ -2,8 +2,22 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-09-08T07:25:32Z",
+  "generated_at": "2026-09-08T14:24:42Z",
   "releases": [
+    {
+      "version": "0.5.50",
+      "tag": "v0.5.50",
+      "date": "2026-09-08",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Sample projects and screenshots now use a neutral placeholder company name instead of a real customer's.",
+            "A pre-commit hook keeps customer names and internal hostnames out of commits."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.49",
       "tag": "v0.5.49",

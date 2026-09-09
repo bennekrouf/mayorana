@@ -208,7 +208,12 @@ export const statusLabel = (status: Status) => (status === 'coming_soon' ? 'COMI
 // link to it run on the client — importing the notes themselves to answer
 // "is there a page?" would ship every release of every tool in the bundle.
 // src/lib/releases.ts holds the notes and checks itself against this list.
-export const releaseNotesTools: string[] = ['ais-runner'];
+export const releaseNotesTools: string[] = [
+  'ais-runner',
+  'ais-monitor',
+  'ais-tracing',
+  'ais-analytics',
+];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);
 
