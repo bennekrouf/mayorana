@@ -35,6 +35,12 @@
     "toggle_theme": "Toggle theme",
     "toggle_menu": "Toggle menu"
   },
+  "auth": {
+    "sign_in": "Sign in",
+    "sign_out": "Sign out",
+    "signed_in": "Signed in",
+    "account_menu": "Account menu"
+  },
   "home": {
     "hero_title": "AI Tools That Actually Work",
     "hero_subtitle": "Rust 🦀 builds what doesn't break. AI makes it human.",

@@ -35,6 +35,12 @@
     "toggle_theme": "Changer le thème",
     "toggle_menu": "Ouvrir/fermer le menu"
   },
+  "auth": {
+    "sign_in": "Se connecter",
+    "sign_out": "Se déconnecter",
+    "signed_in": "Connecté",
+    "account_menu": "Menu du compte"
+  },
   "home": {
     "hero_title": "Outils d'IA qui fonctionnent vraiment",
     "hero_subtitle": "Rust 🦀 construit ce qui ne casse pas. L'IA le rend humain.",

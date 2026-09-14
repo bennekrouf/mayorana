@@ -50,6 +50,7 @@ export function generateStaticParams() {
 
 import { headers } from 'next/headers';
 import { HostProvider } from '@/providers/HostProvider';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 export default async function LocaleLayout({
   children,
@@ -131,7 +132,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <HostProvider isSwissRust={isSwissRust}>
-              {children}
+              <AuthProvider>
+                {children}
+              </AuthProvider>
             </HostProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
