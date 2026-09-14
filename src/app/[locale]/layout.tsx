@@ -52,6 +52,7 @@ import { headers } from 'next/headers';
 import { HostProvider } from '@/providers/HostProvider';
 import { AuthProvider } from '@/providers/AuthProvider';
 import { DownloadGateProvider } from '@/providers/DownloadGateProvider';
+import { ReadProgressProvider } from '@/providers/ReadProgressProvider';
 
 export default async function LocaleLayout({
   children,
@@ -135,7 +136,9 @@ export default async function LocaleLayout({
             <HostProvider isSwissRust={isSwissRust}>
               <AuthProvider>
                 <DownloadGateProvider>
-                  {children}
+                  <ReadProgressProvider>
+                    {children}
+                  </ReadProgressProvider>
                 </DownloadGateProvider>
               </AuthProvider>
             </HostProvider>

@@ -153,6 +153,7 @@
     "title": "C'est gratuit. On aimerait juste votre avis.",
     "body": "{app} est gratuit pour les particuliers — pas de licence, pas d'essai, pas de carte. En échange, une seule chose : connectez-vous, pour qu'on puisse vous écrire une fois et vous demander comment ça se passe. Vous devenez un utilisateur fondateur, et ça reste gratuit pour vous quoi qu'il arrive ensuite.",
     "signin": "Se connecter avec Google et télécharger",
+    "learn_more": "Pourquoi se connecter ? Les utilisateurs fondateurs",
     "skip": "Non merci, juste télécharger",
     "signed_in_as": "Connecté en tant que {email}",
     "downloading": "Téléchargement en cours…",
@@ -411,7 +412,9 @@
     "read_more": "Lire la suite",
     "reading_time": "min de lecture",
     "search_placeholder": "Rechercher des articles...",
-    "all_tags": "Tous les tags"
+    "all_tags": "Tous les tags",
+    "progress_read": "Lu",
+    "progress_partial": "Lu en partie"
   },
   "footer": {
     "description": "Portfolio renforcé par Mayorana expert Rust 🦀",

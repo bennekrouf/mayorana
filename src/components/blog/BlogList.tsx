@@ -9,6 +9,8 @@ import { type BlogPost, formatDate } from '../../lib/blog-shared';
 import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
+import { useReadProgress } from '@/providers/ReadProgressProvider';
+import { isRead } from '@/lib/read-progress';
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -23,6 +25,7 @@ const BlogList: React.FC<BlogListProps> = ({
 }) => {
   const t = useTranslations('blog');
   const locale = useLocale();
+  const { progress } = useReadProgress();
 
   console.log('🔍 BlogList Debug:');
   console.log('   - Current locale:', locale);
@@ -53,11 +56,15 @@ const BlogList: React.FC<BlogListProps> = ({
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => {
             const postUrl = getLocalizedPath(locale, `/blog/${post.slug}`);
+            // Empty on the server and through hydration, so no bar appears
+            // until the browser has read the stored map.
+            const entry = progress[post.slug];
+            const read = isRead(entry);
 
             return (
               <motion.div
                 key={post.slug}
-                className="flex flex-col h-full rounded-xl border border-border overflow-hidden bg-secondary/50"
+                className="relative flex flex-col h-full rounded-xl border border-border overflow-hidden bg-secondary/50"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -116,6 +123,21 @@ const BlogList: React.FC<BlogListProps> = ({
                     </Link>
                   </div>
                 </div>
+
+                {/* How far into this article the reader got. A full bar means
+                    read; a partial one is where they stopped. */}
+                {entry && (
+                  <div
+                    className="absolute bottom-0 inset-x-0 h-[3px] bg-border/40"
+                    role="img"
+                    aria-label={read ? t('progress_read') : t('progress_partial')}
+                  >
+                    <div
+                      className={`h-full transition-[width] duration-300 ${read ? 'bg-primary' : 'bg-primary/60'}`}
+                      style={{ width: `${Math.round((read ? 1 : entry.pct) * 100)}%` }}
+                    />
+                  </div>
+                )}
               </motion.div>
             );
           })}
