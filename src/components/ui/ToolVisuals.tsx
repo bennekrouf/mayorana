@@ -4,6 +4,7 @@ import React from 'react';
 import { FaApple, FaLinux, FaWindows } from 'react-icons/fa';
 import { Database, BarChart3 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useDownloadGate } from '@/providers/DownloadGateProvider';
 import {
   osColors,
   statusBadge,
@@ -55,8 +56,29 @@ export function DataSourceBadge({ dataSource }: { dataSource: DataSource }) {
  * mayorana.ch only — the repositories are private, so there is no source or
  * releases link to offer alongside them.
  */
-export function DownloadButtons({ downloads }: { downloads: DownloadLink[] }) {
+//
+// Both variants keep a real href (right-click → copy link still works) but
+// route a click through the download gate, which asks for a sign-in first —
+// see DownloadGateProvider. `app`/`appName` identify the tool for that.
+export interface DownloadButtonsProps {
+  app: string;
+  appName: string;
+  downloads: DownloadLink[];
+}
+
+function useGatedClick(app: string, appName: string) {
+  const { requestDownload } = useDownloadGate();
+  return (dl: DownloadLink) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Modifier clicks (open in new tab, etc.) keep the browser's behaviour.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    requestDownload({ app, appName, os: dl.os, href: dl.href });
+  };
+}
+
+export function DownloadButtons({ app, appName, downloads }: DownloadButtonsProps) {
   const tApps = useTranslations('apps');
+  const gated = useGatedClick(app, appName);
 
   return (
     <div className="flex flex-col gap-2">
@@ -68,6 +90,7 @@ export function DownloadButtons({ downloads }: { downloads: DownloadLink[] }) {
           <a
             key={dl.os}
             href={dl.href}
+            onClick={gated(dl)}
             title={dl.label}
             aria-label={dl.label}
             className={`inline-flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${osColors[dl.os]}`}
@@ -85,13 +108,16 @@ export function DownloadButtons({ downloads }: { downloads: DownloadLink[] }) {
  * but labelled and full-size: on a detail page the download is the point of the
  * page, not one control on a card competing with ten siblings.
  */
-export function DownloadButtonsLarge({ downloads }: { downloads: DownloadLink[] }) {
+export function DownloadButtonsLarge({ app, appName, downloads }: DownloadButtonsProps) {
+  const gated = useGatedClick(app, appName);
+
   return (
     <div className="flex flex-wrap gap-3">
       {downloads.map((dl) => (
         <a
           key={dl.os}
           href={dl.href}
+          onClick={gated(dl)}
           className={`inline-flex items-center gap-2.5 px-5 py-3 rounded-lg font-medium text-sm transition-colors ${osColors[dl.os]}`}
         >
           {osIcons[dl.os]}

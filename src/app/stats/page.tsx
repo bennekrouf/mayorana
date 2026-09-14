@@ -19,6 +19,7 @@ interface DayDetail {
   by_app: Record<string, number>;
   by_platform: Record<string, number>;
   by_country: Record<string, number>;
+  by_signin?: Record<string, number>;
 }
 
 interface SiteStats {
@@ -31,6 +32,8 @@ interface SiteStats {
   visitor_days: number;
   by_country: Record<string, number>;
   top_paths: Record<string, number>;
+  /** Visitor-days per referring host; absent from a stats.json older than the script. */
+  referrers?: Record<string, number>;
   daily: Record<string, { visitors: number; requests: number; api_requests?: number }>;
 }
 
@@ -135,6 +138,7 @@ function SiteCard({
 }) {
   const days = inRange(site.daily ?? {}, rangeDays);
   const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
+  const referrers = Object.entries(site.referrers ?? {}).slice(0, 6);
 
   // Totals for the window, so a card never contradicts the range selector.
   const visitorDays = days.reduce((n, [, d]) => n + (d.visitors ?? 0), 0);
@@ -199,6 +203,25 @@ function SiteCard({
             </li>
           ))}
         </ul>
+      )}
+
+      {/* Where visitors came from — all-time, not the selected range: the
+          per-day series would have to ship every host to recompute it, and
+          the question is "which channels work at all", not "this week". */}
+      {referrers.length > 0 && (
+        <div className="mt-4 pt-3 border-t border-gray-100 dark:border-slate-700">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1.5">
+            Came from
+          </p>
+          <ul className="space-y-1 text-xs">
+            {referrers.map(([host, n]) => (
+              <li key={host} className="flex justify-between gap-3">
+                <span className="min-w-0 flex-1 truncate text-gray-600 dark:text-gray-300">{host}</span>
+                <span className="shrink-0 text-gray-900 dark:text-white tabular-nums">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
@@ -413,6 +436,7 @@ export default function StatsPage() {
     const byApp: Record<string, number> = {};
     const byPlatform: Record<string, number> = {};
     const byCountry: Record<string, number> = {};
+    const bySignin: Record<string, number> = {};
     let activeSum = 0;
 
     for (const [, d] of days) {
@@ -424,6 +448,7 @@ export default function StatsPage() {
       sumInto(byApp, d.by_app);
       sumInto(byPlatform, d.by_platform);
       sumInto(byCountry, d.by_country);
+      sumInto(bySignin, d.by_signin);
     }
 
     return {
@@ -432,6 +457,7 @@ export default function StatsPage() {
       byApp,
       byPlatform,
       byCountry,
+      bySignin,
       // Averaged, not summed: the same install switched on every day is one
       // install, not seven.
       activeAvg: days.length ? Math.round(activeSum / days.length) : 0,
@@ -525,6 +551,19 @@ export default function StatsPage() {
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <Breakdown title="By country" data={withCountryNames(view.byCountry)} />
               <Breakdown title="Filtered out (bots / self)" data={stats.excluded_by_reason ?? {}} />
+            </div>
+
+            {/* The founding-users funnel: of the people who took a first
+                build, how many signed in first — i.e. how many we can reach.
+                Updates are left out; they say nothing about the offer. */}
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <Breakdown
+                title="First installs · signed in vs anonymous"
+                data={{
+                  'Signed in (reachable)': view.bySignin.signed_in ?? 0,
+                  Anonymous: view.bySignin.anonymous ?? 0,
+                }}
+              />
             </div>
 
             {stats.sites && Object.keys(stats.sites).length > 0 && (

@@ -43,7 +43,7 @@ except ImportError:
 LINE = re.compile(
     r'^(?P<ip>\S+) \S+ \S+ \[(?P<time>[^\]]+)\] '
     r'"(?P<method>[A-Z]+) (?P<path>[^" ]*)[^"]*" '
-    r'(?P<status>\d{3}) \S+ "[^"]*" "(?P<ua>[^"]*)"'
+    r'(?P<status>\d{3}) \S+ "(?P<referer>[^"]*)" "(?P<ua>[^"]*)"'
 )
 
 # /downloads/<app>/<version>/<file>
@@ -72,9 +72,35 @@ BOT = re.compile(
 # browser — the updater's own agent never fetches the file.
 FROM_UPDATER = re.compile(r'[?&]src=updater(&|$)', re.I)
 
+# The site appends this when the person downloading is signed in. A download
+# taken anonymously is still a download; this only says how many of them we
+# can reach afterwards, which is the funnel the founding-users offer is
+# measured on.
+FROM_MEMBER = re.compile(r'[?&]src=member(&|$)', re.I)
+
 # Set by the updater on its latest.json poll. Not a download, but counting it
 # separately answers a more useful question: how many installs are running.
 UPDATER_UA = re.compile(r'\(updater\)', re.I)
+
+# Where a page visit came from. Only the host is kept — a full referring URL
+# can carry a search query or a session id, and the question is "which site
+# sent them", not "which page". Own-site and empty referers are not sources.
+def referrer_host(referer: str, own_hosts: tuple[str, ...]) -> str | None:
+    if not referer or referer == '-':
+        return None
+    match = re.match(r'^https?://([^/:?#]+)', referer, re.I)
+    if not match:
+        return None
+    host = match.group(1).lower()
+    if host.startswith('www.'):
+        host = host[4:]
+    if any(host == own or host.endswith('.' + own) for own in own_hosts):
+        return None
+    return host
+
+# Referrers reported per site, per day. Beyond the first handful the tail is
+# one-off links and referer spam, which is noise on a page meant to be read.
+TOP_REFERRERS = 10
 
 # A phone cannot install a .dmg, .exe or .tar.gz. A mobile user agent asking
 # for one is either a crawler in disguise or a mis-click; neither is a
@@ -281,6 +307,7 @@ def _collect(line, seen, events, checkins, nets) -> None:
         'version': download['version'],
         'platform': platform_of(download['file']),
         'updater': bool(FROM_UPDATER.search(match['path']) or UPDATER_UA.search(match['ua'])),
+        'member': bool(FROM_MEMBER.search(match['path'])),
         'excluded': reason,
     })
 
@@ -312,6 +339,10 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
         'by_app': defaultdict(int), 'by_platform': defaultdict(int),
         'by_country': defaultdict(int),
         'active_by_app': defaultdict(int),
+        # New installs split by whether the person signed in first. Updates
+        # are left out: an existing user taking a new build tells nothing
+        # about whether the offer on the site was accepted.
+        'by_signin': defaultdict(int),
         # Kept rather than silently dropped: a filter you cannot see is a
         # filter you cannot check.
         'excluded': defaultdict(int),
@@ -328,6 +359,8 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
 
         bucket['total'] += 1
         bucket['updates' if event['updater'] else 'installs'] += 1
+        if not event['updater']:
+            bucket['by_signin']['signed_in' if event.get('member') else 'anonymous'] += 1
         bucket['by_app'][event['app']] += 1
         bucket['by_platform'][event['platform']] += 1
         bucket['by_country'][geo.country(event['ip'])] += 1
@@ -363,6 +396,10 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
         requests: dict[str, int] = defaultdict(int)
         bots: dict[str, int] = defaultdict(int)
         paths: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+        # Distinct addresses per referring host per day, so one person
+        # clicking through five pages from the same thread counts once.
+        referrers: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+        own_hosts = (site,)
         # A real browser rendering a page also fetches its CSS and JS; a
         # scraper usually takes the HTML and leaves. Assets are not counted as
         # traffic, but they are the tell that someone real was behind it, so
@@ -431,7 +468,8 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                                 fetched_assets[day].add(match['ip'])
                                 continue
 
-                            pending[(day, match['ip'])].append((request_path, match['ua']))
+                            pending[(day, match['ip'])].append(
+                                (request_path, match['ua'], match['referer']))
                 except OSError as exc:
                     print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
 
@@ -448,8 +486,11 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
             visitors[day].add(ip)
             countries[day][geo.country(ip)].add(ip)
             requests[day] += len(entries)
-            for request_path, _ua in entries:
+            for request_path, _ua, referer in entries:
                 paths[day][request_path] += 1
+                source = referrer_host(referer, own_hosts)
+                if source:
+                    referrers[day][source].add(ip)
 
         every_day = (set(visitors) | set(bots) | set(unverified)
                      | set(api_requests) | set(probes))
@@ -466,6 +507,9 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                     'by_country': {c: len(s) for c, s in countries.get(day, {}).items()},
                     'top_paths': dict(sorted(paths.get(day, {}).items(),
                                              key=lambda kv: -kv[1])[:TOP_PATHS]),
+                    'referrers': dict(sorted(
+                        ((host, len(ips)) for host, ips in referrers.get(day, {}).items()),
+                        key=lambda kv: -kv[1])[:TOP_REFERRERS]),
                 }
                 for day in sorted(every_day)
             }
@@ -484,6 +528,7 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
         ordered_days = sorted(days)
         by_country: dict[str, int] = defaultdict(int)
         top_paths: dict[str, int] = defaultdict(int)
+        referrers: dict[str, int] = defaultdict(int)
         requests = bots = unverified = api_requests = probes = 0
         for day in ordered_days:
             entry = days[day]
@@ -496,6 +541,8 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
                 by_country[country] += n
             for path, n in entry.get('top_paths', {}).items():
                 top_paths[path] += n
+            for host, n in entry.get('referrers', {}).items():
+                referrers[host] += n
 
         out[site] = {
             'requests': requests,
@@ -516,6 +563,10 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
             'visitor_days': sum(days[d].get('visitors', 0) for d in ordered_days),
             'by_country': dict(sorted(by_country.items(), key=lambda kv: -kv[1])[:20]),
             'top_paths': dict(sorted(top_paths.items(), key=lambda kv: -kv[1])[:TOP_PATHS]),
+            # Visitor-days per referring host. Where the people who read
+            # about a product came from is the closest thing the logs hold
+            # to a positioning signal.
+            'referrers': dict(sorted(referrers.items(), key=lambda kv: -kv[1])[:TOP_REFERRERS]),
             'daily': {
                 d: {
                     'visitors': days[d].get('visitors', 0),
@@ -550,6 +601,7 @@ def summarise(state: dict, geo_note: str) -> dict:
     by_app: dict[str, int] = defaultdict(int)
     by_platform: dict[str, int] = defaultdict(int)
     by_country: dict[str, int] = defaultdict(int)
+    by_signin: dict[str, int] = defaultdict(int)
     excluded_by_reason: dict[str, int] = defaultdict(int)
 
     for counts in state.get('days', {}).values():
@@ -557,7 +609,7 @@ def summarise(state: dict, geo_note: str) -> dict:
         totals['installs'] += counts.get('installs', 0)
         totals['updates'] += counts.get('updates', 0)
         for name, target in (('by_app', by_app), ('by_platform', by_platform),
-                             ('by_country', by_country)):
+                             ('by_country', by_country), ('by_signin', by_signin)):
             for key, n in counts.get(name, {}).items():
                 target[key] += n
         for reason, n in counts.get('excluded', {}).items():
@@ -592,6 +644,7 @@ def summarise(state: dict, geo_note: str) -> dict:
         'by_app': ordered(by_app),
         'by_platform': ordered(by_platform),
         'by_country': ordered(by_country),
+        'by_signin': ordered(by_signin),
         'active_installs_daily_avg_7d': active_daily_avg,
         'daily': {
             day: {
@@ -603,6 +656,7 @@ def summarise(state: dict, geo_note: str) -> dict:
                 'by_app': state['days'][day].get('by_app', {}),
                 'by_platform': state['days'][day].get('by_platform', {}),
                 'by_country': state['days'][day].get('by_country', {}),
+                'by_signin': state['days'][day].get('by_signin', {}),
             }
             for day in recent
         },

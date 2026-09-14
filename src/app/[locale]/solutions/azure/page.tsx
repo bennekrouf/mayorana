@@ -153,7 +153,7 @@ export default function AzureSolutionsPage() {
                 <p className="text-xs text-muted-foreground/70 font-mono mb-6">{tool.tech}</p>
 
                 <div className="mt-auto space-y-3">
-                  <DownloadButtons downloads={tool.downloads} />
+                  <DownloadButtons app={tool.id} appName={tool.name} downloads={tool.downloads} />
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
                     <Link
                       href={getLocalizedPath(locale, `/apps/${tool.id}`)}

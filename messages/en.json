@@ -113,6 +113,15 @@
     "consulting_tech": "Your product, our portfolio tech",
     "consulting_cta": "CONTACT US"
   },
+  "download_gate": {
+    "title": "It's free. We'd just love your feedback.",
+    "body": "{app} is free for individuals — no licence, no trial, no card. In return we ask one thing: sign in, so we can reach you once and ask how it's going. That makes you a founding user, and it stays free for you whatever comes next.",
+    "signin": "Sign in with Google and download",
+    "skip": "No thanks, just download",
+    "signed_in_as": "Signed in as {email}",
+    "downloading": "Starting your download…",
+    "cancel": "Cancel"
+  },
   "apps": {
     "page_title": "Apps & Tools",
     "page_subtitle": "Native desktop apps and web tools built with Rust. Primary focus on Azure Integration Services and AI agent infrastructure.",

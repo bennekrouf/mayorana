@@ -21,7 +21,7 @@ import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/T
 // gets its per-OS download buttons and a hosted product gets a single link —
 // the card doesn't need to know which of these it is beyond this tag.
 type ToolAction =
-  | { kind: 'downloads'; downloads: DownloadLink[] }
+  | { kind: 'downloads'; app: string; appName: string; downloads: DownloadLink[] }
   | { kind: 'external'; href: string; label: string }
   | { kind: 'internal'; href: string; label: string }
   | { kind: 'disabled'; label: string };
@@ -111,7 +111,7 @@ function ToolTags({ tool }: { tool: Tool }) {
 function ToolActionButtons({ action }: { action: ToolAction }) {
   switch (action.kind) {
     case 'downloads':
-      return <DownloadButtons downloads={action.downloads} />;
+      return <DownloadButtons app={action.app} appName={action.appName} downloads={action.downloads} />;
     case 'external':
       return (
         <a
@@ -251,7 +251,7 @@ export default function AppsPage() {
       status: app.status,
       tags: app.tags,
       dataSource: app.dataSource,
-      action: { kind: 'downloads', downloads: app.downloads },
+      action: { kind: 'downloads', app: app.id, appName: app.name, downloads: app.downloads },
       detailHref: getLocalizedPath(locale, `/apps/${app.id}`),
       releasesHref: hasReleaseNotes(app.id)
         ? getLocalizedPath(locale, `/apps/${app.id}/releases`)

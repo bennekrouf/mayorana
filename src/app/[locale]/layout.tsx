@@ -51,6 +51,7 @@ export function generateStaticParams() {
 import { headers } from 'next/headers';
 import { HostProvider } from '@/providers/HostProvider';
 import { AuthProvider } from '@/providers/AuthProvider';
+import { DownloadGateProvider } from '@/providers/DownloadGateProvider';
 
 export default async function LocaleLayout({
   children,
@@ -133,7 +134,9 @@ export default async function LocaleLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <HostProvider isSwissRust={isSwissRust}>
               <AuthProvider>
-                {children}
+                <DownloadGateProvider>
+                  {children}
+                </DownloadGateProvider>
               </AuthProvider>
             </HostProvider>
           </ThemeProvider>

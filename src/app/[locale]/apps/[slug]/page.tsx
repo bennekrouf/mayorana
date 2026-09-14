@@ -211,7 +211,7 @@ export default async function ToolDetailPage({ params }: Props) {
           <p className="text-xl text-muted-foreground mb-6">{tagline}</p>
           <p className="text-base text-muted-foreground mb-8 max-w-3xl">{shortDescription}</p>
 
-          <DownloadButtonsLarge downloads={tool.downloads} />
+          <DownloadButtonsLarge app={tool.id} appName={tool.name} downloads={tool.downloads} />
           <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('download_intro')}</p>
           <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
 
