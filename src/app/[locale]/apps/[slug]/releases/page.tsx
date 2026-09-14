@@ -195,7 +195,7 @@ export default async function ToolReleasesPage({ params }: Props) {
           <ReleaseBody release={latest} />
 
           <div className="mt-8">
-            <DownloadButtonsLarge downloads={tool.downloads} />
+            <DownloadButtonsLarge app={tool.id} appName={tool.name} downloads={tool.downloads} />
             <p className="text-xs text-muted-foreground mt-3 max-w-2xl">
               {tDetail('download_intro')}
             </p>
