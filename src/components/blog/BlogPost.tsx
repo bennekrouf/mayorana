@@ -6,6 +6,7 @@ import { type BlogPost as BlogPostType, formatDate } from '../../lib/blog-shared
 import { motion } from '@/components/ui/Motion';
 import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
+import { useTrackReading } from '@/providers/ReadProgressProvider';
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -15,6 +16,9 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   const [linkCopied, setLinkCopied] = useState(false);
   const t = useTranslations('blog');
   const locale = useLocale();
+
+  // Marks this post's place in the reader's progress as they scroll.
+  useTrackReading(post.slug);
 
   // Generate the full URL for the post
   const getPostUrl = () => {
