@@ -9,6 +9,7 @@ import { FiMail, FiMapPin, FiLinkedin } from 'react-icons/fi';
 import { motion } from '@/components/ui/Motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
+import { GATEWAY_URL } from '@/lib/gateway';
 
 interface FormData {
   name: string;
@@ -79,11 +80,7 @@ function ContactFormWithParams() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production'
-        ? 'https://gateway.api0.ai/api/contact'
-        : 'http://0.0.0.0:5009/api/contact';
-
-      const response = await fetch(apiUrl, {
+      const response = await fetch(`${GATEWAY_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

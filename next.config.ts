@@ -36,6 +36,13 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      // Google account avatars, shown in the navbar once signed in.
+      {
+        protocol: 'https' as const,
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 

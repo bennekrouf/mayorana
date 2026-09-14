@@ -8,6 +8,7 @@ import { useTheme } from 'next-themes';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useHostContext } from '@/providers/HostProvider';
+import AuthButton from './AuthButton';
 
 const Navbar: React.FC = () => {
   const { isSwissRust } = useHostContext();
@@ -95,6 +96,8 @@ const Navbar: React.FC = () => {
               <FiGlobe size={16} className="mr-1 flex-shrink-0" />
               <span className="text-sm font-medium">{locale.toUpperCase()}</span>
             </button>
+
+            <AuthButton />
           </div>
 
           {/* Mobile Menu Button */}
@@ -145,6 +148,9 @@ const Navbar: React.FC = () => {
                   <FiGlobe size={16} className="mr-2" />
                   {locale === 'en' ? 'Switch to FR' : 'Passer en EN'}
                 </button>
+              </div>
+              <div className="px-4 py-2">
+                <AuthButton compact />
               </div>
             </div>
           </div>
