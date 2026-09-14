@@ -71,7 +71,16 @@ main() {
       git push origin master 2>/dev/null || log "⚠️  Push failed"
     fi
 
-    # Build and restart
+    # Build and restart. Install first: the checkout may have pulled a
+    # package.json change since node_modules was last refreshed, and a build
+    # against stale node_modules fails with "Module not found".
+    log "📦 Installing dependencies..."
+    if yarn install --frozen-lockfile; then
+      log "✅ Dependencies up to date"
+    else
+      handle_error "yarn install failed"
+    fi
+
     log "🏗️  Building..."
     if yarn build; then
       log "✅ Build successful"
