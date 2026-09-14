@@ -18,15 +18,18 @@ release CI overwriting `latest/`:
 | `https://mayorana.ch/downloads/notice.json` | every product |
 | `https://mayorana.ch/downloads/<product>/notice.json` | that product only — wins when present |
 
-On the VPS: `/var/www/mayorana-downloads/notice.json` (and
-`/var/www/mayorana-downloads/<product>/notice.json`). The copy in this repo at
-`config/downloads-notice.json` is the reference; publish with
+On the VPS: `/var/www/mayorana-downloads/notice.json` and
+`/var/www/mayorana-downloads/<product>/notice.json`. The copy in this repo at
+`config/downloads-notice.json` is the single reference; publish it with
 
 ```bash
-scp config/downloads-notice.json ubuntu@vps-5f2e0f0d.vps.ovh.net:/var/www/mayorana-downloads/notice.json
+./scripts/publish-notice.sh
 ```
 
-Remove the file (or serve an empty `{}`) to show nothing.
+which writes the global file and one per product, each product's `url`
+carrying `?tool=<product>` so `/founding` opens with that tool selected.
+`--dry-run` prints the files instead. Remove the files (or publish an empty
+`{}`) to show nothing.
 
 ## Format
 

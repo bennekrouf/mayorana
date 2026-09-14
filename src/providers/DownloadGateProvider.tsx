@@ -22,8 +22,10 @@ import React, {
   useState,
   type ReactNode,
 } from 'react';
-import { useTranslations } from 'next-intl';
-import { FiX } from 'react-icons/fi';
+import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
+import { FiArrowRight, FiX } from 'react-icons/fi';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useAuth } from '@/providers/AuthProvider';
 import { getFirebaseAuth, isAuthConfigured } from '@/lib/firebase';
@@ -216,6 +218,7 @@ function DownloadGatePanel({
   onClose: () => void;
 }) {
   const t = useTranslations('download_gate');
+  const locale = useLocale();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -250,9 +253,17 @@ function DownloadGatePanel({
           </button>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
           {t('body', { app: request.appName })}
         </p>
+        {/* The offer in full, with the tool carried along so the page's
+            first question is already answered. */}
+        <Link
+          href={`${getLocalizedPath(locale, '/founding')}?tool=${encodeURIComponent(request.app)}`}
+          className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline underline-offset-2 mb-6"
+        >
+          {t('learn_more')} <FiArrowRight className="h-3.5 w-3.5" />
+        </Link>
 
         <button
           onClick={onSignIn}

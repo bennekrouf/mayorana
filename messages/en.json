@@ -153,6 +153,7 @@
     "title": "It's free. We'd just love your feedback.",
     "body": "{app} is free for individuals — no licence, no trial, no card. In return we ask one thing: sign in, so we can reach you once and ask how it's going. That makes you a founding user, and it stays free for you whatever comes next.",
     "signin": "Sign in with Google and download",
+    "learn_more": "Why sign in? Read about founding users",
     "skip": "No thanks, just download",
     "signed_in_as": "Signed in as {email}",
     "downloading": "Starting your download…",
@@ -411,7 +412,9 @@
     "read_more": "Read more",
     "reading_time": "min read",
     "search_placeholder": "Search articles...",
-    "all_tags": "All Tags"
+    "all_tags": "All Tags",
+    "progress_read": "Read",
+    "progress_partial": "Partly read"
   },
   "footer": {
     "description": "Rust-powered portfolio",
