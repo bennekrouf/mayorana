@@ -36,7 +36,7 @@ Remove the file (or serve an empty `{}`) to show nothing.
   "apps": null,
   "text": "You're one of the first people running {app}. …",
   "link_text": "Tell us how it's going",
-  "url": "https://mayorana.ch/en/contact?service=other"
+  "url": "https://mayorana.ch/en/founding"
 }
 ```
 
