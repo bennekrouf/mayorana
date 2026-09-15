@@ -7,6 +7,7 @@ import { motion } from '@/components/ui/Motion';
 import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 import { useTrackReading } from '@/providers/ReadProgressProvider';
+import { progressKey } from '@/lib/read-progress';
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -18,7 +19,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   const locale = useLocale();
 
   // Marks this post's place in the reader's progress as they scroll.
-  useTrackReading(post.slug);
+  useTrackReading(progressKey(post));
 
   // Generate the full URL for the post
   const getPostUrl = () => {

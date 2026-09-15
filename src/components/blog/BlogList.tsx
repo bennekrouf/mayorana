@@ -10,7 +10,7 @@ import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useReadProgress } from '@/providers/ReadProgressProvider';
-import { isRead } from '@/lib/read-progress';
+import { isRead, progressKey } from '@/lib/read-progress';
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -58,7 +58,7 @@ const BlogList: React.FC<BlogListProps> = ({
             const postUrl = getLocalizedPath(locale, `/blog/${post.slug}`);
             // Empty on the server and through hydration, so no bar appears
             // until the browser has read the stored map.
-            const entry = progress[post.slug];
+            const entry = progress[progressKey(post)];
             const read = isRead(entry);
 
             return (
