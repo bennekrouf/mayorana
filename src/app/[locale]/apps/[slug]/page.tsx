@@ -123,7 +123,7 @@ export default async function ToolDetailPage({ params }: Props) {
       name: tool.name,
       alternateName: tagline,
       description: seoDescription,
-      applicationCategory: 'DeveloperApplication',
+      applicationCategory: tool.applicationCategory ?? 'DeveloperApplication',
       operatingSystem: tool.downloads.map((d) => d.label).join(', '),
       url: pageUrl,
       downloadUrl: tool.downloads.map((d) => d.href),
@@ -213,7 +213,9 @@ export default async function ToolDetailPage({ params }: Props) {
 
           <DownloadButtonsLarge app={tool.id} appName={tool.name} downloads={tool.downloads} />
           <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('download_intro')}</p>
-          <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
+          {tool.downloads.some((d) => d.os === 'mac') && (
+            <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
+          )}
 
           {latest && (
             <Link
