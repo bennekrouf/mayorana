@@ -10,8 +10,8 @@
 // follows the person to another browser. The local copy stays authoritative
 // while the tab is open; the gateway is a backup, never a dependency.
 //
-// Posts are keyed by slug alone, so reading an article in French marks the
-// English one too — same article, either language.
+// Progress belongs to the article, not to one language of it: reading the
+// French version marks the English one too. See progressKey().
 
 export interface ReadEntry {
   /** Fraction of the post scrolled through, 0..1. */
@@ -32,6 +32,27 @@ const MIN_RECORDED = 0.05;
 
 /** Progress is monotonic, so a write is only worth making if it moves. */
 const MIN_DELTA = 0.02;
+
+/**
+ * The key a post's progress is stored under: the English slug when the post
+ * has an English counterpart, its own slug otherwise.
+ *
+ * Slugs alone cannot do this — about half the French posts share the English
+ * slug and the rest carry a `-fr` suffix. The pairing is already decided once,
+ * at build time, by linkCounterparts() in scripts/generate-blog-data.js (the
+ * same link hreflang uses), so this reads that rather than guessing from the
+ * spelling.
+ */
+export function progressKey(post: {
+  slug: string;
+  locale: string;
+  counterpart?: { locale: string; slug: string };
+}): string {
+  if (post.locale !== 'en' && post.counterpart?.locale === 'en') {
+    return post.counterpart.slug;
+  }
+  return post.slug;
+}
 
 export function isRead(entry: ReadEntry | undefined): boolean {
   return (entry?.pct ?? 0) >= READ_THRESHOLD;

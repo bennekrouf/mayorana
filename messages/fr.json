@@ -188,6 +188,8 @@
     "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
+    "splitter_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
+    "splitter_description": "Chargez un live, une émission de radio ou une cassette numérisée et obtenez un fichier par morceau. La détection des silences propose les coupures, vous confirmez ou ajustez chacune à l'oreille, puis vous exportez : MP3 sans réencodage, ou MP3/FLAC/WAV avec normalisation du volume et tags ReplayGain. Récupère aussi l'audio d'un lien YouTube.",
     "intro": "Voici les outils que nous concevons et utilisons au quotidien. Ceux du haut portent notre positionnement principal — workflows Azure et agents IA. Le reste regroupe des travaux complémentaires bâtis sur la même stack.",
     "primary_heading": "Outils principaux",
     "secondary_heading": "Également bâtis sur notre stack",
@@ -872,6 +874,65 @@
           {
             "q": "L'app envoie-t-elle vers les stores à ma place ?",
             "a": "Oui, pour les visuels : elle dialogue directement avec les APIs App Store Connect et Google Play Developer pour téléverser les captures dans les bons types d'affichage et jeux de captures. Vous fournissez les identifiants d'API."
+          }
+        ],
+        "article_slug": ""
+      },
+      "splitter": {
+        "seo_title": "Splitter — Découper de longs enregistrements MP3 et WAV en pistes",
+        "seo_description": "App de bureau pilotée au clavier pour découper lives, mixes DJ et longs enregistrements en pistes. Détection des silences, revue coupure par coupure, export MP3 sans réencodage et sans blanc, FLAC/WAV, loudness EBU R128 et ReplayGain.",
+        "overview": [
+          "Un enregistrement de deux heures, c'est un seul fichier, et vous en voulez vingt. Dans un éditeur de forme d'onde, il faut défiler, zoomer, sélectionner et exporter à la main, vingt fois, en espérant que chaque coupure tombe dans le silence et pas sur la première note.",
+          "Splitter lit le fichier une fois, propose une coupure dans chaque passage silencieux, puis vous les fait passer en revue : Tab joue trois secondes de part et d'autre de la coupure suivante, Entrée la garde, Retour arrière la supprime. La plupart des enregistrements se traitent sans toucher la souris.",
+          "L'export copie les trames MP3 d'origine au lieu de les réencoder, avec un en-tête gapless : les pistes sonnent exactement comme la source et s'enchaînent sans clic."
+        ],
+        "features": [
+          {
+            "title": "Coupures proposées, validées à l'oreille",
+            "body": "La détection des silences propose une coupure au milieu de chaque passage calme. Vous écoutez chacune avant de la garder, la décalez de 10 ms ou l'alignez sur le point le plus silencieux à proximité."
+          },
+          {
+            "title": "Export MP3 sans réencodage",
+            "body": "Les trames d'origine sont copiées et un en-tête LAME gapless indique le début et la fin exacts : aucune perte, et les lecteurs gapless enchaînent les pistes sans raccord audible. Les tests comparent chaque piste exportée à la source, échantillon par échantillon."
+          },
+          {
+            "title": "D'autres formats si besoin",
+            "body": "MP3 VBR ou CBR, FLAC ou WAV 16 bits, avec une boucle A/B qui bascule entre l'original et le format choisi à la même position avant de vous engager."
+          },
+          {
+            "title": "Un volume mesuré, pas estimé",
+            "body": "Loudness EBU R128 et true peak pour chaque piste, recalculés quand vous déplacez une coupure. Tags ReplayGain 2.0 à l'export, et normalisation optionnelle à −14 ou −16 LUFS par piste ou pour tout l'enregistrement."
+          },
+          {
+            "title": "Silences rognés aux extrémités",
+            "body": "L'intro, la fin et les blancs entre morceaux sont retirés de l'export par défaut, en gardant un quart de seconde pour préserver attaques et fondus. L'aperçu des coupes joue exactement ce que l'export conservera."
+          },
+          {
+            "title": "Titres, lots et liens YouTube",
+            "body": "Tapez les titres au fil de l'eau ou collez une tracklist. Marquez les fichiers terminés et exportez-les tous d'une traite. Collez un lien YouTube pour en télécharger l'audio et le découper comme n'importe quel fichier."
+          }
+        ],
+        "requirements": [
+          "Windows ou Linux x86_64 — un build macOS arrive",
+          "Des enregistrements MP3 ou WAV ; les téléchargements YouTube arrivent en audio et s'ouvrent directement",
+          "Une connexion internet uniquement pour le téléchargement YouTube, qui récupère yt-dlp et Deno au premier usage"
+        ],
+        "faq": [
+          {
+            "q": "Mes MP3 sont-ils réencodés ?",
+            "a": "Non, sauf si vous choisissez un autre format. L'export par défaut copie les trames MP3 d'origine : la qualité est exactement celle de la source."
+          },
+          {
+            "q": "Mon fichier d'origine est-il modifié ?",
+            "a": "Non. Coupures et titres sont enregistrés dans un petit fichier cutlist à côté de vos enregistrements, et les pistes sont écrites dans un nouveau dossier. Appliquer les coupes écrit une copie séparée."
+          },
+          {
+            "q": "Les pistes s'enchaînent-elles sans blanc ?",
+            "a": "Dans les lecteurs gapless — iTunes/Musique, foobar2000, tout ce qui repose sur ffmpeg — oui : chaque piste porte l'en-tête qui indique au lecteur où l'audio commence et finit vraiment."
+          },
+          {
+            "q": "Faut-il installer ffmpeg ?",
+            "a": "Non. Décodage, encodage et téléchargement YouTube fonctionnent sans rien installer d'autre."
           }
         ],
         "article_slug": ""

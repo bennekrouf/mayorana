@@ -64,6 +64,7 @@ const SECONDARY_ORDER: string[] = [
   'cvenom',
   'appscreens',
   'blog-toolkit',
+  'splitter',
   'solanize',
   'consulting',
 ];
@@ -75,6 +76,7 @@ const FILTER_TAGS: { id: string; label: string }[] = [
   { id: 'azure', label: 'Azure' },
   { id: 'git', label: 'Git' },
   { id: 'blog', label: 'Blog' },
+  { id: 'audio', label: 'Audio' },
   { id: 'api', label: 'API' },
   { id: 'mcp', label: 'MCP' },
   { id: 'ai', label: 'AI' },
