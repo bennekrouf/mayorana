@@ -913,7 +913,7 @@
           }
         ],
         "requirements": [
-          "Windows ou Linux x86_64 — un build macOS arrive",
+          "macOS sur Apple Silicon, Windows ou Linux x86_64",
           "Des enregistrements MP3 ou WAV ; les téléchargements YouTube arrivent en audio et s'ouvrent directement",
           "Une connexion internet uniquement pour le téléchargement YouTube, qui récupère yt-dlp et Deno au premier usage"
         ],
