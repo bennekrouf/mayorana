@@ -32,8 +32,10 @@ export interface DesktopToolConfig {
   tags: string[];
   downloads: DownloadLink[];
   dataSource?: DataSource;
-  /** Public source repository. All seven are source-available on GitHub. */
+  /** Public source repository. Every tool is source-available on GitHub. */
   source: string;
+  /** schema.org applicationCategory for the detail page. Defaults to DeveloperApplication. */
+  applicationCategory?: string;
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -47,6 +49,7 @@ const analyticsDl = 'https://mayorana.ch/downloads/ais-analytics/latest';
 const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
 const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
 const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
+const splitterDl = 'https://mayorana.ch/downloads/splitter/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -159,6 +162,21 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${gitagentDl}/gitagent-setup.exe` },
     ],
   },
+  {
+    id: 'splitter',
+    source: 'https://github.com/Bennekrouf/splitter',
+    name: 'Splitter',
+    tech: 'Rust · Dioxus · symphonia · LAME · FLAC · yt-dlp',
+    status: 'beta',
+    tags: ['audio'],
+    applicationCategory: 'MultimediaApplication',
+    // No macOS build yet: the release pipeline skips it until the repo has the
+    // Apple signing secrets. Add splitter-macos-arm64.dmg here once it ships.
+    downloads: [
+      { os: 'linux', label: 'Linux x86_64', href: `${splitterDl}/splitter-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${splitterDl}/splitter-setup.exe` },
+    ],
+  },
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
@@ -170,6 +188,7 @@ export const appI18nKey: Record<string, string> = {
   'blog-toolkit': 'blog_toolkit',
   appscreens: 'appscreens',
   gitagent: 'gitagent',
+  splitter: 'splitter',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:

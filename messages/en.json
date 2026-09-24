@@ -188,6 +188,8 @@
     "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
     "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or DeepSeek, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
+    "splitter_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
+    "splitter_description": "Load a live set, a radio show or a digitised tape and get one file per track. Silence detection proposes the splits, you confirm or nudge each one by ear, then export: MP3 without re-encoding, or MP3/FLAC/WAV with loudness normalisation and ReplayGain tags. Can also pull the audio of a YouTube link.",
     "intro": "These are the tools we build and use. The ones at the top support our core positioning — Azure workflows and AI agents. Everything else is additional work built on the same stack.",
     "primary_heading": "Primary tools",
     "secondary_heading": "Also built with our stack",
@@ -872,6 +874,65 @@
           {
             "q": "Does it upload to the stores for me?",
             "a": "Yes, for store assets: it talks to the App Store Connect and Google Play Developer APIs directly to upload screenshots into the right display types and sets. You supply the API credentials."
+          }
+        ],
+        "article_slug": ""
+      },
+      "splitter": {
+        "seo_title": "Splitter — Split Long MP3 and WAV Recordings into Tracks",
+        "seo_description": "Keyboard-driven desktop app to split live sets, DJ mixes and long recordings into tracks. Silence detection, split-by-split review, gapless MP3 export without re-encoding, FLAC/WAV, EBU R128 loudness and ReplayGain.",
+        "overview": [
+          "A two-hour recording is one file, and what you want is twenty. Doing it in a waveform editor means scrolling, zooming, selecting and exporting by hand, twenty times, and hoping each cut landed in the gap and not on the first note.",
+          "Splitter reads the whole file once, suggests a split in every quiet stretch, then walks you through them: Tab plays three seconds either side of the next split, Enter keeps it, Backspace drops it. Most recordings are reviewed without touching the mouse.",
+          "Export copies the original MP3 frames instead of re-encoding them, with a gapless header, so the tracks sound exactly like the source and play back to back without a click."
+        ],
+        "features": [
+          {
+            "title": "Splits suggested, reviewed by ear",
+            "body": "Silence detection proposes a split in the middle of every quiet stretch. You hear each one before you keep it, nudge it by 10 ms, or snap it to the quietest point nearby."
+          },
+          {
+            "title": "MP3 export without re-encoding",
+            "body": "Original frames are copied and a LAME gapless header records the exact start and end, so tracks lose nothing and gapless players join them seamlessly. Tests compare every exported track with the source, sample by sample."
+          },
+          {
+            "title": "Other formats when you need them",
+            "body": "MP3 VBR or CBR, FLAC or 16-bit WAV, with an A/B loop that switches between the original and the chosen format at the same position before you commit."
+          },
+          {
+            "title": "Loudness measured, not guessed",
+            "body": "EBU R128 loudness and true peak for every track, updated as you move splits. ReplayGain 2.0 tags on export, and optional normalisation to −14 or −16 LUFS per track or for the whole set."
+          },
+          {
+            "title": "Silence trimmed at the edges",
+            "body": "Lead-in, tail and the gaps between tracks are cut from the export by default, keeping a quarter of a second so quiet attacks and fades survive. Preview cuts plays exactly what the export will keep."
+          },
+          {
+            "title": "Titles, batches and YouTube links",
+            "body": "Type titles as you go or paste a tracklist. Mark files done and export them all in one queue. Paste a YouTube link to download its audio and split it like any other file."
+          }
+        ],
+        "requirements": [
+          "Windows or Linux x86_64 — a macOS build is on its way",
+          "MP3 or WAV recordings; YouTube downloads arrive as audio and are opened directly",
+          "An internet connection only for the YouTube download, which fetches yt-dlp and Deno on first use"
+        ],
+        "faq": [
+          {
+            "q": "Does it re-encode my MP3s?",
+            "a": "Not unless you pick another format. The default export copies the original MP3 frames, so the quality is exactly the source's."
+          },
+          {
+            "q": "Is my original file changed?",
+            "a": "No. Splits and titles are saved in a small cutlist file next to your recordings, and tracks are written to a new folder. Apply cuts writes a separate copy."
+          },
+          {
+            "q": "Will the tracks play without gaps?",
+            "a": "In gapless players — iTunes/Music, foobar2000, anything built on ffmpeg — yes: each track carries the header that tells the player where the audio really starts and ends."
+          },
+          {
+            "q": "Do I need ffmpeg?",
+            "a": "No. Decoding, encoding and the YouTube download all work without installing anything else."
           }
         ],
         "article_slug": ""
