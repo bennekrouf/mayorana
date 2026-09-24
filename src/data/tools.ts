@@ -170,9 +170,8 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'beta',
     tags: ['audio'],
     applicationCategory: 'MultimediaApplication',
-    // No macOS build yet: the release pipeline skips it until the repo has the
-    // Apple signing secrets. Add splitter-macos-arm64.dmg here once it ships.
     downloads: [
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${splitterDl}/splitter-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${splitterDl}/splitter-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${splitterDl}/splitter-setup.exe` },
     ],
