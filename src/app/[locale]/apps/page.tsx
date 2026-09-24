@@ -16,6 +16,7 @@ import {
   type Status,
 } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
+import { Api0FlowDiagram } from '@/components/home/Api0FlowDiagram';
 
 // What the card's action area renders. One shape per kind, so a desktop tool
 // gets its per-OS download buttons and a hosted product gets a single link —
@@ -35,6 +36,8 @@ interface Tool {
   status: Status;
   tags: string[];
   icon?: React.ReactNode;
+  /** Optional schema shown in the space between the tags and the action. */
+  visual?: React.ReactNode;
   dataSource?: DataSource;
   action: ToolAction;
   /** Desktop tools have a page of their own; the web products live off-site. */
@@ -201,6 +204,10 @@ function ToolCard({
         <ToolTags tool={tool} />
       </div>
 
+      {tool.visual && (
+        <div className="flex flex-1 items-center justify-center mb-6">{tool.visual}</div>
+      )}
+
       <div className="mt-auto space-y-3">
         <ToolActionButtons action={tool.action} />
         {(tool.detailHref || tool.releasesHref) && (
@@ -269,6 +276,7 @@ export default function AppsPage() {
         status: 'live',
         tags: ['api', 'mcp'],
         icon: <Brain className="w-8 h-8" />,
+        visual: <Api0FlowDiagram layout="vertical" />,
         action: { kind: 'external', href: 'https://api0.ai', label: tPortfolio('api0_cta') },
       },
       {
