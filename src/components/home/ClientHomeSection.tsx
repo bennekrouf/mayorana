@@ -7,6 +7,7 @@ import { getLocalizedPath } from '@/lib/i18n-utils';
 import { desktopToolsConfig, appI18nKey, type Status } from '@/data/tools';
 import { StatusBadge } from '@/components/ui/ToolVisuals';
 import { FeaturedPromo } from '@/components/ui/FeaturedPromo';
+import { Api0FlowDiagram } from '@/components/home/Api0FlowDiagram';
 
 const API0_URL = 'https://api0.ai';
 
@@ -150,7 +151,12 @@ export default function ClientHomeSection() {
                   <StatusBadge status="live" />
                 </div>
               </div>
-              <p className="text-muted-foreground mb-8">{t('solution_api0_description')}</p>
+              <p className="text-muted-foreground mb-8 md:mb-6">{t('solution_api0_description')}</p>
+              {/* Fills the space the shorter copy leaves next to the Azure card; hidden once
+                  the cards stack, where there is no gap and the text would be too small. */}
+              <div className="hidden md:flex flex-1 items-center justify-center mb-6">
+                <Api0FlowDiagram />
+              </div>
               <a
                 href={API0_URL}
                 target="_blank"
