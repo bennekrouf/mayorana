@@ -16,7 +16,9 @@ import {
   type Status,
 } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
-import { Api0FlowDiagram } from '@/components/home/Api0FlowDiagram';
+import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
+import { CvenomFlowDiagram } from '@/components/diagrams/CvenomFlowDiagram';
+import { SolanizeFlowDiagram } from '@/components/diagrams/SolanizeFlowDiagram';
 
 // What the card's action area renders. One shape per kind, so a desktop tool
 // gets its per-OS download buttons and a hosted product gets a single link —
@@ -287,6 +289,7 @@ export default function AppsPage() {
         status: 'live',
         tags: ['ai'],
         icon: <Shield className="w-8 h-8" />,
+        visual: <CvenomFlowDiagram />,
         action: { kind: 'external', href: 'https://cvenom.com', label: tPortfolio('cvenom_cta') },
       },
       {
@@ -297,6 +300,7 @@ export default function AppsPage() {
         status: 'mvp',
         tags: ['crypto'],
         icon: <Zap className="w-8 h-8" />,
+        visual: <SolanizeFlowDiagram />,
         action: { kind: 'external', href: 'https://ribh.io', label: tPortfolio('solanize_cta') },
       },
     ];

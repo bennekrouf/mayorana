@@ -7,7 +7,7 @@ import { getLocalizedPath } from '@/lib/i18n-utils';
 import { desktopToolsConfig, appI18nKey, type Status } from '@/data/tools';
 import { StatusBadge } from '@/components/ui/ToolVisuals';
 import { FeaturedPromo } from '@/components/ui/FeaturedPromo';
-import { Api0FlowDiagram } from '@/components/home/Api0FlowDiagram';
+import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
 
 const API0_URL = 'https://api0.ai';
 
