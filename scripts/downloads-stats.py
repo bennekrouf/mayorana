@@ -115,7 +115,7 @@ DATACENTRE_NETS = ['158.69.0.0/16']
 # customer — it is us testing, or something enumerating the download tree.
 # Behavioural rather than address-based on purpose: excluding the ISP range we
 # happen to test from would also discard real customers on that ISP.
-DISTINCT_APPS_BOT_THRESHOLD = 4
+DISTINCT_APPS_BOT_THRESHOLD = 5
 
 # ── Site traffic ───────────────────────────────────────────────────────────
 # Everything on this box writes its own nginx access log, so the same parser
