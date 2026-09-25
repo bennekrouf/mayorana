@@ -349,11 +349,13 @@ function ReleaseBody({ release }: { release: Release }) {
   );
 }
 
-// The notes are written as markdown bullets and carry three inline constructs:
-// `code`, *emphasis* and [links](url). Rendered as elements rather than pushed
-// through a markdown library and dangerouslySetInnerHTML — the text comes off a
-// network feed, and this way there is no HTML path for it to travel down at all.
-const INLINE = /(`[^`]+`|\*[^*\n]+\*|\[[^\]]+\]\([^)\s]+\))/g;
+// The notes are written as markdown bullets and carry four inline constructs:
+// `code`, **strong** (the name of a button or menu), *emphasis* and
+// [links](url). Rendered as elements rather than pushed through a markdown
+// library and dangerouslySetInnerHTML — the text comes off a network feed, and
+// this way there is no HTML path for it to travel down at all. **strong** is
+// matched before *emphasis*, which would otherwise take its inner pair.
+const INLINE = /(`[^`]+`|\*\*[^*\n]+\*\*|\*[^*\n]+\*|\[[^\]]+\]\([^)\s]+\))/g;
 
 function Inline({ text }: { text: string }) {
   return (
@@ -367,6 +369,14 @@ function Inline({ text }: { text: string }) {
             >
               {part.slice(1, -1)}
             </code>
+          );
+        }
+
+        if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+          return (
+            <strong key={index} className="font-semibold text-foreground">
+              {part.slice(2, -2)}
+            </strong>
           );
         }
 

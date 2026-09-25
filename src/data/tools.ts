@@ -233,6 +233,9 @@ export const releaseNotesTools: string[] = [
   'ais-monitor',
   'ais-tracing',
   'ais-analytics',
+  'appscreens',
+  'gitagent',
+  'splitter',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);

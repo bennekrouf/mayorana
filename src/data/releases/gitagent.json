@@ -1,0 +1,746 @@
+{
+  "name": "gitagent",
+  "product": "GitAgent",
+  "page": "https://mayorana.ch/en/apps/gitagent",
+  "generated_at": "2026-09-25T12:24:06Z",
+  "releases": [
+    {
+      "version": "0.1.53",
+      "tag": "v0.1.53",
+      "date": "2026-09-25",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A fix offered from a failed step, such as closing a pull request, now runs inside the repository it is for. Run from anywhere else, `gh pr close 11` could close #11 of a different repository.",
+            "An open pull request that no longer changes any files is reported as such, with an offer to close it, instead of the sidebar showing \"ready to merge\" with no way forward."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.52",
+      "tag": "v0.1.52",
+      "date": "2026-09-25",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Reviewing a pull request whose branch is already fully merged into its base says there is nothing to review instead of failing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.51",
+      "tag": "v0.1.51",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.50",
+      "tag": "v0.1.50",
+      "date": "2026-09-15",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "With a local Ollama model, draft steps now queue for the model one at a time and show as queued, instead of all starting at once and timing out while they waited their turn."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.49",
+      "tag": "v0.1.49",
+      "date": "2026-09-15",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**Trust all** in the top bar: every repository and every flow runs trusted, answering its own approvals, until you turn it off. Turning it off lets a run already in progress finish its current flow before asking again."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The sidebar's action buttons are larger and show a tooltip."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.48",
+      "tag": "v0.1.48",
+      "date": "2026-09-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A banner at startup for occasional messages from us, such as a request for feedback. It is fetched once from mayorana.ch, stays until you dismiss it and is not shown again after that. If the notice cannot be fetched, no banner appears and startup is not slowed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.47",
+      "tag": "v0.1.47",
+      "date": "2026-09-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A flow picker in the workspace, to show or hide a repository's flows without leaving the page."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.46",
+      "tag": "v0.1.46",
+      "date": "2026-09-12",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Larger, better-spaced buttons in the repository sidebar. The old ones were too small to hit reliably."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.45",
+      "tag": "v0.1.45",
+      "date": "2026-09-09",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Flows can be hidden per repository. A hidden flow is not offered there and a trusted run does not use it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.44",
+      "tag": "v0.1.44",
+      "date": "2026-09-09",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Clearing a flow's name in Setup no longer leaves an unnamed flow in the sidebar; it becomes \"Untitled flow\".",
+            "Setup fields for names, commands and branches no longer autocorrect, capitalise or spell-check what you type."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.43",
+      "tag": "v0.1.43",
+      "date": "2026-09-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Flow edits in Setup are kept as a draft until you save. Save is enabled only when something changed, and Cancel asks before discarding your edits."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.42",
+      "tag": "v0.1.42",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A first-run screen that asks what writes the commit messages: a model on this machine, a hosted API, or none. It preselects what it finds, and a hosted API key is kept for the session only. With no model, GitAgent builds a plain commit message from the list of changed files."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.41",
+      "tag": "v0.1.41",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**Skip** on a step that is waiting or running, to move past one that is slow or not needed this time. A trusted run carries on past a skipped step."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Clearer messages when a model call times out or fails."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.40",
+      "tag": "v0.1.40",
+      "date": "2026-09-05",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Large diffs open and scroll much faster. Each diff is highlighted once instead of on every redraw."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Unchecking every file at the commit approval no longer commits the files you unchecked. An empty selection now means nothing is staged.",
+            "Branch names generated from a commit message are always valid, even when a cut lands on a dot or produces `..` or `.lock`.",
+            "Files with spaces or unusual characters in their paths are staged correctly."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.39",
+      "tag": "v0.1.39",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.38",
+      "tag": "v0.1.38",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The app's icon in the window title bar and taskbar."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.37",
+      "tag": "v0.1.37",
+      "date": "2026-09-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A repository whose commit flow just opened a pull request and switched back to the base branch still shows that pull request as waiting. GitAgent now looks at every open pull request, not only the checked-out branch's."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.36",
+      "tag": "v0.1.36",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The list of files to commit is shown by default at the commit approval, instead of hidden behind an unlabelled toggle."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.35",
+      "tag": "v0.1.35",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A trusted run that stops says why: which step needs a person, or that no flow answers what the repository needs next.",
+            "**Stop asking me** on an approval: approves that step and every later one in the repository, turning the run you started into a trusted run. It still stops at a merge the analysis or CI is unhappy about.",
+            "Setup marks a flow that answers no repository need, since nothing will ever start it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.34",
+      "tag": "v0.1.34",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A tally at the top of the sidebar: how many repositories are running, have a failed run, or need something from you."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.33",
+      "tag": "v0.1.33",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The sidebar marks repositories whose last run failed, and each repository has a button to check it again without refreshing the whole list."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.32",
+      "tag": "v0.1.32",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A trusted run no longer stops at the commit flow because the new pull request's checks are still pending. It moves on to the review."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.31",
+      "tag": "v0.1.31",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A trusted run now works through the repository rather than one flow: after a commit it moves on to the review, then the release, re-checking the repository between each, and stops when something needs a person.",
+            "The test step is added to your existing commit flows too, between scanning and committing, keeping your own settings and steps. If you remove it, it stays removed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.30",
+      "tag": "v0.1.30",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**Trusted run**: a flow answers its own approvals and stops only at a step that needs a person, showing why it stopped there.",
+            "A test step in the commit flow that runs the project's own test command before anything is committed. GitAgent detects the command."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.29",
+      "tag": "v0.1.29",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.28",
+      "tag": "v0.1.28",
+      "date": "2026-09-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A banner when a newer version is available."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.27",
+      "tag": "v0.1.27",
+      "date": "2026-09-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Flows that are no longer valid are listed with what is wrong, and cannot be started until they are fixed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Opening the review flow selects the pull request that needs reviewing, instead of leaving you to pick it."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The base branch is worked out the same way everywhere. The sidebar and the flows could disagree about what a branch was compared against."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.25",
+      "tag": "v0.1.25",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.24",
+      "tag": "v0.1.24",
+      "date": "2026-08-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The Windows installer installs for the current user by default, with no administrator prompt. Administrators can still install for every user from the command line."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-08-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "GitAgent detects a rebase, merge, cherry-pick or revert left unfinished, shows it in the sidebar with the conflicted files, and offers to finish it once everything is resolved, or abandon it and go back to where you were."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-08-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A push rejected because the branch is behind its remote offers to pull first."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-08-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.19",
+      "tag": "v0.1.19",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A pull request with merge conflicts now offers to bring the base branch into it and resolve the conflicts in a terminal, before offering to abandon it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.18",
+      "tag": "v0.1.18",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On macOS, notifications no longer ask which application should show them each time one is raised."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.17",
+      "tag": "v0.1.17",
+      "date": "2026-08-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Flows declare which repository needs they answer (uncommitted changes, an unpushed branch, an open pull request, a release due), chosen in Setup. The workspace opens the flow that answers what a repository needs, whatever the flow is called."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "A step you reject now shows as declined rather than failed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The sidebar shows a running, waiting or failed run ahead of what the repository needs next."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A release that was due could be hidden behind an open pull request with pending checks."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A system notification when a run stops and needs you, only while the GitAgent window is in the background."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Long repository names are shortened in the workspace instead of pushing the buttons off their row. The full name shows on hover."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "GitAgent picks up the environment variables from your login shell, such as API keys and tokens, so commands behave as they do in a terminal when the app is started from the Dock or Start menu.",
+            "Command output is shown without stray colour codes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Downloads and update checks now come from mayorana.ch instead of GitHub.",
+            "GitAgent is source-available under the PolyForm Noncommercial licence: free for personal, educational and noncommercial use."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A spinner on a branch while deleting it or opening a pull request for it, with its buttons disabled until the action finishes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The sidebar shows merged work that has not been released yet."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Only open pull requests are offered for review. A merged or closed one could be picked and then fail."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "GitAgent uses your login shell's PATH, so `gh`, `az`, `cargo` and other tools are found when the app is started from the Dock or Start menu."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-08-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.4",
+      "tag": "v0.1.4",
+      "date": "2026-08-26",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Target branch setting for pull requests, for repositories that merge into something other than their default branch, such as `develop`. Left empty, GitAgent detects it."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Clearer errors when fetching the base branch fails."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.3",
+      "tag": "v0.1.3",
+      "date": "2026-08-26",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.2",
+      "tag": "v0.1.2",
+      "date": "2026-08-26",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Review any open pull request on a repository, not only the one for the checked-out branch, with several reviews in progress at once. The sidebar shows how many pull requests each repository has open.",
+            "A syntax-highlighted diff view, with a preview of the pull request's diff before anything runs. Showing the diff is a step you approve.",
+            "A step waiting for your approval is marked in the graph.",
+            "Output from push and other remote commands streams in as it happens.",
+            "Flows can be shown or hidden per repository.",
+            "A pull request with merge conflicts offers to abandon it."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A failure to list pull requests (rate limit, network, sign-in) is shown as an error instead of looking like a clean repository.",
+            "The CI status step checks the pull request being reviewed, not the one for the checked-out branch.",
+            "Changes committed outside GitAgent are picked up, and the rest of the flow continues.",
+            "Long diffs scroll instead of being squeezed to fit."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.1",
+      "tag": "v0.1.1",
+      "date": "2026-08-26",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "First release: turn a dirty working tree into an open pull request. GitAgent scans the changes, drafts the commit message and pull request description with a model, then commits, pushes and opens the pull request.",
+            "Nothing touches git history or the remote without your approval. Each gated step shows the exact commands it will run first, and only tracked files are committed.",
+            "Local Ollama or remote DeepSeek for the drafts.",
+            "A Setup screen with a flow editor."
+          ]
+        }
+      ]
+    }
+  ]
+}
