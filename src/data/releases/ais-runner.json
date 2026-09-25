@@ -2,8 +2,61 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-09-15T12:30:16Z",
+  "generated_at": "2026-09-25T12:24:05Z",
   "releases": [
+    {
+      "version": "0.5.54",
+      "tag": "v0.5.54",
+      "date": "2026-09-25",
+      "sections": [
+        {
+          "heading": "Removed",
+          "items": [
+            "AIS Runner no longer edits `workflow.json`. Since 0.5.43, starting `func` stripped `ActiveDirectoryOAuth` blocks from HTTP actions and put them back on stop; those edits showed up in `git status` next to real work and could outlive a session that did not shut down cleanly. Workflows that use `ActiveDirectoryOAuth` are now left as they are, and the start log names how many there are and why their calls fail locally when the tenant, client id and secret parameters do not resolve. Opening a project still puts back any `workflow.json` an older version stripped, so upgrading leaves no patched files behind.",
+            "The per-workspace \"Workflow OAuth\" setting added in 0.5.53, which only existed to turn that stripping off."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.53",
+      "tag": "v0.5.53",
+      "date": "2026-09-15",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A per-workspace \"Workflow OAuth\" setting under Settings, for projects whose `local.settings.json` carries real OAuth parameters. Turning it off keeps `ActiveDirectoryOAuth` in workflows while `func` runs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.52",
+      "tag": "v0.5.52",
+      "date": "2026-09-15",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Workflows pulled or checked out after a session that did not shut down cleanly could be left with their OAuth blocks stripped for good. The app compared them against an outdated snapshot, decided they were not its own edit, and would not restore them. The snapshot is now always taken from the file as it is when `func` starts."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.51",
+      "tag": "v0.5.51",
+      "date": "2026-09-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A banner at startup for occasional messages from us, such as a request for feedback. It is fetched once from mayorana.ch, stays until you dismiss it and is not shown again after that. If the notice cannot be fetched, no banner appears and startup is not slowed. Setting `DISABLE_UPDATE_CHECK` turns it off along with the update check."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.50",
       "tag": "v0.5.50",

@@ -1,0 +1,151 @@
+{
+  "name": "splitter",
+  "product": "Splitter",
+  "page": "https://mayorana.ch/en/apps/splitter",
+  "generated_at": "2026-09-25T12:24:06Z",
+  "releases": [
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The video preview works on Windows web views that refuse to load media from a local address. When that happens the preview falls back to the app's own channel, so the picture still shows instead of an error."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The notes for every release, with its download, are now published at [mayorana.ch/en/apps/splitter/releases](https://mayorana.ch/en/apps/splitter/releases)."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.6",
+      "tag": "v0.1.6",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A download log in the sidebar: what yt-dlp printed for the last URL download, kept after it ends. It opens by itself when a download fails, so the reason can be read instead of guessed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.5",
+      "tag": "v0.1.5",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Videos: MP4, M4V and MOV files with AAC audio are listed next to the recordings and split on their sound, with the picture shown where a recording shows its overview waveform.",
+            "Video export: one MP4 clip per kept track, cut exactly on the splits, with title, album and track number. The clips are re-encoded by ffmpeg, which is fetched on first use (about 30 MB, SHA-256 checked) and never bundled.",
+            "**URL…** can download the video instead of only its audio: picture and sound are fetched separately and merged into one MP4."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.4",
+      "tag": "v0.1.4",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "An update banner: the app checks mayorana.ch for a newer version and links straight to the download for the platform it is running on."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "First release with a macOS build, signed with an Apple Developer ID and notarized."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.3",
+      "tag": "v0.1.3",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Silence at track edges is cut from the export by default. Detection now tags every quiet stretch, lead-in and tail included; where one touches a track's edge it is trimmed, keeping 0.25 s on each side so quiet attacks and fades survive. **G** keeps a silence or cuts it again. Splits don't move, and the track list shows each track's length after the cut."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Pressing Enter in the **URL…** dialog no longer crashes the app."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.2",
+      "tag": "v0.1.2",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "First downloadable release. Silence detection suggests the splits, you review each one by ear from the keyboard, then export: MP3 without re-encoding (gapless), or MP3/FLAC/WAV with EBU R128 loudness, ReplayGain tags and optional normalisation. Titles, a batch export queue and A/B listening included."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "**URL…** downloads through yt-dlp and Deno instead of ffmpeg. Both are fetched on first use and checked against their published SHA-256 sums, and yt-dlp updates itself at most once a day. The AAC or MP3 stream is fetched directly and AAC is decoded to WAV, so nothing needs installing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.1",
+      "tag": "v0.1.1",
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Tagged, but the release build failed and nothing was published. The first downloadable version is 0.1.2."
+          ]
+        }
+      ]
+    }
+  ]
+}
