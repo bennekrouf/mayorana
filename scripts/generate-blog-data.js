@@ -232,6 +232,81 @@ function linkCounterparts(byLocale) {
   return paired;
 }
 
+/**
+ * Put every post at its place in the learning path (content/learning-path.json),
+ * in place, and sort each locale by it.
+ *
+ * A path entry is keyed like reading progress is (see progressKey() in
+ * src/lib/read-progress.ts): the English slug, or the post's own slug when it
+ * has no English version. So a French post takes its step from its English
+ * counterpart and both languages read in the same order. Runs after
+ * linkCounterparts(), which that depends on.
+ *
+ * Each section belongs to a track (one subject: rust, azure, ...). Steps are
+ * numbered within a track, and the "read next" suggestions never cross from
+ * one track to another.
+ *
+ * Posts the path does not mention come after it, newest first, so a freshly
+ * published post still shows up before someone gets round to placing it.
+ */
+function applyLearningPath(byLocale) {
+  const file = path.join(process.cwd(), 'content/learning-path.json');
+  const { sections } = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const keys = sections.flatMap((section) => section.posts);
+
+  const duplicates = keys.filter((key, i) => keys.indexOf(key) !== i);
+  if (duplicates.length > 0) {
+    throw new Error(`learning-path.json lists these more than once: ${duplicates.join(', ')}`);
+  }
+  const stepOf = new Map(keys.map((key, i) => [key, i + 1]));
+  const trackOf = new Map(
+    sections.flatMap((section) => {
+      if (!section.track) throw new Error(`learning-path.json: section "${section.id}" has no track`);
+      return section.posts.map((key) => [key, section.track]);
+    })
+  );
+
+  const keyOf = (post) =>
+    post.locale !== 'en' && post.counterpart?.locale === 'en' ? post.counterpart.slug : post.slug;
+
+  const found = new Set();
+  for (const locale of Object.keys(byLocale)) {
+    const unplaced = [];
+    for (const post of byLocale[locale]) {
+      const key = keyOf(post);
+      if (stepOf.has(key)) {
+        post.step = stepOf.get(key);
+        post.track = trackOf.get(key);
+        found.add(key);
+      } else {
+        unplaced.push(post.slug);
+      }
+    }
+    // Stable sort: unplaced posts keep their newest-first order at the end.
+    byLocale[locale].sort((a, b) => (a.step ?? Infinity) - (b.step ?? Infinity));
+    // Renumber from 1 within each track, without gaps: a post only one
+    // language has would otherwise leave a hole in the other's numbering.
+    const counters = new Map();
+    for (const post of byLocale[locale]) {
+      if (post.step === undefined) continue;
+      post.step = (counters.get(post.track) || 0) + 1;
+      counters.set(post.track, post.step);
+    }
+    if (unplaced.length > 0) {
+      console.warn(`⚠️  ${locale}: not in learning-path.json, listed last: ${unplaced.join(', ')}`);
+    }
+  }
+
+  // A warning rather than a failure: a queued post may be placed ahead of its
+  // publication date. A typo shows up here too.
+  const unknown = keys.filter((key) => !found.has(key));
+  if (unknown.length > 0) {
+    console.warn(`⚠️  learning-path.json names posts that do not exist: ${unknown.join(', ')}`);
+  }
+
+  console.log(`\u{1F9ED} Learning path: ${found.size} post(s) placed`);
+}
+
 // Main function to generate blog data for all locales
 async function generateBlogData() {
   console.log('🚀 Starting i18n blog data generation...\n');
@@ -257,6 +332,7 @@ async function generateBlogData() {
   }
 
   linkCounterparts(byLocale);
+  applyLearningPath(byLocale);
 
   for (const locale of locales) {
     fs.writeFileSync(

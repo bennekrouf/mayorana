@@ -71,11 +71,16 @@ const BlogList: React.FC<BlogListProps> = ({
               >
                 <div className="p-6 flex flex-col h-full">
                   <div className="mb-2">
+                    {post.step !== undefined && (
+                      <span className="text-sm text-muted-foreground mr-2">
+                        {t('step', { step: post.step })}
+                      </span>
+                    )}
                     <span className="text-sm font-medium text-primary">
                       {post.tags?.[0] || t('article')}
                     </span>
                     <span className="text-sm text-muted-foreground ml-2">
-                      {formatDate(post.date)}
+                      {formatDate(post.date, locale)}
                     </span>
                   </div>
 

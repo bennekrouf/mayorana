@@ -435,7 +435,12 @@
     "search_placeholder": "Search articles...",
     "all_tags": "All Tags",
     "progress_read": "Read",
-    "progress_partial": "Partly read"
+    "progress_partial": "Partly read",
+    "learning_path": "Learning path",
+    "step": "Step {step}",
+    "path_step": "Step {step} of {total}",
+    "read_next": "Read next",
+    "path_complete": "You have read every article on this topic. Nice work!"
   },
   "footer": {
     "description": "Rust-powered portfolio",

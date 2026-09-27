@@ -132,11 +132,11 @@ export default async function BlogPage({ params, searchParams }: Props) {
                 </div>
               )}
 
-              {/* Regular posts ordered by date */}
+              {/* Regular posts in learning-path order (content/learning-path.json) */}
               {paginatedData.posts.length > 0 && (
                 <div className="mb-8">
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="text-lg font-semibold">🗓 {t('latest_articles')}</span>
+                    <span className="text-lg font-semibold">🧭 {t('learning_path')}</span>
                   </div>
                   <BlogList
                     posts={paginatedData.posts}

@@ -4,7 +4,7 @@
 import { notFound, redirect } from 'next/navigation';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogPost from '@/components/blog/BlogPost';
-import { getPostBySlug, getAllPosts } from '@/lib/blog';
+import { getPostBySlug, getAllPosts, getLearningPath } from '@/lib/blog';
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>;
@@ -89,7 +89,7 @@ export default async function PostPage({ params }: Props) {
       <LayoutTemplate>
         <section className="py-20 bg-background">
           <div className="container">
-            <BlogPost post={post} />
+            <BlogPost post={post} path={getLearningPath(post.track, locale)} />
           </div>
         </section>
       </LayoutTemplate>

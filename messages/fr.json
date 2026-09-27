@@ -435,7 +435,12 @@
     "search_placeholder": "Rechercher des articles...",
     "all_tags": "Tous les tags",
     "progress_read": "Lu",
-    "progress_partial": "Lu en partie"
+    "progress_partial": "Lu en partie",
+    "learning_path": "Parcours d'apprentissage",
+    "step": "Étape {step}",
+    "path_step": "Étape {step} sur {total}",
+    "read_next": "À lire ensuite",
+    "path_complete": "Vous avez lu tous les articles sur ce sujet. Bravo !"
   },
   "footer": {
     "description": "Portfolio renforcé par Mayorana expert Rust 🦀",
