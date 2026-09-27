@@ -7,7 +7,7 @@ date: '2026-09-27'
 author: mayo
 excerpt: >-
   Query, Key, Value: why real models project each word into three different
-  spaces, and how that separation of roles makes attention smart.
+  spaces, and what that separation of roles changes for attention.
 tags:
   - llm
   - ai
@@ -67,5 +67,4 @@ let v = embeddings.clone();
 ## Key takeaways
 
 - Q = searches, K = answers, V = carries
-- The separation is what makes attention smart
 - The vectors capture several nuances at the same time

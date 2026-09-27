@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/mb/code/mayorana/src/app/%5Blocale%5D/apps/layout.tsx"],"sourcesContent":["import { Metadata } from 'next';\nimport { getTranslations } from 'next-intl/server';\nimport { buildMetadata } from '@/lib/seo';\n\nexport async function generateMetadata({\n  params,\n}: {\n  params: Promise<{ locale: string }>;\n}): Promise<Metadata> {\n  const { locale } = await params;\n  const t = await getTranslations({ locale, namespace: 'metadata' });\n\n  return buildMetadata({\n    locale,\n    path: '/apps',\n    title: t('apps_title'),\n    description: t('apps_description'),\n  });\n}\n\nexport default function AppsLayout({ children }: { children: React.ReactNode }) {\n  return <>{children}</>;\n}\n"],"names":[],"mappings":";;;;;;;AACA;AACA;;;;AAEO,eAAe,iBAAiB,EACrC,MAAM,EAGP;IACC,MAAM,EAAE,MAAM,EAAE,GAAG,MAAM;IACzB,MAAM,IAAI,MAAM,IAAA,2QAAe,EAAC;QAAE;QAAQ,WAAW;IAAW;IAEhE,OAAO,IAAA,kIAAa,EAAC;QACnB;QACA,MAAM;QACN,OAAO,EAAE;QACT,aAAa,EAAE;IACjB;AACF;AAEe,SAAS,WAAW,EAAE,QAAQ,EAAiC;IAC5E,qBAAO;kBAAG;;AACZ"}}]
+}

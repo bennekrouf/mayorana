@@ -1,7 +1,7 @@
 #!/bin/bash
 # Publish the in-app notice (see docs/downloads-notice.md).
 #
-# One reference file, config/downloads-notice.json, becomes seven files on the
+# One reference file, config/downloads-notice.json, becomes eight files on the
 # server: the global notice, plus one per product whose `url` carries
 # `?tool=<product>` so the founding page opens with the right tool selected.
 # The per-product copy wins in the app, so every install gets the tagged link;
@@ -16,7 +16,7 @@ REMOTE_DIR="/var/www/mayorana-downloads"
 SRC="$(cd "$(dirname "$0")/.." && pwd)/config/downloads-notice.json"
 
 # Products that ship the notice banner (src/notice.rs in each repo).
-PRODUCTS=(gitagent ais-monitor ais-runner ais-tracing ais-analytics appscreens)
+PRODUCTS=(gitagent ais-monitor ais-runner ais-tracing ais-analytics appscreens spreadwatch)
 
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1

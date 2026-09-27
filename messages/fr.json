@@ -73,7 +73,7 @@
     "cta_description": "Contactez-nous pour voir comment nos outils d'IA éprouvés peuvent renforcer votre entreprise",
     "get_in_touch": "Nous contacter",
     "hero_eyebrow": "Fiable par conception",
-    "hero_h1": "La couche Rust fiable pour vos agents IA en production et vos workflows Azure",
+    "hero_h1": "Rust production-ready pour les agents IA sur Azure",
     "hero_lead": "Des outils d'IA qui fonctionnent vraiment. Conçus avec Rust.",
     "cta_explore_azure": "Découvrir les outils Azure",
     "cta_try_api0": "Essayer API0.AI",
@@ -205,6 +205,8 @@
     "blog_toolkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
     "appscreens_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
     "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
+    "spreadwatch_tagline": "Les écarts de prix crypto entre exchanges et Solana, en direct",
+    "spreadwatch_description": "Suivez n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps. Voyez les meilleurs écarts entre plateformes, frais déduits, quelle plateforme est en retard sur les autres, et les tokens que Gate ou MEXC viennent de lister et que Binance n'a pas encore. Échangez SOL/USDT on-chain via Jupiter depuis un hot wallet local, en simulation à chaque démarrage et dans des limites strictes.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "splitter_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
@@ -507,8 +509,8 @@
     "download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif. L'usage commercial — y compris un consultant indépendant en mission — requiert une licence. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
     "faq_heading": "Questions",
     "related_heading": "Outils liés",
-    "cta_heading": "Besoin d'une version adaptée à votre stack ?",
-    "cta_body": "Ces outils sont nés de vrais projets d'intégration Azure. Si le vôtre demande une variante — une autre source de données, vos propres conventions, un build on-premise — c'est exactement le type de mission que nous prenons.",
+    "cta_heading": "Besoin d'une version adaptée à votre usage ?",
+    "cta_body": "Chacun de ces outils est conçu et maintenu par nous. S'il vous faut une variante — une autre source de données, vos propres conventions, une fonction qui manque à votre équipe, un build on-premise — c'est exactement le type de mission que nous prenons.",
     "cta_button": "Nous contacter",
     "status_note_wip": "Cette app est en développement actif. Elle est utilisable aujourd'hui, mais attendez-vous à des aspérités et à des releases fréquentes.",
     "status_note_beta": "Cette app est en beta. Le flux principal est stable ; certains panneaux sont encore en cours d'affinage.",
@@ -963,6 +965,57 @@
           }
         ],
         "article_slug": ""
+      },
+      "spreadwatch": {
+        "seo_title": "Spreadwatch — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
+        "seo_description": "App de bureau qui cote n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps : écarts entre plateformes frais déduits, quelle plateforme est en retard, et les nouveaux listings Gate et MEXC que Binance n'a pas encore.",
+        "overview": [
+          "Le même token s'échange sur une douzaine de plateformes à des prix légèrement différents, et l'écart bouge chaque seconde. Le suivre, c'est cinq onglets d'exchanges, un agrégateur DEX et un tableur — et quand les chiffres sont enfin côte à côte, ils sont déjà périmés.",
+          "Spreadwatch reçoit en continu les carnets d'ordres de Binance, Bybit, OKX, MEXC et Gate, et interroge Jupiter pour les tokens Solana, dans une seule fenêtre. Il affiche la meilleure route « acheter ici, vendre là » en points de base, brute et nette des frais taker sur les deux jambes, et mesure quelle plateforme bouge en dernier.",
+          "Un second onglet repère les tokens que Gate ou MEXC viennent de lister contre USDT et que Binance spot ne liste pas, avec un score de sérieux pour chacun. Pour SOL/USDT, l'app peut aussi échanger on-chain via Jupiter depuis un hot wallet qu'elle crée, signé sur votre machine."
+        ],
+        "features": [
+          {
+            "title": "Une watchlist, six plateformes",
+            "body": "Ajoutez n'importe quel ticker (BTC, ETH, JUP, BONK…) et voyez son meilleur bid et ask sur Binance, Bybit, OKX, MEXC et Gate, plus Jupiter pour les tokens Solana, avec une alerte quand un flux se fige."
+          },
+          {
+            "title": "Écarts nets de frais",
+            "body": "Chaque route « acheter sur l'une, vendre sur l'autre » classée en points de base, brute et après les frais taker des deux côtés : un écart que les frais mangeraient est montré pour ce qu'il est."
+          },
+          {
+            "title": "Qui est en retard",
+            "body": "Mesure, plateforme par plateforme, de combien de millisecondes son prix suit les autres en moyenne — c'est sur la plateforme la plus lente qu'un écart s'ouvre en premier."
+          },
+          {
+            "title": "Les nouveaux listings avant Binance",
+            "body": "Les tokens listés par Gate ou MEXC ces derniers jours, ou programmés, que Binance spot ne liste pas, notés selon le volume, les autres listings, la capitalisation et l'intérêt déjà montré par Binance via les futures ou Alpha."
+          },
+          {
+            "title": "Swaps on-chain encadrés",
+            "body": "Échanges SOL/USDT via Jupiter depuis un hot wallet créé par l'app. Elle démarre toujours en simulation, demande confirmation avant le mode réel, et applique des limites par trade, par jour, de slippage et de priority fee qu'un fichier de réglages peut abaisser mais jamais relever."
+          }
+        ],
+        "requirements": [
+          "macOS 11 ou plus récent (Apple Silicon ou Intel), Windows 10 ou 11 avec le runtime WebView2, ou Linux x86_64 (Ubuntu 22.04+, Debian 12+, Fedora et Arch récents)",
+          "Une connexion internet : les prix viennent des APIs publiques des exchanges, aucun compte n'est nécessaire",
+          "Pour le trading on-chain seulement : des SOL dans le hot wallet de l'app, et de préférence l'URL d'un fournisseur RPC Solana"
+        ],
+        "faq": [
+          {
+            "q": "Faut-il des comptes ou des clés d'API sur les exchanges ?",
+            "a": "Non. Les prix viennent des données de marché publiques des exchanges. Le trading se fait uniquement on-chain via Jupiter, depuis le wallet de l'app."
+          },
+          {
+            "q": "Un écart affiché est-il un gain ?",
+            "a": "Non. Le chiffre net déduit les frais taker, mais pas les délais de transfert, les frais et limites de retrait, le slippage ni le prix qui bouge pendant que vous agissez. Spreadwatch montre où regarder, pas ce que vous gagnerez. Ce n'est pas un conseil financier."
+          },
+          {
+            "q": "Où est gardée la clé de mon wallet ?",
+            "a": "Dans un fichier du dossier de réglages de l'app que seul votre compte utilisateur peut lire, et nulle part ailleurs. Sauvegardez-le : c'est la seule copie, et quiconque l'obtient peut dépenser depuis le wallet."
+          }
+        ],
+        "article_slug": ""
       }
     },
     "article_heading": "Pour aller plus loin",
@@ -977,7 +1030,23 @@
     "signing_note_windows_unsigned": "L'installeur Windows n'est pas encore signé : SmartScreen peut signaler un éditeur inconnu — choisissez Informations complémentaires → Exécuter quand même.",
     "releases_heading": "Nouveautés",
     "releases_body": "Version {version}, publiée le {date}. {name} évolue souvent : chaque version et ce qu’elle a changé sont listés sur la page des notes de version.",
-    "releases_link": "Lire les notes de version"
+    "releases_link": "Lire les notes de version",
+    "buy_pro_button": "Acheter {name} Pro",
+    "buy_pro_note": "Achat unique, avec un an de mises à jour. Paiement sécurisé par Stripe ; votre clé de licence s'affiche juste après et vous est envoyée par e-mail.",
+    "buy_pro_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
+    "thanks_title": "Merci d'avoir acheté {name} Pro",
+    "thanks_loading": "Récupération de votre clé de licence…",
+    "thanks_pending": "Votre paiement est en cours de confirmation. Cela prend généralement quelques secondes…",
+    "thanks_intro": "Voici votre clé de licence {name}. Une copie a été envoyée à {email}.",
+    "thanks_copy": "Copier la clé",
+    "thanks_copied": "Copiée",
+    "thanks_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+    "thanks_updates": "Votre licence inclut toutes les mises à jour publiées jusqu'au {date}. Les versions publiées avant cette date continuent de fonctionner ensuite.",
+    "thanks_missing": "Nous n'avons pas trouvé cet achat. Si vous venez de payer, votre clé de licence arrive par e-mail.",
+    "thanks_error": "Votre clé de licence ne peut pas s'afficher pour l'instant. Elle vous a aussi été envoyée par e-mail ; si elle n'arrive pas,",
+    "thanks_contact": "contactez-nous.",
+    "pro_download_intro": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+    "pro_licence_body": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée."
   },
   "app_releases": {
     "breadcrumb": "Notes de version",

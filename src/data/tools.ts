@@ -36,6 +36,13 @@ export interface DesktopToolConfig {
   source: string;
   /** schema.org applicationCategory for the detail page. Defaults to DeveloperApplication. */
   applicationCategory?: string;
+  /**
+   * A paid edition sold from the detail page through Stripe Checkout. The
+   * gateway (POST /api/licenses/checkout) knows the price; this only says the
+   * button should be there and which edition it buys. Stripe sends the buyer
+   * back to /apps/<id>/thanks, which shows the licence key.
+   */
+  pro?: { edition: string };
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -50,6 +57,7 @@ const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
 const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
 const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
 const splitterDl = 'https://mayorana.ch/downloads/splitter/latest';
+const spreadwatchDl = 'https://mayorana.ch/downloads/spreadwatch/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -170,10 +178,26 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'beta',
     tags: ['audio'],
     applicationCategory: 'MultimediaApplication',
+    pro: { edition: 'pro' },
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${splitterDl}/splitter-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${splitterDl}/splitter-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${splitterDl}/splitter-setup.exe` },
+    ],
+  },
+  {
+    id: 'spreadwatch',
+    source: 'https://github.com/Bennekrouf/spreadwatch',
+    name: 'Spreadwatch',
+    tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
+    status: 'beta',
+    tags: ['crypto'],
+    applicationCategory: 'FinanceApplication',
+    downloads: [
+      // One universal DMG: Apple Silicon and Intel.
+      { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadwatchDl}/spreadwatch-macos.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${spreadwatchDl}/spreadwatch-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${spreadwatchDl}/spreadwatch-setup.exe` },
     ],
   },
 ];
@@ -188,6 +212,7 @@ export const appI18nKey: Record<string, string> = {
   appscreens: 'appscreens',
   gitagent: 'gitagent',
   splitter: 'splitter',
+  spreadwatch: 'spreadwatch',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -236,6 +261,7 @@ export const releaseNotesTools: string[] = [
   'appscreens',
   'gitagent',
   'splitter',
+  'spreadwatch',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);
@@ -251,12 +277,15 @@ export function getToolBySlug(slug: string): DesktopToolConfig | undefined {
 
 // Sibling tools for the "related" strip on a detail page: same tag first
 // (the AIS suite hangs together this way), topped up to `limit` with whatever
-// else is in the catalogue so a single-tag tool never renders an empty strip.
+// else is in the catalogue. A tool with no same-tag sibling gets no strip at
+// all: filling it with unrelated tools (AIS Runner under a crypto app) reads
+// as a suggestion that they belong together.
 export function getRelatedTools(slug: string, limit = 3): DesktopToolConfig[] {
   const tool = getToolBySlug(slug);
   if (!tool) return [];
   const others = desktopToolsConfig.filter((t) => t.id !== slug);
   const sameTag = others.filter((t) => t.tags.some((tag) => tool.tags.includes(tag)));
+  if (sameTag.length === 0) return [];
   const rest = others.filter((t) => !sameTag.includes(t));
   return [...sameTag, ...rest].slice(0, limit);
 }

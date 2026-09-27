@@ -8,7 +8,7 @@ author: mayo
 excerpt: >-
   Query, Key, Value : pourquoi les vrais modèles projettent chaque mot dans
   trois espaces différents, et comment cette séparation des rôles rend
-  l'attention intelligente.
+  l'attention plus fine.
 tags:
   - llm
   - ai
@@ -68,5 +68,4 @@ let v = embeddings.clone();
 ## Ce qu'il faut retenir
 
 - Q = cherche, K = répond, V = transporte
-- La séparation rend l'attention intelligente
 - Les vecteurs capturent plusieurs nuances simultanément

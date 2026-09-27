@@ -15,6 +15,7 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, ArrowRight, Check, Github, Scale } from 'lucide-react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { BuyProButton } from '@/components/ui/BuyProButton';
 import {
   DataSourceBadge,
   DownloadButtonsLarge,
@@ -212,9 +213,19 @@ export default async function ToolDetailPage({ params }: Props) {
           <p className="text-base text-muted-foreground mb-8 max-w-3xl">{shortDescription}</p>
 
           <DownloadButtonsLarge app={tool.id} appName={tool.name} downloads={tool.downloads} />
-          <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('download_intro')}</p>
+          <p className="text-xs text-muted-foreground mt-3 max-w-2xl">
+            {t(tool.pro ? 'pro_download_intro' : 'download_intro')}
+          </p>
           {tool.downloads.some((d) => d.os === 'mac') && (
             <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
+          )}
+
+          {/* The paid edition, for the tools that have one. */}
+          {tool.pro && (
+            <div className="mt-8">
+              <BuyProButton product={tool.id} edition={tool.pro.edition} name={tool.name} />
+              <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('buy_pro_note')}</p>
+            </div>
           )}
 
           {latest && (
@@ -333,24 +344,28 @@ export default async function ToolDetailPage({ params }: Props) {
               {t('licence_heading')}
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              {t('licence_body')}
+              {t(tool.pro ? 'pro_licence_body' : 'licence_body')}
             </p>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href={LICENCE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary hover:underline underline-offset-4"
-              >
-                {t('licence_link')}
-              </a>
-              <Link
-                href={`/${locale}/contact`}
-                className="text-sm text-primary hover:underline underline-offset-4"
-              >
-                {t('licence_cta')}
-              </Link>
-            </div>
+            {/* A tool sold as Pro has one thing to buy, for everyone: no
+                noncommercial terms to read, no commercial licence to ask for. */}
+            {!tool.pro && (
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href={LICENCE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline underline-offset-4"
+                >
+                  {t('licence_link')}
+                </a>
+                <Link
+                  href={`/${locale}/contact`}
+                  className="text-sm text-primary hover:underline underline-offset-4"
+                >
+                  {t('licence_cta')}
+                </Link>
+              </div>
+            )}
           </div>
           <div>
             <h2 className="flex items-center gap-2 text-2xl font-bold mb-4">

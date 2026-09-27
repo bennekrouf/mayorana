@@ -73,7 +73,7 @@
     "cta_description": "Get in touch to see how our proven AI tools can power your business",
     "get_in_touch": "Get in Touch",
     "hero_eyebrow": "Reliable by design",
-    "hero_h1": "The reliable Rust layer for production AI agents and Azure workflows",
+    "hero_h1": "Production-ready Rust for AI agents on Azure",
     "hero_lead": "AI tools that actually work. Built with Rust.",
     "cta_explore_azure": "Explore Azure Tools",
     "cta_try_api0": "Try API0.AI",
@@ -205,6 +205,8 @@
     "blog_toolkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
     "appscreens_tagline": "The complete iOS & Android build and publish assistant",
     "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
+    "spreadwatch_tagline": "Crypto price gaps across exchanges and Solana, live",
+    "spreadwatch_description": "Follow any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once. See the best cross-venue edges net of fees, which venue's price trails the others, and the tokens Gate or MEXC just listed that Binance does not have yet. Swap SOL/USDT on-chain through Jupiter from a local hot wallet, in a dry run at every start and within hard limits.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
     "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or DeepSeek, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
     "splitter_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
@@ -507,8 +509,8 @@
     "download_intro": "Free for personal, educational and non-profit use. Commercial use — including a solo consultant on client work — requires a licence. Every build is produced by release CI and served from mayorana.ch.",
     "faq_heading": "Questions",
     "related_heading": "Related tools",
-    "cta_heading": "Need this adapted to your stack?",
-    "cta_body": "These tools came out of real Azure integration work. If yours needs a variant — a different data source, your own conventions, an on-prem build — that is the kind of work we take on.",
+    "cta_heading": "Need it adapted to your work?",
+    "cta_body": "Each of these tools is built and maintained by us. If you need a variant — a different data source, your own conventions, a feature your team is missing, an on-prem build — that is the kind of work we take on.",
     "cta_button": "Get in touch",
     "status_note_wip": "This app is still in active development. It is usable today, but expect rough edges and frequent releases.",
     "status_note_beta": "This app is in beta. The core workflow is stable; some panels are still being refined.",
@@ -963,6 +965,57 @@
           }
         ],
         "article_slug": ""
+      },
+      "spreadwatch": {
+        "seo_title": "Spreadwatch — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
+        "seo_description": "Desktop app that quotes any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once: cross-venue edges net of fees, which venue's price lags, and new Gate and MEXC listings Binance does not have yet.",
+        "overview": [
+          "The same token trades on a dozen venues at slightly different prices, and the gap moves every second. Watching it means five exchange tabs, a DEX aggregator and a spreadsheet, and by the time the numbers are side by side they are stale.",
+          "Spreadwatch streams the order books of Binance, Bybit, OKX, MEXC and Gate, and polls Jupiter for Solana tokens, into one window. It shows the best buy-here, sell-there route in basis points, gross and net of the taker fee on both legs, and measures which venue's price tends to move last.",
+          "A second tab scans for tokens Gate or MEXC just listed against USDT that Binance spot does not list, and scores how serious each looks. For SOL/USDT, the app can also swap on-chain through Jupiter from a hot wallet it creates, signed on your machine."
+        ],
+        "features": [
+          {
+            "title": "One watchlist, six venues",
+            "body": "Add any ticker (BTC, ETH, JUP, BONK…) and see its best bid and ask on Binance, Bybit, OKX, MEXC and Gate, plus Jupiter for Solana tokens, with a warning when a feed goes stale."
+          },
+          {
+            "title": "Edges net of fees",
+            "body": "Every buy-on-one, sell-on-another route ranked in basis points, gross and after the taker fee on both legs, so a gap that fees would eat is shown for what it is."
+          },
+          {
+            "title": "Who is late",
+            "body": "Measures, venue by venue, how many milliseconds its price trails the others on average — the venue that moves last is where a gap opens first."
+          },
+          {
+            "title": "New listings before Binance",
+            "body": "Tokens Gate or MEXC listed in the last few days, or have scheduled, that Binance spot does not list, scored by volume, other listings, market cap and whether Binance already follows them through futures or Alpha."
+          },
+          {
+            "title": "On-chain swaps with guardrails",
+            "body": "SOL/USDT swaps through Jupiter from a hot wallet the app creates. It starts in dry run every time, asks before going live, and enforces per-trade, daily, slippage and priority-fee limits a settings file can lower but never raise."
+          }
+        ],
+        "requirements": [
+          "macOS 11 or later (Apple Silicon or Intel), Windows 10 or 11 with the WebView2 Runtime, or Linux x86_64 (Ubuntu 22.04+, Debian 12+, current Fedora and Arch)",
+          "An internet connection: prices come from the exchanges' public APIs, no exchange account needed",
+          "For on-chain trading only: SOL in the app's hot wallet, and preferably a Solana RPC provider URL"
+        ],
+        "faq": [
+          {
+            "q": "Do I need accounts or API keys on the exchanges?",
+            "a": "No. Prices come from the exchanges' public market data. Trading only happens on-chain through Jupiter, from the app's own wallet."
+          },
+          {
+            "q": "Is a spread on screen a profit?",
+            "a": "No. The net figure subtracts taker fees, but not transfer times, withdrawal fees and limits, slippage or the price moving while you act. Spreadwatch shows where to look, not what you will earn. It is not financial advice."
+          },
+          {
+            "q": "Where is my wallet key kept?",
+            "a": "In a file in the app's settings folder that only your user account can read, and nowhere else. Back it up: it is the only copy, and anyone who gets it can spend from the wallet."
+          }
+        ],
+        "article_slug": ""
       }
     },
     "article_heading": "Read more",
@@ -977,7 +1030,23 @@
     "signing_note_windows_unsigned": "The Windows installer is not code-signed yet, so SmartScreen may warn that the publisher is unknown — choose More info → Run anyway.",
     "releases_heading": "What's new",
     "releases_body": "Version {version}, released {date}. {name} ships often; every version and what it changed is listed on the release notes page.",
-    "releases_link": "Read the release notes"
+    "releases_link": "Read the release notes",
+    "buy_pro_button": "Buy {name} Pro",
+    "buy_pro_note": "One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
+    "buy_pro_error": "The payment page couldn't be opened. Please try again in a moment.",
+    "thanks_title": "Thank you for buying {name} Pro",
+    "thanks_loading": "Fetching your licence key…",
+    "thanks_pending": "Your payment is being confirmed. This usually takes a few seconds…",
+    "thanks_intro": "Here is your {name} licence key. A copy has been sent to {email}.",
+    "thanks_copy": "Copy key",
+    "thanks_copied": "Copied",
+    "thanks_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+    "thanks_updates": "Your licence includes every update released until {date}. Versions released before that date keep working after it.",
+    "thanks_missing": "We couldn't find this purchase. If you have just paid, your licence key is on its way by email.",
+    "thanks_error": "Your licence key couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
+    "thanks_contact": "contact us.",
+    "pro_download_intro": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
+    "pro_licence_body": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. That is the only thing to buy: there is no separate commercial licence."
   },
   "app_releases": {
     "breadcrumb": "Release notes",
