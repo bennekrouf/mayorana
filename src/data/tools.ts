@@ -57,6 +57,7 @@ const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
 const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
 const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
 const splitterDl = 'https://mayorana.ch/downloads/splitter/latest';
+const spreadwatchDl = 'https://mayorana.ch/downloads/spreadwatch/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -184,6 +185,21 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${splitterDl}/splitter-setup.exe` },
     ],
   },
+  {
+    id: 'spreadwatch',
+    source: 'https://github.com/Bennekrouf/spreadwatch',
+    name: 'Spreadwatch',
+    tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
+    status: 'beta',
+    tags: ['crypto'],
+    applicationCategory: 'FinanceApplication',
+    downloads: [
+      // One universal DMG: Apple Silicon and Intel.
+      { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadwatchDl}/spreadwatch-macos.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${spreadwatchDl}/spreadwatch-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${spreadwatchDl}/spreadwatch-setup.exe` },
+    ],
+  },
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
@@ -196,6 +212,7 @@ export const appI18nKey: Record<string, string> = {
   appscreens: 'appscreens',
   gitagent: 'gitagent',
   splitter: 'splitter',
+  spreadwatch: 'spreadwatch',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -244,6 +261,7 @@ export const releaseNotesTools: string[] = [
   'appscreens',
   'gitagent',
   'splitter',
+  'spreadwatch',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);

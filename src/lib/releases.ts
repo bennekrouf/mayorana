@@ -27,6 +27,7 @@ import aisAnalytics from '@/data/releases/ais-analytics.json';
 import appscreens from '@/data/releases/appscreens.json';
 import gitagent from '@/data/releases/gitagent.json';
 import splitter from '@/data/releases/splitter.json';
+import spreadwatch from '@/data/releases/spreadwatch.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -58,6 +59,7 @@ const snapshots: Record<string, ReleaseFeed> = {
   appscreens: appscreens as ReleaseFeed,
   gitagent: gitagent as ReleaseFeed,
   splitter: splitter as ReleaseFeed,
+  spreadwatch: spreadwatch as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client
