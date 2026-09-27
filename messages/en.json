@@ -977,7 +977,21 @@
     "signing_note_windows_unsigned": "The Windows installer is not code-signed yet, so SmartScreen may warn that the publisher is unknown — choose More info → Run anyway.",
     "releases_heading": "What's new",
     "releases_body": "Version {version}, released {date}. {name} ships often; every version and what it changed is listed on the release notes page.",
-    "releases_link": "Read the release notes"
+    "releases_link": "Read the release notes",
+    "buy_pro_button": "Buy {name} Pro",
+    "buy_pro_note": "One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
+    "buy_pro_error": "The payment page couldn't be opened. Please try again in a moment.",
+    "thanks_title": "Thank you for buying {name} Pro",
+    "thanks_loading": "Fetching your licence key…",
+    "thanks_pending": "Your payment is being confirmed. This usually takes a few seconds…",
+    "thanks_intro": "Here is your {name} licence key. A copy has been sent to {email}.",
+    "thanks_copy": "Copy key",
+    "thanks_copied": "Copied",
+    "thanks_how": "To activate it, open Splitter, click Splitter at the top of the file list and paste the key in. It is checked on your computer: no account, nothing sent anywhere.",
+    "thanks_updates": "Your licence includes every update released until {date}. Versions released before that date keep working after it.",
+    "thanks_missing": "We couldn't find this purchase. If you have just paid, your licence key is on its way by email.",
+    "thanks_error": "Your licence key couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
+    "thanks_contact": "contact us."
   },
   "app_releases": {
     "breadcrumb": "Release notes",

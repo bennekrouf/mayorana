@@ -15,6 +15,7 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, ArrowRight, Check, Github, Scale } from 'lucide-react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
+import { BuyProButton } from '@/components/ui/BuyProButton';
 import {
   DataSourceBadge,
   DownloadButtonsLarge,
@@ -215,6 +216,14 @@ export default async function ToolDetailPage({ params }: Props) {
           <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('download_intro')}</p>
           {tool.downloads.some((d) => d.os === 'mac') && (
             <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
+          )}
+
+          {/* The paid edition, for the tools that have one. */}
+          {tool.pro && (
+            <div className="mt-8">
+              <BuyProButton product={tool.id} edition={tool.pro.edition} name={tool.name} />
+              <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('buy_pro_note')}</p>
+            </div>
           )}
 
           {latest && (
