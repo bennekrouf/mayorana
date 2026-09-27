@@ -440,7 +440,10 @@
     "step": "Étape {step}",
     "path_step": "Étape {step} sur {total}",
     "read_next": "À lire ensuite",
-    "path_complete": "Vous avez lu tous les articles sur ce sujet. Bravo !"
+    "path_complete": "Vous avez lu tous les articles sur ce sujet. Bravo !",
+    "follow_path": "Suivre le parcours d'apprentissage",
+    "follow_path_hint": "Lire les articles dans un ordre conseillé. Connexion requise.",
+    "leave_path": "Revenir aux articles récents"
   },
   "footer": {
     "description": "Portfolio renforcé par Mayorana expert Rust 🦀",

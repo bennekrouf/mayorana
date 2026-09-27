@@ -10,19 +10,24 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   baseUrl: string; // "/blog" or "/blog/tag/rust"
+  /** Extra query parameters every page link keeps, e.g. { view: 'path' }. */
+  query?: Record<string, string>;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
-  baseUrl
+  baseUrl,
+  query
 }) => {
   const t = useTranslations('blog');
   if (totalPages <= 1) return null;
 
   const getPageUrl = (page: number) => {
-    if (page === 1) return baseUrl;
-    return `${baseUrl}?page=${page}`;
+    const params = new URLSearchParams(query);
+    if (page > 1) params.set('page', String(page));
+    const search = params.toString();
+    return search ? `${baseUrl}?${search}` : baseUrl;
   };
 
   const renderPageNumbers = () => {
