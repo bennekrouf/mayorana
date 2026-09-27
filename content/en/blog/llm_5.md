@@ -65,4 +65,4 @@ Controls **how fast** the model changes its weights. In transfer learning, a **v
 - **Catastrophic forgetting** = the trap to avoid
 - **Freezing** = freeze to preserve
 - **Domain shift** = the gap to anticipate
-- **Learning rate** = the dose that decides success
+- **Learning rate** = how fast the weights change, very low when fine-tuning

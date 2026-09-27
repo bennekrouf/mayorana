@@ -135,7 +135,6 @@ Dividing this way brings the scores back to a normal size. The most important wo
 
 ## Key takeaways
 
-- Attention is NOT magic, it's simple math
+- Attention is 4 operations: multiplication, transposition, scaling, softmax
 - A word = a vector (not a scalar)
 - Scaling stops attention from locking onto a single word
-- The best way to learn is to code it yourself

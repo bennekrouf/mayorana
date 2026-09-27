@@ -135,7 +135,6 @@ En divisant ainsi, on ramène les scores à une taille normale. Le mot le plus i
 
 ## Ce qu'il faut retenir
 
-- L'attention n'est PAS magique, c'est des maths simples
+- L'attention, c'est 4 opérations : multiplication, transposition, scaling, softmax
 - Un mot = un vecteur (pas un scalaire)
 - Le scaling évite que l'attention se bloque sur un seul mot
-- Le meilleur apprentissage, c'est de le coder soi-même
