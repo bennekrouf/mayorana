@@ -205,6 +205,8 @@
     "blog_toolkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
     "appscreens_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
     "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
+    "spreadwatch_tagline": "Les écarts de prix crypto entre exchanges et Solana, en direct",
+    "spreadwatch_description": "Suivez n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps. Voyez les meilleurs écarts entre plateformes, frais déduits, quelle plateforme est en retard sur les autres, et les tokens que Gate ou MEXC viennent de lister et que Binance n'a pas encore. Échangez SOL/USDT on-chain via Jupiter depuis un hot wallet local, en simulation à chaque démarrage et dans des limites strictes.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "splitter_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
@@ -960,6 +962,57 @@
           {
             "q": "Faut-il installer ffmpeg ?",
             "a": "Non. Décodage, encodage et téléchargement YouTube fonctionnent sans rien installer d'autre."
+          }
+        ],
+        "article_slug": ""
+      },
+      "spreadwatch": {
+        "seo_title": "Spreadwatch — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
+        "seo_description": "App de bureau qui cote n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps : écarts entre plateformes frais déduits, quelle plateforme est en retard, et les nouveaux listings Gate et MEXC que Binance n'a pas encore.",
+        "overview": [
+          "Le même token s'échange sur une douzaine de plateformes à des prix légèrement différents, et l'écart bouge chaque seconde. Le suivre, c'est cinq onglets d'exchanges, un agrégateur DEX et un tableur — et quand les chiffres sont enfin côte à côte, ils sont déjà périmés.",
+          "Spreadwatch reçoit en continu les carnets d'ordres de Binance, Bybit, OKX, MEXC et Gate, et interroge Jupiter pour les tokens Solana, dans une seule fenêtre. Il affiche la meilleure route « acheter ici, vendre là » en points de base, brute et nette des frais taker sur les deux jambes, et mesure quelle plateforme bouge en dernier.",
+          "Un second onglet repère les tokens que Gate ou MEXC viennent de lister contre USDT et que Binance spot ne liste pas, avec un score de sérieux pour chacun. Pour SOL/USDT, l'app peut aussi échanger on-chain via Jupiter depuis un hot wallet qu'elle crée, signé sur votre machine."
+        ],
+        "features": [
+          {
+            "title": "Une watchlist, six plateformes",
+            "body": "Ajoutez n'importe quel ticker (BTC, ETH, JUP, BONK…) et voyez son meilleur bid et ask sur Binance, Bybit, OKX, MEXC et Gate, plus Jupiter pour les tokens Solana, avec une alerte quand un flux se fige."
+          },
+          {
+            "title": "Écarts nets de frais",
+            "body": "Chaque route « acheter sur l'une, vendre sur l'autre » classée en points de base, brute et après les frais taker des deux côtés : un écart que les frais mangeraient est montré pour ce qu'il est."
+          },
+          {
+            "title": "Qui est en retard",
+            "body": "Mesure, plateforme par plateforme, de combien de millisecondes son prix suit les autres en moyenne — c'est sur la plateforme la plus lente qu'un écart s'ouvre en premier."
+          },
+          {
+            "title": "Les nouveaux listings avant Binance",
+            "body": "Les tokens listés par Gate ou MEXC ces derniers jours, ou programmés, que Binance spot ne liste pas, notés selon le volume, les autres listings, la capitalisation et l'intérêt déjà montré par Binance via les futures ou Alpha."
+          },
+          {
+            "title": "Swaps on-chain encadrés",
+            "body": "Échanges SOL/USDT via Jupiter depuis un hot wallet créé par l'app. Elle démarre toujours en simulation, demande confirmation avant le mode réel, et applique des limites par trade, par jour, de slippage et de priority fee qu'un fichier de réglages peut abaisser mais jamais relever."
+          }
+        ],
+        "requirements": [
+          "macOS 11 ou plus récent (Apple Silicon ou Intel), Windows 10 ou 11 avec le runtime WebView2, ou Linux x86_64 (Ubuntu 22.04+, Debian 12+, Fedora et Arch récents)",
+          "Une connexion internet : les prix viennent des APIs publiques des exchanges, aucun compte n'est nécessaire",
+          "Pour le trading on-chain seulement : des SOL dans le hot wallet de l'app, et de préférence l'URL d'un fournisseur RPC Solana"
+        ],
+        "faq": [
+          {
+            "q": "Faut-il des comptes ou des clés d'API sur les exchanges ?",
+            "a": "Non. Les prix viennent des données de marché publiques des exchanges. Le trading se fait uniquement on-chain via Jupiter, depuis le wallet de l'app."
+          },
+          {
+            "q": "Un écart affiché est-il un gain ?",
+            "a": "Non. Le chiffre net déduit les frais taker, mais pas les délais de transfert, les frais et limites de retrait, le slippage ni le prix qui bouge pendant que vous agissez. Spreadwatch montre où regarder, pas ce que vous gagnerez. Ce n'est pas un conseil financier."
+          },
+          {
+            "q": "Où est gardée la clé de mon wallet ?",
+            "a": "Dans un fichier du dossier de réglages de l'app que seul votre compte utilisateur peut lire, et nulle part ailleurs. Sauvegardez-le : c'est la seule copie, et quiconque l'obtient peut dépenser depuis le wallet."
           }
         ],
         "article_slug": ""

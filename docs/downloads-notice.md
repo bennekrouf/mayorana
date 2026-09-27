@@ -54,4 +54,4 @@ the updater's `(updater)` agent so `downloads-stats.py` does not count it as
 a live install. Neither URL matches the script's download pattern.
 
 Client implementation: `src/notice.rs` in each product repo (gitagent,
-ais-monitor, ais-runner, ais-tracing, ais-analytics, appscreens).
+ais-monitor, ais-runner, ais-tracing, ais-analytics, appscreens, spreadwatch).
