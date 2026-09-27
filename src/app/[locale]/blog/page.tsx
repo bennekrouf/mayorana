@@ -3,9 +3,11 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import TagFilter from '@/components/blog/TagFilter';
 import Pagination from '@/components/blog/Pagination';
+import LearningPathToggle from '@/components/blog/LearningPathToggle';
 import {
   getPaginatedPosts,
   getAllTags,
+  type BlogView,
 } from '@/lib/blog';
 // import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -42,6 +44,10 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const { locale } = await params;
   const searchParamsData = await searchParams;
   const page = parseInt(searchParamsData.page as string) || 1;
+  // Newest first unless a signed-in reader chose the learning path; the
+  // toggle sends anyone else back here. Metadata ignores it, so the path view
+  // canonicalises to the default listing.
+  const view: BlogView = searchParamsData.view === 'path' ? 'path' : 'latest';
 
   // DEBUG: What we're getting
   console.log('🔍 BlogPage Debug:');
@@ -49,7 +55,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
   console.log('   - Page:', page);
 
   // DIRECT LOCALE USAGE: Pass locale directly to functions
-  const paginatedData = getPaginatedPosts(page, locale);
+  const paginatedData = getPaginatedPosts(page, locale, view);
   const tags = getAllTags(locale);
 
   // Use the locale directly with getTranslations (server components must pass locale explicitly)
@@ -97,6 +103,8 @@ export default async function BlogPage({ params, searchParams }: Props) {
 
             {/* Main Content */}
             <div className="md:col-span-9">
+              <LearningPathToggle active={view === 'path'} />
+
               <div className="mb-6">
                 <p className="text-sm text-muted-foreground">
                   {paginatedData.totalPosts > 0 ? (
@@ -132,14 +140,17 @@ export default async function BlogPage({ params, searchParams }: Props) {
                 </div>
               )}
 
-              {/* Regular posts in learning-path order (content/learning-path.json) */}
+              {/* Regular posts: newest first, or in learning-path order */}
               {paginatedData.posts.length > 0 && (
                 <div className="mb-8">
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="text-lg font-semibold">🧭 {t('learning_path')}</span>
+                    <span className="text-lg font-semibold">
+                      {view === 'path' ? `🧭 ${t('learning_path')}` : `🗓 ${t('latest_articles')}`}
+                    </span>
                   </div>
                   <BlogList
                     posts={paginatedData.posts}
+                    showSteps={view === 'path'}
                     title=""
                     description=""
                   />
@@ -150,6 +161,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
                 currentPage={paginatedData.currentPage}
                 totalPages={paginatedData.totalPages}
                 baseUrl={`/${locale}/blog`}
+                query={view === 'path' ? { view } : undefined}
               />
             </div>
           </div>

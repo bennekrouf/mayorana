@@ -16,12 +16,15 @@ interface BlogListProps {
   posts: BlogPost[];
   title?: string;
   description?: string;
+  /** Show each post's step in the learning path (path view only). */
+  showSteps?: boolean;
 }
 
 const BlogList: React.FC<BlogListProps> = ({
   posts,
   title,
-  description
+  description,
+  showSteps = false
 }) => {
   const t = useTranslations('blog');
   const locale = useLocale();
@@ -71,7 +74,7 @@ const BlogList: React.FC<BlogListProps> = ({
               >
                 <div className="p-6 flex flex-col h-full">
                   <div className="mb-2">
-                    {post.step !== undefined && (
+                    {showSteps && post.step !== undefined && (
                       <span className="text-sm text-muted-foreground mr-2">
                         {t('step', { step: post.step })}
                       </span>

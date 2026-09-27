@@ -440,7 +440,10 @@
     "step": "Step {step}",
     "path_step": "Step {step} of {total}",
     "read_next": "Read next",
-    "path_complete": "You have read every article on this topic. Nice work!"
+    "path_complete": "You have read every article on this topic. Nice work!",
+    "follow_path": "Follow the learning path",
+    "follow_path_hint": "Read the articles in a suggested order. Requires signing in.",
+    "leave_path": "Back to latest articles"
   },
   "footer": {
     "description": "Rust-powered portfolio",
