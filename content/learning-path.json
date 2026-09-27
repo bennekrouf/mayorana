@@ -1,0 +1,142 @@
+{
+  "_comment": "The order posts are meant to be read in. Each entry is a post's English slug (or its own slug when it has no English version). Sections sharing a track form one subject: steps are numbered within a track and a post only suggests unread posts from its own track. Posts missing from here are listed after the path, newest first.",
+  "sections": [
+    {
+      "id": "why-rust",
+      "track": "rust",
+      "posts": [
+        "why-garbage-collector",
+        "c-low-level-cost",
+        "why-rust-memory-safe"
+      ]
+    },
+    {
+      "id": "getting-started",
+      "track": "rust",
+      "posts": [
+        "getting-started-with-rust",
+        "clamp-rust"
+      ]
+    },
+    {
+      "id": "ownership-and-memory",
+      "track": "rust",
+      "posts": [
+        "memory-safety-rust",
+        "stack-heap-allocation-rust",
+        "ownership-safety-rust",
+        "borrowing-rules-rust",
+        "dangling-pointer-rust",
+        "reborrow-rust",
+        "string-vs-str-rust",
+        "string-literals-memory-rust",
+        "string-str-mismatch-rust",
+        "box-pointer-rust",
+        "cow-copy-on-write-rust",
+        "drop-trait-rust"
+      ]
+    },
+    {
+      "id": "collections-and-iterators",
+      "track": "rust",
+      "posts": [
+        "vec-new-vs-with-capacity",
+        "box-slice-vs-vec-differences",
+        "iter-methods-rust",
+        "into-iter-vs-iter-ownership",
+        "rust-comparison-operators-iterators",
+        "collect-method-rust",
+        "efficient-duplicate-removal-vec",
+        "vec-retain-vs-filter-collect",
+        "vec-drain-vs-truncate-clear",
+        "flatten-vec-iterators-performance"
+      ]
+    },
+    {
+      "id": "traits-and-generics",
+      "track": "rust",
+      "posts": [
+        "rust-traits-vs-interfaces",
+        "trait-bounds-rust",
+        "dispatch-performance-rust",
+        "object-safety-rust",
+        "dyn-mot-cle-rust-fr",
+        "supertraits-bounds-optimization",
+        "sized-unsized-bounds-flexibility",
+        "associated-types-io-driver-api",
+        "blanket-implementations-coherence"
+      ]
+    },
+    {
+      "id": "closures",
+      "track": "rust",
+      "posts": [
+        "function-vs-closure-rust",
+        "fn-traits-rust",
+        "move-closures-rust",
+        "move-closures-rust-javascript-developers",
+        "closure-parameter-rust",
+        "stateful-closures-rust",
+        "higher-order-functions-rust",
+        "storing-closures-in-structs",
+        "handling-lifetimes-returning-closures",
+        "closure-dispatch-rust",
+        "closure-performance-overhead-rust"
+      ]
+    },
+    {
+      "id": "concurrency",
+      "track": "rust",
+      "posts": [
+        "concurrency-rust",
+        "deadlocks-c-vs-rust"
+      ]
+    },
+    {
+      "id": "performance",
+      "track": "rust",
+      "posts": [
+        "vec-push-vs-with-capacity-performance",
+        "zero-cost-abstractions-rust",
+        "allocation-avoidance-real-time-rust",
+        "memory-layout-optimization-rust",
+        "cache-line-awareness-optimization",
+        "branch-prediction-rust",
+        "instruction-level-optimization-inline-always",
+        "simd-matrix-mult-rust",
+        "inline-assembly-rust",
+        "profiling-optimization-rust"
+      ]
+    },
+    {
+      "id": "llm-from-scratch",
+      "track": "llm",
+      "posts": [
+        "llm-from-scratch-introduction",
+        "attention-four-operations",
+        "query-key-value-three-matrices",
+        "embeddings-absolute-vs-contextual",
+        "transfer-learning-reusing-knowledge",
+        "transfer-learning-key-concepts",
+        "embeddings-vector-databases-rag"
+      ]
+    },
+    {
+      "id": "azure-integration",
+      "track": "azure",
+      "posts": [
+        "ais-runner-intro",
+        "logic-apps-workflow-chains",
+        "trace-correlation-id-log-analytics",
+        "trace-correlation-id-cosmos-db"
+      ]
+    },
+    {
+      "id": "git-tooling",
+      "track": "git",
+      "posts": [
+        "ai-commit-messages-without-giving-up-control"
+      ]
+    }
+  ]
+}

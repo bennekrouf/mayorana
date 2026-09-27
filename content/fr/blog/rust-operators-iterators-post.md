@@ -1,5 +1,5 @@
 ---
-id: rust-operateurs-iterateurs
+id: rust-comparison-operators-iterators-fr
 title: 'Opérateurs & Itérateurs Rust'
 locale: fr
 slug: rust-operateurs-iterateurs

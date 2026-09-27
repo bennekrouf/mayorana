@@ -3,12 +3,13 @@
 
 import blogPostsEn from '../data/blog-posts-en.json';
 import blogPostsFr from '../data/blog-posts-fr.json';
-import type { BlogPost, PaginatedPosts } from './blog-shared';
+import type { BlogPost, PaginatedPosts, PathEntry } from './blog-shared';
+import { progressKey } from './read-progress';
 
 // Types and data-free helpers live in ./blog-shared so that client components
 // can import them without dragging the blog-posts-*.json payloads into the
 // browser bundle. Re-exported here to keep this module's public API unchanged.
-export type { BlogPost, PaginatedPosts };
+export type { BlogPost, PaginatedPosts, PathEntry };
 export { formatDate } from './blog-shared';
 
 const POSTS_PER_PAGE = 6;
@@ -49,6 +50,27 @@ export function getPinnedPosts(locale: string = 'en'): BlogPost[] {
   return slugs
     .map(slug => all.find(p => p.slug === slug))
     .filter((p): p is BlogPost => p !== undefined);
+}
+
+// One track of the learning path (the subject a post belongs to), in reading
+// order. Posts come out of
+// getAllPosts() already sorted by it (see applyLearningPath() in
+// scripts/generate-blog-data.js); this trims them to what a suggestion card
+// shows, so the post page does not ship every article body to the browser.
+export function getLearningPath(track: string | undefined, locale: string = 'en'): PathEntry[] {
+  if (!track) return [];
+  return getAllPosts(locale)
+    .filter((post): post is BlogPost & { step: number; track: string } =>
+      post.step !== undefined && post.track === track)
+    .map(post => ({
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt,
+      readingTime: post.readingTime,
+      step: post.step,
+      track: post.track,
+      progressKey: progressKey(post),
+    }));
 }
 
 // Get paginated posts for a specific locale

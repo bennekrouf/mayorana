@@ -37,6 +37,28 @@ export interface BlogPost {
    * hreflang and the sitemap's, so the two cannot disagree.
    */
   counterpart?: { locale: string; slug: string };
+  /**
+   * 1-based position in the learning path (content/learning-path.json),
+   * written at build time by applyLearningPath(). Absent for a post the path
+   * does not mention yet.
+   */
+  step?: number;
+  /** The subject the post's path section belongs to (rust, azure, ...).
+   *  Suggestions stay within it. Absent exactly when `step` is. */
+  track?: string;
+}
+
+/** A post as the "read next" suggestion needs it: enough for a card, without
+ *  the body. */
+export interface PathEntry {
+  slug: string;
+  title: string;
+  excerpt: string;
+  readingTime: string;
+  step: number;
+  track: string;
+  /** Where its reading progress is stored — see progressKey(). */
+  progressKey: string;
 }
 
 export interface PaginatedPosts {
@@ -49,11 +71,15 @@ export interface PaginatedPosts {
   hasPrevPage: boolean;
 }
 
-export function formatDate(dateString: string): string {
+export function formatDate(dateString: string, locale: string = 'en'): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString(locale === 'fr' ? 'fr-CH' : 'en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    // Post dates are bare days ('2025-04-15'), which parse as UTC midnight.
+    // Formatting in the reader's zone would show the day before west of UTC,
+    // and differ from the server's render.
+    timeZone: 'UTC'
   });
 }

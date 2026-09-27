@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { type BlogPost as BlogPostType, formatDate } from '../../lib/blog-shared';
+import { type BlogPost as BlogPostType, type PathEntry, formatDate } from '../../lib/blog-shared';
+import ReadNext from './ReadNext';
 import { motion } from '@/components/ui/Motion';
 import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
@@ -11,9 +12,11 @@ import { progressKey } from '@/lib/read-progress';
 
 interface BlogPostProps {
   post: BlogPostType;
+  /** This post's track of the learning path, for the "read next" suggestions. */
+  path: PathEntry[];
 }
 
-const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
   const [linkCopied, setLinkCopied] = useState(false);
   const t = useTranslations('blog');
   const locale = useLocale();
@@ -130,7 +133,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           )}
 
           <div className="flex items-center text-sm text-muted-foreground">
-            <span>{formatDate(post.date)}</span>
+            <span>{formatDate(post.date, locale)}</span>
             {post.readingTime && (
               <>
                 <span className="mx-2">•</span>
@@ -208,6 +211,8 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           </div>
         </motion.div>
       )}
+
+      <ReadNext path={path} currentKey={progressKey(post)} />
 
       <motion.div
         className="mt-12 pt-8 border-t border-border"
