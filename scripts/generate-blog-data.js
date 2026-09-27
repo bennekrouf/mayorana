@@ -233,8 +233,10 @@ function linkCounterparts(byLocale) {
 }
 
 /**
- * Put every post at its place in the learning path (content/learning-path.json),
- * in place, and sort each locale by it.
+ * Stamp every post with its place in the learning path
+ * (content/learning-path.json), in place. The files stay newest first, which is
+ * what the listing shows by default; the path order is applied on request by
+ * src/lib/blog.ts.
  *
  * A path entry is keyed like reading progress is (see progressKey() in
  * src/lib/read-progress.ts): the English slug, or the post's own slug when it
@@ -246,8 +248,9 @@ function linkCounterparts(byLocale) {
  * numbered within a track, and the "read next" suggestions never cross from
  * one track to another.
  *
- * Posts the path does not mention come after it, newest first, so a freshly
- * published post still shows up before someone gets round to placing it.
+ * Posts the path does not mention get no step; in path order they come after
+ * it, newest first, so a freshly published post still shows up before someone
+ * gets round to placing it.
  */
 function applyLearningPath(byLocale) {
   const file = path.join(process.cwd(), 'content/learning-path.json');
@@ -275,25 +278,29 @@ function applyLearningPath(byLocale) {
     for (const post of byLocale[locale]) {
       const key = keyOf(post);
       if (stepOf.has(key)) {
-        post.step = stepOf.get(key);
+        // pathRank orders the whole path, across tracks; step is renumbered
+        // below within the track, for display.
+        post.pathRank = stepOf.get(key);
+        post.step = post.pathRank;
         post.track = trackOf.get(key);
         found.add(key);
       } else {
         unplaced.push(post.slug);
       }
     }
-    // Stable sort: unplaced posts keep their newest-first order at the end.
-    byLocale[locale].sort((a, b) => (a.step ?? Infinity) - (b.step ?? Infinity));
-    // Renumber from 1 within each track, without gaps: a post only one
-    // language has would otherwise leave a hole in the other's numbering.
+    // Renumber from 1 within each track, in path order, without gaps: a post
+    // only one language has would otherwise leave a hole in the other's
+    // numbering.
+    const inPathOrder = byLocale[locale]
+      .filter((post) => post.step !== undefined)
+      .sort((a, b) => a.pathRank - b.pathRank);
     const counters = new Map();
-    for (const post of byLocale[locale]) {
-      if (post.step === undefined) continue;
+    for (const post of inPathOrder) {
       post.step = (counters.get(post.track) || 0) + 1;
       counters.set(post.track, post.step);
     }
     if (unplaced.length > 0) {
-      console.warn(`⚠️  ${locale}: not in learning-path.json, listed last: ${unplaced.join(', ')}`);
+      console.warn(`⚠️  ${locale}: not in learning-path.json: ${unplaced.join(', ')}`);
     }
   }
 

@@ -52,14 +52,23 @@ export function getPinnedPosts(locale: string = 'en'): BlogPost[] {
     .filter((p): p is BlogPost => p !== undefined);
 }
 
+// How the listing is ordered: newest first for everyone, or along the learning
+// path (content/learning-path.json) for a signed-in reader who opted into it.
+export type BlogView = 'latest' | 'path';
+
+// Path order: by position in the whole path (pathRank, across tracks), with
+// posts the path does not mention yet after it,
+// newest first. Posts are stored newest first, and the sort is stable.
+function byPathOrder(posts: BlogPost[]): BlogPost[] {
+  return [...posts].sort((a, b) => (a.pathRank ?? Infinity) - (b.pathRank ?? Infinity));
+}
+
 // One track of the learning path (the subject a post belongs to), in reading
-// order. Posts come out of
-// getAllPosts() already sorted by it (see applyLearningPath() in
-// scripts/generate-blog-data.js); this trims them to what a suggestion card
-// shows, so the post page does not ship every article body to the browser.
+// order, trimmed to what a suggestion card shows so the post page does not
+// ship every article body to the browser.
 export function getLearningPath(track: string | undefined, locale: string = 'en'): PathEntry[] {
   if (!track) return [];
-  return getAllPosts(locale)
+  return byPathOrder(getAllPosts(locale))
     .filter((post): post is BlogPost & { step: number; track: string } =>
       post.step !== undefined && post.track === track)
     .map(post => ({
@@ -76,8 +85,12 @@ export function getLearningPath(track: string | undefined, locale: string = 'en'
 // Get paginated posts for a specific locale
 // Pinned posts are excluded from pagination — they are returned separately
 // and always displayed on every page.
-export function getPaginatedPosts(page: number = 1, locale: string = 'en'): PaginatedPosts {
-  const allPosts = getAllPosts(locale);
+export function getPaginatedPosts(
+  page: number = 1,
+  locale: string = 'en',
+  view: BlogView = 'latest'
+): PaginatedPosts {
+  const allPosts = view === 'path' ? byPathOrder(getAllPosts(locale)) : getAllPosts(locale);
   const pinnedPosts = getPinnedPosts(locale);
   const pinnedSlugs = new Set(pinnedPosts.map(p => p.slug));
 

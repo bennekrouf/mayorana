@@ -38,11 +38,14 @@ export interface BlogPost {
    */
   counterpart?: { locale: string; slug: string };
   /**
-   * 1-based position in the learning path (content/learning-path.json),
-   * written at build time by applyLearningPath(). Absent for a post the path
-   * does not mention yet.
+   * 1-based position within the post's track of the learning path
+   * (content/learning-path.json), written at build time by
+   * applyLearningPath(). Absent for a post the path does not mention yet.
    */
   step?: number;
+  /** Position in the whole learning path, across tracks (1-based). Sorts the
+   *  path view; `step` is only for display. Absent exactly when `step` is. */
+  pathRank?: number;
   /** The subject the post's path section belongs to (rust, azure, ...).
    *  Suggestions stay within it. Absent exactly when `step` is. */
   track?: string;
