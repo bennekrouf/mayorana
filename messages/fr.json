@@ -1032,7 +1032,7 @@
     "releases_body": "Version {version}, publiée le {date}. {name} évolue souvent : chaque version et ce qu’elle a changé sont listés sur la page des notes de version.",
     "releases_link": "Lire les notes de version",
     "buy_pro_button": "Acheter {name} Pro",
-    "buy_pro_note": "La version gratuite exporte les 10 premières pistes de chaque enregistrement ; Pro les exporte toutes. Achat unique, avec un an de mises à jour. Paiement sécurisé par Stripe ; votre clé de licence s'affiche juste après et vous est envoyée par e-mail.",
+    "buy_pro_note": "Achat unique, avec un an de mises à jour. Paiement sécurisé par Stripe ; votre clé de licence s'affiche juste après et vous est envoyée par e-mail.",
     "buy_pro_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
     "thanks_title": "Merci d'avoir acheté {name} Pro",
     "thanks_loading": "Récupération de votre clé de licence…",
@@ -1044,7 +1044,9 @@
     "thanks_updates": "Votre licence inclut toutes les mises à jour publiées jusqu'au {date}. Les versions publiées avant cette date continuent de fonctionner ensuite.",
     "thanks_missing": "Nous n'avons pas trouvé cet achat. Si vous venez de payer, votre clé de licence arrive par e-mail.",
     "thanks_error": "Votre clé de licence ne peut pas s'afficher pour l'instant. Elle vous a aussi été envoyée par e-mail ; si elle n'arrive pas,",
-    "thanks_contact": "contactez-nous."
+    "thanks_contact": "contactez-nous.",
+    "pro_download_intro": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+    "pro_licence_body": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée."
   },
   "app_releases": {
     "breadcrumb": "Notes de version",
