@@ -37,7 +37,7 @@ Avec la **similarité cosinus**. Elle mesure l'**angle** entre deux vecteurs, pa
 
 - Similarité = 1 → même direction, sens très proche
 - Similarité = 0 → aucun rapport
-- Similarité = -1 → directions opposées. Rare en pratique, et ce n'est pas "le sens contraire" : "chaud" et "froid" sont même assez proches, car ils apparaissent dans les mêmes contextes.
+- Similarité = -1 → directions opposées (rare, et ça ne veut pas dire "le contraire")
 
 C'est un cousin direct du produit scalaire Q·K de l'attention : la similarité cosinus, c'est ce même produit scalaire, divisé par la longueur des deux vecteurs. On garde l'orientation, on ignore la taille.
 

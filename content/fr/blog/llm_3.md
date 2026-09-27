@@ -52,7 +52,7 @@ Un scalaire ne représenterait qu'**une seule dimension** de sens. Un vecteur de
 
 ### 1. Multi-Head Attention
 
-Au lieu d'une seule attention, on en calcule plusieurs en parallèle (ex : 12 têtes). Chaque tête a ses propres matrices Wq, Wk et Wv, qui projettent vers un espace plus petit (768 / 12 = 64 dimensions) : chaque tête regarde donc le texte sous un angle différent. À la fin, on recolle les 12 résultats (12 × 64 = 768) et une dernière matrice, Wo, les mélange.
+Au lieu d'une seule attention, on en fait plusieurs en parallèle (ex : 12 têtes). Chaque tête a ses propres Q, K et V, en plus petit, et regarde donc le texte sous un angle différent : par exemple, l'une suit la grammaire, une autre cherche qui fait référence à qui. À la fin, on recolle les résultats de toutes les têtes et on les mélange.
 
 ### 2. Masking
 
@@ -62,7 +62,7 @@ En génération, on interdit au modèle de regarder les mots futurs. On met des 
 
 L'attention seule ne sait pas l'ordre des mots : pour elle, "le chien mord l'homme" et "l'homme mord le chien" contiennent exactement les mêmes mots. Il faut donc lui donner la position.
 
-Le Transformer original (2017) ajoute un vecteur de position (sinus/cosinus) à chaque embedding, et GPT-2 apprend ces vecteurs pendant l'entraînement. La plupart des LLM actuels (Llama, Mistral, Qwen…) utilisent plutôt **RoPE** (Rotary Position Embedding) : au lieu d'ajouter un vecteur à l'embedding, on fait **tourner** Q et K d'un angle qui dépend de la position. Le score entre deux mots dépend alors de leur position relative.
+Les premiers modèles ajoutaient à chaque mot un vecteur qui dit en gros "je suis en position 3". La plupart des LLM actuels font plus malin, avec une technique appelée **RoPE** : ils font **tourner** Q et K selon la position, un peu comme les aiguilles d'une montre. Deux mots proches dans la phrase ont des angles proches, deux mots éloignés, des angles très différents.
 
 ## Ce qu'il faut retenir
 

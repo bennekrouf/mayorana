@@ -20,7 +20,7 @@ tags:
 
 ## La promesse de cette série
 
-Comprendre comment fonctionnent les LLM (ChatGPT, Claude, etc.) sans avoir besoin d'un doctorat en mathématiques. Chaque épisode part d'une question simple, explique le "pourquoi" avant le "comment", et utilise des exemples concrets en Rust.
+Comprendre comment fonctionnent les LLM (ChatGPT, Claude, etc.) sans avoir besoin d'un doctorat en mathématiques. Chaque épisode part d'une question simple, explique le "pourquoi" avant le "comment", et utilise des exemples en Rust quand ça aide.
 
 ## Pourquoi "from scratch" ?
 

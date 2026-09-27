@@ -41,7 +41,11 @@ Example: in "The bank closed its doors", the word "bank" doesn't mean the same t
 ```rust
 fn mat_mul(a: &[Vec<f32>], b: &[Vec<f32>]) -> Vec<Vec<f32>> {
     let bt = transpose(b); // b's columns become rows
-    a.iter().map(|r| bt.iter().map(|c| r.iter().zip(c).map(|(x, y)| x * y).sum()).collect()).collect()
+    a.iter()
+        .map(|row| bt.iter()
+            .map(|col| row.iter().zip(col).map(|(x, y)| x * y).sum()) // dot product
+            .collect())
+        .collect()
 }
 fn transpose(m: &[Vec<f32>]) -> Vec<Vec<f32>> {
     (0..m[0].len()).map(|j| m.iter().map(|r| r[j]).collect()).collect()
@@ -68,15 +72,13 @@ To start simple, we use the embeddings as they are for Q, K and V: we copy them 
 
 ## Why "stabilize" with scaling?
 
-Scaling divides the scores by √d. When you take the dot product of two high-dimensional vectors, the result grows with the dimension: with d = 768, scores easily reach several tens. And Softmax applies an exponential (e^x), which blows up the gaps: a score of 30 against 20 already gives a ratio of e^10 ≈ 22,000. Softmax **saturates**: nearly all the weight goes to a single word, the others drop to zero, and during training the model almost stops learning (the gradients become close to zero).
+Scaling divides the scores by √d. Why? The bigger the vectors (768 dimensions!), the higher the scores climb. And Softmax hugely amplifies the gaps: with big scores, it gives almost 100% to a single word and 0% to all the others. The model only looks at one word, and during training, it barely learns anything anymore.
 
-Dividing by √d brings the scores back to a reasonable scale, whatever the dimension. The ranking of the scores doesn't change (the most relevant word stays the most relevant), but the Softmax weights become less extreme: attention can spread across several words.
-
-What about overflow? That risk (e^x exceeds what an `f32` can hold from x ≈ 88) is handled differently: subtract the row's maximum before the exponential, as the `softmax` above does. The result is identical, but the exponential never exceeds 1.
+Dividing by √d brings the scores back to a normal size. The most important word stays the most important, but attention can spread across several words again.
 
 ## Key takeaways
 
 - Attention is NOT magic, it's simple math
 - A word = a vector (not a scalar)
-- Scaling keeps the ranking of the scores but stops Softmax from saturating
+- Scaling stops attention from locking onto a single word
 - The best way to learn is to code it yourself

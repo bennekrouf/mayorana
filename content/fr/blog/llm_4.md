@@ -47,10 +47,10 @@ On **ajoute de petites matrices** à côté des existantes, et on n'entraîne qu
 
 ## Le lien avec l'attention
 
-- Tu **gardes** les premières couches (contours, grammaire, relations)
+- Tu **gardes** les premières couches (orthographe, grammaire, relations)
 - Tu **réentraînes** les dernières (ta tâche spécifique)
 
-Comme un immeuble : tu gardes la structure, c'est-à-dire les poids pré-entraînés (embeddings, Q/K/V, attention), et tu n'ajustes qu'une petite partie. Soit la décoration des derniers étages (les dernières couches, en fine-tuning), soit quelques cloisons ajoutées par-dessus (les matrices LoRA, souvent posées sur Wq et Wv, dans chaque couche).
+Comme un immeuble : tu gardes la structure (tout ce que le modèle a déjà appris) et tu n'ajustes qu'une petite partie. Soit tu refais les derniers étages (le fine-tuning des dernières couches), soit tu ajoutes quelques cloisons par-dessus (LoRA).
 
 ## Ce qu'il faut retenir
 

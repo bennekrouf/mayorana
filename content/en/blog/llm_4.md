@@ -47,10 +47,10 @@ You **add small matrices** next to the existing ones and train only those: often
 
 ## The link with attention
 
-- You **keep** the first layers (edges, grammar, relationships)
+- You **keep** the first layers (spelling, grammar, relationships)
 - You **retrain** the last ones (your specific task)
 
-Like a building: you keep the structure, meaning the pre-trained weights (embeddings, Q/K/V, attention), and adjust only a small part of it. Either the decoration of the top floors (the last layers, with fine-tuning), or a few partitions added on top (the LoRA matrices, usually placed on Wq and Wv, in every layer).
+Like a building: you keep the structure (everything the model has already learned) and adjust only a small part of it. Either you redo the top floors (fine-tuning the last layers), or you add a few partitions on top (LoRA).
 
 ## Key takeaways
 
