@@ -277,12 +277,15 @@ export function getToolBySlug(slug: string): DesktopToolConfig | undefined {
 
 // Sibling tools for the "related" strip on a detail page: same tag first
 // (the AIS suite hangs together this way), topped up to `limit` with whatever
-// else is in the catalogue so a single-tag tool never renders an empty strip.
+// else is in the catalogue. A tool with no same-tag sibling gets no strip at
+// all: filling it with unrelated tools (AIS Runner under a crypto app) reads
+// as a suggestion that they belong together.
 export function getRelatedTools(slug: string, limit = 3): DesktopToolConfig[] {
   const tool = getToolBySlug(slug);
   if (!tool) return [];
   const others = desktopToolsConfig.filter((t) => t.id !== slug);
   const sameTag = others.filter((t) => t.tags.some((tag) => tool.tags.includes(tag)));
+  if (sameTag.length === 0) return [];
   const rest = others.filter((t) => !sameTag.includes(t));
   return [...sameTag, ...rest].slice(0, limit);
 }
