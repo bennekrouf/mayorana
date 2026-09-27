@@ -65,4 +65,4 @@ Contrôle **à quelle vitesse** le modèle modifie ses poids. En transfer learni
 - **Oubli catastrophique** = le piège à éviter
 - **Freezing** = geler pour préserver
 - **Domain shift** = le décalage à anticiper
-- **Learning rate** = le dosage qui détermine le succès
+- **Learning rate** = la vitesse de changement des poids, très faible en fine-tuning
