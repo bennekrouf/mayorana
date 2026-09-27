@@ -36,6 +36,13 @@ export interface DesktopToolConfig {
   source: string;
   /** schema.org applicationCategory for the detail page. Defaults to DeveloperApplication. */
   applicationCategory?: string;
+  /**
+   * A paid edition sold from the detail page through Stripe Checkout. The
+   * gateway (POST /api/licenses/checkout) knows the price; this only says the
+   * button should be there and which edition it buys. Stripe sends the buyer
+   * back to /apps/<id>/thanks, which shows the licence key.
+   */
+  pro?: { edition: string };
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -170,6 +177,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'beta',
     tags: ['audio'],
     applicationCategory: 'MultimediaApplication',
+    pro: { edition: 'pro' },
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${splitterDl}/splitter-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${splitterDl}/splitter-linux-x86_64.tar.gz` },
