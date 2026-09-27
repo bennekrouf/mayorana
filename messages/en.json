@@ -979,7 +979,7 @@
     "releases_body": "Version {version}, released {date}. {name} ships often; every version and what it changed is listed on the release notes page.",
     "releases_link": "Read the release notes",
     "buy_pro_button": "Buy {name} Pro",
-    "buy_pro_note": "One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
+    "buy_pro_note": "The free version exports the first 10 tracks of each recording; Pro exports them all. One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
     "buy_pro_error": "The payment page couldn't be opened. Please try again in a moment.",
     "thanks_title": "Thank you for buying {name} Pro",
     "thanks_loading": "Fetching your licence key…",
