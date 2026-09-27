@@ -37,7 +37,7 @@ With **cosine similarity**. It measures the **angle** between two vectors, not t
 
 - Similarity = 1 → same direction, very close meaning
 - Similarity = 0 → unrelated
-- Similarity = -1 → opposite directions. Rare in practice, and it doesn't mean "opposite meaning": "hot" and "cold" are actually fairly close, because they appear in the same contexts.
+- Similarity = -1 → opposite directions (rare, and it doesn't mean "the opposite")
 
 It's a direct cousin of the Q·K dot product in attention: cosine similarity is that same dot product, divided by the length of both vectors. You keep the orientation and ignore the size.
 

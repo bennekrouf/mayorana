@@ -52,7 +52,7 @@ A scalar could only represent **a single dimension** of meaning. A 768-dimension
 
 ### 1. Multi-Head Attention
 
-Instead of a single attention, several run in parallel (e.g. 12 heads). Each head has its own Wq, Wk and Wv matrices, which project into a smaller space (768 / 12 = 64 dimensions), so each head looks at the text from a different angle. At the end, the 12 results are stitched back together (12 × 64 = 768) and a final matrix, Wo, mixes them.
+Instead of a single attention, several run in parallel (e.g. 12 heads). Each head has its own smaller Q, K and V, so each one looks at the text from a different angle: for example, one follows the grammar, another works out who refers to whom. At the end, the results of all the heads are stitched back together and mixed.
 
 ### 2. Masking
 
@@ -62,7 +62,7 @@ During generation, the model is not allowed to look at future words. We put `-in
 
 Attention on its own doesn't know the order of the words: to it, "the dog bites the man" and "the man bites the dog" contain exactly the same words. So it has to be given the position.
 
-The original Transformer (2017) adds a position vector (sine/cosine) to each embedding, and GPT-2 learns these vectors during training. Most current LLMs (Llama, Mistral, Qwen…) use **RoPE** (Rotary Position Embedding) instead: rather than adding a vector to the embedding, Q and K are **rotated** by an angle that depends on the position. The score between two words then depends on their relative position.
+The first models added a vector to each word that roughly says "I'm in position 3". Most current LLMs do something smarter, with a technique called **RoPE**: they **rotate** Q and K according to the position, a bit like the hands of a clock. Two words close together in the sentence get similar angles, two words far apart get very different ones.
 
 ## Key takeaways
 

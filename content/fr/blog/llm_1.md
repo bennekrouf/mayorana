@@ -41,7 +41,11 @@ Exemple : dans "La banque a fermé ses portes", le mot "banque" n'a pas le même
 ```rust
 fn mat_mul(a: &[Vec<f32>], b: &[Vec<f32>]) -> Vec<Vec<f32>> {
     let bt = transpose(b); // les colonnes de b deviennent des lignes
-    a.iter().map(|r| bt.iter().map(|c| r.iter().zip(c).map(|(x, y)| x * y).sum()).collect()).collect()
+    a.iter()
+        .map(|row| bt.iter()
+            .map(|col| row.iter().zip(col).map(|(x, y)| x * y).sum()) // produit scalaire
+            .collect())
+        .collect()
 }
 fn transpose(m: &[Vec<f32>]) -> Vec<Vec<f32>> {
     (0..m[0].len()).map(|j| m.iter().map(|r| r[j]).collect()).collect()
@@ -68,15 +72,13 @@ Pour commencer simplement, on utilise les embeddings tels quels pour Q, K et V :
 
 ## Pourquoi "stabiliser" avec le scaling ?
 
-Le scaling divise les scores par √d. Quand on fait un produit scalaire entre deux vecteurs de grande dimension, le résultat grandit avec la dimension : avec d = 768, les scores atteignent facilement plusieurs dizaines. Or, le Softmax applique une exponentielle (e^x), qui amplifie énormément les écarts : un score de 30 contre 20 donne déjà un rapport de e^10 ≈ 22 000. Le Softmax **sature** : presque tout le poids part sur un seul mot, les autres tombent à zéro, et pendant l'entraînement le modèle n'apprend presque plus (les gradients deviennent quasi nuls).
+Le scaling divise les scores par √d. Pourquoi ? Plus les vecteurs sont grands (768 dimensions !), plus les scores grimpent. Et le Softmax amplifie énormément les écarts : avec de gros scores, il donne presque 100 % à un seul mot et 0 % à tous les autres. Le modèle ne regarde plus qu'un mot, et pendant l'entraînement, il n'apprend presque plus rien.
 
-En divisant par √d, on ramène les scores à une échelle raisonnable, quelle que soit la dimension. L'ordre des scores ne change pas (le mot le plus pertinent reste le plus pertinent), mais les poids du Softmax deviennent moins extrêmes : l'attention peut se répartir sur plusieurs mots.
-
-Et l'overflow ? Ce risque-là (e^x dépasse la capacité d'un `f32` dès x ≈ 88) se règle autrement : on soustrait le maximum de la ligne avant l'exponentielle, comme dans le `softmax` ci-dessus. Le résultat est identique, mais l'exponentielle ne dépasse jamais 1.
+En divisant par √d, on ramène les scores à une taille normale. Le mot le plus important reste le plus important, mais l'attention peut à nouveau se répartir sur plusieurs mots.
 
 ## Ce qu'il faut retenir
 
 - L'attention n'est PAS magique, c'est des maths simples
 - Un mot = un vecteur (pas un scalaire)
-- Le scaling garde l'ordre des scores mais empêche le Softmax de saturer
+- Le scaling évite que l'attention se bloque sur un seul mot
 - Le meilleur apprentissage, c'est de le coder soi-même

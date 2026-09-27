@@ -20,7 +20,7 @@ tags:
 
 ## What this series promises
 
-Understand how LLMs (ChatGPT, Claude, etc.) work without needing a PhD in mathematics. Each episode starts from a simple question, explains the "why" before the "how", and uses concrete examples in Rust.
+Understand how LLMs (ChatGPT, Claude, etc.) work without needing a PhD in mathematics. Each episode starts from a simple question, explains the "why" before the "how", and uses Rust examples where they help.
 
 ## Why "from scratch"?
 
