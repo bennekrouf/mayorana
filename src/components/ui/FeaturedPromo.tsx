@@ -6,6 +6,21 @@ import { Sparkles, ArrowRight, Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { motion } from '@/components/ui/Motion';
 import type { DownloadLink, OS } from '@/data/tools';
+import { withAttribution } from '@/lib/attribution';
+
+/**
+ * Stamp the source onto the build URL at the moment it is followed.
+ *
+ * These are plain links rather than gated downloads, so there is no click
+ * handler to route them through — and the href cannot be stamped at render
+ * time, because the source lives in localStorage and the server has no idea
+ * what it says. Rewriting in mousedown lands before the browser reads the
+ * href for any kind of click, so middle-click and cmd-click carry it too,
+ * while the link a reader copies stays clean.
+ */
+const stampSource = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  e.currentTarget.href = withAttribution(e.currentTarget.href);
+};
 
 const osIcons: Record<OS, React.ReactNode> = {
   mac: <FaApple className="w-4 h-4" />,
@@ -93,6 +108,7 @@ export function FeaturedPromo({
                 <>
                   <a
                     href={primary.href}
+                    onMouseDown={stampSource}
                     className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors"
                   >
                     <Download className="w-4 h-4" />
@@ -107,6 +123,7 @@ export function FeaturedPromo({
                         <a
                           key={dl.os}
                           href={dl.href}
+                          onMouseDown={stampSource}
                           title={dl.label}
                           aria-label={dl.label}
                           className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border bg-background hover:bg-secondary transition-colors"
@@ -123,6 +140,7 @@ export function FeaturedPromo({
                     <a
                       key={dl.os}
                       href={dl.href}
+                      onMouseDown={stampSource}
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors"
                     >
                       {osIcons[dl.os]}
