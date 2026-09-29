@@ -139,7 +139,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'live',
     tags: ['blog'],
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.dmg` },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.tar.gz` },
       { os: 'linux', label: 'Linux x86_64', href: `${blogtkDl}/blog-toolkit-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${blogtkDl}/blog-toolkit-setup.exe` },
     ],
