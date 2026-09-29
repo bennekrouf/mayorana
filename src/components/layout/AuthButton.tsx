@@ -3,15 +3,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { FiLogIn, FiLogOut, FiUser } from 'react-icons/fi';
+import { FaGithub } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 import { useTranslations } from 'next-intl';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
+
+const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_google' | 'sign_in_github' }[] = [
+  { id: 'google', icon: <FcGoogle className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_google' },
+  { id: 'github', icon: <FaGithub className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_github' },
+];
 
 /**
- * Sign-in button, or the signed-in user's avatar with a sign-out menu.
+ * Sign-in button with a Google/GitHub menu, or the signed-in user's avatar
+ * with a sign-out menu.
  * `compact` is the mobile-menu variant: a full-width row instead of an icon.
  */
 const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
-  const { enabled, user, loading, signInWithGoogle, signOut } = useAuth();
+  const { enabled, user, loading, signIn, signOut } = useAuth();
   const t = useTranslations('auth');
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -34,18 +42,48 @@ const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
   }
 
   if (!user) {
+    if (compact) {
+      return (
+        <div className="w-full flex flex-col gap-2">
+          {PROVIDERS.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => signIn(p.id)}
+              className="w-full flex items-center px-4 py-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors"
+            >
+              {p.icon}
+              {t(p.label)}
+            </button>
+          ))}
+        </div>
+      );
+    }
+
     return (
-      <button
-        onClick={signInWithGoogle}
-        className={
-          compact
-            ? 'w-full flex items-center px-4 py-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors'
-            : 'flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors'
-        }
-      >
-        <FiLogIn className="h-4 w-4 mr-2 flex-shrink-0" />
-        {t('sign_in')}
-      </button>
+      <div className="relative" ref={menuRef}>
+        <button
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+        >
+          <FiLogIn className="h-4 w-4 mr-2 flex-shrink-0" />
+          {t('sign_in')}
+        </button>
+        {open && (
+          <div className="absolute right-0 mt-2 w-56 rounded-lg border border-border bg-background shadow-lg py-1 z-50">
+            {PROVIDERS.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => { setOpen(false); signIn(p.id); }}
+                className="w-full flex items-center px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              >
+                {p.icon}
+                {t(p.label)}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     );
   }
 

@@ -17,6 +17,7 @@ import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useLocale, useTranslations } from 'next-intl';
 import { FiCheck, FiGift, FiMessageCircle, FiZap } from 'react-icons/fi';
+import { FaGithub } from 'react-icons/fa';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
 import { useAuth } from '@/providers/AuthProvider';
@@ -35,7 +36,7 @@ interface FormData {
 function FoundingContent() {
   const t = useTranslations('founding');
   const locale = useLocale();
-  const { enabled, user, loading, signInWithGoogle } = useAuth();
+  const { enabled, user, loading, signIn } = useAuth();
   const searchParams = useSearchParams();
 
   // The in-app notice and the download panel can pass ?tool=<id>, so the
@@ -183,16 +184,26 @@ function FoundingContent() {
                       <FiCheck /> {t('signed_in', { email: user.email ?? '' })}
                     </p>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={signInWithGoogle}
-                      className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 transition-colors"
-                    >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden>
-                        <path fill="currentColor" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
-                      </svg>
-                      {t('signin_button')}
-                    </button>
+                    <div className="flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        onClick={() => signIn('google')}
+                        className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 transition-colors"
+                      >
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden>
+                          <path fill="currentColor" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
+                        </svg>
+                        {t('signin_button')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => signIn('github')}
+                        className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium border border-border hover:bg-secondary transition-colors"
+                      >
+                        <FaGithub className="w-5 h-5" aria-hidden />
+                        {t('signin_button_github')}
+                      </button>
+                    </div>
                   )}
                 </div>
               )}
