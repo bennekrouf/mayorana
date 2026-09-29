@@ -805,7 +805,10 @@
             "a": "Yes, the commit-to-PR path works. It is marked WIP because the interface is still moving and releases are frequent."
           }
         ],
-        "article_slug": "ai-commit-messages-without-giving-up-control"
+        "article_slug": "ai-commit-messages-without-giving-up-control",
+        "pro_download_intro": "Free: run flows in 5 repositories of your choice. Pro: run them in every repository, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Free: run flows in 5 repositories of your choice. Pro: run them in every repository, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_how": "To activate it, open GitAgent, click Get Pro… in the top bar and paste the key. It is checked on your computer: no account, nothing sent anywhere."
       },
       "blog_toolkit": {
         "seo_title": "Blog Toolkit — Desktop Blog Manager with AI Drafting",
@@ -964,7 +967,10 @@
             "a": "No. Decoding, encoding and the YouTube download all work without installing anything else."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere."
       },
       "spreadwatch": {
         "seo_title": "Spreadwatch — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
@@ -1040,13 +1046,10 @@
     "thanks_intro": "Here is your {name} licence key. A copy has been sent to {email}.",
     "thanks_copy": "Copy key",
     "thanks_copied": "Copied",
-    "thanks_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
     "thanks_updates": "Your licence includes every update released until {date}. Versions released before that date keep working after it.",
     "thanks_missing": "We couldn't find this purchase. If you have just paid, your licence key is on its way by email.",
     "thanks_error": "Your licence key couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
-    "thanks_contact": "contact us.",
-    "pro_download_intro": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
-    "pro_licence_body": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. That is the only thing to buy: there is no separate commercial licence."
+    "thanks_contact": "contact us."
   },
   "app_releases": {
     "breadcrumb": "Release notes",

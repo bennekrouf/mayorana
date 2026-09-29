@@ -214,7 +214,7 @@ export default async function ToolDetailPage({ params }: Props) {
 
           <DownloadButtonsLarge app={tool.id} appName={tool.name} downloads={tool.downloads} />
           <p className="text-xs text-muted-foreground mt-3 max-w-2xl">
-            {t(tool.pro ? 'pro_download_intro' : 'download_intro')}
+            {t(tool.pro ? `apps.${appI18nKey[tool.id]}.pro_download_intro` : 'download_intro')}
           </p>
           {tool.downloads.some((d) => d.os === 'mac') && (
             <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
@@ -344,7 +344,7 @@ export default async function ToolDetailPage({ params }: Props) {
               {t('licence_heading')}
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              {t(tool.pro ? 'pro_licence_body' : 'licence_body')}
+              {t(tool.pro ? `apps.${appI18nKey[tool.id]}.pro_licence_body` : 'licence_body')}
             </p>
             {/* A tool sold as Pro has one thing to buy, for everyone: no
                 noncommercial terms to read, no commercial licence to ask for. */}
