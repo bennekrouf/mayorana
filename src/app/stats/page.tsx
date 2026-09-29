@@ -2,7 +2,7 @@
 'use client';
 
 import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import {
   FiDownload,
   FiRefreshCw,
@@ -23,6 +23,10 @@ interface DayDetail {
   by_platform: Record<string, number>;
   by_country: Record<string, number>;
   by_signin?: Record<string, number>;
+  /** Which channel found the people who took a first install that day.
+   *  Absent from a stats.json written before download links were tagged. */
+  by_source?: Record<string, number>;
+  by_medium?: Record<string, number>;
 }
 
 interface SiteStats {
@@ -37,7 +41,17 @@ interface SiteStats {
   top_paths: Record<string, number>;
   /** Visitor-days per referring host; absent from a stats.json older than the script. */
   referrers?: Record<string, number>;
-  daily: Record<string, { visitors: number; requests: number; api_requests?: number }>;
+  /** The bot / unverified / probe counts are optional: they were summary-only
+   *  until the script started emitting them per day, and a file written before
+   *  that has no way to answer a narrowed range. */
+  daily: Record<string, {
+    visitors: number;
+    requests: number;
+    api_requests?: number;
+    bot_requests?: number;
+    unverified_requests?: number;
+    probe_requests?: number;
+  }>;
 }
 
 interface Stats {
@@ -51,6 +65,8 @@ interface Stats {
   by_app: Record<string, number>;
   by_platform: Record<string, number>;
   by_country: Record<string, number>;
+  by_source?: Record<string, number>;
+  by_medium?: Record<string, number>;
   active_installs_daily_avg_7d: number;
   daily: Record<string, DayDetail>;
 }
@@ -128,6 +144,26 @@ function Bars<T>({
   );
 }
 
+type SiteDay = SiteStats['daily'][string];
+
+/**
+ * Sum a per-day field across the chosen window, falling back to the all-time
+ * total when the stats file is older than that field.
+ *
+ * Without the fallback an old file would read as a confident zero, which is
+ * worse than an honest all-time number — so the caller is told which it got
+ * and labels it.
+ */
+function sumDaily(
+  days: [string, SiteDay][],
+  value: (d: SiteDay) => number,
+  recorded: (d: SiteDay) => boolean,
+  allTimeTotal: number,
+): { value: number; allTime: boolean } {
+  if (!days.some(([, d]) => recorded(d))) return { value: allTimeTotal, allTime: true };
+  return { value: days.reduce((n, [, d]) => n + value(d), 0), allTime: false };
+}
+
 /** One hosted product. Downloads do not apply to these — the question is how
  *  many people came at all, so visitors and requests lead. */
 function SiteCard({
@@ -147,13 +183,28 @@ function SiteCard({
   const visitorDays = days.reduce((n, [, d]) => n + (d.visitors ?? 0), 0);
   const requests = days.reduce((n, [, d]) => n + (d.requests ?? 0), 0);
   const apiRequests = days.reduce((n, [, d]) => n + (d.api_requests ?? 0), 0);
+  const filtered = sumDaily(
+    days,
+    (d) => (d.bot_requests ?? 0) + (d.unverified_requests ?? 0),
+    (d) => d.bot_requests !== undefined,
+    site.bot_requests + (site.unverified_requests ?? 0),
+  );
+  const probes = sumDaily(
+    days,
+    (d) => d.probe_requests ?? 0,
+    (d) => d.probe_requests !== undefined,
+    site.probe_requests ?? 0,
+  );
 
   return (
     <div className="min-w-0 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 sm:p-5">
       <div className="flex items-baseline justify-between gap-3 mb-3">
         <h3 className="min-w-0 truncate text-base font-bold text-gray-900 dark:text-white">{name}</h3>
-        <span className="shrink-0 text-xs text-gray-500 dark:text-gray-400" title="Declared crawlers, plus addresses that requested pages but never loaded a stylesheet or script">
-          {(site.bot_requests + (site.unverified_requests ?? 0)).toLocaleString()} bot req filtered
+        <span
+          className="shrink-0 text-xs text-gray-500 dark:text-gray-400"
+          title={`Declared crawlers, plus addresses that requested pages but never loaded a stylesheet or script.${filtered.allTime ? ' All-time: this stats file predates per-day bot counts.' : ''}`}
+        >
+          {filtered.value.toLocaleString()} bot req filtered{filtered.allTime ? ' (all-time)' : ''}
         </span>
       </div>
 
@@ -189,9 +240,10 @@ function SiteCard({
         </div>
       )}
 
-      {(site.probe_requests ?? 0) > 0 && (
+      {probes.value > 0 && (
         <p className="text-xs text-amber-700 dark:text-amber-400 mb-3">
-          {site.probe_requests.toLocaleString()} vulnerability probes blocked
+          {probes.value.toLocaleString()} vulnerability probes blocked
+          {probes.allTime ? ' (all-time)' : ''}
         </p>
       )}
 
@@ -407,6 +459,7 @@ interface View {
   byPlatform: Record<string, number>;
   byCountry: Record<string, number>;
   bySignin: Record<string, number>;
+  bySource: Record<string, number>;
   activeAvg: number;
   from: string | null;
 }
@@ -496,6 +549,13 @@ function buildReport(stats: Stats, view: View, range: { label: string; days: num
   out.push(`  Signed in (reachable): ${view.bySignin.signed_in ?? 0}`);
   out.push(`  Anonymous: ${view.bySignin.anonymous ?? 0}`);
   out.push('');
+  out.push('## First installs — by source (selected range)');
+  out.push('Which channel first brought this person to the site, captured on arrival and');
+  out.push("carried on the download URL. 'untagged' means the download predates the tagging");
+  out.push('or lost the parameters on the way — it is coverage, not a channel. Updates are');
+  out.push('excluded: an app checking for a new build did not come from anywhere.');
+  out.push(lines(view.bySource));
+  out.push('');
 
   const sites = Object.entries(stats.sites ?? {}).sort((a, b) => b[1].visitor_days - a[1].visitor_days);
   if (sites.length > 0) {
@@ -516,9 +576,24 @@ function buildReport(stats: Stats, view: View, range: { label: string; days: num
       if (apiRequests > 0) {
         out.push(`API calls: ${apiRequests} (peak clients in a day: ${site.api_clients_peak_day ?? 0})`);
       }
-      out.push(`Bot requests filtered: ${site.bot_requests + (site.unverified_requests ?? 0)}`);
-      if ((site.probe_requests ?? 0) > 0) {
-        out.push(`Vulnerability probes blocked: ${site.probe_requests}`);
+      // All-time, not range-scoped: summarise_sites() in downloads-stats.py
+      // drops these from the per-day series, so the page has no way to narrow
+      // them. Labelled rather than silently shown next to range figures.
+      const filtered = sumDaily(
+        siteDays,
+        (d) => (d.bot_requests ?? 0) + (d.unverified_requests ?? 0),
+        (d) => d.bot_requests !== undefined,
+        site.bot_requests + (site.unverified_requests ?? 0),
+      );
+      const probes = sumDaily(
+        siteDays,
+        (d) => d.probe_requests ?? 0,
+        (d) => d.probe_requests !== undefined,
+        site.probe_requests ?? 0,
+      );
+      out.push(`Bot requests filtered${filtered.allTime ? ' (all-time)' : ''}: ${filtered.value}`);
+      if (probes.value > 0) {
+        out.push(`Vulnerability probes blocked${probes.allTime ? ' (all-time)' : ''}: ${probes.value}`);
       }
       if (siteDays.length > 0) {
         out.push(`Daily visitors: ${siteDays.map(([day, d]) => `${day} ${d.visitors ?? 0}`).join(' · ')}`);
@@ -543,14 +618,15 @@ function buildReport(stats: Stats, view: View, range: { label: string; days: num
   out.push('Counts are unique IP per file per day, excluding bots, HEAD requests and checksum');
   out.push('fetches — so they undercount shared networks and overcount anyone on a changing IP.');
   out.push('Active installs are averaged over the period, not summed: the same install switched');
-  out.push('on every day is one install, not seven. Top-path and referrer breakdowns are all-time;');
-  out.push('everything else follows the selected range.');
+  out.push('on every day is one install, not seven. Anything marked all-time is not narrowed');
+  out.push('by the selected range; everything else is. Top paths and referrers are always');
+  out.push("all-time, and are summed from each day's top entries, so a path that sits just");
+  out.push('outside the daily cut-off every day reads as zero here.');
 
   return out.join('\n');
 }
 
 function StatsDashboard() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   // An unknown or missing ?range= falls back to the default rather than
   // showing nothing: a mistyped link should still render the page.
@@ -559,10 +635,17 @@ function StatsDashboard() {
   const rangeDays = range.days;
 
   const selectRange = useCallback((key: string) => {
-    // replace, not push: flipping through the ranges should not bury the
-    // previous page under a dozen history entries.
-    router.replace(key === DEFAULT_RANGE ? '/stats' : `/stats?range=${key}`, { scroll: false });
-  }, [router]);
+    // history.replaceState, not router.replace: the range is applied in the
+    // browser from data already in hand, but router.replace treats it as a
+    // navigation and refetches the route on every click — which spent the
+    // /stats rate limit and broke the promise made where RANGES is defined,
+    // that switching period "costs no request". Next reflects a direct
+    // history call in useSearchParams without going to the server.
+    //
+    // replace rather than push, so flipping through the ranges does not bury
+    // the previous page under a dozen history entries.
+    window.history.replaceState(null, '', key === DEFAULT_RANGE ? '/stats' : `/stats?range=${key}`);
+  }, []);
 
   const [stats, setStats] = useState<Stats | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -612,6 +695,7 @@ function StatsDashboard() {
     const byPlatform: Record<string, number> = {};
     const byCountry: Record<string, number> = {};
     const bySignin: Record<string, number> = {};
+    const bySource: Record<string, number> = {};
     let activeSum = 0;
 
     for (const [, d] of days) {
@@ -624,6 +708,7 @@ function StatsDashboard() {
       sumInto(byPlatform, d.by_platform);
       sumInto(byCountry, d.by_country);
       sumInto(bySignin, d.by_signin);
+      sumInto(bySource, d.by_source);
     }
 
     return {
@@ -633,6 +718,7 @@ function StatsDashboard() {
       byPlatform,
       byCountry,
       bySignin,
+      bySource,
       // Averaged, not summed: the same install switched on every day is one
       // install, not seven.
       activeAvg: days.length ? Math.round(activeSum / days.length) : 0,
@@ -775,6 +861,11 @@ function StatsDashboard() {
                   Anonymous: view.bySignin.anonymous ?? 0,
                 }}
               />
+              {/* Where the people who installed first came from, carried on
+                  the download URL from the visit that brought them. 'untagged'
+                  is a download that predates the tagging or lost the
+                  parameters on the way — coverage, not a channel. */}
+              <Breakdown title="First installs · by source" data={view.bySource} />
             </div>
 
             {stats.sites && Object.keys(stats.sites).length > 0 && (
