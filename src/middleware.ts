@@ -7,6 +7,11 @@ const ipRateLimit = new Map<string, { count: number, resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS_ADMIN = 5; // 5 attempts per minute for admin
 const MAX_REQUESTS_GENERAL = 500; // 500 requests per minute for general traffic
+// The stats page and its API are counted separately — see the route below.
+// The API is fetched once per page view plus once per Refresh click, so the
+// budget has to cover someone actually reading the page, not one hit per view.
+const MAX_REQUESTS_STATS_API = 30;
+const MAX_REQUESTS_STATS_PAGE = 60;
 
 function getRateLimit(ip: string, limit: number): boolean {
     const now = Date.now();
@@ -61,10 +66,14 @@ export function middleware(request: NextRequest) {
     // /stats to /en/stats and 404) and instead be rate limited hard enough
     // that the key cannot be guessed.
     if (pathname === '/stats' || pathname.startsWith('/api/stats')) {
-        // The API is the only path where a key can be tried, so it gets the
-        // tighter budget; the page itself is fetched once per view.
-        const limit = pathname.startsWith('/api/stats') ? 10 : 60;
-        if (getRateLimit(`stats:${ip}`, limit)) {
+        // Two budgets, and — importantly — two counters. These shared a single
+        // counter while applying different limits, so page requests spent the
+        // API's much smaller budget: a few views in a minute and the page
+        // still rendered, but its own fetch came back 429 and the dashboard
+        // showed "Too Many Requests" where the numbers should be.
+        const isApi = pathname.startsWith('/api/stats');
+        const limit = isApi ? MAX_REQUESTS_STATS_API : MAX_REQUESTS_STATS_PAGE;
+        if (getRateLimit(`stats-${isApi ? 'api' : 'page'}:${ip}`, limit)) {
             return new NextResponse('Too Many Requests', { status: 429 });
         }
         return NextResponse.next();

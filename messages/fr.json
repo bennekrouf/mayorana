@@ -39,6 +39,15 @@
   },
   "auth": {
     "sign_in": "Se connecter",
+    "sign_in_google": "Continuer avec Google",
+    "sign_in_github": "Continuer avec GitHub",
+    "link_title": "Vous avez déjà un compte",
+    "link_body": "{email} se connecte déjà avec {existing}. Connectez-vous une fois avec {existing} et votre connexion {added} y sera liée — ensuite, les deux fonctionnent.",
+    "link_body_no_email": "Cette adresse se connecte déjà avec {existing}. Connectez-vous une fois avec {existing} et votre connexion {added} y sera liée — ensuite, les deux fonctionnent.",
+    "link_continue": "Continuer avec {existing}",
+    "link_cancel": "Annuler",
+    "link_mismatch": "Ce compte {existing} est {actual}, pas {email}. Réessayez avec {email}.",
+    "link_failed": "La liaison n'a pas fonctionné. Veuillez réessayer.",
     "sign_out": "Se déconnecter",
     "signed_in": "Connecté",
     "account_menu": "Menu du compte"
@@ -143,11 +152,12 @@
     "what_you_get_2": "Une ligne directe : vos retours arrivent dans la boîte du fondateur, pas dans une file de tickets.",
     "what_you_get_3": "Un premier aperçu des nouveaux outils et des nouvelles versions.",
     "what_we_ask_title": "Ce qu'on demande",
-    "what_we_ask_1": "Vous connecter avec Google, pour qu'on puisse vous joindre — une fois, quand on aura une question.",
+    "what_we_ask_1": "Vous connecter avec Google ou GitHub, pour qu'on puisse vous joindre — une fois, quand on aura une question.",
     "what_we_ask_2": "Deux réponses honnêtes ci-dessous. Cinq minutes, pas une dissertation.",
     "signin_title": "Étape 1 — Connexion",
     "signin_body": "C'est ainsi qu'on sait qui vous êtes et qu'on peut garder les outils gratuits pour vous.",
     "signin_button": "Se connecter avec Google",
+    "signin_button_github": "Se connecter avec GitHub",
     "signed_in": "Connecté en tant que {email}",
     "form_title": "Étape 2 — Deux questions",
     "q_tool_label": "Quel outil utilisez-vous ?",
@@ -172,6 +182,7 @@
     "title": "C'est gratuit. On aimerait juste votre avis.",
     "body": "{app} est gratuit pour les particuliers — pas de licence, pas d'essai, pas de carte. En échange, une seule chose : connectez-vous, pour qu'on puisse vous écrire une fois et vous demander comment ça se passe. Vous devenez un utilisateur fondateur, et ça reste gratuit pour vous quoi qu'il arrive ensuite.",
     "signin": "Se connecter avec Google et télécharger",
+    "signin_github": "Se connecter avec GitHub et télécharger",
     "learn_more": "Pourquoi se connecter ? Les utilisateurs fondateurs",
     "skip": "Non merci, juste télécharger",
     "signed_in_as": "Connecté en tant que {email}",
@@ -806,8 +817,8 @@
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control-fr",
-        "pro_download_intro": "Gratuit : exécution des flows dans 5 dépôts de votre choix. Pro : dans tous vos dépôts, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Gratuit : exécution des flows dans 5 dépôts de votre choix. Pro : dans tous vos dépôts, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
+        "pro_download_intro": "Gratuit : 5 dépôts. Pro : tous vos dépôts, dans tous vos dossiers, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Gratuit : 5 dépôts, tous dossiers confondus ; les autres sont affichés verrouillés. Pro : tous vos dépôts, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
         "pro_how": "Pour l'activer, ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       },
       "blog_toolkit": {

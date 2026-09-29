@@ -6,8 +6,8 @@
 // The builds are free. What we want back is the ability to talk to the people
 // who use them — a download in the nginx log is an IP address, not a person.
 // So a download by someone not signed in first opens a short explanation and
-// a Google sign-in; a download by someone signed in is recorded against their
-// account (which apps, which OS, when) and goes straight through.
+// a Google or GitHub sign-in; a download by someone signed in is recorded
+// against their account (which apps, which OS, when) and goes straight through.
 //
 // Signing in is optional. The link to skip it is there, and it is honest — no
 // delay, no trick — but it is deliberately the quiet option: the one thing on
@@ -25,11 +25,13 @@ import React, {
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { FiArrowRight, FiX } from 'react-icons/fi';
+import { FaGithub } from 'react-icons/fa';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
 import { getFirebaseAuth, isAuthConfigured } from '@/lib/firebase';
 import { getUserPrefs, updateUserPrefs } from '@/lib/gateway';
+import { capture as captureAttribution, withAttribution } from '@/lib/attribution';
 import type { OS } from '@/data/tools';
 
 export interface DownloadRequest {
@@ -77,9 +79,11 @@ function takePending(): DownloadRequest | null {
 }
 
 /** Start the browser download. `src=member` marks it in the access log as a
- *  download we can follow up on; the stats script counts the split. */
+ *  download we can follow up on; the stats script counts the split. The utm_*
+ *  pair says which channel first brought this person to the site — see
+ *  src/lib/attribution.ts for why it cannot be read off the request itself. */
 function navigateToBuild(href: string, member: boolean) {
-  const url = new URL(href);
+  const url = new URL(withAttribution(href));
   if (member) url.searchParams.set('src', 'member');
   window.location.href = url.toString();
 }
@@ -110,7 +114,7 @@ async function recordDownload(request: DownloadRequest): Promise<void> {
 }
 
 export function DownloadGateProvider({ children }: { children: ReactNode }) {
-  const { enabled, user, signInWithGoogle } = useAuth();
+  const { enabled, user, signIn } = useAuth();
   const [pending, setPending] = useState<DownloadRequest | null>(null);
   const [busy, setBusy] = useState(false);
   // Guards the resume-after-redirect path so it runs once, not on every
@@ -122,6 +126,13 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     panelOpen.current = pending !== null;
   }, [pending]);
+
+  // Every localised page mounts this provider, so this is the one place that
+  // sees an arrival whatever page it landed on. Cheap after the first visit:
+  // an untagged arrival with something already stored reads one key and stops.
+  useEffect(() => {
+    captureAttribution();
+  }, []);
 
   const deliver = useCallback(async (request: DownloadRequest, member: boolean) => {
     setBusy(true);
@@ -162,22 +173,22 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
     });
   }, [deliver]);
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (provider: SignInProvider) => {
     if (!pending) return;
     // Parked in case the popup is blocked and sign-in falls back to a
     // redirect, which leaves this page before the next line runs.
     stashPending(pending);
     setBusy(true);
-    await signInWithGoogle();
+    const outcome = await signIn(provider);
     const signedIn = getFirebaseAuth().currentUser;
-    if (signedIn) {
+    if (outcome === 'signed-in' && signedIn) {
       // Popup path: the session is in place. The parked copy is consumed
       // here so the subscription above does not deliver it a second time.
       takePending();
       resumed.current = true;
       await deliver(pending, true);
     } else {
-      // Popup closed without signing in: back to the panel.
+      // Popup (or link dialog) closed without signing in: back to the panel.
       takePending();
       setBusy(false);
     }
@@ -213,7 +224,7 @@ function DownloadGatePanel({
 }: {
   request: DownloadRequest;
   busy: boolean;
-  onSignIn: () => void;
+  onSignIn: (provider: SignInProvider) => void;
   onSkip: () => void;
   onClose: () => void;
 }) {
@@ -266,7 +277,7 @@ function DownloadGatePanel({
         </Link>
 
         <button
-          onClick={onSignIn}
+          onClick={() => onSignIn('google')}
           disabled={busy}
           className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 disabled:opacity-60 transition-colors"
         >
@@ -274,6 +285,14 @@ function DownloadGatePanel({
             <path fill="#EA4335" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
           </svg>
           {busy ? t('downloading') : t('signin')}
+        </button>
+        <button
+          onClick={() => onSignIn('github')}
+          disabled={busy}
+          className="w-full mt-3 flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium border border-border hover:bg-secondary disabled:opacity-60 transition-colors"
+        >
+          <FaGithub className="w-5 h-5" aria-hidden />
+          {t('signin_github')}
         </button>
 
         <div className="mt-5 text-center">
