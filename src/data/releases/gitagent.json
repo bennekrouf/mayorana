@@ -2,8 +2,61 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-09-27T09:49:16Z",
+  "generated_at": "2026-09-27T18:46:47Z",
   "releases": [
+    {
+      "version": "0.1.62",
+      "tag": "v0.1.62",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The Branches panel spots branches that are ahead of the base branch but would change no file if merged — old merge commits, or work the base already has from a squash merge — and marks them \"nothing new\". A Clean up button closes the branch's open pull request and deletes it on GitHub and locally, after a confirmation. Before, such a branch was listed as needing a pull request, and one named `main` offered no action at all."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.61",
+      "tag": "v0.1.61",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Refresh in the repository list now looks at the folder again: a repository cloned into it since it was opened appears, and one deleted or moved away disappears. Before, it only re-checked the repositories already listed, and a new one needed the folder to be reopened.",
+            "Committing in a repository with no commits yet — straight after `git init` — works. Scan changes used to fail with \"ambiguous argument 'HEAD'\". The first commit now goes on the branch you are on and is pushed as that branch, with no pull request, since the remote has nothing yet to open one against."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.60",
+      "tag": "v0.1.60",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The update check now considers preferred formats for each operating system, ensuring a more tailored download experience."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.58",
+      "tag": "v0.1.58",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A flow's steps are listed in the order they run. Steps added in Setup in front of an existing one used to appear at the bottom of the run view, after the step they come before, even though Setup showed them in the right place."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.57",
       "tag": "v0.1.57",

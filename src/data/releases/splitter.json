@@ -2,8 +2,34 @@
   "name": "splitter",
   "product": "Splitter",
   "page": "https://mayorana.ch/en/apps/splitter",
-  "generated_at": "2026-09-27T09:17:39Z",
+  "generated_at": "2026-09-27T18:48:24Z",
   "releases": [
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Without Splitter Pro, an export now writes the first 10 tracks of each recording. Splitting, reviewing and naming are not limited: when a recording has more tracks, the export bar says how many and **Splitter Pro exports all** opens the licence window. A vinyl side, an EP or a short set still fits in the free version; with Pro, every track is exported, as before."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Splitter Pro licences. Click **Splitter** at the top of the file list to paste the licence key from your purchase email. The key is checked on your computer, with no account and nothing sent anywhere, and a **Pro** badge shows once it is active. **Remove from this computer** frees it for another one."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.9",
       "tag": "v0.1.9",

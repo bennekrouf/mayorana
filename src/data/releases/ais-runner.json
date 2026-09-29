@@ -2,8 +2,21 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-09-27T08:42:27Z",
+  "generated_at": "2026-09-27T18:51:13Z",
   "releases": [
+    {
+      "version": "0.5.56",
+      "tag": "v0.5.56",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The Linux build now starts on Ubuntu 22.04, Debian 12 and other distributions older than Ubuntu 24.04, where it stopped at launch with \"version GLIBC_2.39 not found\". It is now built on Ubuntu 22.04, so it runs there and on anything newer. The same goes for the `ais-test` runner used in CI pipelines."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.55",
       "tag": "v0.5.55",
