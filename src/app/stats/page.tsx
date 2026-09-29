@@ -1,13 +1,16 @@
 // File: src/app/stats/page.tsx
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   FiDownload,
   FiRefreshCw,
   FiAlertCircle,
   FiChevronDown,
   FiChevronRight,
+  FiCopy,
+  FiCheck,
 } from 'react-icons/fi';
 
 interface DayDetail {
@@ -230,13 +233,20 @@ function SiteCard({
 
 // Ranges are applied in the browser: the server ships a year of per-day
 // detail, so switching period is instant and costs no request.
-const RANGES: { label: string; days: number | null }[] = [
-  { label: 'Today', days: 1 },
-  { label: '7 days', days: 7 },
-  { label: '30 days', days: 30 },
-  { label: '90 days', days: 90 },
-  { label: 'All', days: null },
+//
+// `key` is the range's spelling in the URL. The selected range lives in the
+// query string rather than in component state so that a particular view is a
+// link — /stats?range=today is the one to bookmark or send to someone.
+const RANGES: { label: string; key: string; days: number | null }[] = [
+  { label: 'Today', key: 'today', days: 1 },
+  { label: '7 days', key: '7d', days: 7 },
+  { label: '30 days', key: '30d', days: 30 },
+  { label: '90 days', key: '90d', days: 90 },
+  { label: 'All', key: 'all', days: null },
 ];
+
+/** The view with no ?range= at all, and the one whose link stays clean. */
+const DEFAULT_RANGE = '7d';
 
 /** Rows the daily table shows before asking. */
 const DAILY_ROWS = 30;
@@ -388,11 +398,176 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
   );
 }
 
-export default function StatsPage() {
+/** Everything the page computes for the chosen range. Named so the report
+ *  builder below can be handed it without repeating the shape inline. */
+interface View {
+  days: [string, DayDetail][];
+  totals: { downloads: number; installs: number; updates: number; excluded: number };
+  byApp: Record<string, number>;
+  byPlatform: Record<string, number>;
+  byCountry: Record<string, number>;
+  bySignin: Record<string, number>;
+  activeAvg: number;
+  from: string | null;
+}
+
+/** A breakdown as indented "key: n" lines, biggest first. */
+function lines(data: Record<string, number>, indent = '  '): string {
+  const entries = Object.entries(data).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]);
+  if (entries.length === 0) return `${indent}(none)`;
+  return entries.map(([key, n]) => `${indent}${key}: ${n}`).join('\n');
+}
+
+/**
+ * The visible dashboard as plain text, for pasting into a chat with an LLM.
+ *
+ * Deliberately not JSON. These numbers mean nothing without their units and
+ * counting rules — a model handed a bare object invents its own reading of
+ * "active" or "visitor-day" — so every section carries its label, each figure
+ * says whether it follows the selected range or is all-time, and the caveats
+ * from the page footer come along at the end.
+ *
+ * Numbers are written bare (1234, not 1,234): thousands separators are a
+ * display concern and nothing should have to unpick them. The per-day detail
+ * the table keeps behind a click is included in full, since pasting is the one
+ * moment where more context costs nothing.
+ */
+function buildReport(stats: Stats, view: View, range: { label: string; days: number | null }): string {
+  const days = view.days;
+  const span = days.length
+    ? `${days[0][0]} to ${days[days.length - 1][0]}, ${days.length} day${days.length === 1 ? '' : 's'}`
+    : 'no days in range';
+  const out: string[] = [];
+
+  out.push('# mayorana.ch — download and traffic stats');
+  out.push('');
+  out.push(`Range shown: ${range.label} (${span})`);
+  out.push(`Snapshot generated: ${stats.generated_at}`);
+  out.push(`Counting since: ${stats.counting_since ?? 'unknown'} · ${stats.days_recorded ?? 0} day(s) recorded in total`);
+  out.push(`Country data: ${stats.geoip ?? 'disabled'}`);
+  out.push('');
+
+  out.push('## Desktop downloads (selected range)');
+  out.push(`Downloads: ${view.totals.downloads}`);
+  out.push(`First installs (from the website): ${view.totals.installs}`);
+  out.push(`Updates (from in-app banners): ${view.totals.updates}`);
+  out.push(`Active installs: ${view.activeAvg} (daily average over the period)`);
+  out.push(`Filtered out in this period: ${view.totals.excluded} request(s)`);
+  out.push('');
+
+  if (days.length > 0) {
+    // Newest first, the order the table on the page uses.
+    const rows = [...days].reverse();
+    out.push('## Daily');
+    out.push('| Day | Total | Installs | Updates | Active |');
+    out.push('| --- | ---: | ---: | ---: | ---: |');
+    for (const [day, d] of rows) {
+      out.push(`| ${day} | ${d.total ?? 0} | ${d.installs ?? 0} | ${d.updates ?? 0} | ${d.active ?? 0} |`);
+    }
+    out.push('');
+
+    const detailed = rows.filter(([, d]) => (d.total ?? 0) > 0);
+    if (detailed.length > 0) {
+      out.push('### Daily detail');
+      for (const [day, d] of detailed) {
+        out.push(`${day}:`);
+        out.push(`  apps: ${pairs(d.by_app) || '—'}`);
+        out.push(`  platforms: ${pairs(d.by_platform) || '—'}`);
+        out.push(`  countries: ${pairs(withCountryNames(d.by_country ?? {})) || '—'}`);
+        if (d.excluded > 0) out.push(`  filtered out: ${d.excluded} bot / self request(s)`);
+      }
+      out.push('');
+    }
+  }
+
+  out.push('## By app (selected range)');
+  out.push(lines(view.byApp));
+  out.push('');
+  out.push('## By platform (selected range)');
+  out.push(lines(view.byPlatform));
+  out.push('');
+  out.push('## By country (selected range)');
+  out.push(lines(withCountryNames(view.byCountry)));
+  out.push('');
+  out.push('## Filtered out, by reason (all-time)');
+  out.push(lines(stats.excluded_by_reason ?? {}));
+  out.push('');
+  out.push('## First installs — signed in vs anonymous (selected range)');
+  out.push(`  Signed in (reachable): ${view.bySignin.signed_in ?? 0}`);
+  out.push(`  Anonymous: ${view.bySignin.anonymous ?? 0}`);
+  out.push('');
+
+  const sites = Object.entries(stats.sites ?? {}).sort((a, b) => b[1].visitor_days - a[1].visitor_days);
+  if (sites.length > 0) {
+    out.push('## Products — site traffic');
+    out.push('A visitor-day is one address on one day, so a weekly regular counts seven times.');
+    out.push('');
+    for (const [name, site] of sites) {
+      // Recomputed from each site's own series through the same inRange() the
+      // card uses, so the report and the card cannot disagree.
+      const siteDays = inRange(site.daily ?? {}, range.days);
+      const visitorDays = siteDays.reduce((n, [, d]) => n + (d.visitors ?? 0), 0);
+      const requests = siteDays.reduce((n, [, d]) => n + (d.requests ?? 0), 0);
+      const apiRequests = siteDays.reduce((n, [, d]) => n + (d.api_requests ?? 0), 0);
+
+      out.push(`### ${name}`);
+      out.push(`Visitor-days: ${visitorDays}`);
+      out.push(`Requests: ${requests}`);
+      if (apiRequests > 0) {
+        out.push(`API calls: ${apiRequests} (peak clients in a day: ${site.api_clients_peak_day ?? 0})`);
+      }
+      out.push(`Bot requests filtered: ${site.bot_requests + (site.unverified_requests ?? 0)}`);
+      if ((site.probe_requests ?? 0) > 0) {
+        out.push(`Vulnerability probes blocked: ${site.probe_requests}`);
+      }
+      if (siteDays.length > 0) {
+        out.push(`Daily visitors: ${siteDays.map(([day, d]) => `${day} ${d.visitors ?? 0}`).join(' · ')}`);
+      }
+      // Both of these are all-time on the page rather than range-scoped;
+      // saying so stops a model folding them into the selected window.
+      const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
+      if (paths.length > 0) {
+        out.push('Top paths (all-time):');
+        out.push(paths.map(([path, n]) => `  ${path}: ${n}`).join('\n'));
+      }
+      const referrers = Object.entries(site.referrers ?? {}).slice(0, 6);
+      if (referrers.length > 0) {
+        out.push('Came from (all-time, visitor-days per referring host):');
+        out.push(referrers.map(([host, n]) => `  ${host}: ${n}`).join('\n'));
+      }
+      out.push('');
+    }
+  }
+
+  out.push('## How these numbers are counted');
+  out.push('Counts are unique IP per file per day, excluding bots, HEAD requests and checksum');
+  out.push('fetches — so they undercount shared networks and overcount anyone on a changing IP.');
+  out.push('Active installs are averaged over the period, not summed: the same install switched');
+  out.push('on every day is one install, not seven. Top-path and referrer breakdowns are all-time;');
+  out.push('everything else follows the selected range.');
+
+  return out.join('\n');
+}
+
+function StatsDashboard() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  // An unknown or missing ?range= falls back to the default rather than
+  // showing nothing: a mistyped link should still render the page.
+  const range = RANGES.find((r) => r.key === searchParams.get('range'))
+    ?? RANGES.find((r) => r.key === DEFAULT_RANGE)!;
+  const rangeDays = range.days;
+
+  const selectRange = useCallback((key: string) => {
+    // replace, not push: flipping through the ranges should not bury the
+    // previous page under a dozen history entries.
+    router.replace(key === DEFAULT_RANGE ? '/stats' : `/stats?range=${key}`, { scroll: false });
+  }, [router]);
+
   const [stats, setStats] = useState<Stats | null>(null);
-  const [rangeDays, setRangeDays] = useState<number | null>(7);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const fetchStats = useCallback(async (): Promise<string | null> => {
     const response = await fetch('/api/stats');
@@ -469,6 +644,27 @@ export default function StatsPage() {
   // file deploy separately, so the shapes can lag each other.
   const chart = view?.days ?? [];
 
+  const copyReport = useCallback(async () => {
+    if (!stats || !view) return;
+    const report = buildReport(stats, view, range);
+    try {
+      await navigator.clipboard.writeText(report);
+    } catch {
+      // clipboard API needs a secure context and a permission the browser can
+      // refuse; the old selection trick works where it does not.
+      const field = document.createElement('textarea');
+      field.value = report;
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand('copy');
+      document.body.removeChild(field);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [stats, view, range]);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 p-4 sm:p-6">
       <div className="max-w-5xl mx-auto">
@@ -480,6 +676,20 @@ export default function StatsPage() {
             <FiDownload className="h-6 w-6 text-primary" />
             Downloads
           </h1>
+          {/* Only once there is something to copy: an empty report would be
+              a worse answer than a button that is not there. */}
+          {stats && view && (
+            <button
+              onClick={copyReport}
+              title="Copy everything shown, as text to paste into a chat"
+              className="order-1 sm:order-last inline-flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] sm:min-h-0 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700"
+            >
+              {copied
+                ? <FiCheck className="h-4 w-4 text-green-600 dark:text-green-400" />
+                : <FiCopy className="h-4 w-4" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          )}
           <button
             onClick={() => load()}
             disabled={loading}
@@ -492,9 +702,10 @@ export default function StatsPage() {
             {RANGES.map((r) => (
               <button
                 key={r.label}
-                onClick={() => setRangeDays(r.days)}
+                onClick={() => selectRange(r.key)}
+                aria-current={range.key === r.key ? 'true' : undefined}
                 className={`flex-1 sm:flex-none px-2 sm:px-3 py-2 min-h-[44px] sm:min-h-0 text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
-                  rangeDays === r.days
+                  range.key === r.key
                     ? 'bg-primary text-white'
                     : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
                 }`}
@@ -596,5 +807,17 @@ export default function StatsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * useSearchParams needs a Suspense boundary: without one, Next has to opt the
+ * whole route out of prerendering, and the build says so.
+ */
+export default function StatsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 dark:bg-slate-900" />}>
+      <StatsDashboard />
+    </Suspense>
   );
 }
