@@ -805,7 +805,10 @@
             "a": "Oui, le chemin commit-vers-PR fonctionne. Le marquage WIP tient à une interface qui bouge encore et à des releases fréquentes."
           }
         ],
-        "article_slug": "ai-commit-messages-without-giving-up-control-fr"
+        "article_slug": "ai-commit-messages-without-giving-up-control-fr",
+        "pro_download_intro": "Gratuit : exécution des flows dans 5 dépôts de votre choix. Pro : dans tous vos dépôts, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Gratuit : exécution des flows dans 5 dépôts de votre choix. Pro : dans tous vos dépôts, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
+        "pro_how": "Pour l'activer, ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       },
       "blog_toolkit": {
         "seo_title": "Blog Toolkit — Gestionnaire de blog de bureau avec rédaction IA",
@@ -964,7 +967,10 @@
             "a": "Non. Décodage, encodage et téléchargement YouTube fonctionnent sans rien installer d'autre."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
+        "pro_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       },
       "spreadwatch": {
         "seo_title": "Spreadwatch — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
@@ -1040,13 +1046,10 @@
     "thanks_intro": "Voici votre clé de licence {name}. Une copie a été envoyée à {email}.",
     "thanks_copy": "Copier la clé",
     "thanks_copied": "Copiée",
-    "thanks_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
     "thanks_updates": "Votre licence inclut toutes les mises à jour publiées jusqu'au {date}. Les versions publiées avant cette date continuent de fonctionner ensuite.",
     "thanks_missing": "Nous n'avons pas trouvé cet achat. Si vous venez de payer, votre clé de licence arrive par e-mail.",
     "thanks_error": "Votre clé de licence ne peut pas s'afficher pour l'instant. Elle vous a aussi été envoyée par e-mail ; si elle n'arrive pas,",
-    "thanks_contact": "contactez-nous.",
-    "pro_download_intro": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-    "pro_licence_body": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée."
+    "thanks_contact": "contactez-nous."
   },
   "app_releases": {
     "breadcrumb": "Notes de version",

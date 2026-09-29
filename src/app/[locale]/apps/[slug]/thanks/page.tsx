@@ -12,7 +12,7 @@ import { getTranslations } from 'next-intl/server';
 import { ArrowLeft } from 'lucide-react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { LicenceReveal } from '@/components/ui/LicenceReveal';
-import { getToolBySlug, toolSlugs } from '@/data/tools';
+import { appI18nKey, getToolBySlug, toolSlugs } from '@/data/tools';
 import { locales } from '../../../../../../i18n';
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -53,7 +53,10 @@ export default async function ThanksPage({ params }: Props) {
           </Link>
           <h1 className="text-3xl font-bold mb-6">{t('thanks_title', { name: tool.name })}</h1>
           <Suspense fallback={null}>
-            <LicenceReveal contactHref={`/${locale}/contact`} />
+            <LicenceReveal
+              contactHref={`/${locale}/contact`}
+              how={t(`apps.${appI18nKey[tool.id]}.pro_how`)}
+            />
           </Suspense>
         </div>
       </section>

@@ -22,7 +22,8 @@ type State =
 const RETRY_MS = 2000;
 const MAX_TRIES = 45; // 90 s: card payments settle in seconds
 
-export function LicenceReveal({ contactHref }: { contactHref: string }) {
+/** `how`: where the key goes in this app, from the app's own copy. */
+export function LicenceReveal({ contactHref, how }: { contactHref: string; how: string }) {
   const t = useTranslations('app_detail');
   const sessionId = useSearchParams().get('session_id');
   const [state, setState] = useState<State>({ kind: 'loading' });
@@ -108,7 +109,7 @@ export function LicenceReveal({ contactHref }: { contactHref: string }) {
           {copied ? t('thanks_copied') : t('thanks_copy')}
         </button>
       </div>
-      <p className="text-sm text-muted-foreground leading-relaxed">{t('thanks_how')}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{how}</p>
       <p className="text-sm text-muted-foreground leading-relaxed">
         {t('thanks_updates', { date: licence.updates_until })}
       </p>

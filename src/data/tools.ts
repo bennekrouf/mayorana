@@ -159,6 +159,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'gitagent',
+    pro: { edition: 'pro' },
     source: 'https://github.com/Bennekrouf/gitagent',
     name: 'GitAgent',
     tech: 'Rust · Dioxus · ollama / DeepSeek · git · gh',
