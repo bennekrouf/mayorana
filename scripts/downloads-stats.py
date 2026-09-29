@@ -33,6 +33,7 @@ import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from glob import glob
+from urllib.parse import unquote_plus
 
 try:  # Optional: country attribution is skipped cleanly when absent.
     import maxminddb
@@ -77,6 +78,14 @@ FROM_UPDATER = re.compile(r'[?&]src=updater(&|$)', re.I)
 # can reach afterwards, which is the funnel the founding-users offer is
 # measured on.
 FROM_MEMBER = re.compile(r'[?&]src=member(&|$)', re.I)
+
+# Which channel first brought this person to the site, put on the download URL
+# by src/lib/attribution.ts. The log's own Referer for a download is always one
+# of our own pages, so without this the answer would only ever be "they clicked
+# from /apps". Absent on updater traffic — an app checking for a new build did
+# not come from anywhere — and on any download predating the tagging.
+UTM_SOURCE = re.compile(r'[?&]utm_source=([^&]+)', re.I)
+UTM_MEDIUM = re.compile(r'[?&]utm_medium=([^&]+)', re.I)
 
 # Set by the updater on its latest.json poll. Not a download, but counting it
 # separately answers a more useful question: how many installs are running.
@@ -300,6 +309,9 @@ def _collect(line, seen, events, checkins, nets) -> None:
     elif _in_nets(match['ip'], nets):
         reason = 'datacentre'
 
+    source = UTM_SOURCE.search(match['path'])
+    medium = UTM_MEDIUM.search(match['path'])
+
     events.append({
         'day': day,
         'ip': match['ip'],
@@ -308,8 +320,21 @@ def _collect(line, seen, events, checkins, nets) -> None:
         'platform': platform_of(download['file']),
         'updater': bool(FROM_UPDATER.search(match['path']) or UPDATER_UA.search(match['ua'])),
         'member': bool(FROM_MEMBER.search(match['path'])),
+        'source': _unquote(source.group(1)) if source else None,
+        'medium': _unquote(medium.group(1)) if medium else None,
         'excluded': reason,
     })
+
+
+def _unquote(value: str) -> str:
+    """Percent-decoded and bounded. These arrive from a URL anyone can type,
+    so the value is treated as untrusted input, not as a label we chose."""
+    try:
+        decoded = unquote_plus(value)
+    except Exception:
+        decoded = value
+    cleaned = re.sub(r'[^A-Za-z0-9._-]+', '-', decoded).strip('-').lower()
+    return cleaned[:60] or 'unknown'
 
 
 def _in_nets(ip: str, nets: list) -> bool:
@@ -343,6 +368,11 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
         # are left out: an existing user taking a new build tells nothing
         # about whether the offer on the site was accepted.
         'by_signin': defaultdict(int),
+        # Which channel found this person, for first installs only. An update
+        # is an app phoning home, not a visit anyone was persuaded to make, so
+        # counting it here would drown the signal in 'unknown'.
+        'by_source': defaultdict(int),
+        'by_medium': defaultdict(int),
         # Kept rather than silently dropped: a filter you cannot see is a
         # filter you cannot check.
         'excluded': defaultdict(int),
@@ -361,6 +391,12 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
         bucket['updates' if event['updater'] else 'installs'] += 1
         if not event['updater']:
             bucket['by_signin']['signed_in' if event.get('member') else 'anonymous'] += 1
+            # Untagged downloads are real downloads; they just predate the
+            # tagging or came from a browser that dropped the parameters.
+            # Reported as 'untagged' rather than dropped, so the coverage of
+            # the attribution itself stays visible.
+            bucket['by_source'][event.get('source') or 'untagged'] += 1
+            bucket['by_medium'][event.get('medium') or 'untagged'] += 1
         bucket['by_app'][event['app']] += 1
         bucket['by_platform'][event['platform']] += 1
         bucket['by_country'][geo.country(event['ip'])] += 1
@@ -567,11 +603,19 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
             # about a product came from is the closest thing the logs hold
             # to a positioning signal.
             'referrers': dict(sorted(referrers.items(), key=lambda kv: -kv[1])[:TOP_REFERRERS]),
+            # Per day, not just the totals above. The page narrows every
+            # figure it shows to the selected range, and anything missing
+            # from here it cannot narrow — bot and probe counts used to be
+            # summary-only, so they sat on the card at their all-time value
+            # next to a week's worth of visitors, with nothing saying so.
             'daily': {
                 d: {
                     'visitors': days[d].get('visitors', 0),
                     'requests': days[d].get('requests', 0),
                     'api_requests': days[d].get('api_requests', 0),
+                    'bot_requests': days[d].get('bot_requests', 0),
+                    'unverified_requests': days[d].get('unverified_requests', 0),
+                    'probe_requests': days[d].get('probe_requests', 0),
                 }
                 for d in ordered_days[-365:]
             },
@@ -602,6 +646,8 @@ def summarise(state: dict, geo_note: str) -> dict:
     by_platform: dict[str, int] = defaultdict(int)
     by_country: dict[str, int] = defaultdict(int)
     by_signin: dict[str, int] = defaultdict(int)
+    by_source: dict[str, int] = defaultdict(int)
+    by_medium: dict[str, int] = defaultdict(int)
     excluded_by_reason: dict[str, int] = defaultdict(int)
 
     for counts in state.get('days', {}).values():
@@ -609,7 +655,8 @@ def summarise(state: dict, geo_note: str) -> dict:
         totals['installs'] += counts.get('installs', 0)
         totals['updates'] += counts.get('updates', 0)
         for name, target in (('by_app', by_app), ('by_platform', by_platform),
-                             ('by_country', by_country), ('by_signin', by_signin)):
+                             ('by_country', by_country), ('by_signin', by_signin),
+                             ('by_source', by_source), ('by_medium', by_medium)):
             for key, n in counts.get(name, {}).items():
                 target[key] += n
         for reason, n in counts.get('excluded', {}).items():
@@ -645,6 +692,8 @@ def summarise(state: dict, geo_note: str) -> dict:
         'by_platform': ordered(by_platform),
         'by_country': ordered(by_country),
         'by_signin': ordered(by_signin),
+        'by_source': ordered(by_source),
+        'by_medium': ordered(by_medium),
         'active_installs_daily_avg_7d': active_daily_avg,
         'daily': {
             day: {
@@ -657,6 +706,8 @@ def summarise(state: dict, geo_note: str) -> dict:
                 'by_platform': state['days'][day].get('by_platform', {}),
                 'by_country': state['days'][day].get('by_country', {}),
                 'by_signin': state['days'][day].get('by_signin', {}),
+                'by_source': state['days'][day].get('by_source', {}),
+                'by_medium': state['days'][day].get('by_medium', {}),
             }
             for day in recent
         },

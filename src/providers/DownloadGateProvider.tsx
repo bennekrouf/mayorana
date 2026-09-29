@@ -30,6 +30,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useAuth } from '@/providers/AuthProvider';
 import { getFirebaseAuth, isAuthConfigured } from '@/lib/firebase';
 import { getUserPrefs, updateUserPrefs } from '@/lib/gateway';
+import { capture as captureAttribution, withAttribution } from '@/lib/attribution';
 import type { OS } from '@/data/tools';
 
 export interface DownloadRequest {
@@ -77,9 +78,11 @@ function takePending(): DownloadRequest | null {
 }
 
 /** Start the browser download. `src=member` marks it in the access log as a
- *  download we can follow up on; the stats script counts the split. */
+ *  download we can follow up on; the stats script counts the split. The utm_*
+ *  pair says which channel first brought this person to the site — see
+ *  src/lib/attribution.ts for why it cannot be read off the request itself. */
 function navigateToBuild(href: string, member: boolean) {
-  const url = new URL(href);
+  const url = new URL(withAttribution(href));
   if (member) url.searchParams.set('src', 'member');
   window.location.href = url.toString();
 }
@@ -122,6 +125,13 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     panelOpen.current = pending !== null;
   }, [pending]);
+
+  // Every localised page mounts this provider, so this is the one place that
+  // sees an arrival whatever page it landed on. Cheap after the first visit:
+  // an untagged arrival with something already stored reads one key and stops.
+  useEffect(() => {
+    captureAttribution();
+  }, []);
 
   const deliver = useCallback(async (request: DownloadRequest, member: boolean) => {
     setBusy(true);
