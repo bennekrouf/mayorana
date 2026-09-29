@@ -1,7 +1,8 @@
 // File: src/app/stats/page.tsx
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   FiDownload,
   FiRefreshCw,
@@ -230,13 +231,20 @@ function SiteCard({
 
 // Ranges are applied in the browser: the server ships a year of per-day
 // detail, so switching period is instant and costs no request.
-const RANGES: { label: string; days: number | null }[] = [
-  { label: 'Today', days: 1 },
-  { label: '7 days', days: 7 },
-  { label: '30 days', days: 30 },
-  { label: '90 days', days: 90 },
-  { label: 'All', days: null },
+//
+// `key` is the range's spelling in the URL. The selected range lives in the
+// query string rather than in component state so that a particular view is a
+// link — /stats?range=today is the one to bookmark or send to someone.
+const RANGES: { label: string; key: string; days: number | null }[] = [
+  { label: 'Today', key: 'today', days: 1 },
+  { label: '7 days', key: '7d', days: 7 },
+  { label: '30 days', key: '30d', days: 30 },
+  { label: '90 days', key: '90d', days: 90 },
+  { label: 'All', key: 'all', days: null },
 ];
+
+/** The view with no ?range= at all, and the one whose link stays clean. */
+const DEFAULT_RANGE = '7d';
 
 /** Rows the daily table shows before asking. */
 const DAILY_ROWS = 30;
@@ -388,9 +396,22 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
   );
 }
 
-export default function StatsPage() {
+function StatsDashboard() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  // An unknown or missing ?range= falls back to the default rather than
+  // showing nothing: a mistyped link should still render the page.
+  const range = RANGES.find((r) => r.key === searchParams.get('range'))
+    ?? RANGES.find((r) => r.key === DEFAULT_RANGE)!;
+  const rangeDays = range.days;
+
+  const selectRange = useCallback((key: string) => {
+    // replace, not push: flipping through the ranges should not bury the
+    // previous page under a dozen history entries.
+    router.replace(key === DEFAULT_RANGE ? '/stats' : `/stats?range=${key}`, { scroll: false });
+  }, [router]);
+
   const [stats, setStats] = useState<Stats | null>(null);
-  const [rangeDays, setRangeDays] = useState<number | null>(7);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -492,9 +513,10 @@ export default function StatsPage() {
             {RANGES.map((r) => (
               <button
                 key={r.label}
-                onClick={() => setRangeDays(r.days)}
+                onClick={() => selectRange(r.key)}
+                aria-current={range.key === r.key ? 'true' : undefined}
                 className={`flex-1 sm:flex-none px-2 sm:px-3 py-2 min-h-[44px] sm:min-h-0 text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
-                  rangeDays === r.days
+                  range.key === r.key
                     ? 'bg-primary text-white'
                     : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
                 }`}
@@ -596,5 +618,17 @@ export default function StatsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * useSearchParams needs a Suspense boundary: without one, Next has to opt the
+ * whole route out of prerendering, and the build says so.
+ */
+export default function StatsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 dark:bg-slate-900" />}>
+      <StatsDashboard />
+    </Suspense>
   );
 }
