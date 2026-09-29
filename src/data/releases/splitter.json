@@ -2,8 +2,22 @@
   "name": "splitter",
   "product": "Splitter",
   "page": "https://mayorana.ch/en/apps/splitter",
-  "generated_at": "2026-09-27T18:48:24Z",
+  "generated_at": "2026-09-27T19:39:45Z",
   "releases": [
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The version you are running now shows next to the Splitter name at the top of the sidebar and in the window title, so it is at hand when you report a problem or check whether an update installed.",
+            "A **Get Pro…** button at the top of the file list opens the licence window, where you buy Splitter Pro or paste your key. It reads **Pro ✓** once your licence is active. Clicking **Splitter** still opens the same window."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.13",
       "tag": "v0.1.13",

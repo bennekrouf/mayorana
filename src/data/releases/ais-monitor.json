@@ -2,8 +2,72 @@
   "name": "ais-monitor",
   "product": "AIS Monitor",
   "page": "https://mayorana.ch/en/apps/ais-monitor",
-  "generated_at": "2026-09-25T14:31:12Z",
+  "generated_at": "2026-09-29T09:20:59Z",
   "releases": [
+    {
+      "version": "0.3.39",
+      "tag": "v0.3.39",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On Function Apps, each function has a **Runs** button that lists its recent invocations — successful and failed — with time, result, status code and duration. Click an invocation to see the log lines it wrote, warnings and errors highlighted, with a button to copy them all. Needs Application Insights, and follows the metrics range picker."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The other tabs — Functions, Health Check, Resource Health, Event Grid, App Settings, Variable Groups, RBAC, Observability and Diagnostics — now load in the background once your chains are discovered, one every few seconds, so they are usually ready by the time you open them instead of starting their scan on first click."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "In a chain's Workflows tab, the \"also fed by\" line now has a space between the label and each feeding workflow, instead of running the names together."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.38",
+      "tag": "v0.3.38",
+      "date": "2026-09-28",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Home, the run log under \"Still failing\" now disappears when its workflow is no longer in the list — after switching to a shorter window such as Today, or once the workflow recovers — instead of staying open with nothing selected."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.37",
+      "tag": "v0.3.37",
+      "date": "2026-09-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.36",
+      "tag": "v0.3.36",
+      "date": "2026-09-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.3.35",
       "tag": "v0.3.35",

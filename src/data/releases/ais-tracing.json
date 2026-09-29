@@ -2,8 +2,34 @@
   "name": "ais-tracing",
   "product": "AIS Tracing",
   "page": "https://mayorana.ch/en/apps/ais-tracing",
-  "generated_at": "2026-09-27T08:44:21Z",
+  "generated_at": "2026-09-28T08:46:03Z",
   "releases": [
+    {
+      "version": "0.1.27",
+      "tag": "v0.1.27",
+      "date": "2026-09-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-09-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.25",
       "tag": "v0.1.25",

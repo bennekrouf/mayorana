@@ -2,8 +2,72 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-09-27T18:46:47Z",
+  "generated_at": "2026-09-29T13:12:28Z",
   "releases": [
+    {
+      "version": "0.1.66",
+      "tag": "v0.1.66",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The refresh button at the top of the repository list is bigger and tinted green, so the check you run most often is the easiest one to hit. Its icon turns while the repositories are being re-checked."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "**Bring the base in**, offered when a pull request cannot be merged, now finishes the job when the base merges in cleanly: it pushes the branch, waits for GitHub to recheck the pull request, and asks to merge again. Before, a clean merge ended the run without a word and without pushing, so the pull request still showed as conflicting. A real conflict still stops before anything is pushed, with the files to fix marked."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.65",
+      "tag": "v0.1.65",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.64",
+      "tag": "v0.1.64",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A flow created in Setup is shown only on the repository you opened Setup from, instead of on every repository. In the other repositories the flow list button counts it as \"1 more\", and the list offers it as \"only on other repositories — tick to add here\". Setup says where each flow is shown, with **Show on every repository** for a flow meant for all of them, and **Only on** to restrict an existing one — which also covers repositories cloned later, unlike hiding it one repository at a time."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "When a pull request cannot be merged because it conflicts with the base branch, **Bring the base in** now switches to the pull request's own branch before merging the base into it. Before, it merged into whichever branch happened to be checked out. The button no longer reads \"Abandon\", and the message lists every step from there to a merged pull request."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.63",
+      "tag": "v0.1.63",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "GitAgent Pro. The free version now runs flows in 5 repositories of your choice: the first run in a repository takes one of the 5, and **Get Pro…** in the top bar shows which ones and lets you give one back. Every repository stays listed and checked as before; once the 5 are taken, the others show a **Pro** tag and a run there opens the Pro window instead of starting. Paste the licence key from your purchase email in the same window to run flows in every repository. The key is checked on your computer, with no account and nothing sent anywhere."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.62",
       "tag": "v0.1.62",

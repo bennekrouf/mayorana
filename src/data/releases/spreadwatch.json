@@ -2,6 +2,43 @@
   "name": "spreadwatch",
   "product": "Spreadwatch",
   "page": "https://mayorana.ch/en/apps/spreadwatch",
-  "generated_at": "2026-09-27T00:00:00Z",
-  "releases": []
+  "generated_at": "2026-09-27T19:39:12Z",
+  "releases": [
+    {
+      "version": "0.1.3",
+      "tag": "v0.1.3",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The version you are running now shows at the right end of the tab bar, so it is at hand when you report a problem or check whether an update installed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.1",
+      "tag": "v0.1.1",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "First public release, for macOS (Apple Silicon and Intel), Windows and Linux.",
+            "Follow any asset by ticker and see it quoted against USDT on Binance, Bybit, OKX, MEXC and Gate, plus Jupiter for Solana tokens, with the best cross-venue edges net of fees and which venue's price trails the others.",
+            "A New listings tab: tokens Gate or MEXC just listed that Binance spot does not, scored by volume, other listings, market cap and Binance's interest.",
+            "SOL/USDT swaps through Jupiter from a hot wallet the app creates, with a dry run at every start and hard per-trade and daily limits.",
+            "The app tells you when a newer version is available, with a link to it."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The app was called SOL Spread. Its settings folder, with your hot wallet, watchlist and `trade.toml`, moves from `~/.config/sol-spread` to `~/.config/spreadwatch` the first time you start it; nothing to do by hand. A `keypair_path` in `trade.toml` that still points into the old folder keeps working, and the trade panel asks you to update it."
+          ]
+        }
+      ]
+    }
+  ]
 }
