@@ -11,6 +11,10 @@ logs is recomputed rather than added to. That also means a day is only final
 once it has rotated out — a run mid-day records a partial count and the next
 run corrects it.
 
+Usage statistics from the apps arrive in the same log: an app whose user said
+yes GETs /ping?b=<base64url JSON> and gets a 204. Those requests are decoded
+here and rolled up per day — see parse_usage. Nothing is stored per install.
+
 Country attribution is optional and offline: point --geoip at a MaxMind-format
 country database (DB-IP publish a free one) and install python3-maxminddb. No
 addresses are stored — only the per-country totals they roll up into.
@@ -23,6 +27,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import base64
 import gzip
 import ipaddress
 import json
@@ -90,6 +95,17 @@ UTM_MEDIUM = re.compile(r'[?&]utm_medium=([^&]+)', re.I)
 # Set by the updater on its latest.json poll. Not a download, but counting it
 # separately answers a more useful question: how many installs are running.
 UPDATER_UA = re.compile(r'\(updater\)', re.I)
+
+# ── App usage statistics ─────────────────────────────────────────────────
+# GET /ping?b=<base64url JSON> — see setup-vps.sh. The URL is public, so
+# anyone can send anything; a request only counts if it has the app's
+# telemetry User-Agent and a payload of exactly the expected shape.
+PING_PATH = '/ping'
+TELEMETRY_UA = re.compile(r'\(telemetry\)', re.I)
+INSTALL_ID = re.compile(r'^[0-9a-f]{32}$')
+TAG = re.compile(r'^[a-z0-9_.-]{1,40}$')
+PING_SCHEMA = 1
+MAX_EVENTS_PER_PING = 200           # matches the app's MAX_BATCH
 
 # Where a page visit came from. Only the host is kept — a full referring URL
 # can carry a search query or a session id, and the question is "which site
@@ -414,6 +430,139 @@ def _undefault(counts: dict) -> dict:
     }
 
 
+def _decode_ping(path: str) -> dict | None:
+    """The batch out of a request path, or None if it is not a well-formed
+    one. Strict on purpose: everything that passes is counted."""
+    if not path.startswith(PING_PATH + '?'):
+        return None
+    query = path.split('?', 1)[1]
+    encoded = next((p[2:] for p in query.split('&') if p.startswith('b=')), None)
+    if not encoded:
+        return None
+    try:
+        raw = base64.urlsafe_b64decode(encoded + '=' * (-len(encoded) % 4))
+        body = json.loads(raw)
+    except (ValueError, UnicodeDecodeError):
+        return None
+    if not isinstance(body, dict) or body.get('v') != PING_SCHEMA:
+        return None
+    if not TAG.match(str(body.get('app', ''))):
+        return None
+    if not INSTALL_ID.match(str(body.get('install_id', ''))):
+        return None
+    events = body.get('events')
+    if not isinstance(events, list) or not 0 < len(events) <= MAX_EVENTS_PER_PING:
+        return None
+    return body
+
+
+def parse_usage(patterns: list[str]) -> dict[str, dict]:
+    """Per-day app usage, keyed by ISO date of receipt.
+
+    A day is attributed to when the batch arrived, not to the event's own
+    timestamp: a backlog sent after a week offline says "this install is
+    alive today", and the same rule the downloads use keeps a day
+    recomputable from the logs still on disk.
+
+    Counted per day: distinct installs and launches, events by name, finished
+    runs by flow and outcome, and the mix of versions, systems and forges.
+    Install ids are used to count and then dropped.
+    """
+    installs: dict[str, set[str]] = defaultdict(set)
+    launches: dict[str, set[str]] = defaultdict(set)
+    batches: dict[str, int] = defaultdict(int)
+    by_event: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    by_flow: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    by_forge: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    by_provider: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    # Distinct installs, not events: a version's share of the user base.
+    by_version: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    by_os: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    # A client that did not see the 204 sends the same batch again.
+    seen: set[tuple] = set()
+
+    for pattern in patterns:
+        for path in sorted(glob(pattern)):
+            opener = gzip.open if path.endswith('.gz') else open
+            try:
+                with opener(path, 'rt', errors='replace') as fh:
+                    for line in fh:
+                        match = LINE.match(line)
+                        if not match or match['method'] != 'GET':
+                            continue
+                        if match['status'] != '204':
+                            continue
+                        if not TELEMETRY_UA.search(match['ua']):
+                            continue
+                        body = _decode_ping(match['path'])
+                        if body is None:
+                            continue
+                        try:
+                            stamp = datetime.strptime(
+                                match['time'].split()[0], '%d/%b/%Y:%H:%M:%S')
+                        except ValueError:
+                            continue
+                        day = stamp.date().isoformat()
+                        who = body['install_id']
+                        _fold_ping(body, who, day, seen, installs, launches,
+                                   batches, by_event, by_flow, by_forge,
+                                   by_provider, by_version, by_os)
+            except OSError as exc:
+                print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
+
+    days = set(installs)
+    return {
+        day: {
+            'installs': len(installs[day]),
+            'launches': len(launches.get(day, ())),
+            'batches': batches.get(day, 0),
+            'by_event': dict(by_event.get(day, {})),
+            'by_flow': dict(by_flow.get(day, {})),
+            'by_forge': dict(by_forge.get(day, {})),
+            'by_provider': dict(by_provider.get(day, {})),
+            'by_version': {v: len(s) for v, s in by_version.get(day, {}).items()},
+            'by_os': {o: len(s) for o, s in by_os.get(day, {}).items()},
+        }
+        for day in sorted(days)
+    }
+
+
+def _fold_ping(body, who, day, seen, installs, launches, batches, by_event,
+               by_flow, by_forge, by_provider, by_version, by_os) -> None:
+    installs[day].add(who)
+    batches[day] += 1
+    os_name = str(body.get('os', ''))
+    if TAG.match(os_name):
+        by_os[day][os_name].add(who)
+
+    for event in body['events']:
+        if not isinstance(event, dict):
+            continue
+        name, stamp = str(event.get('n', '')), event.get('t')
+        launch, version = str(event.get('l', '')), str(event.get('av', ''))
+        params = event.get('p') if isinstance(event.get('p'), dict) else {}
+        if not TAG.match(name):
+            continue
+        key = (who, launch, name, stamp)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        launches[day].add(launch)
+        by_event[day][name] += 1
+        if re.match(r'^[0-9][0-9a-z.-]{0,19}$', version):
+            by_version[day][version].add(who)
+        if name == 'flow_finished':
+            flow, outcome = str(params.get('flow', '')), str(params.get('outcome', ''))
+            if TAG.match(flow) and TAG.match(outcome):
+                by_flow[day][f'{flow}/{outcome}'] += 1
+            forge, provider = str(params.get('forge', '')), str(params.get('provider', ''))
+            if TAG.match(forge):
+                by_forge[day][forge] += 1
+            if TAG.match(provider):
+                by_provider[day][provider] += 1
+
+
 def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
     """Per-site, per-day visitor and request counts.
 
@@ -474,6 +623,12 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                             except ValueError:
                                 continue
                             day = stamp.date().isoformat()
+
+                            # The apps' usage pings are answered 204 by
+                            # design and are not page views; parse_usage
+                            # reads them.
+                            if request_path == PING_PATH:
+                                continue
 
                             # Counted before the status check: these are
                             # answered 403/404 by design, and a filter you
@@ -640,6 +795,31 @@ def merge_sites(stored: dict, fresh: dict) -> dict:
     return merged
 
 
+def merge_usage(stored: dict, fresh: dict) -> dict:
+    """Same rule as downloads: days still in the logs are recomputed."""
+    merged = dict(stored)
+    merged.update(fresh)
+    return merged
+
+
+def summarise_usage(usage: dict) -> dict:
+    days = sorted(usage)
+    totals: dict[str, int] = defaultdict(int)
+    for day in days:
+        for name, n in usage[day].get('by_event', {}).items():
+            totals[name] += n
+    week = days[-7:]
+    active = [usage[day].get('installs', 0) for day in week]
+    return {
+        'counting_since': days[0] if days else None,
+        'days_recorded': len(days),
+        'events_total': dict(sorted(totals.items(), key=lambda kv: -kv[1])),
+        # Averaged, not summed, for the reason active_installs_daily_avg_7d is.
+        'active_installs_daily_avg_7d': round(sum(active) / len(active)) if active else 0,
+        'daily': {day: usage[day] for day in days[-365:]},
+    }
+
+
 def summarise(state: dict, geo_note: str) -> dict:
     totals = {'downloads': 0, 'installs': 0, 'updates': 0, 'excluded': 0}
     by_app: dict[str, int] = defaultdict(int)
@@ -771,9 +951,13 @@ def main() -> int:
     sites_state = ({} if args.no_sites
                    else merge_sites(state.get('sites', {}), parse_sites(args.log_dir, geo)))
 
-    state = {'days': downloads_state['days'], 'sites': sites_state}
+    usage_state = merge_usage(state.get('usage', {}), parse_usage(args.logs))
+
+    state = {'days': downloads_state['days'], 'sites': sites_state,
+             'usage': usage_state}
     summary = summarise(state, geo.note)
     summary['sites'] = summarise_sites(sites_state)
+    summary['usage'] = summarise_usage(usage_state)
 
     if args.dry_run:
         json.dump(summary, sys.stdout, indent=2, sort_keys=True)
