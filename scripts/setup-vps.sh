@@ -375,6 +375,28 @@ server {
         add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
     }
 
+    # ── Usage statistics ───────────────────────────────────────────────────
+    # Apps that have been told yes by their user GET /ping?b=<base64url JSON>
+    # and get an empty 204. Nothing here parses the query: the request line in
+    # the access log *is* the record, and scripts/downloads-stats.py folds it
+    # into the nightly numbers. No upstream, no database, nothing that has to
+    # be running for a send to succeed.
+    #
+    # Exact match, so only this path answers 204 — a scanner probing /ping/x
+    # falls through to the site. The burst limiter is generous because every
+    # install flushes on a timer and a backlog is several requests; it only
+    # exists to stop a single address filling the log. Requests over nginx's
+    # 8 KB request-line limit are refused with 414 and never reach a log
+    # line the script would accept, which is why the app chunks its batches.
+    location = /ping {
+        limit_req zone=general burst=50 nodelay;
+        limit_req_status 429;
+
+        add_header Cache-Control "no-store" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        return 204;
+    }
+
     # ── Product downloads ──────────────────────────────────────────────────
     # Free-for-individuals builds, served straight off disk. These are 8-20 MB
     # binaries; proxying them through Next would occupy a Node process for the
