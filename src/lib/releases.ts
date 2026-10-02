@@ -28,6 +28,7 @@ import appscreens from '@/data/releases/appscreens.json';
 import gitagent from '@/data/releases/gitagent.json';
 import splitter from '@/data/releases/splitter.json';
 import spreadwatch from '@/data/releases/spreadwatch.json';
+import blogToolkit from '@/data/releases/blog-toolkit.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -60,6 +61,7 @@ const snapshots: Record<string, ReleaseFeed> = {
   gitagent: gitagent as ReleaseFeed,
   splitter: splitter as ReleaseFeed,
   spreadwatch: spreadwatch as ReleaseFeed,
+  'blog-toolkit': blogToolkit as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client
