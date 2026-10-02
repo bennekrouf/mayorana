@@ -259,6 +259,7 @@ export const releaseNotesTools: string[] = [
   'ais-monitor',
   'ais-tracing',
   'ais-analytics',
+  'blog-toolkit',
   'appscreens',
   'gitagent',
   'splitter',
