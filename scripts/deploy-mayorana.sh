@@ -89,6 +89,13 @@ NEXT_DIST_DIR="$STAGE_DIR" yarn build
 
 [ -f "$STAGE_DIR/BUILD_ID" ] || err "Build produced no $STAGE_DIR/BUILD_ID — refusing to swap"
 
+# The build refreshes the release-note snapshots from the live feeds (prebuild,
+# scripts/fetch-releases.js). They are already compiled into $STAGE_DIR, so put
+# the committed copies back: left modified, they make the next deploy refuse
+# the dirty tree above, which is what would stop a scheduled deploy after its
+# first night. (public/sitemap.xml is regenerated too, but it is untracked.)
+"${GIT[@]}" checkout -- src/data/releases
+
 # Stop before swapping: `next start` resolves chunks lazily from disk by path,
 # so a live process would read the new directory through the old paths. A brief
 # clean stop beats serving corrupted responses.
