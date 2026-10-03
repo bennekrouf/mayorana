@@ -43,6 +43,12 @@ export interface DesktopToolConfig {
    * back to /apps/<id>/thanks, which shows the licence key.
    */
   pro?: { edition: string };
+  /**
+   * A Claude skill for the people using the tool, packaged by the tool's
+   * release CI next to its builds. The detail page only shows it once the file
+   * is actually there — see src/lib/claudeSkill.ts.
+   */
+  claudeSkill?: string;
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -89,6 +95,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${runnerDl}/ais-runner-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${runnerDl}/ais-runner-setup.exe` },
     ],
+    claudeSkill: `${runnerDl}/ais-runner-claude-skill.zip`,
   },
   {
     id: 'ais-monitor',
@@ -170,6 +177,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${gitagentDl}/gitagent-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${gitagentDl}/gitagent-setup.exe` },
     ],
+    claudeSkill: `${gitagentDl}/gitagent-claude-skill.zip`,
   },
   {
     id: 'splitter',
