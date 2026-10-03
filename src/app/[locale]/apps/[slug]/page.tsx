@@ -13,7 +13,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ArrowLeft, ArrowRight, Check, Github, Scale } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Download, Github, Scale } from 'lucide-react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { BuyProButton } from '@/components/ui/BuyProButton';
 import {
@@ -30,6 +30,7 @@ import {
   type DesktopToolConfig,
 } from '@/data/tools';
 import { getPostBySlug } from '@/lib/blog';
+import { isClaudeSkillPublished } from '@/lib/claudeSkill';
 import { formatReleaseDate, getReleaseFeed, releaseAnchor } from '@/lib/releases';
 import { buildMetadata, SITE_URL } from '@/lib/seo';
 import { locales } from '../../../../../i18n';
@@ -109,6 +110,10 @@ export default async function ToolDetailPage({ params }: Props) {
   const feed = await getReleaseFeed(slug);
   const latest = feed?.releases[0];
   const recent = feed?.releases.slice(0, 4) ?? [];
+
+  // The tool's Claude skill, once its release CI has published it.
+  const skillHref =
+    tool.claudeSkill && (await isClaudeSkillPublished(tool.claudeSkill)) ? tool.claudeSkill : null;
 
   const pageUrl = `${SITE_URL}/${locale}/apps/${slug}`;
   const related = getRelatedTools(slug);
@@ -218,6 +223,38 @@ export default async function ToolDetailPage({ params }: Props) {
           </p>
           {tool.downloads.some((d) => d.os === 'mac') && (
             <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
+          )}
+
+          {/* Next to the builds rather than further down: it is a second thing
+              to download, and the people who want it decide here. */}
+          {skillHref && (
+            <div className="mt-6 max-w-2xl rounded-xl border border-border bg-background/60 p-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0 sm:flex-1">
+                  <p className="text-sm font-semibold">{t('skill_heading')}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {t('skill_body', { name: tool.name })}
+                  </p>
+                </div>
+                <a
+                  href={skillHref}
+                  download
+                  className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-secondary"
+                >
+                  <Download className="h-4 w-4" />
+                  {t('skill_download')}
+                </a>
+              </div>
+              <details className="mt-3 text-xs text-muted-foreground">
+                <summary className="cursor-pointer hover:text-foreground">
+                  {t('skill_install_summary')}
+                </summary>
+                <ul className="mt-2 list-disc space-y-1.5 pl-4">
+                  <li>{t('skill_install_claude_ai')}</li>
+                  <li>{t('skill_install_claude_code', { id: tool.id })}</li>
+                </ul>
+              </details>
+            </div>
           )}
 
           {/* The paid edition, for the tools that have one. */}
