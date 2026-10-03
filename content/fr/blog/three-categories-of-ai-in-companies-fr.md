@@ -1,7 +1,7 @@
 ---
 title: "L'IA en entreprise, ce n'est pas 50 cas d'usage. C'est 3 choses."
 slug: three-categories-of-ai-in-companies-fr
-date: 2026-10-01
+date: 2026-10-03
 author: Mayorana
 category: ai
 tags: ["ai", "ai-agents", "mcp", "strategy"]

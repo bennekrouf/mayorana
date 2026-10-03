@@ -1,7 +1,7 @@
 ---
 title: "AI in Companies Isn't 50 Use Cases. It's 3 Things."
 slug: three-categories-of-ai-in-companies
-date: 2026-10-01
+date: 2026-10-03
 author: Mayorana
 category: ai
 tags: ["ai", "ai-agents", "mcp", "strategy"]
