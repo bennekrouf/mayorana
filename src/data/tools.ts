@@ -109,6 +109,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${monitorDl}/ais-monitor-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${monitorDl}/ais-monitor-setup.exe` },
     ],
+    claudeSkill: `${monitorDl}/ais-monitor-claude-skill.zip`,
   },
   {
     id: 'ais-tracing',
@@ -123,6 +124,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${tracingDl}/ais-tracing-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${tracingDl}/ais-tracing-setup.exe` },
     ],
+    claudeSkill: `${tracingDl}/ais-tracing-claude-skill.zip`,
   },
   {
     id: 'ais-analytics',
@@ -137,6 +139,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${analyticsDl}/ais-analytics-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${analyticsDl}/ais-analytics-setup.exe` },
     ],
+    claudeSkill: `${analyticsDl}/ais-analytics-claude-skill.zip`,
   },
   {
     id: 'blog-toolkit',
