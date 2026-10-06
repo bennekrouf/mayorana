@@ -27,6 +27,27 @@ interface DayDetail {
    *  Absent from a stats.json written before download links were tagged. */
   by_source?: Record<string, number>;
   by_medium?: Record<string, number>;
+  /** Per-app splits behind the funnel table. Absent from a stats.json written
+   *  before the script emitted them; the table is hidden then. */
+  installs_by_app?: Record<string, number>;
+  updates_by_app?: Record<string, number>;
+  members_by_app?: Record<string, number>;
+  active_by_app?: Record<string, number>;
+}
+
+/** What an app reports about itself through its opt-out usage statistics. */
+interface AppUsage {
+  /** Distinct installs that sent anything that day. */
+  active: number;
+  /** Installs reporting their very first launch. */
+  new: number;
+  /** Installs whose first run completed. */
+  activated: number;
+}
+
+interface UsageStats {
+  counting_since: string | null;
+  daily: Record<string, { by_app?: Record<string, AppUsage> }>;
 }
 
 interface SiteStats {
@@ -69,6 +90,7 @@ interface Stats {
   by_medium?: Record<string, number>;
   active_installs_daily_avg_7d: number;
   daily: Record<string, DayDetail>;
+  usage?: UsageStats;
 }
 
 // ISO codes are terse; a name is easier to scan. Anything unmapped falls
@@ -450,6 +472,132 @@ function DailyTable({ daily }: { daily: Record<string, DayDetail> }) {
   );
 }
 
+/** One product's funnel for the chosen range. */
+interface AppRow {
+  app: string;
+  /** First installs from the website. */
+  installs: number;
+  /** Of those, taken while signed in — the people we can reach. */
+  signedIn: number;
+  /** Builds taken from the in-app update banner. */
+  updates: number;
+  /** Installs whose updater checked in, averaged per day. Every app has this. */
+  activeAvg: number;
+  /** What the app reports about itself, or null for an app that does not
+   *  send usage statistics (yet). */
+  reported: { new: number; activeAvg: number; activated: number } | null;
+}
+
+/**
+ * The per-app funnel: downloaded (signed in or not), installed, still in use.
+ *
+ * The download side comes from the access log and exists for every app. The
+ * "installed" side only exists for apps that send usage statistics: a download
+ * is not an install, and nothing in a web server's log can tell the two apart.
+ * Usage is matched to the same calendar window as the downloads, by date, not
+ * by counting entries — a day with no pings is simply absent from it.
+ */
+function buildAppRows(stats: Stats, days: [string, DayDetail][]): AppRow[] | null {
+  if (!days.some(([, d]) => d.installs_by_app !== undefined)) return null;
+  const from = days[0]?.[0];
+  const to = days[days.length - 1]?.[0];
+  const span = Math.max(1, days.length);
+
+  const installs: Record<string, number> = {};
+  const updates: Record<string, number> = {};
+  const members: Record<string, number> = {};
+  const active: Record<string, number> = {};
+  for (const [, d] of days) {
+    sumInto(installs, d.installs_by_app);
+    sumInto(updates, d.updates_by_app);
+    sumInto(members, d.members_by_app);
+    sumInto(active, d.active_by_app);
+  }
+
+  const reported: Record<string, { new: number; active: number; activated: number }> = {};
+  for (const [day, entry] of Object.entries(stats.usage?.daily ?? {})) {
+    if (!from || day < from || day > to) continue;
+    for (const [app, u] of Object.entries(entry.by_app ?? {})) {
+      const r = (reported[app] ??= { new: 0, active: 0, activated: 0 });
+      r.new += u.new ?? 0;
+      r.active += u.active ?? 0;
+      r.activated += u.activated ?? 0;
+    }
+  }
+
+  const apps = new Set([...Object.keys(installs), ...Object.keys(active), ...Object.keys(reported)]);
+  return [...apps]
+    .map((app) => ({
+      app,
+      installs: installs[app] ?? 0,
+      signedIn: members[app] ?? 0,
+      updates: updates[app] ?? 0,
+      activeAvg: (active[app] ?? 0) / span,
+      reported: reported[app]
+        ? {
+            new: reported[app].new,
+            activeAvg: reported[app].active / span,
+            activated: reported[app].activated,
+          }
+        : null,
+    }))
+    .sort((a, b) => b.installs - a.installs || b.activeAvg - a.activeAvg || a.app.localeCompare(b.app));
+}
+
+/** An average per day. Whole numbers hide small apps: 3 check-ins over a week
+ *  rounds to 0, which reads as "nobody runs it". One decimal below 10. */
+function perDay(n: number): string {
+  return n < 10 ? n.toFixed(1) : String(Math.round(n));
+}
+
+function AppFunnel({ rows }: { rows: AppRow[] }) {
+  const cell = 'px-2 sm:px-3 py-2.5 text-right tabular-nums';
+  const dash = <span className="text-gray-400 dark:text-gray-500">—</span>;
+  return (
+    <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden mb-6">
+      <div className="px-4 sm:px-5 py-4 border-b border-gray-200 dark:border-slate-700">
+        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Per app</h2>
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          Downloaded, signed in or not, and still running. Columns marked * are reported by the app
+          itself (anonymous usage statistics, on by default, opt-out); — means the app does not send them.
+        </p>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-xs sm:text-sm">
+          <thead>
+            <tr className="text-left text-[10px] sm:text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-slate-700">
+              <th className="px-3 sm:px-5 py-2 font-semibold">App</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right">Installs</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right">Signed in</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right">Anonymous</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right">Updates</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right" title="Installs whose update check ran, average per day">Active/day</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right" title="First launches reported by the app">Launched*</th>
+              <th className="px-2 sm:px-3 py-2 font-semibold text-right" title="Installs that sent statistics, average per day">In use/day*</th>
+              <th className="px-2 sm:px-3 sm:pr-5 py-2 font-semibold text-right" title="Installs whose first run completed">Activated*</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.app} className="border-b border-gray-100 dark:border-slate-700/50 last:border-0">
+                <td className="px-3 sm:px-5 py-2.5 font-medium text-gray-900 dark:text-white whitespace-nowrap">{r.app}</td>
+                <td className={`${cell} text-gray-900 dark:text-white`}>{r.installs}</td>
+                <td className={`${cell} text-gray-600 dark:text-gray-300`}>{r.signedIn}</td>
+                <td className={`${cell} text-gray-600 dark:text-gray-300`}>{r.installs - r.signedIn}</td>
+                <td className={`${cell} text-gray-600 dark:text-gray-300`}>{r.updates}</td>
+                <td className={`${cell} text-gray-600 dark:text-gray-300`}>{perDay(r.activeAvg)}</td>
+                <td className={`${cell} text-gray-600 dark:text-gray-300`}>{r.reported ? r.reported.new : dash}</td>
+                <td className={`${cell} text-gray-600 dark:text-gray-300`}>{r.reported ? perDay(r.reported.activeAvg) : dash}</td>
+                <td className={`${cell} sm:pr-5 text-gray-600 dark:text-gray-300`}>{r.reported ? r.reported.activated : dash}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 /** Everything the page computes for the chosen range. Named so the report
  *  builder below can be handed it without repeating the shape inline. */
 interface View {
@@ -460,6 +608,8 @@ interface View {
   byCountry: Record<string, number>;
   bySignin: Record<string, number>;
   bySource: Record<string, number>;
+  /** Null when the stats file predates the per-app split. */
+  perApp: AppRow[] | null;
   activeAvg: number;
   from: string | null;
 }
@@ -545,6 +695,23 @@ function buildReport(stats: Stats, view: View, range: { label: string; days: num
   out.push('## Filtered out, by reason (all-time)');
   out.push(lines(stats.excluded_by_reason ?? {}));
   out.push('');
+  if (view.perApp && view.perApp.length > 0) {
+    out.push('## Per app (selected range)');
+    out.push('Installs = first installs from the website (updates excluded). Active/day = installs');
+    out.push("whose update check ran, averaged per day. Columns marked * come from the app's own");
+    out.push('anonymous usage statistics (opt-out); "—" means the app does not send them.');
+    out.push('| App | Installs | Signed in | Anonymous | Updates | Active/day | Launched* | In use/day* | Activated* |');
+    out.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
+    for (const r of view.perApp) {
+      const rep = r.reported;
+      out.push(
+        `| ${r.app} | ${r.installs} | ${r.signedIn} | ${r.installs - r.signedIn} | ${r.updates} | ${perDay(r.activeAvg)} | ` +
+          `${rep ? rep.new : '—'} | ${rep ? perDay(rep.activeAvg) : '—'} | ${rep ? rep.activated : '—'} |`,
+      );
+    }
+    out.push('');
+  }
+
   out.push('## First installs — signed in vs anonymous (selected range)');
   out.push(`  Signed in (reachable): ${view.bySignin.signed_in ?? 0}`);
   out.push(`  Anonymous: ${view.bySignin.anonymous ?? 0}`);
@@ -703,6 +870,7 @@ function StatsDashboard() {
   const view = useMemo(() => {
     if (!stats) return null;
     const days = inRange(stats.daily ?? {}, rangeDays);
+    const perApp = buildAppRows(stats, days);
     const totals = { downloads: 0, installs: 0, updates: 0, excluded: 0 };
     const byApp: Record<string, number> = {};
     const byPlatform: Record<string, number> = {};
@@ -732,6 +900,7 @@ function StatsDashboard() {
       byCountry,
       bySignin,
       bySource,
+      perApp,
       // Averaged, not summed: the same install switched on every day is one
       // install, not seven.
       activeAvg: days.length ? Math.round(activeSum / days.length) : 0,
@@ -839,6 +1008,8 @@ function StatsDashboard() {
                 hint="daily average over the period"
               />
             </div>
+
+            {view.perApp && view.perApp.length > 0 && <AppFunnel rows={view.perApp} />}
 
             {chart.length > 0 && (
               <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 sm:p-5 mb-6">
