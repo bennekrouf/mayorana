@@ -62,7 +62,7 @@ const nextConfig = {
     ];
   },
 
-  // Retired duplicate blog posts. Each of these was published twice — the
+  // Retired pages. Duplicate blog posts: Each of these was published twice — the
   // survivor is the fuller version — so the retired URL 301s to it rather
   // than 404ing for anyone holding the old link.
   async redirects() {
@@ -78,6 +78,8 @@ const nextConfig = {
       { source: '/fr/blog/flatten-vec-iterators-performance-fr', destination: '/fr/blog/flatten-vec-iterators-performance', permanent: true },
       { source: '/en/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/en/blog/vec-push-vs-with-capacity-performance', permanent: true },
       { source: '/fr/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/fr/blog/vec-push-vs-with-capacity-performance', permanent: true },
+      // The Services page is retired: the company now leads with its products.
+      { source: '/:locale(en|fr)/services', destination: '/:locale', permanent: true },
     ];
   },
 

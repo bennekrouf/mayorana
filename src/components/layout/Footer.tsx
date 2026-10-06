@@ -43,7 +43,6 @@ export default function Footer() {
     { name: tNav('azure_tools'), url: getLocalizedPath(locale, '/solutions/azure') },
     { name: tNav('ai_agents'), url: getLocalizedPath(locale, '/solutions/ai-agents') },
     { name: 'Apps', url: getLocalizedPath(locale, '/apps') },
-    { name: tNav('services'), url: getLocalizedPath(locale, '/services') },
     { name: tNav('blog'), url: getLocalizedPath(locale, '/blog') },
     { name: tNav('contact'), url: getLocalizedPath(locale, '/contact') },
     { name: tNav('about'), url: getLocalizedPath(locale, '/about') }

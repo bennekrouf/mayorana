@@ -1,5 +1,5 @@
 // File: src/app/admin/components/AdminHeader.tsx - Add dark mode toggle
-import React, { useState, useEffect } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { FiSave, FiClock, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 
@@ -12,6 +12,8 @@ interface AdminHeaderProps {
   onSaveAll: () => void;
 }
 
+const subscribeNever = () => () => {};
+
 const AdminHeader: React.FC<AdminHeaderProps> = ({
   selectedFile,
   hasChanges,
@@ -20,11 +22,9 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({
   lastSaved,
   onSaveAll
 }) => {
-  const [mounted, setMounted] = useState(false);
+  // False on the server and during hydration: the theme is only known client-side.
+  const mounted = useSyncExternalStore(subscribeNever, () => true, () => false);
   const { theme, setTheme } = useTheme();
-
-  // After mounting, we can safely access the theme
-  useEffect(() => setMounted(true), []);
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');

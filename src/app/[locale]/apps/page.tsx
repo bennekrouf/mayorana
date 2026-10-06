@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { Brain, Shield, Zap, Code, ExternalLink, ArrowRight, History } from 'lucide-react';
+import { Brain, Shield, Zap, ExternalLink, ArrowRight, History } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import {
@@ -50,7 +50,7 @@ interface Tool {
 
 // Display order by tool id, split into the two sections the page renders.
 // Anything built below but missing from both lists simply wouldn't render —
-// every id from desktopToolsConfig/webTools/consultingTool must appear exactly
+// every id from desktopToolsConfig/webTools must appear exactly
 // once across the two.
 
 // The tools that carry the positioning: Azure workflows and AI agents.
@@ -63,8 +63,7 @@ const PRIMARY_ORDER: string[] = [
   'gitagent',
 ];
 
-// Built on the same stack, but outside the core offer. `consulting` stays last
-// as the "your project" CTA card.
+// Built on the same stack, but outside the core offer.
 const SECONDARY_ORDER: string[] = [
   'cvenom',
   'appscreens',
@@ -72,7 +71,6 @@ const SECONDARY_ORDER: string[] = [
   'splitter',
   'spreadwatch',
   'solanize',
-  'consulting',
 ];
 
 // Display order and label for each filter chip. A tool can carry tags outside
@@ -88,7 +86,6 @@ const FILTER_TAGS: { id: string; label: string }[] = [
   { id: 'ai', label: 'AI' },
   { id: 'crypto', label: 'Crypto' },
   { id: 'tools', label: 'Tools' },
-  { id: 'services', label: 'Services' },
 ];
 
 const tagChipClasses = (active: boolean) =>
@@ -306,18 +303,7 @@ export default function AppsPage() {
       },
     ];
 
-    const consultingTool: Tool = {
-      id: 'consulting',
-      name: tPortfolio('consulting_title'),
-      description: tPortfolio('consulting_description'),
-      tech: tPortfolio('consulting_tech'),
-      status: 'live',
-      tags: ['services'],
-      icon: <Code className="w-8 h-8" />,
-      action: { kind: 'internal', href: getLocalizedPath(locale, '/contact'), label: tPortfolio('consulting_cta') },
-    };
-
-    const all = [...webTools, ...desktopTools, consultingTool];
+    const all = [...webTools, ...desktopTools];
     const inOrder = (order: string[]) =>
       order
         .map((id) => all.find((t) => t.id === id))

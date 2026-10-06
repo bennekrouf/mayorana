@@ -24,14 +24,13 @@ function ContactFormWithParams() {
   const searchParams = useSearchParams();
   const service = searchParams.get('service');
   const t = useTranslations('contact');
-  const tServices = useTranslations('services');
   const tCommon = useTranslations('common');
   const locale = useLocale();
 
   const whatsappNumber = "+41764837540";
   const whatsappMessage = locale === 'en'
-    ? "Hello, I'd like to learn more about your services."
-    : "Bonjour, j'aimerais en savoir plus sur vos services.";
+    ? "Hello, I have a question about your products."
+    : "Bonjour, j'ai une question sur vos produits.";
   const encodedMessage = encodeURIComponent(whatsappMessage);
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
@@ -54,17 +53,17 @@ function ContactFormWithParams() {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // Values must match the offer ids the Services page links with ?service=
-  // (src/app/[locale]/services/page.tsx), or the preselect silently no-ops.
+  // The form field is still called `service` because the contact endpoint
+  // expects it; a ?service= link preselects one of these topics.
   const services = [
-    { value: "ai-agents", label: tServices('ai_agents.title') },
-    { value: "azure", label: tServices('azure.title') },
-    { value: "rust", label: tServices('rust.title') },
-    { value: "other", label: tServices('other') }
+    { value: "api0", label: t('topic_api0') },
+    { value: "tools", label: t('topic_tools') },
+    { value: "licence", label: t('topic_licence') },
+    { value: "other", label: t('topic_other') }
   ];
 
-  // Links to the retired offers (?service=rust-training, llm-integration,
-  // chatbot, api0) are still out there in mail and search results. Falling back
+  // Links to the retired consulting offers (?service=ai-agents, azure, rust,
+  // rust-training, …) are still out there in mail and search results. Falling back
   // to "other" keeps those visitors on a form with a valid selection instead of
   // a blank required field they have to notice and fix themselves.
   const preselectedService = service

@@ -116,7 +116,7 @@ export default async function LocaleLayout({
               alternateName: 'Mayorana Sàrl',
               url: 'https://mayorana.ch',
               logo: 'https://mayorana.ch/image/logo.png',
-              description: 'Swiss consultancy specializing in Rust, AI agents, and API solutions.',
+              description: 'Swiss company building api0, the Rust MCP gateway for AI agents, and native Rust developer tools.',
               foundingLocation: {
                 '@type': 'Place',
                 address: {

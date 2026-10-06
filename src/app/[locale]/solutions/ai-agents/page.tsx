@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
 import { ArrowRight, Check, ExternalLink, Puzzle, ShieldAlert, Gauge } from 'lucide-react';
-import { useTranslations, useLocale } from 'next-intl';
-import { getLocalizedPath } from '@/lib/i18n-utils';
+import { useTranslations } from 'next-intl';
+import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
 
 const API0_URL = 'https://api0.ai';
+const API0_ARCHITECTURE_URL = 'https://api0.ai/blog/how-api0-works';
 
 // Same shape as the Azure page's friction cards, minus the outcome line —
 // the fix here is the whole product, covered by the section below.
@@ -19,14 +19,11 @@ const FRICTIONS = [
 ] as const;
 
 const SOLUTION_POINTS = ['1', '2', '3', '4', '5'] as const;
+const AUTH_POINTS = ['1', '2', '3', '4', '5'] as const;
 const RUST_POINTS = ['1', '2', '3', '4'] as const;
 
 export default function AiAgentsSolutionsPage() {
   const t = useTranslations('solutions_ai_agents');
-  const locale = useLocale();
-
-  const contactHref = getLocalizedPath(locale, '/contact');
-  const servicesHref = getLocalizedPath(locale, '/services');
 
   return (
     <LayoutTemplate>
@@ -72,12 +69,6 @@ export default function AiAgentsSolutionsPage() {
               >
                 {t('hero_cta_primary')} <ExternalLink className="ml-2 w-4 h-4" />
               </a>
-              <Link
-                href={contactHref}
-                className="inline-flex items-center px-6 py-3 rounded-lg border border-border bg-background font-medium hover:bg-secondary transition-colors"
-              >
-                {t('hero_cta_secondary')}
-              </Link>
             </motion.div>
           </div>
         </div>
@@ -133,37 +124,38 @@ export default function AiAgentsSolutionsPage() {
               </a>
             </div>
 
-            <div className="relative h-80 w-full rounded-xl overflow-hidden shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 backdrop-blur-sm flex items-center justify-center p-4">
-                <div className="bg-background/90 backdrop-blur-sm p-6 rounded-xl border border-border max-w-md">
-                  <code className="text-sm block font-mono">
-                    <span className="text-gray-500">{`// api0.ai — MCP Gateway`}</span>
-                    <br />
-                    <span className="text-blue-600">Your APIs</span> → <span className="text-purple-600">MCP Tools</span> → <span className="text-green-600">AI Agents</span>
-                    <br />
-                    <br />
-                    <span className="text-gray-500">{`// Connect any endpoint`}</span>
-                    <br />
-                    <span className="text-blue-600">const</span> <span className="text-green-600">agent</span> = api0.<span className="text-purple-600">createAgent</span>({`{`}
-                    <br />
-                    &nbsp;&nbsp;tools: [<span className="text-orange-600">&quot;your-api&quot;</span>],
-                    <br />
-                    &nbsp;&nbsp;model: <span className="text-orange-600">&quot;claude&quot;</span>
-                    <br />
-                    {`}`});
-                  </code>
-                </div>
-              </div>
+            <div className="flex items-center justify-center rounded-xl border border-border bg-background p-6">
+              <Api0FlowDiagram />
             </div>
           </div>
         </div>
       </section>
 
-      {/* How it powers the rest of the stack */}
+      {/* What the backend receives */}
       <section className="py-16 bg-background">
-        <div className="container max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-6">{t('powers_heading')}</h2>
-          <p className="text-lg text-muted-foreground">{t('powers_body')}</p>
+        <div className="container max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">{t('auth_heading')}</h2>
+              <p className="text-lg text-muted-foreground mb-6">{t('auth_body')}</p>
+              <a
+                href={API0_ARCHITECTURE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-primary font-medium hover:underline"
+              >
+                {t('architecture_link')} <ArrowRight className="ml-1.5 w-4 h-4" />
+              </a>
+            </div>
+            <ul className="space-y-4">
+              {AUTH_POINTS.map((n) => (
+                <li key={n} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 mt-0.5 shrink-0 text-primary" />
+                  <span>{t(`auth_point_${n}`)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -180,30 +172,6 @@ export default function AiAgentsSolutionsPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Next action */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">{t('cta_heading')}</h2>
-            <p className="text-lg text-muted-foreground mb-8">{t('cta_body')}</p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                href={contactHref}
-                className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
-              >
-                {t('cta_primary')} <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-              <Link
-                href={servicesHref}
-                className="inline-flex items-center px-8 py-4 rounded-lg border border-border text-lg font-medium hover:bg-secondary transition-colors"
-              >
-                {t('cta_secondary')}
-              </Link>
-            </div>
           </div>
         </div>
       </section>

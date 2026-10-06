@@ -1,24 +1,29 @@
 // File: src/app/admin/page.tsx - Add theme provider
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import AdminComponent from './AdminComponent';
 import { FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 
+// Sign-in lives in sessionStorage (per tab). Login and logout notify the
+// subscribers below, so the page re-reads it right away.
+const authListeners = new Set<() => void>();
+const subscribeAuth = (onChange: () => void) => {
+  authListeners.add(onChange);
+  return () => { authListeners.delete(onChange); };
+};
+const notifyAuth = () => authListeners.forEach((onChange) => onChange());
+
 export default function SecretAdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isAuthenticated = useSyncExternalStore(
+    subscribeAuth,
+    () => sessionStorage.getItem('admin-authenticated') === 'true',
+    () => false,
+  );
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  // Check if already authenticated (stored in sessionStorage)
-  useEffect(() => {
-    const isAuth = sessionStorage.getItem('admin-authenticated') === 'true';
-    if (isAuth) {
-      setIsAuthenticated(true);
-    }
-  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,9 +39,9 @@ export default function SecretAdminPage() {
       });
 
       if (response.ok) {
-        setIsAuthenticated(true);
         sessionStorage.setItem('admin-authenticated', 'true');
         sessionStorage.setItem('admin-key', password);
+        notifyAuth();
         setPassword(''); // Clear password from state for security
       } else {
         setError('Invalid access key');
@@ -49,9 +54,9 @@ export default function SecretAdminPage() {
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
     sessionStorage.removeItem('admin-authenticated');
     sessionStorage.removeItem('admin-key');
+    notifyAuth();
     setPassword('');
   };
 

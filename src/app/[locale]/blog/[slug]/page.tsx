@@ -39,7 +39,9 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function PostPage({ params }: Props) {
+// Looks the post up; rendering happens in PostPage, outside the try/catch, so
+// a render error is not mistaken for a lookup failure.
+async function loadPost({ params }: Props) {
   try {
     const { slug, locale } = await params;
 
@@ -85,15 +87,7 @@ export default async function PostPage({ params }: Props) {
 
     // console.log('✅ Post found, rendering...');
 
-    return (
-      <LayoutTemplate>
-        <section className="py-20 bg-background">
-          <div className="container">
-            <BlogPost post={post} path={getLearningPath(post.track, locale)} />
-          </div>
-        </section>
-      </LayoutTemplate>
-    );
+    return { post, path: getLearningPath(post.track, locale) };
   } catch (error) {
     // Next.js redirect() and notFound() work by throwing special internal errors.
     // We must re-throw them so the framework can handle them correctly.
@@ -104,4 +98,17 @@ export default async function PostPage({ params }: Props) {
     console.error('❌ Error in PostPage:', error);
     notFound();
   }
+}
+
+export default async function PostPage(props: Props) {
+  const { post, path } = await loadPost(props);
+  return (
+    <LayoutTemplate>
+      <section className="py-20 bg-background">
+        <div className="container">
+          <BlogPost post={post} path={path} />
+        </div>
+      </section>
+    </LayoutTemplate>
+  );
 }
