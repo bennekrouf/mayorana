@@ -90,9 +90,10 @@ export default function PrivacyFr() {
                 <p className="mb-4">
                   Certains outils de bureau envoient des statistiques d&apos;utilisation anonymes. C&apos;est activé par
                   défaut&nbsp;: l&apos;application vous en informe une fois, par un message en bas de sa fenêtre, et n&apos;envoie rien
-                  avant que vous l&apos;ayez vu. Vous pouvez le désactiver depuis ce message ou à tout moment dans les réglages
-                  de l&apos;application, ce qui supprime aussi tout ce qui n&apos;a pas encore été envoyé&nbsp;; définir DO_NOT_TRACK
-                  ou DISABLE_UPDATE_CHECK dans votre environnement le désactive également. Chaque envoi contient un
+                  avant que vous l&apos;ayez vu. Vous pouvez le désactiver depuis ce message ou, dans les applications qui en
+                  ont, depuis leurs réglages&nbsp;; dans les deux cas, ce qui n&apos;a pas encore été envoyé est supprimé.
+                  Définir DO_NOT_TRACK ou DISABLE_UPDATE_CHECK dans votre environnement le désactive dans toutes les
+                  applications. Chaque envoi contient un
                   identifiant d&apos;installation aléatoire créé
                   sur votre machine, le nom et la version de l&apos;application, votre système d&apos;exploitation, ainsi que les
                   fonctionnalités utilisées et leur résultat (pour GitAgent, également le type d&apos;hébergeur Git et le
