@@ -18,6 +18,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "/Users/mb/code/api0/landing-api0", "run", "dev", "--", "--port", "3008"],
       "port": 3008
+    },
+    {
+      "name": "funnel-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/mb/code/mayorana-funnel && node scripts/generate-blog-data.js >/dev/null && DOWNLOAD_STATS_PATH=/private/tmp/claude-501/stats-demo.json npx next dev --webpack -p 3016"],
+      "port": 3016
     }
   ]
 }
