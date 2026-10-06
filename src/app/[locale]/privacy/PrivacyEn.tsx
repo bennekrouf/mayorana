@@ -82,7 +82,10 @@ export default function PrivacyEn() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Desktop Tools</h2>
                 <p className="mb-4">
-                  Some desktop tools can send usage statistics, but only if you agree to it in the app. Each report
+                  Some desktop tools send anonymous usage statistics. This is on by default: the app tells you once, in a
+                  notice at the bottom of its window, and sends nothing before you have seen it. You can turn it off from
+                  that notice or at any time in the app&apos;s settings, which also deletes anything not yet sent; setting
+                  DO_NOT_TRACK or DISABLE_UPDATE_CHECK in your environment turns it off too. Each report
                   contains a random installation identifier created on your machine, the app&apos;s name and version, your
                   operating system, and which features were used and whether they succeeded (for GitAgent, also the type of
                   Git host and AI provider you chose). Reports reach us as requests to mayorana.ch, so they appear in the

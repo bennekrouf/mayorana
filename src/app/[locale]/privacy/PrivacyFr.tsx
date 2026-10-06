@@ -88,8 +88,12 @@ export default function PrivacyFr() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Les outils de bureau</h2>
                 <p className="mb-4">
-                  Certains outils de bureau peuvent envoyer des statistiques d&apos;utilisation, mais seulement si vous
-                  l&apos;acceptez dans l&apos;application. Chaque envoi contient un identifiant d&apos;installation aléatoire créé
+                  Certains outils de bureau envoient des statistiques d&apos;utilisation anonymes. C&apos;est activé par
+                  défaut&nbsp;: l&apos;application vous en informe une fois, par un message en bas de sa fenêtre, et n&apos;envoie rien
+                  avant que vous l&apos;ayez vu. Vous pouvez le désactiver depuis ce message ou à tout moment dans les réglages
+                  de l&apos;application, ce qui supprime aussi tout ce qui n&apos;a pas encore été envoyé&nbsp;; définir DO_NOT_TRACK
+                  ou DISABLE_UPDATE_CHECK dans votre environnement le désactive également. Chaque envoi contient un
+                  identifiant d&apos;installation aléatoire créé
                   sur votre machine, le nom et la version de l&apos;application, votre système d&apos;exploitation, ainsi que les
                   fonctionnalités utilisées et leur résultat (pour GitAgent, également le type d&apos;hébergeur Git et le
                   fournisseur d&apos;IA choisis). Ces envois nous parviennent sous forme de requêtes vers mayorana.ch&nbsp;: ils
