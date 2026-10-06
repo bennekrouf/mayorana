@@ -12,6 +12,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["next", "start", "-p", "3007"],
       "port": 3007
+    },
+    {
+      "name": "api0-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/mb/code/api0/landing-api0", "run", "dev", "--", "--port", "3008"],
+      "port": 3008
     }
   ]
 }
