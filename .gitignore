@@ -21,6 +21,10 @@ src/data/blog-categories-*.json
 # deploy build swap (scripts/deploy-mayorana.sh)
 /.next-staging/
 /.next-previous/
+# Any other Next.js build output dir (NEXT_DIST_DIR), e.g. .next-check or
+# .next-test. A committed one breaks every later build: its stale route types
+# are type-checked, and fail once a page is removed (see the Services removal).
+/.next-*/
 /out/
 
 # production

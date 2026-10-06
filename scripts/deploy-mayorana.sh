@@ -85,6 +85,13 @@ yarn install --frozen-lockfile
 # (postbuild), so the sitemap picks up any new routes.
 info "Building into $STAGE_DIR..."
 rm -rf "$STAGE_DIR"
+# Only the build being made may be type-checked. tsconfig.json includes the
+# generated route types of every dir Next has built into, and the live build's
+# describe the routes it was built from: once a page is removed they name a
+# route that no longer exists, and the new build fails on them (this blocked
+# every deploy after the Services page went). The running server never reads
+# these files — they exist for type-checking only.
+rm -rf "$LIVE_DIR/types" "$LIVE_DIR/dev/types" "$PREV_DIR/types" "$PREV_DIR/dev/types"
 NEXT_DIST_DIR="$STAGE_DIR" yarn build
 
 [ -f "$STAGE_DIR/BUILD_ID" ] || err "Build produced no $STAGE_DIR/BUILD_ID — refusing to swap"
