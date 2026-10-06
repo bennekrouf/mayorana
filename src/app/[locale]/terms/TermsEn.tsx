@@ -15,60 +15,69 @@ export default function TermsEn() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold mb-6">Terms of Service</h1>
-            <p className="text-muted-foreground mb-8">Last updated: {new Date().toLocaleDateString('en-US')}</p>
+            <p className="text-muted-foreground mb-8">Last updated: 6 October 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Agreement to Terms</h2>
                 <p>
-                  By accessing and using the Mayorana website (mayorana.ch), you accept and agree to be bound by the
-                  terms and provision of this agreement. These Terms of Service (&quot;Terms&quot;) govern your use of our website
-                  and services provided by Mayorana, a Swiss-based technology consulting company.
+                  By accessing and using the Mayorana website (mayorana.ch), you accept and agree to be bound by these
+                  Terms of Service (&quot;Terms&quot;). They govern your use of the website and of the software downloaded from it.
+                  Mayorana is a Swiss software company.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold mb-4">Description of Services</h2>
-                <p className="mb-4">Mayorana provides the following services:</p>
+                <h2 className="text-2xl font-semibold mb-4">Our Products</h2>
+                <p className="mb-4">Mayorana builds and distributes:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Rust programming training and consulting</li>
-                  <li>Large Language Model (LLM) integration services</li>
-                  <li>AI agent development</li>
-                  <li>API solutions including api0.ai</li>
-                  <li>Technology consulting and advisory services</li>
+                  <li>
+                    <strong>api0</strong>, an MCP gateway provided at api0.ai. Your use of api0 is governed by the{' '}
+                    <a href="https://api0.ai/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">api0 Terms of Service</a>,
+                    not by these Terms.
+                  </li>
+                  <li>
+                    <strong>Desktop tools</strong> for Azure Integration Services, Git and other tasks, downloadable from this
+                    website. Their use is governed by the licences described under &quot;Software Licences&quot; below.
+                  </li>
                 </ul>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold mb-4">Use License</h2>
+                <h2 className="text-2xl font-semibold mb-4">Use of the Website</h2>
                 <p className="mb-4">
-                  Permission is granted to temporarily download one copy of the materials on Mayorana&apos;s website for
-                  personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                  You may view and download the materials on this website (articles, pages and images) for personal,
+                  non-commercial use. This is the grant of a licence, not a transfer of title, and under it you may not:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Modify or copy the materials</li>
+                  <li>Republish the website&apos;s articles or pages as your own, in whole or in substantial part</li>
                   <li>Use the materials for any commercial purpose or for any public display</li>
-                  <li>Attempt to reverse engineer any software contained on the website</li>
                   <li>Remove any copyright or other proprietary notations from the materials</li>
                 </ul>
                 <p className="mt-4">
-                  This license shall automatically terminate if you violate any of these restrictions and may be
-                  terminated by Mayorana at any time.
+                  This licence does not cover the downloadable software, which is licensed separately (see below). It
+                  terminates automatically if you violate these restrictions and may be terminated by Mayorana at any time.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold mb-4">Professional Services</h2>
+                <h2 className="text-2xl font-semibold mb-4">Software Licences</h2>
                 <p className="mb-4">
-                  For professional consulting and training services, separate service agreements will be established that include:
+                  The desktop tools are source-available under the{' '}
+                  <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PolyForm Noncommercial License 1.0.0</a>.
+                  That licence, not these Terms, sets out what you may do with the software and its source code. In short, it
+                  permits personal, educational, research and hobby use, and use by charities, schools, universities and
+                  government institutions.
                 </p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Specific scope of work and deliverables</li>
-                  <li>Payment terms and conditions</li>
-                  <li>Intellectual property arrangements</li>
-                  <li>Confidentiality and non-disclosure terms</li>
-                  <li>Service level agreements and support terms</li>
-                </ul>
+                <p className="mb-4">
+                  Use for commercial purposes, including work for a company or for clients, requires a commercial licence
+                  from Mayorana. Some tools offer a paid edition bought on the tool&apos;s page: payment is handled by Stripe,
+                  and the licence key is shown after purchase and sent by email.
+                </p>
+                <p>
+                  The source code of the desktop tools is published on GitHub. The Mayorana name, the tool names and their
+                  logos are trademarks and are not licensed under the PolyForm licence.
+                </p>
               </section>
 
               <section>
@@ -123,9 +132,9 @@ export default function TermsEn() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Third-Party Links and Services</h2>
                 <p>
-                  Our website may contain links to third-party websites or services (including api0.ai, social media platforms).
-                  We are not responsible for the content, privacy policies, or practices of third-party sites. We encourage
-                  you to read the terms and privacy policies of any third-party sites you visit.
+                  Our website may contain links to third-party websites or services, such as GitHub, Stripe and social
+                  media platforms. We are not responsible for the content, privacy policies, or practices of third-party
+                  sites. We encourage you to read the terms and privacy policies of any third-party sites you visit.
                 </p>
               </section>
 
@@ -133,8 +142,8 @@ export default function TermsEn() {
                 <h2 className="text-2xl font-semibold mb-4">Intellectual Property</h2>
                 <p className="mb-4">
                   The content, organization, graphics, design, and other matters related to the website are protected
-                  under applicable copyrights and other proprietary laws. Copying, redistribution, use or publication
-                  of any such matters or any part of the website is prohibited.
+                  under applicable copyright and other proprietary laws. Except as these Terms or a software licence allow,
+                  copying, redistribution, use or publication of any part of the website is prohibited.
                 </p>
                 <p>
                   All trademarks, service marks, and trade names are proprietary to Mayorana or other respective owners.

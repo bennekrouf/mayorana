@@ -14,10 +14,9 @@ export default function Footer() {
   const tCommon = useTranslations('common');
   const locale = useLocale();
 
-  // `badge` renders next to the name; Solanize used to appear twice here — once
-  // from this list and once from a hardcoded entry below, both pointing at
-  // ribh.io — so it is listed once, with its badge.
-  const portfolioLinks = [
+  // The products the company leads with: api0 first, then the desktop tools.
+  // Side projects stay on the Apps page. `badge` renders next to the name.
+  const portfolioLinks: { name: string; url: string; external: boolean; badge?: string }[] = [
     { name: t('footer_api0'), url: 'https://api0.ai', external: true },
     { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps#ais-runner'), external: false },
     // Directly under the app it belongs to: the notes page is otherwise three
@@ -27,8 +26,8 @@ export default function Footer() {
       url: getLocalizedPath(locale, '/apps/ais-runner/releases'),
       external: false,
     },
-    { name: 'cVenom', url: 'https://cvenom.com', external: true },
-    { name: t('footer_solanize'), url: 'https://ribh.io', external: true, badge: 'MVP' }
+    { name: 'AIS Monitor', url: getLocalizedPath(locale, '/apps#ais-monitor'), external: false },
+    { name: 'GitAgent', url: getLocalizedPath(locale, '/apps#gitagent'), external: false },
   ];
 
   const actionLinks = [

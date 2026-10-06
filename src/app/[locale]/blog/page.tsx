@@ -49,31 +49,15 @@ export default async function BlogPage({ params, searchParams }: Props) {
   // canonicalises to the default listing.
   const view: BlogView = searchParamsData.view === 'path' ? 'path' : 'latest';
 
-  // DEBUG: What we're getting
-  console.log('🔍 BlogPage Debug:');
-  console.log('   - Received locale:', locale);
-  console.log('   - Page:', page);
-
-  // DIRECT LOCALE USAGE: Pass locale directly to functions
-  const paginatedData = getPaginatedPosts(page, locale, view);
-  const tags = getAllTags(locale);
-
-  // Use the locale directly with getTranslations (server components must pass locale explicitly)
-  const t = await getTranslations({ locale, namespace: 'blog' });
-
   const headersList = await headers();
   const hostname = headersList.get('x-hostname') || '';
   const isSwissRust = hostname.includes('swissrust');
 
-  // DEBUG: Blog data
-  console.log('📊 Blog Data:');
-  console.log('   - Posts found:', paginatedData.posts.length);
-  console.log('   - Total posts:', paginatedData.totalPosts);
-  console.log('   - Tags:', tags.length);
-  if (paginatedData.posts.length > 0) {
-    console.log('   - First post locale:', paginatedData.posts[0].locale);
-    console.log('   - First post title:', paginatedData.posts[0].title);
-  }
+  const paginatedData = getPaginatedPosts(page, locale, view, !isSwissRust);
+  const tags = getAllTags(locale);
+
+  // Use the locale directly with getTranslations (server components must pass locale explicitly)
+  const t = await getTranslations({ locale, namespace: 'blog' });
 
   return (
     <LayoutTemplate>
@@ -125,6 +109,26 @@ export default async function BlogPage({ params, searchParams }: Props) {
                   )}
                 </p>
               </div>
+
+              {/* Featured "AI agents & integration" posts, then the api0 pointer.
+                  Empty on Swiss Rust, a Rust-only site (see getPaginatedPosts). */}
+              {paginatedData.featuredPosts.length > 0 && (
+                <div className="mb-12">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-lg font-semibold">🤖 {t('featured_series')}</span>
+                  </div>
+                  <BlogList posts={paginatedData.featuredPosts} title="" description="" />
+                  <a
+                    href="https://api0.ai/blog"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm hover:bg-primary/10 transition-colors"
+                  >
+                    <span>{t('api0_blog_callout')}</span>
+                    <span className="shrink-0 font-medium text-primary">{t('api0_blog_link')} →</span>
+                  </a>
+                </div>
+              )}
 
               {/* Pinned "Why Rust?" series — always shown on every page */}
               {paginatedData.pinnedPosts.length > 0 && (

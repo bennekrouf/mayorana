@@ -396,7 +396,7 @@ export default async function ToolDetailPage({ params }: Props) {
                   {t('licence_link')}
                 </a>
                 <Link
-                  href={`/${locale}/contact`}
+                  href={`/${locale}/contact?service=licence`}
                   className="text-sm text-primary hover:underline underline-offset-4"
                 >
                   {t('licence_cta')}

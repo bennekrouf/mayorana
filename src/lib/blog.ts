@@ -37,19 +37,35 @@ function getBlogDataSync(locale: string): BlogPost[] {
   return (blogPostsEn as BlogPost[]).filter(post => post.locale === 'en');
 }
 
+// Slugs of the featured "AI agents & integration" posts, per locale — the
+// topics the company leads with, shown above the "Why Rust?" series.
+const FEATURED_SLUGS: Record<string, string[]> = {
+  en: ['three-categories-of-ai-in-companies', 'logic-apps-workflow-chains', 'trace-correlation-id-cosmos-db'],
+  fr: ['three-categories-of-ai-in-companies-fr', 'logic-apps-workflow-chains-fr', 'trace-correlation-id-cosmos-db-fr'],
+};
+
 // Get all blog posts for a specific locale (ONLY that locale)
 export function getAllPosts(locale: string = 'en'): BlogPost[] {
   return getBlogDataSync(locale);
 }
 
-// Get the permanently pinned "Why Rust?" posts for a locale
-export function getPinnedPosts(locale: string = 'en'): BlogPost[] {
+// The posts behind a slug list, in the list's order; missing slugs are skipped.
+function postsBySlug(locale: string, lists: Record<string, string[]>): BlogPost[] {
   const all = getAllPosts(locale);
-  const slugs = PINNED_SLUGS[locale] ?? PINNED_SLUGS['en'];
-  // Preserve the intended order of the series
+  const slugs = lists[locale] ?? lists['en'];
   return slugs
     .map(slug => all.find(p => p.slug === slug))
     .filter((p): p is BlogPost => p !== undefined);
+}
+
+// Get the permanently pinned "Why Rust?" posts for a locale
+export function getPinnedPosts(locale: string = 'en'): BlogPost[] {
+  return postsBySlug(locale, PINNED_SLUGS);
+}
+
+// Get the featured "AI agents & integration" posts for a locale
+export function getFeaturedPosts(locale: string = 'en'): BlogPost[] {
+  return postsBySlug(locale, FEATURED_SLUGS);
 }
 
 // How the listing is ordered: newest first for everyone, or along the learning
@@ -83,18 +99,22 @@ export function getLearningPath(track: string | undefined, locale: string = 'en'
 }
 
 // Get paginated posts for a specific locale
-// Pinned posts are excluded from pagination — they are returned separately
-// and always displayed on every page.
+// Featured and pinned posts are excluded from pagination — they are returned
+// separately and always displayed on every page.
 export function getPaginatedPosts(
   page: number = 1,
   locale: string = 'en',
-  view: BlogView = 'latest'
+  view: BlogView = 'latest',
+  // Off for a site that does not show the featured row, so those posts stay
+  // in the regular listing instead of disappearing.
+  withFeatured: boolean = true
 ): PaginatedPosts {
   const allPosts = view === 'path' ? byPathOrder(getAllPosts(locale)) : getAllPosts(locale);
+  const featuredPosts = withFeatured ? getFeaturedPosts(locale) : [];
   const pinnedPosts = getPinnedPosts(locale);
-  const pinnedSlugs = new Set(pinnedPosts.map(p => p.slug));
+  const setAside = new Set([...featuredPosts, ...pinnedPosts].map(p => p.slug));
 
-  const regularPosts = allPosts.filter(p => !pinnedSlugs.has(p.slug));
+  const regularPosts = allPosts.filter(p => !setAside.has(p.slug));
   const totalPosts = regularPosts.length;
   const totalPages = Math.max(1, Math.ceil(totalPosts / POSTS_PER_PAGE));
   const currentPage = Math.max(1, Math.min(page, totalPages));
@@ -105,6 +125,7 @@ export function getPaginatedPosts(
 
   return {
     posts,
+    featuredPosts,
     pinnedPosts,
     currentPage,
     totalPages,

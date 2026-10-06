@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { Brain, Shield, Zap, ExternalLink, ArrowRight, History } from 'lucide-react';
+import { Shield, Zap, ExternalLink, ArrowRight, History } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import {
@@ -48,22 +48,25 @@ interface Tool {
   releasesHref?: string;
 }
 
+const API0_URL = 'https://api0.ai';
+
 // Display order by tool id, split into the two sections the page renders.
 // Anything built below but missing from both lists simply wouldn't render —
-// every id from desktopToolsConfig/webTools must appear exactly
-// once across the two.
+// every id from desktopToolsConfig/webTools except api0 must appear
+// exactly once across the two.
 
-// The tools that carry the positioning: Azure workflows and AI agents.
+// api0 is not in either list: it has its own band above the grid.
+
+// The developer tools: the Azure Integration Suite, then GitAgent.
 const PRIMARY_ORDER: string[] = [
   'ais-runner',
   'ais-monitor',
   'ais-tracing',
   'ais-analytics',
-  'api0',
   'gitagent',
 ];
 
-// Built on the same stack, but outside the core offer.
+// Smaller tools on the same stack.
 const SECONDARY_ORDER: string[] = [
   'cvenom',
   'appscreens',
@@ -81,8 +84,6 @@ const FILTER_TAGS: { id: string; label: string }[] = [
   { id: 'git', label: 'Git' },
   { id: 'blog', label: 'Blog' },
   { id: 'audio', label: 'Audio' },
-  { id: 'api', label: 'API' },
-  { id: 'mcp', label: 'MCP' },
   { id: 'ai', label: 'AI' },
   { id: 'crypto', label: 'Crypto' },
   { id: 'tools', label: 'Tools' },
@@ -269,17 +270,6 @@ export default function AppsPage() {
 
     const webTools: Tool[] = [
       {
-        id: 'api0',
-        name: 'API0.AI',
-        description: tPortfolio('api0_description'),
-        tech: tPortfolio('api0_tech'),
-        status: 'live',
-        tags: ['api', 'mcp'],
-        icon: <Brain className="w-8 h-8" />,
-        visual: <Api0FlowDiagram layout="vertical" />,
-        action: { kind: 'external', href: 'https://api0.ai', label: tPortfolio('api0_cta') },
-      },
-      {
         id: 'cvenom',
         name: 'CVENOM',
         description: tPortfolio('cvenom_description'),
@@ -351,6 +341,33 @@ export default function AppsPage() {
         </div>
       </section>
 
+      {/* api0 — the product, ahead of the downloadable tools */}
+      <section className="pt-12 bg-background">
+        <div className="container max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-8 items-center rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 via-secondary/40 to-background p-6 sm:p-8">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <h2 className="text-2xl font-bold text-primary">API0.AI</h2>
+                <StatusBadge status="live" />
+              </div>
+              <p className="text-lg font-medium mb-2">{tApps('api0_tagline')}</p>
+              <p className="text-muted-foreground mb-6">{tApps('api0_description')}</p>
+              <a
+                href={API0_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+              >
+                {tApps('api0_cta')} <ExternalLink className="ml-2 w-4 h-4" />
+              </a>
+            </div>
+            <div className="flex items-center justify-center">
+              <Api0FlowDiagram />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Intro + filters */}
       <section className="pt-12 bg-background">
         <div className="container max-w-6xl">
@@ -411,18 +428,18 @@ export default function AppsPage() {
         </section>
       )}
 
-      {/* Footer CTA */}
+      {/* Using the tools at work */}
       <section className="py-16 bg-secondary">
         <div className="container text-center">
-          <h2 className="text-2xl font-bold mb-4">{tApps('more_coming_soon')}</h2>
-          <p className="text-muted-foreground mb-6">
-            {tApps('more_coming_soon_subtitle')}
+          <h2 className="text-2xl font-bold mb-4">{tApps('licence_heading')}</h2>
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            {tApps('licence_body')}
           </p>
           <Link
-            href={getLocalizedPath(locale, '/contact')}
+            href={`${getLocalizedPath(locale, '/contact')}?service=licence`}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
           >
-            {tApps('more_coming_soon_cta')}
+            {tApps('licence_cta')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

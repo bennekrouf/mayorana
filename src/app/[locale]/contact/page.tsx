@@ -4,12 +4,15 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { useForm } from 'react-hook-form';
-import { FiMail, FiMapPin, FiLinkedin } from 'react-icons/fi';
+import { useForm, useWatch } from 'react-hook-form';
+import { FiMail, FiMapPin, FiLinkedin, FiArrowRight } from 'react-icons/fi';
 import { motion } from '@/components/ui/Motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 import { GATEWAY_URL } from '@/lib/gateway';
+import { getLocalizedPath } from '@/lib/i18n-utils';
+
+const API0_QUICKSTART_URL = 'https://api0.ai/blog/connect-claude-to-your-backend-in-5-minutes-with-api0';
 
 interface FormData {
   name: string;
@@ -48,10 +51,25 @@ function ContactFormWithParams() {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isSubmitting }
   } = useForm<FormData>();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  // The message placeholder asks for what the chosen topic needs.
+  const topic = useWatch({ control, name: 'service' });
+  const messagePlaceholder =
+    topic === 'api0' || topic === 'tools' || topic === 'licence'
+      ? t(`message_placeholder_${topic}`)
+      : t('message_placeholder');
+
+  // Answers that don't need a message, shown beside the form.
+  const shortcuts = [
+    { label: t('shortcut_api0'), href: API0_QUICKSTART_URL, external: true },
+    { label: t('shortcut_bug'), href: getLocalizedPath(locale, '/apps'), external: false },
+    { label: t('shortcut_releases'), href: getLocalizedPath(locale, '/apps'), external: false },
+  ];
 
   // The form field is still called `service` because the contact endpoint
   // expects it; a ?service= link preselects one of these topics.
@@ -204,6 +222,25 @@ function ContactFormWithParams() {
                 </div>
               </div>
 
+              <div className="p-6 rounded-xl border border-border">
+                <h3 className="font-medium mb-4">{t('shortcuts_heading')}</h3>
+                <ul className="space-y-3">
+                  {shortcuts.map((shortcut) => (
+                    <li key={shortcut.label}>
+                      <Link
+                        href={shortcut.href}
+                        target={shortcut.external ? '_blank' : undefined}
+                        rel={shortcut.external ? 'noopener noreferrer' : undefined}
+                        className="flex items-start gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        <FiArrowRight className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
+                        {shortcut.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               <div className="p-6 bg-secondary rounded-xl border border-border">
                 <h3 className="font-medium mb-2">{t('response_time')}</h3>
                 <p className="text-sm text-muted-foreground">
@@ -324,7 +361,7 @@ function ContactFormWithParams() {
                       id="message"
                       rows={5}
                       className="w-full p-3 rounded-lg border-2 border-muted-foreground/20 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
-                      placeholder={t('message_placeholder')}
+                      placeholder={messagePlaceholder}
                       {...register('message', { required: t('message_required') })}
                     />
                     {errors.message && (
