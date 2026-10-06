@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
 #
-# Install the nightly download-count aggregator on the VPS.
+# Schedule the download and traffic aggregator on the VPS.
 #
-# nginx logs every hit to /downloads/, but logrotate discards them after about
-# two weeks. This schedules the aggregator so each day's total is folded into a
-# cumulative file before the log it came from is deleted.
+# nginx logs every hit, but logrotate discards the logs after about two weeks.
+# The aggregator folds each day into a cumulative file that outlives them, and
+# rewrites the summary the /stats page reads.
 #
-# Follows the box's existing convention — script in ~/scripts, log beside it,
-# entry in the user crontab — rather than installing to /usr/local/bin and
-# /etc/cron.d. Runs as the ordinary user: reading the nginx log only needs
-# membership of the `adm` group, and sudo is used once, to create the state
-# directory.
+# Every 15 minutes, not nightly: a run takes ~15 s, and once a day meant the
+# page was up to a day stale. Re-running is safe — a day still in the logs is
+# recomputed, not added to.
 #
-# Idempotent: re-run to pick up a new version of the script.
+# The cron runs the script from this checkout, not from a copy. It used to be
+# copied to ~/scripts once, and since deploys never refreshed the copy every
+# later change to the script was merged but not live for weeks without anyone
+# noticing. Running the deployed file means merged-and-deployed is live.
+#
+# Runs as the ordinary user (reading the nginx log needs membership of `adm`);
+# sudo is used once, to create the state directory. Idempotent: re-run any
+# time, and it also replaces an old nightly entry.
 #
 # Usage (as the deploy user, from a checkout of the site repo):
 #     ./scripts/install-downloads-stats.sh
 set -euo pipefail
 
 SCRIPTS_DIR="$HOME/scripts"
-TARGET="$SCRIPTS_DIR/downloads-stats.py"
 LOG="$SCRIPTS_DIR/downloads-stats.log"
+# Two runs at once would both read the state, both write it, and the second
+# would silently discard the first's update. flock -n skips a run instead.
+LOCK=/tmp/downloads-stats.lock
 
 # Outside any deploy directory on purpose: this file is the only record of
 # download history once the logs it came from have rotated away, so a
@@ -54,17 +61,9 @@ if [[ ! -r $ACCESS_LOG ]]; then
     exit 1
 fi
 
-mkdir -p "$SCRIPTS_DIR"
-# Copying a file onto itself is an error, and it happens whenever this is run
-# from the directory it installs into — which is exactly what you get after
-# copying both files straight to ~/scripts.
-if [[ "$(readlink -f "$src")" == "$(readlink -f "$TARGET")" ]]; then
-    chmod 755 "$TARGET"
-    echo "using $TARGET in place"
-else
-    install -m 755 "$src" "$TARGET"
-    echo "installed $TARGET"
-fi
+TARGET="$(readlink -f "$src")"
+[[ -x $TARGET ]] || chmod 755 "$TARGET"
+mkdir -p "$SCRIPTS_DIR"   # for the log
 
 if [[ ! -d $STATE_DIR ]]; then
     echo "creating $STATE_DIR (needs sudo once)"
@@ -72,23 +71,21 @@ if [[ ! -d $STATE_DIR ]]; then
 fi
 echo "state directory ready: $STATE_DIR"
 
-# 03:20: before Debian/Ubuntu rotate the logs from cron.daily, and clear of
-# the 03:30 backup job already in this crontab.
-ENTRY="20 3 * * * $TARGET --state $STATE --out $SUMMARY >> $LOG 2>&1"
+ENTRY="*/15 * * * * flock -n $LOCK $TARGET --state $STATE --out $SUMMARY >> $LOG 2>&1"
 
-# Replace any previous entry for this script rather than stacking duplicates,
-# and leave every other job untouched.
-kept="$(crontab -l 2>/dev/null | grep -vF "$TARGET" | sed '/^[[:space:]]*$/d' || true)"
+# Replace any previous entry for this script — including the old nightly one
+# that ran a copy from ~/scripts — and leave every other job untouched.
+kept="$(crontab -l 2>/dev/null | grep -v 'downloads-stats\.py' | sed '/^[[:space:]]*$/d' || true)"
 if [[ -n $kept ]]; then
     printf '%s\n%s\n' "$kept" "$ENTRY" | crontab -
 else
     printf '%s\n' "$ENTRY" | crontab -
 fi
-echo "crontab entry installed (nightly at 03:20)"
+echo "crontab entry installed (every 15 minutes, running $TARGET)"
 
 # Seed immediately: whatever is in today's log is captured now rather than
 # lost at the next rotation.
-"$TARGET" --state "$STATE" --out "$SUMMARY"
+flock -n "$LOCK" "$TARGET" --state "$STATE" --out "$SUMMARY"
 
 echo
 echo "state:   $STATE   (cumulative — back this up, it outlives the logs)"

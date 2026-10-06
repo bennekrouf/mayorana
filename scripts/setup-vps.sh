@@ -379,7 +379,7 @@ server {
     # Apps that have been told yes by their user GET /ping?b=<base64url JSON>
     # and get an empty 204. Nothing here parses the query: the request line in
     # the access log *is* the record, and scripts/downloads-stats.py folds it
-    # into the nightly numbers. No upstream, no database, nothing that has to
+    # into the stats every 15 minutes. No upstream, no database, nothing that has to
     # be running for a send to succeed.
     #
     # Exact match, so only this path answers 204 — a scanner probing /ping/x
