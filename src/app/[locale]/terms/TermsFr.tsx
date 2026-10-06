@@ -15,62 +15,71 @@ export default function TermsFr() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold mb-6">Conditions d&apos;utilisation</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 6 octobre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Acceptation des conditions</h2>
                 <p>
-                  En accédant au site Mayorana (mayorana.ch) et en l&apos;utilisant, vous acceptez d&apos;être lié par les termes et
-                  dispositions du présent accord. Les présentes Conditions d&apos;utilisation («&nbsp;Conditions&nbsp;») régissent votre
-                  utilisation de notre site et des services fournis par Mayorana, société de conseil technologique basée en Suisse.
+                  En accédant au site Mayorana (mayorana.ch) et en l&apos;utilisant, vous acceptez d&apos;être lié par les présentes
+                  Conditions d&apos;utilisation («&nbsp;Conditions&nbsp;»). Elles régissent votre utilisation du site et des logiciels
+                  qui y sont téléchargés. Mayorana est une entreprise suisse de logiciels.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold mb-4">Description des services</h2>
-                <p className="mb-4">Mayorana propose les services suivants&nbsp;:</p>
+                <h2 className="text-2xl font-semibold mb-4">Nos produits</h2>
+                <p className="mb-4">Mayorana conçoit et distribue&nbsp;:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Formation et conseil en programmation Rust</li>
-                  <li>Services d&apos;intégration de grands modèles de langage (LLM)</li>
-                  <li>Développement d&apos;agents IA</li>
-                  <li>Solutions d&apos;API, dont api0.ai</li>
-                  <li>Conseil technologique et services consultatifs</li>
+                  <li>
+                    <strong>api0</strong>, une passerelle MCP fournie sur api0.ai. Votre utilisation d&apos;api0 est régie par les{' '}
+                    <a href="https://api0.ai/terms" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">conditions d&apos;utilisation d&apos;api0</a>,
+                    et non par les présentes Conditions.
+                  </li>
+                  <li>
+                    <strong>Des outils de bureau</strong> pour Azure Integration Services, Git et d&apos;autres usages, téléchargeables
+                    sur ce site. Leur utilisation est régie par les licences décrites ci-dessous, sous «&nbsp;Licences des logiciels&nbsp;».
+                  </li>
                 </ul>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold mb-4">Licence d&apos;utilisation</h2>
+                <h2 className="text-2xl font-semibold mb-4">Utilisation du site</h2>
                 <p className="mb-4">
-                  Vous êtes autorisé à télécharger temporairement une copie des contenus du site Mayorana à des fins personnelles,
-                  non commerciales et de simple consultation. Il s&apos;agit d&apos;une licence et non d&apos;un transfert de titre. À ce titre,
+                  Vous pouvez consulter et télécharger les contenus de ce site (articles, pages et images) à des fins
+                  personnelles et non commerciales. Il s&apos;agit d&apos;une licence et non d&apos;un transfert de titre. À ce titre,
                   vous ne pouvez pas&nbsp;:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Modifier ou copier les contenus</li>
+                  <li>Republier les articles ou pages du site comme les vôtres, en tout ou en partie substantielle</li>
                   <li>Utiliser les contenus à des fins commerciales ou pour un affichage public</li>
-                  <li>Tenter de désosser tout logiciel présent sur le site</li>
                   <li>Supprimer les mentions de droits d&apos;auteur ou autres mentions de propriété</li>
                 </ul>
                 <p className="mt-4">
-                  Cette licence sera automatiquement résiliée si vous enfreignez l&apos;une de ces restrictions et peut être révoquée
-                  par Mayorana à tout moment.
+                  Cette licence ne couvre pas les logiciels téléchargeables, qui font l&apos;objet d&apos;une licence distincte (voir
+                  ci-dessous). Elle est automatiquement résiliée si vous enfreignez ces restrictions et peut être révoquée par
+                  Mayorana à tout moment.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold mb-4">Services professionnels</h2>
+                <h2 className="text-2xl font-semibold mb-4">Licences des logiciels</h2>
                 <p className="mb-4">
-                  Pour les prestations de conseil et de formation, des contrats de service distincts seront établis et incluront
-                  notamment&nbsp;:
+                  Les outils de bureau sont à source disponible sous la{' '}
+                  <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PolyForm Noncommercial License 1.0.0</a>.
+                  C&apos;est cette licence, et non les présentes Conditions, qui définit ce que vous pouvez faire du logiciel et de son
+                  code source. En résumé, elle autorise l&apos;usage personnel, éducatif, de recherche et de loisir, ainsi que
+                  l&apos;usage par les associations, écoles, universités et institutions publiques.
                 </p>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Périmètre des travaux et livrables</li>
-                  <li>Conditions et modalités de paiement</li>
-                  <li>Accords sur la propriété intellectuelle</li>
-                  <li>Clauses de confidentialité et de non-divulgation</li>
-                  <li>Niveaux de service et conditions de support</li>
-                </ul>
+                <p className="mb-4">
+                  Tout usage commercial, y compris pour le compte d&apos;une entreprise ou de clients, requiert une licence
+                  commerciale de Mayorana. Certains outils proposent une édition payante achetée sur leur page&nbsp;: le paiement
+                  est assuré par Stripe, et la clé de licence est affichée après l&apos;achat et envoyée par e-mail.
+                </p>
+                <p>
+                  Le code source des outils de bureau est publié sur GitHub. Le nom Mayorana, les noms des outils et leurs logos
+                  sont des marques et ne sont pas couverts par la licence PolyForm.
+                </p>
               </section>
 
               <section>
@@ -123,9 +132,10 @@ export default function TermsFr() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Liens et services tiers</h2>
                 <p>
-                  Notre site peut contenir des liens vers des sites ou services tiers (notamment api0.ai et les réseaux sociaux).
-                  Nous ne sommes pas responsables du contenu, des politiques de confidentialité ou des pratiques de ces sites tiers.
-                  Nous vous encourageons à lire les conditions et politiques de confidentialité de tout site tiers que vous visitez.
+                  Notre site peut contenir des liens vers des sites ou services tiers, comme GitHub, Stripe et les réseaux
+                  sociaux. Nous ne sommes pas responsables du contenu, des politiques de confidentialité ou des pratiques de
+                  ces sites tiers. Nous vous encourageons à lire les conditions et politiques de confidentialité de tout site
+                  tiers que vous visitez.
                 </p>
               </section>
 
@@ -133,8 +143,9 @@ export default function TermsFr() {
                 <h2 className="text-2xl font-semibold mb-4">Propriété intellectuelle</h2>
                 <p className="mb-4">
                   Le contenu, l&apos;organisation, les graphismes, le design et autres éléments du site sont protégés par les lois
-                  applicables en matière de droits d&apos;auteur et de propriété. Toute copie, redistribution, utilisation ou
-                  publication de ces éléments, ou d&apos;une partie quelconque du site, est interdite.
+                  applicables en matière de droits d&apos;auteur et de propriété. Sauf dans la mesure permise par les présentes
+                  Conditions ou par une licence logicielle, toute copie, redistribution, utilisation ou publication d&apos;une partie
+                  quelconque du site est interdite.
                 </p>
                 <p>
                   Toutes les marques, marques de service et noms commerciaux sont la propriété de Mayorana ou de leurs détenteurs respectifs.

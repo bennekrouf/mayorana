@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { ArrowRight, Check, PlayCircle, Share2, Search } from 'lucide-react';
+import { ArrowRight, Check, ExternalLink, PlayCircle, Share2, Search, Scale, Sparkles } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { aisTools, appI18nKey, hasReleaseNotes } from '@/data/tools';
@@ -17,6 +17,8 @@ const FRICTIONS = [
   { key: '2', icon: Share2 },
   { key: '3', icon: Search },
 ] as const;
+
+const API0_URL = 'https://api0.ai';
 
 // "Which tool do I need?" rows — each need maps to one tool in the suite, in
 // the same order as `aisTools`, so status badges stay in sync with the data.
@@ -68,6 +70,12 @@ export default function AzureSolutionsPage() {
                 className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
               >
                 {t('hero_cta_primary')} <ArrowRight className="ml-2 w-4 h-4" />
+              </a>
+              <a
+                href="#licence"
+                className="inline-flex items-center px-6 py-3 rounded-lg border border-border bg-background font-medium hover:bg-secondary transition-colors"
+              >
+                {t('hero_cta_secondary')}
               </a>
             </motion.div>
           </div>
@@ -227,6 +235,50 @@ export default function AzureSolutionsPage() {
               ))}
             </ul>
           </div>
+        </div>
+      </section>
+
+      {/* Licence and Claude skill — what using the tools at work involves */}
+      <section id="licence" className="py-16 bg-background scroll-mt-20">
+        <div className="container max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="rounded-2xl border border-border p-6 flex flex-col">
+              <div className="mb-4 p-3 inline-flex self-start bg-primary/10 rounded-full text-primary">
+                <Scale className="w-6 h-6" />
+              </div>
+              <h2 className="text-2xl font-bold mb-3">{t('licence_heading')}</h2>
+              <p className="text-muted-foreground mb-6">{t('licence_body')}</p>
+              <Link
+                href={`${getLocalizedPath(locale, '/contact')}?service=licence`}
+                className="mt-auto self-start inline-flex items-center text-primary font-medium hover:underline"
+              >
+                {t('licence_cta')} <ArrowRight className="ml-1.5 w-4 h-4" />
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-border p-6 flex flex-col">
+              <div className="mb-4 p-3 inline-flex self-start bg-primary/10 rounded-full text-primary">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <h2 className="text-2xl font-bold mb-3">{t('skill_heading')}</h2>
+              <p className="text-muted-foreground">{t('skill_body')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* The same team's product, for when the question becomes agents */}
+      <section className="py-16 bg-secondary/30 border-t border-border">
+        <div className="container max-w-3xl text-center">
+          <h2 className="text-2xl font-bold mb-4">{t('api0_heading')}</h2>
+          <p className="text-muted-foreground mb-6">{t('api0_body')}</p>
+          <a
+            href={API0_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+          >
+            {t('api0_cta')} <ExternalLink className="ml-2 w-4 h-4" />
+          </a>
         </div>
       </section>
     </LayoutTemplate>

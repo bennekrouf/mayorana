@@ -66,6 +66,7 @@ export interface PathEntry {
 
 export interface PaginatedPosts {
   posts: BlogPost[];
+  featuredPosts: BlogPost[];
   pinnedPosts: BlogPost[];
   currentPage: number;
   totalPages: number;
