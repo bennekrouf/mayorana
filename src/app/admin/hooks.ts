@@ -1,10 +1,10 @@
 // File: src/app/admin/hooks.ts
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { AdminState, LanguageFile } from './types';
 import { loadFileTree, loadSingleFile, saveFileToServer, findTranslationFile } from './api';
 
 export const useAdminState = () => {
-  const [state, setState] = useState<AdminState>({
+  const [stored, setState] = useState<AdminState>({
     treeData: [],
     selectedFile: null,
     enFile: null,
@@ -16,12 +16,12 @@ export const useAdminState = () => {
     lastSaved: null,
   });
 
-  // Track changes for both files
-  useEffect(() => {
-    const enHasChanges = state.enFile && state.enFile.content !== state.enFile.originalContent;
-    const frHasChanges = state.frFile && state.frFile.content !== state.frFile.originalContent;
-    setState(prev => ({ ...prev, hasChanges: Boolean(enHasChanges || frHasChanges) }));
-  }, [state.enFile, state.frFile]);
+  // Unsaved changes in either file, derived from the files themselves.
+  const state = useMemo<AdminState>(() => {
+    const enHasChanges = stored.enFile && stored.enFile.content !== stored.enFile.originalContent;
+    const frHasChanges = stored.frFile && stored.frFile.content !== stored.frFile.originalContent;
+    return { ...stored, hasChanges: Boolean(enHasChanges || frHasChanges) };
+  }, [stored]);
 
   const updateState = useCallback((updates: Partial<AdminState>) => {
     setState(prev => ({ ...prev, ...updates }));

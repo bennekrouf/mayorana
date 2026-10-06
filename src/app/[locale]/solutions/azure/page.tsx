@@ -69,12 +69,6 @@ export default function AzureSolutionsPage() {
               >
                 {t('hero_cta_primary')} <ArrowRight className="ml-2 w-4 h-4" />
               </a>
-              <Link
-                href={getLocalizedPath(locale, '/contact')}
-                className="inline-flex items-center px-6 py-3 rounded-lg border border-border bg-background font-medium hover:bg-secondary transition-colors"
-              >
-                {t('hero_cta_secondary')}
-              </Link>
             </motion.div>
           </div>
         </div>
@@ -232,30 +226,6 @@ export default function AzureSolutionsPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Next action */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">{t('cta_heading')}</h2>
-            <p className="text-lg text-muted-foreground mb-8">{t('cta_body')}</p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                href={getLocalizedPath(locale, '/contact')}
-                className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
-              >
-                {t('cta_primary')}
-              </Link>
-              <Link
-                href={getLocalizedPath(locale, '/services')}
-                className="inline-flex items-center px-8 py-4 rounded-lg border border-border text-lg font-medium hover:bg-secondary transition-colors"
-              >
-                {t('cta_secondary')}
-              </Link>
-            </div>
           </div>
         </div>
       </section>

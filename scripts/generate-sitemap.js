@@ -23,7 +23,6 @@ const STATIC_PAGES = [
   { path: '/solutions/ai-agents', changefreq: 'weekly', priority: '0.9' },
   { path: '/apps', changefreq: 'weekly', priority: '0.9' },
   { path: '/founding', changefreq: 'monthly', priority: '0.6' },
-  { path: '/services', changefreq: 'monthly', priority: '0.8' },
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
   { path: '/contact', changefreq: 'monthly', priority: '0.7' },
   { path: '/blog', changefreq: 'daily', priority: '0.9' },

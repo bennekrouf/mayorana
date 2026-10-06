@@ -649,7 +649,7 @@ function StatsDashboard() {
 
   const [stats, setStats] = useState<Stats | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
   const fetchStats = useCallback(async (): Promise<string | null> => {
@@ -681,9 +681,22 @@ function StatsDashboard() {
     setLoading(false);
   }, [fetchStats]);
 
+  // First load. `loading` starts true, so only the async outcome sets state.
   useEffect(() => {
-    load();
-  }, [load]);
+    let cancelled = false;
+    (async () => {
+      let failure: string | null;
+      try {
+        failure = await fetchStats();
+      } catch (err) {
+        failure = `Could not reach the stats endpoint. ${err}`;
+      }
+      if (cancelled) return;
+      if (failure) setError(failure);
+      setLoading(false);
+    })();
+    return () => { cancelled = true; };
+  }, [fetchStats]);
 
   // Everything on the page is recomputed for the chosen window, so the tiles,
   // the chart and the breakdowns can never disagree with each other.

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiMenu, FiX, FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
@@ -10,9 +10,13 @@ import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useHostContext } from '@/providers/HostProvider';
 import AuthButton from './AuthButton';
 
+const subscribeNever = () => () => {};
+
 const Navbar: React.FC = () => {
   const { isSwissRust } = useHostContext();
-  const [mounted, setMounted] = useState(false);
+  // False on the server and during hydration, true afterwards: the theme
+  // toggle depends on client-only state, so the bar renders once mounted.
+  const mounted = useSyncExternalStore(subscribeNever, () => true, () => false);
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
@@ -25,16 +29,11 @@ const Navbar: React.FC = () => {
     { name: t('azure_tools'), path: '/solutions/azure' },
     { name: t('ai_agents'), path: '/solutions/ai-agents' },
     { name: 'Apps', path: '/apps' },
-    { name: t('services'), path: '/services' },
     { name: t('blog'), path: '/blog' },
     { name: t('contact'), path: '/contact' }
   ];
 
   const navItems = isSwissRust ? [] : allNavItems;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const isActivePath = (path: string) => {
     if (path === '/') {

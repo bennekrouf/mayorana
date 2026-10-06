@@ -26,14 +26,14 @@ const MAX_TRIES = 45; // 90 s: card payments settle in seconds
 export function LicenceReveal({ contactHref, how }: { contactHref: string; how: string }) {
   const t = useTranslations('app_detail');
   const sessionId = useSearchParams().get('session_id');
-  const [state, setState] = useState<State>({ kind: 'loading' });
+  const validSession = !!sessionId && sessionId.startsWith('cs_');
+  const [fetched, setState] = useState<State>({ kind: 'loading' });
+  // A missing or malformed session id needs no request: it is known on render.
+  const state: State = validSession ? fetched : { kind: 'missing' };
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (!sessionId || !sessionId.startsWith('cs_')) {
-      setState({ kind: 'missing' });
-      return;
-    }
+    if (!validSession) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
 
@@ -64,7 +64,7 @@ export function LicenceReveal({ contactHref, how }: { contactHref: string; how: 
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [sessionId]);
+  }, [sessionId, validSession]);
 
   async function copy(key: string) {
     await navigator.clipboard.writeText(key);

@@ -23,7 +23,6 @@ export default function ClientHomeSection() {
   const locale = useLocale();
 
   const azureHref = getLocalizedPath(locale, '/solutions/azure');
-  const contactHref = getLocalizedPath(locale, '/contact');
 
   const tools = SELECTED_TOOL_IDS.map((id) => {
     const tool = desktopToolsConfig.find((candidate) => candidate.id === id);
@@ -64,19 +63,19 @@ export default function ClientHomeSection() {
                 {t('cta_try_api0')}
                 <ExternalLink className="ml-2 w-4 h-4" />
               </a>
-              <Link
-                href={contactHref}
+              <a
+                href="#api0"
                 className="btn-cap-light inline-flex items-center px-6 py-3 rounded-lg border border-foreground/20 text-foreground hover:bg-foreground/5 transition duration-200"
               >
-                {t('cta_book_consult')}
-              </Link>
+                {t('cta_how_api0_works')}
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* api0 — the flagship, directly under the hero */}
-      <section className="py-20 bg-secondary/30">
+      <section id="api0" className="py-20 bg-secondary/30 scroll-mt-16">
         <div className="container max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
             <div>
@@ -179,33 +178,6 @@ export default function ClientHomeSection() {
                 <p className="text-sm text-muted-foreground">{tool.line}</p>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services teaser */}
-      <section className="py-20 bg-background">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">{t('services_teaser_heading')}</h2>
-            <p className="lead-marketing text-muted-foreground mb-8">
-              {t('services_teaser_body')}
-            </p>
-            <Link
-              href={getLocalizedPath(locale, '/services')}
-              className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
-            >
-              {t('services_teaser_cta')}
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-            <div className="mt-6">
-              <Link
-                href={contactHref}
-                className="text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
-              >
-                {t('services_teaser_contact')}
-              </Link>
-            </div>
           </div>
         </div>
       </section>
