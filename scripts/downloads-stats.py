@@ -389,6 +389,13 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
         # counting it here would drown the signal in 'unknown'.
         'by_source': defaultdict(int),
         'by_medium': defaultdict(int),
+        # The same split, per app: of each app's first installs, how many were
+        # taken signed in. by_app alone mixes installs with updates, and
+        # by_signin alone mixes the apps, so neither answers "who installed
+        # this app, and can we reach them".
+        'installs_by_app': defaultdict(int),
+        'updates_by_app': defaultdict(int),
+        'members_by_app': defaultdict(int),
         # Kept rather than silently dropped: a filter you cannot see is a
         # filter you cannot check.
         'excluded': defaultdict(int),
@@ -405,7 +412,12 @@ def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) ->
 
         bucket['total'] += 1
         bucket['updates' if event['updater'] else 'installs'] += 1
-        if not event['updater']:
+        if event['updater']:
+            bucket['updates_by_app'][event['app']] += 1
+        else:
+            bucket['installs_by_app'][event['app']] += 1
+            if event.get('member'):
+                bucket['members_by_app'][event['app']] += 1
             bucket['by_signin']['signed_in' if event.get('member') else 'anonymous'] += 1
             # Untagged downloads are real downloads; they just predate the
             # tagging or came from a browser that dropped the parameters.
@@ -478,6 +490,13 @@ def parse_usage(patterns: list[str]) -> dict[str, dict]:
     # Distinct installs, not events: a version's share of the user base.
     by_version: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
     by_os: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    # Per app, because each product is its own funnel: distinct installs seen,
+    # installs reporting their first launch (`app_installed`), and installs
+    # whose first run completed (`first_flow_completed`, gitagent's word for
+    # activation). Sets hold install ids only until the day is counted.
+    app_active: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    app_new: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    app_activated: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     # A client that did not see the 204 sends the same batch again.
     seen: set[tuple] = set()
 
@@ -504,9 +523,20 @@ def parse_usage(patterns: list[str]) -> dict[str, dict]:
                             continue
                         day = stamp.date().isoformat()
                         who = body['install_id']
+                        # Read which events are new *before* the fold marks
+                        # them seen: a resent batch must not count twice.
+                        fresh = [
+                            str(e.get('n', '')) for e in body['events']
+                            if isinstance(e, dict)
+                            and (who, str(e.get('l', '')), str(e.get('n', '')), e.get('t')) not in seen
+                        ]
                         _fold_ping(body, who, day, seen, installs, launches,
                                    batches, by_event, by_flow, by_forge,
                                    by_provider, by_version, by_os)
+                        app = str(body['app'])
+                        app_active[day][app].add(who)
+                        app_new[day][app] += fresh.count('app_installed')
+                        app_activated[day][app] += fresh.count('first_flow_completed')
             except OSError as exc:
                 print(f'warning: cannot read {path}: {exc}', file=sys.stderr)
 
@@ -522,6 +552,14 @@ def parse_usage(patterns: list[str]) -> dict[str, dict]:
             'by_provider': dict(by_provider.get(day, {})),
             'by_version': {v: len(s) for v, s in by_version.get(day, {}).items()},
             'by_os': {o: len(s) for o, s in by_os.get(day, {}).items()},
+            'by_app': {
+                app: {
+                    'active': len(ids),
+                    'new': app_new[day].get(app, 0),
+                    'activated': app_activated[day].get(app, 0),
+                }
+                for app, ids in app_active.get(day, {}).items()
+            },
         }
         for day in sorted(days)
     }
@@ -888,6 +926,12 @@ def summarise(state: dict, geo_note: str) -> dict:
                 'by_signin': state['days'][day].get('by_signin', {}),
                 'by_source': state['days'][day].get('by_source', {}),
                 'by_medium': state['days'][day].get('by_medium', {}),
+                'installs_by_app': state['days'][day].get('installs_by_app', {}),
+                'updates_by_app': state['days'][day].get('updates_by_app', {}),
+                'members_by_app': state['days'][day].get('members_by_app', {}),
+                # Installs whose updater checked in that day: the per-app view
+                # of `active` above, which the page needs to split by app.
+                'active_by_app': state['days'][day].get('active_by_app', {}),
             }
             for day in recent
         },
