@@ -749,8 +749,8 @@
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control",
-        "pro_download_intro": "Free: work with 5 repositories. Pro: every repository, in every folder, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Free: work with 5 repositories, across all your folders; the others are shown locked. Pro: every repository, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, with 5 repositories. Commercial use — including a solo consultant on client work — requires GitAgent Pro, which also covers every repository, in every folder. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 5 repositories across all your folders (the others are shown locked). Commercial use — including a solo consultant on client work and an employee using it at their job — requires GitAgent Pro, which also covers every repository. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "To activate it, open GitAgent, click Get Pro… in the top bar and paste the key. It is checked on your computer: no account, nothing sent anywhere."
       },
       "blog_toolkit": {
@@ -911,8 +911,8 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, exporting the first 10 tracks of each recording. Commercial use — including a solo consultant on client work — requires Splitter Pro, which also exports every track. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with exports limited to the first 10 tracks of each recording. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Splitter Pro, which also exports every track. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere."
       },
       "spreadwatch": {

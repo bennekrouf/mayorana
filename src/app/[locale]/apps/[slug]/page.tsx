@@ -383,26 +383,27 @@ export default async function ToolDetailPage({ params }: Props) {
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               {t(tool.pro ? `apps.${appI18nKey[tool.id]}.pro_licence_body` : 'licence_body')}
             </p>
-            {/* A tool sold as Pro has one thing to buy, for everyone: no
-                noncommercial terms to read, no commercial licence to ask for. */}
-            {!tool.pro && (
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href={LICENCE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-primary hover:underline underline-offset-4"
-                >
-                  {t('licence_link')}
-                </a>
+            {/* Every tool ships under the same noncommercial licence, so its
+                text is always one click away. A tool sold as Pro has nothing
+                to enquire about: Pro is its commercial licence, bought above. */}
+            <div className="flex flex-wrap gap-4">
+              <a
+                href={LICENCE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-primary hover:underline underline-offset-4"
+              >
+                {t('licence_link')}
+              </a>
+              {!tool.pro && (
                 <Link
                   href={`/${locale}/contact?service=licence`}
                   className="text-sm text-primary hover:underline underline-offset-4"
                 >
                   {t('licence_cta')}
                 </Link>
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <div>
             <h2 className="flex items-center gap-2 text-2xl font-bold mb-4">
