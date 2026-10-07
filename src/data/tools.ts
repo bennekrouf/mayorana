@@ -164,7 +164,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screensDl}/appscreens-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${screensDl}/appscreens-linux-x86_64.deb` },
-      { os: 'windows', label: 'Windows', href: `${screensDl}/appscreens-windows-setup.msi` },
+      { os: 'windows', label: 'Windows', href: `${screensDl}/appscreens-windows-setup.exe` },
     ],
   },
   {
