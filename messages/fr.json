@@ -988,6 +988,8 @@
     "skill_install_claude_code": "Claude Code : décompressez-le dans ~/.claude/skills/, pour que le skill se trouve dans ~/.claude/skills/{id}/.",
     "buy_pro_button": "Acheter {name} Pro",
     "buy_pro_note": "Achat unique, avec un an de mises à jour. Paiement sécurisé par Stripe ; votre clé de licence s'affiche juste après et vous est envoyée par e-mail.",
+    "buy_pro_price_once": "paiement unique",
+    "buy_pro_price_vat": "paiement unique, TVA en sus",
     "buy_pro_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
     "thanks_title": "Merci d'avoir acheté {name} Pro",
     "thanks_loading": "Récupération de votre clé de licence…",

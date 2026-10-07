@@ -17,7 +17,7 @@ export default function PrivacyFr() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold mb-6">Politique de confidentialité</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : 6 octobre 2026</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 7 octobre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -195,6 +195,15 @@ export default function PrivacyFr() {
               </section>
 
               <section>
+                <h2 className="text-2xl font-semibold mb-4">Enfants</h2>
+                <p>
+                  Le site et les outils Mayorana s&apos;adressent aux adultes et aux professionnels, pas aux enfants. Nous ne
+                  collectons pas sciemment de données personnelles de personnes de moins de 16 ans. Si vous pensez qu&apos;un
+                  enfant nous a transmis des données personnelles, écrivez à contact@mayorana.ch et nous les supprimerons.
+                </p>
+              </section>
+
+              <section>
                 <h2 className="text-2xl font-semibold mb-4">Liens vers des tiers</h2>
                 <p>
                   Le site renvoie vers des services comme GitHub, LinkedIn et WhatsApp. Ils ont leur propre politique de
@@ -219,7 +228,7 @@ export default function PrivacyFr() {
                 </p>
                 <div className="bg-secondary p-4 rounded-lg">
                   <p><strong>E-mail&nbsp;:</strong> contact@mayorana.ch</p>
-                  <p><strong>Adresse&nbsp;:</strong> Mayorana, Suisse</p>
+                  <p><strong>Adresse&nbsp;:</strong> Mayorana SARL, Suisse</p>
                 </div>
               </section>
             </div>

@@ -200,7 +200,7 @@ export default function TermsEn() {
                 </p>
                 <div className="bg-secondary p-4 rounded-lg">
                   <p><strong>Email:</strong> contact@mayorana.ch</p>
-                  <p><strong>Address:</strong> Mayorana, Switzerland</p>
+                  <p><strong>Address:</strong> Mayorana SARL, Switzerland</p>
                   <p><strong>Website:</strong> mayorana.ch</p>
                 </div>
               </section>

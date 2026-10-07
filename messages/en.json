@@ -988,6 +988,8 @@
     "skill_install_claude_code": "Claude Code: unzip it into ~/.claude/skills/, so that the skill ends up in ~/.claude/skills/{id}/.",
     "buy_pro_button": "Buy {name} Pro",
     "buy_pro_note": "One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
+    "buy_pro_price_once": "one-time",
+    "buy_pro_price_vat": "one-time, plus VAT",
     "buy_pro_error": "The payment page couldn't be opened. Please try again in a moment.",
     "thanks_title": "Thank you for buying {name} Pro",
     "thanks_loading": "Fetching your licence key…",
