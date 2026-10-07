@@ -17,7 +17,7 @@ export default function PrivacyEn() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: 6 October 2026</p>
+            <p className="text-muted-foreground mb-8">Last updated: 7 October 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -182,6 +182,15 @@ export default function PrivacyEn() {
               </section>
 
               <section>
+                <h2 className="text-2xl font-semibold mb-4">Children</h2>
+                <p>
+                  Mayorana&apos;s site and tools are meant for adults and professionals, not for children. We do not
+                  knowingly collect personal data from anyone under 16. If you believe a child has given us personal data,
+                  write to contact@mayorana.ch and we will delete it.
+                </p>
+              </section>
+
+              <section>
                 <h2 className="text-2xl font-semibold mb-4">Third-Party Links</h2>
                 <p>
                   The site links to services such as GitHub, LinkedIn and WhatsApp. They have their own privacy policies,
@@ -204,7 +213,7 @@ export default function PrivacyEn() {
                 </p>
                 <div className="bg-secondary p-4 rounded-lg">
                   <p><strong>Email:</strong> contact@mayorana.ch</p>
-                  <p><strong>Address:</strong> Mayorana, Switzerland</p>
+                  <p><strong>Address:</strong> Mayorana SARL, Switzerland</p>
                 </div>
               </section>
             </div>
