@@ -205,6 +205,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'beta',
     tags: ['crypto'],
     applicationCategory: 'FinanceApplication',
+    pro: { edition: 'pro' },
     downloads: [
       // One universal DMG: Apple Silicon and Intel.
       { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadwatchDl}/spreadwatch-macos.dmg` },

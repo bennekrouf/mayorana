@@ -964,7 +964,10 @@
             "a": "Dans un fichier du dossier de réglages de l'app que seul votre compte utilisateur peut lire, et nulle part ailleurs. Sauvegardez-le : c'est la seule copie, et quiconque l'obtient peut dépenser depuis le wallet."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Pour l'activer, ouvrez Spreadwatch et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       }
     },
     "article_heading": "Pour aller plus loin",
