@@ -202,7 +202,7 @@ export default function TermsFr() {
                 </p>
                 <div className="bg-secondary p-4 rounded-lg">
                   <p><strong>E-mail&nbsp;:</strong> contact@mayorana.ch</p>
-                  <p><strong>Adresse&nbsp;:</strong> Mayorana, Suisse</p>
+                  <p><strong>Adresse&nbsp;:</strong> Mayorana SARL, Suisse</p>
                   <p><strong>Site web&nbsp;:</strong> mayorana.ch</p>
                 </div>
               </section>

@@ -749,8 +749,8 @@
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control",
-        "pro_download_intro": "Free: work with 5 repositories. Pro: every repository, in every folder, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Free: work with 5 repositories, across all your folders; the others are shown locked. Pro: every repository, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, with 5 repositories. Commercial use — including a solo consultant on client work — requires GitAgent Pro, which also covers every repository, in every folder. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 5 repositories across all your folders (the others are shown locked). Commercial use — including a solo consultant on client work and an employee using it at their job — requires GitAgent Pro, which also covers every repository. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "To activate it, open GitAgent, click Get Pro… in the top bar and paste the key. It is checked on your computer: no account, nothing sent anywhere."
       },
       "blog_toolkit": {
@@ -911,8 +911,8 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Free: export the first 10 tracks of each recording. Pro: export every track, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, exporting the first 10 tracks of each recording. Commercial use — including a solo consultant on client work — requires Splitter Pro, which also exports every track. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with exports limited to the first 10 tracks of each recording. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Splitter Pro, which also exports every track. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere."
       },
       "spreadwatch": {
@@ -964,7 +964,10 @@
             "a": "In a file in the app's settings folder that only your user account can read, and nowhere else. Back it up: it is the only copy, and anyone who gets it can spend from the wallet."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires Spreadwatch Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Spreadwatch Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_how": "To activate it, open Spreadwatch and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere."
       }
     },
     "article_heading": "Read more",
@@ -988,6 +991,8 @@
     "skill_install_claude_code": "Claude Code: unzip it into ~/.claude/skills/, so that the skill ends up in ~/.claude/skills/{id}/.",
     "buy_pro_button": "Buy {name} Pro",
     "buy_pro_note": "One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
+    "buy_pro_price_once": "one-time",
+    "buy_pro_price_vat": "one-time, plus VAT",
     "buy_pro_error": "The payment page couldn't be opened. Please try again in a moment.",
     "thanks_title": "Thank you for buying {name} Pro",
     "thanks_loading": "Fetching your licence key…",

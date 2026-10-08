@@ -749,8 +749,8 @@
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control-fr",
-        "pro_download_intro": "Gratuit : 5 dépôts. Pro : tous vos dépôts, dans tous vos dossiers, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Gratuit : 5 dépôts, tous dossiers confondus ; les autres sont affichés verrouillés. Pro : tous vos dépôts, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 5 dépôts. L'usage commercial — y compris un consultant indépendant en mission — requiert GitAgent Pro, qui couvre aussi tous vos dépôts, dans tous vos dossiers. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 5 dépôts tous dossiers confondus (les autres sont affichés verrouillés). L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert GitAgent Pro, qui couvre aussi tous vos dépôts. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Pour l'activer, ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       },
       "blog_toolkit": {
@@ -911,8 +911,8 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Gratuit : export des 10 premières pistes de chaque enregistrement. Pro : export de toutes les pistes, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec l'export des 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission — requiert Splitter Pro, qui exporte aussi toutes les pistes. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec l'export limité aux 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Splitter Pro, qui exporte aussi toutes les pistes. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       },
       "spreadwatch": {
@@ -964,7 +964,10 @@
             "a": "Dans un fichier du dossier de réglages de l'app que seul votre compte utilisateur peut lire, et nulle part ailleurs. Sauvegardez-le : c'est la seule copie, et quiconque l'obtient peut dépenser depuis le wallet."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Pour l'activer, ouvrez Spreadwatch et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       }
     },
     "article_heading": "Pour aller plus loin",
@@ -988,6 +991,8 @@
     "skill_install_claude_code": "Claude Code : décompressez-le dans ~/.claude/skills/, pour que le skill se trouve dans ~/.claude/skills/{id}/.",
     "buy_pro_button": "Acheter {name} Pro",
     "buy_pro_note": "Achat unique, avec un an de mises à jour. Paiement sécurisé par Stripe ; votre clé de licence s'affiche juste après et vous est envoyée par e-mail.",
+    "buy_pro_price_once": "paiement unique",
+    "buy_pro_price_vat": "paiement unique, TVA en sus",
     "buy_pro_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
     "thanks_title": "Merci d'avoir acheté {name} Pro",
     "thanks_loading": "Récupération de votre clé de licence…",
