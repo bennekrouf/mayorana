@@ -964,7 +964,10 @@
             "a": "In a file in the app's settings folder that only your user account can read, and nowhere else. Back it up: it is the only copy, and anyone who gets it can spend from the wallet."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires Spreadwatch Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Spreadwatch Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_how": "To activate it, open Spreadwatch and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere."
       }
     },
     "article_heading": "Read more",
