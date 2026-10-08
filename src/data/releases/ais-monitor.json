@@ -2,8 +2,66 @@
   "name": "ais-monitor",
   "product": "AIS Monitor",
   "page": "https://mayorana.ch/en/apps/ais-monitor",
-  "generated_at": "2026-09-29T09:20:59Z",
+  "generated_at": "2026-10-06T20:34:30Z",
   "releases": [
+    {
+      "version": "0.3.43",
+      "tag": "v0.3.43",
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "AIS Monitor now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.42",
+      "tag": "v0.3.42",
+      "date": "2026-10-05",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.41",
+      "tag": "v0.3.41",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On Home, each queue under \"Dead-letter backlog\" now has a 🔗 button that opens it straight in Service Bus Explorer in the Azure Portal, so you can peek, resubmit or purge its dead letters without going through the Chains tab first."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.3.40",
+      "tag": "v0.3.40",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On Home, click a workflow under \"Workflows running\" to follow that run live in the console at the bottom: its actions appear in the order they start, with their status, start time and how long each took, refreshed every few seconds until the run finishes. The console then shows how the run ended and stays open until you close it."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Run logs, including the ones under \"Still failing\", now list actions in the order they ran, with when each started and how long it took."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.3.39",
       "tag": "v0.3.39",

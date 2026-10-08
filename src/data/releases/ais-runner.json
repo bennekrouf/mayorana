@@ -2,8 +2,60 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-09-29T09:24:22Z",
+  "generated_at": "2026-10-06T20:37:47Z",
   "releases": [
+    {
+      "version": "0.5.61",
+      "tag": "v0.5.61",
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "AIS Runner now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.60",
+      "tag": "v0.5.60",
+      "date": "2026-10-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Release pipeline only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.59",
+      "tag": "v0.5.59",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When a `wait_for_run` step times out on a Service Bus-triggered workflow and messages are still sitting in its trigger queue, the step now says so (\"N message(s) waiting unconsumed in '<queue>'\") instead of only \"no terminal run yet\". From the Tests view it also restarts `func` once and waits again, since a runtime that stopped consuming a queue does not start again on its own. If the messages are still there after the restart, the step fails saying so."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.58",
+      "tag": "v0.5.58",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Running a scenario from the Tests view now runs the file as it is on disk at that moment. Before, a scenario edited in your editor after the Tests view was opened still ran its old version until the list was reloaded, with nothing on screen to say so. A scenario file that has since been deleted or no longer parses now stops the run with that error instead."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.57",
       "tag": "v0.5.57",

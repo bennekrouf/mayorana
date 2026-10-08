@@ -2,8 +2,92 @@
   "name": "appscreens",
   "product": "AppScreens",
   "page": "https://mayorana.ch/en/apps/appscreens",
-  "generated_at": "2026-09-29T07:12:23Z",
+  "generated_at": "2026-10-01T13:41:37Z",
   "releases": [
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The Android upload key card lists the keystores already on your Mac (in your keys folder and the project) with a Use button, so picking yours no longer means browsing for it."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Building an AAB without an upload key no longer starts a build that fails halfway: the Build step shows the missing key with a link to the Accounts step, and the build button says where to set it up. The build script's own message now points to the same place before mentioning the project's `.env`."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Opened from the Dock or Finder, AppScreens no longer reports \"dx not found\" or missing Rust targets when the Dioxus CLI and rustup are installed. It now finds the tools in your Rust install folder and your terminal's settings, and the build scripts it runs find them too.",
+            "When another program called `dx` comes first (Homebrew's deno installs one), the check now says so instead of reporting a wrong Dioxus version, and builds use the Dioxus CLI."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The Google Play service-account key gets the same help. If another of your projects already uses one, one click reuses it. Otherwise the Google Play card walks you through it: enable the API, create the service account and its JSON key, and invite it in Play Console, each step linking to the right page. It then picks up the downloaded JSON key and keeps a private copy in your keys folder. The email to invite comes with a Copy button. Finally it saves the key's location to the project's `.env` and tests the connection."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Create a Distribution certificate\" form explains each field, and warns when the keychain already has one: Apple allows very few per team, and your profiles are tied to the one you have."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-09-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Setting up the App Store Connect API key no longer means editing `.env` by hand. If another of your projects already has a key, one click reuses it — one key works for every app of your team. Otherwise the Apple card walks you through creating one, with a link straight to the right App Store Connect page. It then picks up the downloaded `.p8`, reads the Key ID from its file name, keeps a private copy in your keys folder (Apple lets you download it only once), saves everything to the project's `.env` and tests the connection.",
+            "\"Add profile…\" next to the provisioning profile list installs a profile you downloaded from Apple Developer and selects it, with a link to your profiles there."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Provisioning profiles downloaded by Xcode 16 now appear in the profile list; only the older profiles folder used to be read."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.19",
+      "tag": "v0.1.19",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Opening a project you've already built fills in the App step for you: the app name, project slug, bundle ID and Android package come from your build scripts, `Dioxus.toml`, `Cargo.toml`, fastlane and your last builds, and a project that was only ever built for iOS (or Android) is set up for just that platform. Fields you've filled in yourself are never changed."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "AppScreens no longer replaces a build script you wrote yourself. It used to rewrite every build script from its template before each build, losing changes like a display name or a minimum iOS version. Scripts it wrote are still kept up to date."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.18",
       "tag": "v0.1.18",

@@ -2,8 +2,221 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-09-29T13:12:28Z",
+  "generated_at": "2026-10-06T15:14:28Z",
   "releases": [
+    {
+      "version": "0.1.80",
+      "tag": "v0.1.80",
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A model step such as **Draft commit message** could sit at \"running\" with an empty log until GitAgent was restarted, when an earlier step had kept the local model without ever finishing. Such a step is now passed over after a minute, and the step that was waiting goes ahead.",
+            "**Cancel run** now really stops the run. Before, a cancelled run carried on out of sight, still calling the model and still able to change the run you started next.",
+            "Commit messages, pull request descriptions and reviews no longer assume every repository is a Rust desktop application."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "While a step waits on the model, its log says so: which step in which repository has the model and for how long, then that the request was sent and how long the answer is taking. A slow answer no longer looks like a hung step."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.79",
+      "tag": "v0.1.79",
+      "date": "2026-10-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A **Refresh** button next to \"Recent\" on the first screen checks every repository in your folders again — including ones cloned since — so the waiting work shown for each folder is current without restarting GitAgent."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.78",
+      "tag": "v0.1.78",
+      "date": "2026-10-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The home screen checks the repositories in each recent folder and says what is waiting before you open it — uncommitted work, a pull request ready to merge or failing its checks, a release due — with a count for each. Hover a label to see which repositories it means."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.77",
+      "tag": "v0.1.77",
+      "date": "2026-10-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The diff a step shows has the same **Copy** button in its top-right corner, so the whole diff can go on the clipboard in one click."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "A step's output log is taller and follows new lines as they arrive, so a long-running command no longer needs scrolling to watch. Scroll up to read something and it stays where you left it until you scroll back down."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.76",
+      "tag": "v0.1.76",
+      "date": "2026-10-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "In the Branches panel, a branch with an open pull request has a **Review & merge** button that opens Review → Merge on that pull request."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "More finished-with branches are marked \"nothing new\" with **Clean up**: a branch with no commits the base branch lacks, and one still exactly at what its merged pull request merged — including one named `main` in a repository whose base is `master`. A branch with an open pull request is never offered for clean-up."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.75",
+      "tag": "v0.1.75",
+      "date": "2026-10-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.74",
+      "tag": "v0.1.74",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A **Copy** button in the top-right corner of a step's output or error log puts the whole log on the clipboard, so you can paste it into an issue or a chat without selecting it by hand."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.73",
+      "tag": "v0.1.73",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Only one flow runs in a repository at a time. While a commit is under way, merging a pull request in the same repository waits until it is done, and the other way round; before, both could start and step on each other's branch switches and pulls in the same folder. The **Branches** panel follows the same rule: deleting, cleaning up or opening a pull request for a branch waits for a running flow, and no flow starts until that branch is done. Hover the greyed-out button to see what is in the way. Other repositories are unaffected.",
+            "**Delete all merged** in the **Branches** panel now deletes the branches one after another instead of all at once, and lists every branch it could not delete rather than only the last one."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.72",
+      "tag": "v0.1.72",
+      "date": "2026-10-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "GitAgent now shares anonymous usage statistics, and it is on by default. A note at the bottom of the window tells you once, and nothing is sent until you have seen it. **Turn off** there, or **Settings** at any time, stops it for good. What is shared: which steps ran and whether they succeeded, your operating system, the GitAgent version, and whether the repository is on GitHub or Azure DevOps. What is never shared: repository names, folders, code, commit messages, branch names or error text. It is tied to a random number kept on your computer, not to you, and turning it off deletes anything that has not been sent yet. It also stays off if `DISABLE_UPDATE_CHECK`, `DO_NOT_TRACK` or `GITAGENT_NO_TELEMETRY` is set."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Setting `DISABLE_UPDATE_CHECK` in your shell profile now also applies when GitAgent is opened from the Dock or Finder, not only from a terminal.",
+            "A release no longer runs on an out-of-date copy of the branch. If a pull request was merged on GitHub and not yet pulled, the release used to see no new commits and no notes, and offered to ship build-only, which would have released that change with no notes. GitAgent now pulls those commits first, before drafting notes or running your release script. If it can't pull them safely, it stops and offers the pull on a button.",
+            "When a release is held up for missing notes while origin has commits this copy lacks, GitAgent offers to pull them and release again, instead of offering a build-only release.",
+            "When your release script commits and tags a version but its push is rejected, GitAgent now explains that nothing reached origin and offers one button that undoes the local release commit and tag, pulls, and releases again. Before, only Retry, Skip and Cancel were offered, and retrying could not succeed.",
+            "\"Back to base\" no longer stops with \"cannot lock ref\" when another program, such as your editor's background fetch, updates the same branch at the same moment. GitAgent tries again on its own. If the other program is still busy, GitAgent explains that the repository is fine and offers to fetch again on a button, instead of \"No automatic fix for this\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.71",
+      "tag": "v0.1.71",
+      "date": "2026-09-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The window's title bar says when GitAgent Pro is active — \"GitAgent · version · ✦ Pro\" — and \"Pro updates ended\" for a licence whose updates have run out. It updates as soon as a licence is added or removed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.70",
+      "tag": "v0.1.70",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.69",
+      "tag": "v0.1.69",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.68",
+      "tag": "v0.1.68",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "With GitAgent Pro active, the top-right corner of the window shows a **✦ PRO** badge instead of a plain \"Pro ✓\" button. Hovering it shows who the licence is for and until when updates are included; clicking it still opens the licence window. A licence whose updates have ended shows **✦ RENEW PRO**."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.67",
+      "tag": "v0.1.67",
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Without GitAgent Pro, GitAgent now works with 5 repositories in all, across every folder and every window. The first repositories listed take the 5; every other one is shown greyed out with a **🔒 Pro** tag, isn't checked, and can't be selected, so no flow or branch action can reach it. Clicking a locked repository opens the Pro window, where it can take the place of one of your 5, or where you paste your licence key to unlock them all."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.66",
       "tag": "v0.1.66",
@@ -104,6 +317,19 @@
           "heading": "Added",
           "items": [
             "The update check now considers preferred formats for each operating system, ensuring a more tailored download experience."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.59",
+      "tag": "v0.1.59",
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
           ]
         }
       ]
