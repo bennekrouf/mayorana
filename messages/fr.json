@@ -1024,7 +1024,10 @@
             "a": "Non. L'app télécharge sa propre copie à la première utilisation et la vérifie avec sa somme de contrôle publiée. Une copie déjà présente sur votre machine fonctionne aussi."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "pro_download_intro": "Gratuit : export de 10 vidéos différentes ; réexporter l'une d'elles est gratuit, et l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Gratuit : export de 10 vidéos différentes ; l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
+        "pro_how": "Pour l'activer, ouvrez Small Video, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       }
     },
     "article_heading": "Pour aller plus loin",

@@ -216,6 +216,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'small-video',
+    pro: { edition: 'pro' },
     source: 'https://github.com/bennekrouf/smallvideo',
     name: 'Small Video',
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
