@@ -2,8 +2,22 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-08T17:48:32Z",
+  "generated_at": "2026-10-09T07:33:43Z",
   "releases": [
+    {
+      "version": "0.1.89",
+      "tag": "v0.1.89",
+      "date": "2026-10-09",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Each flow tab now says where its run stands in the repository, under its name: \"running · 3/8\", \"needs you · Merge\", \"failed · Open pull request\", \"done\". Following a pull request through Commit → PR and Review → Merge no longer means opening each tab to find out where it got to.",
+            "When a flow other than the one on screen needs you — waiting for an approval, failed, or running — a line under the tabs says which, for which pull request and at which step, with a **Show** button that goes straight there."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.88",
       "tag": "v0.1.88",

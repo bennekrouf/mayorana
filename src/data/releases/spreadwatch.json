@@ -2,8 +2,22 @@
   "name": "spreadwatch",
   "product": "Spreadwatch",
   "page": "https://mayorana.ch/en/apps/spreadwatch",
-  "generated_at": "2026-10-07T12:59:59Z",
+  "generated_at": "2026-10-08T19:51:58Z",
   "releases": [
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-10-08",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Spreadwatch Pro. The free version follows 3 assets at once, with every tab, every venue and trading; Pro follows any number, and is the licence for commercial use. Buy it on [Spreadwatch's page](https://mayorana.ch/en/apps/spreadwatch), then click **Get Pro…** at the right of the tab bar and paste the key. The key is checked on your computer: no account, nothing sent anywhere.",
+            "If your watchlist already holds more than 3 assets, none is removed: the first 3 are followed and the others stay in the list marked 🔒 Pro. Remove one to make room, then click a locked one to follow it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.6",
       "tag": "v0.1.6",
