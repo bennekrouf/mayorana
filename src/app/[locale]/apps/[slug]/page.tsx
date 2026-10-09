@@ -16,6 +16,7 @@ import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, ArrowRight, Check, Download, Github, Scale } from 'lucide-react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { BuyProButton } from '@/components/ui/BuyProButton';
+import { ComparisonTable, type Comparison } from '@/components/ui/ComparisonTable';
 import {
   DataSourceBadge,
   DownloadButtonsLarge,
@@ -64,6 +65,10 @@ async function loadContent(locale: string, tool: DesktopToolConfig) {
     requirements: t.raw(`apps.${key}.requirements`) as string[],
     faq: t.raw(`apps.${key}.faq`) as FaqEntry[],
     articleSlug: t(`apps.${key}.article_slug`),
+    // Optional: a tool without a comparison in the copy simply has no table.
+    comparison: t.has(`apps.${key}.comparison`)
+      ? (t.raw(`apps.${key}.comparison`) as Comparison)
+      : null,
   };
 }
 
@@ -98,6 +103,7 @@ export default async function ToolDetailPage({ params }: Props) {
     requirements,
     faq,
     articleSlug,
+    comparison,
   } = await loadContent(locale, tool);
 
   // The blog post about this tool, when there is one. The post already links
@@ -198,11 +204,11 @@ export default async function ToolDetailPage({ params }: Props) {
 
       {/* Hero: name, what it is, and the download — the download is the point
           of the page, so it sits above the fold rather than after the copy. */}
-      <section className="py-16 bg-gradient-to-b from-secondary to-background">
+      <section className="pt-10 pb-8 bg-gradient-to-b from-secondary to-background">
         <div className="container max-w-4xl">
           <Link
             href={`/${locale}/apps`}
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             {t('back_to_apps')}
@@ -225,46 +231,6 @@ export default async function ToolDetailPage({ params }: Props) {
             <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
           )}
 
-          {/* Next to the builds rather than further down: it is a second thing
-              to download, and the people who want it decide here. */}
-          {skillHref && (
-            <div className="mt-6 max-w-2xl rounded-xl border border-border bg-background/60 p-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div className="min-w-0 sm:flex-1">
-                  <p className="text-sm font-semibold">{t('skill_heading')}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {t('skill_body', { name: tool.name })}
-                  </p>
-                </div>
-                <a
-                  href={skillHref}
-                  download
-                  className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-secondary"
-                >
-                  <Download className="h-4 w-4" />
-                  {t('skill_download')}
-                </a>
-              </div>
-              <details className="mt-3 text-xs text-muted-foreground">
-                <summary className="cursor-pointer hover:text-foreground">
-                  {t('skill_install_summary')}
-                </summary>
-                <ul className="mt-2 list-disc space-y-1.5 pl-4">
-                  <li>{t('skill_install_claude_ai')}</li>
-                  <li>{t('skill_install_claude_code', { id: tool.id })}</li>
-                </ul>
-              </details>
-            </div>
-          )}
-
-          {/* The paid edition, for the tools that have one. */}
-          {tool.pro && (
-            <div className="mt-8">
-              <BuyProButton product={tool.id} edition={tool.pro.edition} name={tool.name} />
-              <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('buy_pro_note')}</p>
-            </div>
-          )}
-
           {latest && (
             <Link
               href={`/${locale}/apps/${slug}/releases`}
@@ -283,7 +249,87 @@ export default async function ToolDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="py-14 bg-background">
+      {/* Straight after the download: the question a visitor has once they
+          know what the tool is, is why this one rather than what they use. */}
+      {comparison && (
+        <section className="py-12 bg-background">
+          <div className="container max-w-5xl">
+            <h2 className="text-2xl font-bold mb-2">
+              {t('comparison_heading', { name: tool.name })}
+            </h2>
+            <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
+              {t('comparison_intro', { name: tool.name })}
+            </p>
+            <ComparisonTable
+              name={tool.name}
+              comparison={comparison}
+              labels={{
+                feature: t('comparison_feature'),
+                yes: t('comparison_yes'),
+                no: t('comparison_no'),
+                na: t('comparison_na'),
+              }}
+            />
+            <p className="text-xs text-muted-foreground mt-3">
+              {t('comparison_note')}{' '}
+              <Link
+                href={`/${locale}/contact`}
+                className="text-primary hover:underline underline-offset-4"
+              >
+                {t('comparison_note_link')}
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* The second things to download, after the table rather than in the
+          hero: the hero is kept short so the comparison is in view on arrival. */}
+      {(skillHref || tool.pro) && (
+        <section className="pb-12 bg-background">
+          <div className="container max-w-4xl space-y-8">
+            {skillHref && (
+              <div className="max-w-2xl rounded-xl border border-border bg-background/60 p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0 sm:flex-1">
+                    <p className="text-sm font-semibold">{t('skill_heading')}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {t('skill_body', { name: tool.name })}
+                    </p>
+                  </div>
+                  <a
+                    href={skillHref}
+                    download
+                    className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-secondary"
+                  >
+                    <Download className="h-4 w-4" />
+                    {t('skill_download')}
+                  </a>
+                </div>
+                <details className="mt-3 text-xs text-muted-foreground">
+                  <summary className="cursor-pointer hover:text-foreground">
+                    {t('skill_install_summary')}
+                  </summary>
+                  <ul className="mt-2 list-disc space-y-1.5 pl-4">
+                    <li>{t('skill_install_claude_ai')}</li>
+                    <li>{t('skill_install_claude_code', { id: tool.id })}</li>
+                  </ul>
+                </details>
+              </div>
+            )}
+
+            {/* The paid edition, for the tools that have one. */}
+            {tool.pro && (
+              <div>
+                <BuyProButton product={tool.id} edition={tool.pro.edition} name={tool.name} />
+                <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('buy_pro_note')}</p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section className={`py-14 bg-background${comparison ? ' border-t border-border' : ''}`}>
         <div className="container max-w-4xl">
           <h2 className="text-2xl font-bold mb-5">{t('overview_heading')}</h2>
           <div className="space-y-4">

@@ -523,7 +523,80 @@
             "a": "Oui. Chaque release GitHub embarque un latest.json avec le sha256 de chaque artefact."
           }
         ],
-        "article_slug": "ais-runner-intro-fr"
+        "article_slug": "ais-runner-intro-fr",
+        "comparison": {
+          "competitors": [
+            "Logic Apps (Standard) for VS Code",
+            "Logic Apps Local Dev Tools",
+            "Azure portal"
+          ],
+          "rows": [
+            {
+              "feature": "Azurite, émulateur Service Bus et func start, un bouton chacun",
+              "them": [
+                "Lancés séparément, sans émulateur Service Bus",
+                false,
+                null
+              ]
+            },
+            {
+              "feature": "Corrections avant func start (connections.json, package.json, paramètres manquants)",
+              "them": [
+                false,
+                false,
+                null
+              ]
+            },
+            {
+              "feature": "Serveur de mocks généré depuis les appels HTTP sortants des workflows",
+              "them": [
+                "Mocks dans les tests unitaires seulement",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Enregistrer et rejouer des scénarios multi-étapes entre workflows",
+              "them": [
+                "Tests unitaires par workflow",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Files, blobs, appels HTTP et maps Liquid par workflow, d'un coup d'œil",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Compteurs de files et dead-letters Service Bus en local, envois de test",
+              "them": [
+                false,
+                false,
+                "Namespaces cloud uniquement"
+              ]
+            },
+            {
+              "feature": "Testeur Liquid et XSLT avec entrée suggérée, DotLiquid ou Liquid",
+              "them": [
+                "Maps du Data Mapper seulement",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Builds Azure DevOps par environnement : ce qui est déployé où",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "ais_monitor": {
         "seo_title": "AIS Monitor — Explorateur de chaînes de workflows Azure Logic Apps",
@@ -592,7 +665,72 @@
             "a": "Il passe par l'API hostruntime de la Logic App, qui demande plus que le rôle Reader et qui est limitée par souscription. L'interrogation de fond du tableau de bord recule automatiquement quand elle est bridée."
           }
         ],
-        "article_slug": "logic-apps-workflow-chains-fr"
+        "article_slug": "logic-apps-workflow-chains-fr",
+        "comparison": {
+          "competitors": [
+            "Azure portal",
+            "Turbo360",
+            "Azure Monitor workbooks"
+          ],
+          "rows": [
+            {
+              "feature": "Graphe des chaînes de workflows déduit des définitions déployées (Service Bus, Event Grid)",
+              "them": [
+                false,
+                "Regroupement assemblé à la main",
+                false
+              ]
+            },
+            {
+              "feature": "Historique d'exécution d'une chaîne entière, dans l'ordre",
+              "them": [
+                "Un workflow à la fois",
+                "Nécessite l'instrumentation BAM",
+                "Avec votre propre KQL"
+              ]
+            },
+            {
+              "feature": "Paramètres d'application comparés à App Configuration (dérive de config)",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Échecs, dead-letters, dérive, trous RBAC et coût sur un seul écran",
+              "them": [
+                "Écrans séparés",
+                "Tableaux de bord à configurer",
+                "Avec vos propres requêtes"
+              ]
+            },
+            {
+              "feature": "Déclencher des workflows HTTP avec des payloads nommés et sauvegardés, et suivre l'exécution",
+              "them": [
+                "Run with payload, rien n'est sauvegardé",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Édition terminal : un binaire statique pour SSH et jumpboxes",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Fonctionne avec votre az login, aucun accès tiers à votre souscription",
+              "them": [
+                true,
+                false,
+                true
+              ]
+            }
+          ]
+        }
       },
       "ais_tracing": {
         "seo_title": "AIS Tracing — Traceur d'identifiants de corrélation pour Azure Cosmos DB",
@@ -648,7 +786,56 @@
             "a": "Il échantillonne au lieu de tout scanner : le nombre de containers compte davantage que le volume total de documents. Les comptes très larges demandent plus de temps à la première passe."
           }
         ],
-        "article_slug": "trace-correlation-id-cosmos-db-fr"
+        "article_slug": "trace-correlation-id-cosmos-db-fr",
+        "comparison": {
+          "competitors": [
+            "Cosmos DB Data Explorer",
+            "Cosmos DB in VS Code",
+            "Turbo360 BAM"
+          ],
+          "rows": [
+            {
+              "feature": "Une valeur recherchée dans tous les conteneurs en une passe",
+              "them": [
+                "Une requête par conteneur",
+                "Une requête par conteneur",
+                "Flux instrumentés uniquement"
+              ]
+            },
+            {
+              "feature": "Champ de liaison déduit des données, aucun schéma à décrire",
+              "them": [
+                false,
+                false,
+                "Propriétés suivies à définir"
+              ]
+            },
+            {
+              "feature": "Étapes dessinées sur une frise, dans l'ordre",
+              "them": [
+                false,
+                false,
+                "Pour les étapes instrumentées"
+              ]
+            },
+            {
+              "feature": "Conteneurs jamais atteints affichés comme couloirs vides",
+              "them": [
+                false,
+                false,
+                "Pour les étapes instrumentées"
+              ]
+            },
+            {
+              "feature": "Fonctionne sur vos données existantes, rien à instrumenter",
+              "them": [
+                true,
+                true,
+                false
+              ]
+            }
+          ]
+        }
       },
       "ais_analytics": {
         "seo_title": "AIS Analytics — Traceur d'identifiants de corrélation pour Azure Log Analytics",
@@ -695,7 +882,48 @@
             "a": "Non. Elle n'exécute que des requêtes en lecture."
           }
         ],
-        "article_slug": "trace-correlation-id-log-analytics-fr"
+        "article_slug": "trace-correlation-id-log-analytics-fr",
+        "comparison": {
+          "competitors": [
+            "Log Analytics (KQL)",
+            "Application Insights transactions",
+            "Turbo360 BAM"
+          ],
+          "rows": [
+            {
+              "feature": "Colonne de corrélation déduite des données, preuves à l'appui",
+              "them": [
+                false,
+                "Figée sur operation_Id",
+                "Propriétés suivies à définir"
+              ]
+            },
+            {
+              "feature": "Un identifiant suivi dans tout le workspace sans écrire de KQL",
+              "them": [
+                "Une requête par table, ou une union",
+                "Tables App Insights uniquement",
+                "Flux instrumentés uniquement"
+              ]
+            },
+            {
+              "feature": "Fonctionne sur les diagnostics Logic Apps et les tables de logs personnalisées",
+              "them": [
+                "À la main",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "« Pas encore arrivé » distingué de « jamais sur ce chemin »",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "gitagent": {
         "seo_title": "GitAgent — Messages de commit et pull requests par IA, sous votre contrôle",
@@ -749,7 +977,56 @@
         "article_slug": "ai-commit-messages-without-giving-up-control-fr",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 5 dépôts. L'usage commercial — y compris un consultant indépendant en mission — requiert GitAgent Pro, qui couvre aussi tous vos dépôts, dans tous vos dossiers. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 5 dépôts tous dossiers confondus (les autres sont affichés verrouillés). L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert GitAgent Pro, qui couvre aussi tous vos dépôts. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+        "pro_how": "Pour l'activer, ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "comparison": {
+          "competitors": [
+            "aicommits",
+            "GitHub Copilot in VS Code",
+            "Claude Code / Cursor"
+          ],
+          "rows": [
+            {
+              "feature": "De l'arbre de travail modifié à la pull request ouverte, en un seul flux",
+              "them": [
+                "Message de commit seulement",
+                "Rédige le texte, vous faites chaque étape",
+                true
+              ]
+            },
+            {
+              "feature": "S'arrête avant chaque commit, push et PR, en montrant la commande exacte",
+              "them": [
+                "Confirme le commit seulement",
+                null,
+                "Sauf si l'auto-approbation est active"
+              ]
+            },
+            {
+              "feature": "Liste exacte des fichiers commités ; fichiers non suivis jamais embarqués",
+              "them": [
+                "Ce qui est indexé",
+                "Ce qui est indexé",
+                "Selon la consigne"
+              ]
+            },
+            {
+              "feature": "Tourne entièrement sur un modèle local : le diff ne quitte pas la machine",
+              "them": [
+                "Via un endpoint compatible OpenAI",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Aucun abonnement IA nécessaire",
+              "them": [
+                true,
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "blog_toolkit": {
         "seo_title": "Blog Toolkit — Gestionnaire de blog de bureau avec rédaction IA",
@@ -801,7 +1078,48 @@
             "a": "DeepSeek ou Claude, au choix dans les réglages."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "comparison": {
+          "competitors": [
+            "WordPress",
+            "Ghost",
+            "Obsidian + git"
+          ],
+          "rows": [
+            {
+              "feature": "Les articles restent des fichiers markdown dans votre propre dépôt",
+              "them": [
+                false,
+                false,
+                true
+              ]
+            },
+            {
+              "feature": "Une file de publication qui se vide à rythme hebdomadaire",
+              "them": [
+                "Chaque article planifié à la main",
+                "Chaque article planifié à la main",
+                false
+              ]
+            },
+            {
+              "feature": "Premier jet IA dans l'éditeur (DeepSeek ou Claude)",
+              "them": [
+                "Via un plugin",
+                false,
+                "Via un plugin communautaire"
+              ]
+            },
+            {
+              "feature": "Versions française et anglaise d'un article gérées ensemble",
+              "them": [
+                "Plugin WPML ou Polylang",
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "appscreens": {
         "seo_title": "AppScreens — Assistant de build, captures et publication iOS et Android",
@@ -849,7 +1167,72 @@
             "a": "Oui, pour les visuels : elle dialogue directement avec les APIs App Store Connect et Google Play Developer pour téléverser les captures dans les bons types d'affichage et jeux de captures. Vous fournissez les identifiants d'API."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "comparison": {
+          "competitors": [
+            "fastlane",
+            "Web screenshot makers",
+            "Xcode + Play Console"
+          ],
+          "rows": [
+            {
+              "feature": "Captures encadrées pour les stores, dans chaque taille requise, par langue",
+              "them": [
+                "frameit, configuré par fichiers",
+                true,
+                false
+              ]
+            },
+            {
+              "feature": "Cadres d'appareil et fonds générés par IA, un thème par série",
+              "them": [
+                false,
+                "Modèles figés",
+                false
+              ]
+            },
+            {
+              "feature": "Fiche et captures envoyées aux deux stores via leurs API",
+              "them": [
+                true,
+                "Téléchargement, puis envoi à la main",
+                "À la main, store par store"
+              ]
+            },
+            {
+              "feature": "Incrément de version, build signé et soumission à la revue dans une seule app",
+              "them": [
+                "Lanes Ruby à écrire",
+                false,
+                "Outils séparés par store"
+              ]
+            },
+            {
+              "feature": "Profil de provisioning vérifié contre l'app avant le build",
+              "them": [
+                "Géré par match, pas vérifié avant",
+                false,
+                "Échoue au moment du build"
+              ]
+            },
+            {
+              "feature": "Interface desktop, ni Ruby ni scripts à maintenir",
+              "them": [
+                false,
+                true,
+                true
+              ]
+            },
+            {
+              "feature": "Captures et publication sur les stores depuis macOS, Windows ou Linux",
+              "them": [
+                "macOS et Linux ; Windows non officiel",
+                "Dans le navigateur",
+                "Xcode : macOS uniquement"
+              ]
+            }
+          ]
+        }
       },
       "splitter": {
         "seo_title": "Splitter — Découper de longs enregistrements MP3 et WAV en pistes",
@@ -911,7 +1294,64 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec l'export des 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission — requiert Splitter Pro, qui exporte aussi toutes les pistes. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec l'export limité aux 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Splitter Pro, qui exporte aussi toutes les pistes. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+        "pro_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "comparison": {
+          "competitors": [
+            "Audacity",
+            "mp3DirectCut",
+            "mp3splt"
+          ],
+          "rows": [
+            {
+              "feature": "Coupes proposées dans chaque silence, validées à l'oreille au clavier",
+              "them": [
+                "Label Sounds, puis revue à la main",
+                "Détection de pauses, revue à la main",
+                "Automatique, sans revue"
+              ]
+            },
+            {
+              "feature": "Export MP3 sans réencodage, exact à l'échantillon avec en-tête gapless",
+              "them": [
+                "Réencode",
+                "Sans perte, exact à la trame",
+                "Sans perte, exact à la trame"
+              ]
+            },
+            {
+              "feature": "Loudness EBU R128 par piste, tags ReplayGain 2.0, normalisation LUFS",
+              "them": [
+                "Normalisation, sans tags ReplayGain",
+                "Normalisation du gain",
+                false
+              ]
+            },
+            {
+              "feature": "Coller un lien YouTube et découper son audio",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Vidéos découpées sur leur son en clips MP4",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "macOS, Windows et Linux",
+              "them": [
+                true,
+                "Windows uniquement",
+                true
+              ]
+            }
+          ]
+        }
       },
       "spreadwatch": {
         "seo_title": "Spreadwatch — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
@@ -965,7 +1405,64 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez Spreadwatch et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+        "pro_how": "Pour l'activer, ouvrez Spreadwatch et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "comparison": {
+          "competitors": [
+            "Sharpe Terminal",
+            "ArbiHunt",
+            "CCXT scripts"
+          ],
+          "rows": [
+            {
+              "feature": "Carnets d'ordres diffusés en direct sur votre machine, flux périmés signalés",
+              "them": [
+                "Web, scanné côté serveur",
+                "Mobile, scanné côté serveur",
+                "À écrire vous-même"
+              ]
+            },
+            {
+              "feature": "Exchanges centralisés et Solana on-chain (Jupiter) dans une même vue",
+              "them": [
+                "Exchanges centralisés uniquement",
+                "Exchanges centralisés uniquement",
+                "Exchanges centralisés uniquement"
+              ]
+            },
+            {
+              "feature": "Mesure quel venue est en retard, en millisecondes",
+              "them": [
+                false,
+                false,
+                "À écrire vous-même"
+              ]
+            },
+            {
+              "feature": "Nouveaux listings Gate et MEXC absents de Binance spot, notés",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Swaps on-chain avec dry run d'abord et limites qu'une config peut seulement baisser",
+              "them": [
+                false,
+                false,
+                "À écrire vous-même"
+              ]
+            },
+            {
+              "feature": "App desktop native sur macOS, Windows et Linux",
+              "them": [
+                "Dans le navigateur",
+                "App mobile",
+                "Là où vous les lancez"
+              ]
+            }
+          ]
+        }
       },
       "small_video": {
         "seo_title": "Small Video — Enregistreur d'écran avec curseur fluide et zoom automatique",
@@ -1027,7 +1524,40 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit : export de 10 vidéos différentes ; réexporter l'une d'elles est gratuit, et l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Gratuit : export de 10 vidéos différentes ; l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
-        "pro_how": "Pour l'activer, ouvrez Small Video, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+        "pro_how": "Pour l'activer, ouvrez Small Video, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "comparison": {
+          "competitors": [
+            "Screen Studio",
+            "FocuSee",
+            "OBS Studio"
+          ],
+          "rows": [
+            {
+              "feature": "Curseur redessiné et fluide, zoom automatique sur les clics",
+              "them": [
+                true,
+                true,
+                false
+              ]
+            },
+            {
+              "feature": "Fonctionne sous Windows comme sous macOS",
+              "them": [
+                false,
+                true,
+                true
+              ]
+            },
+            {
+              "feature": "Gratuit pour un usage personnel, sans abonnement",
+              "them": [
+                "29 $/mois ou 108 $/an",
+                "Licence payante",
+                true
+              ]
+            }
+          ]
+        }
       }
     },
     "article_heading": "Pour aller plus loin",
@@ -1063,7 +1593,15 @@
     "thanks_updates": "Votre licence inclut toutes les mises à jour publiées jusqu'au {date}. Les versions publiées avant cette date continuent de fonctionner ensuite.",
     "thanks_missing": "Nous n'avons pas trouvé cet achat. Si vous venez de payer, votre clé de licence arrive par e-mail.",
     "thanks_error": "Votre clé de licence ne peut pas s'afficher pour l'instant. Elle vous a aussi été envoyée par e-mail ; si elle n'arrive pas,",
-    "thanks_contact": "contactez-nous."
+    "thanks_contact": "contactez-nous.",
+    "comparison_heading": "{name} face aux alternatives",
+    "comparison_intro": "Seuls les points forts de {name} sont listés. Les autres font beaucoup de choses qu'il ne fait pas — ce tableau dit pourquoi le choisir.",
+    "comparison_feature": "Fonctionnalité",
+    "comparison_yes": "Oui",
+    "comparison_no": "Non",
+    "comparison_na": "Sans objet",
+    "comparison_note": "Comparaison faite en octobre 2026 à partir de la documentation publique de chaque produit. Une information dépassée ?",
+    "comparison_note_link": "Dites-le-nous"
   },
   "app_releases": {
     "breadcrumb": "Notes de version",
