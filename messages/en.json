@@ -186,6 +186,8 @@
     "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
     "spreadwatch_tagline": "Crypto price gaps across exchanges and Solana, live",
     "spreadwatch_description": "Follow any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once. See the best cross-venue edges net of fees, which venue's price trails the others, and the tokens Gate or MEXC just listed that Binance does not have yet. Swap SOL/USDT on-chain through Jupiter from a local hot wallet, in a dry run at every start and within hard limits.",
+    "small_video_tagline": "Record your screen, get a polished video: smooth cursor, zoom on clicks",
+    "small_video_description": "Record from the menu bar or with a shortcut. The cursor is redrawn so it glides, clicks become zooms that ease in, and a background, padding and rounded corners frame the result. Adjust it in the editor, cut the pauses, and export to MP4 at up to 4K.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
     "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or DeepSeek, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
     "splitter_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
@@ -742,10 +744,6 @@
           {
             "q": "Does it work with GitLab or Bitbucket?",
             "a": "Pull request creation goes through the GitHub CLI, so PR opening is GitHub-only today. The commit and push steps work on any git remote."
-          },
-          {
-            "q": "It is marked work in progress — is it usable?",
-            "a": "Yes, the commit-to-PR path works. It is marked WIP because the interface is still moving and releases are frequent."
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control",
@@ -968,6 +966,65 @@
         "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires Spreadwatch Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Spreadwatch Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "To activate it, open Spreadwatch and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere."
+      },
+      "small_video": {
+        "seo_title": "Small Video — Screen Recorder with a Smooth Cursor and Auto-Zoom",
+        "seo_description": "Desktop screen recorder for macOS and Windows: redrawn smooth cursor, automatic zoom on clicks, background and rounded corners, pauses cut out, MP4 export from 1080p to 4K.",
+        "overview": [
+          "A raw screen recording is hard to watch: the cursor jumps around, the text is tiny, and every pause where you were thinking is still in it.",
+          "Small Video records the screen without the cursor and notes where the pointer goes. It then redraws a smooth cursor, zooms in where you clicked, and frames the video with a background, padding and rounded corners.",
+          "The editor lets you adjust each zoom, cut the silences and choose the frame. What you export is exactly what the preview shows."
+        ],
+        "features": [
+          {
+            "title": "Record from anywhere",
+            "body": "Start and stop from the menu bar (macOS) or the notification area (Windows), or with ⌘⇧2 / Ctrl+Shift+2 from any app. The display your pointer is on is recorded with your microphone, and Small Video's own windows are left out."
+          },
+          {
+            "title": "A cursor that glides",
+            "body": "The cursor isn't recorded: it's redrawn from the pointer's path, so it moves smoothly, and it can be made bigger."
+          },
+          {
+            "title": "Zooms from your clicks",
+            "body": "Each click becomes a zoom that eases in on where you clicked. On the timeline you change when it starts and ends, how deep it goes and where it looks, or add one at the playhead with Z."
+          },
+          {
+            "title": "Pauses cut out",
+            "body": "Silences where nothing is said are left out, picture and sound together, with a moment kept around your words. Two sliders set what counts as a pause, and a click on the timeline puts one back."
+          },
+          {
+            "title": "A frame for every format",
+            "body": "Screen, 16:9, 9:16 or square, with background, padding, corners, shadow, cursor size and smoothing. Every change can be undone and is saved as you go."
+          },
+          {
+            "title": "Light files, sharp export",
+            "body": "MP4 at 1080p, 1440p or 4K, 30 or 60 fps, with your voice. On macOS each recording is shrunk to about a fifth of its size right after you stop, with no visible loss on text."
+          }
+        ],
+        "requirements": [
+          "macOS 15 or later on Apple Silicon, or Windows 10 (version 2004) or later",
+          "Screen Recording and Microphone permissions, asked for on the first recording",
+          "An internet connection on first export, to download the video tool (ffmpeg) the app uses"
+        ],
+        "faq": [
+          {
+            "q": "Is the Windows version ready?",
+            "a": "It is built and signed with every release, but it hasn't been run on a real Windows machine yet, so expect rough edges. macOS is the tested platform."
+          },
+          {
+            "q": "Does it work on Linux?",
+            "a": "Not yet. Under Wayland, an app can't read where the pointer is in other apps, and the redrawn cursor depends on it."
+          },
+          {
+            "q": "Where are my recordings?",
+            "a": "Each recording is a folder in Movies/Small Video, with the video, the pointer movements and your edits. The exported MP4 is written next to it. Deleting a recording from the list moves it to the Trash, so you can still get it back."
+          },
+          {
+            "q": "Do I need to install ffmpeg?",
+            "a": "No. The app downloads its own copy on first use and checks it against its published checksum. A copy already on your machine works too."
+          }
+        ],
+        "article_slug": ""
       }
     },
     "article_heading": "Read more",
