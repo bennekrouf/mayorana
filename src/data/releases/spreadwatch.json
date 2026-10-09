@@ -2,8 +2,34 @@
   "name": "spreadwatch",
   "product": "Spreadwatch",
   "page": "https://mayorana.ch/en/apps/spreadwatch",
-  "generated_at": "2026-10-02T07:30:56Z",
+  "generated_at": "2026-10-07T12:59:59Z",
   "releases": [
+    {
+      "version": "0.1.6",
+      "tag": "v0.1.6",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The publisher information for Spreadwatch has been updated to 'Mayorana'. This change affects the metadata associated with the application, such as the installer and executable details."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.5",
+      "tag": "v0.1.5",
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Spreadwatch now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.4",
       "tag": "v0.1.4",

@@ -2,8 +2,63 @@
   "name": "appscreens",
   "product": "AppScreens",
   "page": "https://mayorana.ch/en/apps/appscreens",
-  "generated_at": "2026-10-01T13:41:37Z",
+  "generated_at": "2026-10-07T14:20:17Z",
   "releases": [
+    {
+      "version": "0.1.25",
+      "tag": "v0.1.25",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Android builds now work on Windows and Linux, not just macOS. AppScreens runs the whole build itself — `dx`, then the icon, package name, version and signing fixes, then Gradle — instead of a bash script, finds the Android SDK where Android Studio puts it on each system, and on Windows keeps the upload-key password in Windows Credential Manager.",
+            "The keystore password no longer gets written into the generated Gradle project: Gradle reads it from the environment for the length of the build."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "On Windows, AppScreens now installs from `appscreens-windows-setup.exe` instead of an `.msi`. It installs for your user without administrator rights, and removes an AppScreens installed from the old `.msi` first. Your projects and settings are kept.",
+            "A build script you wrote yourself still runs as it is. On Windows that needs Git for Windows' bash, and AppScreens says so if it's missing.",
+            "On Windows and Linux, the iOS build button and the Apple signing tools say they need a Mac, instead of failing halfway. Screenshots, store text and listing uploads for iOS work everywhere.",
+            "The Doctor's \"Open Android Studio\" button works on Windows and Linux too."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Windows no longer opens a console window behind AppScreens, or one for every tool it runs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.24",
+      "tag": "v0.1.24",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The Windows installer now includes a license page that users must accept before installing the application. This ensures that users are aware of the licensing terms before proceeding with the installation."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "AppScreens now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.22",
       "tag": "v0.1.22",

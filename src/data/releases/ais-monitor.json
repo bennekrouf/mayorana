@@ -2,8 +2,21 @@
   "name": "ais-monitor",
   "product": "AIS Monitor",
   "page": "https://mayorana.ch/en/apps/ais-monitor",
-  "generated_at": "2026-10-06T20:34:30Z",
+  "generated_at": "2026-10-07T13:01:05Z",
   "releases": [
+    {
+      "version": "0.3.44",
+      "tag": "v0.3.44",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Home no longer keeps reporting \"WorkflowNotFound\" errors for a workflow that was deleted or renamed in Azure. AIS Monitor remembers your chains between launches, so a workflow that has since gone stayed in them until you clicked **Refresh**. Now, when Azure says a workflow no longer exists, the chains are rebuilt from what is deployed and the activity log lists which workflows were dropped."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.3.43",
       "tag": "v0.3.43",

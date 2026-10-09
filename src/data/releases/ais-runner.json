@@ -2,8 +2,34 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-10-06T20:37:47Z",
+  "generated_at": "2026-10-07T14:12:28Z",
   "releases": [
+    {
+      "version": "0.5.63",
+      "tag": "v0.5.63",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows, opening a project could stay on the \"Initializing…\" spinner forever. Checking which tools are installed (func, azurite, az, node, mvn, Docker) waited with no time limit, so a tool that never answered — most often Docker Desktop while it is starting or stuck — held the project closed. Each tool now gets 15 seconds and is shown as unavailable if it has not answered by then, with a note when Docker Desktop is not responding. The tools are also checked side by side, so opening a project is quicker."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.62",
+      "tag": "v0.5.62",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The copyright and company information have been updated to reflect the new ownership. The company name is now 'Mayorana', and the copyright notice includes the year 2026."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.61",
       "tag": "v0.5.61",
