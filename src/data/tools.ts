@@ -64,6 +64,7 @@ const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
 const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
 const splitterDl = 'https://mayorana.ch/downloads/splitter/latest';
 const spreadwatchDl = 'https://mayorana.ch/downloads/spreadwatch/latest';
+const smallVideoDl = 'https://mayorana.ch/downloads/small-video/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -102,7 +103,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/ais-monitor',
     name: 'AIS Monitor',
     tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
-    status: 'beta',
+    status: 'live',
     tags: ['azure'],
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${monitorDl}/ais-monitor-macos-arm64.dmg` },
@@ -116,7 +117,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/ais-tracing',
     name: 'AIS Tracing',
     tech: 'Rust · Dioxus · Azure Cosmos DB',
-    status: 'beta',
+    status: 'live',
     tags: ['azure'],
     dataSource: cosmosSource,
     downloads: [
@@ -131,7 +132,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/ais-analytics',
     name: 'AIS Analytics',
     tech: 'Rust · Dioxus · Azure Log Analytics',
-    status: 'beta',
+    status: 'live',
     tags: ['azure'],
     dataSource: logAnalyticsSource,
     downloads: [
@@ -146,7 +147,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/blog-toolkit',
     name: 'Blog Toolkit',
     tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
-    status: 'live',
+    status: 'beta',
     tags: ['blog'],
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.tar.gz` },
@@ -159,7 +160,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/appscreens',
     name: 'AppScreens',
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
-    status: 'beta',
+    status: 'live',
     tags: ['tools'],
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screensDl}/appscreens-macos-arm64.dmg` },
@@ -173,7 +174,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/gitagent',
     name: 'GitAgent',
     tech: 'Rust · Dioxus · ollama / DeepSeek · git · gh',
-    status: 'wip',
+    status: 'live',
     tags: ['git'],
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${gitagentDl}/gitagent-macos-arm64.dmg` },
@@ -187,7 +188,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/splitter',
     name: 'Splitter',
     tech: 'Rust · Dioxus · symphonia · LAME · FLAC · yt-dlp',
-    status: 'beta',
+    status: 'live',
     tags: ['audio'],
     applicationCategory: 'MultimediaApplication',
     pro: { edition: 'pro' },
@@ -213,6 +214,20 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${spreadwatchDl}/spreadwatch-setup.exe` },
     ],
   },
+  {
+    id: 'small-video',
+    source: 'https://github.com/bennekrouf/smallvideo',
+    name: 'Small Video',
+    tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
+    status: 'beta',
+    tags: ['tools'],
+    applicationCategory: 'MultimediaApplication',
+    downloads: [
+      { os: 'mac', label: 'macOS 15+ (Apple Silicon)', href: `${smallVideoDl}/small-video-macos-arm64.dmg` },
+      // No Linux build: recording is not supported there (see the app's FAQ).
+      { os: 'windows', label: 'Windows 10+', href: `${smallVideoDl}/small-video-setup.exe` },
+    ],
+  },
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
@@ -226,6 +241,7 @@ export const appI18nKey: Record<string, string> = {
   gitagent: 'gitagent',
   splitter: 'splitter',
   spreadwatch: 'spreadwatch',
+  'small-video': 'small_video',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -276,6 +292,7 @@ export const releaseNotesTools: string[] = [
   'gitagent',
   'splitter',
   'spreadwatch',
+  'small-video',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);

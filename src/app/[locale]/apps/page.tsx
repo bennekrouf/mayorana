@@ -72,6 +72,7 @@ const SECONDARY_ORDER: string[] = [
   'appscreens',
   'blog-toolkit',
   'splitter',
+  'small-video',
   'spreadwatch',
   'solanize',
 ];

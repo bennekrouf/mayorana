@@ -186,6 +186,8 @@
     "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
     "spreadwatch_tagline": "Les écarts de prix crypto entre exchanges et Solana, en direct",
     "spreadwatch_description": "Suivez n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps. Voyez les meilleurs écarts entre plateformes, frais déduits, quelle plateforme est en retard sur les autres, et les tokens que Gate ou MEXC viennent de lister et que Binance n'a pas encore. Échangez SOL/USDT on-chain via Jupiter depuis un hot wallet local, en simulation à chaque démarrage et dans des limites strictes.",
+    "small_video_tagline": "Enregistrez votre écran, obtenez une vidéo soignée : curseur fluide, zoom sur les clics",
+    "small_video_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "splitter_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
@@ -742,10 +744,6 @@
           {
             "q": "Fonctionne-t-il avec GitLab ou Bitbucket ?",
             "a": "La création de pull request passe par le CLI GitHub : l'ouverture de PR est donc limitée à GitHub aujourd'hui. Les étapes de commit et de push fonctionnent avec n'importe quel remote git."
-          },
-          {
-            "q": "L'app est marquée en cours de développement — est-elle utilisable ?",
-            "a": "Oui, le chemin commit-vers-PR fonctionne. Le marquage WIP tient à une interface qui bouge encore et à des releases fréquentes."
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control-fr",
@@ -968,6 +966,65 @@
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Pour l'activer, ouvrez Spreadwatch et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+      },
+      "small_video": {
+        "seo_title": "Small Video — Enregistreur d'écran avec curseur fluide et zoom automatique",
+        "seo_description": "Enregistreur d'écran pour macOS et Windows : curseur redessiné et fluide, zoom automatique sur les clics, fond et coins arrondis, pauses coupées, export MP4 de 1080p à 4K.",
+        "overview": [
+          "Un enregistrement d'écran brut se regarde mal : le curseur saute, le texte est minuscule, et chaque pause où vous réfléchissiez est encore là.",
+          "Small Video enregistre l'écran sans le curseur et note où va le pointeur. Il redessine ensuite un curseur fluide, zoome là où vous avez cliqué, et encadre la vidéo avec un fond, des marges et des coins arrondis.",
+          "L'éditeur vous laisse ajuster chaque zoom, couper les silences et choisir le cadre. Ce que vous exportez est exactement ce que montre l'aperçu."
+        ],
+        "features": [
+          {
+            "title": "Enregistrer de n'importe où",
+            "body": "Démarrez et arrêtez depuis la barre des menus (macOS) ou la zone de notification (Windows), ou avec ⌘⇧2 / Ctrl+Maj+2 depuis n'importe quelle app. L'écran où se trouve votre pointeur est enregistré avec votre micro, et les fenêtres de Small Video sont laissées de côté."
+          },
+          {
+            "title": "Un curseur qui glisse",
+            "body": "Le curseur n'est pas enregistré : il est redessiné à partir du trajet du pointeur, donc il bouge en douceur, et vous pouvez l'agrandir."
+          },
+          {
+            "title": "Des zooms à partir de vos clics",
+            "body": "Chaque clic devient un zoom qui s'approche en douceur de l'endroit cliqué. Sur la timeline, vous changez son début et sa fin, sa profondeur et l'endroit qu'il regarde, ou vous en ajoutez un à la tête de lecture avec Z."
+          },
+          {
+            "title": "Les pauses coupées",
+            "body": "Les silences où rien n'est dit sont retirés, image et son ensemble, en gardant un instant autour de vos mots. Deux curseurs règlent ce qui compte comme une pause, et un clic sur la timeline en remet une."
+          },
+          {
+            "title": "Un cadre pour chaque format",
+            "body": "Écran, 16:9, 9:16 ou carré, avec fond, marges, coins, ombre, taille et lissage du curseur. Chaque modification peut être annulée et est enregistrée au fur et à mesure."
+          },
+          {
+            "title": "Des fichiers légers, un export net",
+            "body": "MP4 en 1080p, 1440p ou 4K, à 30 ou 60 images par seconde, avec votre voix. Sur macOS, chaque enregistrement est réduit à environ un cinquième de sa taille dès l'arrêt, sans perte visible sur le texte."
+          }
+        ],
+        "requirements": [
+          "macOS 15 ou plus récent sur Apple Silicon, ou Windows 10 (version 2004) ou plus récent",
+          "Les autorisations Enregistrement de l'écran et Micro, demandées au premier enregistrement",
+          "Une connexion internet au premier export, pour télécharger l'outil vidéo (ffmpeg) utilisé par l'app"
+        ],
+        "faq": [
+          {
+            "q": "La version Windows est-elle prête ?",
+            "a": "Elle est compilée et signée à chaque release, mais elle n'a pas encore tourné sur une vraie machine Windows : attendez-vous à quelques accrocs. macOS est la plateforme testée."
+          },
+          {
+            "q": "Fonctionne-t-il sous Linux ?",
+            "a": "Pas encore. Sous Wayland, une app ne peut pas lire la position du pointeur dans les autres apps, et le curseur redessiné en dépend."
+          },
+          {
+            "q": "Où sont mes enregistrements ?",
+            "a": "Chaque enregistrement est un dossier dans Vidéos/Small Video, avec la vidéo, les mouvements du pointeur et vos modifications. Le MP4 exporté est écrit à côté. Supprimer un enregistrement de la liste le met à la Corbeille : vous pouvez encore le récupérer."
+          },
+          {
+            "q": "Faut-il installer ffmpeg ?",
+            "a": "Non. L'app télécharge sa propre copie à la première utilisation et la vérifie avec sa somme de contrôle publiée. Une copie déjà présente sur votre machine fonctionne aussi."
+          }
+        ],
+        "article_slug": ""
       }
     },
     "article_heading": "Pour aller plus loin",
