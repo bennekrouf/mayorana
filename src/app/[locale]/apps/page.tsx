@@ -153,6 +153,34 @@ function ToolActionButtons({ action }: { action: ToolAction }) {
   }
 }
 
+// Where a click anywhere on the card goes: the tool's own page, or for a web
+// product with no page here, its site. The link sits on the name and its
+// ::after stretches over the whole card (the card is `relative`), so the
+// card is one target without nesting the buttons inside an <a>.
+function CardLink({ tool }: { tool: Tool }) {
+  const stretch =
+    "after:absolute after:inset-0 after:content-[''] hover:underline underline-offset-4 focus-visible:outline-none";
+  if (tool.detailHref) {
+    return (
+      <Link href={tool.detailHref} className={stretch}>
+        {tool.name}
+      </Link>
+    );
+  }
+  if (tool.action.kind === 'external' || tool.action.kind === 'internal') {
+    return (
+      <a
+        href={tool.action.href}
+        {...(tool.action.kind === 'external' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        className={stretch}
+      >
+        {tool.name}
+      </a>
+    );
+  }
+  return <>{tool.name}</>;
+}
+
 // One card, used by both sections. `muted` gives the secondary section a
 // quieter surface — content and controls are identical either way.
 function ToolCard({
@@ -172,32 +200,30 @@ function ToolCard({
   return (
     <motion.div
       id={tool.id}
-      className={`scroll-mt-24 group relative overflow-hidden rounded-2xl border border-border p-6 transition-all duration-300 flex flex-col ${surface} ${tool.dataSource?.borderClass ?? ''}`}
+      className={`scroll-mt-24 group relative overflow-hidden rounded-2xl border border-border p-6 transition-all duration-300 flex flex-col cursor-pointer hover:border-primary/50 focus-within:ring-2 focus-within:ring-primary/50 ${surface} ${tool.dataSource?.borderClass ?? ''}`}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
     >
       <div className="flex items-start justify-between mb-3 gap-2">
-        {tool.icon ? (
-          <div className="p-3 bg-primary/10 rounded-full text-primary">{tool.icon}</div>
-        ) : (
-          <h3 className="text-xl font-bold text-primary">
-            {tool.detailHref ? (
-              <Link href={tool.detailHref} className="hover:underline underline-offset-4">
-                {tool.name}
-              </Link>
-            ) : (
-              tool.name
-            )}
+        {/* Logo and name share the row, like the name alone on the other
+            cards, rather than a large logo pushing the name to a line below. */}
+        <div className="flex items-center gap-2.5 min-w-0">
+          {tool.icon && (
+            <div className="shrink-0 p-2 bg-primary/10 rounded-full text-primary">
+              {tool.icon}
+            </div>
+          )}
+          <h3 className="text-xl font-bold text-primary truncate">
+            <CardLink tool={tool} />
           </h3>
-        )}
-        <div className="flex flex-col items-end gap-1.5">
+        </div>
+        <div className="shrink-0 flex flex-col items-end gap-1.5">
           <StatusBadge status={tool.status} />
           {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
         </div>
       </div>
 
-      {tool.icon && <h3 className="text-xl font-bold mb-1 text-primary">{tool.name}</h3>}
       {tool.tagline && <p className="text-sm font-medium mb-1">{tool.tagline}</p>}
       <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>
       <p className="text-xs text-muted-foreground/70 font-mono mb-3">{tool.tech}</p>
@@ -210,7 +236,8 @@ function ToolCard({
         <div className="flex flex-1 items-center justify-center mb-6">{tool.visual}</div>
       )}
 
-      <div className="mt-auto space-y-3">
+      {/* Above the card-wide link, so the buttons still do their own thing. */}
+      <div className="relative z-10 mt-auto space-y-3">
         <ToolActionButtons action={tool.action} />
         {(tool.detailHref || tool.releasesHref) && (
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
@@ -277,7 +304,7 @@ export default function AppsPage() {
         tech: tPortfolio('cvenom_tech'),
         status: 'live',
         tags: ['ai'],
-        icon: <Shield className="w-8 h-8" />,
+        icon: <Shield className="w-5 h-5" />,
         visual: <CvenomFlowDiagram />,
         action: { kind: 'external', href: 'https://cvenom.com', label: tPortfolio('cvenom_cta') },
       },
@@ -288,7 +315,7 @@ export default function AppsPage() {
         tech: tPortfolio('solanize_tech'),
         status: 'mvp',
         tags: ['crypto'],
-        icon: <Zap className="w-8 h-8" />,
+        icon: <Zap className="w-5 h-5" />,
         visual: <SolanizeFlowDiagram />,
         action: { kind: 'external', href: 'https://ribh.io', label: tPortfolio('solanize_cta') },
       },

@@ -523,7 +523,80 @@
             "a": "Yes. Each GitHub release carries a latest.json with the sha256 of every artifact."
           }
         ],
-        "article_slug": "ais-runner-intro"
+        "article_slug": "ais-runner-intro",
+        "comparison": {
+          "competitors": [
+            "Logic Apps (Standard) for VS Code",
+            "Logic Apps Local Dev Tools",
+            "Azure portal"
+          ],
+          "rows": [
+            {
+              "feature": "Azurite, Service Bus emulator and func start, one button each",
+              "them": [
+                "Started separately, no Service Bus emulator",
+                false,
+                null
+              ]
+            },
+            {
+              "feature": "Pre-flight fixes before func start (connections.json, package.json, missing settings)",
+              "them": [
+                false,
+                false,
+                null
+              ]
+            },
+            {
+              "feature": "Mock server generated from the workflows' outbound HTTP calls",
+              "them": [
+                "Mocks inside unit tests only",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Record and replay multi-step scenarios across workflows",
+              "them": [
+                "Unit tests per workflow",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Queues, blobs, HTTP calls and Liquid maps per workflow, at a glance",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Local Service Bus queue and dead-letter counts, test sends",
+              "them": [
+                false,
+                false,
+                "Cloud namespaces only"
+              ]
+            },
+            {
+              "feature": "Liquid and XSLT tester with suggested input, DotLiquid or Liquid",
+              "them": [
+                "Data Mapper maps only",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Azure DevOps builds against environments: what is deployed where",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "ais_monitor": {
         "seo_title": "AIS Monitor — Azure Logic Apps Workflow Chain Explorer",
@@ -592,7 +665,72 @@
             "a": "It goes through the Logic App's hostruntime API, which needs more than Reader and is throttled per subscription. The dashboard's background poll backs off automatically when it gets rate-limited."
           }
         ],
-        "article_slug": "logic-apps-workflow-chains"
+        "article_slug": "logic-apps-workflow-chains",
+        "comparison": {
+          "competitors": [
+            "Azure portal",
+            "Turbo360",
+            "Azure Monitor workbooks"
+          ],
+          "rows": [
+            {
+              "feature": "Workflow chain graph derived from the deployed definitions (Service Bus, Event Grid)",
+              "them": [
+                false,
+                "Grouping you assemble by hand",
+                false
+              ]
+            },
+            {
+              "feature": "Run history of a whole chain, in order",
+              "them": [
+                "One workflow at a time",
+                "Needs BAM instrumentation",
+                "With your own KQL"
+              ]
+            },
+            {
+              "feature": "App settings compared against App Configuration (config drift)",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Failing runs, dead letters, drift, RBAC gaps and cost on one screen",
+              "them": [
+                "Separate blades",
+                "Dashboards you configure",
+                "With your own queries"
+              ]
+            },
+            {
+              "feature": "Trigger HTTP workflows with saved, named payloads and watch the run",
+              "them": [
+                "Run with payload, nothing saved",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Terminal edition: one static binary for SSH and jumpboxes",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Runs on your az login, no third-party access to your subscription",
+              "them": [
+                true,
+                false,
+                true
+              ]
+            }
+          ]
+        }
       },
       "ais_tracing": {
         "seo_title": "AIS Tracing — Correlation ID Tracer for Azure Cosmos DB",
@@ -648,7 +786,56 @@
             "a": "It samples rather than scanning everything, so container count matters more than total document count. Very wide accounts take longer on the first pass."
           }
         ],
-        "article_slug": "trace-correlation-id-cosmos-db"
+        "article_slug": "trace-correlation-id-cosmos-db",
+        "comparison": {
+          "competitors": [
+            "Cosmos DB Data Explorer",
+            "Cosmos DB in VS Code",
+            "Turbo360 BAM"
+          ],
+          "rows": [
+            {
+              "feature": "One value searched across every container in one pass",
+              "them": [
+                "One query per container",
+                "One query per container",
+                "Instrumented flows only"
+              ]
+            },
+            {
+              "feature": "Linking field inferred from the data, no schema to describe",
+              "them": [
+                false,
+                false,
+                "You define tracked properties"
+              ]
+            },
+            {
+              "feature": "Steps drawn on a timeline, in order",
+              "them": [
+                false,
+                false,
+                "For stages you instrumented"
+              ]
+            },
+            {
+              "feature": "Containers the value never reached shown as empty lanes",
+              "them": [
+                false,
+                false,
+                "For stages you instrumented"
+              ]
+            },
+            {
+              "feature": "Works on the data you already have, nothing to instrument",
+              "them": [
+                true,
+                true,
+                false
+              ]
+            }
+          ]
+        }
       },
       "ais_analytics": {
         "seo_title": "AIS Analytics — Correlation ID Tracer for Azure Log Analytics",
@@ -695,7 +882,48 @@
             "a": "No. It only runs read queries."
           }
         ],
-        "article_slug": "trace-correlation-id-log-analytics"
+        "article_slug": "trace-correlation-id-log-analytics",
+        "comparison": {
+          "competitors": [
+            "Log Analytics (KQL)",
+            "Application Insights transactions",
+            "Turbo360 BAM"
+          ],
+          "rows": [
+            {
+              "feature": "Correlation column inferred from the data, with its evidence",
+              "them": [
+                false,
+                "Fixed to operation_Id",
+                "You define tracked properties"
+              ]
+            },
+            {
+              "feature": "One id followed across the workspace without writing KQL",
+              "them": [
+                "A query per table, or a union",
+                "App Insights tables only",
+                "Instrumented flows only"
+              ]
+            },
+            {
+              "feature": "Works on Logic Apps diagnostics and custom log tables",
+              "them": [
+                "By hand",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "\"Not arrived yet\" told apart from \"never on this path\"",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "gitagent": {
         "seo_title": "GitAgent — AI Commit Messages and Pull Requests, Gated by You",
@@ -749,7 +977,56 @@
         "article_slug": "ai-commit-messages-without-giving-up-control",
         "pro_download_intro": "Free for personal, educational and non-profit use, with 5 repositories. Commercial use — including a solo consultant on client work — requires GitAgent Pro, which also covers every repository, in every folder. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 5 repositories across all your folders (the others are shown locked). Commercial use — including a solo consultant on client work and an employee using it at their job — requires GitAgent Pro, which also covers every repository. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open GitAgent, click Get Pro… in the top bar and paste the key. It is checked on your computer: no account, nothing sent anywhere."
+        "pro_how": "To activate it, open GitAgent, click Get Pro… in the top bar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "comparison": {
+          "competitors": [
+            "aicommits",
+            "GitHub Copilot in VS Code",
+            "Claude Code / Cursor"
+          ],
+          "rows": [
+            {
+              "feature": "Dirty working tree to open pull request in one flow",
+              "them": [
+                "Commit message only",
+                "Drafts text, you run each step",
+                true
+              ]
+            },
+            {
+              "feature": "Stops before every commit, push and PR, showing the exact command",
+              "them": [
+                "Confirms the commit only",
+                null,
+                "Unless auto-approve is on"
+              ]
+            },
+            {
+              "feature": "Exact file list committed; untracked files never swept in",
+              "them": [
+                "Whatever is staged",
+                "Whatever is staged",
+                "Depends on the prompt"
+              ]
+            },
+            {
+              "feature": "Runs entirely on a local model: the diff never leaves the machine",
+              "them": [
+                "Via an OpenAI-compatible endpoint",
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "No AI subscription needed",
+              "them": [
+                true,
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "blog_toolkit": {
         "seo_title": "Blog Toolkit — Desktop Blog Manager with AI Drafting",
@@ -801,7 +1078,48 @@
             "a": "DeepSeek or Claude, chosen in Settings."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "comparison": {
+          "competitors": [
+            "WordPress",
+            "Ghost",
+            "Obsidian + git"
+          ],
+          "rows": [
+            {
+              "feature": "Posts stay markdown files in your own repository",
+              "them": [
+                false,
+                false,
+                true
+              ]
+            },
+            {
+              "feature": "A publish queue that drains on a weekly cadence",
+              "them": [
+                "Schedule each post by date",
+                "Schedule each post by date",
+                false
+              ]
+            },
+            {
+              "feature": "AI first draft inside the editor (DeepSeek or Claude)",
+              "them": [
+                "Through a plugin",
+                false,
+                "Through a community plugin"
+              ]
+            },
+            {
+              "feature": "French and English versions of a post managed together",
+              "them": [
+                "WPML or Polylang plugin",
+                false,
+                false
+              ]
+            }
+          ]
+        }
       },
       "appscreens": {
         "seo_title": "AppScreens — iOS and Android Build, Screenshot and Publish Assistant",
@@ -849,7 +1167,72 @@
             "a": "Yes, for store assets: it talks to the App Store Connect and Google Play Developer APIs directly to upload screenshots into the right display types and sets. You supply the API credentials."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "comparison": {
+          "competitors": [
+            "fastlane",
+            "Web screenshot makers",
+            "Xcode + Play Console"
+          ],
+          "rows": [
+            {
+              "feature": "Framed store screenshots in every required size, per language",
+              "them": [
+                "frameit, configured in files",
+                true,
+                false
+              ]
+            },
+            {
+              "feature": "AI-generated device frames and backgrounds, one theme per set",
+              "them": [
+                false,
+                "Fixed templates",
+                false
+              ]
+            },
+            {
+              "feature": "Listing and screenshots uploaded to both stores through their APIs",
+              "them": [
+                true,
+                "Download, then upload by hand",
+                "By hand, store by store"
+              ]
+            },
+            {
+              "feature": "Version bump, signed build and submission for review in one app",
+              "them": [
+                "Ruby lanes you write",
+                false,
+                "Separate tools per store"
+              ]
+            },
+            {
+              "feature": "Provisioning profile checked against the app before the build",
+              "them": [
+                "Managed by match, not pre-checked",
+                false,
+                "Fails at build time"
+              ]
+            },
+            {
+              "feature": "Desktop GUI, no Ruby or scripts to maintain",
+              "them": [
+                false,
+                true,
+                true
+              ]
+            },
+            {
+              "feature": "Screenshots and store publishing from macOS, Windows or Linux",
+              "them": [
+                "macOS and Linux; Windows unofficial",
+                "In the browser",
+                "Xcode is macOS only"
+              ]
+            }
+          ]
+        }
       },
       "splitter": {
         "seo_title": "Splitter — Split Long MP3 and WAV Recordings into Tracks",
@@ -911,7 +1294,64 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, educational and non-profit use, exporting the first 10 tracks of each recording. Commercial use — including a solo consultant on client work — requires Splitter Pro, which also exports every track. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with exports limited to the first 10 tracks of each recording. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Splitter Pro, which also exports every track. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere."
+        "pro_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "comparison": {
+          "competitors": [
+            "Audacity",
+            "mp3DirectCut",
+            "mp3splt"
+          ],
+          "rows": [
+            {
+              "feature": "Splits suggested in every silence, reviewed by ear from the keyboard",
+              "them": [
+                "Label Sounds, then review by hand",
+                "Pause detection, review by hand",
+                "Automatic, no review"
+              ]
+            },
+            {
+              "feature": "MP3 export with no re-encoding, sample-exact with a gapless header",
+              "them": [
+                "Re-encodes",
+                "Lossless, frame-exact",
+                "Lossless, frame-exact"
+              ]
+            },
+            {
+              "feature": "EBU R128 loudness per track, ReplayGain 2.0 tags, LUFS normalisation",
+              "them": [
+                "Normalisation, no ReplayGain tags",
+                "Gain normalisation",
+                false
+              ]
+            },
+            {
+              "feature": "Paste a YouTube link and split its audio",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "Videos split on their sound into MP4 clips",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "macOS, Windows and Linux",
+              "them": [
+                true,
+                "Windows only",
+                true
+              ]
+            }
+          ]
+        }
       },
       "spreadwatch": {
         "seo_title": "Spreadwatch — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
@@ -965,7 +1405,64 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires Spreadwatch Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Spreadwatch Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open Spreadwatch and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere."
+        "pro_how": "To activate it, open Spreadwatch and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "comparison": {
+          "competitors": [
+            "Sharpe Terminal",
+            "ArbiHunt",
+            "CCXT scripts"
+          ],
+          "rows": [
+            {
+              "feature": "Order books streamed live to your machine, stale feeds flagged",
+              "them": [
+                "Web, scanned server-side",
+                "Mobile, scanned server-side",
+                "You write it"
+              ]
+            },
+            {
+              "feature": "Centralised exchanges and Solana on-chain (Jupiter) in one view",
+              "them": [
+                "Centralised exchanges only",
+                "Centralised exchanges only",
+                "Centralised exchanges only"
+              ]
+            },
+            {
+              "feature": "Measures which venue's price lags, in milliseconds",
+              "them": [
+                false,
+                false,
+                "You write it"
+              ]
+            },
+            {
+              "feature": "New Gate and MEXC listings Binance spot doesn't list, scored",
+              "them": [
+                false,
+                false,
+                false
+              ]
+            },
+            {
+              "feature": "On-chain swaps with dry run first and limits a config can only lower",
+              "them": [
+                false,
+                false,
+                "You write it"
+              ]
+            },
+            {
+              "feature": "Native desktop app on macOS, Windows and Linux",
+              "them": [
+                "In the browser",
+                "Mobile app",
+                "Wherever you run them"
+              ]
+            }
+          ]
+        }
       },
       "small_video": {
         "seo_title": "Small Video — Screen Recorder with a Smooth Cursor and Auto-Zoom",
@@ -1024,7 +1521,40 @@
             "a": "No. The app downloads its own copy on first use and checks it against its published checksum. A copy already on your machine works too."
           }
         ],
-        "article_slug": ""
+        "article_slug": "",
+        "comparison": {
+          "competitors": [
+            "Screen Studio",
+            "FocuSee",
+            "OBS Studio"
+          ],
+          "rows": [
+            {
+              "feature": "Smooth redrawn cursor and automatic zoom on clicks",
+              "them": [
+                true,
+                true,
+                false
+              ]
+            },
+            {
+              "feature": "Runs on Windows as well as macOS",
+              "them": [
+                false,
+                true,
+                true
+              ]
+            },
+            {
+              "feature": "Free for personal use, no subscription",
+              "them": [
+                "$29/month or $108/year",
+                "Paid licence",
+                true
+              ]
+            }
+          ]
+        }
       }
     },
     "article_heading": "Read more",
@@ -1060,7 +1590,15 @@
     "thanks_updates": "Your licence includes every update released until {date}. Versions released before that date keep working after it.",
     "thanks_missing": "We couldn't find this purchase. If you have just paid, your licence key is on its way by email.",
     "thanks_error": "Your licence key couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
-    "thanks_contact": "contact us."
+    "thanks_contact": "contact us.",
+    "comparison_heading": "How {name} compares",
+    "comparison_intro": "Only the things {name} is strong at are listed. The others do plenty it doesn't — this table is about why you would pick it.",
+    "comparison_feature": "Feature",
+    "comparison_yes": "Yes",
+    "comparison_no": "No",
+    "comparison_na": "Not applicable",
+    "comparison_note": "Compared in October 2026 from each product's public documentation. Something out of date?",
+    "comparison_note_link": "Tell us"
   },
   "app_releases": {
     "breadcrumb": "Release notes",
