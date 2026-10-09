@@ -1522,6 +1522,9 @@
           }
         ],
         "article_slug": "",
+        "pro_download_intro": "Free: export 10 different videos; exporting one again is free, and recording and editing are never limited. Pro: export every video, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Free: export 10 different videos; recording and editing are never limited. Pro: export every video, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
+        "pro_how": "To activate it, open Small Video, click Get Pro… in the sidebar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
         "comparison": {
           "competitors": [
             "Screen Studio",

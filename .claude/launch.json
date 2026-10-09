@@ -4,26 +4,56 @@
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3006
     },
     {
       "name": "prod",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["next", "start", "-p", "3007"],
+      "runtimeArgs": [
+        "next",
+        "start",
+        "-p",
+        "3007"
+      ],
       "port": 3007
     },
     {
       "name": "api0-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "/Users/mb/code/api0/landing-api0", "run", "dev", "--", "--port", "3008"],
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/mb/code/api0/landing-api0",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3008"
+      ],
       "port": 3008
     },
     {
       "name": "funnel-dev",
       "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd /Users/mb/code/mayorana-funnel && node scripts/generate-blog-data.js >/dev/null && DOWNLOAD_STATS_PATH=/private/tmp/claude-501/stats-demo.json npx next dev --webpack -p 3016"],
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/mb/code/mayorana-funnel && node scripts/generate-blog-data.js >/dev/null && DOWNLOAD_STATS_PATH=/private/tmp/claude-501/stats-demo.json npx next dev --webpack -p 3016"
+      ],
       "port": 3016
+    },
+    {
+      "name": "cvenom-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/mb/code/cvenom/cvenom-landing",
+        "run",
+        "dev"
+      ],
+      "port": 4004
     }
   ]
 }
