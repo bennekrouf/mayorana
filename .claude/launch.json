@@ -54,6 +54,17 @@
         "dev"
       ],
       "port": 4004
+    },
+    {
+      "name": "solanize-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/mb/code/solanize/landing-solanize",
+        "run",
+        "dev"
+      ],
+      "port": 4003
     }
   ]
 }
