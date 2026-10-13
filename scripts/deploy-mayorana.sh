@@ -47,6 +47,13 @@ command -v yarn >/dev/null || err "yarn not found"
 command -v pm2  >/dev/null || err "pm2 not found"
 pm2 describe "$PM2_APP" >/dev/null 2>&1 || err "PM2 app '$PM2_APP' not found in $(whoami)'s daemon"
 
+# Any build refreshes the release-note snapshots from the live feeds (prebuild,
+# scripts/fetch-releases.js) — not only this script's own, which restores them
+# below, but also the 07:00 publishing cron's `yarn build`. Left modified they
+# are not work anyone did, and they blocked every nightly deploy after a post
+# was published. The build further down regenerates them regardless.
+"${GIT[@]}" checkout -- src/data/releases
+
 # Refuse to clobber uncommitted work someone left on the server.
 if [ -n "$("${GIT[@]}" status --porcelain)" ]; then
   "${GIT[@]}" status --short

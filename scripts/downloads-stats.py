@@ -198,6 +198,12 @@ ASSET = re.compile(
     re.I,
 )
 
+# One blog post: /blog/<slug>, optionally under a locale (/en/blog/<slug>).
+# Tag pages and the index are not posts. Every post is kept, unlike the top-paths
+# list: a post read steadily by a few people a day never reaches a site-wide top
+# 15, and "which posts are people reading" was otherwise unanswerable.
+POST_PATH = re.compile(r'^(?:/[a-z]{2})?/blog/(?!tag(?:/|$))[^/]+$')
+
 # How many distinct paths to keep per site. Enough to see what people use,
 # bounded so the JSON stays small.
 TOP_PATHS = 15
@@ -619,6 +625,9 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
         requests: dict[str, int] = defaultdict(int)
         bots: dict[str, int] = defaultdict(int)
         paths: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+        # Distinct readers per blog post per day (a refresh is not a second
+        # reader); see POST_PATH.
+        posts: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
         # Distinct addresses per referring host per day, so one person
         # clicking through five pages from the same thread counts once.
         referrers: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
@@ -666,6 +675,12 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                             # design and are not page views; parse_usage
                             # reads them.
                             if request_path == PING_PATH:
+                                continue
+                            # Builds, and the apps' update checks for them, are
+                            # counted by parse_logs. As page traffic they were
+                            # noise: a running app's latest.json poll topped the
+                            # site's path list whenever its user also browsed.
+                            if request_path.startswith('/downloads/'):
                                 continue
 
                             # Counted before the status check: these are
@@ -717,6 +732,9 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
             requests[day] += len(entries)
             for request_path, _ua, referer in entries:
                 paths[day][request_path] += 1
+                post = request_path.rstrip('/') or '/'
+                if POST_PATH.match(post):
+                    posts[day][post].add(ip)
                 source = referrer_host(referer, own_hosts)
                 if source:
                     referrers[day][source].add(ip)
@@ -739,6 +757,7 @@ def parse_sites(log_dir: str, geo: Geo) -> dict[str, dict]:
                     'referrers': dict(sorted(
                         ((host, len(ips)) for host, ips in referrers.get(day, {}).items()),
                         key=lambda kv: -kv[1])[:TOP_REFERRERS]),
+                    'posts': {post: len(ips) for post, ips in posts.get(day, {}).items()},
                 }
                 for day in sorted(every_day)
             }
@@ -809,6 +828,9 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
                     'bot_requests': days[d].get('bot_requests', 0),
                     'unverified_requests': days[d].get('unverified_requests', 0),
                     'probe_requests': days[d].get('probe_requests', 0),
+                    # Readers per post that day — the page sums them over the
+                    # chosen range. Absent on days before posts were counted.
+                    'posts': days[d].get('posts', {}),
                 }
                 for d in ordered_days[-365:]
             },
