@@ -72,6 +72,8 @@ interface SiteStats {
     bot_requests?: number;
     unverified_requests?: number;
     probe_requests?: number;
+    /** Distinct readers per blog post that day. Absent before posts were counted. */
+    posts?: Record<string, number>;
   }>;
 }
 
@@ -186,6 +188,23 @@ function sumDaily(
   return { value: days.reduce((n, [, d]) => n + value(d), 0), allTime: false };
 }
 
+/** The `n` largest entries, biggest first.
+ *
+ *  The stats file is written with its keys sorted alphabetically, so taking the
+ *  first few entries of a breakdown gave the alphabetically-first paths — `/en`,
+ *  `/en/about`, `/en/apps` — however little traffic they had, and hid the blog
+ *  index, the second-busiest page. Never slice a breakdown without this. */
+function largest(data: Record<string, number> | undefined, n: number): [string, number][] {
+  return Object.entries(data ?? {}).sort((a, b) => b[1] - a[1]).slice(0, n);
+}
+
+/** Readers per blog post over the chosen days, biggest first. */
+function postsInRange(days: [string, SiteDay][], n: number): [string, number][] {
+  const total: Record<string, number> = {};
+  for (const [, d] of days) sumInto(total, d.posts);
+  return largest(total, n);
+}
+
 /** One hosted product. Downloads do not apply to these — the question is how
  *  many people came at all, so visitors and requests lead. */
 function SiteCard({
@@ -198,8 +217,9 @@ function SiteCard({
   rangeDays: number | null;
 }) {
   const days = inRange(site.daily ?? {}, rangeDays);
-  const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
-  const referrers = Object.entries(site.referrers ?? {}).slice(0, 6);
+  const paths = largest(site.top_paths, 5);
+  const referrers = largest(site.referrers, 6);
+  const posts = postsInRange(days, 8);
 
   // Totals for the window, so a card never contradicts the range selector.
   const visitorDays = days.reduce((n, [, d]) => n + (d.visitors ?? 0), 0);
@@ -280,6 +300,24 @@ function SiteCard({
             </li>
           ))}
         </ul>
+      )}
+
+      {/* Readers per post for the selected range — unlike the paths above,
+          every post is counted, not just the site's top few pages. */}
+      {posts.length > 0 && (
+        <div className="mt-4 pt-3 border-t border-gray-100 dark:border-slate-700">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1.5">
+            Most read posts
+          </p>
+          <ul className="space-y-1 text-xs">
+            {posts.map(([post, n]) => (
+              <li key={post} className="flex justify-between gap-3">
+                <span className="min-w-0 flex-1 truncate font-mono text-gray-600 dark:text-gray-300">{post}</span>
+                <span className="shrink-0 text-gray-900 dark:text-white tabular-nums" title="readers">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {/* Where visitors came from — all-time, not the selected range: the
@@ -767,12 +805,17 @@ function buildReport(stats: Stats, view: View, range: { label: string; days: num
       }
       // Both of these are all-time on the page rather than range-scoped;
       // saying so stops a model folding them into the selected window.
-      const paths = Object.entries(site.top_paths ?? {}).slice(0, 5);
+      const paths = largest(site.top_paths, 5);
       if (paths.length > 0) {
         out.push('Top paths (all-time):');
         out.push(paths.map(([path, n]) => `  ${path}: ${n}`).join('\n'));
       }
-      const referrers = Object.entries(site.referrers ?? {}).slice(0, 6);
+      const posts = postsInRange(siteDays, 15);
+      if (posts.length > 0) {
+        out.push('Most read blog posts (selected range, distinct readers per day, summed):');
+        out.push(posts.map(([post, n]) => `  ${post}: ${n}`).join('\n'));
+      }
+      const referrers = largest(site.referrers, 6);
       if (referrers.length > 0) {
         out.push('Came from (all-time, visitor-days per referring host):');
         out.push(referrers.map(([host, n]) => `  ${host}: ${n}`).join('\n'));
