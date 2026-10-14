@@ -167,7 +167,7 @@
   },
   "apps": {
     "page_title": "Apps & Outils",
-    "page_subtitle": "api0 pour les agents IA, et des outils de bureau natifs pour Azure Integration Services et Git. Tous écrits en Rust.",
+    "page_subtitle": "api0 pour les agents IA, et des outils de bureau natifs pour Git et plus encore. Tous écrits en Rust.",
     "tools_heading": "Tous les outils",
     "filter_all": "Tous",
     "download_label": "Télécharger",
