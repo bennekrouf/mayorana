@@ -32,43 +32,25 @@ Files in people's own folders are read under both names: `splitter.cutlist.json`
 
 ## Order of operations
 
-1. **Deploy the site.** Old `/apps/<old>` URLs 301 to the new ones
-   (`next.config.ts`); download buttons still point at the old folders, which
-   exist today.
-2. **Deploy `api0`**: licence emails and Stripe return URLs use the new names.
-3. **Rename the products in the Stripe dashboard.**
-4. **On the VPS, before any app release:** move each download folder and
-   redirect the old path, so installed copies keep finding updates, notices
-   and release notes:
-
-   ```bash
-   cd /var/www/mayorana-downloads
-   mv appscreens shipscreen && mv blog-toolkit publishkit && mv splitter trackcut \
-     && mv small-video polishcast && mv spreadwatch spreadradar
-   ```
-
-   ```nginx
-   # http block
-   map $old_app $new_app {
-       appscreens   shipscreen;
-       blog-toolkit publishkit;
-       splitter     trackcut;
-       small-video  polishcast;
-       spreadwatch  spreadradar;
-   }
-
-   # server block, before the /downloads/ location
-   location ~ ^/downloads/(?<old_app>appscreens|blog-toolkit|splitter|small-video|spreadwatch)/(?<rest>.*)$ {
-       return 301 /downloads/$new_app/$rest$is_args$args;
-   }
-   ```
-
-   Check that the release deploy key (rrsync) still allows the new folders.
+1. **On the VPS, first:** run `./scripts/migrate-renamed-downloads.sh`
+   (`--dry-run` to see it first). Each download folder moves to its new name,
+   with the old name left as a symlink, so installed copies keep finding
+   updates, notices and release notes. Every build gets its new file name
+   (`trackcut-setup.exe`, …) beside the original, which `latest.json` still
+   names. The site's download buttons use the new names, so this must run
+   before the site deploys.
+2. **Deploy the site.** Old `/apps/<old>` URLs 301 to the new ones
+   (`next.config.ts`).
+3. **Deploy `api0`**: licence emails and Stripe return URLs use the new names.
+4. **Rename the products in the Stripe dashboard.**
 5. **Rename the GitHub repositories** (GitHub redirects the old URLs). The apps'
-   installers and READMEs already link to the new names.
-6. **Release each app.** CI publishes `<new>-*` artifacts into the new folder.
-   Then switch that tool's download constants and file names in
-   `src/data/tools.ts`, and its `source` link, to the new name.
+   installers and READMEs already link to the new names; then switch each
+   tool's `source` link in `src/data/tools.ts`.
+6. **Release each app.** CI publishes its builds under the new names, and the
+   installed program itself is then called `trackcut.exe`, `TrackCut.app`, …
+   Until then the renamed downloads still contain the old program.
 
 `scripts/downloads-stats.py` counts the old and new names as one product
-(`RENAMED`), so each app keeps one history.
+(`RENAMED`), and on every run folds the days it stored under an old name —
+downloads, installs, updates, app usage, and visits to the old app pages — into
+the new one (`consolidate_renames`), so each app keeps one history.

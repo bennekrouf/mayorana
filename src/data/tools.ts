@@ -61,19 +61,19 @@ export interface DesktopToolConfig {
 // to its source — see `source` on each entry and LICENCE_URL below.
 //
 // ShipScreen, PublishKit, TrackCut, SpreadRadar and Polishcast were renamed
-// from AppScreens, Blog Toolkit, Splitter, Spreadwatch and Small Video. Their
-// builds keep the old folder and file names until each one's first release
-// under the new name moves them; the constants below follow it then.
+// from AppScreens, Blog Toolkit, Splitter, Spreadwatch and Small Video; their
+// builds were given the new names on the server by
+// scripts/migrate-renamed-downloads.sh.
 const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
 const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
 const tracingDl = 'https://mayorana.ch/downloads/ais-tracing/latest';
 const analyticsDl = 'https://mayorana.ch/downloads/ais-analytics/latest';
 const gitagentDl = 'https://mayorana.ch/downloads/gitagent/latest';
-const blogtkDl = 'https://mayorana.ch/downloads/blog-toolkit/latest';
-const screensDl = 'https://mayorana.ch/downloads/appscreens/latest';
-const splitterDl = 'https://mayorana.ch/downloads/splitter/latest';
-const spreadwatchDl = 'https://mayorana.ch/downloads/spreadwatch/latest';
-const smallVideoDl = 'https://mayorana.ch/downloads/small-video/latest';
+const publishkitDl = 'https://mayorana.ch/downloads/publishkit/latest';
+const shipscreenDl = 'https://mayorana.ch/downloads/shipscreen/latest';
+const trackcutDl = 'https://mayorana.ch/downloads/trackcut/latest';
+const spreadradarDl = 'https://mayorana.ch/downloads/spreadradar/latest';
+const polishcastDl = 'https://mayorana.ch/downloads/polishcast/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -159,9 +159,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'beta',
     tags: ['blog'],
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${blogtkDl}/blog-toolkit-macos-arm64.tar.gz` },
-      { os: 'linux', label: 'Linux x86_64', href: `${blogtkDl}/blog-toolkit-linux-x86_64.tar.gz` },
-      { os: 'windows', label: 'Windows', href: `${blogtkDl}/blog-toolkit-setup.exe` },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${publishkitDl}/publishkit-macos-arm64.tar.gz` },
+      { os: 'linux', label: 'Linux x86_64', href: `${publishkitDl}/publishkit-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${publishkitDl}/publishkit-setup.exe` },
     ],
   },
   {
@@ -172,9 +172,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'live',
     tags: ['tools'],
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${screensDl}/appscreens-macos-arm64.dmg` },
-      { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${screensDl}/appscreens-linux-x86_64.deb` },
-      { os: 'windows', label: 'Windows', href: `${screensDl}/appscreens-windows-setup.exe` },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${shipscreenDl}/shipscreen-macos-arm64.dmg` },
+      { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${shipscreenDl}/shipscreen-linux-x86_64.deb` },
+      { os: 'windows', label: 'Windows', href: `${shipscreenDl}/shipscreen-windows-setup.exe` },
     ],
   },
   {
@@ -202,9 +202,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     applicationCategory: 'MultimediaApplication',
     pro: { edition: 'pro', product: 'splitter' },
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${splitterDl}/splitter-macos-arm64.dmg` },
-      { os: 'linux', label: 'Linux x86_64', href: `${splitterDl}/splitter-linux-x86_64.tar.gz` },
-      { os: 'windows', label: 'Windows', href: `${splitterDl}/splitter-setup.exe` },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${trackcutDl}/trackcut-macos-arm64.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${trackcutDl}/trackcut-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${trackcutDl}/trackcut-setup.exe` },
     ],
   },
   {
@@ -218,9 +218,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     pro: { edition: 'pro', product: 'spreadwatch' },
     downloads: [
       // One universal DMG: Apple Silicon and Intel.
-      { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadwatchDl}/spreadwatch-macos.dmg` },
-      { os: 'linux', label: 'Linux x86_64', href: `${spreadwatchDl}/spreadwatch-linux-x86_64.tar.gz` },
-      { os: 'windows', label: 'Windows', href: `${spreadwatchDl}/spreadwatch-setup.exe` },
+      { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadradarDl}/spreadradar-macos.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${spreadradarDl}/spreadradar-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${spreadradarDl}/spreadradar-setup.exe` },
     ],
   },
   {
@@ -233,9 +233,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tags: ['tools'],
     applicationCategory: 'MultimediaApplication',
     downloads: [
-      { os: 'mac', label: 'macOS 15+ (Apple Silicon)', href: `${smallVideoDl}/small-video-macos-arm64.dmg` },
+      { os: 'mac', label: 'macOS 15+ (Apple Silicon)', href: `${polishcastDl}/polishcast-macos-arm64.dmg` },
       // No Linux build: recording is not supported there (see the app's FAQ).
-      { os: 'windows', label: 'Windows 10+', href: `${smallVideoDl}/small-video-setup.exe` },
+      { os: 'windows', label: 'Windows 10+', href: `${polishcastDl}/polishcast-setup.exe` },
     ],
   },
 ];

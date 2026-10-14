@@ -55,6 +55,7 @@ LINE = re.compile(
 # Apps renamed in October 2026. Their builds, updater checks and telemetry keep
 # arriving under the old name from installs that predate the rename, so both
 # names are counted as the new one and each app keeps one continuous history.
+# Days stored before the rename are folded in too (see consolidate_renames).
 RENAMED = {
     'appscreens': 'shipscreen',
     'blog-toolkit': 'publishkit',
@@ -62,6 +63,9 @@ RENAMED = {
     'small-video': 'polishcast',
     'spreadwatch': 'spreadradar',
 }
+
+# An app's page under its old name: /en/apps/splitter, /fr/apps/splitter/releases…
+OLD_APP_PAGE = re.compile(r'(/apps/)(' + '|'.join(map(re.escape, RENAMED)) + r')(?=[/?#]|$)')
 
 # /downloads/<app>/<version>/<file>
 DOWNLOAD = re.compile(r'^/downloads/(?P<app>[^/]+)/(?P<version>[^/]+)/(?P<file>[^/?]+)')
@@ -849,6 +853,46 @@ def summarise_sites(sites: dict[str, dict]) -> dict:
     return out
 
 
+def _fold_keys(counts: dict, rename) -> dict:
+    """`counts` with each key renamed, values of keys that meet added together
+    (numbers, or dicts of numbers like usage's per-app entries)."""
+    out: dict = {}
+    for key, value in counts.items():
+        key = rename(key)
+        if key not in out:
+            out[key] = dict(value) if isinstance(value, dict) else value
+        elif isinstance(value, dict):
+            for field, n in value.items():
+                out[key][field] = out[key].get(field, 0) + n
+        else:
+            out[key] += value
+    return out
+
+
+def consolidate_renames(state: dict) -> dict:
+    """Files everything recorded under an app's old name under its new one.
+
+    Days still in the logs come out of parsing under the new names already;
+    this is for the days only the stored state remembers. Idempotent, so it
+    runs on every pass rather than once.
+    """
+    app = lambda name: RENAMED.get(name, name)
+    page = lambda path: OLD_APP_PAGE.sub(lambda m: m.group(1) + RENAMED[m.group(2)], path)
+    for day in state.get('days', {}).values():
+        for field in ('by_app', 'installs_by_app', 'updates_by_app',
+                      'members_by_app', 'active_by_app'):
+            if field in day:
+                day[field] = _fold_keys(day[field], app)
+    for day in state.get('usage', {}).values():
+        if 'by_app' in day:
+            day['by_app'] = _fold_keys(day['by_app'], app)
+    for site in state.get('sites', {}).values():
+        for day in site.get('days', {}).values():
+            if 'top_paths' in day:
+                day['top_paths'] = _fold_keys(day['top_paths'], page)
+    return state
+
+
 def merge(state: dict, fresh: dict[str, dict]) -> dict:
     """Days still in the logs replace their stored copy; older days stand."""
     days = dict(state.get('days', {}))
@@ -1030,8 +1074,8 @@ def main() -> int:
 
     usage_state = merge_usage(state.get('usage', {}), parse_usage(args.logs))
 
-    state = {'days': downloads_state['days'], 'sites': sites_state,
-             'usage': usage_state}
+    state = consolidate_renames({'days': downloads_state['days'], 'sites': sites_state,
+                                 'usage': usage_state})
     summary = summarise(state, geo.note)
     summary['sites'] = summarise_sites(sites_state)
     summary['usage'] = summarise_usage(usage_state)
