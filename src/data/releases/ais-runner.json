@@ -2,8 +2,47 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-10-07T14:12:28Z",
+  "generated_at": "2026-10-14T09:05:12Z",
   "releases": [
+    {
+      "version": "0.5.65",
+      "tag": "v0.5.65",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "AIS Runner now comes with an MCP server, so you can connect it to Claude Desktop, Claude Code or another MCP client and ask about your project in chat: which workflows read or write a queue, whether a workflow can run locally, why a local run failed and what an action received, your saved test scenarios, and your Azure DevOps builds with the log of the step that broke. It only reads — it never starts anything, triggers a workflow or edits a file — and keys and passwords in connection strings are masked. The README explains how to connect it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.64",
+      "tag": "v0.5.64",
+      "date": "2026-10-13",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The DevOps tab can show a build's logs. Click the status icon of any run to see its jobs and steps with how long each took. The first failed step opens on its own, with its error messages above its log, so you no longer have to go to Azure DevOps to find out why a build broke. \"Open in browser\" takes you to the same build on Azure DevOps."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The DevOps tab now finds your organization and project on its own: from the project folder's git remote when it is hosted on Azure DevOps, otherwise from the defaults you set with `az devops configure`. You can also paste any Azure DevOps link straight from your browser — a pipelines page, a build result or a repo URL — and it is split into the organization and project for you, instead of failing because the box expected the organization URL alone. The organization box suggests every organization your Azure account belongs to (and picks it for you when there is only one), and the project box suggests the projects you have access to in that organization.",
+            "The DevOps tab reopens the build pipeline you last looked at in each project, or the first one the first time, so its recent runs are on screen right away instead of an empty page waiting for you to pick one."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Linking a project to an Azure Logic App no longer forgets the organization and project you had set in the DevOps tab."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.63",
       "tag": "v0.5.63",

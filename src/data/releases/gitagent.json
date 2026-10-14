@@ -2,8 +2,175 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-09T14:20:06Z",
+  "generated_at": "2026-10-14T11:49:14Z",
   "releases": [
+    {
+      "version": "0.1.101",
+      "tag": "v0.1.101",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Flow tabs say what their flow would act on right now: **5 files** on the commit flow when there are changes to commit (or **2 commits** with no pull request yet), **3 PRs** on the review flow, **4 commits** on the release flow since the last tag. Hover a count for what it is; a flow with nothing to do shows none. It follows what each flow says it handles in Setup, so it works whatever the flow is called."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A fix offered under a failed step that runs and stops no longer looks as if nothing happened: its button reads **Run again**, and what it printed is shown under \"That stopped before finishing\".",
+            "When **Bring the base in** stops on conflicts, the Merge step now moves on to what comes next instead of keeping its old message. It names the files to fix and offers **Finish the merge, push, and merge again** — which refuses while a file still has conflict markers — or **Abandon the merge** to put the branch back as it was."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.100",
+      "tag": "v0.1.100",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The run view now has the same **Branches**, **Base** and **Trusted run** buttons as the list view, at the top next to Play, so you no longer have to switch back to the list to open the branches, change the base branch, or hand a run over to a trusted run. **Stop asking me** and **Trusting…** show there too while a run is going."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.99",
+      "tag": "v0.1.99",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "GitAgent now displays failed checks in the pull request brief, allowing you to see which checks failed and navigate directly to their logs.",
+            "A repository waiting on an approval now has an **Approve** button right in the repository list, so you can approve it without opening the repository first. Hovering over the button shows exactly what it will run."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.98",
+      "tag": "v0.1.98",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "GitAgent can now be driven from Claude, or any other assistant that speaks MCP: point it at `gitagent mcp` and it can list your repositories, run a flow, and stop at every approval with the exact files and commands, so nothing touches history or the remote until you say yes in the chat. It uses the same flows, settings and sign-ins as the app.",
+            "A repository waiting on an approval now has an **Approve** button right in the repository list, in place of **needs you**, so you can answer it without opening the repository first. Hover it to see exactly what it will run. A step a trusted run held back, or a commit with every file unchecked, still says **needs you** and wants a look first."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Review flows you copied or built in Setup now work like **Review → Merge**: they show the list of open pull requests to pick from, and once a pull request has been through, they move on to the next one rather than offering to run again.",
+            "Commit flows you copied or built in Setup now work like **Commit → PR**: the Start button says what it will do — **Commit 5 files**, **Push 2 commits & open PR** — and reads **Nothing to commit** on a clean tree, instead of a plain **Start run** that would find nothing to do."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.97",
+      "tag": "v0.1.97",
+      "date": "2026-10-13",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Once a pull request has been through **Review → Merge** — merged, declined, or nothing to do — the flow moves straight on to the next open pull request instead of offering **Review #N again**. When none is left, the button says **Nothing else to review**."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.96",
+      "tag": "v0.1.96",
+      "date": "2026-10-13",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Adding a **Second opinion** or **Focused reviews** step in Setup now tells you straight away when Settings gives it nothing to run with — no second reviewer chosen, or no focused review turned on — rather than leaving you to find the step skipped on your first pull request. A button on the notice opens Settings on the spot, and the notice goes once that is set up."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "**Second opinion** and **Focused reviews** no longer say \"skipped by you\" when they were skipped because nothing is set up for them in Settings. They now say \"skipped\", with the reason underneath — no second reviewer chosen, or no focused review turned on."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.95",
+      "tag": "v0.1.95",
+      "date": "2026-10-13",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A repository with uncommitted changes now opens on **Commit → PR** even when colleagues have pull requests open in it. Before, any open pull request with passing checks marked the repository as ready to merge and opened it on **Review → Merge**, so your changes were never offered for commit. A pull request from the branch you have checked out still comes first."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.94",
+      "tag": "v0.1.94",
+      "date": "2026-10-11",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The button at the end of the flow tabs that chooses which flows a repository shows always says what it is — **0 hidden** when nothing is hidden — instead of a bare \"⋯\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.93",
+      "tag": "v0.1.93",
+      "date": "2026-10-09",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Keyboard shortcuts for the Run view's map zoom, the ones a browser uses: **⌘+** zooms in, **⌘−** zooms out and **⌘0** goes back to 100% (Ctrl on Windows and Linux), around the middle of the view. They only act while the Run view is on screen.",
+            "Zooming the Run view's map shows the new percentage for a moment in the middle of the map, however you zoomed — buttons, shortcuts, ⌘ + scroll or pinch — so you can tell where you are without looking down at the bar.",
+            "When a flow's map is wider than the Run view, the view now scrolls along with the run: as each step starts, waits for you or fails, the map glides sideways to keep it in sight, and with the step panel open it keeps the step you picked clear of the panel. It only moves when the run moves on, so it never pulls the map away while you scroll around it yourself."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.92",
+      "tag": "v0.1.92",
+      "date": "2026-10-09",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Zooming the Run view's map keeps what you are pointing at under the pointer: ⌘ + scroll and pinch zoom around the cursor, and **−** / **+** around the middle of the view, instead of leaving the map scrolled to where it was and sending what you were looking at off screen."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.91",
+      "tag": "v0.1.91",
+      "date": "2026-10-09",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The Run view's map now zooms, from 50% to 200%, using **− / +** in its bottom bar, or ⌘ + scroll and pinch on the map; click the percentage to go back to 100%. Zoomed out, a big flow such as Review → Merge with its review circle fits on one screen; zoomed in, everything grows and stays sharp, and the map scrolls. The rest of the window keeps its size, and GitAgent remembers the zoom."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.90",
       "tag": "v0.1.90",
@@ -12,7 +179,8 @@
         {
           "heading": "Added",
           "items": [
-            "The repository list on the left can be folded: **‹** in its header shrinks it to a strip of status dots, one per repository, still showing which one wants you and still clickable; **›** opens it again. GitAgent remembers which way you left it."
+            "The repository list on the left can be folded: **‹** in its header shrinks it to a strip of status dots, one per repository, still showing which one wants you and still clickable; **›** opens it again. GitAgent remembers which way you left it.",
+            "The Run view's map zooms, from 50% to 200%: **− / +** in its bottom bar, beside the replay speed, or ⌘ + scroll and pinch on the map; click the percentage to go back to 100%. Zoomed out, a big flow such as Review → Merge with its review circle fits on one screen; zoomed in, everything grows and stays sharp, and the map scrolls. The rest of the window keeps its size, and GitAgent remembers the zoom."
           ]
         },
         {
