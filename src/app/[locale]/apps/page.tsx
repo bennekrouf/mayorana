@@ -52,19 +52,14 @@ const API0_URL = 'https://api0.ai';
 
 // Display order by tool id, split into the two sections the page renders.
 // Anything built below but missing from both lists simply wouldn't render —
-// every id from desktopToolsConfig/webTools except api0 must appear
+// every id from desktopToolsConfig/webTools except api0 and the AIS tools must appear
 // exactly once across the two.
 
-// api0 is not in either list: it has its own band above the grid.
+// api0 is not in either list: it has its own band above the grid. Neither
+// is the Azure Integration Suite: it has its own tab, /solutions/azure.
 
-// The developer tools: the Azure Integration Suite, then GitAgent.
-const PRIMARY_ORDER: string[] = [
-  'ais-runner',
-  'ais-monitor',
-  'ais-tracing',
-  'ais-analytics',
-  'gitagent',
-];
+// The developer tools.
+const PRIMARY_ORDER: string[] = ['gitagent'];
 
 // Smaller tools on the same stack.
 const SECONDARY_ORDER: string[] = [
@@ -81,7 +76,6 @@ const SECONDARY_ORDER: string[] = [
 // this list — they just won't get a chip of their own or be filterable — but
 // every tag assigned to a tool above is expected to appear here.
 const FILTER_TAGS: { id: string; label: string }[] = [
-  { id: 'azure', label: 'Azure' },
   { id: 'git', label: 'Git' },
   { id: 'blog', label: 'Blog' },
   { id: 'audio', label: 'Audio' },
