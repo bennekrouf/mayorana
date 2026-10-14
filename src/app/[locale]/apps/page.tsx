@@ -58,19 +58,18 @@ const API0_URL = 'https://api0.ai';
 // api0 is not in either list: it has its own band above the grid. Neither
 // is the Azure Integration Suite: it has its own tab, /solutions/azure.
 
-// The developer tools.
-const PRIMARY_ORDER: string[] = ['gitagent'];
-
-// Smaller tools on the same stack.
-const SECONDARY_ORDER: string[] = [
-  'cvenom',
+// The developer tools: the desktop apps, downloaded from this page.
+const DEVELOPER_ORDER: string[] = [
+  'gitagent',
   'shipscreen',
   'publishkit',
   'trackcut',
   'polishcast',
   'spreadradar',
-  'solanize',
 ];
+
+// The cloud solutions: hosted products, used on their own sites.
+const CLOUD_ORDER: string[] = ['cvenom', 'solanize'];
 
 // Display order and label for each filter chip. A tool can carry tags outside
 // this list — they just won't get a chip of their own or be filterable — but
@@ -175,21 +174,10 @@ function CardLink({ tool }: { tool: Tool }) {
   return <>{tool.name}</>;
 }
 
-// One card, used by both sections. `muted` gives the secondary section a
-// quieter surface — content and controls are identical either way.
-function ToolCard({
-  tool,
-  index,
-  muted = false,
-}: {
-  tool: Tool;
-  index: number;
-  muted?: boolean;
-}) {
+// One card, used by both sections.
+function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const tApps = useTranslations('apps');
-  const surface = muted
-    ? 'bg-background/60 hover:shadow-lg'
-    : 'bg-gradient-to-br from-secondary/50 to-secondary/20 hover:shadow-2xl';
+  const surface = 'bg-gradient-to-br from-secondary/50 to-secondary/20 hover:shadow-2xl';
 
   return (
     <motion.div
@@ -273,7 +261,7 @@ export default function AppsPage() {
     setActiveTags((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
   };
 
-  const tools = useMemo<{ primary: Tool[]; secondary: Tool[] }>(() => {
+  const tools = useMemo<{ developer: Tool[]; cloud: Tool[] }>(() => {
     const desktopTools: Tool[] = desktopToolsConfig.map((app) => ({
       id: app.id,
       name: app.name,
@@ -321,7 +309,7 @@ export default function AppsPage() {
         .map((id) => all.find((t) => t.id === id))
         .filter((t): t is Tool => t !== undefined);
 
-    return { primary: inOrder(PRIMARY_ORDER), secondary: inOrder(SECONDARY_ORDER) };
+    return { developer: inOrder(DEVELOPER_ORDER), cloud: inOrder(CLOUD_ORDER) };
   }, [tApps, tPortfolio, locale]);
 
   // Filters apply across both sections; a section with no matches is hidden
@@ -331,10 +319,10 @@ export default function AppsPage() {
       activeTags.length === 0
         ? list
         : list.filter((tool) => tool.tags.some((t) => activeTags.includes(t)));
-    return { primary: match(tools.primary), secondary: match(tools.secondary) };
+    return { developer: match(tools.developer), cloud: match(tools.cloud) };
   }, [tools, activeTags]);
 
-  const nothingMatches = visible.primary.length === 0 && visible.secondary.length === 0;
+  const nothingMatches = visible.developer.length === 0 && visible.cloud.length === 0;
 
   return (
     <LayoutTemplate>
@@ -419,13 +407,13 @@ export default function AppsPage() {
         </div>
       </section>
 
-      {/* Primary tools — the ones carrying the positioning */}
-      {visible.primary.length > 0 && (
+      {/* Developer tools — the desktop apps */}
+      {visible.developer.length > 0 && (
         <section className="py-12 bg-background">
           <div className="container max-w-6xl">
-            <h2 className="text-2xl font-bold mb-8">{tApps('primary_heading')}</h2>
+            <h2 className="text-2xl font-bold mb-8">{tApps('developer_heading')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visible.primary.map((tool, i) => (
+              {visible.developer.map((tool, i) => (
                 <ToolCard key={tool.id} tool={tool} index={i} />
               ))}
             </div>
@@ -433,17 +421,14 @@ export default function AppsPage() {
         </section>
       )}
 
-      {/* Also built with our stack — quieter treatment, same card content */}
-      {visible.secondary.length > 0 && (
+      {/* Cloud solutions — the hosted products */}
+      {visible.cloud.length > 0 && (
         <section className="py-12 bg-secondary/30 border-t border-border">
           <div className="container max-w-6xl">
-            <h2 className="text-2xl font-bold mb-2">{tApps('secondary_heading')}</h2>
-            <p className="text-sm text-muted-foreground mb-8 max-w-2xl">
-              {tApps('secondary_intro')}
-            </p>
+            <h2 className="text-2xl font-bold mb-8">{tApps('cloud_heading')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visible.secondary.map((tool, i) => (
-                <ToolCard key={tool.id} tool={tool} index={i} muted />
+              {visible.cloud.map((tool, i) => (
+                <ToolCard key={tool.id} tool={tool} index={i} />
               ))}
             </div>
           </div>
