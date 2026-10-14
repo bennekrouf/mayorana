@@ -39,8 +39,8 @@ short version above (not standalone).
 **Deprioritized — secondary proof only, not primary messaging**
 - Job seekers / recruiters (CVENOM)
 - Crypto users (SOLANIZE)
-- General mobile app builders (AppScreens)
-- Content creators (Blog Toolkit)
+- General mobile app builders (ShipScreen)
+- Content creators (PublishKit)
 
 **Decision on secondary products:** treat as "also built with our stack" —
 i.e. proof points of Rust/engineering capability, kept in a dedicated
@@ -77,7 +77,7 @@ Apply this order on every major page:
 - [x] Primary + secondary ICP — confirmed above
 - [x] Messaging hierarchy — confirmed above
 - [x] Tagline: keep current tagline, use as secondary line under the new short version
-- [x] Secondary products (CVENOM, SOLANIZE, AppScreens, Blog Toolkit): "also built with our stack" — proof section, not primary nav/messaging
+- [x] Secondary products (CVENOM, SOLANIZE, ShipScreen, PublishKit): "also built with our stack" — proof section, not primary nav/messaging
 
 ## Next
 

@@ -69,11 +69,11 @@ const PRIMARY_ORDER: string[] = [
 // Smaller tools on the same stack.
 const SECONDARY_ORDER: string[] = [
   'cvenom',
-  'appscreens',
-  'blog-toolkit',
-  'splitter',
-  'small-video',
-  'spreadwatch',
+  'shipscreen',
+  'publishkit',
+  'trackcut',
+  'polishcast',
+  'spreadradar',
   'solanize',
 ];
 

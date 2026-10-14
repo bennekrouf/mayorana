@@ -180,18 +180,18 @@
     "ais_tracing_description": "Follow a single value — a correlation id, an order reference — through every container of an Azure Cosmos DB account, and see where it got to. Samples your containers, works out which field links documents together, then draws each step on a timeline. Empty rows matter as much as full ones: they show where the data hasn't arrived.",
     "ais_analytics_tagline": "Correlation-id tracer for Azure Log Analytics",
     "ais_analytics_description": "The same tracer, aimed at a Log Analytics workspace instead of Cosmos DB. Paste a correlation id and see every step it touched — it works out which column ties the steps of one flow together straight from the data, then draws where that value got to and where it didn't. An empty lane is as meaningful as a full one.",
-    "blog_toolkit_tagline": "AI-powered blog post manager with queue-to-publish workflow",
-    "blog_toolkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
-    "appscreens_tagline": "The complete iOS & Android build and publish assistant",
-    "appscreens_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
-    "spreadwatch_tagline": "Crypto price gaps across exchanges and Solana, live",
-    "spreadwatch_description": "Follow any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once. See the best cross-venue edges net of fees, which venue's price trails the others, and the tokens Gate or MEXC just listed that Binance does not have yet. Swap SOL/USDT on-chain through Jupiter from a local hot wallet, in a dry run at every start and within hard limits.",
-    "small_video_tagline": "Record your screen, get a polished video: smooth cursor, zoom on clicks",
-    "small_video_description": "Record from the menu bar or with a shortcut. The cursor is redrawn so it glides, clicks become zooms that ease in, and a background, padding and rounded corners frame the result. Adjust it in the editor, cut the pauses, and export to MP4 at up to 4K.",
+    "publishkit_tagline": "AI-powered blog post manager with queue-to-publish workflow",
+    "publishkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
+    "shipscreen_tagline": "The complete iOS & Android build and publish assistant",
+    "shipscreen_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
+    "spreadradar_tagline": "Crypto price gaps across exchanges and Solana, live",
+    "spreadradar_description": "Follow any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once. See the best cross-venue edges net of fees, which venue's price trails the others, and the tokens Gate or MEXC just listed that Binance does not have yet. Swap SOL/USDT on-chain through Jupiter from a local hot wallet, in a dry run at every start and within hard limits.",
+    "polishcast_tagline": "Record your screen, get a polished video: smooth cursor, zoom on clicks",
+    "polishcast_description": "Record from the menu bar or with a shortcut. The cursor is redrawn so it glides, clicks become zooms that ease in, and a background, padding and rounded corners frame the result. Adjust it in the editor, cut the pauses, and export to MP4 at up to 4K.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
     "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or DeepSeek, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
-    "splitter_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
-    "splitter_description": "Load a live set, a radio show or a digitised tape and get one file per track. Silence detection proposes the splits, you confirm or nudge each one by ear, then export: MP3 without re-encoding, or MP3/FLAC/WAV with loudness normalisation and ReplayGain tags. Can also pull the audio of a YouTube link.",
+    "trackcut_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
+    "trackcut_description": "Load a live set, a radio show or a digitised tape and get one file per track. Silence detection proposes the splits, you confirm or nudge each one by ear, then export: MP3 without re-encoding, or MP3/FLAC/WAV with loudness normalisation and ReplayGain tags. Can also pull the audio of a YouTube link.",
     "intro": "The desktop apps download straight from this page for macOS, Linux and Windows. They are free for personal, educational and non-profit use, and companies buy a licence. Each tool page has its release notes, its source and, for most, a Claude skill.",
     "primary_heading": "Developer tools",
     "secondary_heading": "Side projects",
@@ -1028,12 +1028,12 @@
           ]
         }
       },
-      "blog_toolkit": {
-        "seo_title": "Blog Toolkit — Desktop Blog Manager with AI Drafting",
+      "publishkit": {
+        "seo_title": "PublishKit — Desktop Blog Manager with AI Drafting",
         "seo_description": "Write, generate and schedule blog posts from a native desktop app. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow and weekly auto-publish in French and English.",
         "overview": [
           "A blog that publishes on a schedule needs two things a text editor does not give you: somewhere for finished-but-unpublished posts to wait, and something that publishes them when the day comes.",
-          "Blog Toolkit is a native desktop app built around that queue. You draft in markdown with a live preview, optionally with an AI model doing the first pass, then move posts into a queue that publishes on its own schedule.",
+          "PublishKit is a native desktop app built around that queue. You draft in markdown with a live preview, optionally with an AI model doing the first pass, then move posts into a queue that publishes on its own schedule.",
           "It handles both language versions of a post as part of the same flow, which is what makes a bilingual blog sustainable rather than something you keep meaning to catch up on."
         ],
         "features": [
@@ -1121,12 +1121,12 @@
           ]
         }
       },
-      "appscreens": {
-        "seo_title": "AppScreens — iOS and Android Build, Screenshot and Publish Assistant",
+      "shipscreen": {
+        "seo_title": "ShipScreen — iOS and Android Build, Screenshot and Publish Assistant",
         "seo_description": "Build and run iOS and Android apps locally, then package release artifacts for the App Store and Google Play. Handles bundle IDs, signing, version bumps, store screenshots in every required size and device-frame marketing assets.",
         "overview": [
           "Shipping a mobile app release is a long list of small, exacting steps: bump the version, get the signing config right, produce a screenshot in each size the store demands, wrap them in device frames so the listing does not look amateur, then package the artifact the store will accept.",
-          "AppScreens does that list from one native desktop app, for both platforms, without the usual pile of shell scripts and half-remembered Xcode settings.",
+          "ShipScreen does that list from one native desktop app, for both platforms, without the usual pile of shell scripts and half-remembered Xcode settings.",
           "The screenshot generation alone is the part most teams do by hand every release, in every required size, for both stores."
         ],
         "features": [
@@ -1234,12 +1234,12 @@
           ]
         }
       },
-      "splitter": {
-        "seo_title": "Splitter — Split Long MP3 and WAV Recordings into Tracks",
+      "trackcut": {
+        "seo_title": "TrackCut — Split Long MP3 and WAV Recordings into Tracks",
         "seo_description": "Keyboard-driven desktop app to split live sets, DJ mixes and long recordings into tracks. Silence detection, split-by-split review, gapless MP3 export without re-encoding, FLAC/WAV, EBU R128 loudness and ReplayGain.",
         "overview": [
           "A two-hour recording is one file, and what you want is twenty. Doing it in a waveform editor means scrolling, zooming, selecting and exporting by hand, twenty times, and hoping each cut landed in the gap and not on the first note.",
-          "Splitter reads the whole file once, suggests a split in every quiet stretch, then walks you through them: Tab plays three seconds either side of the next split, Enter keeps it, Backspace drops it. Most recordings are reviewed without touching the mouse.",
+          "TrackCut reads the whole file once, suggests a split in every quiet stretch, then walks you through them: Tab plays three seconds either side of the next split, Enter keeps it, Backspace drops it. Most recordings are reviewed without touching the mouse.",
           "Export copies the original MP3 frames instead of re-encoding them, with a gapless header, so the tracks sound exactly like the source and play back to back without a click."
         ],
         "features": [
@@ -1292,9 +1292,9 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Free for personal, educational and non-profit use, exporting the first 10 tracks of each recording. Commercial use — including a solo consultant on client work — requires Splitter Pro, which also exports every track. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with exports limited to the first 10 tracks of each recording. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Splitter Pro, which also exports every track. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open Splitter and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, exporting the first 10 tracks of each recording. Commercial use — including a solo consultant on client work — requires TrackCut Pro, which also exports every track. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with exports limited to the first 10 tracks of each recording. Commercial use — including a solo consultant on client work and an employee using it at their job — requires TrackCut Pro, which also exports every track. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_how": "To activate it, open TrackCut and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
         "comparison": {
           "competitors": [
             "Audacity",
@@ -1353,12 +1353,12 @@
           ]
         }
       },
-      "spreadwatch": {
-        "seo_title": "Spreadwatch — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
+      "spreadradar": {
+        "seo_title": "SpreadRadar — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
         "seo_description": "Desktop app that quotes any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once: cross-venue edges net of fees, which venue's price lags, and new Gate and MEXC listings Binance does not have yet.",
         "overview": [
           "The same token trades on a dozen venues at slightly different prices, and the gap moves every second. Watching it means five exchange tabs, a DEX aggregator and a spreadsheet, and by the time the numbers are side by side they are stale.",
-          "Spreadwatch streams the order books of Binance, Bybit, OKX, MEXC and Gate, and polls Jupiter for Solana tokens, into one window. It shows the best buy-here, sell-there route in basis points, gross and net of the taker fee on both legs, and measures which venue's price tends to move last.",
+          "SpreadRadar streams the order books of Binance, Bybit, OKX, MEXC and Gate, and polls Jupiter for Solana tokens, into one window. It shows the best buy-here, sell-there route in basis points, gross and net of the taker fee on both legs, and measures which venue's price tends to move last.",
           "A second tab scans for tokens Gate or MEXC just listed against USDT that Binance spot does not list, and scores how serious each looks. For SOL/USDT, the app can also swap on-chain through Jupiter from a hot wallet it creates, signed on your machine."
         ],
         "features": [
@@ -1395,7 +1395,7 @@
           },
           {
             "q": "Is a spread on screen a profit?",
-            "a": "No. The net figure subtracts taker fees, but not transfer times, withdrawal fees and limits, slippage or the price moving while you act. Spreadwatch shows where to look, not what you will earn. It is not financial advice."
+            "a": "No. The net figure subtracts taker fees, but not transfer times, withdrawal fees and limits, slippage or the price moving while you act. SpreadRadar shows where to look, not what you will earn. It is not financial advice."
           },
           {
             "q": "Where is my wallet key kept?",
@@ -1403,9 +1403,9 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires Spreadwatch Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires Spreadwatch Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open Spreadwatch and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires SpreadRadar Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires SpreadRadar Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_how": "To activate it, open SpreadRadar and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
         "comparison": {
           "competitors": [
             "Sharpe Terminal",
@@ -1464,18 +1464,18 @@
           ]
         }
       },
-      "small_video": {
-        "seo_title": "Small Video — Screen Recorder with a Smooth Cursor and Auto-Zoom",
+      "polishcast": {
+        "seo_title": "Polishcast — Screen Recorder with a Smooth Cursor and Auto-Zoom",
         "seo_description": "Desktop screen recorder for macOS and Windows: redrawn smooth cursor, automatic zoom on clicks, background and rounded corners, pauses cut out, MP4 export from 1080p to 4K.",
         "overview": [
           "A raw screen recording is hard to watch: the cursor jumps around, the text is tiny, and every pause where you were thinking is still in it.",
-          "Small Video records the screen without the cursor and notes where the pointer goes. It then redraws a smooth cursor, zooms in where you clicked, and frames the video with a background, padding and rounded corners.",
+          "Polishcast records the screen without the cursor and notes where the pointer goes. It then redraws a smooth cursor, zooms in where you clicked, and frames the video with a background, padding and rounded corners.",
           "The editor lets you adjust each zoom, cut the silences and choose the frame. What you export is exactly what the preview shows."
         ],
         "features": [
           {
             "title": "Record from anywhere",
-            "body": "Start and stop from the menu bar (macOS) or the notification area (Windows), or with ⌘⇧2 / Ctrl+Shift+2 from any app. The display your pointer is on is recorded with your microphone, and Small Video's own windows are left out."
+            "body": "Start and stop from the menu bar (macOS) or the notification area (Windows), or with ⌘⇧2 / Ctrl+Shift+2 from any app. The display your pointer is on is recorded with your microphone, and Polishcast's own windows are left out."
           },
           {
             "title": "A cursor that glides",
@@ -1514,7 +1514,7 @@
           },
           {
             "q": "Where are my recordings?",
-            "a": "Each recording is a folder in Movies/Small Video, with the video, the pointer movements and your edits. The exported MP4 is written next to it. Deleting a recording from the list moves it to the Trash, so you can still get it back."
+            "a": "Each recording is a folder in Movies/Polishcast, with the video, the pointer movements and your edits. The exported MP4 is written next to it. Deleting a recording from the list moves it to the Trash, so you can still get it back."
           },
           {
             "q": "Do I need to install ffmpeg?",
@@ -1524,7 +1524,7 @@
         "article_slug": "",
         "pro_download_intro": "Free: export 10 different videos; exporting one again is free, and recording and editing are never limited. Pro: export every video, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Free: export 10 different videos; recording and editing are never limited. Pro: export every video, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
-        "pro_how": "To activate it, open Small Video, click Get Pro… in the sidebar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_how": "To activate it, open Polishcast, click Get Pro… in the sidebar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
         "comparison": {
           "competitors": [
             "Screen Studio",

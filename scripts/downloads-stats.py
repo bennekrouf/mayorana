@@ -52,6 +52,17 @@ LINE = re.compile(
     r'(?P<status>\d{3}) \S+ "(?P<referer>[^"]*)" "(?P<ua>[^"]*)"'
 )
 
+# Apps renamed in October 2026. Their builds, updater checks and telemetry keep
+# arriving under the old name from installs that predate the rename, so both
+# names are counted as the new one and each app keeps one continuous history.
+RENAMED = {
+    'appscreens': 'shipscreen',
+    'blog-toolkit': 'publishkit',
+    'splitter': 'trackcut',
+    'small-video': 'polishcast',
+    'spreadwatch': 'spreadradar',
+}
+
 # /downloads/<app>/<version>/<file>
 DOWNLOAD = re.compile(r'^/downloads/(?P<app>[^/]+)/(?P<version>[^/]+)/(?P<file>[^/?]+)')
 
@@ -319,7 +330,7 @@ def _collect(line, seen, events, checkins, nets) -> None:
     # an install that already exists.
     if download['file'] == 'latest.json':
         if UPDATER_UA.search(match['ua']):
-            checkins.append((day, download['app']))
+            checkins.append((day, RENAMED.get(download['app'], download['app'])))
         return
 
     if not ARTIFACT.search(download['file']):
@@ -337,7 +348,7 @@ def _collect(line, seen, events, checkins, nets) -> None:
     events.append({
         'day': day,
         'ip': match['ip'],
-        'app': download['app'],
+        'app': RENAMED.get(download['app'], download['app']),
         'version': download['version'],
         'platform': platform_of(download['file']),
         'updater': bool(FROM_UPDATER.search(match['path']) or UPDATER_UA.search(match['ua'])),
@@ -539,7 +550,7 @@ def parse_usage(patterns: list[str]) -> dict[str, dict]:
                         _fold_ping(body, who, day, seen, installs, launches,
                                    batches, by_event, by_flow, by_forge,
                                    by_provider, by_version, by_os)
-                        app = str(body['app'])
+                        app = RENAMED.get(str(body['app']), str(body['app']))
                         app_active[day][app].add(who)
                         app_new[day][app] += fresh.count('app_installed')
                         app_activated[day][app] += fresh.count('first_flow_completed')

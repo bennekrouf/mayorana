@@ -1,7 +1,7 @@
 {
-  "name": "splitter",
-  "product": "Splitter",
-  "page": "https://mayorana.ch/en/apps/splitter",
+  "name": "trackcut",
+  "product": "TrackCut",
+  "page": "https://mayorana.ch/en/apps/trackcut",
   "generated_at": "2026-10-07T13:05:07Z",
   "releases": [
     {
@@ -12,7 +12,7 @@
         {
           "heading": "Changed",
           "items": [
-            "Splitter now uses the PolyForm Noncommercial License 1.0.0 and has updated branding. This means the software is free for personal use, but commercial use requires a license. The company name has changed to Mayorana, and the copyright notice has been updated accordingly."
+            "TrackCut now uses the PolyForm Noncommercial License 1.0.0 and has updated branding. This means the software is free for personal use, but commercial use requires a license. The company name has changed to Mayorana, and the copyright notice has been updated accordingly."
           ]
         }
       ]
@@ -25,7 +25,7 @@
         {
           "heading": "Added",
           "items": [
-            "Splitter now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+            "TrackCut now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
           ]
         }
       ]
@@ -78,8 +78,8 @@
         {
           "heading": "Added",
           "items": [
-            "The version you are running now shows next to the Splitter name at the top of the sidebar and in the window title, so it is at hand when you report a problem or check whether an update installed.",
-            "A **Get Pro…** button at the top of the file list opens the licence window, where you buy Splitter Pro or paste your key. It reads **Pro ✓** once your licence is active. Clicking **Splitter** still opens the same window."
+            "The version you are running now shows next to the TrackCut name at the top of the sidebar and in the window title, so it is at hand when you report a problem or check whether an update installed.",
+            "A **Get Pro…** button at the top of the file list opens the licence window, where you buy TrackCut Pro or paste your key. It reads **Pro ✓** once your licence is active. Clicking **TrackCut** still opens the same window."
           ]
         }
       ]
@@ -92,7 +92,7 @@
         {
           "heading": "Changed",
           "items": [
-            "Without Splitter Pro, an export now writes the first 10 tracks of each recording. Splitting, reviewing and naming are not limited: when a recording has more tracks, the export bar says how many and **Splitter Pro exports all** opens the licence window. A vinyl side, an EP or a short set still fits in the free version; with Pro, every track is exported, as before."
+            "Without TrackCut Pro, an export now writes the first 10 tracks of each recording. Splitting, reviewing and naming are not limited: when a recording has more tracks, the export bar says how many and **TrackCut Pro exports all** opens the licence window. A vinyl side, an EP or a short set still fits in the free version; with Pro, every track is exported, as before."
           ]
         }
       ]
@@ -105,7 +105,7 @@
         {
           "heading": "Added",
           "items": [
-            "Splitter Pro licences. Click **Splitter** at the top of the file list to paste the licence key from your purchase email. The key is checked on your computer, with no account and nothing sent anywhere, and a **Pro** badge shows once it is active. **Remove from this computer** frees it for another one."
+            "TrackCut Pro licences. Click **TrackCut** at the top of the file list to paste the licence key from your purchase email. The key is checked on your computer, with no account and nothing sent anywhere, and a **Pro** badge shows once it is active. **Remove from this computer** frees it for another one."
           ]
         }
       ]
@@ -176,7 +176,7 @@
         {
           "heading": "Changed",
           "items": [
-            "The notes for every release, with its download, are now published at [mayorana.ch/en/apps/splitter/releases](https://mayorana.ch/en/apps/splitter/releases)."
+            "The notes for every release, with its download, are now published at [mayorana.ch/en/apps/trackcut/releases](https://mayorana.ch/en/apps/trackcut/releases)."
           ]
         }
       ]

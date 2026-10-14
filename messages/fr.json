@@ -180,18 +180,18 @@
     "ais_tracing_description": "Suivez une seule valeur — un identifiant de corrélation, une référence de commande — à travers tous les containers d'un compte Azure Cosmos DB, et voyez jusqu'où elle est allée. Échantillonne vos containers, détermine quel champ relie les documents entre eux, puis dessine chaque étape sur une timeline. Les lignes vides comptent autant que les pleines : elles montrent où la donnée n'est pas arrivée.",
     "ais_analytics_tagline": "Traceur d'identifiants de corrélation pour Azure Log Analytics",
     "ais_analytics_description": "Le même traceur, pointé vers un espace de travail Log Analytics plutôt que Cosmos DB. Collez un identifiant de corrélation et visualisez chaque étape qu'il a traversée — l'app détermine, à partir des données elles-mêmes, quelle colonne relie les étapes d'un même flux, puis dessine où cette valeur est allée et où elle ne l'est pas. Une voie vide est aussi parlante qu'une voie pleine.",
-    "blog_toolkit_tagline": "Gestionnaire de billets de blog propulsé par l'IA avec flux file-vers-publication",
-    "blog_toolkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
-    "appscreens_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
-    "appscreens_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
-    "spreadwatch_tagline": "Les écarts de prix crypto entre exchanges et Solana, en direct",
-    "spreadwatch_description": "Suivez n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps. Voyez les meilleurs écarts entre plateformes, frais déduits, quelle plateforme est en retard sur les autres, et les tokens que Gate ou MEXC viennent de lister et que Binance n'a pas encore. Échangez SOL/USDT on-chain via Jupiter depuis un hot wallet local, en simulation à chaque démarrage et dans des limites strictes.",
-    "small_video_tagline": "Enregistrez votre écran, obtenez une vidéo soignée : curseur fluide, zoom sur les clics",
-    "small_video_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
+    "publishkit_tagline": "Gestionnaire de billets de blog propulsé par l'IA avec flux file-vers-publication",
+    "publishkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
+    "shipscreen_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
+    "shipscreen_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
+    "spreadradar_tagline": "Les écarts de prix crypto entre exchanges et Solana, en direct",
+    "spreadradar_description": "Suivez n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps. Voyez les meilleurs écarts entre plateformes, frais déduits, quelle plateforme est en retard sur les autres, et les tokens que Gate ou MEXC viennent de lister et que Binance n'a pas encore. Échangez SOL/USDT on-chain via Jupiter depuis un hot wallet local, en simulation à chaque démarrage et dans des limites strictes.",
+    "polishcast_tagline": "Enregistrez votre écran, obtenez une vidéo soignée : curseur fluide, zoom sur les clics",
+    "polishcast_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
-    "splitter_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
-    "splitter_description": "Chargez un live, une émission de radio ou une cassette numérisée et obtenez un fichier par morceau. La détection des silences propose les coupures, vous confirmez ou ajustez chacune à l'oreille, puis vous exportez : MP3 sans réencodage, ou MP3/FLAC/WAV avec normalisation du volume et tags ReplayGain. Récupère aussi l'audio d'un lien YouTube.",
+    "trackcut_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
+    "trackcut_description": "Chargez un live, une émission de radio ou une cassette numérisée et obtenez un fichier par morceau. La détection des silences propose les coupures, vous confirmez ou ajustez chacune à l'oreille, puis vous exportez : MP3 sans réencodage, ou MP3/FLAC/WAV avec normalisation du volume et tags ReplayGain. Récupère aussi l'audio d'un lien YouTube.",
     "intro": "Les applications de bureau se téléchargent directement depuis cette page, pour macOS, Linux et Windows. Elles sont gratuites pour un usage personnel, éducatif et non lucratif, et les entreprises achètent une licence. Chaque page d’outil donne ses notes de version, son code source et, pour la plupart, un skill Claude.",
     "primary_heading": "Outils de développement",
     "secondary_heading": "Projets annexes",
@@ -1028,12 +1028,12 @@
           ]
         }
       },
-      "blog_toolkit": {
-        "seo_title": "Blog Toolkit — Gestionnaire de blog de bureau avec rédaction IA",
+      "publishkit": {
+        "seo_title": "PublishKit — Gestionnaire de blog de bureau avec rédaction IA",
         "seo_description": "Rédigez, générez et planifiez vos billets depuis une app de bureau native. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication et publication automatique hebdomadaire en français et en anglais.",
         "overview": [
           "Un blog qui publie à un rythme régulier demande deux choses qu'un éditeur de texte ne donne pas : un endroit où les billets finis mais non publiés peuvent attendre, et quelque chose qui les publie le jour venu.",
-          "Blog Toolkit est une app de bureau native construite autour de cette file d'attente. Vous rédigez en markdown avec un aperçu en direct, éventuellement avec un modèle IA pour la première passe, puis vous déplacez les billets dans une file qui publie selon son propre calendrier.",
+          "PublishKit est une app de bureau native construite autour de cette file d'attente. Vous rédigez en markdown avec un aperçu en direct, éventuellement avec un modèle IA pour la première passe, puis vous déplacez les billets dans une file qui publie selon son propre calendrier.",
           "L'app gère les deux versions linguistiques d'un billet dans le même flux — c'est ce qui rend un blog bilingue tenable plutôt que perpétuellement en retard."
         ],
         "features": [
@@ -1121,12 +1121,12 @@
           ]
         }
       },
-      "appscreens": {
-        "seo_title": "AppScreens — Assistant de build, captures et publication iOS et Android",
+      "shipscreen": {
+        "seo_title": "ShipScreen — Assistant de build, captures et publication iOS et Android",
         "seo_description": "Construisez et exécutez vos apps iOS et Android en local, puis empaquetez les artefacts de release pour l'App Store et le Google Play. Gère bundle IDs, signature, bumps de version, captures dans toutes les tailles requises et visuels avec device frames.",
         "overview": [
           "Livrer une release mobile, c'est une longue liste de petites étapes exigeantes : bumper la version, obtenir la bonne config de signature, produire une capture dans chaque taille exigée par les stores, les habiller de device frames pour que la fiche ne fasse pas amateur, puis empaqueter l'artefact que le store acceptera.",
-          "AppScreens déroule cette liste depuis une seule app de bureau native, pour les deux plateformes, sans l'habituel empilement de scripts shell et de réglages Xcode à moitié mémorisés.",
+          "ShipScreen déroule cette liste depuis une seule app de bureau native, pour les deux plateformes, sans l'habituel empilement de scripts shell et de réglages Xcode à moitié mémorisés.",
           "La génération des captures est à elle seule la partie que la plupart des équipes refont à la main à chaque release, dans chaque taille requise, pour les deux stores."
         ],
         "features": [
@@ -1234,12 +1234,12 @@
           ]
         }
       },
-      "splitter": {
-        "seo_title": "Splitter — Découper de longs enregistrements MP3 et WAV en pistes",
+      "trackcut": {
+        "seo_title": "TrackCut — Découper de longs enregistrements MP3 et WAV en pistes",
         "seo_description": "App de bureau pilotée au clavier pour découper lives, mixes DJ et longs enregistrements en pistes. Détection des silences, revue coupure par coupure, export MP3 sans réencodage et sans blanc, FLAC/WAV, loudness EBU R128 et ReplayGain.",
         "overview": [
           "Un enregistrement de deux heures, c'est un seul fichier, et vous en voulez vingt. Dans un éditeur de forme d'onde, il faut défiler, zoomer, sélectionner et exporter à la main, vingt fois, en espérant que chaque coupure tombe dans le silence et pas sur la première note.",
-          "Splitter lit le fichier une fois, propose une coupure dans chaque passage silencieux, puis vous les fait passer en revue : Tab joue trois secondes de part et d'autre de la coupure suivante, Entrée la garde, Retour arrière la supprime. La plupart des enregistrements se traitent sans toucher la souris.",
+          "TrackCut lit le fichier une fois, propose une coupure dans chaque passage silencieux, puis vous les fait passer en revue : Tab joue trois secondes de part et d'autre de la coupure suivante, Entrée la garde, Retour arrière la supprime. La plupart des enregistrements se traitent sans toucher la souris.",
           "L'export copie les trames MP3 d'origine au lieu de les réencoder, avec un en-tête gapless : les pistes sonnent exactement comme la source et s'enchaînent sans clic."
         ],
         "features": [
@@ -1292,9 +1292,9 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec l'export des 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission — requiert Splitter Pro, qui exporte aussi toutes les pistes. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec l'export limité aux 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Splitter Pro, qui exporte aussi toutes les pistes. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez Splitter et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec l'export des 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission — requiert TrackCut Pro, qui exporte aussi toutes les pistes. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec l'export limité aux 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert TrackCut Pro, qui exporte aussi toutes les pistes. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Pour l'activer, ouvrez TrackCut et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
         "comparison": {
           "competitors": [
             "Audacity",
@@ -1353,12 +1353,12 @@
           ]
         }
       },
-      "spreadwatch": {
-        "seo_title": "Spreadwatch — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
+      "spreadradar": {
+        "seo_title": "SpreadRadar — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
         "seo_description": "App de bureau qui cote n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps : écarts entre plateformes frais déduits, quelle plateforme est en retard, et les nouveaux listings Gate et MEXC que Binance n'a pas encore.",
         "overview": [
           "Le même token s'échange sur une douzaine de plateformes à des prix légèrement différents, et l'écart bouge chaque seconde. Le suivre, c'est cinq onglets d'exchanges, un agrégateur DEX et un tableur — et quand les chiffres sont enfin côte à côte, ils sont déjà périmés.",
-          "Spreadwatch reçoit en continu les carnets d'ordres de Binance, Bybit, OKX, MEXC et Gate, et interroge Jupiter pour les tokens Solana, dans une seule fenêtre. Il affiche la meilleure route « acheter ici, vendre là » en points de base, brute et nette des frais taker sur les deux jambes, et mesure quelle plateforme bouge en dernier.",
+          "SpreadRadar reçoit en continu les carnets d'ordres de Binance, Bybit, OKX, MEXC et Gate, et interroge Jupiter pour les tokens Solana, dans une seule fenêtre. Il affiche la meilleure route « acheter ici, vendre là » en points de base, brute et nette des frais taker sur les deux jambes, et mesure quelle plateforme bouge en dernier.",
           "Un second onglet repère les tokens que Gate ou MEXC viennent de lister contre USDT et que Binance spot ne liste pas, avec un score de sérieux pour chacun. Pour SOL/USDT, l'app peut aussi échanger on-chain via Jupiter depuis un hot wallet qu'elle crée, signé sur votre machine."
         ],
         "features": [
@@ -1395,7 +1395,7 @@
           },
           {
             "q": "Un écart affiché est-il un gain ?",
-            "a": "Non. Le chiffre net déduit les frais taker, mais pas les délais de transfert, les frais et limites de retrait, le slippage ni le prix qui bouge pendant que vous agissez. Spreadwatch montre où regarder, pas ce que vous gagnerez. Ce n'est pas un conseil financier."
+            "a": "Non. Le chiffre net déduit les frais taker, mais pas les délais de transfert, les frais et limites de retrait, le slippage ni le prix qui bouge pendant que vous agissez. SpreadRadar montre où regarder, pas ce que vous gagnerez. Ce n'est pas un conseil financier."
           },
           {
             "q": "Où est gardée la clé de mon wallet ?",
@@ -1403,9 +1403,9 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert Spreadwatch Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez Spreadwatch et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert SpreadRadar Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert SpreadRadar Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Pour l'activer, ouvrez SpreadRadar et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
         "comparison": {
           "competitors": [
             "Sharpe Terminal",
@@ -1464,18 +1464,18 @@
           ]
         }
       },
-      "small_video": {
-        "seo_title": "Small Video — Enregistreur d'écran avec curseur fluide et zoom automatique",
+      "polishcast": {
+        "seo_title": "Polishcast — Enregistreur d'écran avec curseur fluide et zoom automatique",
         "seo_description": "Enregistreur d'écran pour macOS et Windows : curseur redessiné et fluide, zoom automatique sur les clics, fond et coins arrondis, pauses coupées, export MP4 de 1080p à 4K.",
         "overview": [
           "Un enregistrement d'écran brut se regarde mal : le curseur saute, le texte est minuscule, et chaque pause où vous réfléchissiez est encore là.",
-          "Small Video enregistre l'écran sans le curseur et note où va le pointeur. Il redessine ensuite un curseur fluide, zoome là où vous avez cliqué, et encadre la vidéo avec un fond, des marges et des coins arrondis.",
+          "Polishcast enregistre l'écran sans le curseur et note où va le pointeur. Il redessine ensuite un curseur fluide, zoome là où vous avez cliqué, et encadre la vidéo avec un fond, des marges et des coins arrondis.",
           "L'éditeur vous laisse ajuster chaque zoom, couper les silences et choisir le cadre. Ce que vous exportez est exactement ce que montre l'aperçu."
         ],
         "features": [
           {
             "title": "Enregistrer de n'importe où",
-            "body": "Démarrez et arrêtez depuis la barre des menus (macOS) ou la zone de notification (Windows), ou avec ⌘⇧2 / Ctrl+Maj+2 depuis n'importe quelle app. L'écran où se trouve votre pointeur est enregistré avec votre micro, et les fenêtres de Small Video sont laissées de côté."
+            "body": "Démarrez et arrêtez depuis la barre des menus (macOS) ou la zone de notification (Windows), ou avec ⌘⇧2 / Ctrl+Maj+2 depuis n'importe quelle app. L'écran où se trouve votre pointeur est enregistré avec votre micro, et les fenêtres de Polishcast sont laissées de côté."
           },
           {
             "title": "Un curseur qui glisse",
@@ -1514,7 +1514,7 @@
           },
           {
             "q": "Où sont mes enregistrements ?",
-            "a": "Chaque enregistrement est un dossier dans Vidéos/Small Video, avec la vidéo, les mouvements du pointeur et vos modifications. Le MP4 exporté est écrit à côté. Supprimer un enregistrement de la liste le met à la Corbeille : vous pouvez encore le récupérer."
+            "a": "Chaque enregistrement est un dossier dans Vidéos/Polishcast, avec la vidéo, les mouvements du pointeur et vos modifications. Le MP4 exporté est écrit à côté. Supprimer un enregistrement de la liste le met à la Corbeille : vous pouvez encore le récupérer."
           },
           {
             "q": "Faut-il installer ffmpeg ?",
@@ -1524,7 +1524,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit : export de 10 vidéos différentes ; réexporter l'une d'elles est gratuit, et l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Gratuit : export de 10 vidéos différentes ; l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
-        "pro_how": "Pour l'activer, ouvrez Small Video, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_how": "Pour l'activer, ouvrez Polishcast, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
         "comparison": {
           "competitors": [
             "Screen Studio",

@@ -1,7 +1,7 @@
 {
-  "name": "blog-toolkit",
-  "product": "Blog Toolkit",
-  "page": "https://mayorana.ch/en/apps/blog-toolkit",
+  "name": "publishkit",
+  "product": "PublishKit",
+  "page": "https://mayorana.ch/en/apps/publishkit",
   "generated_at": "2026-10-02T07:03:25Z",
   "releases": [
     {
@@ -27,7 +27,7 @@
           "items": [
             "A LinkedIn tab: generate a LinkedIn post from a product or topic and the points you want to make, in French or English, keep it in a queue, and mark it as posted once you have published it on LinkedIn.",
             "Each generated blog post comes with a LinkedIn and an X teaser, shown under the post with a copy button.",
-            "Per-project settings in a `blog-toolkit.yaml` file at the project root, so several sites can each have their own prompts and author. The content folders for each language are detected the first time a project is opened.",
+            "Per-project settings in a `publishkit.yaml` file at the project root, so several sites can each have their own prompts and author. The content folders for each language are detected the first time a project is opened.",
             "A light and dark theme toggle, following the system theme at startup."
           ]
         },
@@ -35,7 +35,7 @@
           "heading": "Changed",
           "items": [
             "Downloads now come from mayorana.ch instead of GitHub.",
-            "Blog Toolkit is source-available under the PolyForm Noncommercial licence: free for personal, educational and noncommercial use."
+            "PublishKit is source-available under the PolyForm Noncommercial licence: free for personal, educational and noncommercial use."
           ]
         }
       ]

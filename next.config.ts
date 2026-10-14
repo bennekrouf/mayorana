@@ -80,6 +80,13 @@ const nextConfig = {
       { source: '/fr/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/fr/blog/vec-push-vs-with-capacity-performance', permanent: true },
       // The Services page is retired: the company now leads with its products.
       { source: '/:locale(en|fr)/services', destination: '/:locale', permanent: true },
+      // Renamed apps. The old ids are still the licence ids, so the gateway's
+      // Stripe return URL (/apps/<product>/thanks) lands on these too.
+      { source: '/:locale(en|fr)/apps/appscreens/:path*', destination: '/:locale/apps/shipscreen/:path*', permanent: true },
+      { source: '/:locale(en|fr)/apps/blog-toolkit/:path*', destination: '/:locale/apps/publishkit/:path*', permanent: true },
+      { source: '/:locale(en|fr)/apps/splitter/:path*', destination: '/:locale/apps/trackcut/:path*', permanent: true },
+      { source: '/:locale(en|fr)/apps/small-video/:path*', destination: '/:locale/apps/polishcast/:path*', permanent: true },
+      { source: '/:locale(en|fr)/apps/spreadwatch/:path*', destination: '/:locale/apps/spreadradar/:path*', permanent: true },
     ];
   },
 
