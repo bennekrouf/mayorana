@@ -321,7 +321,7 @@ export default async function ToolDetailPage({ params }: Props) {
             {/* The paid edition, for the tools that have one. */}
             {tool.pro && (
               <div>
-                <BuyProButton product={tool.id} edition={tool.pro.edition} name={tool.name} />
+                <BuyProButton product={tool.pro.product ?? tool.id} edition={tool.pro.edition} name={tool.name} />
                 <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('buy_pro_note')}</p>
               </div>
             )}

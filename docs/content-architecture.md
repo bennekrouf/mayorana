@@ -75,7 +75,7 @@ Replaces the current single API0.AI spotlight + generic CTA band with the
 - Add short intro tying the page to the primary positioning statement
 - Group into two tiers:
   - **Primary tools** (top of page): AIS suite (Runner, Monitor, Tracing, Analytics), API0.AI, GitAgent
-  - **"Also built with our stack"** (clearly labeled secondary section): CVENOM, SOLANIZE, AppScreens, Blog Toolkit — per the Step 1 decision to keep these as proof points, not primary messaging
+  - **"Also built with our stack"** (clearly labeled secondary section): CVENOM, SOLANIZE, ShipScreen, PublishKit — per the Step 1 decision to keep these as proof points, not primary messaging
 - Existing filter chips (azure, git, blog, api, mcp, ai, crypto, tools, services) stay; grouping is a layout/ordering change, not a data-model change, though extracting `desktopToolsConfig` out of the page into `src/data/` is recommended groundwork for Step 3
 
 ### E. Services Page (`/services`) — upgrade existing, not new

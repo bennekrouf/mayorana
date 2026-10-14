@@ -28,7 +28,7 @@ Date: 2026-08-28
 | `/solutions/ai-agents` page | Critical | ✅ Built | API0.AI deep dive; EN + FR |
 | Services page | High | ✅ Built | 3 offers + process; EN + FR; contact dropdown realigned |
 | Apps page intro paragraph | High | ✅ Built | Ties `/apps` to primary positioning |
-| "Also built with our stack" section copy | Medium | ✅ Built | CVENOM, AppScreens, Blog Toolkit, SOLANIZE, + consulting CTA |
+| "Also built with our stack" section copy | Medium | ✅ Built | CVENOM, ShipScreen, PublishKit, SOLANIZE, + consulting CTA |
 | Navigation labels | High | Update | `src/components/layout/Navbar.tsx` — add Services + Solutions |
 | Meta titles & descriptions (all key pages) | High | ✅ Built | EN + FR; per-route `generateMetadata` |
 

@@ -41,8 +41,12 @@ export interface DesktopToolConfig {
    * gateway (POST /api/licenses/checkout) knows the price; this only says the
    * button should be there and which edition it buys. Stripe sends the buyer
    * back to /apps/<id>/thanks, which shows the licence key.
+   *
+   * `product` is the id the gateway and the licence keys use, when it is not
+   * the tool's id: TrackCut, SpreadRadar and Polishcast were renamed after
+   * keys had been sold under their old ids, and a key names its product.
    */
-  pro?: { edition: string };
+  pro?: { edition: string; product?: string };
   /**
    * A Claude skill for the people using the tool, packaged by the tool's
    * release CI next to its builds. The detail page only shows it once the file
@@ -55,6 +59,11 @@ export interface DesktopToolConfig {
 // so these URLs never need bumping. The repositories themselves are public and
 // source-available under PolyForm Noncommercial 1.0.0, so each tool also links
 // to its source — see `source` on each entry and LICENCE_URL below.
+//
+// ShipScreen, PublishKit, TrackCut, SpreadRadar and Polishcast were renamed
+// from AppScreens, Blog Toolkit, Splitter, Spreadwatch and Small Video. Their
+// builds keep the old folder and file names until each one's first release
+// under the new name moves them; the constants below follow it then.
 const runnerDl = 'https://mayorana.ch/downloads/ais-runner/latest';
 const monitorDl = 'https://mayorana.ch/downloads/ais-monitor/latest';
 const tracingDl = 'https://mayorana.ch/downloads/ais-tracing/latest';
@@ -143,9 +152,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     claudeSkill: `${analyticsDl}/ais-analytics-claude-skill.zip`,
   },
   {
-    id: 'blog-toolkit',
+    id: 'publishkit',
     source: 'https://github.com/Bennekrouf/blog-toolkit',
-    name: 'Blog Toolkit',
+    name: 'PublishKit',
     tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
     status: 'beta',
     tags: ['blog'],
@@ -156,9 +165,9 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     ],
   },
   {
-    id: 'appscreens',
+    id: 'shipscreen',
     source: 'https://github.com/Bennekrouf/appscreens',
-    name: 'AppScreens',
+    name: 'ShipScreen',
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'live',
     tags: ['tools'],
@@ -184,14 +193,14 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     claudeSkill: `${gitagentDl}/gitagent-claude-skill.zip`,
   },
   {
-    id: 'splitter',
+    id: 'trackcut',
     source: 'https://github.com/Bennekrouf/splitter',
-    name: 'Splitter',
+    name: 'TrackCut',
     tech: 'Rust · Dioxus · symphonia · LAME · FLAC · yt-dlp',
     status: 'live',
     tags: ['audio'],
     applicationCategory: 'MultimediaApplication',
-    pro: { edition: 'pro' },
+    pro: { edition: 'pro', product: 'splitter' },
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${splitterDl}/splitter-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${splitterDl}/splitter-linux-x86_64.tar.gz` },
@@ -199,14 +208,14 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     ],
   },
   {
-    id: 'spreadwatch',
+    id: 'spreadradar',
     source: 'https://github.com/Bennekrouf/spreadwatch',
-    name: 'Spreadwatch',
+    name: 'SpreadRadar',
     tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
     status: 'beta',
     tags: ['crypto'],
     applicationCategory: 'FinanceApplication',
-    pro: { edition: 'pro' },
+    pro: { edition: 'pro', product: 'spreadwatch' },
     downloads: [
       // One universal DMG: Apple Silicon and Intel.
       { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadwatchDl}/spreadwatch-macos.dmg` },
@@ -215,10 +224,10 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     ],
   },
   {
-    id: 'small-video',
-    pro: { edition: 'pro' },
+    id: 'polishcast',
+    pro: { edition: 'pro', product: 'small-video' },
     source: 'https://github.com/bennekrouf/smallvideo',
-    name: 'Small Video',
+    name: 'Polishcast',
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
     status: 'beta',
     tags: ['tools'],
@@ -237,12 +246,12 @@ export const appI18nKey: Record<string, string> = {
   'ais-monitor': 'ais_monitor',
   'ais-tracing': 'ais_tracing',
   'ais-analytics': 'ais_analytics',
-  'blog-toolkit': 'blog_toolkit',
-  appscreens: 'appscreens',
+  publishkit: 'publishkit',
+  shipscreen: 'shipscreen',
   gitagent: 'gitagent',
-  splitter: 'splitter',
-  spreadwatch: 'spreadwatch',
-  'small-video': 'small_video',
+  trackcut: 'trackcut',
+  spreadradar: 'spreadradar',
+  polishcast: 'polishcast',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -288,12 +297,12 @@ export const releaseNotesTools: string[] = [
   'ais-monitor',
   'ais-tracing',
   'ais-analytics',
-  'blog-toolkit',
-  'appscreens',
+  'publishkit',
+  'shipscreen',
   'gitagent',
-  'splitter',
-  'spreadwatch',
-  'small-video',
+  'trackcut',
+  'spreadradar',
+  'polishcast',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);

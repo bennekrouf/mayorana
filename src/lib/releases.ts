@@ -24,12 +24,12 @@ import aisRunner from '@/data/releases/ais-runner.json';
 import aisMonitor from '@/data/releases/ais-monitor.json';
 import aisTracing from '@/data/releases/ais-tracing.json';
 import aisAnalytics from '@/data/releases/ais-analytics.json';
-import appscreens from '@/data/releases/appscreens.json';
+import shipscreen from '@/data/releases/shipscreen.json';
 import gitagent from '@/data/releases/gitagent.json';
-import splitter from '@/data/releases/splitter.json';
-import spreadwatch from '@/data/releases/spreadwatch.json';
-import blogToolkit from '@/data/releases/blog-toolkit.json';
-import smallVideo from '@/data/releases/small-video.json';
+import trackcut from '@/data/releases/trackcut.json';
+import spreadradar from '@/data/releases/spreadradar.json';
+import publishKit from '@/data/releases/publishkit.json';
+import polishcast from '@/data/releases/polishcast.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -58,12 +58,12 @@ const snapshots: Record<string, ReleaseFeed> = {
   'ais-monitor': aisMonitor as ReleaseFeed,
   'ais-tracing': aisTracing as ReleaseFeed,
   'ais-analytics': aisAnalytics as ReleaseFeed,
-  appscreens: appscreens as ReleaseFeed,
+  shipscreen: shipscreen as ReleaseFeed,
   gitagent: gitagent as ReleaseFeed,
-  splitter: splitter as ReleaseFeed,
-  spreadwatch: spreadwatch as ReleaseFeed,
-  'blog-toolkit': blogToolkit as ReleaseFeed,
-  'small-video': smallVideo as ReleaseFeed,
+  trackcut: trackcut as ReleaseFeed,
+  spreadradar: spreadradar as ReleaseFeed,
+  'publishkit': publishKit as ReleaseFeed,
+  'polishcast': polishcast as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client

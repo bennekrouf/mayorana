@@ -16,7 +16,7 @@ REMOTE_DIR="/var/www/mayorana-downloads"
 SRC="$(cd "$(dirname "$0")/.." && pwd)/config/downloads-notice.json"
 
 # Products that ship the notice banner (src/notice.rs in each repo).
-PRODUCTS=(gitagent ais-monitor ais-runner ais-tracing ais-analytics appscreens spreadwatch)
+PRODUCTS=(gitagent ais-monitor ais-runner ais-tracing ais-analytics shipscreen spreadradar)
 
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1

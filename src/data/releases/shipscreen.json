@@ -1,7 +1,7 @@
 {
-  "name": "appscreens",
-  "product": "AppScreens",
-  "page": "https://mayorana.ch/en/apps/appscreens",
+  "name": "shipscreen",
+  "product": "ShipScreen",
+  "page": "https://mayorana.ch/en/apps/shipscreen",
   "generated_at": "2026-10-07T14:20:17Z",
   "releases": [
     {
@@ -12,15 +12,15 @@
         {
           "heading": "Added",
           "items": [
-            "Android builds now work on Windows and Linux, not just macOS. AppScreens runs the whole build itself — `dx`, then the icon, package name, version and signing fixes, then Gradle — instead of a bash script, finds the Android SDK where Android Studio puts it on each system, and on Windows keeps the upload-key password in Windows Credential Manager.",
+            "Android builds now work on Windows and Linux, not just macOS. ShipScreen runs the whole build itself — `dx`, then the icon, package name, version and signing fixes, then Gradle — instead of a bash script, finds the Android SDK where Android Studio puts it on each system, and on Windows keeps the upload-key password in Windows Credential Manager.",
             "The keystore password no longer gets written into the generated Gradle project: Gradle reads it from the environment for the length of the build."
           ]
         },
         {
           "heading": "Changed",
           "items": [
-            "On Windows, AppScreens now installs from `appscreens-windows-setup.exe` instead of an `.msi`. It installs for your user without administrator rights, and removes an AppScreens installed from the old `.msi` first. Your projects and settings are kept.",
-            "A build script you wrote yourself still runs as it is. On Windows that needs Git for Windows' bash, and AppScreens says so if it's missing.",
+            "On Windows, ShipScreen now installs from `shipscreen-windows-setup.exe` instead of an `.msi`. It installs for your user without administrator rights, and removes an ShipScreen installed from the old `.msi` first. Your projects and settings are kept.",
+            "A build script you wrote yourself still runs as it is. On Windows that needs Git for Windows' bash, and ShipScreen says so if it's missing.",
             "On Windows and Linux, the iOS build button and the Apple signing tools say they need a Mac, instead of failing halfway. Screenshots, store text and listing uploads for iOS work everywhere.",
             "The Doctor's \"Open Android Studio\" button works on Windows and Linux too."
           ]
@@ -28,7 +28,7 @@
         {
           "heading": "Fixed",
           "items": [
-            "Windows no longer opens a console window behind AppScreens, or one for every tool it runs."
+            "Windows no longer opens a console window behind ShipScreen, or one for every tool it runs."
           ]
         }
       ]
@@ -54,7 +54,7 @@
         {
           "heading": "Added",
           "items": [
-            "AppScreens now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+            "ShipScreen now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
           ]
         }
       ]
@@ -79,7 +79,7 @@
         {
           "heading": "Fixed",
           "items": [
-            "Opened from the Dock or Finder, AppScreens no longer reports \"dx not found\" or missing Rust targets when the Dioxus CLI and rustup are installed. It now finds the tools in your Rust install folder and your terminal's settings, and the build scripts it runs find them too.",
+            "Opened from the Dock or Finder, ShipScreen no longer reports \"dx not found\" or missing Rust targets when the Dioxus CLI and rustup are installed. It now finds the tools in your Rust install folder and your terminal's settings, and the build scripts it runs find them too.",
             "When another program called `dx` comes first (Homebrew's deno installs one), the check now says so instead of reporting a wrong Dioxus version, and builds use the Dioxus CLI."
           ]
         }
@@ -138,7 +138,7 @@
         {
           "heading": "Fixed",
           "items": [
-            "AppScreens no longer replaces a build script you wrote yourself. It used to rewrite every build script from its template before each build, losing changes like a display name or a minimum iOS version. Scripts it wrote are still kept up to date."
+            "ShipScreen no longer replaces a build script you wrote yourself. It used to rewrite every build script from its template before each build, losing changes like a display name or a minimum iOS version. Scripts it wrote are still kept up to date."
           ]
         }
       ]
@@ -163,8 +163,8 @@
             "The App step warns when the project's code isn't safe from a lost Mac: not in git, no remote, or commits that were never pushed.",
             "The Submit step shows what the stores have right now — version states from App Store Connect and every Play track's releases — with links to what only the consoles show.",
             "The Accounts step has an \"If this Mac is lost or stolen\" checklist: what to revoke and replace, in order, filled in with this project's own key IDs and linking straight to each console page.",
-            "The Build step shows every Java installed on the machine — Android Studio's, Homebrew, SDKMAN, system installs, and on Windows the registry — marks the ones too old or too new for the Gradle version your project builds with, and lets you pick which one AppScreens uses. Your terminal and system settings are left alone, so there is no JAVA_HOME to set up by hand.",
-            "When no suitable Java is installed, the Java card offers to install one that fits your project: Homebrew (inside AppScreens, no password) or the Temurin installer on macOS, your package manager in a terminal on Linux, winget on Windows — and picks it up as soon as it's done.",
+            "The Build step shows every Java installed on the machine — Android Studio's, Homebrew, SDKMAN, system installs, and on Windows the registry — marks the ones too old or too new for the Gradle version your project builds with, and lets you pick which one ShipScreen uses. Your terminal and system settings are left alone, so there is no JAVA_HOME to set up by hand.",
+            "When no suitable Java is installed, the Java card offers to install one that fits your project: Homebrew (inside ShipScreen, no password) or the Temurin installer on macOS, your package manager in a terminal on Linux, winget on Windows — and picks it up as soon as it's done.",
             "Android builds no longer start on a Java the project's Gradle can't run on. If the Java you picked, or the one in `JAVA_HOME`, is too old or too new (Java 26 with Gradle 9.1, for example), the build uses one that fits and says so in the log. The Doctor and the Java card point it out, with a one-click \"Use Java 21\".",
             "When a build fails on a Java mismatch anyway, the Build step explains it in plain words and offers \"Build again with Java 21\", using a Java you already have installed.",
             "If you want the same Java in your own terminal, the Java card can add it to your shell profile (zsh, bash or fish) or your Windows user settings. You see the exact lines first, your profile is backed up, and Remove takes them out again. \"Check my terminal\" opens a fresh shell and shows which Java it and your project's Gradle really use."
@@ -173,7 +173,7 @@
         {
           "heading": "Fixed",
           "items": [
-            "Signing and Android builds no longer fail with \"Unable to locate a Java Runtime\" when AppScreens is started from the Dock or a terminal without Java on its path. It now finds a Java installation by itself — `JAVA_HOME`, macOS's registered Java, Android Studio's bundled runtime or Homebrew — and hands it to the build."
+            "Signing and Android builds no longer fail with \"Unable to locate a Java Runtime\" when ShipScreen is started from the Dock or a terminal without Java on its path. It now finds a Java installation by itself — `JAVA_HOME`, macOS's registered Java, Android Studio's bundled runtime or Homebrew — and hands it to the build."
           ]
         }
       ]
@@ -265,7 +265,7 @@
         {
           "heading": "Fixed",
           "items": [
-            "Android screenshots are saved inside the project, one set per language, in fastlane's folder layout. They used to land wherever AppScreens was started from, and each language overwrote the one before, so every language got the same images on Google Play.",
+            "Android screenshots are saved inside the project, one set per language, in fastlane's folder layout. They used to land wherever ShipScreen was started from, and each language overwrote the one before, so every language got the same images on Google Play.",
             "Google Play gets a single feature graphic per language, taken from the first screen. Every screen used to produce one, but Play keeps only one.",
             "Google Play uploads for Arabic, Hindi, Turkish and Chinese (Simplified) now use the language codes Play accepts; they were rejected before.",
             "Desktop screenshot sizes are exported. Desktop projects get a landscape layout: captions on top with the whole window fitted below, or an AI-drawn laptop frame.",
@@ -378,7 +378,7 @@
           "heading": "Changed",
           "items": [
             "Downloads and update checks now come from mayorana.ch instead of GitHub. The update banner links to the download page there.",
-            "AppScreens is source-available under the PolyForm Noncommercial licence: free for personal, educational and noncommercial use."
+            "ShipScreen is source-available under the PolyForm Noncommercial licence: free for personal, educational and noncommercial use."
           ]
         }
       ]
@@ -404,7 +404,7 @@
         {
           "heading": "Added",
           "items": [
-            "AppScreens runs on Android, picking images through the system file picker.",
+            "ShipScreen runs on Android, picking images through the system file picker.",
             "A banner when a newer version is available.",
             "A light and dark theme toggle, following the system theme until you choose.",
             "A new app icon."
