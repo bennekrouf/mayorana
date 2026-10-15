@@ -34,7 +34,7 @@ short version above (not standalone).
 - Desired outcome: faster local testing, clear workflow visibility, secure agent-to-API bridges without custom glue code
 
 **Secondary ICP — 30%**
-- Swiss software vendors who want their product usable from their customers' Teams and WhatsApp, under their name (API0.AI). Microsoft partners and operations teams follow once vendor pilots prove it.
+- Swiss software vendors who want their product usable from their customers' Teams and WhatsApp, as their own app (API0.AI). Microsoft partners and operations teams follow once vendor pilots prove it.
 - Engineering teams / CTOs building agentic systems who need a production-grade MCP gateway (API0.AI, developer entry point)
 - Companies wanting custom high-performance Rust + AI solutions
 
@@ -87,7 +87,7 @@ api0 moves from "MCP gateway for Claude", sold to developers, to **the conversat
 front door to software a company already runs**, starting in Switzerland.
 
 - First audience: **Swiss software vendors** (their product in their customers' Teams and
-  WhatsApp, under their name). Microsoft partners and operations teams come later.
+  WhatsApp, as their own app). Microsoft partners and operations teams come later.
 - One direct field-service pilot (WhatsApp) runs alongside, as a faster-closing backup.
 
 - api0 one-liner: *Your software, in the chat your team already uses.*
