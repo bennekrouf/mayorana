@@ -31,12 +31,14 @@ export function Api0FlowDiagram({ layout = 'responsive' }: { layout?: 'responsiv
         >
           <ArrowMarker id={hArrowId} />
 
-          <Node x={0} y={10} width={110} height={38} title="WhatsApp" />
-          <Node x={0} y={66} width={110} height={38} title={chat} />
+          <Node x={0} y={0} width={110} height={32} title="Teams" />
+          <Node x={0} y={40} width={110} height={32} title="WhatsApp" />
+          <Node x={0} y={80} width={110} height={32} title={chat} />
 
           <Links>
-            <path d="M110,29 C132,29 132,48 153,48" markerEnd={hArrow} />
-            <path d="M110,85 C132,85 132,66 153,66" markerEnd={hArrow} />
+            <path d="M110,16 C132,16 132,45 153,45" markerEnd={hArrow} />
+            <path d="M110,56 L153,57" markerEnd={hArrow} />
+            <path d="M110,96 C132,96 132,69 153,69" markerEnd={hArrow} />
             <path d="M275,57 L308,57" markerStart={hArrow} markerEnd={hArrow} />
           </Links>
 
@@ -62,12 +64,14 @@ export function Api0FlowDiagram({ layout = 'responsive' }: { layout?: 'responsiv
       >
         {(arrow) => (
           <>
-            <Node x={0} y={0} width={118} height={34} title="WhatsApp" />
-            <Node x={132} y={0} width={118} height={34} title={chat} />
+            <Node x={0} y={0} width={80} height={34} title="Teams" />
+            <Node x={85} y={0} width={80} height={34} title="WhatsApp" />
+            <Node x={170} y={0} width={80} height={34} title={chat} />
 
             <Links>
-              <path d="M59,34 C59,50 110,46 110,62" markerEnd={arrow} />
-              <path d="M191,34 C191,50 140,46 140,62" markerEnd={arrow} />
+              <path d="M40,34 C40,50 105,46 105,62" markerEnd={arrow} />
+              <path d="M125,34 L125,62" markerEnd={arrow} />
+              <path d="M210,34 C210,50 145,46 145,62" markerEnd={arrow} />
               <path d="M125,120 L125,146" markerStart={arrow} markerEnd={arrow} />
             </Links>
 

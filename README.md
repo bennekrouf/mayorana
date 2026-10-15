@@ -6,7 +6,6 @@ A modern, responsive website for mayorana.ch built with Next.js and Tailwind CSS
 
 - Clean, modern interface with responsive design
 - Light and dark mode support
-- Configurable via YAML files
 - Pages for Services, About, and Contact
 - api0.ai solution showcase
 
@@ -17,7 +16,6 @@ A modern, responsive website for mayorana.ch built with Next.js and Tailwind CSS
 - **Animations**: Framer Motion
 - **Forms**: React Hook Form
 - **Icons**: React Icons
-- **Configuration**: js-yaml
 
 ## Getting Started
 
@@ -41,7 +39,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the w
 
 ```
 mayorana-website/
-├── config/           # YAML configuration files
+├── config/           # Publishing config, nginx, download notice
 ├── public/           # Static assets
 │   └── images/       # Image files
 ├── src/
@@ -61,7 +59,7 @@ mayorana-website/
 
 ## Configuration
 
-The website uses YAML files for configuration located in the `config/` directory. The main configuration file is `site.yaml`.
+Page copy lives in `messages/en.json` and `messages/fr.json`. The `config/` directory holds `publishing.yaml` (read by the blog publishing scripts), the nginx config and the downloads notice.
 
 ## Deployment
 

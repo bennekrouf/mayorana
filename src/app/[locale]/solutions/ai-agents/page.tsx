@@ -3,7 +3,7 @@
 import React from 'react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { motion } from '@/components/ui/Motion';
-import { ArrowRight, Check, ExternalLink, Puzzle, ShieldAlert, Gauge } from 'lucide-react';
+import { ArrowRight, Check, ExternalLink, Puzzle, ShieldAlert, Gauge, Building2, Wrench } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
 
@@ -16,6 +16,13 @@ const FRICTIONS = [
   { key: '1', icon: Puzzle },
   { key: '2', icon: ShieldAlert },
   { key: '3', icon: Gauge },
+] as const;
+
+// One card per buyer, each tied to the channel that buyer already uses. Channel
+// names are brands, so they are not translated.
+const USE_CASES = [
+  { key: '1', icon: Building2, channel: 'Teams' },
+  { key: '2', icon: Wrench, channel: 'WhatsApp' },
 ] as const;
 
 const SOLUTION_POINTS = ['1', '2', '3', '4', '5'] as const;
@@ -131,8 +138,43 @@ export default function AiAgentsSolutionsPage() {
         </div>
       </section>
 
-      {/* What the backend receives */}
+      {/* Use cases */}
       <section className="py-16 bg-background">
+        <div className="container max-w-6xl">
+          <h2 className="text-3xl font-bold mb-4">{t('use_cases_heading')}</h2>
+          <p className="text-lg text-muted-foreground mb-12 max-w-2xl">{t('use_cases_subtitle')}</p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {USE_CASES.map(({ key, icon: Icon, channel }, i) => (
+              <motion.div
+                key={key}
+                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="p-3 inline-flex bg-primary/10 rounded-full text-primary">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full border border-border text-muted-foreground">
+                    {channel}
+                  </span>
+                </div>
+                <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+                  {t(`use_case_${key}_who`)}
+                </p>
+                <h3 className="text-lg font-bold mb-3">{t(`use_case_${key}_action`)}</h3>
+                <p className="text-sm text-muted-foreground">{t(`use_case_${key}_body`)}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What the backend receives */}
+      <section className="py-16 bg-secondary">
         <div className="container max-w-5xl">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
@@ -160,7 +202,7 @@ export default function AiAgentsSolutionsPage() {
       </section>
 
       {/* Rust proof */}
-      <section className="py-16 bg-secondary">
+      <section className="py-16 bg-background">
         <div className="container max-w-5xl">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <h2 className="text-3xl font-bold">{t('rust_heading')}</h2>
