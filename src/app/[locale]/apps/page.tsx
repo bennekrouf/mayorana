@@ -66,6 +66,7 @@ const DEVELOPER_ORDER: string[] = [
   'trackcut',
   'polishcast',
   'spreadradar',
+  'jobscout',
 ];
 
 // The cloud solutions: hosted products, used on their own sites.

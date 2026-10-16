@@ -30,6 +30,7 @@ import trackcut from '@/data/releases/trackcut.json';
 import spreadradar from '@/data/releases/spreadradar.json';
 import publishKit from '@/data/releases/publishkit.json';
 import polishcast from '@/data/releases/polishcast.json';
+import jobscout from '@/data/releases/jobscout.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -64,6 +65,7 @@ const snapshots: Record<string, ReleaseFeed> = {
   spreadradar: spreadradar as ReleaseFeed,
   'publishkit': publishKit as ReleaseFeed,
   'polishcast': polishcast as ReleaseFeed,
+  jobscout: jobscout as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client

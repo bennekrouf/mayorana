@@ -74,6 +74,7 @@ const shipscreenDl = 'https://mayorana.ch/downloads/shipscreen/latest';
 const trackcutDl = 'https://mayorana.ch/downloads/trackcut/latest';
 const spreadradarDl = 'https://mayorana.ch/downloads/spreadradar/latest';
 const polishcastDl = 'https://mayorana.ch/downloads/polishcast/latest';
+const jobscoutDl = 'https://mayorana.ch/downloads/jobscout/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -238,6 +239,22 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows 10+', href: `${polishcastDl}/polishcast-setup.exe` },
     ],
   },
+  {
+    id: 'jobscout',
+    pro: { edition: 'pro' },
+    source: 'https://github.com/bennekrouf/jobscout',
+    name: 'JobScout',
+    tech: 'Rust · Dioxus · DeepSeek / ollama · WebKit · Camoufox',
+    status: 'beta',
+    tags: ['ai'],
+    applicationCategory: 'BusinessApplication',
+    downloads: [
+      // One universal DMG: Apple Silicon and Intel.
+      { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${jobscoutDl}/jobscout-macos.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${jobscoutDl}/jobscout-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${jobscoutDl}/jobscout-setup.exe` },
+    ],
+  },
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
@@ -252,6 +269,7 @@ export const appI18nKey: Record<string, string> = {
   trackcut: 'trackcut',
   spreadradar: 'spreadradar',
   polishcast: 'polishcast',
+  jobscout: 'jobscout',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -303,6 +321,7 @@ export const releaseNotesTools: string[] = [
   'trackcut',
   'spreadradar',
   'polishcast',
+  'jobscout',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);
