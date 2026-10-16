@@ -33,7 +33,11 @@ interface Tool {
   id: string;
   name: string;
   tagline?: string;
-  description: string;
+  /**
+   * Only for the web products: they have no tagline and no page here. A
+   * desktop tool's card stops at its tagline; the detail page has the rest.
+   */
+  description?: string;
   tech: string;
   status: Status;
   tags: string[];
@@ -208,7 +212,7 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
       </div>
 
       {tool.tagline && <p className="text-sm font-medium mb-1">{tool.tagline}</p>}
-      <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>
+      {tool.description && <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>}
       <p className="text-xs text-muted-foreground/70 font-mono mb-3">{tool.tech}</p>
 
       <div className="mb-4">
@@ -267,7 +271,6 @@ export default function AppsPage() {
       id: app.id,
       name: app.name,
       tagline: tApps(`${appI18nKey[app.id]}_tagline`),
-      description: tApps(`${appI18nKey[app.id]}_description`),
       tech: app.tech,
       status: app.status,
       tags: app.tags,
