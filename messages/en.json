@@ -1472,17 +1472,17 @@
         }
       },
       "polishcast": {
-        "seo_title": "Polishcast — Screen Recorder with a Smooth Cursor and Auto-Zoom",
+        "seo_title": "PolishCast — Screen Recorder with a Smooth Cursor and Auto-Zoom",
         "seo_description": "Desktop screen recorder for macOS and Windows: redrawn smooth cursor, automatic zoom on clicks, background and rounded corners, pauses cut out, MP4 export from 1080p to 4K.",
         "overview": [
           "A raw screen recording is hard to watch: the cursor jumps around, the text is tiny, and every pause where you were thinking is still in it.",
-          "Polishcast records the screen without the cursor and notes where the pointer goes. It then redraws a smooth cursor, zooms in where you clicked, and frames the video with a background, padding and rounded corners.",
+          "PolishCast records the screen without the cursor and notes where the pointer goes. It then redraws a smooth cursor, zooms in where you clicked, and frames the video with a background, padding and rounded corners.",
           "The editor lets you adjust each zoom, cut the silences and choose the frame. What you export is exactly what the preview shows."
         ],
         "features": [
           {
             "title": "Record from anywhere",
-            "body": "Start and stop from the menu bar (macOS) or the notification area (Windows), or with ⌘⇧2 / Ctrl+Shift+2 from any app. The display your pointer is on is recorded with your microphone, and Polishcast's own windows are left out."
+            "body": "Start and stop from the menu bar (macOS) or the notification area (Windows), or with ⌘⇧2 / Ctrl+Shift+2 from any app. The display your pointer is on is recorded with your microphone, and PolishCast's own windows are left out."
           },
           {
             "title": "A cursor that glides",
@@ -1521,7 +1521,7 @@
           },
           {
             "q": "Where are my recordings?",
-            "a": "Each recording is a folder in Movies/Polishcast, with the video, the pointer movements and your edits. The exported MP4 is written next to it. Deleting a recording from the list moves it to the Trash, so you can still get it back."
+            "a": "Each recording is a folder in Movies/PolishCast, with the video, the pointer movements and your edits. The exported MP4 is written next to it. Deleting a recording from the list moves it to the Trash, so you can still get it back."
           },
           {
             "q": "Do I need to install ffmpeg?",
@@ -1531,7 +1531,7 @@
         "article_slug": "",
         "pro_download_intro": "Free: export 10 different videos; exporting one again is free, and recording and editing are never limited. Pro: export every video, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Free: export 10 different videos; recording and editing are never limited. Pro: export every video, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
-        "pro_how": "To activate it, open Polishcast, click Get Pro… in the sidebar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_how": "To activate it, open PolishCast, click Get Pro… in the sidebar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
         "comparison": {
           "competitors": [
             "Screen Studio",
