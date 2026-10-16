@@ -188,6 +188,8 @@
     "spreadradar_description": "Suivez n'importe quel actif crypto sur Binance, Bybit, OKX, MEXC, Gate et Jupiter en même temps. Voyez les meilleurs écarts entre plateformes, frais déduits, quelle plateforme est en retard sur les autres, et les tokens que Gate ou MEXC viennent de lister et que Binance n'a pas encore. Échangez SOL/USDT on-chain via Jupiter depuis un hot wallet local, en simulation à chaque démarrage et dans des limites strictes.",
     "polishcast_tagline": "Enregistrez votre écran, obtenez une vidéo soignée : curseur fluide, zoom sur les clics",
     "polishcast_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
+    "jobscout_tagline": "Les offres d'emploi de LinkedIn et des sites locaux, classées selon votre profil",
+    "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn, jobs.ch et jobup.ch en Suisse, ou de LinkedIn, MyCareersFuture et JobStreet à Singapour, dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec DeepSeek ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "trackcut_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
@@ -1565,6 +1567,61 @@
             }
           ]
         }
+      },
+      "jobscout": {
+        "seo_title": "JobScout — Recherche d'emploi sur LinkedIn et les sites locaux, évaluée selon votre profil",
+        "seo_description": "App de bureau qui rassemble les offres d'emploi de LinkedIn, jobs.ch, jobup.ch, MyCareersFuture et JobStreet, les garde sur votre ordinateur et évalue chacune selon votre profil avec DeepSeek ou un modèle ollama local.",
+        "overview": [
+          "Chercher un emploi, c'est la même recherche sur trois ou quatre sites, la même offre vue deux fois sous des titres différents, et un navigateur plein d'onglets à rouvrir plus tard. Décider quelles offres méritent une candidature prend plus de temps que de les trouver.",
+          "JobScout interroge les pages publiques de LinkedIn, sans connexion, et les principaux sites locaux d'un pays à la fois : jobs.ch et jobup.ch pour la Suisse, MyCareersFuture et JobStreet pour Singapour. Chaque offre arrive une seule fois dans une liste sur votre ordinateur, avec un statut que vous choisissez : Nouvelle, Gardée, Postulée ou Masquée.",
+          "Chaque offre peut être évaluée selon votre profil par n'importe quel modèle compatible OpenAI, DeepSeek par défaut ou ollama sur votre machine. Une note vient avec un verdict en une ligne, les points forts et les manques. Les recherches enregistrées, appelées veilles, tournent seules tant que l'app est ouverte et vous signalent les nouvelles offres au-dessus de votre seuil."
+        ],
+        "features": [
+          {
+            "title": "Plusieurs sites, une liste",
+            "body": "LinkedIn plus jobs.ch et jobup.ch en Suisse, ou MyCareersFuture et JobStreet à Singapour. Une offre publiée sur plusieurs sites n'apparaît qu'une fois."
+          },
+          {
+            "title": "Sans connexion, sans risque pour votre compte",
+            "body": "LinkedIn est lu par ses pages publiques, jamais avec votre compte. Les requêtes sont espacées, et une limite de débit arrête la recherche au lieu de réessayer."
+          },
+          {
+            "title": "Évaluée selon votre profil",
+            "body": "DeepSeek par défaut ou un modèle ollama local donne à chaque offre une note, un verdict en une ligne, ses points forts et ses manques. La clé d'API est lue dans votre environnement et jamais écrite sur le disque."
+          },
+          {
+            "title": "Des veilles qui vous préviennent",
+            "body": "Enregistrez une recherche : JobScout la relance toutes les 1 à 72 heures tant qu'il est ouvert, évalue jusqu'à 15 nouvelles offres et envoie une notification pour celles au-dessus de votre seuil."
+          },
+          {
+            "title": "Chez vous, sur votre ordinateur",
+            "body": "Offres, statuts, veilles et profil sont gardés dans de simples fichiers JSON, un dossier par pays. Exportez la liste affichée en CSV à tout moment."
+          }
+        ],
+        "requirements": [
+          "macOS (Apple Silicon ou Intel), Windows 10 ou 11 avec le runtime WebView2, ou Linux x86_64",
+          "Une connexion internet. Aucun compte LinkedIn ni sur les sites d'emploi n'est nécessaire",
+          "Pour l'évaluation : une clé d'API DeepSeek ou un autre service compatible OpenAI, ou ollama en local",
+          "Pour JobStreet sous Windows et Linux : Python avec Camoufox (pip install -U camoufox && python -m camoufox fetch)"
+        ],
+        "faq": [
+          {
+            "q": "JobScout utilise-t-il mon compte LinkedIn ?",
+            "a": "Non. Il lit les pages publiques de LinkedIn, celles que tout le monde voit sans se connecter : votre compte n'est jamais utilisé, ni mis en danger."
+          },
+          {
+            "q": "Où les offres sont-elles gardées ?",
+            "a": "Sur votre ordinateur, dans le dossier de données de JobScout, un dossier par pays. Rien n'est envoyé ailleurs, à part les recherches elles-mêmes et, si vous évaluez des offres, l'offre et votre profil au modèle choisi. Avec ollama, cela reste aussi sur votre machine."
+          },
+          {
+            "q": "Quels pays sont pris en charge ?",
+            "a": "La Suisse (LinkedIn, jobs.ch, jobup.ch) et Singapour (LinkedIn, MyCareersFuture, JobStreet). Chaque pays est gardé à part : changer de pays décharge l'un et charge l'autre."
+          }
+        ],
+        "article_slug": "",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec une veille. La recherche, l'évaluation et l'export ne sont jamais limités. L'usage commercial — y compris un recruteur ou un consultant pour un client — nécessite JobScout Pro, qui garde aussi autant de veilles que vous voulez, dans chaque pays. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Code source disponible sous la PolyForm Noncommercial License 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une veille et la recherche, l'évaluation et l'export illimités. L'usage commercial — y compris un recruteur, un consultant pour un client et un salarié dans le cadre de son travail — nécessite JobScout Pro, qui garde aussi autant de veilles que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Pour l'activer, ouvrez JobScout et cliquez sur Get Pro… en bas de la barre latérale, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
       }
     },
     "article_heading": "Pour aller plus loin",
