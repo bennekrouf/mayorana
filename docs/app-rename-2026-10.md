@@ -5,7 +5,7 @@
 | AppScreens | ShipScreen | `shipscreen` | — |
 | Blog Toolkit | PublishKit | `publishkit` | — |
 | Splitter | TrackCut | `trackcut` | `splitter` |
-| Small Video | Polishcast | `polishcast` | `small-video` |
+| Small Video | PolishCast | `polishcast` | `small-video` |
 | Spreadwatch | SpreadRadar | `spreadradar` | `spreadwatch` |
 
 ## What is renamed, and what deliberately is not
@@ -19,7 +19,7 @@ These keep the old name, because changing them would break existing installs:
   (`api0/store-api0/src/payment/license.rs`) still check the old ids, and the
   site passes them through `pro.product` in `src/data/tools.ts`.
 - **macOS bundle ids, Android package id, Windows AppIds.** Screen Recording
-  permission (Polishcast), Keychain items and in-place upgrades are tied to them.
+  permission (PolishCast), Keychain items and in-place upgrades are tied to them.
 - **Settings, licence, Keychain and telemetry folders.** Spreadwatch's holds
   the hot wallet; Blog Toolkit's holds API keys (the previous rename lost them).
 - **GitHub repository variables** (`SPLITTER_LICENSE_PUBLIC_KEY`, …).
@@ -27,8 +27,8 @@ These keep the old name, because changing them would break existing installs:
 
 Files in people's own folders are read under both names: `splitter.cutlist.json`
 (moved to the new name on the next save), `blog-toolkit.yaml` and
-`appscreens.json` (kept in place). Polishcast moves `Movies/Small Video` to
-`Movies/Polishcast` the first time it starts.
+`appscreens.json` (kept in place). PolishCast moves `Movies/Small Video` to
+`Movies/PolishCast` the first time it starts.
 
 ## Order of operations
 

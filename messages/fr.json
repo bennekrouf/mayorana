@@ -1472,17 +1472,17 @@
         }
       },
       "polishcast": {
-        "seo_title": "Polishcast — Enregistreur d'écran avec curseur fluide et zoom automatique",
+        "seo_title": "PolishCast — Enregistreur d'écran avec curseur fluide et zoom automatique",
         "seo_description": "Enregistreur d'écran pour macOS et Windows : curseur redessiné et fluide, zoom automatique sur les clics, fond et coins arrondis, pauses coupées, export MP4 de 1080p à 4K.",
         "overview": [
           "Un enregistrement d'écran brut se regarde mal : le curseur saute, le texte est minuscule, et chaque pause où vous réfléchissiez est encore là.",
-          "Polishcast enregistre l'écran sans le curseur et note où va le pointeur. Il redessine ensuite un curseur fluide, zoome là où vous avez cliqué, et encadre la vidéo avec un fond, des marges et des coins arrondis.",
+          "PolishCast enregistre l'écran sans le curseur et note où va le pointeur. Il redessine ensuite un curseur fluide, zoome là où vous avez cliqué, et encadre la vidéo avec un fond, des marges et des coins arrondis.",
           "L'éditeur vous laisse ajuster chaque zoom, couper les silences et choisir le cadre. Ce que vous exportez est exactement ce que montre l'aperçu."
         ],
         "features": [
           {
             "title": "Enregistrer de n'importe où",
-            "body": "Démarrez et arrêtez depuis la barre des menus (macOS) ou la zone de notification (Windows), ou avec ⌘⇧2 / Ctrl+Maj+2 depuis n'importe quelle app. L'écran où se trouve votre pointeur est enregistré avec votre micro, et les fenêtres de Polishcast sont laissées de côté."
+            "body": "Démarrez et arrêtez depuis la barre des menus (macOS) ou la zone de notification (Windows), ou avec ⌘⇧2 / Ctrl+Maj+2 depuis n'importe quelle app. L'écran où se trouve votre pointeur est enregistré avec votre micro, et les fenêtres de PolishCast sont laissées de côté."
           },
           {
             "title": "Un curseur qui glisse",
@@ -1521,7 +1521,7 @@
           },
           {
             "q": "Où sont mes enregistrements ?",
-            "a": "Chaque enregistrement est un dossier dans Vidéos/Polishcast, avec la vidéo, les mouvements du pointeur et vos modifications. Le MP4 exporté est écrit à côté. Supprimer un enregistrement de la liste le met à la Corbeille : vous pouvez encore le récupérer."
+            "a": "Chaque enregistrement est un dossier dans Vidéos/PolishCast, avec la vidéo, les mouvements du pointeur et vos modifications. Le MP4 exporté est écrit à côté. Supprimer un enregistrement de la liste le met à la Corbeille : vous pouvez encore le récupérer."
           },
           {
             "q": "Faut-il installer ffmpeg ?",
@@ -1531,7 +1531,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit : export de 10 vidéos différentes ; réexporter l'une d'elles est gratuit, et l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Gratuit : export de 10 vidéos différentes ; l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
-        "pro_how": "Pour l'activer, ouvrez Polishcast, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_how": "Pour l'activer, ouvrez PolishCast, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
         "comparison": {
           "competitors": [
             "Screen Studio",

@@ -43,7 +43,7 @@ export interface DesktopToolConfig {
    * back to /apps/<id>/thanks, which shows the licence key.
    *
    * `product` is the id the gateway and the licence keys use, when it is not
-   * the tool's id: TrackCut, SpreadRadar and Polishcast were renamed after
+   * the tool's id: TrackCut, SpreadRadar and PolishCast were renamed after
    * keys had been sold under their old ids, and a key names its product.
    */
   pro?: { edition: string; product?: string };
@@ -60,7 +60,7 @@ export interface DesktopToolConfig {
 // source-available under PolyForm Noncommercial 1.0.0, so each tool also links
 // to its source — see `source` on each entry and LICENCE_URL below.
 //
-// ShipScreen, PublishKit, TrackCut, SpreadRadar and Polishcast were renamed
+// ShipScreen, PublishKit, TrackCut, SpreadRadar and PolishCast were renamed
 // from AppScreens, Blog Toolkit, Splitter, Spreadwatch and Small Video; their
 // builds were given the new names on the server by
 // scripts/migrate-renamed-downloads.sh.
@@ -153,7 +153,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'publishkit',
-    source: 'https://github.com/Bennekrouf/blog-toolkit',
+    source: 'https://github.com/bennekrouf/publishkit',
     name: 'PublishKit',
     tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
     status: 'beta',
@@ -166,7 +166,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'shipscreen',
-    source: 'https://github.com/Bennekrouf/appscreens',
+    source: 'https://github.com/bennekrouf/shipscreen',
     name: 'ShipScreen',
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'live',
@@ -194,7 +194,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'trackcut',
-    source: 'https://github.com/Bennekrouf/splitter',
+    source: 'https://github.com/bennekrouf/trackcut',
     name: 'TrackCut',
     tech: 'Rust · Dioxus · symphonia · LAME · FLAC · yt-dlp',
     status: 'live',
@@ -209,7 +209,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'spreadradar',
-    source: 'https://github.com/Bennekrouf/spreadwatch',
+    source: 'https://github.com/bennekrouf/spreadradar',
     name: 'SpreadRadar',
     tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
     status: 'beta',
@@ -226,8 +226,8 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   {
     id: 'polishcast',
     pro: { edition: 'pro', product: 'small-video' },
-    source: 'https://github.com/bennekrouf/smallvideo',
-    name: 'Polishcast',
+    source: 'https://github.com/bennekrouf/polishcast',
+    name: 'PolishCast',
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
     status: 'beta',
     tags: ['tools'],
