@@ -2,8 +2,21 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-18T21:03:37Z",
+  "generated_at": "2026-10-19T05:38:08Z",
   "releases": [
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows, TrackCut no longer fails to start with \"VCRUNTIME140_1.dll was not found\" on PCs without the Microsoft Visual C++ Redistributable. Nothing extra needs to be installed any more."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.22",
       "tag": "v0.1.22",
