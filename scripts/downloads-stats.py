@@ -149,7 +149,22 @@ MOBILE_UA = re.compile(r'iPhone|iPod|iPad|Android|Mobile Safari', re.I)
 
 # Hosting ranges. Traffic from a datacenter is a machine whatever its user
 # agent claims; these showed up pulling every product in lockstep.
-DATACENTRE_NETS = ['158.69.0.0/16']
+DATACENTRE_NETS = [
+    '158.69.0.0/16',
+    # Alibaba Cloud. Addresses from 47.79.13.x and 47.82.11.x took one
+    # installer each, every day, with desktop user agents — a crawler spread
+    # across many addresses so the per-address sweep test never fires.
+    '47.74.0.0/15', '47.76.0.0/14', '47.80.0.0/13', '47.88.0.0/14',
+    '47.235.0.0/16', '47.236.0.0/14', '47.240.0.0/14', '47.244.0.0/15',
+    '47.246.0.0/16', '47.250.0.0/15', '47.252.0.0/15', '47.254.0.0/16',
+    '8.208.0.0/12',
+]
+
+# Our own traffic: the corporate Zscaler egress we test and update from. Kept
+# apart from the datacentre list so it shows as its own exclusion reason. The
+# home connection (Swisscom 213.55.x) is deliberately not here — the address
+# moves daily and the range is shared with every Swisscom customer.
+OWN_NETS = ['165.225.94.0/23']
 
 # An address that grabs this many *different* products in one day is not a
 # customer — it is us testing, or something enumerating the download tree.
@@ -277,12 +292,13 @@ def parse_logs(patterns: list[str], geo: Geo) -> dict[str, dict]:
     Two passes: the behavioural filter has to see a whole day before it can
     judge an address, so events are collected first and counted second.
     """
-    nets = []
-    for cidr in DATACENTRE_NETS:
-        try:
-            nets.append(ipaddress.ip_network(cidr, strict=False))
-        except ValueError:
-            print(f'warning: ignoring bad network {cidr}', file=sys.stderr)
+    nets = []                                     # (network, exclusion reason)
+    for reason, cidrs in (('own', OWN_NETS), ('datacentre', DATACENTRE_NETS)):
+        for cidr in cidrs:
+            try:
+                nets.append((ipaddress.ip_network(cidr, strict=False), reason))
+            except ValueError:
+                print(f'warning: ignoring bad network {cidr}', file=sys.stderr)
 
     events: list[dict] = []
     checkins: list[tuple[str, str]] = []          # (day, app)
@@ -340,11 +356,9 @@ def _collect(line, seen, events, checkins, nets) -> None:
     if not ARTIFACT.search(download['file']):
         return
 
-    reason = None
-    if MOBILE_UA.search(match['ua']):
+    reason = _net_reason(match['ip'], nets)
+    if reason is None and MOBILE_UA.search(match['ua']):
         reason = 'mobile'
-    elif _in_nets(match['ip'], nets):
-        reason = 'datacentre'
 
     source = UTM_SOURCE.search(match['path'])
     medium = UTM_MEDIUM.search(match['path'])
@@ -374,14 +388,15 @@ def _unquote(value: str) -> str:
     return cleaned[:60] or 'unknown'
 
 
-def _in_nets(ip: str, nets: list) -> bool:
+def _net_reason(ip: str, nets: list) -> str | None:
+    """The exclusion reason of the first listed network holding ip, if any."""
     if not nets:
-        return False
+        return None
     try:
         address = ipaddress.ip_address(ip)
     except ValueError:
-        return False
-    return any(address in net for net in nets)
+        return None
+    return next((reason for net, reason in nets if address in net), None)
 
 
 def _aggregate(events: list[dict], checkins: list[tuple[str, str]], geo: Geo) -> dict[str, dict]:
