@@ -2,8 +2,157 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-14T11:49:14Z",
+  "generated_at": "2026-10-16T19:46:11Z",
   "releases": [
+    {
+      "version": "0.1.109",
+      "tag": "v0.1.109",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Changed your mind while resolving a merge? Start over puts a file's conflicts back exactly as git left them, so you can pick again, even after you saved it or it was marked resolved. Files already resolved are listed under the conflicts, each with its own Start over, and Start over on every file takes the whole merge back to its first stop. Your choices are thrown away, but the merge itself carries on; abandon it if you want to undo it entirely. If git remembers resolutions on your machine, the one you undid is forgotten too, so it is not quietly applied again next time."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.108",
+      "tag": "v0.1.108",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Merge conflicts can be resolved without leaving GitAgent. When a step stops because a merge, rebase, cherry-pick or revert is waiting on files, the step's panel now lists those files and shows each conflict as its two sides, Current and Incoming, with Accept current, Accept incoming or Accept both, as in an editor. Save writes your choices, and once nothing in a file is left undecided it is marked resolved, ready for Finish below. A file one side deleted, or one that is not text, is settled by keeping one side whole, and a file you already fixed in your editor only needs Mark resolved."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The second opinion works with small local models again. A small model could get stuck repeating the same characters in a quoted line of code until it ran out of room, and the step failed with \"model did not return JSON\" followed by a wall of unreadable text. Each part of a review now has a length limit the model has to respect, so it moves on instead. If an answer is still cut off, the step says so plainly and suggests running it again or picking a larger model."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.107",
+      "tag": "v0.1.107",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Claude can work on your flows through GitAgent's MCP server, not only run them: list the kinds of step a flow can use, read a flow, create or change one, delete one, and choose which repositories show it — the same checks as Setup, so a flow that would not run is refused with the reason. A step that runs a script or a server command always stops for your approval: Claude cannot switch that off. `flows.toml` is backed up before every change, and the open window shows the change without a restart.",
+            "Claude can also ask for everything GitAgent knows about a repository: its branch, uncommitted files, what it needs next and which flow answers that, open pull requests with their checks, the release state, and what each flow would act on."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.106",
+      "tag": "v0.1.106",
+      "date": "2026-10-15",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The buttons for approving, rejecting, or skipping steps are now always visible at the bottom of the step's panel, regardless of how long the content above them is. This makes it easier to respond to steps without scrolling.",
+            "When a step fails, the fixes on offer under **Fix it from here** — pull and replay, bring the base in, close the pull request — sit in that same bar at the bottom, just above Retry, Skip and Cancel run, instead of up in the panel above the error. Every decision on a step is now in one place."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A release no longer stops at \"this copy has 1 commit that origin/main does not\" when the commit is GitAgent's own release notes and a pull request was merged on GitHub meanwhile. The notes are committed on top of what origin has at that moment, and if a merge still lands in between, the release puts the notes commit back on top of it by itself and carries on. Only a clash — both edited CHANGELOG.md — or a commit of your own still asks first.",
+            "**Back to base** handles the same case after a merge: GitAgent's own release notes commit left on your local base is put back on top of origin, or — when a later pull request already carried those notes — simply dropped, instead of failing with \"Not possible to fast-forward\". A commit of your own there gets a **Replay your local commits on top** button rather than \"No automatic fix\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.105",
+      "tag": "v0.1.105",
+      "date": "2026-10-15",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Flows Claude runs through GitAgent's MCP server can be trusted runs: when you ask Claude for a trusted run, or have **Trust all** on in the window, GitAgent answers the approvals itself by the same rules as its Trusted run — stopping at anything risky, at your own scripts and deploys, and at release notes — and carries on into the next flow the repository needs. Claude is told what went through on its own and where, and why, it stopped; the window's live panel marks such a run \"trusted\"."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "**Trust all** is remembered between launches, and shared with GitAgent's MCP server, instead of switching itself off every time the window opens.",
+            "Approve, Reject and Skip now stay pinned to the bottom of a step's panel, so you can answer without scrolling past a long diff first. The same goes for Retry, Skip and Cancel run after a step fails, and for skipping a step that is still waiting or running."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "**Back to base**, the last step of Review → Merge, no longer fails when you have uncommitted edits — the usual case when a review is merged while you keep working. It never touches them: on another branch, it brings your base branch up to date without switching to it, and you stay where you were; on the base branch itself, it leaves everything as it is and says how far behind it is, to pull once your edits are committed.",
+            "A deploy flow's tab now counts the commits merged since your last deploy, not since the repository's last tag. A flow that deploys without tagging used to show a number that only ever grew — a repository deployed on every merge read 172 commits pending, all counted from a tag a year old. The count goes back to zero after each deploy that goes all the way through, and its tooltip says \"since the last deploy\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.104",
+      "tag": "v0.1.104",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On macOS, a run no longer stalls while GitAgent's window is hidden or covered: it used to look stopped and only catch up once you showed the window again. GitAgent now tells macOS it is busy while a flow or branch action is running, and still lets your Mac go to sleep."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.103",
+      "tag": "v0.1.103",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Settings lists the models your local ollama has installed, with their size, under the Model field — and under the second opinion's, when it runs on ollama too: click one to use it instead of typing its name exactly. Typing still works, for a model you are about to pull. If ollama is not running, Settings says so.",
+            "A flow Claude runs through GitAgent's MCP server shows up in the open window, live: under the flow tabs of that repository, \"Claude is running Commit → PR here\", each step with where it stands, and the step waiting for approval with exactly what it would do. It is read-only — answer approvals in Claude, where the run was started — and it goes away once that session ends.",
+            "The repository list keeps itself current: a commit, push, pull, branch switch or merge made outside the window — from a terminal, or by GitAgent's MCP server — updates that repository's row and tab counts within a couple of seconds, without a Refresh. Plain file edits still need one."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "A flow you made now has an id that reads as its name — **Deploy cvenom** is `deploy_cvenom`, not `review_and_merge_copy_copy_copy_copy_2` — so anything that sees the id, such as an assistant starting the flow through GitAgent's MCP tools, sees what the flow does rather than what it was copied from. Existing flows are renamed once, on the first launch, and the flows each repository shows or hides follow; Setup keeps the id in step with the name from then on. The built-in Commit → PR and Review → Merge keep theirs.",
+            "The button that re-checks one repository, shown when you hover its row in the repository list, is now a proper green button with the same icon as Refresh, instead of a tiny grey glyph that was easy to miss."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A local model that thinks before it answers, such as MiniCPM5, no longer comes back empty. It used to spend the whole answer on thinking about a medium-sized diff and return nothing, so the step failed with \"model did not return JSON\"; GitAgent now asks for the answer only.",
+            "A review finding whose quote is the right code, but written without the diff's `+`/`-` line markers or with two lines joined, is no longer thrown out as \"quoted evidence was not in the diff\". A quote that is not in the diff is still dropped."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.102",
+      "tag": "v0.1.102",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A new **MCP** button in the top bar shows how to use GitAgent from Claude Desktop or Claude Code: the text to paste, with a Copy button, already pointing at where GitAgent is installed on your computer. Claude in the browser can't connect to it, and the window says so."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.101",
       "tag": "v0.1.101",

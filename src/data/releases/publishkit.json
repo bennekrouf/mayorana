@@ -2,8 +2,99 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-02T07:03:25Z",
+  "generated_at": "2026-10-18T21:22:50Z",
   "releases": [
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Use PublishKit from Claude. The new **MCP** button in the top bar shows what to paste into Claude Desktop, or the one line to run for Claude Code, already pointing at where PublishKit is installed. Claude can then read your site's posts, write and queue drafts in each language (or have PublishKit's own model write them), edit drafts, set their LinkedIn and X teasers, queue LinkedIn posts, and publish or delete drafts when you ask. The lists in the window follow within a couple of seconds."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "PublishKit now includes an icon in the Linux and Windows installers, making it easier to identify the application in your system's application launcher and taskbar."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Blog Toolkit is now called PublishKit. Your API keys and settings carry over. A project's `blog-toolkit.yaml` is still read and kept where it is; new projects get a `publishkit.yaml`. On macOS the update installs as PublishKit.app; once it runs, you can delete Blog Toolkit.app from Applications."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The installer now includes a license agreement, ensuring users are aware of the terms before installing PublishKit."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "PublishKit now shares anonymous usage statistics: whether it is installed and opened, its version and your operating system. It is on by default; a note at the bottom of the window tells you once, and nothing is sent before you have seen it. **Turn off** there stops it for good and deletes anything not yet sent. Your files, data and accounts are never part of it. It also stays off if `DO_NOT_TRACK`, `DISABLE_UPDATE_CHECK` or `MAYORANA_NO_TELEMETRY` is set."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-10-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-08-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The macOS download is a signed and notarized `.dmg` with a regular app bundle, which opens with a normal double-click. It used to be a bare program that macOS refused to open because the developer could not be verified. The disk image also carries `setup-mac.sh`, which installs Node.js for publishing if you need it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.6",
       "tag": "v0.1.6",
@@ -27,7 +118,7 @@
           "items": [
             "A LinkedIn tab: generate a LinkedIn post from a product or topic and the points you want to make, in French or English, keep it in a queue, and mark it as posted once you have published it on LinkedIn.",
             "Each generated blog post comes with a LinkedIn and an X teaser, shown under the post with a copy button.",
-            "Per-project settings in a `publishkit.yaml` file at the project root, so several sites can each have their own prompts and author. The content folders for each language are detected the first time a project is opened.",
+            "Per-project settings in a `blog-toolkit.yaml` file at the project root, so several sites can each have their own prompts and author. The content folders for each language are detected the first time a project is opened.",
             "A light and dark theme toggle, following the system theme at startup."
           ]
         },

@@ -2,8 +2,61 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-16T19:42:27Z",
+  "generated_at": "2026-10-18T20:50:58Z",
   "releases": [
+    {
+      "version": "0.1.4",
+      "tag": "v0.1.4",
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added support for StepStone, Germany's largest commercial job board. You can now search and view jobs from StepStone directly within JobScout."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.3",
+      "tag": "v0.1.3",
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Use JobScout from Claude. The new **MCP** button at the bottom of the sidebar shows what to paste into Claude Desktop, or the one line to run for Claude Code, already pointing at where JobScout is installed. Claude can then search the boards, list and read the jobs you keep, score them against your profile, mark them Saved, Applied or Hidden, read and update your profile, manage your watches and export a list to CSV, in any country. What Claude changes shows up in the open window within a couple of seconds. Scoring uses the model and key set in Settings. Through Claude, JobStreet and StepStone's job descriptions need the Camoufox backend: the built-in browser only runs in the window.",
+            "Germany. Pick the German flag to search LinkedIn, the Arbeitsagentur's Jobbörse (the federal employment agency's board, the largest in the country) and StepStone, Germany's biggest commercial job board. Salaries show where the employer gives them; on StepStone, a salary marked \"StepStone estimate\" is the site's own guess. StepStone descriptions open in the built-in browser, like JobStreet's, so on Windows and Linux they need the Camoufox backend. A job posted on more than one board is listed once. Like Switzerland and Singapore, Germany keeps its own jobs, watches, profile and last search; nothing found there shows up in the other countries."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The activity log now belongs to the country it happened in. Switching country shows that country's own searches and messages, and switching back brings the earlier ones back."
+          ]
+        },
+        {
+          "heading": "Removed",
+          "items": [
+            "The Location field in the search form. The country you pick at the top is where JobScout searches, so typing it again was redundant. Searches cover the whole country; a town you had typed there before is no longer used."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.2",
+      "tag": "v0.1.2",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "JobScout has its own icon in the Dock, Finder, the Start menu and your Linux app launcher, instead of a blank or generic one.",
+            "Switching country loads that country's own search. Before, the form kept the last country's search, so searching right after picking Singapore could fill Singapore's list with Swiss jobs from jobs.ch and jobup."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.1",
       "tag": "v0.1.1",

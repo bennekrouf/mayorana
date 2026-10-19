@@ -2,8 +2,47 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-07T13:05:07Z",
+  "generated_at": "2026-10-18T21:03:37Z",
   "releases": [
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Use TrackCut from Claude. The new **MCP** button at the top of the file list shows what to paste into Claude Desktop, or the one line to run for Claude Code, already pointing at where TrackCut is installed. Claude can then list a folder's recordings, find a recording's tracks, confirm, move, add or remove splits, re-run silence detection with other settings, name the tracks or paste a tracklist, leave tracks out, mark a recording done, export it, apply the cuts, and download a recording from a link. What Claude changes in the folder open in the window shows up there within a second."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Light mode. TrackCut now matches your computer's light or dark setting and follows it when it changes. The sun/moon button at the top right switches between the two. The video frame stays black in both."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Splitter is now called TrackCut. Your Pro licence, settings, downloaded tools and the edits saved in your folders all carry over: a folder's `splitter.cutlist.json` is still read, and becomes `trackcut.cutlist.json` the first time you change something in it. On macOS the update installs as TrackCut.app; once it runs, you can delete Splitter.app from Applications."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.19",
       "tag": "v0.1.19",

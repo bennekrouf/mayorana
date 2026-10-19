@@ -2,8 +2,47 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-07T14:20:17Z",
+  "generated_at": "2026-10-18T21:14:04Z",
   "releases": [
+    {
+      "version": "0.1.28",
+      "tag": "v0.1.28",
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Use ShipScreen from Claude. The new **MCP** button at the bottom of a project's sidebar shows what to paste into Claude Desktop, or the one line to run for Claude Code, already pointing at where ShipScreen is installed. Claude can then read everything about a project and what it still needs, write and translate the store text (the stores' character limits are enforced), add languages, add screenshots and caption them in every language, set or bump the version and build numbers, generate the screenshots and run the iOS, AAB and APK builds. What Claude changes shows up in the open project within a couple of seconds. Uploading to the stores stays in the Submit step."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.27",
+      "tag": "v0.1.27",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "ShipScreen Pro. The free version works on one app, with every step from build to store submission; Pro works on any number of apps, and is the licence for commercial use. The first app you open becomes your free app. Opening another one asks for Pro, or offers to make that one your free app instead. Buy it on [ShipScreen's page](https://mayorana.ch/en/apps/shipscreen), then click **Get Pro…** on the start screen and paste the key. The key is checked on your computer: no account, nothing sent anywhere."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "AppScreens is now called ShipScreen. Your projects, saved passwords, signing keys and Java setup carry over. A project's `appscreens.json` is still read and kept where it is; new projects get a `shipscreen.json`. Build scripts AppScreens wrote are still recognised as ShipScreen's own and kept up to date. On macOS the update installs as ShipScreen.app; once it runs, you can delete AppScreens.app from Applications."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.25",
       "tag": "v0.1.25",

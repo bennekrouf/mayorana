@@ -2,8 +2,224 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-09T07:14:54Z",
+  "generated_at": "2026-10-18T21:02:07Z",
   "releases": [
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Use PolishCast from Claude. The new **MCP** button next to Get Pro… shows what to paste into Claude Desktop, or the one line to run for Claude Code, already pointing at where PolishCast is installed. Claude can then list your takes, add, move and remove zooms (or suggest them again from your clicks), cut the pauses, trim and leave out clips, change the background, the frame's shape and the speed, and export an MP4 or a GIF. A take open in the editor shows Claude's changes within a couple of seconds, and ⌘Z takes them back. Recording stays yours, from the menu bar."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-10-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Light mode. PolishCast now matches your computer's light or dark setting and follows it when it changes. The sun/moon button at the top right switches between the two. The video preview stays black in both."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The name is now written PolishCast. Your takes folder follows: `Movies/Polishcast` is renamed `Movies/PolishCast` the first time it starts, with everything in it. On macOS the update installs as PolishCast.app; once it runs, you can delete Polishcast.app from Applications."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-10-15",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The recordings panel on the left can be made wider or narrower: drag its right edge. The width is remembered; double-click the edge to go back to the usual width.",
+            "Music under your video. **+ Music** starts a song at the playhead; while the preview plays, press **M** to stop it and **M** again to bring it back, right where you want it. Each song starts and stops at moments of the recording, so it stays with them when you cut pauses, remove clips or change the speed, and it always plays at its own speed. Click a song on the timeline to set its volume, fades and where in the song it begins, or to swap the song. Turn on **Lower the music while I speak** and it dips under your voice, in the preview as in the export."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Exporting at a faster speed made the picture twice as slow instead of faster while the sound was sped up, so the two drifted apart. The picture now plays at the speed you chose."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-10-15",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Recording one window with the Mac's sound on now includes the sound of every app, not only the recorded window's. Music playing in a browser behind the window used to be missing, and only came through faintly via the microphone."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On a Mac that still has Small Video.app, the app under its old name, PolishCast offers to quit it and move it to the Trash. Opening it by mistake from the Dock or Spotlight started the old version, which kept saying an update was available even after you had installed it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A take that macOS was slow to finish saving, such as a long window recording, no longer opens half-written with a \"Compacting failed … moov atom not found\" message. PolishCast now waits until the file is complete before opening and shrinking it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added support for recording system audio and specific windows on macOS. This allows users to capture audio from their system and record specific windows, enhancing the flexibility and utility of the application."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Clicking a selected zoom on the timeline again deselects it, so the panel goes back to the style settings without having to press **Done**."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-10-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Small Video is now called PolishCast. Your takes move from `Movies/Small Video` to `Movies/PolishCast` (`Videos\\PolishCast` on Windows) the first time it starts; your Pro licence and settings carry over, and macOS keeps the Screen Recording permission you gave it. On macOS the update installs as PolishCast.app; once it runs, you can delete Small Video.app from Applications."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-10-13",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A recording you forget to stop now stops by itself after 2 hours, at 20 GB, or when less than 2 GB is left on the disk, whichever comes first, instead of filling the disk. The take is kept, and the sidebar says why it stopped."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.6",
+      "tag": "v0.1.6",
+      "date": "2026-10-12",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Record one window or an area of the screen, not only the whole screen: choose **Screen**, **Window** or **Area** under Record. A window is recorded on its own even when others cover it; for an area, drag across the part to record when you start (Esc cancels). macOS only for now.",
+            "**Record the Mac's sound too**, under Record, puts the sound apps play into the take along with your voice. The setting and what to record are remembered for next time.",
+            "A ring spreads from the cursor at each click, and the cursor fades out while you leave the mouse alone, then back in just before it moves. Both are on for new takes and can be turned off under **Style** (**Ring on clicks**, **Hide the cursor when it rests**).",
+            "Cut by hand: **Split** (or S) splits the video at the playhead, and clicking a clip in the strip under the zooms lets you remove it or put it back. **[** leaves out everything before the playhead and **]** everything after, to trim the start and end in one key. Undo brings everything back.",
+            "Your own picture as the background: the **+** swatch under **Style** takes a PNG or JPEG. It fills the frame without being stretched, and is copied into the take so moving or deleting the original doesn't affect it.",
+            "Export as an animated GIF: choose **GIF** in the export panel, at 640, 960 or 1280 px and 10, 15 or 24 fps. It has no sound and loops, for pasting into a page, a ticket or a chat.",
+            "A recording you forget to stop now stops by itself after 2 hours, at 20 GB, or when less than 2 GB is left on the disk, whichever comes first, instead of filling the disk. The take is kept, and the sidebar says why it stopped.",
+            "The recordings panel on the left can be closed with **‹** to give the editor the whole window; a thin strip keeps Record and **›** to open it again."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.5",
+      "tag": "v0.1.5",
+      "date": "2026-10-11",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "When you click the PolishCast icon in the Dock, Finder, or Launchpad while the window is closed, the app now opens and focuses the window. This makes it easier to access the app quickly."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.4",
+      "tag": "v0.1.4",
+      "date": "2026-10-11",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A speed for each video: **Speed** next to the play button speeds it up to 1.25×, 1.5×, 2× or 3×. The preview plays at that speed so you can check it reads well, the time shown is the exported video's, and the export comes out at that speed. The voice is sped up with the picture and keeps its pitch; zooms and the cursor stay in step."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.3",
+      "tag": "v0.1.3",
+      "date": "2026-10-09",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The version you are running now shows next to the PolishCast name at the top of the sidebar and in the window title, so it is at hand when you report a problem or check whether an update installed.",
+            "When a newer version of PolishCast is out, a banner at the top of the window says so and **Download** fetches it for your system. **×** hides it until the next start."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.2",
+      "tag": "v0.1.2",
+      "date": "2026-10-09",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "PolishCast Pro. The free version exports 10 different takes; exporting one of them again, after changing a zoom for instance, is free, and recording and editing are never limited. The export panel shows how many free exports are left, and **Get Pro…** in the sidebar is where you buy PolishCast Pro or paste your licence key to export every take. The key is checked on your computer, with no account and nothing sent anywhere."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.1",
       "tag": "v0.1.1",
