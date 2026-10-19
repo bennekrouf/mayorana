@@ -67,7 +67,7 @@ The path from a dirty working tree to an open pull request is a sequence, and it
 
 Modelling it explicitly as a graph of steps, rather than as a single "do the thing" button, is what makes each gate a natural place to stop rather than an interruption bolted onto an autonomous loop.
 
-[GitAgent](/en/apps/gitagent) implements exactly that. It is a native desktop app in Rust, it drafts with a local ollama model or with DeepSeek, and nothing touches git history or the remote without an explicit go-ahead on that specific step. PR creation goes through the GitHub CLI, so that step is GitHub-only for now; commit and push work against any remote.
+[GitAgent](/en/apps/gitagent) implements exactly that. It is a native desktop app in Rust, it drafts with a local ollama model or with Mistral, and nothing touches git history or the remote without an explicit go-ahead on that specific step. PR creation goes through the GitHub CLI, so that step is GitHub-only for now; commit and push work against any remote.
 
 It is marked work in progress — the commit-to-PR path works, but the interface is still moving. [Download it](/en/apps/gitagent) for macOS, Windows or Linux: free for personal, educational and non-profit use, with a licence required for commercial use.
 

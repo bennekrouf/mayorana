@@ -181,7 +181,7 @@
     "ais_analytics_tagline": "Correlation-id tracer for Azure Log Analytics",
     "ais_analytics_description": "The same tracer, aimed at a Log Analytics workspace instead of Cosmos DB. Paste a correlation id and see every step it touched — it works out which column ties the steps of one flow together straight from the data, then draws where that value got to and where it didn't. An empty lane is as meaningful as a full one.",
     "publishkit_tagline": "AI-powered blog post manager with queue-to-publish workflow",
-    "publishkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
+    "publishkit_description": "Write, generate, and schedule blog posts from your desktop. AI drafting via Mistral or Claude, markdown editor with live preview, queue-to-publish flow, weekly auto-publish, and multi-language support (FR/EN) — all in one native app.",
     "shipscreen_tagline": "The complete iOS & Android build and publish assistant",
     "shipscreen_description": "Your perfect companion for shipping mobile apps. Build, run, and iterate locally on iOS and Android, then package release artifacts ready for the App Store and Google Play. Handles bundle IDs, signing config, version bumps, screenshot generation in every required size, and the device-frame marketing assets — all from a single native desktop app.",
     "spreadradar_tagline": "Crypto price gaps across exchanges and Solana, live",
@@ -189,9 +189,9 @@
     "polishcast_tagline": "Record your screen, get a polished video: smooth cursor, zoom on clicks",
     "polishcast_description": "Record from the menu bar or with a shortcut. The cursor is redrawn so it glides, clicks become zooms that ease in, and a background, padding and rounded corners frame the result. Adjust it in the editor, cut the pauses, and export to MP4 at up to 4K.",
     "jobscout_tagline": "Job posts from LinkedIn and local boards, ranked against your profile",
-    "jobscout_description": "Collect job posts from LinkedIn, jobs.ch and jobup.ch in Switzerland, or LinkedIn, MyCareersFuture and JobStreet in Singapore, into one list on your computer. Read each description in the app, score every job against your profile with DeepSeek or a local ollama model, and let saved searches run on their own and notify you about the good matches.",
+    "jobscout_description": "Collect job posts from LinkedIn, jobs.ch and jobup.ch in Switzerland, or LinkedIn, MyCareersFuture and JobStreet in Singapore, into one list on your computer. Read each description in the app, score every job against your profile with Mistral or a local ollama model, and let saved searches run on their own and notify you about the good matches.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
-    "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or DeepSeek, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
+    "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or Mistral, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
     "trackcut_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
     "trackcut_description": "Load a live set, a radio show or a digitised tape and get one file per track. Silence detection proposes the splits, you confirm or nudge each one by ear, then export: MP3 without re-encoding, or MP3/FLAC/WAV with loudness normalisation and ReplayGain tags. Can also pull the audio of a YouTube link.",
     "intro": "The desktop apps download straight from this page for macOS, Linux and Windows. They are free for personal, educational and non-profit use, and companies buy a licence. Each tool page has its release notes, its source and, for most, a Claude skill.",
@@ -936,11 +936,11 @@
       },
       "gitagent": {
         "seo_title": "GitAgent — AI Commit Messages and Pull Requests, Gated by You",
-        "seo_description": "Turns a dirty working tree into an open pull request one approved step at a time. Drafts commit messages and PR descriptions with a local ollama model or DeepSeek — nothing touches git history or the remote without your explicit approval.",
+        "seo_description": "Turns a dirty working tree into an open pull request one approved step at a time. Drafts commit messages and PR descriptions with a local ollama model or Mistral — nothing touches git history or the remote without your explicit approval.",
         "overview": [
           "Most AI git tooling has the same problem: it is either a text generator that hands you a commit message to paste, or an agent that runs commands on your repository and tells you afterwards. Neither is what you want on a repo you care about.",
           "GitAgent models the work as a graph of steps — scan the tree, draft the commit message, commit, push, draft the PR description, open the PR — and stops at each one. You see what it proposes and what command it will run before it runs.",
-          "Drafting can run entirely on a local ollama model, which means the diff of a private repository never leaves your machine. DeepSeek is there if you would rather use a hosted model."
+          "Drafting can run entirely on a local ollama model, which means the diff of a private repository never leaves your machine. Mistral is there if you would rather use a hosted model."
         ],
         "features": [
           {
@@ -957,7 +957,7 @@
           },
           {
             "title": "Local model support",
-            "body": "Point it at an ollama model running on your own machine and the contents of a private repository never leave it. DeepSeek is available as a hosted alternative."
+            "body": "Point it at an ollama model running on your own machine and the contents of a private repository never leave it. Mistral is available as a hosted alternative."
           },
           {
             "title": "The whole path in one place",
@@ -967,7 +967,7 @@
         "requirements": [
           "macOS on Apple Silicon, Windows, or Linux x86_64",
           "git, and the GitHub CLI (gh) authenticated, for opening pull requests",
-          "Either ollama running locally, or a DeepSeek API key"
+          "Either ollama running locally, or a Mistral API key"
         ],
         "faq": [
           {
@@ -1039,7 +1039,7 @@
       },
       "publishkit": {
         "seo_title": "PublishKit — Desktop Blog Manager with AI Drafting",
-        "seo_description": "Write, generate and schedule blog posts from a native desktop app. AI drafting via DeepSeek or Claude, markdown editor with live preview, queue-to-publish flow and weekly auto-publish in French and English.",
+        "seo_description": "Write, generate and schedule blog posts from a native desktop app. AI drafting via Mistral or Claude, markdown editor with live preview, queue-to-publish flow and weekly auto-publish in French and English.",
         "overview": [
           "A blog that publishes on a schedule needs two things a text editor does not give you: somewhere for finished-but-unpublished posts to wait, and something that publishes them when the day comes.",
           "PublishKit is a native desktop app built around that queue. You draft in markdown with a live preview, optionally with an AI model doing the first pass, then move posts into a queue that publishes on its own schedule.",
@@ -1056,7 +1056,7 @@
           },
           {
             "title": "AI drafting",
-            "body": "First drafts via DeepSeek or Claude, in the editor rather than in a separate chat window you copy out of."
+            "body": "First drafts via Mistral or Claude, in the editor rather than in a separate chat window you copy out of."
           },
           {
             "title": "Markdown editor with live preview",
@@ -1071,7 +1071,7 @@
           "macOS on Apple Silicon, Windows, or Linux x86_64",
           "A blog project laid out as content/{en,fr}/{queue,blog} — the app is asked for the project root on first launch",
           "Node.js 18 or newer: publishing shells out to Node to rebuild the site index (the Windows installer and the macOS setup script handle this)",
-          "A DeepSeek or Anthropic API key, if you want AI drafting — pasted in Settings or read from DEEPSEEK_API_KEY / ANTHROPIC_API_KEY"
+          "A Mistral or Anthropic API key, if you want AI drafting — pasted in Settings or read from MISTRAL_API_KEY / ANTHROPIC_API_KEY"
         ],
         "faq": [
           {
@@ -1084,7 +1084,7 @@
           },
           {
             "q": "Which models does it use?",
-            "a": "DeepSeek or Claude, chosen in Settings."
+            "a": "Mistral or Claude, chosen in Settings."
           }
         ],
         "article_slug": "",
@@ -1112,7 +1112,7 @@
               ]
             },
             {
-              "feature": "AI first draft inside the editor (DeepSeek or Claude)",
+              "feature": "AI first draft inside the editor (Mistral or Claude)",
               "them": [
                 "Through a plugin",
                 false,
@@ -1570,11 +1570,11 @@
       },
       "jobscout": {
         "seo_title": "JobScout — Job Search Across LinkedIn and Local Boards, Scored Against Your Profile",
-        "seo_description": "Desktop app that collects job posts from LinkedIn, jobs.ch, jobup.ch, MyCareersFuture and JobStreet, keeps them on your computer, and scores each one against your profile with DeepSeek or a local ollama model.",
+        "seo_description": "Desktop app that collects job posts from LinkedIn, jobs.ch, jobup.ch, MyCareersFuture and JobStreet, keeps them on your computer, and scores each one against your profile with Mistral or a local ollama model.",
         "overview": [
           "Looking for a job means the same search on three or four sites, the same post seen twice under different titles, and a browser full of tabs you meant to come back to. Deciding which posts are worth an application takes longer than finding them.",
           "JobScout searches LinkedIn's public pages, without logging in, and the main local boards for one country at a time: jobs.ch and jobup.ch for Switzerland, MyCareersFuture and JobStreet for Singapore. Every job lands in one list on your computer, once, with a status you set: New, Saved, Applied or Hidden.",
-          "Each job can be scored against your profile by any OpenAI-compatible model, DeepSeek by default or ollama on your own machine. A score comes with a one-line verdict, the strengths and the gaps. Saved searches, called watches, run on their own while the app is open and notify you about new jobs above your threshold."
+          "Each job can be scored against your profile by any OpenAI-compatible model, Mistral by default or ollama on your own machine. A score comes with a one-line verdict, the strengths and the gaps. Saved searches, called watches, run on their own while the app is open and notify you about new jobs above your threshold."
         ],
         "features": [
           {
@@ -1587,7 +1587,7 @@
           },
           {
             "title": "Scored against your profile",
-            "body": "DeepSeek by default or a local ollama model gives each job a score, a one-line verdict, its strengths and its gaps. The API key is read from your environment and never written to disk."
+            "body": "Mistral by default or a local ollama model gives each job a score, a one-line verdict, its strengths and its gaps. The API key is read from your environment and never written to disk."
           },
           {
             "title": "Watches that notify you",
@@ -1601,7 +1601,7 @@
         "requirements": [
           "macOS (Apple Silicon or Intel), Windows 10 or 11 with the WebView2 Runtime, or Linux x86_64",
           "An internet connection. No LinkedIn or job-board account is needed",
-          "For scoring: a DeepSeek API key or another OpenAI-compatible endpoint, or ollama running locally",
+          "For scoring: a Mistral API key or another OpenAI-compatible endpoint, or ollama running locally",
           "For JobStreet on Windows and Linux: Python with Camoufox (pip install -U camoufox && python -m camoufox fetch)"
         ],
         "faq": [

@@ -181,7 +181,7 @@
     "ais_analytics_tagline": "Traceur d'identifiants de corrélation pour Azure Log Analytics",
     "ais_analytics_description": "Le même traceur, pointé vers un espace de travail Log Analytics plutôt que Cosmos DB. Collez un identifiant de corrélation et visualisez chaque étape qu'il a traversée — l'app détermine, à partir des données elles-mêmes, quelle colonne relie les étapes d'un même flux, puis dessine où cette valeur est allée et où elle ne l'est pas. Une voie vide est aussi parlante qu'une voie pleine.",
     "publishkit_tagline": "Gestionnaire de billets de blog propulsé par l'IA avec flux file-vers-publication",
-    "publishkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
+    "publishkit_description": "Rédigez, générez et planifiez vos billets de blog depuis votre bureau. Rédaction IA via Mistral ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication, publication automatique hebdomadaire et support multilingue (FR/EN) — le tout dans une app native.",
     "shipscreen_tagline": "L'assistant complet pour construire et publier vos apps iOS & Android",
     "shipscreen_description": "Votre compagnon idéal pour livrer des apps mobiles. Construisez, exécutez et itérez en local sur iOS et Android, puis empaquetez des artefacts de release prêts pour l'App Store et le Google Play. Gère les bundle IDs, la config de signature, les bumps de version, la génération de captures d'écran dans toutes les tailles requises, et les visuels marketing avec device frames — le tout depuis une seule app de bureau native.",
     "spreadradar_tagline": "Les écarts de prix crypto entre exchanges et Solana, en direct",
@@ -189,9 +189,9 @@
     "polishcast_tagline": "Enregistrez votre écran, obtenez une vidéo soignée : curseur fluide, zoom sur les clics",
     "polishcast_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
     "jobscout_tagline": "Les offres d'emploi de LinkedIn et des sites locaux, classées selon votre profil",
-    "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn, jobs.ch et jobup.ch en Suisse, ou de LinkedIn, MyCareersFuture et JobStreet à Singapour, dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec DeepSeek ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
+    "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn, jobs.ch et jobup.ch en Suisse, ou de LinkedIn, MyCareersFuture et JobStreet à Singapour, dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec Mistral ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
-    "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou DeepSeek, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
+    "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou Mistral, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "trackcut_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
     "trackcut_description": "Chargez un live, une émission de radio ou une cassette numérisée et obtenez un fichier par morceau. La détection des silences propose les coupures, vous confirmez ou ajustez chacune à l'oreille, puis vous exportez : MP3 sans réencodage, ou MP3/FLAC/WAV avec normalisation du volume et tags ReplayGain. Récupère aussi l'audio d'un lien YouTube.",
     "intro": "Les applications de bureau se téléchargent directement depuis cette page, pour macOS, Linux et Windows. Elles sont gratuites pour un usage personnel, éducatif et non lucratif, et les entreprises achètent une licence. Chaque page d’outil donne ses notes de version, son code source et, pour la plupart, un skill Claude.",
@@ -936,11 +936,11 @@
       },
       "gitagent": {
         "seo_title": "GitAgent — Messages de commit et pull requests par IA, sous votre contrôle",
-        "seo_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Rédige messages de commit et descriptions de PR via un modèle ollama local ou DeepSeek — rien ne touche l'historique git ni le remote sans votre accord explicite.",
+        "seo_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Rédige messages de commit et descriptions de PR via un modèle ollama local ou Mistral — rien ne touche l'historique git ni le remote sans votre accord explicite.",
         "overview": [
           "La plupart des outils git dopés à l'IA ont le même défaut : soit ce sont des générateurs de texte qui vous rendent un message de commit à coller, soit ce sont des agents qui exécutent des commandes sur votre dépôt et vous préviennent après coup. Ni l'un ni l'autre n'est ce qu'on veut sur un dépôt qui compte.",
           "GitAgent modélise le travail comme un graphe d'étapes — scanner l'arbre, rédiger le message de commit, committer, pousser, rédiger la description de PR, ouvrir la PR — et s'arrête à chacune. Vous voyez ce qu'il propose et quelle commande il va lancer avant qu'elle ne parte.",
-          "La rédaction peut tourner entièrement sur un modèle ollama local : le diff d'un dépôt privé ne quitte alors jamais votre machine. DeepSeek reste disponible si vous préférez un modèle hébergé."
+          "La rédaction peut tourner entièrement sur un modèle ollama local : le diff d'un dépôt privé ne quitte alors jamais votre machine. Mistral reste disponible si vous préférez un modèle hébergé."
         ],
         "features": [
           {
@@ -957,7 +957,7 @@
           },
           {
             "title": "Support des modèles locaux",
-            "body": "Pointez l'app vers un modèle ollama tournant sur votre machine et le contenu d'un dépôt privé n'en sort jamais. DeepSeek est disponible comme alternative hébergée."
+            "body": "Pointez l'app vers un modèle ollama tournant sur votre machine et le contenu d'un dépôt privé n'en sort jamais. Mistral est disponible comme alternative hébergée."
           },
           {
             "title": "Tout le chemin au même endroit",
@@ -967,7 +967,7 @@
         "requirements": [
           "macOS sur Apple Silicon, Windows, ou Linux x86_64",
           "git, et le CLI GitHub (gh) authentifié, pour l'ouverture des pull requests",
-          "Soit ollama en local, soit une clé API DeepSeek"
+          "Soit ollama en local, soit une clé API Mistral"
         ],
         "faq": [
           {
@@ -1039,7 +1039,7 @@
       },
       "publishkit": {
         "seo_title": "PublishKit — Gestionnaire de blog de bureau avec rédaction IA",
-        "seo_description": "Rédigez, générez et planifiez vos billets depuis une app de bureau native. Rédaction IA via DeepSeek ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication et publication automatique hebdomadaire en français et en anglais.",
+        "seo_description": "Rédigez, générez et planifiez vos billets depuis une app de bureau native. Rédaction IA via Mistral ou Claude, éditeur markdown avec aperçu en direct, flux file-vers-publication et publication automatique hebdomadaire en français et en anglais.",
         "overview": [
           "Un blog qui publie à un rythme régulier demande deux choses qu'un éditeur de texte ne donne pas : un endroit où les billets finis mais non publiés peuvent attendre, et quelque chose qui les publie le jour venu.",
           "PublishKit est une app de bureau native construite autour de cette file d'attente. Vous rédigez en markdown avec un aperçu en direct, éventuellement avec un modèle IA pour la première passe, puis vous déplacez les billets dans une file qui publie selon son propre calendrier.",
@@ -1056,7 +1056,7 @@
           },
           {
             "title": "Rédaction IA",
-            "body": "Premiers jets via DeepSeek ou Claude, dans l'éditeur plutôt que dans une fenêtre de chat séparée d'où il faut copier."
+            "body": "Premiers jets via Mistral ou Claude, dans l'éditeur plutôt que dans une fenêtre de chat séparée d'où il faut copier."
           },
           {
             "title": "Éditeur markdown avec aperçu en direct",
@@ -1071,7 +1071,7 @@
           "macOS sur Apple Silicon, Windows, ou Linux x86_64",
           "Un projet de blog organisé en content/{en,fr}/{queue,blog} — la racine du projet est demandée au premier lancement",
           "Node.js 18 ou plus : la publication appelle Node pour reconstruire l'index du site (l'installeur Windows et le script setup macOS s'en chargent)",
-          "Une clé API DeepSeek ou Anthropic pour la rédaction IA — collée dans les réglages ou lue depuis DEEPSEEK_API_KEY / ANTHROPIC_API_KEY"
+          "Une clé API Mistral ou Anthropic pour la rédaction IA — collée dans les réglages ou lue depuis MISTRAL_API_KEY / ANTHROPIC_API_KEY"
         ],
         "faq": [
           {
@@ -1084,7 +1084,7 @@
           },
           {
             "q": "Quels modèles utilise-t-elle ?",
-            "a": "DeepSeek ou Claude, au choix dans les réglages."
+            "a": "Mistral ou Claude, au choix dans les réglages."
           }
         ],
         "article_slug": "",
@@ -1112,7 +1112,7 @@
               ]
             },
             {
-              "feature": "Premier jet IA dans l'éditeur (DeepSeek ou Claude)",
+              "feature": "Premier jet IA dans l'éditeur (Mistral ou Claude)",
               "them": [
                 "Via un plugin",
                 false,
@@ -1570,11 +1570,11 @@
       },
       "jobscout": {
         "seo_title": "JobScout — Recherche d'emploi sur LinkedIn et les sites locaux, évaluée selon votre profil",
-        "seo_description": "App de bureau qui rassemble les offres d'emploi de LinkedIn, jobs.ch, jobup.ch, MyCareersFuture et JobStreet, les garde sur votre ordinateur et évalue chacune selon votre profil avec DeepSeek ou un modèle ollama local.",
+        "seo_description": "App de bureau qui rassemble les offres d'emploi de LinkedIn, jobs.ch, jobup.ch, MyCareersFuture et JobStreet, les garde sur votre ordinateur et évalue chacune selon votre profil avec Mistral ou un modèle ollama local.",
         "overview": [
           "Chercher un emploi, c'est la même recherche sur trois ou quatre sites, la même offre vue deux fois sous des titres différents, et un navigateur plein d'onglets à rouvrir plus tard. Décider quelles offres méritent une candidature prend plus de temps que de les trouver.",
           "JobScout interroge les pages publiques de LinkedIn, sans connexion, et les principaux sites locaux d'un pays à la fois : jobs.ch et jobup.ch pour la Suisse, MyCareersFuture et JobStreet pour Singapour. Chaque offre arrive une seule fois dans une liste sur votre ordinateur, avec un statut que vous choisissez : Nouvelle, Gardée, Postulée ou Masquée.",
-          "Chaque offre peut être évaluée selon votre profil par n'importe quel modèle compatible OpenAI, DeepSeek par défaut ou ollama sur votre machine. Une note vient avec un verdict en une ligne, les points forts et les manques. Les recherches enregistrées, appelées veilles, tournent seules tant que l'app est ouverte et vous signalent les nouvelles offres au-dessus de votre seuil."
+          "Chaque offre peut être évaluée selon votre profil par n'importe quel modèle compatible OpenAI, Mistral par défaut ou ollama sur votre machine. Une note vient avec un verdict en une ligne, les points forts et les manques. Les recherches enregistrées, appelées veilles, tournent seules tant que l'app est ouverte et vous signalent les nouvelles offres au-dessus de votre seuil."
         ],
         "features": [
           {
@@ -1587,7 +1587,7 @@
           },
           {
             "title": "Évaluée selon votre profil",
-            "body": "DeepSeek par défaut ou un modèle ollama local donne à chaque offre une note, un verdict en une ligne, ses points forts et ses manques. La clé d'API est lue dans votre environnement et jamais écrite sur le disque."
+            "body": "Mistral par défaut ou un modèle ollama local donne à chaque offre une note, un verdict en une ligne, ses points forts et ses manques. La clé d'API est lue dans votre environnement et jamais écrite sur le disque."
           },
           {
             "title": "Des veilles qui vous préviennent",
@@ -1601,7 +1601,7 @@
         "requirements": [
           "macOS (Apple Silicon ou Intel), Windows 10 ou 11 avec le runtime WebView2, ou Linux x86_64",
           "Une connexion internet. Aucun compte LinkedIn ni sur les sites d'emploi n'est nécessaire",
-          "Pour l'évaluation : une clé d'API DeepSeek ou un autre service compatible OpenAI, ou ollama en local",
+          "Pour l'évaluation : une clé d'API Mistral ou un autre service compatible OpenAI, ou ollama en local",
           "Pour JobStreet sous Windows et Linux : Python avec Camoufox (pip install -U camoufox && python -m camoufox fetch)"
         ],
         "faq": [

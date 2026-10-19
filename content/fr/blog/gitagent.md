@@ -67,7 +67,7 @@ Le chemin d'un répertoire de travail modifié vers une pull request ouverte est
 
 Modéliser cela explicitement comme un graphe d'étapes, plutôt que comme un unique bouton « fais le truc », est ce qui fait de chaque barrière un point d'arrêt naturel plutôt qu'une interruption greffée sur une boucle autonome.
 
-[GitAgent](/fr/apps/gitagent) implémente exactement cela. C'est une app de bureau native en Rust, elle rédige avec un modèle ollama local ou avec DeepSeek, et rien ne touche l'historique git ni le remote sans un accord explicite sur cette étape précise. La création de PR passe par le CLI GitHub : cette étape est donc limitée à GitHub pour l'instant ; commit et push fonctionnent avec n'importe quel remote.
+[GitAgent](/fr/apps/gitagent) implémente exactement cela. C'est une app de bureau native en Rust, elle rédige avec un modèle ollama local ou avec Mistral, et rien ne touche l'historique git ni le remote sans un accord explicite sur cette étape précise. La création de PR passe par le CLI GitHub : cette étape est donc limitée à GitHub pour l'instant ; commit et push fonctionnent avec n'importe quel remote.
 
 L'app est marquée en cours de développement — le chemin commit-vers-PR fonctionne, mais l'interface bouge encore. [Télécharge-la](/fr/apps/gitagent) pour macOS, Windows ou Linux : gratuite pour un usage personnel, éducatif et non lucratif, licence requise pour l'usage commercial.
 
