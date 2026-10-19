@@ -157,7 +157,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/publishkit',
     name: 'PublishKit',
     tech: 'Rust · Dioxus · DeepSeek / Claude · Markdown',
-    status: 'beta',
+    status: 'live',
     tags: ['blog'],
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${publishkitDl}/publishkit-macos-arm64.tar.gz` },
@@ -213,7 +213,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/spreadradar',
     name: 'SpreadRadar',
     tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
-    status: 'beta',
+    status: 'live',
     tags: ['crypto'],
     applicationCategory: 'FinanceApplication',
     pro: { edition: 'pro', product: 'spreadwatch' },
@@ -230,7 +230,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/polishcast',
     name: 'PolishCast',
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
-    status: 'beta',
+    status: 'live',
     tags: ['tools'],
     applicationCategory: 'MultimediaApplication',
     downloads: [
@@ -245,7 +245,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/jobscout',
     name: 'JobScout',
     tech: 'Rust · Dioxus · DeepSeek / ollama · WebKit · Camoufox',
-    status: 'beta',
+    status: 'live',
     tags: ['ai'],
     applicationCategory: 'BusinessApplication',
     downloads: [
