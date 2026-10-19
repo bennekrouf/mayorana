@@ -82,10 +82,9 @@ export function DownloadButtons({ app, appName, downloads }: DownloadButtonsProp
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">
-        {tApps('download_label')}
-      </p>
-      <div className="flex flex-wrap gap-2">
+      {/* No visible label: the OS icons say it. The group still names itself
+          for screen readers, which otherwise hear only "macOS (Apple Silicon)". */}
+      <div role="group" aria-label={tApps('download_label')} className="flex flex-wrap gap-2">
         {downloads.map((dl) => (
           <a
             key={dl.os}
