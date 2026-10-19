@@ -2,8 +2,21 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-18T20:59:55Z",
+  "generated_at": "2026-10-19T08:24:12Z",
   "releases": [
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "SpreadRadar now includes the necessary Windows C runtime libraries, ensuring it runs on any PC without requiring additional installations. This makes the app more portable and easier to use for new users."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.12",
       "tag": "v0.1.12",

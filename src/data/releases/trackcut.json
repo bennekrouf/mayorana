@@ -2,8 +2,21 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-19T05:38:08Z",
+  "generated_at": "2026-10-19T08:21:46Z",
   "releases": [
+    {
+      "version": "0.1.24",
+      "tag": "v0.1.24",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.23",
       "tag": "v0.1.23",

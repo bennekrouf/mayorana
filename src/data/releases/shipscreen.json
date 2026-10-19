@@ -2,8 +2,21 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-18T21:14:04Z",
+  "generated_at": "2026-10-19T08:31:30Z",
   "releases": [
+    {
+      "version": "0.1.29",
+      "tag": "v0.1.29",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "ShipScreen now links the Windows C runtime statically, ensuring it runs on any PC without requiring the Visual C++ Redistributable. This makes the application more portable and easier to distribute."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.28",
       "tag": "v0.1.28",
