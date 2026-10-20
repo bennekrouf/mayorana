@@ -26,6 +26,14 @@ interface FormData {
 function ContactFormWithParams() {
   const searchParams = useSearchParams();
   const service = searchParams.get('service');
+  // The desktop apps' Feedback link adds ?app=GitAgent&v=1.4.0, so a message
+  // says which app and version it is about without asking the sender.
+  const fromApp = (() => {
+    const app = searchParams.get('app')?.trim().slice(0, 40);
+    if (!app) return null;
+    const v = searchParams.get('v')?.trim().slice(0, 20);
+    return v ? `${app} ${v}` : app;
+  })();
   const t = useTranslations('contact');
   const tCommon = useTranslations('common');
   const locale = useLocale();
@@ -102,7 +110,9 @@ function ContactFormWithParams() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(
+          fromApp ? { ...data, message: `[${fromApp}]\n\n${data.message}` } : data
+        ),
       });
 
       if (!response.ok) {
@@ -357,6 +367,11 @@ function ContactFormWithParams() {
                     <label htmlFor="message" className="font-medium">
                       {t('message')} <span className="text-primary">*</span>
                     </label>
+                    {fromApp && (
+                      <p className="text-sm text-muted-foreground">
+                        {t('from_app', { app: fromApp })}
+                      </p>
+                    )}
                     <textarea
                       id="message"
                       rows={5}
