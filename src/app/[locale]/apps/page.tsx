@@ -71,6 +71,7 @@ const DEVELOPER_ORDER: string[] = [
   'polishcast',
   'spreadradar',
   'jobscout',
+  'surface-watch',
 ];
 
 // The cloud solutions: hosted products, used on their own sites.
@@ -85,6 +86,7 @@ const FILTER_TAGS: { id: string; label: string }[] = [
   { id: 'audio', label: 'Audio' },
   { id: 'ai', label: 'AI' },
   { id: 'crypto', label: 'Crypto' },
+  { id: 'security', label: 'Security' },
   { id: 'tools', label: 'Tools' },
 ];
 

@@ -75,6 +75,7 @@ const trackcutDl = 'https://mayorana.ch/downloads/trackcut/latest';
 const spreadradarDl = 'https://mayorana.ch/downloads/spreadradar/latest';
 const polishcastDl = 'https://mayorana.ch/downloads/polishcast/latest';
 const jobscoutDl = 'https://mayorana.ch/downloads/jobscout/latest';
+const surfaceWatchDl = 'https://mayorana.ch/downloads/surface-watch/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -255,6 +256,21 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${jobscoutDl}/jobscout-setup.exe` },
     ],
   },
+  {
+    id: 'surface-watch',
+    pro: { edition: 'pro' },
+    source: 'https://github.com/bennekrouf/surface-watch',
+    name: 'Surface Watch',
+    tech: 'Rust · Dioxus · REA · Node.js · Chrome',
+    status: 'beta',
+    tags: ['security'],
+    applicationCategory: 'SecurityApplication',
+    downloads: [
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${surfaceWatchDl}/surface-watch-macos-arm64.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${surfaceWatchDl}/surface-watch-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${surfaceWatchDl}/surface-watch-setup.exe` },
+    ],
+  },
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
@@ -270,6 +286,7 @@ export const appI18nKey: Record<string, string> = {
   spreadradar: 'spreadradar',
   polishcast: 'polishcast',
   jobscout: 'jobscout',
+  'surface-watch': 'surface_watch',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -322,6 +339,7 @@ export const releaseNotesTools: string[] = [
   'spreadradar',
   'polishcast',
   'jobscout',
+  'surface-watch',
 ];
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);
