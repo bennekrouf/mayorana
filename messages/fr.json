@@ -455,6 +455,8 @@
   },
   "app_detail": {
     "back_to_apps": "Toutes les apps & outils",
+    "panel_close": "Fermer",
+    "panel_open_page": "Ouvrir la page complète",
     "overview_heading": "Vue d'ensemble",
     "features_heading": "Ce que fait l'app",
     "requirements_heading": "Prérequis",

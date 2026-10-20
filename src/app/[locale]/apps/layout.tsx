@@ -18,6 +18,19 @@ export async function generateMetadata({
   });
 }
 
-export default function AppsLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+// `panel` is the parallel slot a tool's detail opens in when a card is clicked
+// on the catalogue — see @panel/(.)[slug]. Empty everywhere else.
+export default function AppsLayout({
+  children,
+  panel,
+}: {
+  children: React.ReactNode;
+  panel: React.ReactNode;
+}) {
+  return (
+    <>
+      {children}
+      {panel}
+    </>
+  );
 }
