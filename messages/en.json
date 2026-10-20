@@ -455,6 +455,8 @@
   },
   "app_detail": {
     "back_to_apps": "All apps & tools",
+    "panel_close": "Close",
+    "panel_open_page": "Open full page",
     "overview_heading": "Overview",
     "features_heading": "What it does",
     "requirements_heading": "Requirements",

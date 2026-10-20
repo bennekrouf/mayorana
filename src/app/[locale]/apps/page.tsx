@@ -151,8 +151,10 @@ function ToolActionButtons({ action }: { action: ToolAction }) {
   }
 }
 
-// Where a click anywhere on the card goes: the tool's own page, or for a web
-// product with no page here, its site. The link sits on the name and its
+// Where a click anywhere on the card goes: the tool's detail, which opens in a
+// side panel over this page (the intercepted route in @panel), or for a web
+// product with no page here, its site. scroll={false} keeps the catalogue
+// where it was under the panel. The link sits on the name and its
 // ::after stretches over the whole card (the card is `relative`), so the
 // card is one target without nesting the buttons inside an <a>.
 function CardLink({ tool }: { tool: Tool }) {
@@ -160,7 +162,7 @@ function CardLink({ tool }: { tool: Tool }) {
     "after:absolute after:inset-0 after:content-[''] hover:underline underline-offset-4 focus-visible:outline-none";
   if (tool.detailHref) {
     return (
-      <Link href={tool.detailHref} className={stretch}>
+      <Link href={tool.detailHref} scroll={false} className={stretch}>
         {tool.name}
       </Link>
     );
@@ -191,6 +193,8 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
+      whileHover={{ y: -3, transition: { duration: 0.2 } }}
+      whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
     >
       <div className="flex items-start justify-between mb-3 gap-2">
         {/* Logo and name share the row, like the name alone on the other
@@ -231,6 +235,7 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
             {tool.detailHref && (
               <Link
                 href={tool.detailHref}
+                scroll={false}
                 className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 {tApps('promo_details')}
