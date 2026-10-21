@@ -6,8 +6,7 @@
 
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { ArrowLeft, ArrowRight, Check, Download, Github, Scale } from 'lucide-react';
-import { BuyProButton } from '@/components/ui/BuyProButton';
+import { ArrowLeft, ArrowRight, Check, Download, Github, Scale, Sparkles } from 'lucide-react';
 import { ComparisonTable, type Comparison } from '@/components/ui/ComparisonTable';
 import {
   DataSourceBadge,
@@ -249,11 +248,18 @@ export async function ToolDetailContent({
               </div>
             )}
 
-            {/* The paid edition, for the tools that have one. */}
+            {/* Pro comes with a plan; the pricing page highlights the ones
+                that include this tool. */}
             {tool.pro && (
               <div>
-                <BuyProButton product={tool.pro.product ?? tool.id} edition={tool.pro.edition} name={tool.name} />
-                <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('buy_pro_note')}</p>
+                <Link
+                  href={`/${locale}/pricing?app=${tool.id}`}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  {t('plans_button', { name: tool.name })}
+                </Link>
+                <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('plans_note', { name: tool.name })}</p>
               </div>
             )}
           </div>
