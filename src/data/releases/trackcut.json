@@ -2,8 +2,35 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-19T08:21:46Z",
+  "generated_at": "2026-10-21T09:48:34Z",
   "releases": [
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "TrackCut Pro now comes with a monthly plan on mayorana.ch instead of a one-time licence key. Click TrackCut at the top of the file list and paste the licence number from the plan's email (like ABCDE-FGHJK-LMNPQ-RSTUV). TrackCut checks it when it starts and once a day, and Pro keeps working for a week without a connection.",
+            "The Pro window shows your plan, the AI credits left this month and when the plan renews. Manage subscription opens the page where you change or cancel it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.25",
+      "tag": "v0.1.25",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback link beside the version number opens the contact form with TrackCut and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.24",
       "tag": "v0.1.24",

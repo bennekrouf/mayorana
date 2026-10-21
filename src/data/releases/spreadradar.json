@@ -2,8 +2,35 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-19T08:24:12Z",
+  "generated_at": "2026-10-21T09:46:34Z",
   "releases": [
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "SpreadRadar Pro now comes with a monthly plan on mayorana.ch instead of a one-time licence key. Paste the licence number from the plan's email (like ABCDE-FGHJK-LMNPQ-RSTUV) in the Pro window. SpreadRadar checks it when it starts and once a day, and Pro keeps working for a week without a connection.",
+            "The Pro window shows your plan, the AI credits left this month and when the plan renews. Manage subscription opens the page where you change or cancel it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback button next to MCP opens the contact form with SpreadRadar and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.13",
       "tag": "v0.1.13",

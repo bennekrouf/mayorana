@@ -2,8 +2,80 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-19T08:18:32Z",
+  "generated_at": "2026-10-21T09:39:07Z",
   "releases": [
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "JobScout Pro now comes with a monthly plan on mayorana.ch instead of a one-time licence key. Paste the licence number from the plan's email (like ABCDE-FGHJK-LMNPQ-RSTUV) in the Pro window. JobScout checks it when it starts and once a day, and Pro keeps working for a week without a connection.",
+            "The Pro window shows your plan, the AI credits left this month and when the plan renews. Manage subscription opens the page where you change or cancel it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Feedback and mayorana.ch links at the bottom of the sidebar. Feedback opens the contact form with JobScout and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Profile, Watches, Pro, MCP and Settings moved from the bottom of the sidebar to a bar across the top of the window, so the sidebar keeps to the search."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows, the taskbar and the window's title bar show the JobScout icon instead of a generic one.",
+            "On Windows, the country buttons show flags instead of two-letter codes such as CH and SG. The flags now look the same on every system."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Search by contract type. Tick Permanent (CDI), Freelance or both in the sidebar and the search keeps to those contracts on the boards that can filter by them: LinkedIn, France Travail, Arbeitsagentur and Reed. The sidebar names the ones available in the country you have loaded; the other boards still bring every contract. With both ticked, Arbeitsagentur and Reed cannot leave out fixed-term jobs, so they may show some. Watches keep the contract types of the search they were made from."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The country buttons at the top of the sidebar show only their flags, so they fit in a row or two and leave more room for the search. Hover a flag to see which country it is."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A new search no longer shows the jobs from your previous searches mixed in with its own. Once you search, the list shows only what that search found, including jobs you already had, and the status tabs and filter still work inside it. Click \"Show all jobs\" above the list to see every job again. Watches running in the background leave the list as it is."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.6",
       "tag": "v0.1.6",

@@ -2,8 +2,35 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-19T08:31:30Z",
+  "generated_at": "2026-10-21T09:54:10Z",
   "releases": [
+    {
+      "version": "0.1.31",
+      "tag": "v0.1.31",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "ShipScreen Pro now comes with a monthly plan on mayorana.ch instead of a one-time licence key. Paste the licence number from the plan's email (like ABCDE-FGHJK-LMNPQ-RSTUV) in the Pro window. ShipScreen checks it when it starts and once a day, and Pro keeps working for a week without a connection.",
+            "The Pro window shows your plan, the AI credits left this month and when the plan renews. Manage subscription opens the page where you change or cancel it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.30",
+      "tag": "v0.1.30",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback button under Settings and MCP, and Feedback and mayorana.ch links on the projects screen, open the contact form with ShipScreen and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.29",
       "tag": "v0.1.29",

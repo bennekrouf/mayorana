@@ -2,8 +2,35 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-19T08:16:52Z",
+  "generated_at": "2026-10-21T09:48:53Z",
   "releases": [
+    {
+      "version": "0.1.19",
+      "tag": "v0.1.19",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "PolishCast Pro now comes with a monthly plan on mayorana.ch instead of a one-time licence key. Paste the licence number from the plan's email (like ABCDE-FGHJK-LMNPQ-RSTUV) in the Pro window. PolishCast checks it when it starts and once a day, and Pro keeps working for a week without a connection.",
+            "The Pro window shows your plan, the AI credits left this month and when the plan renews. Manage subscription opens the page where you change or cancel it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.18",
+      "tag": "v0.1.18",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback button next to MCP in the sidebar opens the contact form with PolishCast and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.17",
       "tag": "v0.1.17",

@@ -2,8 +2,40 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-19T08:18:07Z",
+  "generated_at": "2026-10-20T15:14:01Z",
   "releases": [
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback button in the top bar opens the contact form with PublishKit and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The Windows installer no longer asks for administrator rights. PublishKit now installs for your account only, in your user folder, and Node.js is set up the same way, so you can install on a work PC without an admin password. The installer still offers an install for all users, and an existing all-users install is updated in place."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The app icon has been updated to a new design, featuring a page with a folded corner and text lines, along with a paper plane leaving it. The new icon gives a modern and cohesive look to the application."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.14",
       "tag": "v0.1.14",

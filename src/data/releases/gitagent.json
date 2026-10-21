@@ -2,8 +2,103 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-19T07:03:47Z",
+  "generated_at": "2026-10-21T09:48:02Z",
   "releases": [
+    {
+      "version": "0.1.116",
+      "tag": "v0.1.116",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "api0 is now one of the hosted models under Settings → Model provider and on the first-run screen. It needs no API key of its own: your GitAgent Pro licence is enough, and the model's use comes out of your plan's monthly AI credits. Test connection shows how many credits are left this month.",
+            "When a hosted model refuses a request, the step's log now shows the provider's own explanation instead of the raw reply around it."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "GitAgent Pro now comes with a monthly plan from mayorana.ch. Subscribing emails you a licence number such as `ABCDE-FGHJK-LMNPQ-RSTUV`: paste it in the GitAgent Pro window, in any case, with or without the dashes. The window shows your plan, the apps it includes, the AI credits left this month and when it renews, and Manage subscription opens the page where you change or cancel it.",
+            "GitAgent checks your licence when it starts and once a day. Without a connection Pro keeps working for seven days after the last check that got through. The free version's five repositories work as before, online or not.",
+            "Opening a folder from the home screen now shows that it is being checked: the folder's row spins and counts the repositories as each one is reached (**Checking 3/12**), the other folders step back until it is done, and **Open folder…** and **Refresh** spin while they work. Before, the only sign was a line of text under the list, so a slow check looked like nothing was happening."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.115",
+      "tag": "v0.1.115",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback button in the top bar, and Feedback and mayorana.ch links under the welcome screen, open the contact form with GitAgent and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.114",
+      "tag": "v0.1.114",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Opening a folder now checks that you can reach every repository in it before the window opens. Before, a repository you had no access to, such as an Azure DevOps project you were never added to, could leave the new window blank forever on Windows. Now the welcome screen names each repository it could not reach and shows git's reason. You can fix access and try again, or open the folder anyway.",
+            "When a merge stops on conflicts, the button that finishes the merge now waits until every file is resolved. It names the files git is still waiting on and points you to Resolve conflicts above it, including Mark resolved for a file you fixed in your editor. Before, the button could be clicked too early and only showed git's \"unmerged files\" error, with no hint of what to do next."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.113",
+      "tag": "v0.1.113",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Approving a step from its panel over the run map, such as a release, now keeps the panel open on the step's log while it runs. The panel closes once the step succeeds. If the step fails, the panel stays open on the error. Closing the panel yourself or moving to another step still works as before."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "When a run stops because Azure DevOps does not accept your Azure sign-in (TF400813, \"not authorized\"), the error now explains why and what to do: check your access to the organization, sign in to the tenant it is connected to, enroll in multi-factor authentication if that tenant asks for it, or use a personal access token instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.112",
+      "tag": "v0.1.112",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Approving a step from the repository list now closes that step's panel over the run map, as the Approve button in the panel itself does. Before, the panel stayed open on a step that had already moved on.",
+            "When a run stops because the GitHub CLI is not signed in, the error now walks you through `gh auth login` step by step, offers the token alternative, and shows what `gh auth status` reported. It also tells you when one account is signed in but another has a stale sign-in, which fails the check too."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.111",
+      "tag": "v0.1.111",
+      "date": "2026-10-19",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The Approve button in the repository list now also shows for a step a trusted run stopped at, such as release notes, a script or a deploy. Before, those rows only said the run needed you, and approving meant opening the run. Hover the button to read why the run stopped before you approve."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.110",
       "tag": "v0.1.110",
