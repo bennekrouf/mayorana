@@ -1,18 +1,16 @@
 'use client';
 
 // The plans on sale, an email field and a Subscribe button on each plan. No
-// sign-in: the email is where the licence goes. With ?app=<tool id> (from a
-// tool's page) the plans that make that tool Pro are highlighted.
+// sign-in: the email is where the licence goes.
 
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Check, Loader2, Sparkles } from 'lucide-react';
-import { appI18nKey, planProductId, toolsForPlanProducts, type DesktopToolConfig } from '@/data/tools';
+import { appI18nKey, toolsForPlanProducts } from '@/data/tools';
 import {
   creditUses,
   fetchPlans,
   formatPlanPrice,
-  planIncludes,
   plausibleEmail,
   startCheckout,
   type Plan,
@@ -22,7 +20,7 @@ import {
 type Load = { kind: 'loading' } | ({ kind: 'ready' } & PlanCatalogue) | { kind: 'error' };
 type Problem = 'email' | 'taken' | 'error' | null;
 
-export function PlanPicker({ highlight }: { highlight?: DesktopToolConfig }) {
+export function PlanPicker() {
   const t = useTranslations('pricing');
   const locale = useLocale();
   const [load, setLoad] = useState<Load>({ kind: 'loading' });
@@ -30,7 +28,6 @@ export function PlanPicker({ highlight }: { highlight?: DesktopToolConfig }) {
   const [busyPlan, setBusyPlan] = useState<string | null>(null);
   const [problem, setProblem] = useState<Problem>(null);
   const emailRef = useRef<HTMLInputElement>(null);
-  const product = highlight ? planProductId(highlight) : undefined;
 
   useEffect(() => {
     let cancelled = false;
@@ -106,23 +103,9 @@ export function PlanPicker({ highlight }: { highlight?: DesktopToolConfig }) {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {load.plans.map((plan) => {
           const tools = toolsForPlanProducts(plan.products);
-          const includesHighlight = !!product && planIncludes(plan, product);
-          // The highlighted app's line first.
-          const uses = creditUses(plan.monthly_credits, load.appUses).sort(
-            (a, b) => Number(b.tool === highlight?.id) - Number(a.tool === highlight?.id),
-          );
+          const uses = creditUses(plan.monthly_credits, load.appUses);
           return (
-            <div
-              key={plan.id}
-              className={`flex flex-col rounded-xl border p-6 bg-background transition-opacity ${
-                includesHighlight ? 'border-primary ring-2 ring-primary/40' : 'border-border'
-              } ${product && !includesHighlight ? 'opacity-60' : ''}`}
-            >
-              {includesHighlight && (
-                <span className="self-start mb-3 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                  {t('includes_app', { name: highlight!.name })}
-                </span>
-              )}
+            <div key={plan.id} className="flex flex-col rounded-xl border border-border p-6 bg-background">
               <h2 className="text-xl font-bold">{plan.name}</h2>
               <p className="mt-2">
                 <span className="text-3xl font-semibold">{formatPlanPrice(plan, locale)}</span>

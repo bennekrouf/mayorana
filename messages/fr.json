@@ -161,7 +161,6 @@
     "eyebrow": "Formules",
     "title": "Une formule, Pro dans vos apps, des crédits IA chaque mois",
     "intro": "Chaque formule active Pro dans les apps qu'elle liste et recharge vos crédits IA chaque mois. Abonnez-vous avec votre e-mail : le numéro de licence débloque toutes les apps de la formule.",
-    "intro_app": "Les formules mises en avant incluent {name} Pro. Chacune recharge aussi vos crédits IA chaque mois ; abonnez-vous avec votre e-mail et le numéro de licence débloque toutes les apps de la formule.",
     "loading": "Chargement des formules…",
     "unavailable": "Les formules n'ont pas pu être chargées. Réessayez dans un instant.",
     "email_label": "Votre e-mail",
@@ -170,7 +169,6 @@
     "email_invalid": "Indiquez l'e-mail auquel envoyer votre licence.",
     "already_subscribed": "{email} a déjà une formule. Pour la changer ou la résilier, ouvrez la fenêtre de licence dans l'une de vos apps (Get Pro…) et gérez votre abonnement depuis là.",
     "checkout_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
-    "includes_app": "Inclut {name} Pro",
     "per_month": "/ mois",
     "credits": "{count, plural, one {# crédit IA} other {# crédits IA}} chaque mois",
     "all_apps": "Pro dans toutes les apps Mayorana",
@@ -1760,7 +1758,7 @@
     "comparison_na": "Sans objet",
     "comparison_note": "Comparaison faite en octobre 2026 à partir de la documentation publique de chaque produit. Une information dépassée ?",
     "comparison_note_link": "Dites-le-nous",
-    "plans_button": "Voir les formules avec {name} Pro",
+    "plans_button": "Voir les formules",
     "plans_note": "{name} Pro est inclus dans un abonnement mensuel, qui apporte aussi des crédits IA. Abonnez-vous avec votre e-mail ; votre numéro de licence s'affiche juste après et vous est envoyé par e-mail."
   },
   "app_releases": {

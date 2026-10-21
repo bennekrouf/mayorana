@@ -62,15 +62,15 @@ export function creditUses(monthlyCredits: number, appUses: AppUse[]) {
   });
 }
 
-export function planIncludes(plan: Pick<Plan, 'products'>, product: string) {
-  return plan.products.includes('*') || plan.products.includes(product);
-}
-
 export async function fetchPlans(): Promise<PlanCatalogue> {
   const response = await fetch(`${GATEWAY_URL}/api/plans`);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const body = await response.json();
-  const plans: Plan[] = (body.plans ?? []).map((p: Plan) => ({ ...p, products: p.products ?? [] }));
+  // A plan priced at 0 is the apps' free allowance, never an offer: the
+  // gateway no longer lists it, and an older one that does must not show it.
+  const plans: Plan[] = (body.plans ?? [])
+    .filter((p: Plan) => p.price_cents > 0)
+    .map((p: Plan) => ({ ...p, products: p.products ?? [] }));
   return {
     plans: [...plans].sort((a, b) => a.sort_order - b.sort_order),
     appUses: Array.isArray(body.app_uses) ? body.app_uses : [],

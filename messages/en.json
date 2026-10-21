@@ -161,7 +161,6 @@
     "eyebrow": "Plans",
     "title": "One plan, Pro in your apps, AI credits every month",
     "intro": "Each plan makes Pro the apps it lists and refills your AI credits every month. Subscribe with your email: the licence number unlocks every app in the plan.",
-    "intro_app": "The highlighted plans include {name} Pro. Each also refills your AI credits every month; subscribe with your email and the licence number unlocks every app in the plan.",
     "loading": "Loading the plans…",
     "unavailable": "The plans couldn't be loaded right now. Please try again in a moment.",
     "email_label": "Your email",
@@ -170,7 +169,6 @@
     "email_invalid": "Enter the email your licence should go to.",
     "already_subscribed": "{email} already has a plan. To change or cancel it, open the licence window in one of your apps (Get Pro…) and manage your subscription from there.",
     "checkout_error": "The payment page couldn't be opened. Please try again in a moment.",
-    "includes_app": "Includes {name} Pro",
     "per_month": "/ month",
     "credits": "{count, plural, one {# AI credit} other {# AI credits}} every month",
     "all_apps": "Pro in every Mayorana app",
@@ -1760,7 +1758,7 @@
     "comparison_na": "Not applicable",
     "comparison_note": "Compared in October 2026 from each product's public documentation. Something out of date?",
     "comparison_note_link": "Tell us",
-    "plans_button": "See the plans with {name} Pro",
+    "plans_button": "See the plans",
     "plans_note": "{name} Pro comes with a monthly plan, which also brings AI credits. Subscribe with your email; your licence number is shown right after and sent by email."
   },
   "app_releases": {

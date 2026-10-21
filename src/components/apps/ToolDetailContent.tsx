@@ -248,16 +248,15 @@ export async function ToolDetailContent({
               </div>
             )}
 
-            {/* Pro comes with a plan; the pricing page highlights the ones
-                that include this tool. */}
+            {/* Pro comes with a plan, on the one pricing page for every app. */}
             {tool.pro && (
               <div>
                 <Link
-                  href={`/${locale}/pricing?app=${tool.id}`}
+                  href={`/${locale}/pricing`}
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors"
                 >
                   <Sparkles className="w-4 h-4" />
-                  {t('plans_button', { name: tool.name })}
+                  {t('plans_button')}
                 </Link>
                 <p className="text-xs text-muted-foreground mt-3 max-w-2xl">{t('plans_note', { name: tool.name })}</p>
               </div>
