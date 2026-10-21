@@ -29,6 +29,7 @@ const Navbar: React.FC = () => {
     { name: t('azure_tools'), path: '/solutions/azure' },
     { name: t('ai_agents'), path: '/solutions/ai-agents' },
     { name: 'Apps', path: '/apps' },
+    { name: t('pricing'), path: '/pricing' },
     { name: t('blog'), path: '/blog' },
     { name: t('contact'), path: '/contact' }
   ];

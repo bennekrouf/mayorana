@@ -15,6 +15,8 @@
     "ai_agents_description": "api0 est une passerelle MCP en Rust qui transforme vos API REST existantes en outils sécurisés pour Claude et les autres clients compatibles MCP. Connectez Claude à votre backend en moins de cinq minutes.",
     "founding_title": "Utilisateurs fondateurs",
     "founding_description": "Les outils de bureau Mayorana sont gratuits pour les particuliers. Connectez-vous, répondez à deux questions, et ils restent gratuits pour vous.",
+    "pricing_title": "Tarifs",
+    "pricing_description": "Un abonnement mensuel active Pro dans les apps de bureau Mayorana — GitAgent, JobScout, TrackCut, PolishCast, SpreadRadar — et apporte des crédits IA chaque mois.",
     "apps_title": "Apps & Outils",
     "apps_description": "api0, la passerelle MCP en Rust pour les agents IA, et des outils de bureau natifs en Rust pour Azure Integration Services et Git. Gratuits pour un usage personnel.",
     "privacy_title": "Politique de confidentialité",
@@ -28,6 +30,7 @@
     "ai_agents": "Agents IA",
     "portfolio": "Portfolio",
     "blog": "Blog",
+    "pricing": "Tarifs",
     "about": "À propos",
     "contact": "Contact",
     "get_started": "NOUS CONTACTER",
@@ -153,6 +156,51 @@
     "thanks_body": "C'est exactement ce dont on avait besoin. On le lira nous-mêmes et, si on a une question, on vous écrira une fois. En attendant, les outils sont à vous.",
     "thanks_apps": "Retour aux outils",
     "error": "Ça n'est pas passé. Réessayez ou écrivez-nous directement à mb@mayorana.ch."
+  },
+  "pricing": {
+    "eyebrow": "Formules",
+    "title": "Une formule, Pro dans vos apps, des crédits IA chaque mois",
+    "intro": "Chaque formule active Pro dans les apps qu'elle liste et recharge vos crédits IA chaque mois. Abonnez-vous avec votre e-mail : le numéro de licence débloque toutes les apps de la formule.",
+    "intro_app": "Les formules mises en avant incluent {name} Pro. Chacune recharge aussi vos crédits IA chaque mois ; abonnez-vous avec votre e-mail et le numéro de licence débloque toutes les apps de la formule.",
+    "loading": "Chargement des formules…",
+    "unavailable": "Les formules n'ont pas pu être chargées. Réessayez dans un instant.",
+    "email_label": "Votre e-mail",
+    "email_placeholder": "vous@exemple.ch",
+    "email_note": "Votre numéro de licence est envoyé ici. Aucun compte à créer.",
+    "email_invalid": "Indiquez l'e-mail auquel envoyer votre licence.",
+    "already_subscribed": "{email} a déjà une formule. Pour la changer ou la résilier, ouvrez la fenêtre de licence dans l'une de vos apps (Get Pro…) et gérez votre abonnement depuis là.",
+    "checkout_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
+    "includes_app": "Inclut {name} Pro",
+    "per_month": "/ mois",
+    "credits": "{count, plural, one {# crédit IA} other {# crédits IA}} chaque mois",
+    "all_apps": "Pro dans toutes les apps Mayorana",
+    "app_pro": "{name} Pro",
+    "uses_heading": "Ce que vos crédits permettent, à combiner librement",
+    "uses": {
+      "gitagent": "{count, plural, one {# dépôt} other {# dépôts}} avec GitAgent chaque mois",
+      "shipscreen": "{count, plural, one {# app mobile publiée} other {# apps mobiles publiées}} avec ShipScreen",
+      "trackcut": "{count, plural, one {# piste à découper} other {# pistes à découper}} avec TrackCut",
+      "polishcast": "{count, plural, one {# vidéo} other {# vidéos}} avec PolishCast",
+      "jobscout": "{count, plural, one {# pays prospecté} other {# pays prospectés}} avec JobScout",
+      "spreadradar": "{count, plural, one {# crypto suivie} other {# cryptos suivies}} pour leur spread avec SpreadRadar",
+      "surface_watch": "{count, plural, one {# app à pentester} other {# apps à pentester}} avec Surface Watch"
+    },
+    "subscribe": "S'abonner",
+    "fine_print": "Facturé chaque mois par Stripe ; résiliable à tout moment, Pro reste actif jusqu'à la fin du mois payé. Les crédits IA non utilisés ne sont pas reportés.",
+    "thanks_title": "Merci pour votre abonnement",
+    "thanks_loading": "Récupération de votre numéro de licence…",
+    "thanks_pending": "Votre paiement est en cours de confirmation. Cela prend généralement quelques secondes…",
+    "thanks_emailed": "Votre paiement est toujours en cours de confirmation. Votre numéro de licence vous sera envoyé par e-mail dès qu'il le sera — en général en moins d'une minute.",
+    "thanks_intro": "Vous avez la formule {plan}. Une copie de votre numéro de licence a été envoyée à {email}.",
+    "thanks_licence_label": "Numéro de licence",
+    "thanks_copy": "Copier le numéro de licence",
+    "thanks_copied": "Copié",
+    "thanks_credits": "{count, plural, one {# crédit IA restant} other {# crédits IA restants}} ce mois-ci ; la formule se renouvelle le {date}.",
+    "thanks_how_heading": "Collez-le dans vos apps",
+    "thanks_manage": "Pour changer ou résilier votre formule plus tard, ouvrez la fenêtre de licence dans l'une de ces apps.",
+    "thanks_missing": "Nous n'avons pas trouvé cet abonnement. Si vous venez de payer, votre numéro de licence arrive par e-mail.",
+    "thanks_error": "Votre numéro de licence ne peut pas s'afficher pour l'instant. Il vous a aussi été envoyé par e-mail ; s'il n'arrive pas,",
+    "thanks_contact": "contactez-nous."
   },
   "download_gate": {
     "title": "C'est gratuit. On aimerait juste votre avis.",
@@ -991,7 +1039,7 @@
         "article_slug": "ai-commit-messages-without-giving-up-control-fr",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 5 dépôts. L'usage commercial — y compris un consultant indépendant en mission — requiert GitAgent Pro, qui couvre aussi tous vos dépôts, dans tous vos dossiers. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 5 dépôts tous dossiers confondus (les autres sont affichés verrouillés). L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert GitAgent Pro, qui couvre aussi tous vos dépôts. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_how": "Ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez le numéro de licence.",
         "comparison": {
           "competitors": [
             "aicommits",
@@ -1308,7 +1356,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec l'export des 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission — requiert TrackCut Pro, qui exporte aussi toutes les pistes. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec l'export limité aux 10 premières pistes de chaque enregistrement. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert TrackCut Pro, qui exporte aussi toutes les pistes. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez TrackCut et cliquez sur Get Pro… en haut de la liste des fichiers (avant la version 0.1.14, cliquez sur le nom Splitter à cet endroit), puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_how": "Ouvrez TrackCut, cliquez sur Get Pro… en haut de la liste des fichiers et collez le numéro de licence.",
         "comparison": {
           "competitors": [
             "Audacity",
@@ -1419,7 +1467,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 3 actifs suivis à la fois. L'usage commercial — y compris un consultant indépendant en mission — requiert SpreadRadar Pro, qui suit aussi autant d'actifs que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 3 actifs suivis à la fois, tous les onglets, toutes les plateformes et le trading. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert SpreadRadar Pro, qui suit aussi autant d'actifs que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez SpreadRadar et cliquez sur Get Pro… à droite de la barre d'onglets, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_how": "Ouvrez SpreadRadar, cliquez sur Get Pro… à droite de la barre d'onglets et collez le numéro de licence.",
         "comparison": {
           "competitors": [
             "Sharpe Terminal",
@@ -1538,7 +1586,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit : export de 10 vidéos différentes ; réexporter l'une d'elles est gratuit, et l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Gratuit : export de 10 vidéos différentes ; l'enregistrement et le montage ne sont jamais limités. Pro : export de toutes vos vidéos, pour un usage personnel ou professionnel. C'est la seule chose à acheter : il n'y a pas de licence commerciale séparée.",
-        "pro_how": "Pour l'activer, ouvrez PolishCast, cliquez sur Get Pro… dans la barre latérale et collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé.",
+        "pro_how": "Ouvrez PolishCast, cliquez sur Get Pro… dans la barre latérale et collez le numéro de licence.",
         "comparison": {
           "competitors": [
             "Screen Studio",
@@ -1626,7 +1674,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec une veille. La recherche, l'évaluation et l'export ne sont jamais limités. L'usage commercial — y compris un recruteur ou un consultant pour un client — nécessite JobScout Pro, qui garde aussi autant de veilles que vous voulez, dans chaque pays. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Code source disponible sous la PolyForm Noncommercial License 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une veille et la recherche, l'évaluation et l'export illimités. L'usage commercial — y compris un recruteur, un consultant pour un client et un salarié dans le cadre de son travail — nécessite JobScout Pro, qui garde aussi autant de veilles que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez JobScout et cliquez sur Get Pro… en bas de la barre latérale, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+        "pro_how": "Ouvrez JobScout, cliquez sur Get Pro… en bas de la barre latérale et collez le numéro de licence."
       },
       "surface_watch": {
         "seo_title": "Surface Watch — Suivi de la surface d'attaque côté client pour les pentests web",
@@ -1682,7 +1730,7 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, de recherche ou non lucratif, avec une mission et tous les onglets, la ligne de commande et les surveillances planifiées. L'usage commercial, y compris un consultant sur une mission client, nécessite Surface Watch Pro, qui garde aussi un nombre illimité de missions. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous la licence PolyForm Noncommercial 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une mission et toutes les fonctionnalités. L'usage commercial, y compris un consultant sur une mission client et un employé qui l'utilise dans son travail, nécessite Surface Watch Pro, qui garde aussi un nombre illimité de missions. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Pour l'activer, ouvrez Surface Watch et cliquez sur Get Pro… à côté du nom de l'app, ou lancez surfacewatch licence <clé>, puis collez la clé. Elle est vérifiée sur votre ordinateur : pas de compte, rien n'est envoyé."
+        "pro_how": "Ouvrez Surface Watch, cliquez sur Get Pro… à côté du nom de l'app et collez le numéro de licence, ou lancez surfacewatch licence suivi du numéro."
       }
     },
     "article_heading": "Pour aller plus loin",
@@ -1704,21 +1752,6 @@
     "skill_install_summary": "Comment l'installer",
     "skill_install_claude_ai": "claude.ai ou l'application Claude : Customize → Skills → + → Create skill → Upload a skill, puis choisissez le .zip. L'option « Code execution and file creation » doit être activée dans Settings → Capabilities.",
     "skill_install_claude_code": "Claude Code : décompressez-le dans ~/.claude/skills/, pour que le skill se trouve dans ~/.claude/skills/{id}/.",
-    "buy_pro_button": "Acheter {name} Pro",
-    "buy_pro_note": "Achat unique, avec un an de mises à jour. Paiement sécurisé par Stripe ; votre clé de licence s'affiche juste après et vous est envoyée par e-mail.",
-    "buy_pro_price_once": "paiement unique",
-    "buy_pro_price_vat": "paiement unique, TVA en sus",
-    "buy_pro_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
-    "thanks_title": "Merci d'avoir acheté {name} Pro",
-    "thanks_loading": "Récupération de votre clé de licence…",
-    "thanks_pending": "Votre paiement est en cours de confirmation. Cela prend généralement quelques secondes…",
-    "thanks_intro": "Voici votre clé de licence {name}. Une copie a été envoyée à {email}.",
-    "thanks_copy": "Copier la clé",
-    "thanks_copied": "Copiée",
-    "thanks_updates": "Votre licence inclut toutes les mises à jour publiées jusqu'au {date}. Les versions publiées avant cette date continuent de fonctionner ensuite.",
-    "thanks_missing": "Nous n'avons pas trouvé cet achat. Si vous venez de payer, votre clé de licence arrive par e-mail.",
-    "thanks_error": "Votre clé de licence ne peut pas s'afficher pour l'instant. Elle vous a aussi été envoyée par e-mail ; si elle n'arrive pas,",
-    "thanks_contact": "contactez-nous.",
     "comparison_heading": "{name} face aux alternatives",
     "comparison_intro": "Seuls les points forts de {name} sont listés. Les autres font beaucoup de choses qu'il ne fait pas — ce tableau dit pourquoi le choisir.",
     "comparison_feature": "Fonctionnalité",
@@ -1726,7 +1759,9 @@
     "comparison_no": "Non",
     "comparison_na": "Sans objet",
     "comparison_note": "Comparaison faite en octobre 2026 à partir de la documentation publique de chaque produit. Une information dépassée ?",
-    "comparison_note_link": "Dites-le-nous"
+    "comparison_note_link": "Dites-le-nous",
+    "plans_button": "Voir les formules avec {name} Pro",
+    "plans_note": "{name} Pro est inclus dans un abonnement mensuel, qui apporte aussi des crédits IA. Abonnez-vous avec votre e-mail ; votre numéro de licence s'affiche juste après et vous est envoyé par e-mail."
   },
   "app_releases": {
     "breadcrumb": "Notes de version",

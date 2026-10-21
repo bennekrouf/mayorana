@@ -137,7 +137,8 @@ export function middleware(request: NextRequest) {
         if (!hasLocalePrefix) {
             const acceptLanguage = request.headers.get('accept-language') || '';
             const targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
-            return NextResponse.redirect(new URL(`/${targetLocale}${pathname}`, request.url));
+            // Keeps the query: Stripe returns subscribers to /pricing?checkout=success&session_id=…
+            return NextResponse.redirect(new URL(`/${targetLocale}${pathname}${request.nextUrl.search}`, request.url));
         }
     }
 
