@@ -169,6 +169,7 @@
     "email_invalid": "Enter the email your licence should go to.",
     "already_subscribed": "{email} already has a plan. To change or cancel it, open the licence window in one of your apps (Get Pro…) and manage your subscription from there.",
     "checkout_error": "The payment page couldn't be opened. Please try again in a moment.",
+    "most_popular": "Most popular",
     "per_month": "/ month",
     "credits": "{count, plural, one {# AI credit} other {# AI credits}} every month",
     "all_apps": "Pro in every Mayorana app",
