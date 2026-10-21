@@ -37,16 +37,14 @@ export interface DesktopToolConfig {
   /** schema.org applicationCategory for the detail page. Defaults to DeveloperApplication. */
   applicationCategory?: string;
   /**
-   * A paid edition sold from the detail page through Stripe Checkout. The
-   * gateway (POST /api/licenses/checkout) knows the price; this only says the
-   * button should be there and which edition it buys. Stripe sends the buyer
-   * back to /apps/<id>/thanks, which shows the licence key.
+   * The tool has a Pro edition, unlocked by a plan that lists it (see
+   * src/lib/plans.ts and /pricing). The detail page links to the plans.
    *
-   * `product` is the id the gateway and the licence keys use, when it is not
-   * the tool's id: TrackCut, SpreadRadar and PolishCast were renamed after
-   * keys had been sold under their old ids, and a key names its product.
+   * `product` is the id the plans and licences use, when it is not the tool's
+   * id: TrackCut, SpreadRadar and PolishCast were renamed, and the apps still
+   * check for their old ids.
    */
-  pro?: { edition: string; product?: string };
+  pro?: { product?: string };
   /**
    * A Claude skill for the people using the tool, packaged by the tool's
    * release CI next to its builds. The detail page only shows it once the file
@@ -181,7 +179,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'gitagent',
-    pro: { edition: 'pro' },
+    pro: {},
     source: 'https://github.com/Bennekrouf/gitagent',
     name: 'GitAgent',
     tech: 'Rust · Dioxus · ollama / Mistral · git · gh',
@@ -202,7 +200,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'live',
     tags: ['audio'],
     applicationCategory: 'MultimediaApplication',
-    pro: { edition: 'pro', product: 'splitter' },
+    pro: { product: 'splitter' },
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${trackcutDl}/trackcut-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${trackcutDl}/trackcut-linux-x86_64.tar.gz` },
@@ -217,7 +215,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     status: 'live',
     tags: ['crypto'],
     applicationCategory: 'FinanceApplication',
-    pro: { edition: 'pro', product: 'spreadwatch' },
+    pro: { product: 'spreadwatch' },
     downloads: [
       // One universal DMG: Apple Silicon and Intel.
       { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${spreadradarDl}/spreadradar-macos.dmg` },
@@ -227,7 +225,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'polishcast',
-    pro: { edition: 'pro', product: 'small-video' },
+    pro: { product: 'small-video' },
     source: 'https://github.com/bennekrouf/polishcast',
     name: 'PolishCast',
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
@@ -242,7 +240,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'jobscout',
-    pro: { edition: 'pro' },
+    pro: {},
     source: 'https://github.com/bennekrouf/jobscout',
     name: 'JobScout',
     tech: 'Rust · Dioxus · Mistral / ollama · WebKit · Camoufox',
@@ -258,7 +256,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'surface-watch',
-    pro: { edition: 'pro' },
+    pro: {},
     source: 'https://github.com/bennekrouf/surface-watch',
     name: 'Surface Watch',
     tech: 'Rust · Dioxus · REA · Node.js · Chrome',
@@ -274,6 +272,19 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
+/** The id plans and licences know this tool by, for a tool with a Pro edition. */
+export function planProductId(tool: DesktopToolConfig) {
+  return tool.pro ? (tool.pro.product ?? tool.id) : undefined;
+}
+
+/** The tools a plan's `products` make Pro; "*" is every one of them. */
+export function toolsForPlanProducts(products: string[]) {
+  return desktopToolsConfig.filter((tool) => {
+    const id = planProductId(tool);
+    return !!id && (products.includes('*') || products.includes(id));
+  });
+}
+
 export const appI18nKey: Record<string, string> = {
   'ais-runner': 'ais_runner',
   'ais-monitor': 'ais_monitor',

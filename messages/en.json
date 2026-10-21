@@ -15,6 +15,8 @@
     "ai_agents_description": "api0 is a Rust MCP gateway that turns your existing REST APIs into secure tools for Claude and other MCP-compatible clients. Connect Claude to your backend in under five minutes.",
     "founding_title": "Founding users",
     "founding_description": "Mayorana's desktop tools are free for individuals. Sign in, answer two questions, and they stay free for you for good.",
+    "pricing_title": "Pricing",
+    "pricing_description": "One monthly plan unlocks Pro in Mayorana's desktop apps — GitAgent, JobScout, TrackCut, PolishCast, SpreadRadar — and brings AI credits every month.",
     "apps_title": "Apps & Tools",
     "apps_description": "api0, the Rust MCP gateway for AI agents, plus native Rust desktop tools for Azure Integration Services and Git. Free for personal use.",
     "privacy_title": "Privacy Policy",
@@ -28,6 +30,7 @@
     "ai_agents": "AI Agents",
     "portfolio": "Portfolio",
     "blog": "Blog",
+    "pricing": "Pricing",
     "about": "About",
     "contact": "Contact",
     "get_started": "GET IN TOUCH",
@@ -153,6 +156,51 @@
     "thanks_body": "That's exactly what we needed. We'll read it ourselves and, if we have a follow-up question, we'll write once. Meanwhile, the tools are yours.",
     "thanks_apps": "Back to the tools",
     "error": "That didn't go through. Please try again or email us directly at mb@mayorana.ch."
+  },
+  "pricing": {
+    "eyebrow": "Plans",
+    "title": "One plan, Pro in your apps, AI credits every month",
+    "intro": "Each plan makes Pro the apps it lists and refills your AI credits every month. Subscribe with your email: the licence number unlocks every app in the plan.",
+    "intro_app": "The highlighted plans include {name} Pro. Each also refills your AI credits every month; subscribe with your email and the licence number unlocks every app in the plan.",
+    "loading": "Loading the plans…",
+    "unavailable": "The plans couldn't be loaded right now. Please try again in a moment.",
+    "email_label": "Your email",
+    "email_placeholder": "you@example.com",
+    "email_note": "Your licence number is sent here. No account to create.",
+    "email_invalid": "Enter the email your licence should go to.",
+    "already_subscribed": "{email} already has a plan. To change or cancel it, open the licence window in one of your apps (Get Pro…) and manage your subscription from there.",
+    "checkout_error": "The payment page couldn't be opened. Please try again in a moment.",
+    "includes_app": "Includes {name} Pro",
+    "per_month": "/ month",
+    "credits": "{count, plural, one {# AI credit} other {# AI credits}} every month",
+    "all_apps": "Pro in every Mayorana app",
+    "app_pro": "{name} Pro",
+    "uses_heading": "What your credits buy, in any mix",
+    "uses": {
+      "gitagent": "{count, plural, one {# repo} other {# repos}} with GitAgent each month",
+      "shipscreen": "{count, plural, one {# mobile app} other {# mobile apps}} shipped with ShipScreen",
+      "trackcut": "{count, plural, one {# track} other {# tracks}} to cut with TrackCut",
+      "polishcast": "{count, plural, one {# video} other {# videos}} cast with PolishCast",
+      "jobscout": "{count, plural, one {# country} other {# countries}} scouted with JobScout",
+      "spreadradar": "{count, plural, one {# crypto} other {# cryptos}} to track the spread of with SpreadRadar",
+      "surface_watch": "{count, plural, one {# app} other {# apps}} to pentest with Surface Watch"
+    },
+    "subscribe": "Subscribe",
+    "fine_print": "Billed monthly by Stripe; cancel any time and Pro stays on until the end of the month you paid for. Unused AI credits do not carry over.",
+    "thanks_title": "Thank you for subscribing",
+    "thanks_loading": "Fetching your licence number…",
+    "thanks_pending": "Your payment is being confirmed. This usually takes a few seconds…",
+    "thanks_emailed": "Your payment is still being confirmed. Your licence number will be emailed to you as soon as it is — usually within a minute.",
+    "thanks_intro": "You are on the {plan} plan. A copy of your licence number has been sent to {email}.",
+    "thanks_licence_label": "Licence number",
+    "thanks_copy": "Copy licence number",
+    "thanks_copied": "Copied",
+    "thanks_credits": "{count, plural, one {# AI credit} other {# AI credits}} left this month; the plan renews on {date}.",
+    "thanks_how_heading": "Paste it into your apps",
+    "thanks_manage": "To change or cancel your plan later, open the licence window in any of these apps.",
+    "thanks_missing": "We couldn't find this subscription. If you have just paid, your licence number is on its way by email.",
+    "thanks_error": "Your licence number couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
+    "thanks_contact": "contact us."
   },
   "download_gate": {
     "title": "It's free. We'd just love your feedback.",
@@ -991,7 +1039,7 @@
         "article_slug": "ai-commit-messages-without-giving-up-control",
         "pro_download_intro": "Free for personal, educational and non-profit use, with 5 repositories. Commercial use — including a solo consultant on client work — requires GitAgent Pro, which also covers every repository, in every folder. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 5 repositories across all your folders (the others are shown locked). Commercial use — including a solo consultant on client work and an employee using it at their job — requires GitAgent Pro, which also covers every repository. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open GitAgent, click Get Pro… in the top bar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_how": "Open GitAgent, click Get Pro… in the top bar and paste the licence number.",
         "comparison": {
           "competitors": [
             "aicommits",
@@ -1308,7 +1356,7 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, educational and non-profit use, exporting the first 10 tracks of each recording. Commercial use — including a solo consultant on client work — requires TrackCut Pro, which also exports every track. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with exports limited to the first 10 tracks of each recording. Commercial use — including a solo consultant on client work and an employee using it at their job — requires TrackCut Pro, which also exports every track. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open TrackCut and click Get Pro… at the top of the file list (in versions before 0.1.14, click the Splitter name there), then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_how": "Open TrackCut, click Get Pro… at the top of the file list and paste the licence number.",
         "comparison": {
           "competitors": [
             "Audacity",
@@ -1419,7 +1467,7 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, educational and non-profit use, following 3 assets at once. Commercial use — including a solo consultant on client work — requires SpreadRadar Pro, which also follows any number of assets. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, following 3 assets at once with every tab, every venue and trading. Commercial use — including a solo consultant on client work and an employee using it at their job — requires SpreadRadar Pro, which also follows any number of assets. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open SpreadRadar and click Get Pro… at the right of the tab bar, then paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_how": "Open SpreadRadar, click Get Pro… at the right of the tab bar and paste the licence number.",
         "comparison": {
           "competitors": [
             "Sharpe Terminal",
@@ -1538,7 +1586,7 @@
         "article_slug": "",
         "pro_download_intro": "Free: export 10 different videos; exporting one again is free, and recording and editing are never limited. Pro: export every video, for personal or professional use. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Free: export 10 different videos; recording and editing are never limited. Pro: export every video, for personal or professional use. That is the only thing to buy: there is no separate commercial licence.",
-        "pro_how": "To activate it, open PolishCast, click Get Pro… in the sidebar and paste the key. It is checked on your computer: no account, nothing sent anywhere.",
+        "pro_how": "Open PolishCast, click Get Pro… in the sidebar and paste the licence number.",
         "comparison": {
           "competitors": [
             "Screen Studio",
@@ -1626,7 +1674,7 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, educational and non-profit use, with one watch. Searching, scoring and export are never limited. Commercial use — including a recruiter or a consultant on client work — requires JobScout Pro, which also keeps any number of watches, in every country. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with one watch and unlimited searching, scoring and export. Commercial use — including a recruiter, a consultant on client work and an employee using it at their job — requires JobScout Pro, which also keeps any number of watches. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open JobScout and click Get Pro… at the bottom of the sidebar, then paste the key. It is checked on your computer: no account, nothing sent anywhere."
+        "pro_how": "Open JobScout, click Get Pro… at the bottom of the sidebar and paste the licence number."
       },
       "surface_watch": {
         "seo_title": "Surface Watch — Client-Side Attack Surface Monitoring for Web Pentests",
@@ -1682,7 +1730,7 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, research and non-profit use, with one engagement and every tab, the command line and scheduled watches. Commercial use, including a consultant on client work, requires Surface Watch Pro, which also keeps any number of engagements. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with one engagement and every feature. Commercial use, including a consultant on client work and an employee using it at their job, requires Surface Watch Pro, which also keeps any number of engagements. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "To activate it, open Surface Watch and click Get Pro… next to the app's name, or run surfacewatch licence <key>, then paste the key. It is checked on your computer: no account, nothing sent anywhere."
+        "pro_how": "Open Surface Watch, click Get Pro… next to the app's name and paste the licence number, or run surfacewatch licence followed by the number."
       }
     },
     "article_heading": "Read more",
@@ -1704,21 +1752,6 @@
     "skill_install_summary": "How to install it",
     "skill_install_claude_ai": "claude.ai or the Claude app: Customize → Skills → + → Create skill → Upload a skill, then choose the .zip. “Code execution and file creation” must be on in Settings → Capabilities.",
     "skill_install_claude_code": "Claude Code: unzip it into ~/.claude/skills/, so that the skill ends up in ~/.claude/skills/{id}/.",
-    "buy_pro_button": "Buy {name} Pro",
-    "buy_pro_note": "One-time purchase, including a year of updates. Secure payment by Stripe; your licence key is shown right after and sent by email.",
-    "buy_pro_price_once": "one-time",
-    "buy_pro_price_vat": "one-time, plus VAT",
-    "buy_pro_error": "The payment page couldn't be opened. Please try again in a moment.",
-    "thanks_title": "Thank you for buying {name} Pro",
-    "thanks_loading": "Fetching your licence key…",
-    "thanks_pending": "Your payment is being confirmed. This usually takes a few seconds…",
-    "thanks_intro": "Here is your {name} licence key. A copy has been sent to {email}.",
-    "thanks_copy": "Copy key",
-    "thanks_copied": "Copied",
-    "thanks_updates": "Your licence includes every update released until {date}. Versions released before that date keep working after it.",
-    "thanks_missing": "We couldn't find this purchase. If you have just paid, your licence key is on its way by email.",
-    "thanks_error": "Your licence key couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
-    "thanks_contact": "contact us.",
     "comparison_heading": "How {name} compares",
     "comparison_intro": "Only the things {name} is strong at are listed. The others do plenty it doesn't — this table is about why you would pick it.",
     "comparison_feature": "Feature",
@@ -1726,7 +1759,9 @@
     "comparison_no": "No",
     "comparison_na": "Not applicable",
     "comparison_note": "Compared in October 2026 from each product's public documentation. Something out of date?",
-    "comparison_note_link": "Tell us"
+    "comparison_note_link": "Tell us",
+    "plans_button": "See the plans with {name} Pro",
+    "plans_note": "{name} Pro comes with a monthly plan, which also brings AI credits. Subscribe with your email; your licence number is shown right after and sent by email."
   },
   "app_releases": {
     "breadcrumb": "Release notes",
