@@ -169,6 +169,7 @@
     "email_invalid": "Indiquez l'e-mail auquel envoyer votre licence.",
     "already_subscribed": "{email} a déjà une formule. Pour la changer ou la résilier, ouvrez la fenêtre de licence dans l'une de vos apps (Get Pro…) et gérez votre abonnement depuis là.",
     "checkout_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
+    "most_popular": "Le plus choisi",
     "per_month": "/ mois",
     "credits": "{count, plural, one {# crédit IA} other {# crédits IA}} chaque mois",
     "all_apps": "Pro dans toutes les apps Mayorana",

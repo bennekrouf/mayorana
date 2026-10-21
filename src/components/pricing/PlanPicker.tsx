@@ -5,7 +5,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { Check, Loader2, Sparkles } from 'lucide-react';
+import { Check, Loader2, Sparkles, Star } from 'lucide-react';
 import { appI18nKey, toolsForPlanProducts } from '@/data/tools';
 import {
   creditUses,
@@ -69,6 +69,17 @@ export function PlanPicker() {
     return <p className="text-muted-foreground">{t('unavailable')}</p>;
   }
 
+  // Every app any plan buys uses of, so the same app sits on the same row in
+  // every card (blank where a plan's credits buy none).
+  const useRows = Array.from(
+    new Set(load.plans.flatMap((plan) => creditUses(plan.monthly_credits, load.appUses).map((u) => u.tool))),
+  );
+  // Name, price, description, highlights, then the uses heading and one row per
+  // app, then the button.
+  const cardRows = 5 + (useRows.length > 0 ? 1 + useRows.length : 0);
+  // The middle plan is the one we point people to.
+  const featuredIndex = load.plans.length > 1 ? Math.floor(load.plans.length / 2) : -1;
+
   return (
     <div className="space-y-8">
       <div className="max-w-md">
@@ -100,19 +111,36 @@ export function PlanPicker() {
       )}
       {problem === 'error' && <p className="text-sm text-red-600">{t('checkout_error')}</p>}
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {load.plans.map((plan) => {
+      {/* Each card is a subgrid spanning the same rows, so price, lists and
+          button sit at the same height in every card whatever wraps. */}
+      <div className="grid gap-x-6 gap-y-0 md:grid-cols-2 lg:grid-cols-3">
+        {load.plans.map((plan, index) => {
           const tools = toolsForPlanProducts(plan.products);
-          const uses = creditUses(plan.monthly_credits, load.appUses);
+          const uses = new Map(creditUses(plan.monthly_credits, load.appUses).map((u) => [u.tool, u.count]));
+          const featured = index === featuredIndex;
           return (
-            <div key={plan.id} className="flex flex-col rounded-xl border border-border p-6 bg-background">
+            <div
+              key={plan.id}
+              style={{ gridRow: `span ${cardRows}` }}
+              className={`relative mb-8 grid grid-rows-subgrid rounded-xl border p-6 ${
+                featured
+                  ? 'border-primary bg-primary/5 ring-1 ring-primary shadow-lg shadow-primary/10'
+                  : 'border-border bg-background'
+              }`}
+            >
+              {featured && (
+                <span className="absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                  <Star className="w-3 h-3 fill-current" />
+                  {t('most_popular')}
+                </span>
+              )}
               <h2 className="text-xl font-bold">{plan.name}</h2>
-              <p className="mt-2">
+              <p className="pt-2">
                 <span className="text-3xl font-semibold">{formatPlanPrice(plan, locale)}</span>
                 <span className="text-muted-foreground"> {t('per_month')}</span>
               </p>
-              {plan.description && <p className="text-sm text-muted-foreground mt-3">{plan.description}</p>}
-              <ul className="mt-5 space-y-2 text-sm">
+              <p className="text-sm text-muted-foreground pt-3">{plan.description}</p>
+              <ul className="pt-5 space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <Sparkles className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
                   {t('credits', { count: plan.monthly_credits })}
@@ -131,30 +159,39 @@ export function PlanPicker() {
                   ))
                 )}
               </ul>
-              {uses.length > 0 && (
-                <div className="mt-5 flex-1 border-t border-border pt-4">
-                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2">
-                    {t('uses_heading')}
-                  </p>
-                  <ul className="space-y-1.5 text-sm">
-                    {uses.map(({ tool, count }) => (
-                      <li key={tool} className="flex items-start gap-2 text-muted-foreground">
+              {useRows.length > 0 && (
+                <p className="mt-5 border-t border-border pt-4 pb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  {t('uses_heading')}
+                </p>
+              )}
+              {useRows.map((tool) => {
+                const count = uses.get(tool);
+                return (
+                  <p key={tool} className="flex items-start gap-2 pt-1.5 text-sm text-muted-foreground">
+                    {count !== undefined && (
+                      <>
                         <span className="w-4 shrink-0 text-center text-primary">~</span>
                         {t(`uses.${appI18nKey[tool]}`, { count })}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <button
-                type="button"
-                onClick={() => subscribe(plan)}
-                disabled={busyPlan !== null}
-                className="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 disabled:opacity-70 transition-colors"
-              >
-                {busyPlan === plan.id && <Loader2 className="w-4 h-4 animate-spin" />}
-                {t('subscribe')}
-              </button>
+                      </>
+                    )}
+                  </p>
+                );
+              })}
+              <div className="flex items-end pt-6">
+                <button
+                  type="button"
+                  onClick={() => subscribe(plan)}
+                  disabled={busyPlan !== null}
+                  className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-medium text-sm disabled:opacity-70 transition-colors ${
+                    featured
+                      ? 'bg-primary text-white hover:bg-primary/90'
+                      : 'border border-primary text-primary hover:bg-primary/10'
+                  }`}
+                >
+                  {busyPlan === plan.id && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {t('subscribe')}
+                </button>
+              </div>
             </div>
           );
         })}
