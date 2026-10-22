@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- mayorana's arch, with one rising bar per tier: basic -->
+  <rect width="1024" height="1024" rx="220" fill="#FFF1E6"/>
+  <g fill="#FF6B00" transform="translate(512 528) scale(0.74) translate(-526.5 -521.5)">
+    <path d="M165 885 V520 A361.5 361.5 0 0 1 888 520 V885 H730 V520 A206 206 0 0 0 318 520 V885 Z"/>
+    <rect x="452.5" y="523" width="148" height="362" rx="10"/>
+  </g>
+</svg>

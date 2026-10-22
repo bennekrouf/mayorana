@@ -16,7 +16,7 @@
     "founding_title": "Utilisateurs fondateurs",
     "founding_description": "Les outils de bureau Mayorana sont gratuits pour les particuliers. Connectez-vous, répondez à deux questions, et ils restent gratuits pour vous.",
     "pricing_title": "Tarifs",
-    "pricing_description": "Un abonnement mensuel active Pro dans les apps de bureau Mayorana — GitAgent, JobScout, TrackCut, PolishCast, SpreadRadar — et apporte des crédits IA chaque mois.",
+    "pricing_description": "Chaque abonnement mensuel débloque un ensemble d'apps de bureau Mayorana — GitAgent, JobScout, TrackCut, PolishCast, SpreadRadar — et apporte des crédits IA chaque mois.",
     "apps_title": "Apps & Outils",
     "apps_description": "api0, la passerelle MCP en Rust pour les agents IA, et des outils de bureau natifs en Rust pour Azure Integration Services et Git. Gratuits pour un usage personnel.",
     "privacy_title": "Politique de confidentialité",
@@ -50,7 +50,8 @@
     "link_failed": "La liaison n'a pas fonctionné. Veuillez réessayer.",
     "sign_out": "Se déconnecter",
     "signed_in": "Connecté",
-    "account_menu": "Menu du compte"
+    "account_menu": "Menu du compte",
+    "my_subscription": "Mon abonnement"
   },
   "home": {
     "hero_title": "Outils d'IA qui fonctionnent vraiment",
@@ -159,33 +160,63 @@
   },
   "pricing": {
     "eyebrow": "Formules",
-    "title": "Une formule, Pro dans vos apps, des crédits IA chaque mois",
-    "intro": "Chaque formule active Pro dans les apps qu'elle liste et recharge vos crédits IA chaque mois. Abonnez-vous avec votre e-mail : le numéro de licence débloque toutes les apps de la formule.",
+    "title": "Une formule : vos apps et des crédits IA chaque mois",
+    "intro": "Chaque formule débloque les apps qu'elle liste et recharge vos crédits IA chaque mois. Connectez-vous pour vous abonner : votre numéro de licence débloque toutes les apps de la formule, et la même connexion permet ensuite de voir ou résilier votre formule.",
     "loading": "Chargement des formules…",
     "unavailable": "Les formules n'ont pas pu être chargées. Réessayez dans un instant.",
-    "email_label": "Votre e-mail",
-    "email_placeholder": "vous@exemple.ch",
-    "email_note": "Votre numéro de licence est envoyé ici. Aucun compte à créer.",
-    "email_invalid": "Indiquez l'e-mail auquel envoyer votre licence.",
-    "already_subscribed": "{email} a déjà une formule. Pour la changer ou la résilier, ouvrez la fenêtre de licence dans l'une de vos apps (Get Pro…) et gérez votre abonnement depuis là.",
+    "already_subscribed": "Vous avez déjà une formule avec cette connexion — elle est affichée ci-dessus. Changez de formule, mettez à jour votre carte ou résiliez depuis là.",
     "checkout_error": "La page de paiement n'a pas pu s'ouvrir. Réessayez dans un instant.",
-    "most_popular": "Le plus choisi",
+    "sign_in_note": "L'abonnement demande une connexion avec Google ou GitHub : votre formule est rattachée à cet e-mail, pour la voir ou la résilier ici à tout moment.",
+    "signed_in_note": "Connecté en tant que {email}. Votre formule et votre licence sont rattachées à cet e-mail.",
+    "sign_in_title": "Connectez-vous pour souscrire à la formule {plan}",
+    "sign_in_body": "Votre licence est envoyée à l'e-mail de votre connexion, et la même connexion vous permet ensuite de voir ou résilier votre formule. Le paiement suit directement.",
+    "most_popular": "La plus choisie",
     "per_month": "/ mois",
     "credits": "{count, plural, one {# crédit IA} other {# crédits IA}} chaque mois",
-    "all_apps": "Pro dans toutes les apps Mayorana",
-    "app_pro": "{name} Pro",
-    "uses_heading": "Ce que vos crédits permettent, à combiner librement",
+    "all_apps": "Toutes les apps Mayorana incluses",
+    "app_included": "{name} inclus",
+    "plan_descriptions": {
+      "basic": "Pour découvrir les fonctions IA.",
+      "pro": "Pour un usage quotidien.",
+      "max": "Pour un usage intensif de l’IA."
+    },
+    "groups": {
+      "build": "Développer et livrer",
+      "create": "Créer et publier",
+      "track": "Surveiller et prospecter"
+    },
     "uses": {
       "gitagent": "{count, plural, one {# dépôt} other {# dépôts}} avec GitAgent chaque mois",
       "shipscreen": "{count, plural, one {# app mobile publiée} other {# apps mobiles publiées}} avec ShipScreen",
       "trackcut": "{count, plural, one {# piste à découper} other {# pistes à découper}} avec TrackCut",
       "polishcast": "{count, plural, one {# vidéo} other {# vidéos}} avec PolishCast",
-      "jobscout": "{count, plural, one {# pays prospecté} other {# pays prospectés}} avec JobScout",
       "spreadradar": "{count, plural, one {# crypto suivie} other {# cryptos suivies}} pour leur spread avec SpreadRadar",
-      "surface_watch": "{count, plural, one {# app à pentester} other {# apps à pentester}} avec Surface Watch"
+      "surface_watch": "{count, plural, one {# app à pentester} other {# apps à pentester}} avec Surface Watch",
+      "jobscout": "{count, plural, one {# recherche} other {# recherches}} par mois avec JobScout, dans tous les pays",
+      "publishkit": "PublishKit, sans limite et sans crédits"
     },
+    "uses_note": "~ indique à peu près ce que les crédits d'un mois permettent s'ils vont tous à cette app : les crédits sont partagés entre toutes les apps, à combiner librement.",
     "subscribe": "S'abonner",
-    "fine_print": "Facturé chaque mois par Stripe ; résiliable à tout moment, Pro reste actif jusqu'à la fin du mois payé. Les crédits IA non utilisés ne sont pas reportés.",
+    "current_plan": "Votre formule",
+    "switch_plan": "Passer à cette formule",
+    "sub_title": "Votre formule {plan}",
+    "sub_status_renews": "Active · se renouvelle le {date}",
+    "sub_status_ending": "Résiliée · reste active jusqu'au {date}",
+    "sub_status_ended": "Terminée le {date}",
+    "sub_status_past_due": "Échec du paiement",
+    "sub_status_free": "Allocation gratuite · rechargée le {date}",
+    "sub_credits_label": "Crédits IA ce mois-ci",
+    "sub_credits": "{left} sur {granted} restants",
+    "sub_portal": "Carte, factures et changement de formule",
+    "sub_fix_payment": "Mettre à jour votre carte",
+    "sub_cancel": "Résilier la formule",
+    "sub_cancel_confirm": "Résilier votre formule ? Plus rien ne sera prélevé, et vos apps et crédits restent actifs jusqu'au {date}. Vous pouvez la reprendre d'ici là.",
+    "sub_cancel_yes": "Oui, résilier",
+    "sub_cancel_no": "Garder ma formule",
+    "sub_resume": "Reprendre la formule",
+    "sub_error": "Cela n'a pas fonctionné. Réessayez dans un instant.",
+    "sub_unavailable": "Votre abonnement n'a pas pu être chargé. Réessayez dans un instant.",
+    "fine_print": "Facturé chaque mois par Stripe ; résiliable à tout moment, vos apps restent débloquées jusqu'à la fin du mois payé. Les crédits IA non utilisés ne sont pas reportés.",
     "thanks_title": "Merci pour votre abonnement",
     "thanks_loading": "Récupération de votre numéro de licence…",
     "thanks_pending": "Votre paiement est en cours de confirmation. Cela prend généralement quelques secondes…",
@@ -196,7 +227,7 @@
     "thanks_copied": "Copié",
     "thanks_credits": "{count, plural, one {# crédit IA restant} other {# crédits IA restants}} ce mois-ci ; la formule se renouvelle le {date}.",
     "thanks_how_heading": "Collez-le dans vos apps",
-    "thanks_manage": "Pour changer ou résilier votre formule plus tard, ouvrez la fenêtre de licence dans l'une de ces apps.",
+    "thanks_manage": "Pour voir, changer ou résilier votre formule plus tard, connectez-vous sur cette page de tarifs avec le même compte.",
     "thanks_missing": "Nous n'avons pas trouvé cet abonnement. Si vous venez de payer, votre numéro de licence arrive par e-mail.",
     "thanks_error": "Votre numéro de licence ne peut pas s'afficher pour l'instant. Il vous a aussi été envoyé par e-mail ; s'il n'arrive pas,",
     "thanks_contact": "contactez-nous."
@@ -236,7 +267,7 @@
     "polishcast_tagline": "Enregistrez votre écran, obtenez une vidéo soignée : curseur fluide, zoom sur les clics",
     "polishcast_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
     "jobscout_tagline": "Les offres d'emploi de LinkedIn et des sites locaux, classées selon votre profil",
-    "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn, jobs.ch et jobup.ch en Suisse, ou de LinkedIn, MyCareersFuture et JobStreet à Singapour, dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec Mistral ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
+    "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn et des principaux sites locaux de neuf pays — Suisse, Singapour, Allemagne, France, Royaume-Uni, Émirats arabes unis, Irlande, Belgique et Autriche — dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec Mistral ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
     "surface_watch_tagline": "Suivez l'évolution de la surface d'attaque côté client d'une app web d'un build à l'autre",
     "surface_watch_description": "Capturez chaque cible d'une mission de pentest avec REA et voyez sa surface d'attaque : endpoints, paramètres, statuts, en-têtes de sécurité et tiers. Comparez deux builds sans le bruit des chunks renommés ni des temps de réponse, transformez ce qui compte en findings appuyés par des preuves, et relancez un test pour savoir si chacun est corrigé. Tout tourne en local, avec une ligne de commande pour les surveillances planifiées.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
@@ -1036,8 +1067,8 @@
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control-fr",
-        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 5 dépôts. L'usage commercial — y compris un consultant indépendant en mission — requiert GitAgent Pro, qui couvre aussi tous vos dépôts, dans tous vos dossiers. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 5 dépôts tous dossiers confondus (les autres sont affichés verrouillés). L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert GitAgent Pro, qui couvre aussi tous vos dépôts. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, dans tous vos dépôts. L'usage commercial — y compris un consultant indépendant en mission — requiert GitAgent Pro, qui apporte aussi des crédits IA chaque mois pour le modèle api0. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, dans tous vos dépôts, avec ou sans licence. L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert GitAgent Pro, qui apporte aussi des crédits IA chaque mois. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Ouvrez GitAgent, cliquez sur Get Pro… dans la barre du haut et collez le numéro de licence.",
         "comparison": {
           "competitors": [
@@ -1293,7 +1324,10 @@
               ]
             }
           ]
-        }
+        },
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, sur une app : le premier projet que vous ouvrez. L'usage commercial — y compris un consultant indépendant en mission — requiert ShipScreen Pro, qui couvre aussi autant d'apps que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, sur une app avec toutes les fonctionnalités (vous pouvez changer l'app gratuite). L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert ShipScreen Pro, qui couvre aussi autant d'apps que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Ouvrez ShipScreen, cliquez sur Get Pro… sur l'écran des projets, à côté de New Project…, et collez le numéro de licence."
       },
       "trackcut": {
         "seo_title": "TrackCut — Découper de longs enregistrements MP3 et WAV en pistes",
@@ -1622,16 +1656,16 @@
       },
       "jobscout": {
         "seo_title": "JobScout — Recherche d'emploi sur LinkedIn et les sites locaux, évaluée selon votre profil",
-        "seo_description": "App de bureau qui rassemble les offres d'emploi de LinkedIn, jobs.ch, jobup.ch, MyCareersFuture et JobStreet, les garde sur votre ordinateur et évalue chacune selon votre profil avec Mistral ou un modèle ollama local.",
+        "seo_description": "App de bureau qui rassemble les offres d'emploi de LinkedIn et des sites locaux de neuf pays, de jobs.ch à StepStone, les garde sur votre ordinateur et évalue chacune selon votre profil avec Mistral ou un modèle ollama local.",
         "overview": [
           "Chercher un emploi, c'est la même recherche sur trois ou quatre sites, la même offre vue deux fois sous des titres différents, et un navigateur plein d'onglets à rouvrir plus tard. Décider quelles offres méritent une candidature prend plus de temps que de les trouver.",
-          "JobScout interroge les pages publiques de LinkedIn, sans connexion, et les principaux sites locaux d'un pays à la fois : jobs.ch et jobup.ch pour la Suisse, MyCareersFuture et JobStreet pour Singapour. Chaque offre arrive une seule fois dans une liste sur votre ordinateur, avec un statut que vous choisissez : Nouvelle, Gardée, Postulée ou Masquée.",
+          "JobScout interroge les pages publiques de LinkedIn, sans connexion, et les principaux sites locaux d'un pays à la fois, parmi neuf : la Suisse (jobs.ch, jobup.ch), Singapour (MyCareersFuture, JobStreet), l'Allemagne (Arbeitsagentur, StepStone), la France (France Travail), le Royaume-Uni (Totaljobs, Reed), les Émirats arabes unis (Bayt), l'Irlande (IrishJobs), la Belgique et l'Autriche (StepStone). Chaque offre arrive une seule fois dans une liste sur votre ordinateur, avec un statut que vous choisissez : Nouvelle, Gardée, Postulée ou Masquée.",
           "Chaque offre peut être évaluée selon votre profil par n'importe quel modèle compatible OpenAI, Mistral par défaut ou ollama sur votre machine. Une note vient avec un verdict en une ligne, les points forts et les manques. Les recherches enregistrées, appelées veilles, tournent seules tant que l'app est ouverte et vous signalent les nouvelles offres au-dessus de votre seuil."
         ],
         "features": [
           {
             "title": "Plusieurs sites, une liste",
-            "body": "LinkedIn plus jobs.ch et jobup.ch en Suisse, ou MyCareersFuture et JobStreet à Singapour. Une offre publiée sur plusieurs sites n'apparaît qu'une fois."
+            "body": "LinkedIn plus les sites propres à chaque pays : jobs.ch et jobup.ch en Suisse, StepStone et l'Arbeitsagentur en Allemagne, Reed et Totaljobs au Royaume-Uni, et d'autres. Une offre publiée sur plusieurs sites n'apparaît qu'une fois."
           },
           {
             "title": "Sans connexion, sans risque pour votre compte",
@@ -1643,7 +1677,7 @@
           },
           {
             "title": "Des veilles qui vous préviennent",
-            "body": "Enregistrez une recherche : JobScout la relance toutes les 1 à 72 heures tant qu'il est ouvert, évalue jusqu'à 15 nouvelles offres et envoie une notification pour celles au-dessus de votre seuil."
+            "body": "Enregistrez une recherche : JobScout la relance toutes les 1 à 72 heures tant qu'il est ouvert, évalue jusqu'à 15 nouvelles offres et envoie une notification pour celles au-dessus de votre seuil — et, si vous le souhaitez, un e-mail avec les offres et leurs liens à l'adresse de votre licence."
           },
           {
             "title": "Chez vous, sur votre ordinateur",
@@ -1667,12 +1701,12 @@
           },
           {
             "q": "Quels pays sont pris en charge ?",
-            "a": "La Suisse (LinkedIn, jobs.ch, jobup.ch) et Singapour (LinkedIn, MyCareersFuture, JobStreet). Chaque pays est gardé à part : changer de pays décharge l'un et charge l'autre."
+            "a": "Neuf, avec toutes les formules : la Suisse (jobs.ch, jobup.ch), Singapour (MyCareersFuture, JobStreet), l'Allemagne (Arbeitsagentur, StepStone), la France (France Travail), le Royaume-Uni (Totaljobs, Reed), les Émirats arabes unis (Bayt), l'Irlande (IrishJobs), la Belgique et l'Autriche (StepStone), chacun avec LinkedIn en plus. Chaque pays est gardé à part : changer de pays décharge l'un et charge l'autre."
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec une veille. La recherche, l'évaluation et l'export ne sont jamais limités. L'usage commercial — y compris un recruteur ou un consultant pour un client — nécessite JobScout Pro, qui garde aussi autant de veilles que vous voulez, dans chaque pays. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Code source disponible sous la PolyForm Noncommercial License 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une veille et la recherche, l'évaluation et l'export illimités. L'usage commercial — y compris un recruteur, un consultant pour un client et un salarié dans le cadre de son travail — nécessite JobScout Pro, qui garde aussi autant de veilles que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 10 recherches par mois dans n'importe quel pays. L'évaluation et l'export ne sont jamais limités. L'usage commercial — y compris un recruteur ou un consultant pour un client — nécessite JobScout Pro, dont les formules offrent plus de recherches : 50 par mois avec Basic, 500 avec Pro et 1000 avec Max, dans tous les pays. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Code source disponible sous la PolyForm Noncommercial License 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 10 recherches par mois dans n'importe quel pays, autant de veilles que vous voulez, et l'évaluation et l'export illimités. L'usage commercial — y compris un recruteur, un consultant pour un client et un salarié dans le cadre de son travail — nécessite JobScout Pro. Chaque formule couvre tous les pays ; ce qu'elle fixe, c'est le nombre de recherches par mois : 50 avec Basic, 500 avec Pro, 1000 avec Max. Une recherche dans l'app ou depuis Claude compte pour une ; un passage de veille ne compte que s'il trouve de nouvelles offres. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Ouvrez JobScout, cliquez sur Get Pro… en bas de la barre latérale et collez le numéro de licence."
       },
       "surface_watch": {

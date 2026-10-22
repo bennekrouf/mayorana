@@ -16,7 +16,7 @@
     "founding_title": "Founding users",
     "founding_description": "Mayorana's desktop tools are free for individuals. Sign in, answer two questions, and they stay free for you for good.",
     "pricing_title": "Pricing",
-    "pricing_description": "One monthly plan unlocks Pro in Mayorana's desktop apps — GitAgent, JobScout, TrackCut, PolishCast, SpreadRadar — and brings AI credits every month.",
+    "pricing_description": "Each monthly plan unlocks a set of Mayorana's desktop apps — GitAgent, JobScout, TrackCut, PolishCast, SpreadRadar — and brings AI credits every month.",
     "apps_title": "Apps & Tools",
     "apps_description": "api0, the Rust MCP gateway for AI agents, plus native Rust desktop tools for Azure Integration Services and Git. Free for personal use.",
     "privacy_title": "Privacy Policy",
@@ -50,7 +50,8 @@
     "link_failed": "Linking didn't work. Please try again.",
     "sign_out": "Sign out",
     "signed_in": "Signed in",
-    "account_menu": "Account menu"
+    "account_menu": "Account menu",
+    "my_subscription": "My subscription"
   },
   "home": {
     "hero_title": "AI Tools That Actually Work",
@@ -159,33 +160,63 @@
   },
   "pricing": {
     "eyebrow": "Plans",
-    "title": "One plan, Pro in your apps, AI credits every month",
-    "intro": "Each plan makes Pro the apps it lists and refills your AI credits every month. Subscribe with your email: the licence number unlocks every app in the plan.",
+    "title": "One plan: your apps and AI credits every month",
+    "intro": "Each plan unlocks the apps it lists and refills your AI credits every month. Sign in to subscribe: your licence number unlocks every app in the plan, and the same sign-in shows or cancels your plan later.",
     "loading": "Loading the plans…",
     "unavailable": "The plans couldn't be loaded right now. Please try again in a moment.",
-    "email_label": "Your email",
-    "email_placeholder": "you@example.com",
-    "email_note": "Your licence number is sent here. No account to create.",
-    "email_invalid": "Enter the email your licence should go to.",
-    "already_subscribed": "{email} already has a plan. To change or cancel it, open the licence window in one of your apps (Get Pro…) and manage your subscription from there.",
+    "already_subscribed": "You already have a plan under this sign-in — it's shown above. Switch plan, update your card or cancel from there.",
     "checkout_error": "The payment page couldn't be opened. Please try again in a moment.",
+    "sign_in_note": "Subscribing needs a sign-in with Google or GitHub: your plan is kept under that email, so you can see or cancel it here any time.",
+    "signed_in_note": "Signed in as {email}. Your plan and licence are kept under this email.",
+    "sign_in_title": "Sign in to subscribe to {plan}",
+    "sign_in_body": "Your licence is sent to the email of your sign-in, and the same sign-in lets you see or cancel your plan later. You go on to payment right after.",
     "most_popular": "Most popular",
     "per_month": "/ month",
     "credits": "{count, plural, one {# AI credit} other {# AI credits}} every month",
-    "all_apps": "Pro in every Mayorana app",
-    "app_pro": "{name} Pro",
-    "uses_heading": "What your credits buy, in any mix",
+    "all_apps": "Every Mayorana app included",
+    "app_included": "{name} included",
+    "plan_descriptions": {
+      "basic": "To get started with the AI features.",
+      "pro": "For daily use.",
+      "max": "For heavy AI use."
+    },
+    "groups": {
+      "build": "Build & ship",
+      "create": "Create & publish",
+      "track": "Track & prospect"
+    },
     "uses": {
       "gitagent": "{count, plural, one {# repo} other {# repos}} with GitAgent each month",
       "shipscreen": "{count, plural, one {# mobile app} other {# mobile apps}} shipped with ShipScreen",
       "trackcut": "{count, plural, one {# track} other {# tracks}} to cut with TrackCut",
       "polishcast": "{count, plural, one {# video} other {# videos}} cast with PolishCast",
-      "jobscout": "{count, plural, one {# country} other {# countries}} scouted with JobScout",
       "spreadradar": "{count, plural, one {# crypto} other {# cryptos}} to track the spread of with SpreadRadar",
-      "surface_watch": "{count, plural, one {# app} other {# apps}} to pentest with Surface Watch"
+      "surface_watch": "{count, plural, one {# app} other {# apps}} to pentest with Surface Watch",
+      "jobscout": "{count, plural, one {# search} other {# searches}} a month with JobScout, in every country",
+      "publishkit": "PublishKit, with no limit and no credits needed"
     },
+    "uses_note": "~ is roughly what a month's credits buy if they all go to that one app: the credits are shared by every app, in any mix.",
     "subscribe": "Subscribe",
-    "fine_print": "Billed monthly by Stripe; cancel any time and Pro stays on until the end of the month you paid for. Unused AI credits do not carry over.",
+    "current_plan": "Your plan",
+    "switch_plan": "Switch to this plan",
+    "sub_title": "Your {plan} plan",
+    "sub_status_renews": "Active · renews on {date}",
+    "sub_status_ending": "Cancelled · stays on until {date}",
+    "sub_status_ended": "Ended on {date}",
+    "sub_status_past_due": "Payment failed",
+    "sub_status_free": "Free allowance · refills on {date}",
+    "sub_credits_label": "AI credits this month",
+    "sub_credits": "{left} of {granted} left",
+    "sub_portal": "Card, invoices & plan change",
+    "sub_fix_payment": "Update your card",
+    "sub_cancel": "Cancel plan",
+    "sub_cancel_confirm": "Cancel your plan? Nothing more will be charged, and your apps and credits stay on until {date}. You can resume it until then.",
+    "sub_cancel_yes": "Yes, cancel",
+    "sub_cancel_no": "Keep my plan",
+    "sub_resume": "Resume plan",
+    "sub_error": "That didn't work. Please try again in a moment.",
+    "sub_unavailable": "Your subscription couldn't be loaded right now. Please try again in a moment.",
+    "fine_print": "Billed monthly by Stripe; cancel any time and your apps stay unlocked until the end of the month you paid for. Unused AI credits do not carry over.",
     "thanks_title": "Thank you for subscribing",
     "thanks_loading": "Fetching your licence number…",
     "thanks_pending": "Your payment is being confirmed. This usually takes a few seconds…",
@@ -196,7 +227,7 @@
     "thanks_copied": "Copied",
     "thanks_credits": "{count, plural, one {# AI credit} other {# AI credits}} left this month; the plan renews on {date}.",
     "thanks_how_heading": "Paste it into your apps",
-    "thanks_manage": "To change or cancel your plan later, open the licence window in any of these apps.",
+    "thanks_manage": "To see, change or cancel your plan later, sign in on this pricing page with the same account.",
     "thanks_missing": "We couldn't find this subscription. If you have just paid, your licence number is on its way by email.",
     "thanks_error": "Your licence number couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
     "thanks_contact": "contact us."
@@ -236,7 +267,7 @@
     "polishcast_tagline": "Record your screen, get a polished video: smooth cursor, zoom on clicks",
     "polishcast_description": "Record from the menu bar or with a shortcut. The cursor is redrawn so it glides, clicks become zooms that ease in, and a background, padding and rounded corners frame the result. Adjust it in the editor, cut the pauses, and export to MP4 at up to 4K.",
     "jobscout_tagline": "Job posts from LinkedIn and local boards, ranked against your profile",
-    "jobscout_description": "Collect job posts from LinkedIn, jobs.ch and jobup.ch in Switzerland, or LinkedIn, MyCareersFuture and JobStreet in Singapore, into one list on your computer. Read each description in the app, score every job against your profile with Mistral or a local ollama model, and let saved searches run on their own and notify you about the good matches.",
+    "jobscout_description": "Collect job posts from LinkedIn and the main local boards of nine countries — Switzerland, Singapore, Germany, France, the United Kingdom, the United Arab Emirates, Ireland, Belgium and Austria — into one list on your computer. Read each description in the app, score every job against your profile with Mistral or a local ollama model, and let saved searches run on their own and notify you about the good matches.",
     "surface_watch_tagline": "Watch a web app's client-side attack surface change between builds",
     "surface_watch_description": "Capture each target of a pentest engagement with REA and see its attack surface: endpoints, parameters, statuses, security headers and third parties. Compare two builds without the noise of renamed chunks and timing, turn what matters into findings backed by evidence, and retest to see whether each one is fixed. Runs fully local, with a command line for scheduled watches.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
@@ -1036,8 +1067,8 @@
           }
         ],
         "article_slug": "ai-commit-messages-without-giving-up-control",
-        "pro_download_intro": "Free for personal, educational and non-profit use, with 5 repositories. Commercial use — including a solo consultant on client work — requires GitAgent Pro, which also covers every repository, in every folder. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 5 repositories across all your folders (the others are shown locked). Commercial use — including a solo consultant on client work and an employee using it at their job — requires GitAgent Pro, which also covers every repository. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, in every repository. Commercial use — including a solo consultant on client work — requires GitAgent Pro, which also brings AI credits every month for the api0 model. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, in every repository, with or without a licence. Commercial use — including a solo consultant on client work and an employee using it at their job — requires GitAgent Pro, which also brings AI credits every month. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "Open GitAgent, click Get Pro… in the top bar and paste the licence number.",
         "comparison": {
           "competitors": [
@@ -1293,7 +1324,10 @@
               ]
             }
           ]
-        }
+        },
+        "pro_download_intro": "Free for personal, educational and non-profit use, on one app: the first project you open. Commercial use — including a solo consultant on client work — requires ShipScreen Pro, which also covers any number of apps. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, on one app with every feature (you can swap which app is the free one). Commercial use — including a solo consultant on client work and an employee using it at their job — requires ShipScreen Pro, which also covers any number of apps. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_how": "Open ShipScreen, click Get Pro… on the project screen, next to New Project…, and paste the licence number."
       },
       "trackcut": {
         "seo_title": "TrackCut — Split Long MP3 and WAV Recordings into Tracks",
@@ -1622,16 +1656,16 @@
       },
       "jobscout": {
         "seo_title": "JobScout — Job Search Across LinkedIn and Local Boards, Scored Against Your Profile",
-        "seo_description": "Desktop app that collects job posts from LinkedIn, jobs.ch, jobup.ch, MyCareersFuture and JobStreet, keeps them on your computer, and scores each one against your profile with Mistral or a local ollama model.",
+        "seo_description": "Desktop app that collects job posts from LinkedIn and the local boards of nine countries, from jobs.ch to StepStone, keeps them on your computer, and scores each one against your profile with Mistral or a local ollama model.",
         "overview": [
           "Looking for a job means the same search on three or four sites, the same post seen twice under different titles, and a browser full of tabs you meant to come back to. Deciding which posts are worth an application takes longer than finding them.",
-          "JobScout searches LinkedIn's public pages, without logging in, and the main local boards for one country at a time: jobs.ch and jobup.ch for Switzerland, MyCareersFuture and JobStreet for Singapore. Every job lands in one list on your computer, once, with a status you set: New, Saved, Applied or Hidden.",
+          "JobScout searches LinkedIn's public pages, without logging in, and the main local boards for one country at a time, in any of nine: Switzerland (jobs.ch, jobup.ch), Singapore (MyCareersFuture, JobStreet), Germany (Arbeitsagentur, StepStone), France (France Travail), the United Kingdom (Totaljobs, Reed), the United Arab Emirates (Bayt), Ireland (IrishJobs), Belgium and Austria (StepStone). Every job lands in one list on your computer, once, with a status you set: New, Saved, Applied or Hidden.",
           "Each job can be scored against your profile by any OpenAI-compatible model, Mistral by default or ollama on your own machine. A score comes with a one-line verdict, the strengths and the gaps. Saved searches, called watches, run on their own while the app is open and notify you about new jobs above your threshold."
         ],
         "features": [
           {
             "title": "Several boards, one list",
-            "body": "LinkedIn plus jobs.ch and jobup.ch in Switzerland, or MyCareersFuture and JobStreet in Singapore. A job posted on more than one site appears once."
+            "body": "LinkedIn plus each country's own boards: jobs.ch and jobup.ch in Switzerland, StepStone and the Arbeitsagentur in Germany, Reed and Totaljobs in the UK, and more. A job posted on more than one site appears once."
           },
           {
             "title": "No login, no account at risk",
@@ -1643,7 +1677,7 @@
           },
           {
             "title": "Watches that notify you",
-            "body": "Save a search and JobScout runs it every 1 to 72 hours while it is open, scores up to 15 new jobs and sends one desktop notification for those above your threshold."
+            "body": "Save a search and JobScout runs it every 1 to 72 hours while it is open, scores up to 15 new jobs and sends one desktop notification for those above your threshold — and, if you like, an email with the jobs and their links to your licence's address."
           },
           {
             "title": "Yours, on your computer",
@@ -1667,12 +1701,12 @@
           },
           {
             "q": "Which countries are supported?",
-            "a": "Switzerland (LinkedIn, jobs.ch, jobup.ch) and Singapore (LinkedIn, MyCareersFuture, JobStreet). Each country is kept separately: switching unloads one and loads the other."
+            "a": "Nine, on every plan: Switzerland (jobs.ch, jobup.ch), Singapore (MyCareersFuture, JobStreet), Germany (Arbeitsagentur, StepStone), France (France Travail), the United Kingdom (Totaljobs, Reed), the United Arab Emirates (Bayt), Ireland (IrishJobs), Belgium and Austria (StepStone), each with LinkedIn too. Each country is kept separately: switching unloads one and loads the other."
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Free for personal, educational and non-profit use, with one watch. Searching, scoring and export are never limited. Commercial use — including a recruiter or a consultant on client work — requires JobScout Pro, which also keeps any number of watches, in every country. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with one watch and unlimited searching, scoring and export. Commercial use — including a recruiter, a consultant on client work and an employee using it at their job — requires JobScout Pro, which also keeps any number of watches. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_download_intro": "Free for personal, educational and non-profit use, with 10 searches a month in any country. Scoring and export are never limited. Commercial use — including a recruiter or a consultant on client work — requires JobScout Pro, whose plans run more searches: 50 a month on Basic, 500 on Pro and 1000 on Max, in every country. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 10 searches a month in any country, any number of watches, and unlimited scoring and export. Commercial use — including a recruiter, a consultant on client work and an employee using it at their job — requires JobScout Pro. Every plan covers every country; what it sets is the searches a month: 50 on Basic, 500 on Pro, 1000 on Max. A search from the app or from Claude counts as one; a watch's run counts only when it finds new jobs. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "Open JobScout, click Get Pro… at the bottom of the sidebar and paste the licence number."
       },
       "surface_watch": {

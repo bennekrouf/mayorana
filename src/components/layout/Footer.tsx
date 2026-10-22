@@ -18,7 +18,7 @@ export default function Footer() {
   // Side projects stay on the Apps page. `badge` renders next to the name.
   const portfolioLinks: { name: string; url: string; external: boolean; badge?: string }[] = [
     { name: t('footer_api0'), url: 'https://api0.ai', external: true },
-    { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps#ais-runner'), external: false },
+    { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps/ais-runner'), external: false },
     // Directly under the app it belongs to: the notes page is otherwise three
     // clicks deep and signposted nowhere a visitor would think to look.
     {
@@ -26,8 +26,8 @@ export default function Footer() {
       url: getLocalizedPath(locale, '/apps/ais-runner/releases'),
       external: false,
     },
-    { name: 'AIS Monitor', url: getLocalizedPath(locale, '/apps#ais-monitor'), external: false },
-    { name: 'GitAgent', url: getLocalizedPath(locale, '/apps#gitagent'), external: false },
+    { name: 'AIS Monitor', url: getLocalizedPath(locale, '/apps/ais-monitor'), external: false },
+    { name: 'GitAgent', url: getLocalizedPath(locale, '/apps/gitagent'), external: false },
   ];
 
   const actionLinks = [
