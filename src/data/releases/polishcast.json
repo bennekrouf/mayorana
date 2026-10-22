@@ -2,8 +2,35 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-21T09:48:53Z",
+  "generated_at": "2026-10-22T07:30:48Z",
   "releases": [
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Export now asks what to call the video before it starts, and suggests a name that says what it is: the take, its size, frame rate, shape and speed, whether the pauses are cut, and when it was exported. Exporting the same take again no longer replaces the video you exported before; if you pick a name that is already taken, the window says so before anything is overwritten.",
+            "One licence number for every Mayorana app on this computer. Paste it in any of them and the others are Pro too the next time they start, with nothing to paste again; a number already pasted in one app is shared the same way. Removing the licence in the Pro window removes it from all of them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Free AI credits every month, without Pro. Enter your email under Get free AI credits in the Pro window and the licence number arrives by email; paste it in the same window. The window then shows how many credits are left this month. The free version's limits stay as they are."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.19",
       "tag": "v0.1.19",

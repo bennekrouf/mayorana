@@ -2,8 +2,40 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-21T09:39:07Z",
+  "generated_at": "2026-10-22T07:27:27Z",
   "releases": [
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Score jobs with api0's model, paid for by your licence's AI credits, free or Pro. It is now the scoring model: no API key to set up, since it uses the licence number from the Pro window. If you were on DeepSeek as set up out of the box, JobScout switches you to api0; a model you chose yourself is kept, and DeepSeek is one click away under Scoring model in Settings."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "One licence number for every Mayorana app on this computer. Paste it in any of them and the others are Pro too the next time they start, with nothing to paste again; a number already pasted in one app is shared the same way. Removing the licence in the Pro window removes it from all of them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Free AI credits every month, without Pro. Enter your email under Get free AI credits in the Pro window and the licence number arrives by email; paste it in the same window. The window then shows how many credits are left this month. The free version's limits stay as they are."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.10",
       "tag": "v0.1.10",

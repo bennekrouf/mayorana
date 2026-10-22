@@ -2,8 +2,34 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-21T09:54:10Z",
+  "generated_at": "2026-10-22T07:36:05Z",
   "releases": [
+    {
+      "version": "0.1.33",
+      "tag": "v0.1.33",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "One licence number for every Mayorana app on this computer. Paste it in any of them and the others are Pro too the next time they start, with nothing to paste again; a number already pasted in one app is shared the same way. Removing the licence in the Pro window removes it from all of them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.32",
+      "tag": "v0.1.32",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Free AI credits every month, without Pro. Enter your email under Get free AI credits in the Pro window and the licence number arrives by email; paste it in the same window. The window then shows how many credits are left this month. The free version's limits stay as they are."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.31",
       "tag": "v0.1.31",

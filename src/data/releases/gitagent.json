@@ -2,8 +2,56 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-21T09:48:02Z",
+  "generated_at": "2026-10-22T07:27:13Z",
   "releases": [
+    {
+      "version": "0.1.118",
+      "tag": "v0.1.118",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The panel that opens beside the run map can be resized: drag its left edge to widen it as far as the whole view, so a pull request's diff or a step's log can be read full width, and back down again. It never gets so narrow it is hard to grab, the width you leave it at is kept between launches, and a double-click on the edge puts it back to its usual size."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "One licence number for every Mayorana app on this computer. Paste it in any of them and the others are Pro too the next time they start, with nothing to paste again; a number already pasted in one app is shared the same way. Removing the licence in the Pro window removes it from all of them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.117",
+      "tag": "v0.1.117",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Free AI credits every month, without Pro: in the GitAgent Pro window, enter your email under Get free AI credits and a licence number is sent to you. Paste it like any licence, and the api0 model under Settings → Model provider works on those credits. The window shows \"Free\" and the credits left this month. Buy a plan later with the same email and that licence becomes Pro, with nothing to paste again."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Without a licence, Settings no longer just says api0 has no key: it points to the free AI credits in the GitAgent Pro window, and links to the plans for more.",
+            "A licence whose plan doesn't include GitAgent now shows as AI credits only, with the credits left this month, instead of as a lapsed Pro licence.",
+            "Settings → Model provider is now split into two tabs, Default and Second reviewer, instead of one long panel. The Default tab holds the model every step calls — the commit message, the pull request description, the review, the release notes — with its focused reviews; the Second reviewer tab holds the model that reviews a pull request a second time. Each tab says which model it is set to, so you can see whether the second reviewer is on without opening it.",
+            "The GitAgent Pro window no longer lists \"Apps included: none\" for a plan that names no apps, and its buttons wrap as whole buttons instead of squeezing each label onto two or three lines.",
+            "Activating a licence now just says it worked — **GitAgent Pro is active**, with your email and this month's AI credits — and a Done button, instead of putting Remove from this computer and Manage subscription in front of you the moment you have subscribed. They are still there when you open the window again."
+          ]
+        },
+        {
+          "heading": "Removed",
+          "items": [
+            "The free version's limit of five repositories is gone: GitAgent runs flows in every repository, with or without a licence. No repository is greyed out with a 🔒 Pro tag any more, and the GitAgent Pro window no longer lists five repositories or asks you to give one back."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.116",
       "tag": "v0.1.116",
