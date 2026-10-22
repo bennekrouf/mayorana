@@ -99,8 +99,14 @@ export function creditUses(monthlyCredits: number, appUses: AppUse[]) {
 export const PLAN_GROUPS = [
   { key: 'build', tools: ['gitagent', 'shipscreen', 'surface-watch'] },
   { key: 'create', tools: ['polishcast', 'trackcut', 'publishkit'] },
-  { key: 'track', tools: ['jobscout', 'spreadradar'] },
+  // CVenom is a web app, not a desktop one: it spends the same plan's credits
+  // when its account has the plan's email. Next to JobScout, which finds the jobs
+  // it tailors CVs for.
+  { key: 'track', tools: ['jobscout', 'cvenom', 'spreadradar'] },
 ] as const;
+
+/** What a tailored CV costs in CVenom (backend-cvenom's cv_generation). */
+export const CVENOM_CV_CREDITS = 20;
 
 /** The plan descriptions the site has wording for, by plan id; others show the gateway's text. */
 export const TRANSLATED_PLAN_DESCRIPTIONS = new Set(['basic', 'pro', 'max']);
