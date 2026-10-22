@@ -43,8 +43,12 @@ export interface DesktopToolConfig {
    * `product` is the id the plans and licences use, when it is not the tool's
    * id: TrackCut, SpreadRadar and PolishCast were renamed, and the apps still
    * check for their old ids.
+   *
+   * `monthlySearches`, by plan id, is what a plan sets for a tool whose plans
+   * differ by searches a month rather than by AI credits (JobScout; `free` is
+   * the app without a plan). The app enforces the same numbers.
    */
-  pro?: { product?: string };
+  pro?: { product?: string; monthlySearches?: Record<string, number> };
   /**
    * A Claude skill for the people using the tool, packaged by the tool's
    * release CI next to its builds. The detail page only shows it once the file
@@ -166,6 +170,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'shipscreen',
+    pro: {},
     source: 'https://github.com/bennekrouf/shipscreen',
     name: 'ShipScreen',
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
@@ -240,7 +245,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
   },
   {
     id: 'jobscout',
-    pro: {},
+    pro: { monthlySearches: { free: 10, basic: 50, pro: 500, max: 1000 } },
     source: 'https://github.com/bennekrouf/jobscout',
     name: 'JobScout',
     tech: 'Rust · Dioxus · Mistral / ollama · WebKit · Camoufox',

@@ -2,10 +2,12 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { FiLogIn, FiLogOut, FiUser } from 'react-icons/fi';
+import Link from 'next/link';
+import { FiCreditCard, FiLogIn, FiLogOut, FiUser } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
 
 const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_google' | 'sign_in_github' }[] = [
@@ -15,12 +17,14 @@ const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_go
 
 /**
  * Sign-in button with a Google/GitHub menu, or the signed-in user's avatar
- * with a sign-out menu.
+ * with a menu to their subscription and to sign out.
  * `compact` is the mobile-menu variant: a full-width row instead of an icon.
  */
 const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
   const { enabled, user, loading, signIn, signOut } = useAuth();
   const t = useTranslations('auth');
+  const locale = useLocale();
+  const subscriptionHref = getLocalizedPath(locale, '/pricing#subscription');
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -109,13 +113,22 @@ const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
           {avatar}
           <span className="text-sm truncate">{user.displayName || user.email}</span>
         </div>
-        <button
-          onClick={signOut}
-          className="flex items-center px-3 py-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors"
-        >
-          <FiLogOut className="h-4 w-4 mr-2" />
-          {t('sign_out')}
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href={subscriptionHref}
+            aria-label={t('my_subscription')}
+            className="flex items-center p-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors"
+          >
+            <FiCreditCard className="h-4 w-4" />
+          </Link>
+          <button
+            onClick={signOut}
+            className="flex items-center px-3 py-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors"
+          >
+            <FiLogOut className="h-4 w-4 mr-2" />
+            {t('sign_out')}
+          </button>
+        </div>
       </div>
     );
   }
@@ -136,6 +149,14 @@ const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
             <p className="text-sm font-medium truncate">{user.displayName || t('signed_in')}</p>
             <p className="text-xs text-muted-foreground truncate">{user.email}</p>
           </div>
+          <Link
+            href={subscriptionHref}
+            onClick={() => setOpen(false)}
+            className="w-full flex items-center px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          >
+            <FiCreditCard className="h-4 w-4 mr-2" />
+            {t('my_subscription')}
+          </Link>
           <button
             onClick={() => { setOpen(false); signOut(); }}
             className="w-full flex items-center px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"

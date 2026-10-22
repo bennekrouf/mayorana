@@ -32,8 +32,8 @@ export default function ClientHomeSection() {
       name: tool.name,
       line: tApps(`${appI18nKey[tool.id]}_tagline`),
       status: tool.status,
-      // The Apps page gives every card an id, so this lands on the tool itself.
-      href: getLocalizedPath(locale, `/apps#${tool.id}`),
+      // Each tool has its own detail page at /apps/<id>.
+      href: getLocalizedPath(locale, `/apps/${tool.id}`),
     };
   });
 
