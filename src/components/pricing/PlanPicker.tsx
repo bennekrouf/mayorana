@@ -20,6 +20,7 @@ import {
   fetchPlans,
   fetchSubscription,
   formatPlanPrice,
+  CVENOM_CV_CREDITS,
   openPortal,
   PLAN_GROUPS,
   planLogo,
@@ -288,9 +289,9 @@ export function PlanPicker() {
                     <AppRow
                       key={id}
                       toolId={id}
-                      included={tools.some((tool) => tool.id === id) || id === 'publishkit'}
+                      included={tools.some((tool) => tool.id === id) || id === 'publishkit' || id === 'cvenom'}
                       searches={desktopToolsConfig.find((tool) => tool.id === id)?.pro?.monthlySearches?.[plan.id]}
-                      uses={uses.get(id)}
+                      uses={id === 'cvenom' ? Math.floor(plan.monthly_credits / CVENOM_CV_CREDITS) : uses.get(id)}
                     />
                   ))}
                 </Fragment>
@@ -341,7 +342,15 @@ function AppRow({
   const t = useTranslations('pricing');
   const tool = desktopToolsConfig.find((candidate) => candidate.id === toolId);
   // Kept as an empty row, so the apps stay level across the cards.
-  if (!tool || !included) return <p className="pt-1.5 text-sm" aria-hidden />;
+  if (!included || (!tool && toolId !== 'cvenom')) return <p className="pt-1.5 text-sm" aria-hidden />;
+  if (toolId === 'cvenom') {
+    return (
+      <p className="flex items-start gap-2 pt-1.5 text-sm text-muted-foreground">
+        <span className="w-4 shrink-0 text-center text-primary">~</span>
+        {t('uses.cvenom', { count: uses ?? 0 })}
+      </p>
+    );
+  }
   const [mark, text] =
     searches !== undefined
       ? [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('uses.jobscout', { count: searches })]
@@ -349,7 +358,7 @@ function AppRow({
         ? [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('uses.publishkit')]
         : uses !== undefined
           ? [<span key="m" className="w-4 shrink-0 text-center text-primary">~</span>, t(`uses.${appI18nKey[toolId]}`, { count: uses })]
-          : [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('app_included', { name: tool.name })];
+          : [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('app_included', { name: tool!.name })];
   return (
     <p className="flex items-start gap-2 pt-1.5 text-sm text-muted-foreground">
       {mark}
