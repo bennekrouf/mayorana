@@ -90,9 +90,14 @@ const nextConfig = {
     ];
   },
 
-  // Simplified rewrites
+  // Firebase's sign-in handler, served from our own domain so Google's consent
+  // screen says "Sign in to mayorana.ch" rather than the project's
+  // firebaseapp.com host. Pairs with authDomain in src/lib/firebase.ts.
   async rewrites() {
-    return [];
+    return [
+      { source: '/__/auth/:path*', destination: 'https://mayorana-7922a.firebaseapp.com/__/auth/:path*' },
+      { source: '/__/firebase/:path*', destination: 'https://mayorana-7922a.firebaseapp.com/__/firebase/:path*' },
+    ];
   },
 
   // Rewrite `react-icons/*` barrel imports to per-icon imports so a page that
