@@ -2,8 +2,53 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-22T07:27:27Z",
+  "generated_at": "2026-10-22T16:23:39Z",
   "releases": [
+    {
+      "version": "0.1.15",
+      "tag": "v0.1.15",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Removed",
+          "items": [
+            "The \"DeepSeek, your own key\" button is gone from Settings: api0 scores in Europe, China or the United States, or a local Ollama does. A model set by hand keeps working."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Settings offers three places to score in: Europe, China and the United States, each one click with its flag. They run on your licence's AI credits with no API key to set up, and each shows about how many credits a score costs, so you can weigh them before scoring a list. Ollama on this computer sits beside them, and DeepSeek with your own key is still one click away. New installs score in Europe, and so do settings left on api0's plan default: you see which region scores, and can pick another."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Plans now differ by searches, not watches: every country is open on every plan, and you keep as many watches as you like. The free version runs 10 searches a month; Basic 50, Pro 500 and Max 1000. A search from the sidebar or from Claude counts as one, and a watch's run only when it finds new jobs, across all countries, and the count starts again on the 1st. The sidebar shows how many are left; the Pro window shows your plan's searches."
+          ]
+        },
+        {
+          "heading": "Added",
+          "items": [
+            "Watch results by email. Tick Email on a watch and each run that finds something sends you the jobs too, with their score and a link, at your licence's email. Any licence works, including the free AI credits."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.12",
       "tag": "v0.1.12",

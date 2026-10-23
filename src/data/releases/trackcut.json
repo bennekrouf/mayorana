@@ -2,8 +2,21 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-22T07:30:23Z",
+  "generated_at": "2026-10-22T11:49:29Z",
   "releases": [
+    {
+      "version": "0.1.29",
+      "tag": "v0.1.29",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The window title now shows your licence status next to the app name and version: a Pro marker when Pro is active, or Pro inactive when it has lapsed. The selected recording still appears after a dash."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.28",
       "tag": "v0.1.28",

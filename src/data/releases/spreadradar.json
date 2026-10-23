@@ -2,8 +2,47 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-21T19:59:03Z",
+  "generated_at": "2026-10-22T16:03:43Z",
   "releases": [
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.19",
+      "tag": "v0.1.19",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The window title now shows your licence state next to the app name and version: a star and Pro when Pro is active, and Pro inactive when a Pro licence has lapsed or could not be checked. It updates as soon as the licence changes, so you can see your status without opening the Pro window."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.18",
+      "tag": "v0.1.18",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "One licence number for every Mayorana app on this computer. Paste it in any of them and the others are Pro too the next time they start, with nothing to paste again; a number already pasted in one app is shared the same way. Removing the licence in the Pro window removes it from all of them."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.17",
       "tag": "v0.1.17",

@@ -2,8 +2,56 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-22T07:27:13Z",
+  "generated_at": "2026-10-23T07:18:11Z",
   "releases": [
+    {
+      "version": "0.1.121",
+      "tag": "v0.1.121",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The default model and the second reviewer now offer the same four choices in the same row: api0, Ollama, your own key, or none. The second reviewer can be set to an api0 region of its own, and the long list of providers only appears once you say you have a key. When api0 needs a licence, Settings offers a button that opens the licence window directly instead of pointing you to the top bar. A model saved before api0 had regions now shows the region it runs in rather than \"default\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.120",
+      "tag": "v0.1.120",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A new install only asks what writes the commit messages when there is a model on this machine to offer. With ollama running it is the same one-click question as before, now naming the model it found — and a model other than the usual one is picked up rather than reported as missing. Without ollama the question is skipped: GitAgent starts on the Europe model and opens straight onto your repositories, and Settings changes it whenever you like. \"No AI\" is no longer offered as a way to set up GitAgent; every flow still runs without a model where one is unreachable, and the second reviewer is still off until you turn it on."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.119",
+      "tag": "v0.1.119",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Settings has three new choices for the model: Europe, China and the United States. Each is one click, runs on your plan's AI credits with no API key to set up, and shows about how many credits a step costs, so you can weigh them before a run. Ollama sits beside them, and a provider with a key of your own is still one click away.",
+            "Each open folder keeps its own model. Set one window to China and the one beside it to the United States, and both stay that way — the model shown in the top bar is the folder's, and changing it there no longer moves any other window. A folder you have not chosen for runs the model set with no folder open, so nothing has to be picked twice. The second reviewer and the focused reviews are still one setting for the whole computer."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "A new install only asks what writes the commit messages when there is a model on this machine to offer. With ollama running it is the same one-click question as before, now naming the model it found — and a model other than the usual one is picked up rather than reported as missing. Without ollama the question is skipped: GitAgent starts on the Europe model and opens straight onto your repositories, and Settings changes it whenever you like.",
+            "\"No AI\" is no longer offered as a way to set up GitAgent. Every flow still runs without a model where one is unreachable, and the second reviewer is still off until you turn it on.",
+            "The repository list offers the next step instead of only naming it: a repository with uncommitted files shows a \"Commit 3 files\" button where it said \"uncommitted\", and one with a release due shows a button named after the flow that will run it — \"Release\", or \"Deploy VPS\" if that is what cuts releases here. A click opens the repository and starts that flow, so any approval it stops at is right in front of you."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.118",
       "tag": "v0.1.118",
