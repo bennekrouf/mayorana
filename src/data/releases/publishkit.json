@@ -2,8 +2,21 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-22T16:21:48Z",
+  "generated_at": "2026-10-23T08:05:12Z",
   "releases": [
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "API requests now include a header specifying the task kind, allowing api0 to route writing tasks to the appropriate region-specific model. This ensures that the writing process is optimized for the selected region and leverages the AI credits shared across Mayorana apps on the same computer."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.19",
       "tag": "v0.1.19",

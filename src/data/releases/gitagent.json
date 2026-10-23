@@ -2,8 +2,54 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-23T07:18:11Z",
+  "generated_at": "2026-10-23T08:04:51Z",
   "releases": [
+    {
+      "version": "0.1.123",
+      "tag": "v0.1.123",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A repository whose pull request is ready now offers the decision instead of reporting it: where the list said \"ready to merge\", it has a Merge #34 button that opens that repository and starts the review, with the pull request it names already chosen. Four repositories all reading \"ready to merge\" used to need opening one by one to tell apart. The note stays wherever the button cannot be offered — a hidden Review → Merge flow, or a pull request whose checks are red.",
+            "Settings → Model provider is down to four choices, side by side: the model on this computer, or api0 in Europe, China or the United States. No step between them and no fifth option — the flags are the choice, and what a step costs in each region is on the button.",
+            "The second reviewer now has a switch of its own. Tick \"Review every pull request a second time\" and the same four choices appear for it; untick it and there is one review, as before.",
+            "The first-run question offers that same row, so the choice made on day one is the one Settings shows afterwards."
+          ]
+        },
+        {
+          "heading": "Removed",
+          "items": [
+            "Bringing your own API key is gone from Settings and from the first-run screen, which no longer has anything to paste into, and so is \"No AI\". Every model GitAgent calls is either on your computer or on api0's regions, which run on your plan's AI credits with nothing to paste. A setting from an earlier version that named a provider of your own, or no model at all, keeps working exactly as it did; Settings says so, and one click moves it to one of the four."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.122",
+      "tag": "v0.1.122",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Settings → Model provider now offers the same four choices on both tabs: api0, Ollama, a provider you have a key for, and none. The second reviewer is picked the way the default model is, api0 region and all, instead of a drop-down of its own, and the list of key-based providers (OpenAI, Mistral and the rest) only appears once you say you have a key.",
+            "api0 carries the mayorana mark in that row, and the region you run in — its flag and what a step costs — sits right under it.",
+            "A model set to api0 now names its region everywhere. The button in the top bar that opens this window used to read \"default\" for a plan that had never been sent to a region; it reads the region's flag and name from now on, and an older setting is moved to Europe the first time it is read.",
+            "With no licence on this computer, api0 offers to sign in from inside the window rather than sending you to look for Get Pro… in the top bar.",
+            "The default model can be turned off from this window. \"No AI\" used to be offered only while setting GitAgent up for the first time.",
+            "The question a new install is asked — what writes the commit messages — now offers that same row of providers, so the choice made on the first screen looks like the one Settings offers later. A key, or an api0 licence number, is still pasted right there and kept for the session only."
+          ]
+        },
+        {
+          "heading": "Removed",
+          "items": [
+            "DeepSeek is no longer in the list of providers you bring a key for: api0 runs the model in Europe, China or the United States instead. A setting still on DeepSeek moves to OpenAI; pick api0 or another provider in Settings. The OpenRouter preset now starts on an OpenAI model."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.121",
       "tag": "v0.1.121",

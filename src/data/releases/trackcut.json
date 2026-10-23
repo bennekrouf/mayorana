@@ -2,8 +2,21 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-22T11:49:29Z",
+  "generated_at": "2026-10-23T09:39:12Z",
   "releases": [
+    {
+      "version": "0.1.30",
+      "tag": "v0.1.30",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On company networks that inspect secure connections (Zscaler and similar proxies), activating TrackCut Pro failed with \"invalid peer certificate: UnknownIssuer\". TrackCut now trusts the certificates your computer trusts, as your browser does, so the licence check, update check and the yt-dlp, Deno and ffmpeg downloads work there too. If the proxy's certificate isn't installed on the computer, the message now says so and suggests asking IT to install it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.29",
       "tag": "v0.1.29",
