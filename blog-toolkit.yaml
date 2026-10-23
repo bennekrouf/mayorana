@@ -24,3 +24,17 @@ content_paths:
     fr:
       queue: content/fr/queue
       blog: content/fr/blog
+preset: publishkit
+drafts: folder
+front_matter: yaml
+extension: md
+bundles: false
+title_heading: true
+date_in_filename: false
+publish_command: node scripts/generate-blog-data.js
+post_url: '{site_url}/{lang}/blog/{slug}'
+linkedin_dir: ''
+deploy_command: ''
+deploy_after_publish: false
+images_dir: ''
+images_url: ''
