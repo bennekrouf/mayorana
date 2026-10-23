@@ -6,7 +6,8 @@
 
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { ArrowLeft, ArrowRight, Check, Download, Github, Scale, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Download, Github, Scale, Sparkles, Terminal } from 'lucide-react';
+import { McpInstall } from '@/components/apps/McpInstall';
 import { ComparisonTable, type Comparison } from '@/components/ui/ComparisonTable';
 import {
   DataSourceBadge,
@@ -18,6 +19,7 @@ import {
   getRelatedTools,
   getToolBySlug,
   LICENCE_URL,
+  mcpInstallCommands,
   type DesktopToolConfig,
 } from '@/data/tools';
 import { getPostBySlug } from '@/lib/blog';
@@ -105,6 +107,7 @@ export async function ToolDetailContent({
   const { t, tagline, shortDescription, features, overview, requirements, faq, comparison } =
     content;
   const inPanel = variant === 'panel';
+  const mcpCommands = mcpInstallCommands(tool);
 
   // The page centres each section in the site container; the panel is already
   // narrow, so its sections just take an even gutter.
@@ -215,7 +218,7 @@ export async function ToolDetailContent({
 
       {/* The second things to download, after the table rather than in the
           hero: the hero is kept short so the comparison is in view on arrival. */}
-      {(skillHref || tool.pro) && (
+      {(skillHref || tool.pro || mcpCommands.length > 0) && (
         <section className="pb-12 bg-background">
           <div className={`${box('max-w-4xl')} space-y-8`}>
             {skillHref && (
@@ -245,6 +248,27 @@ export async function ToolDetailContent({
                     <li>{t('skill_install_claude_code', { id: tool.id })}</li>
                   </ul>
                 </details>
+              </div>
+            )}
+
+            {mcpCommands.length > 0 && (
+              <div className="max-w-2xl rounded-xl border border-border bg-background/60 p-4">
+                <p className="flex items-center gap-2 text-sm font-semibold">
+                  <Terminal className="h-4 w-4 text-primary" />
+                  {t('mcp_heading')}
+                </p>
+                <p className="mt-1 mb-4 text-sm text-muted-foreground">
+                  {t('mcp_body', { name: tool.name })}
+                </p>
+                <McpInstall
+                  commands={mcpCommands}
+                  labels={{
+                    os: { mac: 'macOS', windows: t('mcp_os_windows'), linux: 'Linux' },
+                    copy: t('mcp_copy'),
+                    copied: t('mcp_copied'),
+                  }}
+                />
+                <p className="mt-3 text-xs text-muted-foreground">{t('mcp_note', { name: tool.name })}</p>
               </div>
             )}
 
