@@ -155,5 +155,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+    // `__/` is Firebase's auth handler, proxied to firebaseapp.com by a rewrite
+    // in next.config.ts — it must not get the locale redirect.
+    matcher: ['/((?!_next/static|_next/image|favicon.ico|__/).*)'],
 }

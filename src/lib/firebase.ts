@@ -9,7 +9,7 @@ import { getAuth, type Auth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyA8OaC_m27FnQFFi3pq6c8pF0b0mZyh8Fw',
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'mayorana-7922a.firebaseapp.com',
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'mayorana.ch',
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'mayorana-7922a',
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:454981824324:web:92f65f850fd45452383111',
 };
