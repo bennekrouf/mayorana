@@ -55,6 +55,15 @@ export interface DesktopToolConfig {
    * is actually there — see src/lib/claudeSkill.ts.
    */
   claudeSkill?: string;
+  /**
+   * The tool's MCP server, where each installer puts it, so the detail page
+   * can give the one line that adds it to Claude Code. Same paths the apps'
+   * own MCP windows show, for a default install: /Applications on macOS, the
+   * per-user Inno Setup folder on Windows, and the extracted archive (or the
+   * .deb's /usr/bin) on Linux. `args` is what the executable needs to start
+   * as a server; AIS Runner ships a separate binary that needs none.
+   */
+  mcp?: { mac: string; windows: string; linux?: string; args?: string };
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -110,6 +119,11 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${runnerDl}/ais-runner-setup.exe` },
     ],
     claudeSkill: `${runnerDl}/ais-runner-claude-skill.zip`,
+    mcp: {
+      mac: '/Applications/AIS Runner.app/Contents/MacOS/ais-mcp',
+      windows: '%LOCALAPPDATA%\\Programs\\AIS Runner\\ais-mcp.exe',
+      linux: '$HOME/ais-runner-linux-x86_64/ais-mcp',
+    },
   },
   {
     id: 'ais-monitor',
@@ -167,6 +181,13 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${publishkitDl}/publishkit-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${publishkitDl}/publishkit-setup.exe` },
     ],
+    mcp: {
+      mac: '/Applications/PublishKit.app/Contents/MacOS/publishkit',
+      // The Windows installer still installs under its old name.
+      windows: '%LOCALAPPDATA%\\Programs\\Blog Manager\\publishkit.exe',
+      linux: '$HOME/publishkit-linux-x86_64/publishkit',
+      args: 'mcp',
+    },
   },
   {
     id: 'shipscreen',
@@ -181,6 +202,12 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64 (.deb)', href: `${shipscreenDl}/shipscreen-linux-x86_64.deb` },
       { os: 'windows', label: 'Windows', href: `${shipscreenDl}/shipscreen-windows-setup.exe` },
     ],
+    mcp: {
+      mac: '/Applications/ShipScreen.app/Contents/MacOS/shipscreen',
+      windows: '%LOCALAPPDATA%\\Programs\\ShipScreen\\shipscreen.exe',
+      linux: '/usr/bin/shipscreen',
+      args: 'mcp',
+    },
   },
   {
     id: 'gitagent',
@@ -196,6 +223,12 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${gitagentDl}/gitagent-setup.exe` },
     ],
     claudeSkill: `${gitagentDl}/gitagent-claude-skill.zip`,
+    mcp: {
+      mac: '/Applications/GitAgent.app/Contents/MacOS/gitagent',
+      windows: '%LOCALAPPDATA%\\Programs\\GitAgent\\gitagent.exe',
+      linux: '$HOME/gitagent-linux-x86_64/gitagent',
+      args: 'mcp',
+    },
   },
   {
     id: 'trackcut',
@@ -211,6 +244,12 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${trackcutDl}/trackcut-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${trackcutDl}/trackcut-setup.exe` },
     ],
+    mcp: {
+      mac: '/Applications/TrackCut.app/Contents/MacOS/trackcut',
+      windows: '%LOCALAPPDATA%\\Programs\\TrackCut\\trackcut.exe',
+      linux: '$HOME/trackcut-linux-x86_64/trackcut',
+      args: 'mcp',
+    },
   },
   {
     id: 'spreadradar',
@@ -227,6 +266,12 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${spreadradarDl}/spreadradar-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${spreadradarDl}/spreadradar-setup.exe` },
     ],
+    mcp: {
+      mac: '/Applications/SpreadRadar.app/Contents/MacOS/spreadradar',
+      windows: '%LOCALAPPDATA%\\Programs\\SpreadRadar\\spreadradar.exe',
+      linux: '$HOME/spreadradar-linux-x86_64/spreadradar',
+      args: 'mcp',
+    },
   },
   {
     id: 'polishcast',
@@ -242,6 +287,11 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       // No Linux build: recording is not supported there (see the app's FAQ).
       { os: 'windows', label: 'Windows 10+', href: `${polishcastDl}/polishcast-setup.exe` },
     ],
+    mcp: {
+      mac: '/Applications/PolishCast.app/Contents/MacOS/polishcast',
+      windows: '%LOCALAPPDATA%\\Programs\\PolishCast\\polishcast.exe',
+      args: 'mcp',
+    },
   },
   {
     id: 'jobscout',
@@ -258,6 +308,12 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'linux', label: 'Linux x86_64', href: `${jobscoutDl}/jobscout-linux-x86_64.tar.gz` },
       { os: 'windows', label: 'Windows', href: `${jobscoutDl}/jobscout-setup.exe` },
     ],
+    mcp: {
+      mac: '/Applications/JobScout.app/Contents/MacOS/jobscout',
+      windows: '%LOCALAPPDATA%\\Programs\\JobScout\\jobscout.exe',
+      linux: '$HOME/jobscout-linux-x86_64/jobscout',
+      args: 'mcp',
+    },
   },
   {
     id: 'surface-watch',
@@ -357,6 +413,24 @@ export const releaseNotesTools: string[] = [
   'jobscout',
   'surface-watch',
 ];
+
+/**
+ * The line that adds a tool's MCP server to Claude Code for every project, one
+ * per OS it has a path for — the same line the app's own MCP window gives.
+ * Windows uses %LOCALAPPDATA%, which Command Prompt expands.
+ */
+export function mcpInstallCommands(tool: DesktopToolConfig): { os: OS; command: string }[] {
+  const { mcp } = tool;
+  if (!mcp) return [];
+  const line = (path: string) =>
+    `claude mcp add ${tool.id} --scope user -- "${path}"${mcp.args ? ` ${mcp.args}` : ''}`;
+  const paths: [OS, string | undefined][] = [
+    ['mac', mcp.mac],
+    ['windows', mcp.windows],
+    ['linux', mcp.linux],
+  ];
+  return paths.flatMap(([os, path]) => (path ? [{ os, command: line(path) }] : []));
+}
 
 export const hasReleaseNotes = (toolId: string) => releaseNotesTools.includes(toolId);
 
