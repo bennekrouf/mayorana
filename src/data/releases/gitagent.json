@@ -2,8 +2,72 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-23T08:04:51Z",
+  "generated_at": "2026-10-25T13:01:10Z",
   "releases": [
+    {
+      "version": "0.1.127",
+      "tag": "v0.1.127",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Activating a licence now shows a small spinner while it is checked, then a window that says you're Pro, with the AI credits left and the renewal date in small type below. Removing the licence and checking it again no longer sit beside it; Manage subscription is a small link. Press Esc or the × to close it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.126",
+      "tag": "v0.1.126",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Activating a licence now shows a small spinner while it is checked, then a window that says you're Pro, with the AI credits left and the renewal date in small type below. Removing the licence and checking it again no longer sit beside it; Manage subscription is a small link. Press Esc or the × to close it.",
+            "The run controls, the replay speed and zoom buttons and the side-by-side choice buttons are now 30px tall, like every other button."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.125",
+      "tag": "v0.1.125",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "`gitagent run` runs a flow from the terminal, with no window. Leave out `--flow` and it runs the one the repository needs next. Every step that touches git history or the remote is put to you at a prompt, where you can read the diff and leave files out of the commit before you approve. `--trusted` answers approvals by the Trusted run's rules and carries on into the next flow, stopping at the same things it stops at in the window.",
+            "With no terminal to ask, as in CI or a scheduled job, `gitagent run` stops at the first approval rather than guessing, and its exit code says how the run ended: finished, a step failed, nothing ran, stopped at an approval, or an approval declined. A pull request's address and the other things a run produced are printed one per line for a script to read.",
+            "An open window shows a run started from the terminal as it goes, and says to answer its approvals in that terminal, as it already did for runs started from Claude."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A repository whose `origin` is a folder on your machine (`C:\\...` on Windows) no longer fails Preflight as an unsupported host named `c`. Every step up to and including the push now runs; only opening the pull request needs GitHub or Azure DevOps.",
+            "On Windows, repository paths in replies to Claude no longer start with `\\\\?\\`, so they match the path Claude sent.",
+            "A repository folder that no longer exists is now reported in English, instead of in the language Windows is set to.",
+            "The PRO badge in the top bar is now the same height as the buttons beside it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.124",
+      "tag": "v0.1.124",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Fields that hold an exact value no longer correct what you type into them: the target branch under Base branch, the ollama address and model name in Model provider, and the licence number and email under GitAgent Pro. A branch or model name is not prose, and it was being capitalised, autocorrected, underlined in red and offered completions from other fields, while git and the model APIs take only what is written. Setup's own fields already behaved this way."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.123",
       "tag": "v0.1.123",

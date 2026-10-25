@@ -2,8 +2,56 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-22T16:03:43Z",
+  "generated_at": "2026-10-25T13:02:19Z",
   "releases": [
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Activating a licence now shows a small spinner while it is checked, then a window that says you're Pro, with the AI credits left and the renewal date in small type below. Removing the licence and checking it again no longer sit beside it; Manage subscription is a small link. Press Esc or the × to close it.",
+            "The new-version banner and the usage-statistics notice now look the same as in GitAgent: a blue bar across the top, or the bottom for the notice, with a Download link and a × to hide it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Dialogs now have a title bar with a × to close them, and text fields have the same size and typeface as in GitAgent.",
+            "An open dialog now dims the light/dark switch in the corner along with the rest of the window, instead of leaving it lit on top.",
+            "The buttons along the top of the window now all have the same height, borders included, and the light/dark switch matches them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Buttons now have the same size, rounded corners and typeface as in GitAgent, so they look alike across the Mayorana apps."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The PRO button in the top-right corner is no longer hidden behind the light/dark switch."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.20",
       "tag": "v0.1.20",
