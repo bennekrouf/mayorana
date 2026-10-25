@@ -191,7 +191,7 @@
       "trackcut": "{count, plural, one {# track} other {# tracks}} to cut with TrackCut",
       "polishcast": "{count, plural, one {# video} other {# videos}} cast with PolishCast",
       "spreadradar": "{count, plural, one {# crypto} other {# cryptos}} to track the spread of with SpreadRadar",
-      "surface_watch": "{count, plural, one {# app} other {# apps}} to pentest with Surface Watch",
+      "surfacewatch": "{count, plural, one {# app} other {# apps}} to pentest with SurfaceWatch",
       "jobscout": "{count, plural, one {# search} other {# searches}} a month with JobScout, in every country",
       "cvenom": "{count, plural, one {# tailored CV} other {# tailored CVs}} with CVenom, on the web",
       "publishkit": "PublishKit, with no limit and no credits needed"
@@ -271,8 +271,8 @@
     "polishcast_description": "Record from the menu bar or with a shortcut. The cursor is redrawn so it glides, clicks become zooms that ease in, and a background, padding and rounded corners frame the result. Adjust it in the editor, cut the pauses, and export to MP4 at up to 4K.",
     "jobscout_tagline": "Job posts from LinkedIn and local boards, ranked against your profile",
     "jobscout_description": "Collect job posts from LinkedIn and the main local boards of nine countries — Switzerland, Singapore, Germany, France, the United Kingdom, the United Arab Emirates, Ireland, Belgium and Austria — into one list on your computer. Read each description in the app, score every job against your profile with Mistral or a local ollama model, and let saved searches run on their own and notify you about the good matches.",
-    "surface_watch_tagline": "Watch a web app's client-side attack surface change between builds",
-    "surface_watch_description": "Capture each target of a pentest engagement with REA and see its attack surface: endpoints, parameters, statuses, security headers and third parties. Compare two builds without the noise of renamed chunks and timing, turn what matters into findings backed by evidence, and retest to see whether each one is fixed. Runs fully local, with a command line for scheduled watches.",
+    "surfacewatch_tagline": "Watch a web app's client-side attack surface change between builds",
+    "surfacewatch_description": "Capture each target of a pentest engagement with REA and see its attack surface: endpoints, parameters, statuses, security headers and third parties. Compare two builds without the noise of renamed chunks and timing, turn what matters into findings backed by evidence, and retest to see whether each one is fixed. Runs fully local, with a command line for scheduled watches.",
     "gitagent_tagline": "Agentic graph for commit and deploy workflows",
     "gitagent_description": "Turns a dirty working tree into an open pull request, one approved step at a time. Scans your repo, drafts a commit message and a PR description with a local ollama model or Mistral, then commits, pushes, and opens the PR — but nothing touches git history or the remote without an explicit yes at each gated step.",
     "trackcut_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
@@ -1712,12 +1712,12 @@
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 10 searches a month in any country, any number of watches, and unlimited scoring and export. Commercial use — including a recruiter, a consultant on client work and an employee using it at their job — requires JobScout Pro. Every plan covers every country; what it sets is the searches a month: 50 on Basic, 500 on Pro, 1000 on Max. A search from the app or from Claude counts as one; a watch's run counts only when it finds new jobs. Pro is the commercial licence: there is nothing else to buy.",
         "pro_how": "Open JobScout, click Get Pro… at the bottom of the sidebar and paste the licence number."
       },
-      "surface_watch": {
-        "seo_title": "Surface Watch — Client-Side Attack Surface Monitoring for Web Pentests",
+      "surfacewatch": {
+        "seo_title": "SurfaceWatch — Client-Side Attack Surface Monitoring for Web Pentests",
         "seo_description": "Desktop app and CLI that captures web apps with REA, maps their client-side attack surface and shows what changed between two builds, with evidence-backed findings and retests. Runs fully local.",
         "overview": [
           "A web app under test changes every sprint. Comparing two builds by hand means wading through renamed script chunks, images and timing differences to find the one new endpoint that matters, and remembering which findings were fixed since the last visit.",
-          "Surface Watch captures each target of an engagement with REA and turns the traffic into a surface: every endpoint with its parameters and statuses, the security headers, the scripts and the third parties the page talks to. Entries worth a look, such as server errors, admin paths that answer without a login or pages without a Content-Security-Policy, are flagged first.",
+          "SurfaceWatch captures each target of an engagement with REA and turns the traffic into a surface: every endpoint with its parameters and statuses, the security headers, the scripts and the third parties the page talks to. Entries worth a look, such as server errors, admin paths that answer without a login or pages without a Content-Security-Policy, are flagged first.",
           "Compare any two captures and see only what changed, each change with what it means for your testing. Findings cite the raw REA evidence they rest on, and a retest says whether each one is fixed. Everything runs on your computer and no LLM is involved."
         ],
         "features": [
@@ -1739,7 +1739,7 @@
           },
           {
             "title": "Desktop and command line",
-            "body": "The surfacewatch CLI shares the same core, for scheduled watches from cron or CI, HAR imports and checks over SSH."
+            "body": "The surfacewatch-cli command line shares the same core, for scheduled watches from cron or CI, HAR imports and checks over SSH."
           }
         ],
         "requirements": [
@@ -1752,11 +1752,11 @@
         "faq": [
           {
             "q": "What is REA?",
-            "a": "REA is the open-source tool Surface Watch drives to open each target in a browser and record what it does. Surface Watch keeps REA's raw evidence unchanged and builds the surface and the diffs on top of it."
+            "a": "REA is the open-source tool SurfaceWatch drives to open each target in a browser and record what it does. SurfaceWatch keeps REA's raw evidence unchanged and builds the surface and the diffs on top of it."
           },
           {
             "q": "Does anything leave my computer?",
-            "a": "No. Captures, surfaces, findings and engagements are kept in private files on your computer. Surface Watch talks only to the targets you capture, and no AI model is involved."
+            "a": "No. Captures, surfaces, findings and engagements are kept in private files on your computer. SurfaceWatch talks only to the targets you capture, and no AI model is involved."
           },
           {
             "q": "Can I capture any website?",
@@ -1764,9 +1764,9 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Free for personal, research and non-profit use, with one engagement and every tab, the command line and scheduled watches. Commercial use, including a consultant on client work, requires Surface Watch Pro, which also keeps any number of engagements. Every build is produced by release CI and served from mayorana.ch.",
-        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with one engagement and every feature. Commercial use, including a consultant on client work and an employee using it at their job, requires Surface Watch Pro, which also keeps any number of engagements. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "Open Surface Watch, click Get Pro… next to the app's name and paste the licence number, or run surfacewatch licence followed by the number."
+        "pro_download_intro": "Free for personal, research and non-profit use, with one engagement and every tab, the command line and scheduled watches. Commercial use, including a consultant on client work, requires SurfaceWatch Pro, which also keeps any number of engagements. Every build is produced by release CI and served from mayorana.ch.",
+        "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with one engagement and every feature. Commercial use, including a consultant on client work and an employee using it at their job, requires SurfaceWatch Pro, which also keeps any number of engagements. Pro is the commercial licence: there is nothing else to buy.",
+        "pro_how": "Open SurfaceWatch, click Get Pro… next to the app's name and paste the licence number, or run surfacewatch-cli licence followed by the number."
       }
     },
     "article_heading": "Read more",

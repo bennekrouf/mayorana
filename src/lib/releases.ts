@@ -31,7 +31,7 @@ import spreadradar from '@/data/releases/spreadradar.json';
 import publishKit from '@/data/releases/publishkit.json';
 import polishcast from '@/data/releases/polishcast.json';
 import jobscout from '@/data/releases/jobscout.json';
-import surfaceWatch from '@/data/releases/surface-watch.json';
+import surfacewatch from '@/data/releases/surfacewatch.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -67,7 +67,7 @@ const snapshots: Record<string, ReleaseFeed> = {
   'publishkit': publishKit as ReleaseFeed,
   'polishcast': polishcast as ReleaseFeed,
   jobscout: jobscout as ReleaseFeed,
-  'surface-watch': surfaceWatch as ReleaseFeed,
+  surfacewatch: surfacewatch as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client

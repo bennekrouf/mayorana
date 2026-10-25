@@ -191,7 +191,7 @@
       "trackcut": "{count, plural, one {# piste à découper} other {# pistes à découper}} avec TrackCut",
       "polishcast": "{count, plural, one {# vidéo} other {# vidéos}} avec PolishCast",
       "spreadradar": "{count, plural, one {# crypto suivie} other {# cryptos suivies}} pour leur spread avec SpreadRadar",
-      "surface_watch": "{count, plural, one {# app à pentester} other {# apps à pentester}} avec Surface Watch",
+      "surfacewatch": "{count, plural, one {# app à pentester} other {# apps à pentester}} avec SurfaceWatch",
       "jobscout": "{count, plural, one {# recherche} other {# recherches}} par mois avec JobScout, dans tous les pays",
       "cvenom": "{count, plural, one {# CV sur mesure} other {# CV sur mesure}} avec CVenom, sur le web",
       "publishkit": "PublishKit, sans limite et sans crédits"
@@ -271,8 +271,8 @@
     "polishcast_description": "Enregistrez depuis la barre des menus ou avec un raccourci. Le curseur est redessiné pour glisser en douceur, les clics deviennent des zooms progressifs, et un fond, des marges et des coins arrondis encadrent le résultat. Ajustez dans l'éditeur, coupez les pauses, exportez en MP4 jusqu'en 4K.",
     "jobscout_tagline": "Les offres d'emploi de LinkedIn et des sites locaux, classées selon votre profil",
     "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn et des principaux sites locaux de neuf pays — Suisse, Singapour, Allemagne, France, Royaume-Uni, Émirats arabes unis, Irlande, Belgique et Autriche — dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec Mistral ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
-    "surface_watch_tagline": "Suivez l'évolution de la surface d'attaque côté client d'une app web d'un build à l'autre",
-    "surface_watch_description": "Capturez chaque cible d'une mission de pentest avec REA et voyez sa surface d'attaque : endpoints, paramètres, statuts, en-têtes de sécurité et tiers. Comparez deux builds sans le bruit des chunks renommés ni des temps de réponse, transformez ce qui compte en findings appuyés par des preuves, et relancez un test pour savoir si chacun est corrigé. Tout tourne en local, avec une ligne de commande pour les surveillances planifiées.",
+    "surfacewatch_tagline": "Suivez l'évolution de la surface d'attaque côté client d'une app web d'un build à l'autre",
+    "surfacewatch_description": "Capturez chaque cible d'une mission de pentest avec REA et voyez sa surface d'attaque : endpoints, paramètres, statuts, en-têtes de sécurité et tiers. Comparez deux builds sans le bruit des chunks renommés ni des temps de réponse, transformez ce qui compte en findings appuyés par des preuves, et relancez un test pour savoir si chacun est corrigé. Tout tourne en local, avec une ligne de commande pour les surveillances planifiées.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou Mistral, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "trackcut_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
@@ -1712,12 +1712,12 @@
         "pro_licence_body": "Code source disponible sous la PolyForm Noncommercial License 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 10 recherches par mois dans n'importe quel pays, autant de veilles que vous voulez, et l'évaluation et l'export illimités. L'usage commercial — y compris un recruteur, un consultant pour un client et un salarié dans le cadre de son travail — nécessite JobScout Pro. Chaque formule couvre tous les pays ; ce qu'elle fixe, c'est le nombre de recherches par mois : 50 avec Basic, 500 avec Pro, 1000 avec Max. Une recherche dans l'app ou depuis Claude compte pour une ; un passage de veille ne compte que s'il trouve de nouvelles offres. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Ouvrez JobScout, cliquez sur Get Pro… en bas de la barre latérale et collez le numéro de licence."
       },
-      "surface_watch": {
-        "seo_title": "Surface Watch — Suivi de la surface d'attaque côté client pour les pentests web",
+      "surfacewatch": {
+        "seo_title": "SurfaceWatch — Suivi de la surface d'attaque côté client pour les pentests web",
         "seo_description": "App de bureau et CLI qui capture des apps web avec REA, cartographie leur surface d'attaque côté client et montre ce qui a changé entre deux builds, avec des findings appuyés par des preuves et des retests. Tout tourne en local.",
         "overview": [
           "Une app web en test change à chaque sprint. Comparer deux builds à la main, c'est trier des chunks de scripts renommés, des images et des écarts de temps pour trouver le seul nouvel endpoint qui compte, et se souvenir des findings corrigés depuis la dernière visite.",
-          "Surface Watch capture chaque cible d'une mission avec REA et transforme le trafic en surface : chaque endpoint avec ses paramètres et ses statuts, les en-têtes de sécurité, les scripts et les tiers contactés par la page. Les entrées qui méritent un coup d'œil, comme les erreurs serveur, les chemins d'administration accessibles sans connexion ou les pages sans Content-Security-Policy, sont signalées en premier.",
+          "SurfaceWatch capture chaque cible d'une mission avec REA et transforme le trafic en surface : chaque endpoint avec ses paramètres et ses statuts, les en-têtes de sécurité, les scripts et les tiers contactés par la page. Les entrées qui méritent un coup d'œil, comme les erreurs serveur, les chemins d'administration accessibles sans connexion ou les pages sans Content-Security-Policy, sont signalées en premier.",
           "Comparez deux captures et ne voyez que ce qui a changé, chaque changement accompagné de ce qu'il implique pour vos tests. Les findings citent les preuves brutes de REA sur lesquelles ils reposent, et un retest indique si chacun est corrigé. Tout tourne sur votre ordinateur, sans aucun LLM."
         ],
         "features": [
@@ -1739,7 +1739,7 @@
           },
           {
             "title": "Bureau et ligne de commande",
-            "body": "La CLI surfacewatch partage le même cœur, pour les surveillances planifiées depuis cron ou la CI, les imports HAR et les vérifications par SSH."
+            "body": "La ligne de commande surfacewatch-cli partage le même cœur, pour les surveillances planifiées depuis cron ou la CI, les imports HAR et les vérifications par SSH."
           }
         ],
         "requirements": [
@@ -1752,11 +1752,11 @@
         "faq": [
           {
             "q": "Qu'est-ce que REA ?",
-            "a": "REA est l'outil open source que Surface Watch pilote pour ouvrir chaque cible dans un navigateur et enregistrer ce qu'elle fait. Surface Watch conserve les preuves brutes de REA telles quelles et construit la surface et les diffs par-dessus."
+            "a": "REA est l'outil open source que SurfaceWatch pilote pour ouvrir chaque cible dans un navigateur et enregistrer ce qu'elle fait. SurfaceWatch conserve les preuves brutes de REA telles quelles et construit la surface et les diffs par-dessus."
           },
           {
             "q": "Quelque chose quitte-t-il mon ordinateur ?",
-            "a": "Non. Captures, surfaces, findings et missions sont gardés dans des fichiers privés sur votre ordinateur. Surface Watch ne communique qu'avec les cibles que vous capturez, et aucun modèle d'IA n'intervient."
+            "a": "Non. Captures, surfaces, findings et missions sont gardés dans des fichiers privés sur votre ordinateur. SurfaceWatch ne communique qu'avec les cibles que vous capturez, et aucun modèle d'IA n'intervient."
           },
           {
             "q": "Puis-je capturer n'importe quel site ?",
@@ -1764,9 +1764,9 @@
           }
         ],
         "article_slug": "",
-        "pro_download_intro": "Gratuit pour un usage personnel, de recherche ou non lucratif, avec une mission et tous les onglets, la ligne de commande et les surveillances planifiées. L'usage commercial, y compris un consultant sur une mission client, nécessite Surface Watch Pro, qui garde aussi un nombre illimité de missions. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
-        "pro_licence_body": "Source disponible sous la licence PolyForm Noncommercial 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une mission et toutes les fonctionnalités. L'usage commercial, y compris un consultant sur une mission client et un employé qui l'utilise dans son travail, nécessite Surface Watch Pro, qui garde aussi un nombre illimité de missions. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Ouvrez Surface Watch, cliquez sur Get Pro… à côté du nom de l'app et collez le numéro de licence, ou lancez surfacewatch licence suivi du numéro."
+        "pro_download_intro": "Gratuit pour un usage personnel, de recherche ou non lucratif, avec une mission et tous les onglets, la ligne de commande et les surveillances planifiées. L'usage commercial, y compris un consultant sur une mission client, nécessite SurfaceWatch Pro, qui garde aussi un nombre illimité de missions. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
+        "pro_licence_body": "Source disponible sous la licence PolyForm Noncommercial 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une mission et toutes les fonctionnalités. L'usage commercial, y compris un consultant sur une mission client et un employé qui l'utilise dans son travail, nécessite SurfaceWatch Pro, qui garde aussi un nombre illimité de missions. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
+        "pro_how": "Ouvrez SurfaceWatch, cliquez sur Get Pro… à côté du nom de l'app et collez le numéro de licence, ou lancez surfacewatch-cli licence suivi du numéro."
       }
     },
     "article_heading": "Pour aller plus loin",

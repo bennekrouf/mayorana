@@ -71,7 +71,7 @@ const DEVELOPER_ORDER: string[] = [
   'polishcast',
   'spreadradar',
   'jobscout',
-  'surface-watch',
+  'surfacewatch',
 ];
 
 // The cloud solutions: hosted products, used on their own sites.

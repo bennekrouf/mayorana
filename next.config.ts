@@ -87,6 +87,7 @@ const nextConfig = {
       { source: '/:locale(en|fr)/apps/splitter/:path*', destination: '/:locale/apps/trackcut/:path*', permanent: true },
       { source: '/:locale(en|fr)/apps/small-video/:path*', destination: '/:locale/apps/polishcast/:path*', permanent: true },
       { source: '/:locale(en|fr)/apps/spreadwatch/:path*', destination: '/:locale/apps/spreadradar/:path*', permanent: true },
+      { source: '/:locale(en|fr)/apps/surface-watch/:path*', destination: '/:locale/apps/surfacewatch/:path*', permanent: true },
     ];
   },
 
