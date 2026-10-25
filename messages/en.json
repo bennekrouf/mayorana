@@ -231,7 +231,9 @@
     "thanks_manage": "To see, change or cancel your plan later, sign in on this pricing page with the same account.",
     "thanks_missing": "We couldn't find this subscription. If you have just paid, your licence number is on its way by email.",
     "thanks_error": "Your licence number couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
-    "thanks_contact": "contact us."
+    "thanks_contact": "contact us.",
+    "back_to_cvenom": "Back to CVenom studio",
+    "from_cvenom_note": "Coming from CVenom? Sign in here with the same Google account you use in the studio: the plan’s monthly credits then count there too, spent before your own."
   },
   "download_gate": {
     "title": "It's free. We'd just love your feedback.",

@@ -231,7 +231,9 @@
     "thanks_manage": "Pour voir, changer ou résilier votre formule plus tard, connectez-vous sur cette page de tarifs avec le même compte.",
     "thanks_missing": "Nous n'avons pas trouvé cet abonnement. Si vous venez de payer, votre numéro de licence arrive par e-mail.",
     "thanks_error": "Votre numéro de licence ne peut pas s'afficher pour l'instant. Il vous a aussi été envoyé par e-mail ; s'il n'arrive pas,",
-    "thanks_contact": "contactez-nous."
+    "thanks_contact": "contactez-nous.",
+    "back_to_cvenom": "Retour au studio CVenom",
+    "from_cvenom_note": "Vous venez de CVenom ? Connectez-vous ici avec le même compte Google que dans le studio : les crédits mensuels de la formule y comptent alors aussi, utilisés avant les vôtres."
   },
   "download_gate": {
     "title": "C'est gratuit. On aimerait juste votre avis.",
