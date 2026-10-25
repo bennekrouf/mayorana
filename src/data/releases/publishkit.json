@@ -2,8 +2,23 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-25T12:21:53Z",
+  "generated_at": "2026-10-25T20:59:37Z",
   "releases": [
+    {
+      "version": "0.1.25",
+      "tag": "v0.1.25",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Installing PublishKit no longer needs admin rights anywhere. On macOS and Linux, the setup script puts Node.js in your home folder instead of installing Homebrew or asking for sudo; on Linux, the launcher goes into your own applications menu, and only a missing WebKitGTK asks for your password.",
+            "On Windows, the Start menu, desktop shortcut and installer say PublishKit instead of Blog Manager. Shortcuts left from an earlier install under the old name are removed when you update.",
+            "On Windows, PublishKit always installs for your user only, in `%LOCALAPPDATA%\\Programs`, without asking. An update no longer moves it to Program Files because an old Blog Manager was once installed there, which broke the PublishKit entry you had added to Claude Code."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.24",
       "tag": "v0.1.24",

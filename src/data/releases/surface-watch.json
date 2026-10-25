@@ -1,9 +1,23 @@
 {
-  "name": "surface-watch",
-  "product": "Surface Watch",
-  "page": "https://mayorana.ch/en/apps/surface-watch",
-  "generated_at": "2026-10-25T20:41:58Z",
+  "name": "surfacewatch",
+  "product": "SurfaceWatch",
+  "page": "https://mayorana.ch/en/apps/surfacewatch",
+  "generated_at": "2026-10-25T20:57:26Z",
   "releases": [
+    {
+      "version": "0.1.16",
+      "tag": "v0.1.16",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Surface Watch is now called SurfaceWatch, written as one word like the other Mayorana apps. Your engagements, captures and licence carry over: they stay in the same folder. On macOS the update installs as SurfaceWatch.app; once it runs, you can delete Surface Watch.app from Applications. On Windows the update replaces the old version and its Start menu entry.",
+            "The command line is now `surfacewatch-cli` (`surfacewatch-cli.exe` on Windows), so that the desktop app can be `surfacewatch`, as GitAgent is `gitagent`. Scripts and cron jobs that run `surfacewatch` need the new name; the commands and their options are unchanged."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.15",
       "tag": "v0.1.15",
