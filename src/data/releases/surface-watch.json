@@ -2,8 +2,121 @@
   "name": "surface-watch",
   "product": "Surface Watch",
   "page": "https://mayorana.ch/en/apps/surface-watch",
-  "generated_at": "2026-10-20T14:47:44Z",
+  "generated_at": "2026-10-23T21:45:47Z",
   "releases": [
+    {
+      "version": "0.1.14",
+      "tag": "v0.1.14",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The new-version banner and the usage-statistics notice now look the same as in GitAgent: a blue bar across the top, or the bottom for the notice, with a Download link and a × to hide it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.13",
+      "tag": "v0.1.13",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Dialogs now have a title bar with a × to close them, and text fields have the same size and typeface as in GitAgent.",
+            "An open dialog now dims the light/dark switch in the corner along with the rest of the window, instead of leaving it lit on top.",
+            "The buttons along the top of the window now all have the same height, borders included, and the light/dark switch matches them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.12",
+      "tag": "v0.1.12",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Buttons now have the same size, rounded corners and typeface as in GitAgent, so they look alike across the Mayorana apps."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The PRO button at the top of the sidebar is no longer cut off: Feedback and PRO move to their own line under the app name."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The window title now shows your licence status: it reads Pro when Pro is active, and Pro inactive when Pro has lapsed or could not be checked. The title updates as soon as the licence changes, so you can see your status without opening the Pro window."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-10-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "One licence number for every Mayorana app on this computer. Paste it in any of them and the others are Pro too the next time they start, with nothing to paste again; a number already pasted in one app is shared the same way. Removing the licence in the Pro window removes it from all of them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Free AI credits every month, without Pro. Enter your email under Get free AI credits in the Pro window and the licence number arrives by email; paste it in the same window. The window then shows how many credits are left this month. The free version's limits stay as they are. With the command-line edition, run `surfacewatch licence --free <email>`."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Surface Watch Pro now comes with a monthly plan on mayorana.ch instead of a one-time licence key. Paste the licence number from the plan's email (like ABCDE-FGHJK-LMNPQ-RSTUV) in the Pro window, or run `surfacewatch licence <number>`. Surface Watch checks it when it starts and once a day, and Pro keeps working for a week without a connection.",
+            "The Pro window shows your plan, the AI credits left this month and when the plan renews. Manage subscription opens the page where you change or cancel it. `surfacewatch licence` shows the same."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.7",
+      "tag": "v0.1.7",
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A Feedback link beside the version number opens the contact form with Surface Watch and your version already filled in, so an idea or a problem reaches us in two clicks."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.6",
       "tag": "v0.1.6",

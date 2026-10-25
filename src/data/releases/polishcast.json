@@ -2,8 +2,36 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-23T09:40:44Z",
+  "generated_at": "2026-10-23T16:26:04Z",
   "releases": [
+    {
+      "version": "0.1.25",
+      "tag": "v0.1.25",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Dialogs now have a title bar with a × to close them, and text fields have the same size and typeface as in GitAgent.",
+            "An open dialog now dims the light/dark switch in the corner along with the rest of the window, instead of leaving it lit on top.",
+            "The buttons along the top of the window now all have the same height, borders included, and the light/dark switch matches them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.24",
+      "tag": "v0.1.24",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Buttons now have the same size, rounded corners and typeface as in GitAgent, so they look alike across the Mayorana apps."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.23",
       "tag": "v0.1.23",

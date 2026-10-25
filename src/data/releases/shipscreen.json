@@ -2,8 +2,63 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-23T08:12:11Z",
+  "generated_at": "2026-10-25T12:29:05Z",
   "releases": [
+    {
+      "version": "0.1.41",
+      "tag": "v0.1.41",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Activating a licence now shows a small spinner while it is checked, then a window that says you're Pro, with the AI credits left and the renewal date in small type below. Removing the licence and checking it again no longer sit beside it; Manage subscription is a small link. Press Esc or the × to close it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.40",
+      "tag": "v0.1.40",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The new-version banner and the usage-statistics notice now look the same as in GitAgent: a blue bar across the top, or the bottom for the notice, with a Download link and a × to hide it.",
+            "Every action button is now 30px tall, borders included, like the regular buttons beside it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.39",
+      "tag": "v0.1.39",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Dialogs now have a title bar with a × to close them, and text fields have the same size and typeface as in GitAgent.",
+            "An open dialog now dims the light/dark switch in the corner along with the rest of the window, instead of leaving it lit on top.",
+            "The buttons along the top of the window now all have the same height, borders included, and the light/dark switch matches them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.38",
+      "tag": "v0.1.38",
+      "date": "2026-10-23",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Buttons now have the same size, rounded corners and typeface as in GitAgent, so they look alike across the Mayorana apps."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.37",
       "tag": "v0.1.37",
