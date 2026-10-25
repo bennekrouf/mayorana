@@ -2,8 +2,21 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-25T12:29:05Z",
+  "generated_at": "2026-10-25T13:44:36Z",
   "releases": [
+    {
+      "version": "0.1.42",
+      "tag": "v0.1.42",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Installing silently, as IT does for an unattended update with `/VERYSILENT`, no longer hangs when the same version, or an older ShipScreen installed from an .msi, is already there: setup waited on a question nobody could see. It now goes ahead without asking."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.41",
       "tag": "v0.1.41",
