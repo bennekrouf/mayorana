@@ -86,7 +86,7 @@ const trackcutDl = 'https://mayorana.ch/downloads/trackcut/latest';
 const spreadradarDl = 'https://mayorana.ch/downloads/spreadradar/latest';
 const polishcastDl = 'https://mayorana.ch/downloads/polishcast/latest';
 const jobscoutDl = 'https://mayorana.ch/downloads/jobscout/latest';
-const surfaceWatchDl = 'https://mayorana.ch/downloads/surface-watch/latest';
+const surfacewatchDl = 'https://mayorana.ch/downloads/surfacewatch/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -316,18 +316,19 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     },
   },
   {
-    id: 'surface-watch',
-    pro: {},
+    id: 'surfacewatch',
+    // Licences name it by its id from before SurfaceWatch.
+    pro: { product: 'surface-watch' },
     source: 'https://github.com/bennekrouf/surface-watch',
-    name: 'Surface Watch',
+    name: 'SurfaceWatch',
     tech: 'Rust · Dioxus · REA · Node.js · Chrome',
     status: 'beta',
     tags: ['security'],
     applicationCategory: 'SecurityApplication',
     downloads: [
-      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${surfaceWatchDl}/surface-watch-macos-arm64.dmg` },
-      { os: 'linux', label: 'Linux x86_64', href: `${surfaceWatchDl}/surface-watch-linux-x86_64.tar.gz` },
-      { os: 'windows', label: 'Windows', href: `${surfaceWatchDl}/surface-watch-setup.exe` },
+      { os: 'mac', label: 'macOS (Apple Silicon)', href: `${surfacewatchDl}/surfacewatch-macos-arm64.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${surfacewatchDl}/surfacewatch-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${surfacewatchDl}/surfacewatch-setup.exe` },
     ],
   },
 ];
@@ -358,7 +359,7 @@ export const appI18nKey: Record<string, string> = {
   spreadradar: 'spreadradar',
   polishcast: 'polishcast',
   jobscout: 'jobscout',
-  'surface-watch': 'surface_watch',
+  surfacewatch: 'surfacewatch',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -411,7 +412,7 @@ export const releaseNotesTools: string[] = [
   'spreadradar',
   'polishcast',
   'jobscout',
-  'surface-watch',
+  'surfacewatch',
 ];
 
 /**
