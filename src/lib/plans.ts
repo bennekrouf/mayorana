@@ -97,7 +97,7 @@ export function creditUses(monthlyCredits: number, appUses: AppUse[]) {
  * row in every card.
  */
 export const PLAN_GROUPS = [
-  { key: 'build', tools: ['gitagent', 'shipscreen', 'surface-watch'] },
+  { key: 'build', tools: ['gitagent', 'shipscreen', 'surfacewatch'] },
   { key: 'create', tools: ['polishcast', 'trackcut', 'publishkit'] },
   // CVenom is a web app, not a desktop one: it spends the same plan's credits
   // when its account has the plan's email. Next to JobScout, which finds the jobs
