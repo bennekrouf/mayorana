@@ -2,8 +2,21 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-25T13:02:19Z",
+  "generated_at": "2026-10-25T13:40:31Z",
   "releases": [
+    {
+      "version": "0.1.24",
+      "tag": "v0.1.24",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Installing silently, as IT does for an unattended update with `/VERYSILENT`, no longer hangs when SpreadRadar is already installed: setup waited on a question nobody could see. It now replaces the installed version without asking, and stops with an error, instead of waiting, when the Microsoft Edge WebView2 Runtime is missing."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.23",
       "tag": "v0.1.23",
