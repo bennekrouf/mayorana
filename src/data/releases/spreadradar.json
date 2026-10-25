@@ -2,8 +2,22 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-23T16:19:24Z",
+  "generated_at": "2026-10-25T13:02:19Z",
   "releases": [
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Activating a licence now shows a small spinner while it is checked, then a window that says you're Pro, with the AI credits left and the renewal date in small type below. Removing the licence and checking it again no longer sit beside it; Manage subscription is a small link. Press Esc or the × to close it.",
+            "The new-version banner and the usage-statistics notice now look the same as in GitAgent: a blue bar across the top, or the bottom for the notice, with a Download link and a × to hide it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.22",
       "tag": "v0.1.22",
