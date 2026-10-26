@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "site_title": "La couche Rust fiable pour vos agents IA en production",
+    "site_title": "Votre logiciel dans Teams, WhatsApp et Claude",
     "site_description": "Mayorana conçoit api0, qui met votre logiciel existant dans Teams, WhatsApp, Telegram et Claude, au nom de la personne qui demande. Et des outils Rust natifs pour Azure Integration Services. Conçu en Suisse.",
     "about_title": "À propos",
     "about_description": "Mayorana est une entreprise suisse de logiciels qui conçoit api0, la passerelle MCP en Rust qui permet aux agents IA d’agir sur vos API existantes, ainsi que des outils de développement natifs en Rust.",
@@ -70,7 +70,7 @@
     "ready_elevate": "Prêts à construire votre avantage IA avec Rust ?",
     "cta_description": "Contactez-nous pour voir comment nos outils d'IA éprouvés peuvent renforcer votre entreprise",
     "hero_eyebrow": "Conçu en Suisse · Écrit en Rust",
-    "hero_h1": "La couche Rust fiable pour vos agents IA en production",
+    "hero_h1": "Votre logiciel, dans chaque conversation.",
     "hero_lead": "Nous concevons api0 : votre logiciel existant, utilisable depuis Teams, WhatsApp, Telegram et Claude. Chaque action s’exécute au nom de la personne qui la demande.",
     "cta_try_api0": "Essayer api0.ai",
     "solution_azure_cta": "Découvrir la suite Azure",
@@ -84,7 +84,7 @@
     "why_body": "Des agents qui touchent de vrais systèmes exigent un logiciel qui ne casse pas. Tout ce que nous livrons est écrit en Rust et conçu en Suisse, de la passerelle api0 à nos outils de bureau.",
     "selected_tools_view_all": "Voir tous les outils",
     "api0_eyebrow": "Notre produit",
-    "api0_heading": "api0 : votre logiciel, dans le chat que votre équipe utilise déjà",
+    "api0_heading": "api0 : importez votre API une fois, utilisez-la partout",
     "api0_body": "Importez votre API une fois. Votre équipe et vos clients l’utilisent depuis Teams, WhatsApp, Telegram ou Claude, dans leur langue. api0 décide qui appelle, quel identifiant reçoit votre backend et ce que coûte l’appel.",
     "api0_step1_title": "Importez vos endpoints",
     "api0_step1_body": "Collez une spécification OpenAPI ou décrivez vos endpoints en langage courant. Chacun devient un outil MCP.",
@@ -372,7 +372,7 @@
   },
   "about": {
     "hero_title": "À propos de Mayorana",
-    "hero_subtitle": "Nous construisons la couche Rust fiable pour les agents IA en production.",
+    "hero_subtitle": "Votre logiciel, dans chaque conversation. Conçu en Rust, en Suisse.",
     "who_heading": "Qui nous sommes",
     "who_1": "Mayorana est une entreprise suisse de logiciels. Nous concevons api0, qui permet d’agir sur de vrais systèmes depuis le chat qu’on utilise déjà : Teams, WhatsApp, Telegram ou Claude.",
     "who_2": "La plupart des équipes qui essaient les agents se heurtent au même mur : le modèle est prêt, mais le connecter aux API internes impose du code de liaison, des clés collées dans les prompts et un backend qui ne sait pas pour quelle personne l’agent agit. api0 règle tout cela au même endroit.",
@@ -498,8 +498,8 @@
     "api0_blog_link": "Lire le blog d’api0"
   },
   "footer": {
-    "description": "La couche Rust fiable pour vos agents IA en production",
-    "footer_tagline": "La couche Rust fiable pour vos agents IA en production",
+    "description": "Votre logiciel, dans chaque conversation.",
+    "footer_tagline": "Votre logiciel, dans chaque conversation.",
     "footer_api0": "Api0.ai",
     "footer_book_call": "Nous contacter",
     "footer_whatsapp": "WhatsApp",

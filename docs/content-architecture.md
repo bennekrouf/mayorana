@@ -38,8 +38,8 @@ for positioning — it becomes the "browse everything" page.
 Goal: communicate the positioning in the first screen.
 
 1. **Hero**
-   - Headline: "The reliable Rust layer for production AI agents and Azure workflows"
-   - Subhead: short version from positioning doc, paired with existing tagline as secondary line
+   - Headline: "Your software, in every chat." (positioning doc §1, §7)
+   - Lead: the channels by name (Teams, WhatsApp, Telegram, Claude) and that every action runs as the person asking; existing tagline stays as a secondary line
    - CTAs: Primary "Explore Azure Tools" → `/solutions/azure` · Secondary "Try API0.AI" → api0.ai or `/solutions/ai-agents` · Tertiary "Book free consult" → `/contact`
 2. **Featured Solutions** — 2 cards only:
    - Azure Integration Suite (AIS Runner + Monitor + Tracing) → `/solutions/azure`
