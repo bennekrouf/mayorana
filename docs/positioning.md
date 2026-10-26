@@ -4,6 +4,7 @@ Status: **Locked** — base for all future content/architecture work (Step 2+).
 Owner: MB
 Date: 2026-08-28
 Amended: 2026-10-15 — api0's ICP and value proposition, for the Swiss go-to-market (see §6)
+Amended: 2026-10-26 — new headline, replacing "the reliable Rust layer" (see §1 and §7)
 
 This document is the single source of truth for positioning. Every page, CTA, and
 piece of content produced in later steps should trace back to it.
@@ -12,16 +13,25 @@ piece of content produced in later steps should trace back to it.
 
 **Primary:**
 
-> Mayorana builds the reliable Rust layer for production AI agents and Azure
-> integration workflows. We turn complex systems into tools that actually
-> work — secure, high-performance, and free of glue code.
+> Mayorana puts your existing software in every chat — Teams, WhatsApp,
+> Telegram and Claude — with api0, and builds native Rust tools for Azure
+> integration workflows. Tools that actually work — secure, high-performance,
+> and free of glue code.
 
-**Short version** (hero, meta, LinkedIn):
+**Headline** (hero H1, footer, LinkedIn):
 
-> AI tools that actually work. Built with Rust.
+> Your software, in every chat.
+>
+> FR: *Votre logiciel, dans chaque conversation.*
+
+**Page title / social card** (where search keywords matter):
+
+> Your software in Teams, WhatsApp and Claude
+>
+> FR: *Votre logiciel dans Teams, WhatsApp et Claude*
 
 **Tagline decision:** keep current tagline as secondary, always paired with the
-short version above (not standalone).
+headline above (not standalone).
 
 > Rust builds what doesn't break. AI makes it human.
 
@@ -75,10 +85,10 @@ Apply this order on every major page:
 
 ## 5. Locked Decisions (Step 1 deliverables)
 
-- [x] Positioning statement (primary + short version) — approved above
+- [x] Positioning statement (primary + headline) — approved above
 - [x] Primary + secondary ICP — confirmed above
 - [x] Messaging hierarchy — confirmed above
-- [x] Tagline: keep current tagline, use as secondary line under the new short version
+- [x] Tagline: keep current tagline, use as secondary line under the headline
 - [x] Secondary products (CVENOM, SOLANIZE, ShipScreen, PublishKit): "also built with our stack" — proof section, not primary nav/messaging
 
 ## 6. Amendment — 2026-10-15
@@ -97,6 +107,20 @@ front door to software a company already runs**, starting in Switzerland.
 
 Copy, claims that wait until they are true, and LinkedIn text:
 `api0/positioning-update-2026-10.md`.
+
+## 7. Amendment — 2026-10-26
+
+The headline "The reliable Rust layer for production AI agents" is retired. It named a
+layer instead of an outcome, "reliable" is a claim every vendor makes, and it repeated
+the "Built in Rust" eyebrow right above it.
+
+- Headline: *Your software, in every chat.* It says what the customer gets; Rust and
+  Swiss-made stay in the eyebrow and the "Why" section, not the headline.
+- The channel names go in the lead under the headline (Teams, WhatsApp, Telegram,
+  Claude, in the §6 order), and in the page title, where they carry search keywords.
+- The home page's api0 section no longer reuses the §6 one-liner, which now sits too
+  close to the headline. Its heading is *api0: import your API once, use it
+  everywhere*. The §6 one-liner still stands for api0's own pages and LinkedIn.
 
 ## Next
 
