@@ -2,8 +2,35 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-25T20:59:37Z",
+  "generated_at": "2026-10-27T14:07:06Z",
   "releases": [
+    {
+      "version": "0.1.27",
+      "tag": "v0.1.27",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-10-26",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows, PublishKit's window shows the PublishKit icon in its title bar, the taskbar and Alt-Tab, instead of a generic logo. The Start menu and desktop shortcuts use it too. On Linux, the window shows it as well.",
+            "Switching sites starts the new-post form afresh again, instead of keeping what was typed for the previous site."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.25",
       "tag": "v0.1.25",

@@ -2,8 +2,34 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-25T18:53:08Z",
+  "generated_at": "2026-10-26T13:52:38Z",
   "releases": [
+    {
+      "version": "0.1.28",
+      "tag": "v0.1.28",
+      "date": "2026-10-26",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows and Linux, opening PolishCast while it already runs in the notification area brings its window back, instead of starting another, hidden copy each time. Only one PolishCast runs at a time, so its recording shortcut and notification-area icon always belong to the one you see."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.27",
+      "tag": "v0.1.27",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Installing silently, as IT does for an unattended update with `/VERYSILENT`, no longer hangs when PolishCast is already installed: setup waited on a question nobody could see. It now replaces the installed version without asking."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.26",
       "tag": "v0.1.26",

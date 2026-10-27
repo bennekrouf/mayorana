@@ -2,8 +2,40 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-25T20:50:50Z",
+  "generated_at": "2026-10-27T13:57:17Z",
   "releases": [
+    {
+      "version": "0.1.131",
+      "tag": "v0.1.131",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A repository with commits on a branch but no pull request no longer just says \"needs a PR\" in the repository list. The row now has a Push & open PR button that pushes the branch and opens the pull request in one click."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "On an Azure DevOps repository where the Azure CLI's azure-devops extension isn't installed yet, the pull request list showed a long Python traceback ending in \"EOF when reading a line\". It now says the extension is missing and offers a button to add it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.130",
+      "tag": "v0.1.130",
+      "date": "2026-10-25",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When an AI assistant saves a flow you made under an id that doesn't match its name, GitAgent still stores it under the id its name reads as, and now says so in its reply, with the id to use from then on. Before, the assistant kept using its own id and was told the flow didn't exist."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.129",
       "tag": "v0.1.129",

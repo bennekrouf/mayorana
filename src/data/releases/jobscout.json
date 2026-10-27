@@ -2,8 +2,47 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-25T13:40:03Z",
+  "generated_at": "2026-10-27T14:16:59Z",
   "releases": [
+    {
+      "version": "0.1.22",
+      "tag": "v0.1.22",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-10-26",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Claude can now switch where your jobs are scored: ask it to score in Europe, China or the United States, or with Ollama on your computer, as the buttons in Settings → Scoring model do. An open JobScout window picks up the change within a couple of seconds."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.20",
+      "tag": "v0.1.20",
+      "date": "2026-10-26",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Through Claude, JobScout now works hand in hand with cvenom. Asking for your CV opens it from cvenom, and asking to adapt or generate a CV for a job hands the job's link and description to cvenom, which tailors your real CV and returns the PDF, instead of Claude writing a CV of its own. Connect the cvenom MCP server alongside JobScout to use it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.19",
       "tag": "v0.1.19",
