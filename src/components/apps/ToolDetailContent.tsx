@@ -107,7 +107,7 @@ export async function ToolDetailContent({
   const { t, tagline, shortDescription, features, overview, requirements, faq, comparison } =
     content;
   const inPanel = variant === 'panel';
-  const mcpCommands = mcpInstallCommands(tool);
+  const mcpCommands = mcpInstallCommands(tool, 'claude');
 
   // The page centres each section in the site container; the panel is already
   // narrow, so its sections just take an even gutter.
@@ -257,17 +257,29 @@ export async function ToolDetailContent({
                   <Terminal className="h-4 w-4 text-primary" />
                   {t('mcp_heading')}
                 </p>
-                <p className="mt-1 mb-4 text-sm text-muted-foreground">
-                  {t('mcp_body', { name: tool.name })}
-                </p>
-                <McpInstall
-                  commands={mcpCommands}
-                  labels={{
-                    os: { mac: 'macOS', windows: t('mcp_os_windows'), linux: 'Linux' },
-                    copy: t('mcp_copy'),
-                    copied: t('mcp_copied'),
-                  }}
-                />
+                <div className="mt-3">
+                  <McpInstall
+                    clients={[
+                      {
+                        id: 'claude',
+                        label: 'Claude Code',
+                        body: t('mcp_body', { name: tool.name }),
+                        commands: mcpCommands,
+                      },
+                      {
+                        id: 'codex',
+                        label: 'Codex',
+                        body: t('mcp_body_codex', { name: tool.name }),
+                        commands: mcpInstallCommands(tool, 'codex'),
+                      },
+                    ]}
+                    labels={{
+                      os: { mac: 'macOS', windows: t('mcp_os_windows'), linux: 'Linux' },
+                      copy: t('mcp_copy'),
+                      copied: t('mcp_copied'),
+                    }}
+                  />
+                </div>
                 <p className="mt-3 text-xs text-muted-foreground">{t('mcp_note', { name: tool.name })}</p>
               </div>
             )}
