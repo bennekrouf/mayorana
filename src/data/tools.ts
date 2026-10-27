@@ -430,16 +430,22 @@ export const releaseNotesTools: string[] = [
   'surfacewatch',
 ];
 
+export type McpClient = 'claude' | 'codex';
+
 /**
- * The line that adds a tool's MCP server to Claude Code for every project, one
- * per OS it has a path for — the same line the app's own MCP window gives.
+ * The line that adds a tool's MCP server to a client for every project, one
+ * per OS it has a path for — the same lines the app's own MCP window gives.
+ * Codex has no scopes: a server added with `codex mcp add` is always global.
  * Windows uses %LOCALAPPDATA%, which Command Prompt expands.
  */
-export function mcpInstallCommands(tool: DesktopToolConfig): { os: OS; command: string }[] {
+export function mcpInstallCommands(
+  tool: DesktopToolConfig,
+  client: McpClient,
+): { os: OS; command: string }[] {
   const { mcp } = tool;
   if (!mcp) return [];
-  const line = (path: string) =>
-    `claude mcp add ${tool.id} --scope user -- "${path}"${mcp.args ? ` ${mcp.args}` : ''}`;
+  const add = client === 'claude' ? `claude mcp add ${tool.id} --scope user` : `codex mcp add ${tool.id}`;
+  const line = (path: string) => `${add} -- "${path}"${mcp.args ? ` ${mcp.args}` : ''}`;
   const paths: [OS, string | undefined][] = [
     ['mac', mcp.mac],
     ['windows', mcp.windows],
