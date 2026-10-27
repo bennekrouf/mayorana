@@ -1121,7 +1121,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "GitAgent exécute Review → Merge sur une pull request : le graphe des étapes, avec la revue confiée à un second modèle et des revues ciblées"
       },
       "publishkit": {
         "seo_title": "PublishKit — Gestionnaire de blog de bureau avec rédaction IA",
@@ -1214,7 +1215,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "La vue Blog de PublishKit : les articles publiés à gauche et le formulaire qui en génère un nouveau"
       },
       "shipscreen": {
         "seo_title": "ShipScreen — Assistant de build, captures et publication iOS et Android",
@@ -1330,7 +1332,8 @@
         },
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, sur une app : le premier projet que vous ouvrez. L'usage commercial — y compris un consultant indépendant en mission — requiert ShipScreen Pro, qui couvre aussi autant d'apps que vous voulez. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous PolyForm Noncommercial License 1.0.0 : gratuit pour l'usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, sur une app avec toutes les fonctionnalités (vous pouvez changer l'app gratuite). L'usage commercial — y compris un consultant indépendant en mission ou un salarié dans son travail — requiert ShipScreen Pro, qui couvre aussi autant d'apps que vous voulez. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Ouvrez ShipScreen, cliquez sur Get Pro… sur l'écran des projets, à côté de New Project…, et collez le numéro de licence."
+        "pro_how": "Ouvrez ShipScreen, cliquez sur Get Pro… sur l'écran des projets, à côté de New Project…, et collez le numéro de licence.",
+        "screenshot_alt": "L'étape Screenshots de ShipScreen : les tailles iOS et Android à générer, dans un style manuel ou IA"
       },
       "trackcut": {
         "seo_title": "TrackCut — Découper de longs enregistrements MP3 et WAV en pistes",
@@ -1449,7 +1452,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "TrackCut découpe un long enregistrement : la forme d'onde avec les points de coupe, la liste des pistes et les raccourcis clavier"
       },
       "spreadradar": {
         "seo_title": "SpreadRadar — Écarts crypto, avance/retard et nouveaux listings entre exchanges",
@@ -1560,7 +1564,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "SpreadRadar suit SOL/USDT sur cinq plateformes et Jupiter, avec les meilleurs écarts entre plateformes"
       },
       "polishcast": {
         "seo_title": "PolishCast — Enregistreur d'écran avec curseur fluide et zoom automatique",
@@ -1655,7 +1660,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "PolishCast monte un enregistrement : la vidéo sur un fond dégradé, les zooms sur la timeline et le panneau de style"
       },
       "jobscout": {
         "seo_title": "JobScout — Recherche d'emploi sur LinkedIn et les sites locaux, évaluée selon votre profil",
@@ -1710,7 +1716,8 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif, avec 10 recherches par mois dans n'importe quel pays. L'évaluation et l'export ne sont jamais limités. L'usage commercial — y compris un recruteur ou un consultant pour un client — nécessite JobScout Pro, dont les formules offrent plus de recherches : 50 par mois avec Basic, 500 avec Pro et 1000 avec Max, dans tous les pays. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Code source disponible sous la PolyForm Noncommercial License 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec 10 recherches par mois dans n'importe quel pays, autant de veilles que vous voulez, et l'évaluation et l'export illimités. L'usage commercial — y compris un recruteur, un consultant pour un client et un salarié dans le cadre de son travail — nécessite JobScout Pro. Chaque formule couvre tous les pays ; ce qu'elle fixe, c'est le nombre de recherches par mois : 50 avec Basic, 500 avec Pro, 1000 avec Max. Une recherche dans l'app ou depuis Claude compte pour une ; un passage de veille ne compte que s'il trouve de nouvelles offres. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Ouvrez JobScout, cliquez sur Get Pro… en bas de la barre latérale et collez le numéro de licence."
+        "pro_how": "Ouvrez JobScout, cliquez sur Get Pro… en bas de la barre latérale et collez le numéro de licence.",
+        "screenshot_alt": "La liste d'offres de JobScout pour la Suisse : le formulaire de recherche à gauche, 1 170 offres de LinkedIn, jobs.ch et jobup.ch au centre"
       },
       "surfacewatch": {
         "seo_title": "SurfaceWatch — Suivi de la surface d'attaque côté client pour les pentests web",
@@ -1766,7 +1773,8 @@
         "article_slug": "",
         "pro_download_intro": "Gratuit pour un usage personnel, de recherche ou non lucratif, avec une mission et tous les onglets, la ligne de commande et les surveillances planifiées. L'usage commercial, y compris un consultant sur une mission client, nécessite SurfaceWatch Pro, qui garde aussi un nombre illimité de missions. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
         "pro_licence_body": "Source disponible sous la licence PolyForm Noncommercial 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une mission et toutes les fonctionnalités. L'usage commercial, y compris un consultant sur une mission client et un employé qui l'utilise dans son travail, nécessite SurfaceWatch Pro, qui garde aussi un nombre illimité de missions. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
-        "pro_how": "Ouvrez SurfaceWatch, cliquez sur Get Pro… à côté du nom de l'app et collez le numéro de licence, ou lancez surfacewatch-cli licence suivi du numéro."
+        "pro_how": "Ouvrez SurfaceWatch, cliquez sur Get Pro… à côté du nom de l'app et collez le numéro de licence, ou lancez surfacewatch-cli licence suivi du numéro.",
+        "screenshot_alt": "SurfaceWatch compare deux captures d'OWASP Juice Shop : endpoints supprimés, paramètres modifiés et origines tierces"
       }
     },
     "article_heading": "Pour aller plus loin",

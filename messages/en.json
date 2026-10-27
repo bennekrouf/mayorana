@@ -1121,7 +1121,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "GitAgent running Review → Merge on a pull request: the step graph, with the review fanning out to a second model and focused reviews"
       },
       "publishkit": {
         "seo_title": "PublishKit — Desktop Blog Manager with AI Drafting",
@@ -1214,7 +1215,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "PublishKit's Blog view: published posts on the left and the form that generates a new one"
       },
       "shipscreen": {
         "seo_title": "ShipScreen — iOS and Android Build, Screenshot and Publish Assistant",
@@ -1330,7 +1332,8 @@
         },
         "pro_download_intro": "Free for personal, educational and non-profit use, on one app: the first project you open. Commercial use — including a solo consultant on client work — requires ShipScreen Pro, which also covers any number of apps. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, on one app with every feature (you can swap which app is the free one). Commercial use — including a solo consultant on client work and an employee using it at their job — requires ShipScreen Pro, which also covers any number of apps. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "Open ShipScreen, click Get Pro… on the project screen, next to New Project…, and paste the licence number."
+        "pro_how": "Open ShipScreen, click Get Pro… on the project screen, next to New Project…, and paste the licence number.",
+        "screenshot_alt": "ShipScreen's Screenshots step: the iOS and Android sizes to generate, in a manual or AI style"
       },
       "trackcut": {
         "seo_title": "TrackCut — Split Long MP3 and WAV Recordings into Tracks",
@@ -1449,7 +1452,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "TrackCut splitting a long recording: the waveform with split markers, the track list and the keyboard shortcuts"
       },
       "spreadradar": {
         "seo_title": "SpreadRadar — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
@@ -1560,7 +1564,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "SpreadRadar watching SOL/USDT on five exchanges and Jupiter, with the best cross-venue edges"
       },
       "polishcast": {
         "seo_title": "PolishCast — Screen Recorder with a Smooth Cursor and Auto-Zoom",
@@ -1655,7 +1660,8 @@
               ]
             }
           ]
-        }
+        },
+        "screenshot_alt": "PolishCast editing a recording: the clip on a gradient background, zooms on the timeline and the style panel"
       },
       "jobscout": {
         "seo_title": "JobScout — Job Search Across LinkedIn and Local Boards, Scored Against Your Profile",
@@ -1710,7 +1716,8 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, educational and non-profit use, with 10 searches a month in any country. Scoring and export are never limited. Commercial use — including a recruiter or a consultant on client work — requires JobScout Pro, whose plans run more searches: 50 a month on Basic, 500 on Pro and 1000 on Max, in every country. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with 10 searches a month in any country, any number of watches, and unlimited scoring and export. Commercial use — including a recruiter, a consultant on client work and an employee using it at their job — requires JobScout Pro. Every plan covers every country; what it sets is the searches a month: 50 on Basic, 500 on Pro, 1000 on Max. A search from the app or from Claude counts as one; a watch's run counts only when it finds new jobs. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "Open JobScout, click Get Pro… at the bottom of the sidebar and paste the licence number."
+        "pro_how": "Open JobScout, click Get Pro… at the bottom of the sidebar and paste the licence number.",
+        "screenshot_alt": "JobScout's job list for Switzerland: the search form on the left, 1,170 jobs from LinkedIn, jobs.ch and jobup.ch in the middle"
       },
       "surfacewatch": {
         "seo_title": "SurfaceWatch — Client-Side Attack Surface Monitoring for Web Pentests",
@@ -1766,7 +1773,8 @@
         "article_slug": "",
         "pro_download_intro": "Free for personal, research and non-profit use, with one engagement and every tab, the command line and scheduled watches. Commercial use, including a consultant on client work, requires SurfaceWatch Pro, which also keeps any number of engagements. Every build is produced by release CI and served from mayorana.ch.",
         "pro_licence_body": "Source-available under the PolyForm Noncommercial License 1.0.0: free for personal use, learning, research and hobby projects, and for charities, schools, universities and government institutions, with one engagement and every feature. Commercial use, including a consultant on client work and an employee using it at their job, requires SurfaceWatch Pro, which also keeps any number of engagements. Pro is the commercial licence: there is nothing else to buy.",
-        "pro_how": "Open SurfaceWatch, click Get Pro… next to the app's name and paste the licence number, or run surfacewatch-cli licence followed by the number."
+        "pro_how": "Open SurfaceWatch, click Get Pro… next to the app's name and paste the licence number, or run surfacewatch-cli licence followed by the number.",
+        "screenshot_alt": "SurfaceWatch comparing two captures of OWASP Juice Shop: removed endpoints, changed parameters and third-party origins"
       }
     },
     "article_heading": "Read more",

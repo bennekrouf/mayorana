@@ -64,6 +64,13 @@ export interface DesktopToolConfig {
    * as a server; AIS Runner ships a separate binary that needs none.
    */
   mcp?: { mac: string; windows: string; linux?: string; args?: string };
+  /**
+   * A screenshot of the app's main window, in public/, shown under the
+   * download on the detail page. The same image heads the app's README. Its
+   * size is given so the page keeps the space before the image loads; the alt
+   * text is in the copy, under app_detail.apps.<key>.screenshot_alt.
+   */
+  screenshot?: { src: string; width: number; height: number };
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -173,6 +180,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     id: 'publishkit',
     source: 'https://github.com/bennekrouf/publishkit',
     name: 'PublishKit',
+    screenshot: { src: '/image/apps/publishkit.png', width: 1920, height: 1248 },
     tech: 'Rust · Dioxus · Mistral / Claude · Markdown',
     status: 'live',
     tags: ['blog'],
@@ -194,6 +202,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     pro: {},
     source: 'https://github.com/bennekrouf/shipscreen',
     name: 'ShipScreen',
+    screenshot: { src: '/image/apps/shipscreen.png', width: 1920, height: 1679 },
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'live',
     tags: ['tools'],
@@ -214,6 +223,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     pro: {},
     source: 'https://github.com/Bennekrouf/gitagent',
     name: 'GitAgent',
+    screenshot: { src: '/image/apps/gitagent.png', width: 1921, height: 1028 },
     tech: 'Rust · Dioxus · ollama / Mistral · git · gh',
     status: 'live',
     tags: ['git'],
@@ -234,6 +244,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     id: 'trackcut',
     source: 'https://github.com/bennekrouf/trackcut',
     name: 'TrackCut',
+    screenshot: { src: '/image/apps/trackcut.png', width: 1920, height: 1278 },
     tech: 'Rust · Dioxus · symphonia · LAME · FLAC · yt-dlp',
     status: 'live',
     tags: ['audio'],
@@ -255,6 +266,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     id: 'spreadradar',
     source: 'https://github.com/bennekrouf/spreadradar',
     name: 'SpreadRadar',
+    screenshot: { src: '/image/apps/spreadradar.png', width: 1920, height: 1314 },
     tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
     status: 'live',
     tags: ['crypto'],
@@ -278,6 +290,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     pro: { product: 'small-video' },
     source: 'https://github.com/bennekrouf/polishcast',
     name: 'PolishCast',
+    screenshot: { src: '/image/apps/polishcast.png', width: 1920, height: 1278 },
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
     status: 'live',
     tags: ['tools'],
@@ -298,6 +311,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     pro: { monthlySearches: { free: 10, basic: 50, pro: 500, max: 1000 } },
     source: 'https://github.com/bennekrouf/jobscout',
     name: 'JobScout',
+    screenshot: { src: '/image/apps/jobscout.png', width: 1920, height: 1259 },
     tech: 'Rust · Dioxus · Mistral / ollama · WebKit · Camoufox',
     status: 'live',
     tags: ['ai'],
@@ -321,6 +335,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     pro: { product: 'surface-watch' },
     source: 'https://github.com/bennekrouf/surface-watch',
     name: 'SurfaceWatch',
+    screenshot: { src: '/image/apps/surfacewatch.png', width: 1920, height: 1278 },
     tech: 'Rust · Dioxus · REA · Node.js · Chrome',
     status: 'beta',
     tags: ['security'],

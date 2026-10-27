@@ -4,6 +4,7 @@
 // apps/@panel). Both render the same copy; only the frame differs, which is
 // what `variant` is for.
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, ArrowRight, Check, Download, Github, Scale, Sparkles, Terminal } from 'lucide-react';
@@ -178,6 +179,20 @@ export async function ToolDetailContent({
             <p className="mt-6 text-sm text-muted-foreground border-l-2 border-border pl-4">
               {statusNote}
             </p>
+          )}
+
+          {/* What the app looks like, right under the download: the hero
+              says what it does, this shows it. */}
+          {tool.screenshot && (
+            <Image
+              src={tool.screenshot.src}
+              width={tool.screenshot.width}
+              height={tool.screenshot.height}
+              alt={t(`apps.${appI18nKey[tool.id]}.screenshot_alt`)}
+              sizes={inPanel ? '(min-width: 768px) 720px, 100vw' : '(min-width: 1024px) 896px, 100vw'}
+              priority={!inPanel}
+              className="mt-10 w-full h-auto rounded-xl border border-border shadow-lg"
+            />
           )}
         </div>
       </section>
