@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState, ViewTransition } from 'react';
+import { RunnableSnippets } from './RunnableSnippets';
 import Link from 'next/link';
 import { type BlogPost as BlogPostType, type PathEntry, formatDate } from '../../lib/blog-shared';
 import ReadNext from './ReadNext';
-import { motion } from '@/components/ui/Motion';
 import { FaTwitter, FaLinkedin, FaLink, FaCheck } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
+import { useHostContext } from '@/providers/HostProvider';
 import { useTrackReading } from '@/providers/ReadProgressProvider';
 import { progressKey } from '@/lib/read-progress';
 
@@ -16,9 +17,27 @@ interface BlogPostProps {
   path: PathEntry[];
 }
 
+// The article itself, memoised on its HTML. This component re-renders as the
+// reader scrolls (reading progress is recorded through context), and without
+// the memo React replaced the body's DOM on those re-renders: the Run panels
+// added under the code blocks were wiped with it, and the whole article was
+// rebuilt each time progress was saved.
+const PostBody = React.memo(function PostBody({ html, ref }: { html: string; ref: React.Ref<HTMLDivElement> }) {
+  return (
+    <div
+      ref={ref}
+      className="prose prose-lg dark:prose-invert max-w-none"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+});
+
 const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
   const [linkCopied, setLinkCopied] = useState(false);
   const t = useTranslations('blog');
+  const tLearn = useTranslations('learn');
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const { isSwissRust } = useHostContext();
   const locale = useLocale();
 
   // Marks this post's place in the reader's progress as they scroll.
@@ -40,16 +59,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
 
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`;
 
-    // Track the share event
-    if (typeof window !== 'undefined' && window.plausible) {
-      window.plausible('Social Share', {
-        props: {
-          platform: 'twitter',
-          post: post.slug
-        }
-      });
-    }
-
     window.open(twitterUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -61,16 +70,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
 
     const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`;
 
-    // Track the share event
-    if (typeof window !== 'undefined' && window.plausible) {
-      window.plausible('Social Share', {
-        props: {
-          platform: 'linkedin',
-          post: post.slug
-        }
-      });
-    }
-
     window.open(linkedinUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -81,15 +80,6 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
     try {
       await navigator.clipboard.writeText(url);
       setLinkCopied(true);
-
-      // Track the copy event
-      if (typeof window !== 'undefined' && window.plausible) {
-        window.plausible('Link Copy', {
-          props: {
-            post: post.slug
-          }
-        });
-      }
 
       // Reset the copied state after 2 seconds
       setTimeout(() => {
@@ -111,12 +101,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
 
   return (
     <article className="w-full max-w-3xl mx-auto blog-content">
-      <motion.div
-        className="mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div className="mb-8">
         <div className="mb-4">
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-3">
@@ -141,9 +126,21 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
               </>
             )}
           </div>
+
+          {/* The track this post is a step of; swissrust.ch has no /learn. */}
+          {post.track && post.step !== undefined && !isSwissRust && (
+            <Link
+              href={`/${locale}/learn/${post.track}`}
+              className="mt-2 inline-block text-sm text-primary hover:underline underline-offset-4"
+            >
+              🧭 {tLearn('part_of', { track: tLearn(`tracks.${post.track}.title`) })} · {tLearn('step', { step: post.step })}
+            </Link>
+          )}
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
+        <ViewTransition name={`post-title-${post.slug}`}>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
+        </ViewTransition>
 
         <div className="flex items-center mb-8">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
@@ -151,15 +148,10 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
           </div>
           <span className="font-medium">{post.author}</span>
         </div>
-      </motion.div>
+      </div>
 
       {post.headings && post.headings.length > 0 && (
-        <motion.div
-          className="mb-8 p-4 bg-secondary rounded-lg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
+        <div className="mb-8 p-4 bg-secondary rounded-lg">
           <h2 className="text-lg font-medium mb-3">{t('table_contents')}</h2>
           <nav>
             <ul className="space-y-2">
@@ -179,24 +171,14 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
               ))}
             </ul>
           </nav>
-        </motion.div>
+        </div>
       )}
 
-      <motion.div
-        className="prose prose-lg dark:prose-invert max-w-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-      />
+      <PostBody ref={bodyRef} html={post.contentHtml} />
+      <RunnableSnippets container={bodyRef} />
 
       {post.tags && post.tags.length > 0 && (
-        <motion.div
-          className="mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <div className="mt-12">
           <h3 className="text-lg font-medium mb-4">{t('tags')}</h3>
           <div className="flex flex-wrap gap-2">
             {post.tags.map(tag => (
@@ -209,17 +191,12 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
               </Link>
             ))}
           </div>
-        </motion.div>
+        </div>
       )}
 
       <ReadNext path={path} currentKey={progressKey(post)} />
 
-      <motion.div
-        className="mt-12 pt-8 border-t border-border"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-      >
+      <div className="mt-12 pt-8 border-t border-border">
         <div className="flex flex-col sm:flex-row sm:justify-between items-center">
           {/* FIXED: Use locale-aware back to blog link */}
           <Link
@@ -287,18 +264,13 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
 
         {/* Success message for link copy */}
         {linkCopied && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="mt-4 text-center"
-          >
+          <div className="mt-4 text-center animate-in fade-in slide-in-from-bottom-2">
             <span className="text-sm text-green-600 dark:text-green-400">
               ✓ {t('link_copied')}
             </span>
-          </motion.div>
+          </div>
         )}
-      </motion.div>
+      </div>
     </article>
   );
 };

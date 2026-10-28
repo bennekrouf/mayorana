@@ -25,7 +25,19 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          // Two oranges behind one name. Solid uses (text-primary,
+          // bg-primary, hover:bg-primary/90) get --primary, dark enough in
+          // light mode for text on white and for white text on it (WCAG AA).
+          // Faint tints and borders — an opacity modifier below 0.5, like
+          // bg-primary/10 — keep the brand orange, --brand, where contrast
+          // does not apply and the brighter colour reads as the brand.
+          DEFAULT: (({ opacityValue }: { opacityValue?: string }) => {
+            const alpha = Number(opacityValue);
+            if (opacityValue !== undefined && !Number.isNaN(alpha) && alpha < 0.5) {
+              return `hsl(var(--brand) / ${opacityValue})`;
+            }
+            return opacityValue === undefined ? "hsl(var(--primary))" : `hsl(var(--primary) / ${opacityValue})`;
+          }) as unknown as string,
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {

@@ -70,7 +70,7 @@ const Pagination: React.FC<PaginationProps> = ({
           href={getPageUrl(i)}
           className={`px-3 py-2 text-sm font-medium transition-colors ${
             i === currentPage
-              ? 'bg-primary text-white rounded-lg'
+              ? 'bg-primary text-primary-foreground rounded-lg'
               : 'text-muted-foreground hover:text-primary'
           }`}
         >

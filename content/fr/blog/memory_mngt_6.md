@@ -119,7 +119,7 @@ Ce mismatch de types n'est pas de la bureaucratie — les deux références cont
 </div>
 
 **Exemple : Le Problème** :
-```rust
+```rust,compile_fail
 fn print_string(s: &String) {
     println!("{}", s);
 }

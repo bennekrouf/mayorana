@@ -7,13 +7,20 @@
 // for the tab (Stripe's return URL is fixed and drops it), so they are told to
 // subscribe with the email they use there, and the thank-you view takes them
 // back to the studio, where the plan's credits now count.
+//
+// The query is read with useQuery (src/lib/use-query.ts), not
+// useSearchParams: the page is prerendered with the plans in it, and
+// useSearchParams would have React replace them all on hydration. The server
+// and hydration render the plans; the thank-you view takes over right after,
+// when the query asks for it.
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useQuery } from '@/lib/use-query';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import { PlanLicenceReveal } from './PlanLicenceReveal';
 import { PlanPicker } from './PlanPicker';
+import type { PlanCatalogue } from '@/lib/plans';
 
 const FROM_KEY = 'mayorana_pricing_from';
 const CVENOM_CREDITS_URL = 'https://studio.cvenom.com/credits?subscribed=1';
@@ -31,25 +38,38 @@ function useFromCvenom(from: string | null): boolean {
   return fromCvenom;
 }
 
-export function PricingContent({ contactHref }: { contactHref: string }) {
-  const t = useTranslations('pricing');
-  const params = useSearchParams();
-  const fromCvenom = useFromCvenom(params.get('from'));
+type PricingProps = {
+  contactHref: string;
+  /** The plans fetched on the server, or null to fetch them in the browser. */
+  plans: PlanCatalogue | null;
+};
 
-  if (params.get('checkout') === 'success') {
+export function PricingContent(props: PricingProps) {
+  return <PricingView {...props} query={useQuery()} />;
+}
+
+export function PricingView({
+  contactHref,
+  plans,
+  query,
+}: PricingProps & { query: Pick<URLSearchParams, 'get'> | null }) {
+  const t = useTranslations('pricing');
+  const fromCvenom = useFromCvenom(query?.get('from') ?? null);
+
+  if (query?.get('checkout') === 'success') {
     return (
       <div className="max-w-3xl">
         <h1 className="text-3xl font-bold mb-6">{t('thanks_title')}</h1>
         {fromCvenom && (
           <a
             href={CVENOM_CREDITS_URL}
-            className="mb-8 inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="mb-8 inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             {t('back_to_cvenom')}
             <ArrowRight className="w-4 h-4" />
           </a>
         )}
-        <PlanLicenceReveal sessionId={params.get('session_id')} contactHref={contactHref} />
+        <PlanLicenceReveal sessionId={query.get('session_id')} contactHref={contactHref} />
       </div>
     );
   }
@@ -64,7 +84,7 @@ export function PricingContent({ contactHref }: { contactHref: string }) {
           <p className="mt-4 rounded-lg border border-primary/40 bg-primary/5 p-4 text-sm">{t('from_cvenom_note')}</p>
         )}
       </div>
-      <PlanPicker />
+      <PlanPicker initial={plans} />
     </>
   );
 }

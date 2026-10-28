@@ -30,6 +30,8 @@
     "ai_agents": "Agents IA",
     "portfolio": "Portfolio",
     "blog": "Blog",
+    "learn": "Parcours",
+    "search": "Rechercher",
     "pricing": "Tarifs",
     "about": "À propos",
     "contact": "Contact",
@@ -247,6 +249,10 @@
     "cancel": "Annuler"
   },
   "apps": {
+    "mcp_site_heading": "Posez vos questions sur ces applications à votre assistant IA",
+    "mcp_site_body": "Ajoutez le serveur MCP de Mayorana : Claude ou Codex peuvent alors chercher parmi les applications, lire leurs pages et notes de version, et comparer les offres pour vous. En lecture seule, sans compte.",
+    "mcp_site_claude": "Claude Code",
+    "mcp_site_codex": "Codex",
     "page_title": "Apps & Outils",
     "page_subtitle": "api0 pour les agents IA, et des outils de bureau natifs pour Git et plus encore. Tous écrits en Rust.",
     "tools_heading": "Tous les outils",
@@ -450,6 +456,13 @@
     "shortcut_releases": "Vous voulez savoir ce qui a changé ? Chaque outil de la page Apps renvoie vers ses notes de version"
   },
   "blog": {
+    "run_code": "Exécuter",
+    "run_running": "Exécution…",
+    "run_output": "Sortie",
+    "run_no_output": "(aucune sortie)",
+    "run_failed": "Impossible de joindre le Rust Playground. Réessayez dans un instant.",
+    "run_open": "Ouvrir dans le Rust Playground",
+    "run_label": "Exécuter cet exemple sur le Rust Playground",
     "hero_title": "Blog",
     "hero_subtitle": "Nos notes en construisant api0 et nos outils Rust : agents IA, MCP, intégration Azure et Rust lui-même.",
     "filter_by_topic": "Filtrer par thème",
@@ -538,6 +551,12 @@
     "nav_blog": "Blog"
   },
   "app_detail": {
+    "install_heading": "Ou installer depuis un terminal",
+    "install_unix": "macOS et Linux",
+    "install_mac": "macOS",
+    "install_linux": "Linux",
+    "install_windows": "Windows (PowerShell)",
+    "install_view": "Lire le script",
     "back_to_apps": "Toutes les apps & outils",
     "panel_close": "Fermer",
     "panel_open_page": "Ouvrir la page complète",
@@ -1790,6 +1809,7 @@
     "releases_heading": "Nouveautés",
     "releases_body": "Version {version}, publiée le {date}. {name} évolue souvent : chaque version et ce qu’elle a changé sont listés sur la page des notes de version.",
     "releases_link": "Lire les notes de version",
+    "latest_badge": "Version {version} · {date}",
     "skill_heading": "Skill Claude",
     "skill_body": "Permet à Claude de vous aider avec {name} : son fonctionnement, les erreurs connues et leurs solutions, et un rapport de bug que vous relisez avant de l'envoyer vous-même.",
     "skill_download": "Télécharger le skill (.zip)",
@@ -1830,5 +1850,86 @@
     "permalink": "Lien vers la version",
     "feed_heading": "Le même historique, en JSON",
     "feed_body": "Cette page est générée à partir d’un flux publié à côté des builds — le fichier que {name} lit lui-même pour vérifier les mises à jour. Branchez-y un script si vous suivez les versions à l’échelle d’une équipe."
+  },
+  "learn": {
+    "title": "Parcours d'apprentissage",
+    "meta_title": "Parcours d'apprentissage : Rust, LLM, intégration Azure",
+    "meta_description": "Le blog Mayorana dans l'ordre de lecture : Rust depuis les bases, les LLM depuis zéro, l'intégration Azure et plus. Gratuit, étape par étape, avec votre progression conservée.",
+    "intro": "Les articles du blog, dans l'ordre où ils sont faits pour être lus. Choisissez un sujet et avancez étape par étape. Votre progression est conservée dans ce navigateur, et vous suit sur vos autres appareils une fois connecté.",
+    "articles": "{count, plural, one {# article} other {# articles}}",
+    "minutes": "environ {minutes} min de lecture",
+    "progress": "{read} sur {total} lus",
+    "start": "Commencer par l'étape 1",
+    "continue": "Reprendre à l'étape {step}",
+    "complete": "Parcours terminé. Bravo !",
+    "all_tracks": "Tous les parcours",
+    "open_track": "Ouvrir le parcours",
+    "step": "Étape {step}",
+    "read": "Lu",
+    "part_of": "Fait partie du parcours {track}",
+    "continue_reading": "Reprendre la lecture",
+    "next_in": "Suite de {track}",
+    "dismiss": "Masquer",
+    "tracks": {
+      "rust": {
+        "title": "Rust, depuis les bases",
+        "intro": "Pourquoi le ramasse-miettes comme la mémoire manuelle ont un coût, puis l'ownership, les collections, les traits, les closures, la concurrence et la performance : le Rust qu'il faut pour lire et écrire du vrai code."
+      },
+      "llm": {
+        "title": "Les LLM depuis zéro",
+        "intro": "Comment fonctionne un modèle de langage, une opération à la fois : attention, requêtes, clés et valeurs, embeddings, transfer learning et bases vectorielles."
+      },
+      "azure": {
+        "title": "Intégration Azure",
+        "intro": "Suivre une requête à travers Logic Apps, Cosmos DB et Log Analytics grâce à son identifiant de corrélation, et les outils de bureau qui rendent chaque étape visible."
+      },
+      "git": {
+        "title": "Outils git",
+        "intro": "Utiliser l'IA sur un dépôt qui compte sans lui confier votre historique git."
+      },
+      "ai": {
+        "title": "L'IA en entreprise",
+        "intro": "Où l'IA générative et agentique trouve vraiment sa place en entreprise, en trois catégories plutôt qu'en cinquante cas d'usage."
+      }
+    },
+    "sections": {
+      "why-rust": "Pourquoi Rust ?",
+      "getting-started": "Premiers pas",
+      "ownership-and-memory": "Ownership et mémoire",
+      "collections-and-iterators": "Collections et itérateurs",
+      "traits-and-generics": "Traits et génériques",
+      "closures": "Closures",
+      "concurrency": "Concurrence",
+      "performance": "Performance",
+      "llm-from-scratch": "Un LLM, pièce par pièce",
+      "azure-integration": "Tracer les flux d'intégration",
+      "git-tooling": "Git assisté par l'IA",
+      "ai-in-companies": "Trois catégories d'IA"
+    }
+  },
+  "search": {
+    "placeholder_ask": "Rechercher, ou poser une question…",
+    "ask_row": "Demander à Mayorana : « {query} »",
+    "ask_thinking": "Lecture du site…",
+    "ask_sources": "Sources",
+    "ask_back": "Retour aux résultats",
+    "ask_note": "Rédigé par une IA (Claude Haiku) à partir des pages de mayorana.ch. Elle peut se tromper : les sources font foi.",
+    "ask_error_empty": "Posez une question de quelques mots.",
+    "ask_error_limit_ip": "Cela fait beaucoup de questions pour une journée. Réessayez demain, ou utilisez la recherche.",
+    "ask_error_limit_day": "Les questions sont en pause pour le reste de la journée. La recherche fonctionne toujours.",
+    "ask_error_exhausted": "Les questions sont en pause jusqu'au mois prochain. La recherche fonctionne toujours.",
+    "ask_error_failed": "Impossible d'obtenir une réponse pour le moment. Réessayez, ou utilisez la recherche.",
+    "placeholder": "Rechercher des articles, des applications, des pages…",
+    "no_results": "Aucun résultat pour « {query} ».",
+    "loading": "Chargement…",
+    "error": "La recherche est indisponible pour le moment.",
+    "suggestions": "Pour commencer",
+    "hint": "↑ ↓ pour naviguer · Entrée pour ouvrir · Échap pour fermer",
+    "types": {
+      "page": "Page",
+      "track": "Parcours",
+      "app": "Application",
+      "post": "Article"
+    }
   }
 }

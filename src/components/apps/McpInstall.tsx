@@ -40,7 +40,7 @@ export function McpInstall({
               setCopied(null);
             }}
             className={`rounded-md px-3 py-1 font-medium transition-colors ${
-              id === client ? 'bg-primary text-white' : 'text-muted-foreground hover:text-foreground'
+              id === client ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             {label}

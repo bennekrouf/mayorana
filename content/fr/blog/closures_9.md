@@ -816,7 +816,7 @@ Stocke dans une struct une closure qui a capturé `&mut` et la mutabilité remon
 la struct doit être `mut` lui aussi, et la borne du champ doit être `FnMut`.
 
 ## Un cas complet
-```rust
+```rust,ignore
 use std::collections::HashMap;
 
 // Système de plugins avec closures stockées

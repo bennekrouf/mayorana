@@ -9,6 +9,15 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, ArrowRight, Check, Download, Github, Scale, Sparkles, Terminal } from 'lucide-react';
 import { McpInstall } from '@/components/apps/McpInstall';
+import { InstallCommands, type InstallRow } from '@/components/apps/InstallCommands';
+import {
+  hasPowershellInstall,
+  hasShellInstall,
+  powershellInstallCommand,
+  powershellInstallUrl,
+  shellInstallCommand,
+  shellInstallUrl,
+} from '@/lib/install-scripts';
 import { ComparisonTable, type Comparison } from '@/components/ui/ComparisonTable';
 import {
   DataSourceBadge,
@@ -108,6 +117,27 @@ export async function ToolDetailContent({
   const { t, tagline, shortDescription, features, overview, requirements, faq, comparison } =
     content;
   const inPanel = variant === 'panel';
+
+  // The one-line installers (src/lib/install-scripts.ts), labelled by the
+  // platforms this tool actually has builds for.
+  const hasMac = tool.downloads.some((d) => d.os === 'mac');
+  const hasLinux = tool.downloads.some((d) => d.os === 'linux');
+  const installRows: InstallRow[] = [
+    ...(hasShellInstall(tool)
+      ? [{
+          label: t(hasMac && hasLinux ? 'install_unix' : hasMac ? 'install_mac' : 'install_linux'),
+          command: shellInstallCommand(tool.id),
+          scriptUrl: shellInstallUrl(tool.id),
+        }]
+      : []),
+    ...(hasPowershellInstall(tool)
+      ? [{
+          label: t('install_windows'),
+          command: powershellInstallCommand(tool.id),
+          scriptUrl: powershellInstallUrl(tool.id),
+        }]
+      : []),
+  ];
   const mcpCommands = mcpInstallCommands(tool, 'claude');
 
   // The page centres each section in the site container; the panel is already
@@ -147,6 +177,18 @@ export async function ToolDetailContent({
           <div className="flex flex-wrap items-center gap-2 mb-4">
             <StatusBadge status={tool.status} />
             {tool.dataSource && <DataSourceBadge dataSource={tool.dataSource} />}
+            {/* The version a download gets today, and when it shipped: the
+                first thing that says this is a live product. Links to that
+                release's notes. */}
+            {latest && (
+              <Link
+                href={`/${locale}/apps/${slug}/releases#${releaseAnchor(latest.version)}`}
+                className="inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+              >
+                {t('latest_badge', { version: latest.version, date: formatReleaseDate(latest.date, locale) })}
+                <ArrowRight className="w-3 h-3" aria-hidden="true" />
+              </Link>
+            )}
           </div>
 
           {inPanel ? (
@@ -165,14 +207,12 @@ export async function ToolDetailContent({
             <p className="text-xs text-muted-foreground mt-1.5 max-w-2xl">{t('signing_note_mac')}</p>
           )}
 
-          {latest && (
-            <Link
-              href={`/${locale}/apps/${slug}/releases`}
-              className="inline-flex items-center gap-1.5 mt-5 text-sm text-primary hover:underline underline-offset-4"
-            >
-              {t('releases_link')}
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+          {installRows.length > 0 && (
+            <InstallCommands
+              heading={t('install_heading')}
+              rows={installRows}
+              labels={{ copy: t('mcp_copy'), copied: t('mcp_copied'), view: t('install_view') }}
+            />
           )}
 
           {statusNote && (
@@ -222,7 +262,7 @@ export async function ToolDetailContent({
               {t('comparison_note')}{' '}
               <Link
                 href={`/${locale}/contact`}
-                className="text-primary hover:underline underline-offset-4"
+                className="text-primary underline underline-offset-4"
               >
                 {t('comparison_note_link')}
               </Link>
@@ -304,7 +344,7 @@ export async function ToolDetailContent({
               <div>
                 <Link
                   href={`/${locale}/pricing`}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
                 >
                   <Sparkles className="w-4 h-4" />
                   {t('plans_button')}
@@ -508,7 +548,7 @@ export async function ToolDetailContent({
           <p className="text-muted-foreground mb-6">{t('cta_body')}</p>
           <Link
             href={`/${locale}/contact`}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             {t('cta_button')}
             <ArrowRight className="w-4 h-4" />

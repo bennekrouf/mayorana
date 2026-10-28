@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useQuery, type Query } from '@/lib/use-query';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { useForm, useWatch } from 'react-hook-form';
 import { FiMail, FiMapPin, FiLinkedin, FiArrowRight } from 'react-icons/fi';
-import { motion } from '@/components/ui/Motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useTranslations, useLocale } from 'next-intl';
 import { GATEWAY_URL } from '@/lib/gateway';
@@ -22,16 +21,17 @@ interface FormData {
   message: string;
 }
 
-// Separate component that uses useSearchParams
-function ContactFormWithParams() {
-  const searchParams = useSearchParams();
-  const service = searchParams.get('service');
+// ?service= and ?app= are read with useQuery (src/lib/use-query.ts), not
+// useSearchParams: the page is prerendered, and useSearchParams would have
+// React replace the whole form on hydration.
+function ContactForm({ searchParams }: { searchParams: Query | null }) {
+  const service = searchParams?.get('service');
   // The desktop apps' Feedback link adds ?app=GitAgent&v=1.4.0, so a message
   // says which app and version it is about without asking the sender.
   const fromApp = (() => {
-    const app = searchParams.get('app')?.trim().slice(0, 40);
+    const app = searchParams?.get('app')?.trim().slice(0, 40);
     if (!app) return null;
-    const v = searchParams.get('v')?.trim().slice(0, 20);
+    const v = searchParams?.get('v')?.trim().slice(0, 20);
     return v ? `${app} ${v}` : app;
   })();
   const t = useTranslations('contact');
@@ -44,16 +44,6 @@ function ContactFormWithParams() {
     : "Bonjour, j'ai une question sur vos produits.";
   const encodedMessage = encodeURIComponent(whatsappMessage);
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-  const handleWhatsAppClick = () => {
-    if (typeof window !== 'undefined' && window.plausible) {
-      window.plausible('WhatsApp Contact', {
-        props: {
-          source: 'contact_page'
-        }
-      });
-    }
-  };
 
   const {
     register,
@@ -133,22 +123,16 @@ function ContactFormWithParams() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1
+            <h1
               className="text-4xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
             >
               {t('hero_title')}
-            </motion.h1>
-            <motion.p
+            </h1>
+            <p
               className="text-xl text-muted-foreground"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
             >
               {t('hero_subtitle')}
-            </motion.p>
+            </p>
           </div>
         </div>
       </section>
@@ -161,8 +145,7 @@ function ContactFormWithParams() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={handleWhatsAppClick}
-          className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors"
+          className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-green-700 text-white font-medium hover:bg-green-800 transition-colors"
         >
           <FaWhatsapp className="h-5 w-5" />
           {t('contact_via_whatsapp')}
@@ -174,12 +157,7 @@ function ContactFormWithParams() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Information */}
-            <motion.div
-              className="space-y-8"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <div className="space-y-8">
               <div>
                 <h2 className="text-2xl font-bold mb-6">{t('contact_information')}</h2>
                 <p className="text-muted-foreground mb-8">
@@ -257,14 +235,10 @@ function ContactFormWithParams() {
                   {t('response_description')}
                 </p>
               </div>
-            </motion.div>
+            </div>
 
             {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
+            <div>
               {formSubmitted ? (
                 <div className="bg-secondary p-8 rounded-xl border border-border text-center">
                   <div className="text-primary text-6xl mb-4">✓</div>
@@ -274,7 +248,7 @@ function ContactFormWithParams() {
                   </p>
                   <button
                     onClick={() => setFormSubmitted(false)}
-                    className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                    className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
                   >
                     {t('send_another')}
                   </button>
@@ -387,13 +361,13 @@ function ContactFormWithParams() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full p-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors disabled:opacity-70"
+                    className="w-full p-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-70"
                   >
                     {isSubmitting ? t('sending') : t('send_message_button')}
                   </button>
                 </form>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -401,30 +375,10 @@ function ContactFormWithParams() {
   );
 }
 
-// Fallback component to show while Suspense is loading
-function ContactFormFallback() {
-  const t = useTranslations('contact');
-  const tCommon = useTranslations('common');
-
-  return (
-    <div className="py-20 bg-gradient-to-b from-secondary to-background">
-      <div className="container">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-6">{t('hero_title')}</h1>
-          <p className="text-xl text-muted-foreground">{tCommon('loading')}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Main component with Suspense boundary
 export default function ContactPage() {
   return (
     <LayoutTemplate>
-      <Suspense fallback={<ContactFormFallback />}>
-        <ContactFormWithParams />
-      </Suspense>
+      <ContactForm searchParams={useQuery()} />
     </LayoutTemplate>
   );
 }

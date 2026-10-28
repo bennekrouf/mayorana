@@ -14,7 +14,7 @@ import {
   type User,
 } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { getFirebaseAuth, isAuthConfigured } from '@/lib/firebase';
+import { getFirebaseAuth, isAuthConfigured, popupRedirectResolver } from '@/lib/firebase';
 
 export type SignInProvider = 'google' | 'github';
 
@@ -138,7 +138,7 @@ function takeRedirectProvider(): SignInProvider | null {
 
 async function redirectTo(provider: SignInProvider, email?: string | null) {
   try { sessionStorage.setItem(REDIRECT_KEY, provider); } catch { /* ignore */ }
-  await signInWithRedirect(getFirebaseAuth(), makeProvider(provider, email));
+  await signInWithRedirect(getFirebaseAuth(), makeProvider(provider, email), popupRedirectResolver);
 }
 
 function isQuietCancel(code: string | undefined) {
@@ -223,7 +223,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     redirectHandled.current = true;
     const redirected = takeRedirectProvider();
     const pending = takeLink();
-    getRedirectResult(getFirebaseAuth())
+    // Only after a redirect sign-in: asking costs the sign-in iframe, which
+    // every other page load now skips (see src/lib/firebase.ts).
+    if (!redirected) return;
+    getRedirectResult(getFirebaseAuth(), popupRedirectResolver)
       .then(async (result) => {
         if (!result || !pending) return;
         if (result.providerId === PROVIDER_IDS[pending.existing]) {
@@ -243,7 +246,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (provider: SignInProvider): Promise<SignInOutcome> => {
     try {
-      await signInWithPopup(getFirebaseAuth(), makeProvider(provider));
+      await signInWithPopup(getFirebaseAuth(), makeProvider(provider), popupRedirectResolver);
       return 'signed-in';
     } catch (error) {
       const code = (error as AuthError).code;
@@ -266,7 +269,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLinkBusy(true);
     setLinkError(null);
     try {
-      const result = await signInWithPopup(getFirebaseAuth(), makeProvider(link.existing, link.email));
+      const result = await signInWithPopup(
+        getFirebaseAuth(),
+        makeProvider(link.existing, link.email),
+        popupRedirectResolver,
+      );
       await finishLink(result.user, link);
     } catch (error) {
       const code = (error as AuthError).code;
@@ -371,7 +378,7 @@ function LinkAccountsDialog({
         <button
           onClick={onContinue}
           disabled={busy}
-          className="w-full px-4 py-3 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 disabled:opacity-60 transition-colors"
+          className="w-full px-4 py-3 rounded-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-colors"
         >
           {t('link_continue', names)}
         </button>

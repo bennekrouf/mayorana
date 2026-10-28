@@ -3,10 +3,9 @@
 
 'use client';
 
-import React from 'react';
+import React, { ViewTransition } from 'react';
 import Link from 'next/link';
 import { type BlogPost, formatDate } from '../../lib/blog-shared';
-import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useReadProgress } from '@/providers/ReadProgressProvider';
@@ -30,18 +29,9 @@ const BlogList: React.FC<BlogListProps> = ({
   const locale = useLocale();
   const { progress } = useReadProgress();
 
-  console.log('🔍 BlogList Debug:');
-  console.log('   - Current locale:', locale);
-  console.log('   - Posts to display:', posts.length);
-
-  // Debug each post's URL generation
-  posts.forEach((post, index) => {
-    const postUrl = getLocalizedPath(locale, `/blog/${post.slug}`);
-    console.log(`📄 Post ${index + 1}: "${post.title}"`);
-    console.log(`   - Slug: ${post.slug}`);
-    console.log(`   - Locale: ${post.locale}`);
-    console.log(`   - Generated URL: ${postUrl}`);
-  });
+  // The links prefetch (Next's default): posts are prerendered, so fetching
+  // the ones in view costs a static file each, and opening one is instant.
+  // They used to opt out, when every post was rendered on request.
 
   // Only show title/description if explicitly provided
   const showHeader = title || description;
@@ -65,12 +55,10 @@ const BlogList: React.FC<BlogListProps> = ({
             const read = isRead(entry);
 
             return (
-              <motion.div
+              <div
                 key={post.slug}
-                className="relative flex flex-col h-full rounded-xl border border-border overflow-hidden bg-secondary/50"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative flex flex-col h-full rounded-xl border border-border overflow-hidden bg-secondary/50 rise"
+                style={{ '--rise-delay': `${index * 0.1}s` } as React.CSSProperties}
               >
                 <div className="p-6 flex flex-col h-full">
                   <div className="mb-2">
@@ -91,15 +79,11 @@ const BlogList: React.FC<BlogListProps> = ({
                     <Link
                       href={postUrl}
                       className="hover:text-primary transition-colors"
-                      prefetch={false}
-                      onClick={() => {
-                        console.log(`🔗 Clicking link to: ${postUrl}`);
-                        console.log(`   - Post: "${post.title}"`);
-                        console.log(`   - Slug: ${post.slug}`);
-                        console.log(`   - Locale: ${post.locale}`);
-                      }}
                     >
-                      {post.title}
+                      {/* Morphs into the article's heading on the way in. */}
+                      <ViewTransition name={`post-title-${post.slug}`}>
+                        <span>{post.title}</span>
+                      </ViewTransition>
                     </Link>
                   </h3>
 
@@ -111,10 +95,13 @@ const BlogList: React.FC<BlogListProps> = ({
                     <Link
                       href={postUrl}
                       className="text-primary font-medium hover:underline inline-flex items-center"
-                      prefetch={false}
                     >
                       {t('read_more')}
+                      {/* "Read more" alone says nothing out of context, to a
+                          screen reader or a search engine; the title does. */}
+                      <span className="sr-only">: {post.title}</span>
                       <svg
+                        aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4 ml-1"
                         fill="none"
@@ -146,7 +133,7 @@ const BlogList: React.FC<BlogListProps> = ({
                     />
                   </div>
                 )}
-              </motion.div>
+              </div>
             );
           })}
         </div>

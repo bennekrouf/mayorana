@@ -43,6 +43,7 @@ export default function Footer() {
     { name: tNav('ai_agents'), url: getLocalizedPath(locale, '/solutions/ai-agents') },
     { name: 'Apps', url: getLocalizedPath(locale, '/apps') },
     { name: tNav('blog'), url: getLocalizedPath(locale, '/blog') },
+    { name: tNav('learn'), url: getLocalizedPath(locale, '/learn') },
     { name: tNav('contact'), url: getLocalizedPath(locale, '/contact') },
     { name: tNav('about'), url: getLocalizedPath(locale, '/about') }
   ];
@@ -153,7 +154,7 @@ export default function Footer() {
             <div className="mt-6">
               <Link
                 href={getLocalizedPath(locale, '/contact')}
-                className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm"
+                className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm"
               >
                 {tCommon('cta_button')}
               </Link>

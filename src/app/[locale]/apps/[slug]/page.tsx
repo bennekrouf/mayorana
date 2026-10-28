@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: seoTitle,
     description: seoDescription,
     ogImagePath: `/apps/${slug}/opengraph-image`,
+    markdownUrl: `${SITE_URL}/${locale}/apps/${slug}.md`,
   });
 }
 

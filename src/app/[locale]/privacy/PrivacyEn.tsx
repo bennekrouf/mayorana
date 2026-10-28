@@ -2,7 +2,6 @@
 
 import React from 'react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { motion } from '@/components/ui/Motion';
 
 const link = 'text-primary hover:underline';
 
@@ -11,13 +10,10 @@ export default function PrivacyEn() {
     <LayoutTemplate>
       <div className="py-20 bg-background">
         <div className="container max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div
+ className="rise">
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: 7 October 2026</p>
+            <p className="text-muted-foreground mb-8">Last updated: 28 October 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -57,10 +53,6 @@ export default function PrivacyEn() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Information Collected Automatically</h2>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    <strong>Website analytics</strong> through Plausible Analytics, which does not use cookies and does not
-                    collect personal data. We see aggregate figures such as page views and referring sites.
-                  </li>
                   <li>
                     <strong>Server logs.</strong> Like any web server, ours records each request: IP address, time, page or
                     file requested, browser user agent and referring page. These logs are deleted after about two weeks.
@@ -117,7 +109,17 @@ export default function PrivacyEn() {
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Google Firebase Authentication, and Google or GitHub, for sign-in</li>
                   <li>Stripe, for payments</li>
-                  <li>Plausible Analytics, for website analytics</li>
+                  <li>
+                    Anthropic, through the api0 gateway, when you ask a question in the site search (&quot;Ask
+                    Mayorana&quot;): the question is sent with excerpts of our pages to Anthropic&apos;s Claude model to
+                    write the answer. Your IP address is used for a daily question limit, kept in memory for that day
+                    only, and the question is not stored with it.
+                  </li>
+                  <li>
+                    The Rust Playground (play.rust-lang.org, run by the Rust project), when you click Run under a code
+                    example on the blog: the example&apos;s code is sent there to be compiled and run. Nothing else is
+                    sent, and nothing is sent unless you click.
+                  </li>
                 </ul>
                 <p className="mt-4">
                   Forms, sign-in data and licences are handled by the api0 gateway (gateway.api0.ai), which we operate.
@@ -217,7 +219,7 @@ export default function PrivacyEn() {
                 </div>
               </section>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </LayoutTemplate>

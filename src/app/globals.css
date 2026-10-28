@@ -281,14 +281,23 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
  
-    --primary: 25 100% 50%; /* #FF6B00 */
+    /* The brand orange, #FF6B00, is 2.9:1 on white: fine for tints and large
+       shapes, too light for text or for white text on it. --primary is the
+       same hue darkened to #B24A00 (5.4:1 on white, 4.9:1 on its own 10%
+       tint, 5.0:1 on --secondary);
+       tailwind.config.ts gives faint tints --brand and everything else
+       --primary. */
+    --brand: 25 100% 50%; /* #FF6B00 */
+    --primary: 25 100% 35%; /* #B24A00 */
     --primary-foreground: 0 0% 100%;
  
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
  
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* 43% rather than shadcn's 46.9%: the latter is 4.3:1 on --secondary,
+       where the tag chips and cards put it, short of AA's 4.5. */
+    --muted-foreground: 215.4 16.3% 43%;
  
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -313,6 +322,8 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
  
+    /* On the dark background the brand orange itself has the contrast. */
+    --brand: 25 100% 50%; /* #FF6B00 */
     --primary: 25 100% 50%; /* #FF6B00 */
     --primary-foreground: 222.2 47.4% 11.2%;
  
@@ -468,4 +479,51 @@ a {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+}
+
+/* Entrance and reveal animations, in CSS rather than Framer Motion: they run
+   from the first paint instead of waiting for the page's JS to hydrate (the
+   text used to sit at opacity 0 until it had), and they cost no bundle.
+   `rise` plays on load; set --rise-delay for a stagger. `rise-in-view` plays
+   as the element scrolls into view where the browser supports scroll-driven
+   animations, and is simply visible where it does not. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.rise {
+  animation: rise 0.5s ease-out both;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+@supports (animation-timeline: view()) {
+  .rise-in-view {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .rise-in-view {
+    animation: none;
+  }
+}
+
+/* Page transitions (experimental.viewTransition in next.config.ts): short,
+   and off for anyone who asks for less motion. */
+::view-transition-group(*) {
+  animation-duration: 0.25s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

@@ -5,6 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogPost from '@/components/blog/BlogPost';
 import { getPostBySlug, getAllPosts, getLearningPath } from '@/lib/blog';
+import { SITE_URL, SITE_NAME } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>;
@@ -102,8 +103,48 @@ async function loadPost({ params }: Props) {
 
 export default async function PostPage(props: Props) {
   const { post, path } = await loadPost(props);
+  const { locale } = await props.params;
+  const url = `${SITE_URL}/${locale}/blog/${post.slug}`;
+
+  // What the article is and where it sits, for search and answer engines. The
+  // image is the social card the page's metadata already points at.
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      url,
+      mainEntityOfPage: url,
+      datePublished: post.date,
+      inLanguage: locale,
+      keywords: post.tags,
+      image: `${SITE_URL}/${locale}/opengraph-image`,
+      author: { '@type': 'Person', name: post.author },
+      publisher: {
+        '@type': 'Organization',
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: { '@type': 'ImageObject', url: `${SITE_URL}/image/logo.png` },
+      },
+      isPartOf: { '@type': 'Blog', name: `${SITE_NAME} Blog`, url: `${SITE_URL}/${locale}/blog` },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: SITE_NAME, item: `${SITE_URL}/${locale}` },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/${locale}/blog` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: url },
+      ],
+    },
+  ];
+
   return (
     <LayoutTemplate>
+      {/* Plain script tag so the JSON-LD is in the served HTML; see the app
+          detail page for why next/script will not do. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <section className="py-20 bg-background">
         <div className="container">
           <BlogPost post={post} path={path} />

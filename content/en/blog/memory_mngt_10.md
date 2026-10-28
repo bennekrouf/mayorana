@@ -184,6 +184,8 @@ fn to_uppercase_no_digits(input: &str) -> Cow<str> {
 Accept both borrowed and owned data without forcing clones:
 
 ```rust
+use std::borrow::Cow;
+
 fn print(data: Cow<str>) {
     println!("{}", data);
 }

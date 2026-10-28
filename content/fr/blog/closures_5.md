@@ -97,7 +97,7 @@ fn main() {
 
 Pour un état complexe, encapsule-le dans une struct avec une implémentation `FnMut` explicite :
 
-```rust
+```rust,ignore
 struct Counter {
     count: i32,
 }

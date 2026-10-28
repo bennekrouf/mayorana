@@ -389,7 +389,7 @@ fn main() {
     let y = 84i32;
     
     // Closure qui capture x et y
-    let closure = |z| x + y + z;
+    let closure = |z: i32| x + y + z;
     
     println!("Closure size: {} bytes", mem::size_of_val(&closure));
     // Probablement 8 bytes (2 × i32)

@@ -27,6 +27,7 @@ const STATIC_PAGES = [
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
   { path: '/contact', changefreq: 'monthly', priority: '0.7' },
   { path: '/blog', changefreq: 'daily', priority: '0.9' },
+  { path: '/learn', changefreq: 'weekly', priority: '0.8' },
   { path: '/privacy', changefreq: 'yearly', priority: '0.3' },
   { path: '/terms', changefreq: 'yearly', priority: '0.3' },
 ];
@@ -201,7 +202,21 @@ async function generateSitemap() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
 
-  const counts = { static: 0, tools: 0, releases: 0, posts: 0, tags: 0 };
+  const counts = { static: 0, tools: 0, releases: 0, posts: 0, tags: 0, tracks: 0 };
+
+  // Learning-path tracks (/learn/<track>): a track has a page in a locale
+  // when some post there belongs to it — the same rule as the route's
+  // generateStaticParams — and hreflang pairs it across the locales that have it.
+  const tracksByLocale = Object.fromEntries(
+    LOCALES.map((locale) => [
+      locale,
+      new Set((postsByLocale[locale] || []).map((p) => p.track).filter(Boolean)),
+    ]),
+  );
+  const trackAlternates = (track) =>
+    Object.fromEntries(
+      LOCALES.filter((l) => tracksByLocale[l].has(track)).map((l) => [l, `${BASE_URL}/${l}/learn/${track}`]),
+    );
 
   for (const locale of LOCALES) {
     const prefix = `${BASE_URL}/${locale}`;
@@ -241,6 +256,19 @@ async function generateSitemap() {
         });
         counts.releases++;
       }
+    }
+
+    sitemap += `
+  <!-- ${locale}: learning paths -->`;
+    for (const track of tracksByLocale[locale]) {
+      const alternates = trackAlternates(track);
+      sitemap += urlEntry({
+        loc: `${prefix}/learn/${track}`,
+        changefreq: 'weekly',
+        priority: '0.8',
+        alternates: Object.keys(alternates).length > 1 ? alternates : undefined,
+      });
+      counts.tracks++;
     }
 
     const posts = postsByLocale[locale];
@@ -283,6 +311,7 @@ async function generateSitemap() {
   console.log(`   - Release notes:${counts.releases}`);
   console.log(`   - Blog posts:   ${counts.posts}`);
   console.log(`   - Tag pages:    ${counts.tags}`);
+  console.log(`   - Tracks:       ${counts.tracks}`);
 
   return sitemap;
 }

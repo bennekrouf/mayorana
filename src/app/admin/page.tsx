@@ -114,7 +114,7 @@ export default function SecretAdminPage() {
             <button
               type="submit"
               disabled={isLoading || !password.trim()}
-              className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors focus:ring-2 focus:ring-primary/50 focus:outline-none"
+              className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-medium py-3 px-4 rounded-lg transition-colors focus:ring-2 focus:ring-primary/50 focus:outline-none"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">

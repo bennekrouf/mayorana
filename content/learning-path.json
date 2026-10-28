@@ -137,6 +137,13 @@
       "posts": [
         "ai-commit-messages-without-giving-up-control"
       ]
+    },
+    {
+      "id": "ai-in-companies",
+      "track": "ai",
+      "posts": [
+        "three-categories-of-ai-in-companies"
+      ]
     }
   ]
 }

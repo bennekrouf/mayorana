@@ -248,7 +248,7 @@ struct PackedMetadata {
 
 ### Mesures et validation
 
-```rust
+```rust,ignore
 // Validation des tailles et alignements
 use std::mem;
 

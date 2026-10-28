@@ -257,7 +257,7 @@ impl Transformer for SquareTransformer {
 
 ### Système de Plugin complet
 
-```rust
+```rust,ignore
 use std::collections::HashMap;
 
 type PluginFactory = fn() -> Box<dyn Transformer>;

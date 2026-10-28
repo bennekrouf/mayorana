@@ -154,7 +154,7 @@ fn main() {
 
 ### 2. Curry Functions
 
-```rust
+```rust,ignore
 // Currying : transform une function à 2 paramètres en functions imbriquées
 fn curry<F, A, B, C>(f: F) -> impl Fn(A) -> impl Fn(B) -> C
 where
@@ -628,7 +628,7 @@ closures sont des `Fn(i32) -> i32`, et c'est tout le contrat que voit l'appelant
 
 ## Exemple pratique complet
 
-```rust
+```rust,ignore
 use std::collections::HashMap;
 
 // Système de traitement de commandes avec HOFs

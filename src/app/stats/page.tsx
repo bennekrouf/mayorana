@@ -1004,7 +1004,7 @@ function StatsDashboard() {
           <button
             onClick={() => load()}
             disabled={loading}
-            className="order-1 sm:order-last inline-flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] sm:min-h-0 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
+            className="order-1 sm:order-last inline-flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] sm:min-h-0 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
           >
             <FiRefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
@@ -1017,7 +1017,7 @@ function StatsDashboard() {
                 aria-current={range.key === r.key ? 'true' : undefined}
                 className={`flex-1 sm:flex-none px-2 sm:px-3 py-2 min-h-[44px] sm:min-h-0 text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
                   range.key === r.key
-                    ? 'bg-primary text-white'
+                    ? 'bg-primary text-primary-foreground'
                     : 'bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
                 }`}
               >

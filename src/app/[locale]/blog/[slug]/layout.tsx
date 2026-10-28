@@ -1,5 +1,5 @@
 import { getPostBySlug, getPostCounterpart } from '@/lib/blog';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, SITE_URL } from '@/lib/seo';
 import type { Metadata } from 'next'
 
 type Props = {
@@ -41,6 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ogType: 'article',
     crossLocale: false,
     alternatePaths,
+    markdownUrl: `${SITE_URL}/${locale}/blog/${slug}.md`,
   });
 }
 

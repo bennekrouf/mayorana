@@ -197,7 +197,7 @@ rand = "0.8"
 
 Maintenant, modifions `src/main.rs` :
 
-```rust
+```rust,ignore
 use rand::Rng;  // Importer le trait Rng
 
 fn main() {
@@ -655,7 +655,7 @@ fn main() {
 ## Premier projet pratique : un jeu de devinette
 Créons un jeu simple pour mettre en pratique ce que nous avons appris :
 
-```rust
+```rust,ignore
 use rand::Rng;
 use std::cmp::Ordering;
 use std::io;

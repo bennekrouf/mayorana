@@ -58,7 +58,7 @@ export default function ClientHomeSection() {
                 href={API0_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
+                className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
               >
                 {t('cta_try_api0')}
                 <ExternalLink className="ml-2 w-4 h-4" />
@@ -103,7 +103,7 @@ export default function ClientHomeSection() {
               href={API0_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
+              className="btn-cap inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               {t('api0_cta')}
               <ExternalLink className="ml-2 w-4 h-4" />
