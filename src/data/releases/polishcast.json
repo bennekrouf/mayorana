@@ -2,8 +2,49 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-27T17:33:49Z",
+  "generated_at": "2026-10-28T14:14:00Z",
   "releases": [
+    {
+      "version": "0.1.33",
+      "tag": "v0.1.33",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.32",
+      "tag": "v0.1.32",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The bar across the top of the window now looks and works the same in every mayorana app: the name and version on the left, and on the right Record, MCP, Feedback, the light/dark switch and the Pro badge in the corner.",
+            "Record is always in the bar, so it is one click away with the recordings panel open or hidden; Pro, MCP and Feedback moved there from the panel."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.31",
+      "tag": "v0.1.31",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "PolishCast no longer closes at start when the menu bar or notification area won't take its icon: it opens without the icon, and the window has every control.",
+            "An export at a size no frame can be drawn at now stops with a message, instead of closing PolishCast."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.30",
       "tag": "v0.1.30",

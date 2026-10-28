@@ -2,8 +2,63 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-27T14:07:06Z",
+  "generated_at": "2026-10-28T14:20:52Z",
   "releases": [
+    {
+      "version": "0.1.31",
+      "tag": "v0.1.31",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.30",
+      "tag": "v0.1.30",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The bar across the top of the window now looks and works the same in every mayorana app: the name and version on the left, and on the right Deploy, the model, Settings, MCP, Feedback, the light/dark switch and the Pro badge in the corner.",
+            "Settings is a named button instead of a gear, and the light/dark switch is an icon like in the other apps.",
+            "The light or dark look now follows your system setting while PublishKit is open, until you pick one with the switch.",
+            "Messages that name the model say \"🇪🇺 Europe\" instead of \"api0 · Europe\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.29",
+      "tag": "v0.1.29",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.28",
+      "tag": "v0.1.28",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The MCP setup modal now includes instructions for Codex alongside Claude, with a dedicated command to add PublishKit to Codex."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.27",
       "tag": "v0.1.27",
