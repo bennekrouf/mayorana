@@ -2,8 +2,21 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-27T14:16:59Z",
+  "generated_at": "2026-10-27T17:46:33Z",
   "releases": [
+    {
+      "version": "0.1.23",
+      "tag": "v0.1.23",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The setup modal now includes steps to connect JobScout to Codex, alongside Claude."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.22",
       "tag": "v0.1.22",

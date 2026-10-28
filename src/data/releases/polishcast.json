@@ -2,8 +2,34 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-26T13:52:38Z",
+  "generated_at": "2026-10-27T17:33:49Z",
   "releases": [
+    {
+      "version": "0.1.30",
+      "tag": "v0.1.30",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The dialog for setting up PolishCast with an MCP client now includes instructions for Codex, alongside Claude. The window title and step numbering have been updated to reflect this."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.29",
+      "tag": "v0.1.29",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.28",
       "tag": "v0.1.28",

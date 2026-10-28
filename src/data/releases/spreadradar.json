@@ -2,8 +2,21 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-10-27T14:09:27Z",
+  "generated_at": "2026-10-27T17:40:05Z",
   "releases": [
+    {
+      "version": "0.1.26",
+      "tag": "v0.1.26",
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added support for Codex: the MCP setup window now shows instructions for Codex alongside Claude Desktop and Claude Code."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.25",
       "tag": "v0.1.25",
