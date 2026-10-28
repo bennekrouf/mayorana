@@ -124,7 +124,7 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
         className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-colors disabled:opacity-60 ${
           active
             ? 'border border-primary text-primary hover:bg-primary/10'
-            : 'bg-primary text-white hover:bg-primary/90'
+            : 'bg-primary text-primary-foreground hover:bg-primary/90'
         }`}
       >
         {active ? t('leave_path') : `🧭 ${t('follow_path')}`}

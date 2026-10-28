@@ -94,7 +94,7 @@ fn main() {
 
 For complex state, encapsulate it in a struct with an explicit `FnMut` implementation:
 
-```rust
+```rust,ignore
 struct Counter {
     count: i32,
 }

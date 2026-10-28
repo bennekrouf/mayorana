@@ -2,18 +2,14 @@
 
 import React from 'react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { motion } from '@/components/ui/Motion';
 
 export default function TermsFr() {
   return (
     <LayoutTemplate>
       <div className="py-20 bg-background">
         <div className="container max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div
+ className="rise">
             <h1 className="text-4xl font-bold mb-6">Conditions d&apos;utilisation</h1>
             <p className="text-muted-foreground mb-8">Dernière mise à jour : 6 octobre 2026</p>
 
@@ -207,7 +203,7 @@ export default function TermsFr() {
                 </div>
               </section>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </LayoutTemplate>

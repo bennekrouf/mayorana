@@ -60,6 +60,11 @@ type BuildMetadataArgs = {
    * the locale-swap that `crossLocale` performs.
    */
   alternatePaths?: Partial<Record<string, string>>;
+  /**
+   * The page's plain-markdown twin (src/lib/markdown-export.ts), announced as
+   * <link rel="alternate" type="text/markdown"> so agents find it.
+   */
+  markdownUrl?: string;
 };
 
 /**
@@ -118,6 +123,7 @@ export function buildMetadata({
   ogType = 'website',
   crossLocale = true,
   alternatePaths,
+  markdownUrl,
 }: BuildMetadataArgs): Metadata {
   // Built once and set absolutely. The locale layout declares a
   // '%s | Mayorana' title template, but a template only reaches the segment
@@ -133,7 +139,10 @@ export function buildMetadata({
     metadataBase: new URL(SITE_URL),
     title: { absolute: fullTitle },
     description,
-    alternates: alternatesFor(locale, path, crossLocale, alternatePaths),
+    alternates: {
+      ...alternatesFor(locale, path, crossLocale, alternatePaths),
+      ...(markdownUrl ? { types: { 'text/markdown': markdownUrl } } : {}),
+    },
     robots: noindex
       ? { index: false, follow: true }
       : {

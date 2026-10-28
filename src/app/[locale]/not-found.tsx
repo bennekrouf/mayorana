@@ -27,7 +27,7 @@ export default function NotFound() {
           </p>
           <Link
             href={`/${locale}`}
-            className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             {t('return_home')}
           </Link>

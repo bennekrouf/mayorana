@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { motion } from '@/components/ui/Motion';
+import { InstallCommands } from '@/components/apps/InstallCommands';
 import { Shield, Zap, ExternalLink, ArrowRight, History } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
@@ -92,7 +92,7 @@ const FILTER_TAGS: { id: string; label: string }[] = [
 
 const tagChipClasses = (active: boolean) =>
   active
-    ? 'bg-primary text-white border-primary'
+    ? 'bg-primary text-primary-foreground border-primary'
     : 'bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground';
 
 function ToolTags({ tool }: { tool: Tool }) {
@@ -125,7 +125,7 @@ function ToolActionButtons({ action }: { action: ToolAction }) {
           href={action.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-colors bg-primary text-white hover:bg-primary/90"
+          className="inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
         >
           {action.label}
           <ExternalLink className="ml-1.5 w-3.5 h-3.5" />
@@ -135,7 +135,7 @@ function ToolActionButtons({ action }: { action: ToolAction }) {
       return (
         <Link
           href={action.href}
-          className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors"
+          className="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
         >
           {action.label}
           <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
@@ -189,14 +189,10 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const surface = 'bg-gradient-to-br from-secondary/50 to-secondary/20 hover:shadow-2xl';
 
   return (
-    <motion.div
+    <div
       id={tool.id}
-      className={`scroll-mt-24 group relative overflow-hidden rounded-2xl border border-border p-6 transition-all duration-300 flex flex-col cursor-pointer hover:border-primary/50 focus-within:ring-2 focus-within:ring-primary/50 ${surface} ${tool.dataSource?.borderClass ?? ''}`}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      whileTap={{ scale: 0.985, transition: { duration: 0.1 } }}
+      className={`rise hover:-translate-y-[3px] active:scale-[0.985] scroll-mt-24 group relative overflow-hidden rounded-2xl border border-border p-6 transition-all duration-300 flex flex-col cursor-pointer hover:border-primary/50 focus-within:ring-2 focus-within:ring-primary/50 ${surface} ${tool.dataSource?.borderClass ?? ''}`}
+      style={{ '--rise-delay': `${(index % 6) * 0.05}s` } as React.CSSProperties}
     >
       <div className="flex items-start justify-between mb-3 gap-2">
         {/* Logo and name share the row, like the name alone on the other
@@ -259,12 +255,13 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function AppsPage() {
   const tPortfolio = useTranslations('portfolio');
+  const tDetail = useTranslations('app_detail');
   const tApps = useTranslations('apps');
   const locale = useLocale();
   const [activeTags, setActiveTags] = useState<string[]>([]);
@@ -342,22 +339,15 @@ export default function AppsPage() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1
-              className="text-4xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <h1 className="text-4xl font-bold mb-6 rise">
               {tApps('page_title')}
-            </motion.h1>
-            <motion.p
-              className="text-xl text-muted-foreground"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            </h1>
+            <p
+              className="text-xl text-muted-foreground rise"
+              style={{ '--rise-delay': '0.2s' } as React.CSSProperties}
             >
               {tApps('page_subtitle')}
-            </motion.p>
+            </p>
           </div>
         </div>
       </section>
@@ -377,7 +367,7 @@ export default function AppsPage() {
                 href={API0_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {tApps('api0_cta')} <ExternalLink className="ml-2 w-4 h-4" />
               </a>
@@ -446,6 +436,22 @@ export default function AppsPage() {
         </section>
       )}
 
+      {/* The site's own MCP server (src/app/mcp): the catalogue, for an agent. */}
+      <section className="py-12 bg-background border-t border-border">
+        <div className="container max-w-3xl">
+          <h2 className="text-2xl font-bold mb-2">{tApps('mcp_site_heading')}</h2>
+          <InstallCommands
+            heading=""
+            body={tApps('mcp_site_body')}
+            rows={[
+              { label: tApps('mcp_site_claude'), command: 'claude mcp add --transport http mayorana https://mayorana.ch/mcp' },
+              { label: tApps('mcp_site_codex'), command: 'codex mcp add mayorana --url https://mayorana.ch/mcp' },
+            ]}
+            labels={{ copy: tDetail('mcp_copy'), copied: tDetail('mcp_copied') }}
+          />
+        </div>
+      </section>
+
       {/* Using the tools at work */}
       <section className="py-16 bg-secondary">
         <div className="container text-center">
@@ -455,7 +461,7 @@ export default function AppsPage() {
           </p>
           <Link
             href={`${getLocalizedPath(locale, '/contact')}?service=licence`}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             {tApps('licence_cta')}
             <ArrowRight className="w-4 h-4" />

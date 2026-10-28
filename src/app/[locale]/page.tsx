@@ -3,6 +3,7 @@ import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import { getRecentPosts } from '@/lib/blog';
 import ClientHomeSection from '@/components/home/ClientHomeSection';
+import { ContinueReading } from '@/components/learn/ContinueReading';
 import { getTranslations } from 'next-intl/server';
 
 type Props = {
@@ -18,6 +19,7 @@ export default async function HomePage({ params }: Props) {
     <LayoutTemplate>
       {/* Hero Section */}
       <ClientHomeSection />
+      <ContinueReading />
 
       {/* Blog Section */}
       <section className="py-20 bg-background">

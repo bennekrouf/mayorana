@@ -9,6 +9,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useHostContext } from '@/providers/HostProvider';
 import AuthButton from './AuthButton';
+import { SearchPalette } from './SearchPalette';
 
 const subscribeNever = () => () => {};
 
@@ -71,6 +72,11 @@ const Navbar: React.FC = () => {
             ))}
           </div>
 
+          <div className="flex items-center gap-2 md:gap-4">
+          {/* Search: on every screen size; swissrust.ch is only the blog, and
+              the index lists mayorana.ch pages. */}
+          {!isSwissRust && <SearchPalette />}
+
           {/* Right side controls - exactly like live site */}
           <div className="hidden md:flex items-center space-x-4">
 
@@ -108,6 +114,7 @@ const Navbar: React.FC = () => {
           >
             {isOpen ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
           </button>
+          </div>
         </div>
 
         {/* Mobile Menu - exactly like live site */}

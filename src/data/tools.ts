@@ -396,7 +396,7 @@ export const LICENCE_URL = 'https://polyformproject.org/licenses/noncommercial/1
 
 export const osColors: Record<OS, string> = {
   mac: 'bg-neutral-800 hover:bg-neutral-700 text-white',
-  linux: 'bg-orange-600  hover:bg-orange-500  text-white',
+  linux: 'bg-orange-700  hover:bg-orange-600  text-white',
   windows: 'bg-blue-600    hover:bg-blue-500    text-white',
 };
 

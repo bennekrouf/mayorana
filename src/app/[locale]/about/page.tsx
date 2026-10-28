@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { ArrowRight, Check, ExternalLink } from 'lucide-react';
-import { motion } from '@/components/ui/Motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
@@ -26,22 +25,15 @@ export default function AboutPage() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.h1
-              className="text-4xl md:text-5xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 rise">
               {t('hero_title')}
-            </motion.h1>
-            <motion.p
-              className="text-xl text-muted-foreground"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            </h1>
+            <p
+              className="text-xl text-muted-foreground rise"
+              style={{ '--rise-delay': '0.2s' } as React.CSSProperties}
             >
               {t('hero_subtitle')}
-            </motion.p>
+            </p>
           </div>
         </div>
       </section>
@@ -92,7 +84,7 @@ export default function AboutPage() {
                   href={API0_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
                 >
                   {t('visit_api0')} <ExternalLink className="ml-2 w-4 h-4" />
                 </a>
@@ -139,7 +131,7 @@ export default function AboutPage() {
                 href={API0_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-white text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
+                className="inline-flex items-center px-8 py-4 rounded-lg bg-primary text-primary-foreground text-lg font-semibold hover:bg-primary/90 transform transition duration-200 hover:-translate-y-1 shadow-xl shadow-primary/20"
               >
                 {t('cta_primary')} <ExternalLink className="ml-2 w-5 h-5" />
               </a>

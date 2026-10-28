@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { motion } from '@/components/ui/Motion';
 import { ArrowRight, Check, ExternalLink, PlayCircle, Share2, Search, Scale, Sparkles } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
@@ -35,39 +34,28 @@ export default function AzureSolutionsPage() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.p
-              className="text-sm font-semibold uppercase tracking-wider text-primary mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 rise">
               {t('hero_eyebrow')}
-            </motion.p>
-            <motion.h1
-              className="text-4xl md:text-5xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+            </p>
+            <h1
+              className="text-4xl md:text-5xl font-bold mb-6 rise"
+              style={{ '--rise-delay': '0.1s' } as React.CSSProperties}
             >
               {t('hero_title')}
-            </motion.h1>
-            <motion.p
-              className="text-xl text-muted-foreground mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            </h1>
+            <p
+              className="text-xl text-muted-foreground mb-8 rise"
+              style={{ '--rise-delay': '0.2s' } as React.CSSProperties}
             >
               {t('hero_subtitle')}
-            </motion.p>
-            <motion.div
-              className="flex flex-wrap gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+            </p>
+            <div
+              className="flex flex-wrap gap-4 justify-center rise"
+              style={{ '--rise-delay': '0.3s' } as React.CSSProperties}
             >
               <a
                 href="#tools"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {t('hero_cta_primary')} <ArrowRight className="ml-2 w-4 h-4" />
               </a>
@@ -77,7 +65,7 @@ export default function AzureSolutionsPage() {
               >
                 {t('hero_cta_secondary')}
               </a>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -91,14 +79,10 @@ export default function AzureSolutionsPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {FRICTIONS.map(({ key, icon: Icon }, i) => (
-              <motion.div
+            {FRICTIONS.map(({ key, icon: Icon }) => (
+              <div
                 key={key}
-                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col rise-in-view"
               >
                 <div className="mb-4 p-3 inline-flex self-start bg-primary/10 rounded-full text-primary">
                   <Icon className="w-6 h-6" />
@@ -109,7 +93,7 @@ export default function AzureSolutionsPage() {
                   <Check className="w-4 h-4 mt-0.5 shrink-0" />
                   {t(`friction_${key}_outcome`)}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -124,15 +108,11 @@ export default function AzureSolutionsPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {aisTools.map((tool, i) => (
-              <motion.div
+            {aisTools.map((tool) => (
+              <div
                 key={tool.id}
                 id={tool.id}
-                className={`scroll-mt-24 rounded-2xl border border-border bg-background p-6 flex flex-col ${tool.dataSource?.borderClass ?? ''}`}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: (i % 2) * 0.1 }}
+                className={`rise-in-view scroll-mt-24 rounded-2xl border border-border bg-background p-6 flex flex-col ${tool.dataSource?.borderClass ?? ''}`}
               >
                 <div className="flex items-start justify-between mb-3 gap-2">
                   <h3 className="text-xl font-bold text-primary">
@@ -177,7 +157,7 @@ export default function AzureSolutionsPage() {
                     )}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -275,7 +255,7 @@ export default function AzureSolutionsPage() {
             href={API0_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             {t('api0_cta')} <ExternalLink className="ml-2 w-4 h-4" />
           </a>

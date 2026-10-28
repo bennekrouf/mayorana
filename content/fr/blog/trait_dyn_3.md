@@ -95,7 +95,7 @@ impl EventProcessor for LogProcessor {
 ```
 
 ### Version à dispatch statique
-```rust
+```rust,ignore
 fn process_static<T: EventProcessor>(processor: &mut T, events: &[u32]) -> u32 {
     let mut result = 0;
     for &event in events {
@@ -114,7 +114,7 @@ fn main() {
 ```
 
 ### Version à dispatch dynamique
-```rust
+```rust,ignore
 fn process_dynamic(processor: &mut dyn EventProcessor, events: &[u32]) -> u32 {
     let mut result = 0;
     for &event in events {

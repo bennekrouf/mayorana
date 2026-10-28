@@ -593,7 +593,7 @@ Si tu veux constater l'abstraction à coût nul plutôt que me croire sur parole
 `cargo rustc -- --emit asm`, puis compare la closure et la fonction équivalente.
 ## Exemple pratique complet
 
-```rust
+```rust,ignore
 use std::time::Instant;
 
 // Système de traitement de données avec différentes stratégies

@@ -117,7 +117,7 @@ The type mismatch is not bureaucratic — the two references hold physically dif
 </div>
 
 **Example: The Problem**:
-```rust
+```rust,compile_fail
 fn print_string(s: &String) {
     println!("{}", s);
 }

@@ -58,7 +58,6 @@ const ReadNext: React.FC<ReadNextProps> = ({ path, currentKey }) => {
               <li key={entry.slug}>
                 <Link
                   href={getLocalizedPath(locale, `/blog/${entry.slug}`)}
-                  prefetch={false}
                   className={`block rounded-xl border border-border p-4 transition-colors hover:border-primary ${
                     index === 0 ? 'bg-secondary' : 'bg-secondary/50'
                   }`}
