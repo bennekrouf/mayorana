@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Check, Copy, Loader2 } from 'lucide-react';
 import { toolsForPlanProducts } from '@/data/tools';
-import { openPortal, planLogo, setCancelled, type Subscription } from '@/lib/plans';
+import { onStripe, openPortal, planLogo, setCancelled, type Subscription } from '@/lib/plans';
 
 type Busy = 'portal' | 'cancel' | 'resume' | null;
 
@@ -32,7 +32,9 @@ export function ManageSubscription({
   const paymentFailed = !sub.live && (sub.status === 'past_due' || sub.status === 'unpaid');
   const status = sub.is_free
     ? t('sub_status_free', { date })
-    : sub.live
+    : sub.live && !onStripe(sub)
+      ? t('sub_status_granted', { date })
+      : sub.live
       ? sub.cancel_at_period_end
         ? t('sub_status_ending', { date })
         : t('sub_status_renews', { date })
@@ -125,7 +127,7 @@ export function ManageSubscription({
         )}
       </div>
 
-      {!sub.is_free && (
+      {onStripe(sub) && (
         <div className="mt-6 border-t border-border pt-5">
           {confirming ? (
             <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">

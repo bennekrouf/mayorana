@@ -21,6 +21,7 @@ import {
   fetchSubscription,
   formatPlanPrice,
   CVENOM_CV_CREDITS,
+  onStripe,
   openPortal,
   PLAN_GROUPS,
   planLogo,
@@ -33,7 +34,7 @@ import {
 
 type Load = { kind: 'loading' } | ({ kind: 'ready' } & PlanCatalogue) | { kind: 'error' };
 type SubLoad = { kind: 'loading' } | { kind: 'ready'; sub: Subscription | null } | { kind: 'error' };
-type Problem = 'taken' | 'error' | null;
+type Problem = 'error' | null;
 
 /**
  * `initial` is the catalogue the server fetched for the static HTML. Without
@@ -77,9 +78,10 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
   }, [uid]);
 
   const sub = uid && subLoad.kind === 'ready' ? subLoad.sub : null;
-  // A paid plan running now: the others are switched to on Stripe's portal,
-  // as a second subscription would be refused.
-  const runningPlan = sub && sub.live && !sub.is_free ? sub.plan_id : null;
+  // A Stripe plan running now: the others are switched to on Stripe's portal,
+  // as a second subscription would be refused. The free allowance and a plan
+  // granted by hand go straight to Checkout.
+  const runningPlan = sub && sub.live && onStripe(sub) ? sub.plan_id : null;
 
   useEffect(() => {
     if (!signInFor) return;
@@ -108,7 +110,12 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
       setSignInFor(plan);
       return;
     }
-    setProblem(result.kind === 'taken' ? 'taken' : 'error');
+    // Already on a Stripe plan this page did not know of: switch there instead.
+    if (result.kind === 'taken') {
+      await switchPlan(plan);
+      return;
+    }
+    setProblem('error');
   }
 
   async function signInThenSubscribe(provider: SignInProvider) {
@@ -117,11 +124,11 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
     const outcome = await signIn(provider);
     if (outcome !== 'signed-in') return;
     setSignInFor(null);
-    // Already subscribed under this sign-in: show that rather than a refused Checkout.
+    // Already on a Stripe plan under this sign-in: switch on the portal rather than a refused Checkout.
     const current = await fetchSubscription().catch(() => null);
-    if (current && current.live && !current.is_free) {
+    if (current && current.live && onStripe(current)) {
       setSubLoad({ kind: 'ready', sub: current });
-      setProblem('taken');
+      await switchPlan(plan);
       return;
     }
     await subscribe(plan);
@@ -220,11 +227,6 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
         </div>
       )}
 
-      {problem === 'taken' && (
-        <p className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm max-w-2xl">
-          {t('already_subscribed')}
-        </p>
-      )}
       {problem === 'error' && <p className="text-sm text-red-600">{t('checkout_error')}</p>}
 
       {/* Each card is a subgrid spanning the same rows, so price, lists and
