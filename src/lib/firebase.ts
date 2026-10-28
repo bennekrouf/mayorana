@@ -5,7 +5,15 @@
 // web config (it identifies the project, it is not a secret); the env
 // overrides exist for pointing a dev build at another project.
 import { getApps, initializeApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
+import {
+  browserLocalPersistence,
+  browserPopupRedirectResolver,
+  browserSessionPersistence,
+  getAuth,
+  indexedDBLocalPersistence,
+  initializeAuth,
+  type Auth,
+} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyA8OaC_m27FnQFFi3pq6c8pF0b0mZyh8Fw',
@@ -18,12 +26,30 @@ const firebaseConfig = {
 export const isAuthConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.appId);
 
 let app: FirebaseApp | undefined;
+let auth: Auth | undefined;
 
 // Lazy so that importing this module during SSR (client components are still
 // rendered on the server) does not initialise Firebase in Node.
+//
+// initializeAuth rather than getAuth: getAuth also installs the popup/redirect
+// resolver, which loads Google's sign-in iframe and gapi (~135 KB, plus two
+// project-config requests) on every page for every visitor, before anyone
+// clicks Sign in. Restoring a session needs only the persistence below; the
+// resolver is passed to the sign-in calls themselves (popupRedirectResolver).
 export function getFirebaseAuth(): Auth {
-  if (!app) {
+  if (!auth) {
     app = getApps()[0] ?? initializeApp(firebaseConfig);
+    try {
+      auth = initializeAuth(app, {
+        persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence],
+      });
+    } catch {
+      // Already initialised (a hot reload in dev): take the existing instance.
+      auth = getAuth(app);
+    }
   }
-  return getAuth(app);
+  return auth;
 }
+
+/** For signInWithPopup, signInWithRedirect and getRedirectResult only. */
+export const popupRedirectResolver = browserPopupRedirectResolver;

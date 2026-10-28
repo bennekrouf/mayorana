@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ViewTransition } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
@@ -16,8 +16,10 @@ const LayoutTemplate: React.FC<LayoutTemplateProps> = ({
     <div className="flex flex-col min-h-screen">
       <Navbar />
 
+      {/* Only the page content takes part in the cross-fade between pages;
+          the navbar and footer stay put. */}
       <main className="flex-grow">
-        {children}
+        <ViewTransition>{children}</ViewTransition>
       </main>
 
       <Footer />

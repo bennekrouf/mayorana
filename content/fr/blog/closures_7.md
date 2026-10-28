@@ -647,7 +647,7 @@ Retire le `move` de `capture_with_lifetime` et ça ne compile plus : la closure 
 qui a déjà disparu au moment où on l'appelle.
 
 ## Le tout mis ensemble
-```rust
+```rust,ignore
 use std::collections::HashMap;
 
 // Système de cache avec closures et lifetime management

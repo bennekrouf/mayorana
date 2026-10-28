@@ -3,6 +3,7 @@
 
 import blogPostsEn from '../data/blog-posts-en.json';
 import blogPostsFr from '../data/blog-posts-fr.json';
+import learningPath from '../../content/learning-path.json';
 import type { BlogPost, PaginatedPosts, PathEntry } from './blog-shared';
 import { progressKey } from './read-progress';
 
@@ -96,6 +97,45 @@ export function getLearningPath(track: string | undefined, locale: string = 'en'
       track: post.track,
       progressKey: progressKey(post),
     }));
+}
+
+/** A track of the learning path as its page shows it: sections in order, each
+ *  with its posts in reading order. */
+export interface Track {
+  id: string;
+  sections: { id: string; posts: PathEntry[] }[];
+  total: number;
+}
+
+/** Tracks in the order content/learning-path.json first mentions them. */
+export const TRACK_IDS: string[] = Array.from(new Set(learningPath.sections.map((s) => s.track)));
+
+// The sections come from content/learning-path.json, keyed by a post's English
+// slug (its progressKey); a section whose posts are all missing in this locale
+// is dropped, and so is a track left with none.
+export function getTrack(track: string, locale: string = 'en'): Track | null {
+  const entries = getLearningPath(track, locale);
+  const byKey = new Map(entries.map((entry) => [entry.progressKey, entry]));
+  const sections = learningPath.sections
+    .filter((section) => section.track === track)
+    .map((section) => ({
+      id: section.id,
+      posts: section.posts.map((key) => byKey.get(key)).filter((p): p is PathEntry => p !== undefined),
+    }))
+    .filter((section) => section.posts.length > 0);
+  if (sections.length === 0) return null;
+  return { id: track, sections, total: entries.length };
+}
+
+/** Sum of the track's "N min" reading times. */
+export function trackMinutes(track: Track): number {
+  return track.sections
+    .flatMap((section) => section.posts)
+    .reduce((sum, post) => sum + (parseInt(post.readingTime, 10) || 0), 0);
+}
+
+export function getTracks(locale: string = 'en'): Track[] {
+  return TRACK_IDS.map((id) => getTrack(id, locale)).filter((t): t is Track => t !== null);
 }
 
 // Get paginated posts for a specific locale

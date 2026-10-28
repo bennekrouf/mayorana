@@ -12,6 +12,12 @@ const MAX_REQUESTS_GENERAL = 500; // 500 requests per minute for general traffic
 // budget has to cover someone actually reading the page, not one hit per view.
 const MAX_REQUESTS_STATS_API = 30;
 const MAX_REQUESTS_STATS_PAGE = 60;
+// The public MCP server: an agent makes a handful of calls per question, so
+// this allows a busy session while stopping anyone from scraping through it.
+const MAX_REQUESTS_MCP = 120;
+// Ask Mayorana (src/lib/ask.ts): each question is a paid model call. The
+// route also caps questions per visitor per day; this stops a burst.
+const MAX_REQUESTS_ASK = 6;
 
 function getRateLimit(ip: string, limit: number): boolean {
     const now = Date.now();
@@ -79,12 +85,33 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // The public MCP server (src/app/mcp). Not a page, so no locale redirect
+    // and no swissrust rewrite; its own budget, apart from page traffic.
+    if (pathname === '/mcp') {
+        if (getRateLimit(`mcp:${ip}`, MAX_REQUESTS_MCP)) {
+            return new NextResponse('Too Many Requests', { status: 429 });
+        }
+        return NextResponse.next();
+    }
+
+    if (pathname === '/api/ask') {
+        if (getRateLimit(`ask:${ip}`, MAX_REQUESTS_ASK)) {
+            return NextResponse.json({ error: 'limit_ip' }, { status: 429 });
+        }
+        return NextResponse.next();
+    }
+
+    // Markdown twins of posts and app pages, for AI agents: /en/blog/<slug>.md
+    // is served by the route handler at /en/blog/<slug>/md. See
+    // src/lib/markdown-export.ts.
+    const markdown = pathname.match(/^\/(en|fr)\/(blog|apps)\/([^/]+)\.md$/);
+    if (markdown) {
+        const [, mdLocale, section, slug] = markdown;
+        return NextResponse.rewrite(new URL(`/${mdLocale}/${section}/${slug}/md`, request.url));
+    }
+
     // Swissrust Domain Proxy Logic
     const hostname = request.headers.get('host') || '';
-    // Inject hostname into request headers so layout.tsx can read it via headers()
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('x-hostname', hostname);
-
     if (hostname.includes('swissrust.ch')) {
         // Essential: Exclude Next.js static files, data requests, and API requests from being rewritten
         if (!pathname.startsWith('/_next') && !pathname.startsWith('/api') && !pathname.includes('.')) {
@@ -102,18 +129,18 @@ export function middleware(request: NextRequest) {
                 targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
             }
 
-            // 3. Extract the rest of the path after the locale (if present)
+            // 3. Extract the rest of the path after the locale (if present),
+            //    and after /blog: swissrust.ch serves /x and /blog/x alike.
             const remainingPath = hasLocalePrefix ? `/${pathParts.slice(1).join('/')}` : pathname;
+            const blogPath = remainingPath.replace(/^\/blog(?=\/|$)/, '').replace(/^\/$/, '');
 
-            // 4. We only want to rewrite if they aren't already explicitly browsing the /blog directory
-            if (!remainingPath.startsWith('/blog')) {
-                const newPath = `/${targetLocale}/blog${remainingPath === '/' ? '' : remainingPath}`;
-                return NextResponse.rewrite(new URL(newPath, request.url), {
-                    request: {
-                        headers: requestHeaders,
-                    }
-                });
-            }
+            // 4. Every page is served from the swissrust segment, which is how the
+            //    pages know the site without reading the request (see
+            //    src/app/[locale]/swissrust/layout.tsx). The query is kept for
+            //    the listing's ?page= and ?view=.
+            const target = new URL(`/${targetLocale}/swissrust/blog${blogPath}`, request.url);
+            target.search = request.nextUrl.search;
+            return NextResponse.rewrite(target);
         }
     }
 
@@ -125,6 +152,12 @@ export function middleware(request: NextRequest) {
 
         const pathParts = pathname.split('/').filter(Boolean);
         const hasLocalePrefix = pathParts.length > 0 && (pathParts[0] === 'en' || pathParts[0] === 'fr');
+
+        // The swissrust segment is swissrust.ch's copy of the blog, reached only
+        // through the rewrite above; on mayorana.ch it would be duplicate content.
+        if (hasLocalePrefix && pathParts[1] === 'swissrust') {
+            return NextResponse.rewrite(new URL(`/${pathParts[0]}/not-found`, request.url));
+        }
 
         // Root path: detect browser language and redirect
         if (pathname === '/' || pathname === '') {
@@ -147,11 +180,7 @@ export function middleware(request: NextRequest) {
         return new NextResponse('Too Many Requests', { status: 429 });
     }
 
-    return NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        }
-    });
+    return NextResponse.next();
 }
 
 export const config = {

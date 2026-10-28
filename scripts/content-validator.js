@@ -345,6 +345,53 @@ class ContentValidator {
     
     return report;
   }
+
+  /**
+   * The Rust examples a post page gives a Run button: ```rust fences holding a
+   * whole program (a `fn main`), not marked `ignore`. Same rule as isRunnable()
+   * in src/components/blog/RunnableSnippets.tsx. `compile_fail` marks an
+   * example that is meant not to build (a borrow-checker error on purpose).
+   */
+  extractRunnableSnippets(markdown) {
+    const snippets = [];
+    const fence = /^```([^\n]*)\n([\s\S]*?)^```[ \t]*$/gm;
+    let match;
+    while ((match = fence.exec(markdown)) !== null) {
+      const [lang, ...flags] = match[1].trim().split(',').map((part) => part.trim());
+      const code = match[2];
+      if (lang !== 'rust' || flags.includes('ignore') || !/\bfn\s+main\s*\(/.test(code)) continue;
+      const line = markdown.slice(0, match.index).split('\n').length;
+      snippets.push({ line, code, compileFail: flags.includes('compile_fail') });
+    }
+    return snippets;
+  }
+
+  /**
+   * Builds one snippet on the Rust Playground, as the Run button does.
+   * Resolves to { ok, expected, stderr }: `ok` whether it built and ran,
+   * `expected` whether that is what the fence said should happen.
+   */
+  async runSnippet(snippet, { timeoutMs = 30000 } = {}) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch('https://play.rust-lang.org/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'User-Agent': 'mayorana.ch content-validator' },
+        body: JSON.stringify({
+          channel: 'stable', mode: 'debug', edition: '2021', crateType: 'bin',
+          tests: false, backtrace: false, code: snippet.code,
+        }),
+        signal: controller.signal,
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const body = await response.json();
+      const ok = Boolean(body.success);
+      return { ok, expected: ok !== snippet.compileFail, stderr: String(body.stderr || '') };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
 }
 
 module.exports = ContentValidator;

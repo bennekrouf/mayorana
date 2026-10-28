@@ -121,8 +121,10 @@ export function planLogo(planId: string): string | null {
   return PLAN_LOGOS.has(planId) ? `/image/plans/${planId}.svg` : null;
 }
 
-export async function fetchPlans(): Promise<PlanCatalogue> {
-  const response = await fetch(`${GATEWAY_URL}/api/plans`);
+// `init` lets the pricing page fetch on the server with a revalidate window, so
+// the plans are in the served HTML; the browser calls it with none.
+export async function fetchPlans(init?: RequestInit): Promise<PlanCatalogue> {
+  const response = await fetch(`${GATEWAY_URL}/api/plans`, init);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const body = await response.json();
   // A plan priced at 0 is the apps' free allowance, never an offer: the

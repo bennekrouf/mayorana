@@ -4,10 +4,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import Script from "next/script";
 import { ThemeProvider } from "../providers";
 import { NextIntlClientProvider } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales } from '../../../i18n';
 import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/lib/seo';
@@ -48,8 +47,6 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-import { headers } from 'next/headers';
-import { HostProvider } from '@/providers/HostProvider';
 import { AuthProvider } from '@/providers/AuthProvider';
 import { DownloadGateProvider } from '@/providers/DownloadGateProvider';
 import { ReadProgressProvider } from '@/providers/ReadProgressProvider';
@@ -58,10 +55,11 @@ export default async function LocaleLayout({
   children,
   params
 }: Props) {
+  // No headers() here: reading the request would make every page below
+  // dynamic. swissrust.ch is told apart by its own route segment instead
+  // (see swissrust/layout.tsx); everywhere else HostProvider's default is
+  // mayorana.ch.
   const { locale } = await params;
-  const headersList = await headers();
-  const hostname = headersList.get('x-hostname') || '';
-  const isSwissRust = hostname.includes('swissrust');
 
   // console.log('🔍 LocaleLayout - received locale:', locale);
 
@@ -70,6 +68,10 @@ export default async function LocaleLayout({
     console.log('❌ LocaleLayout - Invalid locale');
     notFound();
   }
+
+  // Lets next-intl calls below that pass no locale find it without reading
+  // the request, which would make the page dynamic.
+  setRequestLocale(locale);
 
   // console.log('✅ LocaleLayout - Valid locale confirmed:', locale);
 
@@ -91,18 +93,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Script
-          src="https://plausible.io/js/script.outbound-links.js"
-          data-domain="mayorana.ch"
-          strategy="afterInteractive"
-        />
-        <Script id="plausible-setup" strategy="afterInteractive">
-          {`
-            window.plausible = window.plausible || function() { 
-              (window.plausible.q = window.plausible.q || []).push(arguments) 
-            }
-          `}
-        </Script>
         {/* Plain script tag rather than next/script: next/script pushes its
             content into a client-side queue, so the JSON-LD never appears in
             the served HTML as structured data a crawler can read. */}
@@ -133,15 +123,13 @@ export default async function LocaleLayout({
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <HostProvider isSwissRust={isSwissRust}>
-              <AuthProvider>
-                <DownloadGateProvider>
-                  <ReadProgressProvider>
-                    {children}
-                  </ReadProgressProvider>
-                </DownloadGateProvider>
-              </AuthProvider>
-            </HostProvider>
+            <AuthProvider>
+              <DownloadGateProvider>
+                <ReadProgressProvider>
+                  {children}
+                </ReadProgressProvider>
+              </DownloadGateProvider>
+            </AuthProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

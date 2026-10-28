@@ -156,7 +156,7 @@ export function ManageSubscription({
                   type="button"
                   onClick={() => changeCancel(false)}
                   disabled={busy !== null}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-60 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-60 transition-colors"
                 >
                   {busy === 'resume' && <Loader2 className="w-4 h-4 animate-spin" />}
                   {t('sub_resume')}

@@ -8,6 +8,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /stats
+Disallow: /mcp
 Disallow: /dev/
 Disallow: /staging/
 
@@ -15,5 +16,11 @@ Disallow: /staging/
 # disallowed. Every page now serves a canonical tag pointing at its clean URL,
 # which consolidates those duplicates — and unlike a Disallow, it still lets a
 # link arriving with tracking parameters pass its value to the real page.
+
+# AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, ...) are
+# welcome, and are deliberately not given groups of their own: a crawler that
+# finds its own group ignores the "*" group, so each would need its own copy of
+# the Disallow lines above. Agents should start from /llms.txt, which lists a
+# plain-markdown version of every post and app page (<page>.md).
 
 Sitemap: https://mayorana.ch/sitemap.xml

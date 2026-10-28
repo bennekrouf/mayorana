@@ -2,7 +2,6 @@
 
 import React from 'react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { motion } from '@/components/ui/Motion';
 import { ArrowRight, Check, ExternalLink, Puzzle, ShieldAlert, Gauge, Building2, Wrench } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
@@ -38,45 +37,34 @@ export default function AiAgentsSolutionsPage() {
       <section className="py-20 bg-gradient-to-b from-secondary to-background">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.p
-              className="text-sm font-semibold uppercase tracking-wider text-primary mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 rise">
               {t('hero_eyebrow')}
-            </motion.p>
-            <motion.h1
-              className="text-4xl md:text-5xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+            </p>
+            <h1
+              className="text-4xl md:text-5xl font-bold mb-6 rise"
+              style={{ '--rise-delay': '0.1s' } as React.CSSProperties}
             >
               {t('hero_title')}
-            </motion.h1>
-            <motion.p
-              className="text-xl text-muted-foreground mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            </h1>
+            <p
+              className="text-xl text-muted-foreground mb-8 rise"
+              style={{ '--rise-delay': '0.2s' } as React.CSSProperties}
             >
               {t('hero_subtitle')}
-            </motion.p>
-            <motion.div
-              className="flex flex-wrap gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+            </p>
+            <div
+              className="flex flex-wrap gap-4 justify-center rise"
+              style={{ '--rise-delay': '0.3s' } as React.CSSProperties}
             >
               <a
                 href={API0_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {t('hero_cta_primary')} <ExternalLink className="ml-2 w-4 h-4" />
               </a>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -87,21 +75,17 @@ export default function AiAgentsSolutionsPage() {
           <h2 className="text-3xl font-bold mb-12">{t('friction_heading')}</h2>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {FRICTIONS.map(({ key, icon: Icon }, i) => (
-              <motion.div
+            {FRICTIONS.map(({ key, icon: Icon }) => (
+              <div
                 key={key}
-                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col rise-in-view"
               >
                 <div className="mb-4 p-3 inline-flex self-start bg-primary/10 rounded-full text-primary">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold mb-3">{t(`friction_${key}_problem`)}</h3>
                 <p className="text-sm text-muted-foreground">{t(`friction_${key}_body`)}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -125,7 +109,7 @@ export default function AiAgentsSolutionsPage() {
                 href={API0_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {t('hero_cta_primary')} <ExternalLink className="ml-2 w-4 h-4" />
               </a>
@@ -145,14 +129,10 @@ export default function AiAgentsSolutionsPage() {
           <p className="text-lg text-muted-foreground mb-12 max-w-2xl">{t('use_cases_subtitle')}</p>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {USE_CASES.map(({ key, icon: Icon, channel }, i) => (
-              <motion.div
+            {USE_CASES.map(({ key, icon: Icon, channel }) => (
+              <div
                 key={key}
-                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-6 flex flex-col rise-in-view"
               >
                 <div className="mb-4 flex items-center justify-between">
                   <div className="p-3 inline-flex bg-primary/10 rounded-full text-primary">
@@ -167,7 +147,7 @@ export default function AiAgentsSolutionsPage() {
                 </p>
                 <h3 className="text-lg font-bold mb-3">{t(`use_case_${key}_action`)}</h3>
                 <p className="text-sm text-muted-foreground">{t(`use_case_${key}_body`)}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

@@ -41,7 +41,7 @@ fn greet() {
 4. **No runtime overhead**
 
 ### No More Use-After-Free
-```rust
+```rust,compile_fail
 fn main() {
     let r;
     {

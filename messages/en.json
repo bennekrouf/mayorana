@@ -30,6 +30,8 @@
     "ai_agents": "AI Agents",
     "portfolio": "Portfolio",
     "blog": "Blog",
+    "learn": "Learning paths",
+    "search": "Search",
     "pricing": "Pricing",
     "about": "About",
     "contact": "Contact",
@@ -247,6 +249,10 @@
     "cancel": "Cancel"
   },
   "apps": {
+    "mcp_site_heading": "Ask your AI assistant about these apps",
+    "mcp_site_body": "Add Mayorana's MCP server and Claude or Codex can search the apps, read their pages and release notes, and compare the plans for you. Read-only, no account needed.",
+    "mcp_site_claude": "Claude Code",
+    "mcp_site_codex": "Codex",
     "page_title": "Apps & Tools",
     "page_subtitle": "api0 for AI agents, plus native desktop tools for Git and more. All built in Rust.",
     "tools_heading": "All Tools",
@@ -450,6 +456,13 @@
     "shortcut_releases": "Checking what changed? Each tool on the Apps page links to its release notes"
   },
   "blog": {
+    "run_code": "Run",
+    "run_running": "Running…",
+    "run_output": "Output",
+    "run_no_output": "(no output)",
+    "run_failed": "Couldn't reach the Rust Playground. Try again in a moment.",
+    "run_open": "Open in the Rust Playground",
+    "run_label": "Run this example on the Rust Playground",
     "hero_title": "Blog",
     "hero_subtitle": "Notes from building api0 and our Rust tools: AI agents, MCP, Azure integration and Rust itself.",
     "filter_by_topic": "Filter by topic",
@@ -538,6 +551,12 @@
     "nav_blog": "Blog"
   },
   "app_detail": {
+    "install_heading": "Or install from a terminal",
+    "install_unix": "macOS and Linux",
+    "install_mac": "macOS",
+    "install_linux": "Linux",
+    "install_windows": "Windows (PowerShell)",
+    "install_view": "Read the script",
     "back_to_apps": "All apps & tools",
     "panel_close": "Close",
     "panel_open_page": "Open full page",
@@ -1790,6 +1809,7 @@
     "releases_heading": "What's new",
     "releases_body": "Version {version}, released {date}. {name} ships often; every version and what it changed is listed on the release notes page.",
     "releases_link": "Read the release notes",
+    "latest_badge": "Version {version} · {date}",
     "skill_heading": "Claude skill",
     "skill_body": "Lets Claude help you with {name}: how it works, the known errors and their fixes, and a bug report you review before sending it yourself.",
     "skill_download": "Download the skill (.zip)",
@@ -1830,5 +1850,86 @@
     "permalink": "Link to version",
     "feed_heading": "The same history, as JSON",
     "feed_body": "This page is generated from a feed published beside the builds — the same file {name} reads when it checks for an update. Point a script at it if you track versions across a team."
+  },
+  "learn": {
+    "title": "Learning paths",
+    "meta_title": "Learning paths: Rust, LLMs, Azure integration",
+    "meta_description": "The Mayorana blog in reading order: Rust from first principles, LLMs from scratch, Azure integration and more. Free, step by step, with your progress kept as you read.",
+    "intro": "The blog's articles, in the order they are meant to be read. Pick a subject and work through it step by step. Your progress is kept in this browser, and follows you to your other devices once you sign in.",
+    "articles": "{count, plural, one {# article} other {# articles}}",
+    "minutes": "about {minutes} min of reading",
+    "progress": "{read} of {total} read",
+    "start": "Start with step 1",
+    "continue": "Continue with step {step}",
+    "complete": "Path complete. Nice work!",
+    "all_tracks": "All learning paths",
+    "open_track": "Open the path",
+    "step": "Step {step}",
+    "read": "Read",
+    "part_of": "Part of the learning path {track}",
+    "continue_reading": "Continue reading",
+    "next_in": "Next in {track}",
+    "dismiss": "Dismiss",
+    "tracks": {
+      "rust": {
+        "title": "Rust, from first principles",
+        "intro": "Why garbage collection and manual memory both cost you, then ownership, collections, traits, closures, concurrency and performance: the Rust you need to read and write real code."
+      },
+      "llm": {
+        "title": "LLMs from scratch",
+        "intro": "How a language model works inside, one operation at a time: attention, queries, keys and values, embeddings, transfer learning and vector databases."
+      },
+      "azure": {
+        "title": "Azure integration",
+        "intro": "Following one request through Logic Apps, Cosmos DB and Log Analytics by its correlation id, and the desktop tools that make each step visible."
+      },
+      "git": {
+        "title": "Git tooling",
+        "intro": "Using AI on a repository you care about without handing it your git history."
+      },
+      "ai": {
+        "title": "AI in companies",
+        "intro": "Where generative and agentic AI actually fits in a company, in three categories rather than fifty use cases."
+      }
+    },
+    "sections": {
+      "why-rust": "Why Rust?",
+      "getting-started": "Getting started",
+      "ownership-and-memory": "Ownership and memory",
+      "collections-and-iterators": "Collections and iterators",
+      "traits-and-generics": "Traits and generics",
+      "closures": "Closures",
+      "concurrency": "Concurrency",
+      "performance": "Performance",
+      "llm-from-scratch": "An LLM, piece by piece",
+      "azure-integration": "Tracing integration flows",
+      "git-tooling": "AI-assisted git",
+      "ai-in-companies": "Three categories of AI"
+    }
+  },
+  "search": {
+    "placeholder_ask": "Search, or ask a question…",
+    "ask_row": "Ask Mayorana: “{query}”",
+    "ask_thinking": "Reading the site…",
+    "ask_sources": "Sources",
+    "ask_back": "Back to results",
+    "ask_note": "Written by AI (Claude Haiku) from the pages of mayorana.ch. It can be wrong: the sources are the reference.",
+    "ask_error_empty": "Ask a question of a few words.",
+    "ask_error_limit_ip": "That's a lot of questions for one day. Try again tomorrow, or search instead.",
+    "ask_error_limit_day": "Ask is resting for the rest of the day. Search still works.",
+    "ask_error_exhausted": "Ask is resting until next month. Search still works.",
+    "ask_error_failed": "Couldn't get an answer just now. Try again, or search instead.",
+    "placeholder": "Search articles, apps and pages…",
+    "no_results": "Nothing matches “{query}”.",
+    "loading": "Loading…",
+    "error": "Search is unavailable right now.",
+    "suggestions": "Start here",
+    "hint": "↑ ↓ to move · Enter to open · Esc to close",
+    "types": {
+      "page": "Page",
+      "track": "Learning path",
+      "app": "App",
+      "post": "Article"
+    }
   }
 }

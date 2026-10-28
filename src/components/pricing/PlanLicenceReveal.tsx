@@ -92,7 +92,7 @@ export function PlanLicenceReveal({ sessionId, contactHref }: { sessionId: strin
     return (
       <p className="text-muted-foreground leading-relaxed">
         {state.kind === 'missing' ? t('thanks_missing') : t('thanks_error')}{' '}
-        <a href={contactHref} className="text-primary hover:underline underline-offset-4">
+        <a href={contactHref} className="text-primary underline underline-offset-4">
           {t('thanks_contact')}
         </a>
       </p>
@@ -113,7 +113,7 @@ export function PlanLicenceReveal({ sessionId, contactHref }: { sessionId: strin
         <button
           type="button"
           onClick={() => copy(licence.licence)}
-          className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-colors"
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
         >
           {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
           {copied ? t('thanks_copied') : t('thanks_copy')}

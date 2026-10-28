@@ -35,12 +35,16 @@ type Load = { kind: 'loading' } | ({ kind: 'ready' } & PlanCatalogue) | { kind: 
 type SubLoad = { kind: 'loading' } | { kind: 'ready'; sub: Subscription | null } | { kind: 'error' };
 type Problem = 'taken' | 'error' | null;
 
-export function PlanPicker() {
+/**
+ * `initial` is the catalogue the server fetched for the static HTML. Without
+ * it (the gateway was down at build time) the plans are fetched here instead.
+ */
+export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null }) {
   const t = useTranslations('pricing');
   const tAuth = useTranslations('auth');
   const locale = useLocale();
   const { enabled: authEnabled, user, loading: authLoading, signIn } = useAuth();
-  const [load, setLoad] = useState<Load>({ kind: 'loading' });
+  const [load, setLoad] = useState<Load>(initial ? { kind: 'ready', ...initial } : { kind: 'loading' });
   const [subLoad, setSubLoad] = useState<SubLoad>({ kind: 'loading' });
   const [busyPlan, setBusyPlan] = useState<string | null>(null);
   const [problem, setProblem] = useState<Problem>(null);
@@ -48,6 +52,7 @@ export function PlanPicker() {
   const [signInFor, setSignInFor] = useState<Plan | null>(null);
 
   useEffect(() => {
+    if (initial) return;
     let cancelled = false;
     fetchPlans()
       .then((catalogue) => !cancelled && setLoad({ kind: 'ready', ...catalogue }))
@@ -55,7 +60,7 @@ export function PlanPicker() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initial]);
 
   // Whoever signs in sees their plan; signing out hides it.
   const uid = user?.uid ?? null;
@@ -156,11 +161,11 @@ export function PlanPicker() {
       {sub && <ManageSubscription subscription={sub} onChange={(next) => setSubLoad({ kind: 'ready', sub: next })} />}
       {uid && subLoad.kind === 'error' && <p className="text-sm text-red-600">{t('sub_unavailable')}</p>}
 
-      {!authLoading && (
-        <p className="text-sm text-muted-foreground max-w-2xl">
-          {user ? t('signed_in_note', { email: user.email ?? '' }) : t('sign_in_note')}
-        </p>
-      )}
+      {/* Kept in the layout while sign-in resolves, so the plans below do
+          not jump when the note appears. */}
+      <p className={`text-sm text-muted-foreground max-w-2xl ${authLoading ? 'invisible' : ''}`}>
+        {user ? t('signed_in_note', { email: user.email ?? '' }) : t('sign_in_note')}
+      </p>
 
       {signInFor && !user && (
         // Above the navbar; the account-linking dialog (z-70) can open on top of it.
@@ -241,7 +246,7 @@ export function PlanPicker() {
               }`}
             >
               {featured && (
-                <span className="absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                <span className="absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-foreground">
                   <Star className="w-3 h-3 fill-current" />
                   {t('most_popular')}
                 </span>
@@ -303,7 +308,7 @@ export function PlanPicker() {
                   disabled={busyPlan !== null || current}
                   className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-medium text-sm disabled:opacity-70 transition-colors ${
                     featured
-                      ? 'bg-primary text-white hover:bg-primary/90'
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                       : 'border border-primary text-primary hover:bg-primary/10'
                   }`}
                 >

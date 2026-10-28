@@ -12,7 +12,9 @@
     "deploy-fix": "chmod +x scripts/deploy-fix.sh && ./scripts/deploy-fix.sh",
     "sitemap": "node scripts/generate-sitemap.js",
     "blog-data": "node scripts/generate-blog-data.js",
-    "releases": "node scripts/fetch-releases.js"
+    "releases": "node scripts/fetch-releases.js",
+    "check-snippets": "node scripts/check-snippets.js",
+    "perf-budget": "node scripts/perf-budget.js"
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.9",

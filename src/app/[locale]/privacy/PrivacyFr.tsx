@@ -2,7 +2,6 @@
 
 import React from 'react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
-import { motion } from '@/components/ui/Motion';
 
 const link = 'text-primary hover:underline';
 
@@ -11,13 +10,10 @@ export default function PrivacyFr() {
     <LayoutTemplate>
       <div className="py-20 bg-background">
         <div className="container max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div
+ className="rise">
             <h1 className="text-4xl font-bold mb-6">Politique de confidentialité</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : 7 octobre 2026</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 28 octobre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -59,11 +55,6 @@ export default function PrivacyFr() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Les informations collectées automatiquement</h2>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    <strong>Statistiques du site</strong> via Plausible Analytics, qui n&apos;utilise pas de cookies et ne
-                    collecte pas de données personnelles. Nous voyons des chiffres agrégés comme les pages vues et les sites
-                    d&apos;origine.
-                  </li>
                   <li>
                     <strong>Journaux du serveur.</strong> Comme tout serveur web, le nôtre enregistre chaque requête&nbsp;:
                     adresse IP, heure, page ou fichier demandé, navigateur (user agent) et page d&apos;origine. Ces journaux
@@ -129,7 +120,18 @@ export default function PrivacyFr() {
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Google Firebase Authentication, ainsi que Google ou GitHub, pour la connexion</li>
                   <li>Stripe, pour les paiements</li>
-                  <li>Plausible Analytics, pour les statistiques du site</li>
+                  <li>
+                    Anthropic, via la passerelle api0, lorsque vous posez une question dans la recherche du site
+                    («&nbsp;Demander à Mayorana&nbsp;»)&nbsp;: la question est envoyée avec des extraits de nos pages au
+                    modèle Claude d&apos;Anthropic, qui rédige la réponse. Votre adresse IP sert à une limite quotidienne
+                    de questions, gardée en mémoire pour la journée seulement, et la question n&apos;est pas conservée
+                    avec elle.
+                  </li>
+                  <li>
+                    Le Rust Playground (play.rust-lang.org, géré par le projet Rust), lorsque vous cliquez sur Exécuter
+                    sous un exemple de code du blog&nbsp;: le code de l&apos;exemple y est envoyé pour être compilé et
+                    exécuté. Rien d&apos;autre n&apos;est envoyé, et rien ne l&apos;est sans votre clic.
+                  </li>
                 </ul>
                 <p className="mt-4">
                   Les formulaires, les données de connexion et les licences sont traités par la passerelle api0
@@ -232,7 +234,7 @@ export default function PrivacyFr() {
                 </div>
               </section>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </LayoutTemplate>

@@ -15,8 +15,12 @@ function isLocale(value: string | undefined | null): value is Locale {
 // Server components MUST pass explicit { locale } to getTranslations({ locale, namespace }),
 // because this default config can't reliably resolve locale from the URL.
 // Without middleware-provided requestLocale, anything that omits the locale arg falls back to 'en'.
-export default getRequestConfig(async ({ requestLocale }) => {
-  const fromRequest = await requestLocale;
+//
+// An explicit locale is used as is. Awaiting requestLocale reads the request
+// headers, and doing that on every getTranslations call made every page
+// dynamic; it is only the fallback for calls that pass no locale.
+export default getRequestConfig(async ({ locale: explicit, requestLocale }) => {
+  const fromRequest = explicit ?? await requestLocale;
   const locale: Locale = isLocale(fromRequest) ? fromRequest : defaultLocale;
 
   try {

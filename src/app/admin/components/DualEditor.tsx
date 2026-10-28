@@ -87,7 +87,7 @@ const DualEditor: React.FC<DualEditorProps> = ({
               <button
                 onClick={() => onSaveFile('en')}
                 disabled={!enFile || enFile.content === enFile.originalContent || isSaving}
-                className="text-xs px-2 py-1 bg-primary text-white rounded hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Save EN
               </button>
@@ -130,7 +130,7 @@ const DualEditor: React.FC<DualEditorProps> = ({
               <button
                 onClick={() => onSaveFile('fr')}
                 disabled={!frFile || frFile.content === frFile.originalContent || isSaving}
-                className="text-xs px-2 py-1 bg-primary text-white rounded hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Save FR
               </button>
@@ -191,7 +191,7 @@ const DualEditor: React.FC<DualEditorProps> = ({
           <button
             onClick={onSaveAll}
             disabled={!hasChanges || isSaving}
-            className="px-3 py-1 bg-primary text-white rounded text-xs hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-xs hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Save All
           </button>

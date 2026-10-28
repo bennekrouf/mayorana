@@ -192,7 +192,7 @@ export default async function ToolReleasesPage({ params }: Props) {
             })}
           </p>
 
-          <ReleaseBody release={latest} />
+          <ReleaseBody release={latest} level="h3" />
 
           <div className="mt-8">
             <DownloadButtonsLarge app={tool.id} appName={tool.name} downloads={tool.downloads} />
@@ -277,7 +277,7 @@ export default async function ToolReleasesPage({ params }: Props) {
           <p className="text-muted-foreground mb-6">{tDetail('cta_body')}</p>
           <Link
             href={`/${locale}/contact`}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
           >
             {tDetail('cta_button')}
             <ArrowRight className="w-4 h-4" />
@@ -323,15 +323,18 @@ function ReleaseEntry({
   );
 }
 
-function ReleaseBody({ release }: { release: Release }) {
+// The section headings sit one level below whatever titles the release:
+// h3 under the "Latest" h2, h4 under each history entry's h3.
+function ReleaseBody({ release, level = 'h4' }: { release: Release; level?: 'h3' | 'h4' }) {
+  const Heading = level;
   return (
     <div className="space-y-5">
       {release.sections.map((section, index) => (
         <div key={`${section.heading}-${index}`}>
           {section.heading && (
-            <h4 className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
+            <Heading className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
               {section.heading}
-            </h4>
+            </Heading>
           )}
           <ul className="space-y-2.5">
             {section.items.map((item, itemIndex) => (
@@ -391,7 +394,7 @@ function Inline({ text }: { text: string }) {
               key={index}
               href={link[2]}
               rel="noopener noreferrer"
-              className="text-primary hover:underline underline-offset-4"
+              className="text-primary underline underline-offset-4"
             >
               {link[1]}
             </a>
