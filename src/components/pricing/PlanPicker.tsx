@@ -236,7 +236,8 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
           const tools = toolsForPlanProducts(plan.products);
           const uses = new Map(creditUses(plan.monthly_credits, load.appUses).map((u) => [u.tool, u.count]));
           const featured = index === featuredIndex;
-          const current = plan.id === runningPlan;
+          // The plan they are on now, paid or granted by hand: nothing to buy.
+          const current = !!sub && sub.live && !sub.is_free && plan.id === sub.plan_id;
           return (
             <div
               key={plan.id}
