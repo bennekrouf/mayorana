@@ -14,7 +14,7 @@
 // and hydration render the plans; the thank-you view takes over right after,
 // when the query asks for it.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { useQuery } from '@/lib/use-query';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
@@ -25,17 +25,31 @@ import type { PlanCatalogue } from '@/lib/plans';
 const FROM_KEY = 'mayorana_pricing_from';
 const CVENOM_CREDITS_URL = 'https://studio.cvenom.com/credits?subscribed=1';
 
+const subscribeNever = () => () => {};
+
+function readStoredFrom(): string | null {
+  try {
+    return sessionStorage.getItem(FROM_KEY);
+  } catch {
+    return null; // storage blocked: the query alone decides
+  }
+}
+
+// Remembered for the tab: the query says "from=cvenom" on arrival, the stored
+// value carries it past Stripe's fixed return URL. Read through
+// useSyncExternalStore (null on the server and in hydration) rather than
+// copied into state from an effect.
 function useFromCvenom(from: string | null): boolean {
-  const [fromCvenom, setFromCvenom] = useState(false);
   useEffect(() => {
+    if (from !== 'cvenom') return;
     try {
-      if (from === 'cvenom') sessionStorage.setItem(FROM_KEY, 'cvenom');
-      setFromCvenom(sessionStorage.getItem(FROM_KEY) === 'cvenom');
+      sessionStorage.setItem(FROM_KEY, 'cvenom');
     } catch {
-      setFromCvenom(from === 'cvenom');
+      // storage blocked: the query still says it on this page
     }
   }, [from]);
-  return fromCvenom;
+  const stored = useSyncExternalStore(subscribeNever, readStoredFrom, () => null);
+  return from === 'cvenom' || stored === 'cvenom';
 }
 
 type PricingProps = {

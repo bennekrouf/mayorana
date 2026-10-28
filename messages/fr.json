@@ -56,6 +56,7 @@
     "my_subscription": "Mon abonnement"
   },
   "home": {
+    "api0_use_cases_link": "Cas d’usage pour votre entreprise",
     "hero_title": "Outils d'IA qui fonctionnent vraiment",
     "hero_subtitle": "Rust 🦀 construit ce qui ne casse pas. L'IA le rend humain.",
     "hero_tagline": "Nous construisons ce que les agences promettent. Découvrez nos outils live ci-dessus.",
@@ -71,9 +72,9 @@
     "work_subtitle": "2 outils live + 1 MVP. api0 les alimente tous.",
     "ready_elevate": "Prêts à construire votre avantage IA avec Rust ?",
     "cta_description": "Contactez-nous pour voir comment nos outils d'IA éprouvés peuvent renforcer votre entreprise",
-    "hero_eyebrow": "Conçu en Suisse · Écrit en Rust",
-    "hero_h1": "Votre logiciel, dans chaque conversation.",
-    "hero_lead": "Nous concevons api0 : votre logiciel existant, utilisable depuis Teams, WhatsApp, Telegram et Claude. Chaque action s’exécute au nom de la personne qui la demande.",
+    "hero_eyebrow": "Écrit en Rust",
+    "hero_h1": "Votre hub IA, connecté à vos logiciels.",
+    "hero_lead": "Votre logiciel existant, utilisable depuis Teams, WhatsApp, Telegram et Claude. Chaque action s’exécute au nom de la personne qui la demande.",
     "cta_try_api0": "Essayer api0.ai",
     "solution_azure_cta": "Découvrir la suite Azure",
     "api0_diagram_aria": "Une demande depuis Teams, WhatsApp ou Claude passe par la passerelle API0.AI, qui appelle le système de réservation d'une agence de voyage",
@@ -82,7 +83,7 @@
     "api0_diagram_target": "Agence de voyage",
     "api0_diagram_target_sub": "système de réservation",
     "api0_diagram_caption": "« Réserve-moi un vol pour Lisbonne » → un vrai appel API",
-    "why_heading": "Rust et conçu en Suisse, par principe",
+    "why_heading": "Rust, par principe",
     "why_body": "Des agents qui touchent de vrais systèmes exigent un logiciel qui ne casse pas. Tout ce que nous livrons est écrit en Rust et conçu en Suisse, de la passerelle api0 à nos outils de bureau.",
     "selected_tools_view_all": "Voir tous les outils",
     "api0_eyebrow": "Notre produit",
@@ -337,6 +338,8 @@
     "api0_cta": "Découvrir api0.ai"
   },
   "solutions_ai_agents": {
+    "more_body": "La même base Rust fait tourner nos applications de bureau : outils Git, Azure, vidéo et recherche d’emploi qui travaillent sur votre machine.",
+    "more_link": "Voir les applications",
     "hero_eyebrow": "Passerelle d’actions IA · Écrite en Rust",
     "hero_title": "Mettez votre logiciel existant dans le chat de votre équipe",
     "hero_subtitle": "api0 est une passerelle MCP écrite en Rust qui transforme vos API REST existantes en outils pour Claude et les autres clients compatibles MCP. Connectez Claude à votre backend en moins de cinq minutes.",

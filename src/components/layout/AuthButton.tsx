@@ -21,7 +21,7 @@ const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_go
  * `compact` is the mobile-menu variant: a full-width row instead of an icon.
  */
 const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
-  const { enabled, user, loading, signIn, signOut } = useAuth();
+  const { enabled, user, loading, signIn, signOut, prepare } = useAuth();
   const t = useTranslations('auth');
   const locale = useLocale();
   const subscriptionHref = getLocalizedPath(locale, '/pricing#subscription');
@@ -53,6 +53,7 @@ const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
             <button
               key={p.id}
               onClick={() => signIn(p.id)}
+              {...{ onPointerEnter: prepare, onFocus: prepare, onPointerDown: prepare }}
               className="w-full flex items-center px-4 py-2 text-sm rounded bg-secondary hover:bg-secondary/80 transition-colors"
             >
               {p.icon}
@@ -67,6 +68,9 @@ const AuthButton: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
       <div className="relative" ref={menuRef}>
         <button
           onClick={() => setOpen((o) => !o)}
+          // Pointing at Sign in starts loading Firebase, so the popup opens
+          // at once on the click that follows (src/lib/firebase.ts).
+          {...{ onPointerEnter: prepare, onFocus: prepare, onPointerDown: prepare }}
           aria-expanded={open}
           className="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
         >

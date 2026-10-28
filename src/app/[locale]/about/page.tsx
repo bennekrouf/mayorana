@@ -1,10 +1,8 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { ArrowRight, Check, ExternalLink } from 'lucide-react';
-import { useTranslations, useLocale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
 
@@ -15,9 +13,13 @@ const FACTS = ['product', 'stack', 'tools', 'base'] as const;
 const PRINCIPLES = ['1', '2', '3', '4'] as const;
 const API0_POINTS = ['1', '2', '3'] as const;
 
-export default function AboutPage() {
-  const t = useTranslations('about');
-  const locale = useLocale();
+type Props = { params: Promise<{ locale: string }> };
+
+// A server component: the copy is rendered at build time, and only the
+// interactive pieces inside it (diagrams, download buttons) ship JS.
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'about' });
 
   return (
     <LayoutTemplate>

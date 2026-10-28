@@ -1,12 +1,12 @@
 // File: src/app/[locale]/privacy/page.tsx
-'use client';
+// A server component: the text is static, so no JS is sent for it.
 
-import React from 'react';
-import { useLocale } from 'next-intl';
 import PrivacyEn from './PrivacyEn';
 import PrivacyFr from './PrivacyFr';
 
-export default function PrivacyPolicyPage() {
-  const locale = useLocale();
+type Props = { params: Promise<{ locale: string }> };
+
+export default async function PrivacyPolicyPage({ params }: Props) {
+  const { locale } = await params;
   return locale === 'fr' ? <PrivacyFr /> : <PrivacyEn />;
 }

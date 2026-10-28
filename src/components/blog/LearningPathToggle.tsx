@@ -15,7 +15,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
-import { getFirebaseAuth } from '@/lib/firebase';
+import { currentUser } from '@/lib/firebase';
 import { getUserPrefs, updateUserPrefs } from '@/lib/gateway';
 
 const PENDING_KEY = 'mayorana.followPathPending';
@@ -43,11 +43,15 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
   const t = useTranslations('blog');
   const locale = useLocale();
   const router = useRouter();
-  const { enabled, user, loading, signIn } = useAuth();
+  const { enabled, user, loading, signIn, prepare } = useAuth();
   const tAuth = useTranslations('auth');
   const [busy, setBusy] = useState(false);
   // Signed out, the first click offers the providers instead of picking one.
   const [choosing, setChoosing] = useState(false);
+  // Choosing a provider: get Firebase ready while they pick.
+  useEffect(() => {
+    if (choosing) prepare();
+  }, [choosing, prepare]);
   const checkedPrefsFor = useRef<string | null>(null);
 
   const blogUrl = `/${locale}/blog`;
@@ -109,7 +113,7 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
     // Popup path: finish here, so the effect above does not do it twice.
     // If the popup was closed without signing in, just drop the choice.
     const parked = takePending();
-    if (parked && getFirebaseAuth().currentUser) await follow(true);
+    if (parked && currentUser()) await follow(true);
     setChoosing(false);
     setBusy(false);
   };

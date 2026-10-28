@@ -1,12 +1,12 @@
 // File: src/app/[locale]/terms/page.tsx
-'use client';
+// A server component: the text is static, so no JS is sent for it.
 
-import React from 'react';
-import { useLocale } from 'next-intl';
 import TermsEn from './TermsEn';
 import TermsFr from './TermsFr';
 
-export default function TermsOfServicePage() {
-  const locale = useLocale();
+type Props = { params: Promise<{ locale: string }> };
+
+export default async function TermsOfServicePage({ params }: Props) {
+  const { locale } = await params;
   return locale === 'fr' ? <TermsFr /> : <TermsEn />;
 }

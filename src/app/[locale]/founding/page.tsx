@@ -38,7 +38,7 @@ interface FormData {
 function FoundingContent({ searchParams }: { searchParams: Query | null }) {
   const t = useTranslations('founding');
   const locale = useLocale();
-  const { enabled, user, loading, signIn } = useAuth();
+  const { enabled, user, loading, signIn, prepare } = useAuth();
 
   // The in-app notice and the download panel can pass ?tool=<id>, so the
   // first question is already answered for most visitors.
@@ -189,6 +189,7 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
                       <button
                         type="button"
                         onClick={() => signIn('google')}
+                        {...{ onPointerEnter: prepare, onFocus: prepare, onPointerDown: prepare }}
                         className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
                       >
                         <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden>
@@ -199,6 +200,7 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
                       <button
                         type="button"
                         onClick={() => signIn('github')}
+                        {...{ onPointerEnter: prepare, onFocus: prepare, onPointerDown: prepare }}
                         className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium border border-border hover:bg-secondary transition-colors"
                       >
                         <FaGithub className="w-5 h-5" aria-hidden />

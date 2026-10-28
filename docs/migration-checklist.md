@@ -4,6 +4,10 @@ Status: **Locked** — planning artifact, no site code changes made here.
 Builds on [`docs/positioning.md`](./positioning.md) and
 [`docs/content-architecture.md`](./content-architecture.md).
 Date: 2026-08-28
+Updated: 2026-10-28 — checklist reconciled with the site as it is: the
+Services page was retired (it 301s to the home page; the company leads with
+its products), and the homepage was rewritten for the 2026-10-26 positioning
+("Your software, in every chat"). What remains is in Phase D.
 
 ## 1. Priority Order of Work
 
@@ -23,13 +27,13 @@ Date: 2026-08-28
 
 | Piece | Priority | Status | Notes |
 |---|---|---|---|
-| Homepage hero + structure | Critical | To write | New positioning statement; replaces current single API0.AI spotlight |
+| Homepage hero + structure | Critical | ✅ Built | Rewritten for the 2026-10-26 positioning: api0 story, then the desktop tools as proof |
 | `/solutions/azure` full page | Critical | ✅ Built | AIS suite (Runner, Monitor, Tracing, Analytics); EN + FR |
 | `/solutions/ai-agents` page | Critical | ✅ Built | API0.AI deep dive; EN + FR |
-| Services page | High | ✅ Built | 3 offers + process; EN + FR; contact dropdown realigned |
+| Services page | High | Retired | Built, then retired: `/[locale]/services` 301s to the home page (next.config.ts) |
 | Apps page intro paragraph | High | ✅ Built | Ties `/apps` to primary positioning |
 | "Also built with our stack" section copy | Medium | ✅ Built | CVENOM, ShipScreen, PublishKit, SOLANIZE, + consulting CTA |
-| Navigation labels | High | Update | `src/components/layout/Navbar.tsx` — add Services + Solutions |
+| Navigation labels | High | ✅ Built | `Home · Azure Tools · AI Agents · Apps · Pricing · Blog · Contact`, plus ⌘K search |
 | Meta titles & descriptions (all key pages) | High | ✅ Built | EN + FR; per-route `generateMetadata` |
 
 ### Supporting content (soon after)
@@ -56,21 +60,21 @@ Date: 2026-08-28
 - [x] Positioning statement approved (`docs/positioning.md`)
 - [x] ICP confirmed
 - [x] New URLs decided: `/solutions/azure`, `/solutions/ai-agents`, `/services` (existing, reused)
-- [ ] Design/layout approach agreed — default: reuse existing components (cards, badges, `DownloadLink`) rather than new patterns
+- [x] Design/layout approach agreed — reuse existing components (cards, badges, `DownloadLink`) rather than new patterns
 
 **Phase B — Content Production**
-- [ ] Write full Homepage content
+- [x] Write full Homepage content (2026-10-26 positioning)
 - [x] Write Azure Solutions page (EN + FR, `messages/*.json` → `solutions_azure`)
 - [x] Write AI Agents / API0 page (EN + FR, `messages/*.json` → `solutions_ai_agents`)
 - [x] Write Services page (EN + FR; page moved off hardcoded English onto i18n keys)
 - [x] Write new Apps page intro + secondary section (EN + FR)
 - [x] Update all meta titles & descriptions (EN + FR, all 10 routes)
-- [ ] Prepare any new images/icons if needed
+- [x] Prepare any new images/icons if needed (app screenshots, #122)
 
 **Phase C — Implementation**
 - [x] Create route `src/app/[locale]/solutions/azure/` (+ localized metadata in its `layout.tsx`)
 - [x] Create route `src/app/[locale]/solutions/ai-agents/` (+ localized metadata)
-- [ ] Update Homepage (`src/app/[locale]/page.tsx`, `src/components/home/ClientHomeSection.tsx`)
+- [x] Update Homepage (`src/app/[locale]/page.tsx`, `src/components/home/ClientHomeSection.tsx`)
 - [x] Extract `desktopToolsConfig` into `src/data/tools.ts` + shared `src/components/ui/ToolVisuals.tsx`
       (status/data-source badges, download row) so Apps and Solutions share one
       source of truth for download URLs — done as groundwork for the Azure page
@@ -82,13 +86,23 @@ Date: 2026-08-28
 - [x] Footer "Explore" column (`src/components/layout/Footer.tsx`) now mirrors the header nav
 - [x] Update footer links (Explore column, portfolio column, Swiss signal)
 - [x] Add new routes to `scripts/generate-sitemap.js` (now a derived `STATIC_PAGES` list; also picked up `/apps`, which had been missing)
-- [ ] Internal links between pages: Homepage → Solutions → Apps → Services
+- [x] Internal links between pages: Homepage → Solutions → Apps (Services retired).
+      Added 2026-10-28: Homepage api0 section → AI Agents ("Use cases for your
+      company"), and an AI Agents → Apps link at the end of that page; Azure →
+      app pages and Homepage → Azure / Apps were already there.
 
 **Phase D — Quality & Launch**
-- [ ] Mobile + desktop review of all key pages
-- [ ] Check all CTAs and download links
+- [x] Mobile + desktop review of all key pages (2026-10-28). 16 key pages checked
+      at 375 px (and the blog at 320 px) for horizontal overflow; Lighthouse
+      mobile + desktop 100 on all of them. Fixed: the blog listing and tag pages
+      ran 26 px off a phone screen (grid with no explicit mobile column), and the
+      blog pagination ran off it in French and on middle pages (now wraps, arrow
+      only on a phone).
+- [x] Check all CTAs and download links (2026-10-28, live site): all 437 sitemap
+      pages and all 261 other same-site URLs they link to — downloads, release
+      notes, tag pages, install scripts, markdown twins — answer 200. None broken.
 - [ ] 5-second clarity test with 2–3 people outside the team
-- [ ] Soft launch
+- [x] Soft launch (the site is live)
 - [ ] Publish short announcement post (Blog + LinkedIn)
 
 ## 5. Success Metrics (content perspective)

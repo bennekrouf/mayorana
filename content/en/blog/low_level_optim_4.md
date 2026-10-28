@@ -12,6 +12,8 @@ tags:
   - optimization
   - advanced
 date: '2025-10-23'
+seo_title: 'Branch Misprediction in Rust Loops: 4 Fixes'
+meta_description: 'Each mispredicted branch costs 10 to 20 cycles. Four ways to cut them in Rust hot loops: branchless arithmetic, sorted data, conditional moves, unrolling.'
 ---
 
 # Boosting Rust Hot Loops: Slashing Branch Mispredictions

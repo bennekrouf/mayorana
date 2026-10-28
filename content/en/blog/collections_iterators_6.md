@@ -12,6 +12,8 @@ tags:
   - rust
   - collections
 date: '2025-07-24'
+seo_title: 'Box<[T]> vs Vec<T> in Rust: Size, Cost, When to Use'
+meta_description: 'Vec carries a capacity field; Box<[T]> does not. Memory overhead, mutability and conversion cost side by side, and which one to pick when.'
 ---
 
 # What is the difference between Box<[T]> and Vec<T>?

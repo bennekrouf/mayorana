@@ -1,10 +1,8 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { ArrowRight, Check, ExternalLink, PlayCircle, Share2, Search, Scale, Sparkles } from 'lucide-react';
-import { useTranslations, useLocale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { aisTools, appI18nKey, hasReleaseNotes } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons } from '@/components/ui/ToolVisuals';
@@ -23,10 +21,14 @@ const API0_URL = 'https://api0.ai';
 // the same order as `aisTools`, so status badges stay in sync with the data.
 const CHOOSER_ROWS = ['1', '2', '3', '4'] as const;
 
-export default function AzureSolutionsPage() {
-  const t = useTranslations('solutions_azure');
-  const tApps = useTranslations('apps');
-  const locale = useLocale();
+type Props = { params: Promise<{ locale: string }> };
+
+// A server component: the copy is rendered at build time, and only the
+// interactive pieces inside it (diagrams, download buttons) ship JS.
+export default async function AzureSolutionsPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'solutions_azure' });
+  const tApps = await getTranslations({ locale, namespace: 'apps' });
 
   return (
     <LayoutTemplate>
