@@ -2,8 +2,28 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-28T14:14:00Z",
+  "generated_at": "2026-10-28T14:28:44Z",
   "releases": [
+    {
+      "version": "0.1.34",
+      "tag": "v0.1.34",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "PolishCast now shows the occasional message from mayorana.ch, under the bar at the top, until you close it."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The update banner and the occasional message from mayorana.ch now sit just under the bar at the top of the window instead of covering it, and look the same in every mayorana app. Download opens the new build in your browser and shows its SHA-256 when one is published, to compare with the file you downloaded.",
+            "The Pro window looks and reads the same in every mayorana app. Once you're Pro it names your plan and email, and pressing Enter in the licence number field activates it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.33",
       "tag": "v0.1.33",
