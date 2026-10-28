@@ -62,6 +62,13 @@ export interface Subscription {
   products: string[];
   /** The free allowance some apps hand out: nothing to pay or cancel. */
   is_free: boolean;
+  /** Paid through Stripe, so changed and cancelled on its portal; a plan granted by hand is not. */
+  on_stripe?: boolean;
+}
+
+/** Whether the plan is managed on Stripe's portal; a gateway older than `on_stripe` meant every paid plan. */
+export function onStripe(sub: Subscription): boolean {
+  return sub.on_stripe ?? !sub.is_free;
 }
 
 /** What one use of an app's AI costs, by the product id plans use. */
