@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.bennekrouf/mayorana",
+  "title": "Mayorana",
+  "description": "Search mayorana.ch: desktop apps, release notes, plans, and the Rust, LLM and Azure blog.",
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mayorana.ch/mcp"
+    }
+  ]
+}

@@ -13,6 +13,8 @@ tags:
   - rust
   - standard-library
   - basics
+seo_title: 'clamp en Rust : borner une valeur entre min et max'
+meta_description: 'Ce que fait value.clamp(min, max) en Rust, pourquoi il panique si min > max, et ses équivalents en C++, JavaScript et C, avec un tableau récapitulatif.'
 ---
 
 # Qu'est-ce que `clamp` en Rust, et quand l'utiliser ?

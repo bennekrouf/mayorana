@@ -12,6 +12,8 @@ tags:
   - rust
   - drain
 date: '2025-07-26'
+seo_title: 'Rust Vec: drain() vs truncate() vs clear()'
+meta_description: 'Which to use to remove elements from a Rust Vec: drain() hands you the removed items, truncate() and clear() drop them in O(1). Capacity, cost, examples.'
 ---
 
 # Vec::drain() Vs Vec::truncate() or Vec::clear()?

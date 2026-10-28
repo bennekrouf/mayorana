@@ -27,9 +27,8 @@ import { useLocale, useTranslations } from 'next-intl';
 import { FiArrowRight, FiX } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
 import { getLocalizedPath } from '@/lib/i18n-utils';
-import { onAuthStateChanged } from 'firebase/auth';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
-import { getFirebaseAuth, isAuthConfigured } from '@/lib/firebase';
+import { currentUser } from '@/lib/firebase';
 import { getUserPrefs, updateUserPrefs } from '@/lib/gateway';
 import { capture as captureAttribution, withAttribution } from '@/lib/attribution';
 import type { OS } from '@/data/tools';
@@ -114,7 +113,7 @@ async function recordDownload(request: DownloadRequest): Promise<void> {
 }
 
 export function DownloadGateProvider({ children }: { children: ReactNode }) {
-  const { enabled, user, signIn } = useAuth();
+  const { enabled, user, signIn, prepare } = useAuth();
   const [pending, setPending] = useState<DownloadRequest | null>(null);
   const [busy, setBusy] = useState(false);
   // Guards the resume-after-redirect path so it runs once, not on every
@@ -125,7 +124,9 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
   const panelOpen = useRef(false);
   useEffect(() => {
     panelOpen.current = pending !== null;
-  }, [pending]);
+    // The panel offers sign-in: get Firebase ready while it is read.
+    if (pending) prepare();
+  }, [pending, prepare]);
 
   // Every localised page mounts this provider, so this is the one place that
   // sees an arrival whatever page it landed on. Cheap after the first visit:
@@ -159,19 +160,18 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
   }, [enabled, user, deliver]);
 
   // Back from a redirect sign-in: React state is gone, but the download that
-  // started it is parked in sessionStorage. Firebase reports the restored
-  // session through this subscription; finish the download from there.
+  // started it is parked in sessionStorage. AuthProvider restores the session
+  // (a redirect coming back always loads Firebase); finish the download once
+  // the user appears.
   useEffect(() => {
-    if (!isAuthConfigured) return;
-    return onAuthStateChanged(getFirebaseAuth(), (signedIn) => {
-      // Also fires when the popup sign-in completes; with the panel still
-      // open that download is handleSignIn's to finish.
-      if (!signedIn || resumed.current || panelOpen.current) return;
-      resumed.current = true;
-      const parked = takePending();
-      if (parked) void deliver(parked, true);
-    });
-  }, [deliver]);
+    // Also turns true when the popup sign-in completes; with the panel still
+    // open that download is handleSignIn's to finish.
+    if (!user || resumed.current || panelOpen.current) return;
+    resumed.current = true;
+    const parked = takePending();
+    // A reaction to the session arriving, run after this render settles.
+    if (parked) void Promise.resolve().then(() => deliver(parked, true));
+  }, [user, deliver]);
 
   const handleSignIn = async (provider: SignInProvider) => {
     if (!pending) return;
@@ -180,7 +180,7 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
     stashPending(pending);
     setBusy(true);
     const outcome = await signIn(provider);
-    const signedIn = getFirebaseAuth().currentUser;
+    const signedIn = currentUser();
     if (outcome === 'signed-in' && signedIn) {
       // Popup path: the session is in place. The parked copy is consumed
       // here so the subscription above does not deliver it a second time.

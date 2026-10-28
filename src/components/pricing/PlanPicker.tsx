@@ -44,7 +44,7 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
   const t = useTranslations('pricing');
   const tAuth = useTranslations('auth');
   const locale = useLocale();
-  const { enabled: authEnabled, user, loading: authLoading, signIn } = useAuth();
+  const { enabled: authEnabled, user, loading: authLoading, signIn, prepare } = useAuth();
   const [load, setLoad] = useState<Load>(initial ? { kind: 'ready', ...initial } : { kind: 'loading' });
   const [subLoad, setSubLoad] = useState<SubLoad>({ kind: 'loading' });
   const [busyPlan, setBusyPlan] = useState<string | null>(null);
@@ -82,6 +82,11 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
   // as a second subscription would be refused. The free allowance and a plan
   // granted by hand go straight to Checkout.
   const runningPlan = sub && sub.live && onStripe(sub) ? sub.plan_id : null;
+
+  // The sign-in dialog is open: get Firebase ready while it is read.
+  useEffect(() => {
+    if (signInFor) prepare();
+  }, [signInFor, prepare]);
 
   useEffect(() => {
     if (!signInFor) return;

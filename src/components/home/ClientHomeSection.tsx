@@ -117,6 +117,13 @@ export default function ClientHomeSection() {
               {t('api0_architecture_link')}
               <ArrowRight className="ml-1.5 w-4 h-4" />
             </a>
+            <Link
+              href={getLocalizedPath(locale, '/solutions/ai-agents')}
+              className="inline-flex items-center text-primary font-medium hover:underline"
+            >
+              {t('api0_use_cases_link')}
+              <ArrowRight className="ml-1.5 w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 // The api0 gateway is the only backend mayorana talks to.
-import { getFirebaseAuth, isAuthConfigured } from './firebase';
+import { currentUser } from './firebase';
 
 export const GATEWAY_URL =
   process.env.NEXT_PUBLIC_GATEWAY_URL ||
@@ -29,7 +29,8 @@ export async function gatewayFetch<T = unknown>(path: string, init: RequestInit 
     headers.set('Content-Type', 'application/json');
   }
 
-  const user = isAuthConfigured ? getFirebaseAuth().currentUser : null;
+  // Null when Firebase is not loaded: nobody has signed in on this page.
+  const user = currentUser();
   if (user) {
     headers.set('X-Google-Auth', await user.getIdToken());
   }

@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 
@@ -10,8 +8,7 @@ export default function PrivacyEn() {
     <LayoutTemplate>
       <div className="py-20 bg-background">
         <div className="container max-w-4xl mx-auto">
-          <div
- className="rise">
+          <div>
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
             <p className="text-muted-foreground mb-8">Last updated: 28 October 2026</p>
 

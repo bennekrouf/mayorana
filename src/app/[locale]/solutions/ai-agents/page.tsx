@@ -1,9 +1,9 @@
-'use client';
-
 import React from 'react';
+import Link from 'next/link';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { ArrowRight, Check, ExternalLink, Puzzle, ShieldAlert, Gauge, Building2, Wrench } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import { getLocalizedPath } from '@/lib/i18n-utils';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
 
 const API0_URL = 'https://api0.ai';
@@ -28,8 +28,13 @@ const SOLUTION_POINTS = ['1', '2', '3', '4', '5'] as const;
 const AUTH_POINTS = ['1', '2', '3', '4', '5'] as const;
 const RUST_POINTS = ['1', '2', '3', '4'] as const;
 
-export default function AiAgentsSolutionsPage() {
-  const t = useTranslations('solutions_ai_agents');
+type Props = { params: Promise<{ locale: string }> };
+
+// A server component: the copy is rendered at build time, and only the
+// interactive pieces inside it (diagrams, download buttons) ship JS.
+export default async function AiAgentsSolutionsPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'solutions_ai_agents' });
 
   return (
     <LayoutTemplate>
@@ -195,6 +200,20 @@ export default function AiAgentsSolutionsPage() {
               ))}
             </ul>
           </div>
+        </div>
+      </section>
+
+      {/* Onward to the apps: the same stack, as products you can download. */}
+      <section className="py-12 bg-secondary/30 border-t border-border">
+        <div className="container max-w-5xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <p className="text-muted-foreground max-w-2xl">{t('more_body')}</p>
+          <Link
+            href={getLocalizedPath(locale, '/apps')}
+            className="inline-flex shrink-0 items-center gap-1.5 font-medium text-primary hover:underline underline-offset-4"
+          >
+            {t('more_link')}
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </LayoutTemplate>

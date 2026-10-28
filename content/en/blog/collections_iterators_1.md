@@ -14,6 +14,8 @@ tags:
   - rust
   - collections
   - iterators
+seo_title: 'Rust Vec::new() vs with_capacity(): When to Use'
+meta_description: 'Vec::new() starts empty and reallocates as it grows; with_capacity(n) allocates once. When pre-allocating pays off, with a benchmark of the difference.'
 ---
 
 # Rust Vec::new() vs. with_capacity(): When to Use Each

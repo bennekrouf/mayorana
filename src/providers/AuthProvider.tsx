@@ -1,20 +1,16 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import {
-  getRedirectResult,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  linkWithCredential,
-  OAuthCredential,
-  onAuthStateChanged,
-  signInWithPopup,
-  signInWithRedirect,
-  type AuthError,
-  type User,
-} from 'firebase/auth';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import type { AuthError, OAuthCredential, User } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { getFirebaseAuth, isAuthConfigured, popupRedirectResolver } from '@/lib/firebase';
+import {
+  hasSessionHint,
+  isAuthConfigured,
+  loadFirebase,
+  loadedFirebase,
+  rememberSignedIn,
+  type FirebaseKit,
+} from '@/lib/firebase';
 
 export type SignInProvider = 'google' | 'github';
 
@@ -34,6 +30,14 @@ interface AuthContextType {
   loading: boolean;
   signIn: (provider: SignInProvider) => Promise<SignInOutcome>;
   signOut: () => Promise<void>;
+  /**
+   * Starts loading Firebase without signing in. Call it when someone shows an
+   * intent to sign in — pointing at, focusing or pressing a Sign in button, a
+   * sign-in panel opening — so it is there by the click: a popup opened after
+   * a slow download can be blocked (Safari), which turns sign-in into a
+   * full-page redirect. See src/lib/firebase.ts.
+   */
+  prepare: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -42,6 +46,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   signIn: async () => 'failed',
   signOut: async () => {},
+  prepare: () => {},
 });
 
 export function useAuth() {
@@ -51,24 +56,24 @@ export function useAuth() {
 const PROVIDER_NAMES: Record<SignInProvider, string> = { google: 'Google', github: 'GitHub' };
 const PROVIDER_IDS: Record<SignInProvider, string> = { google: 'google.com', github: 'github.com' };
 
-function makeProvider(provider: SignInProvider, email?: string | null) {
+function makeProvider(kit: FirebaseKit, provider: SignInProvider, email?: string | null) {
   if (provider === 'google') {
-    const google = new GoogleAuthProvider();
+    const google = new kit.GoogleAuthProvider();
     // Preselects the right account in Google's chooser when linking.
     if (email) google.setCustomParameters({ login_hint: email });
     return google;
   }
-  const github = new GithubAuthProvider();
+  const github = new kit.GithubAuthProvider();
   // Without it a GitHub account with a private email signs in with no email
   // at all, and the gateway rejects every token that lacks one.
   github.addScope('user:email');
   return github;
 }
 
-function credentialFromError(provider: SignInProvider, error: AuthError) {
+function credentialFromError(kit: FirebaseKit, provider: SignInProvider, error: AuthError) {
   return provider === 'google'
-    ? GoogleAuthProvider.credentialFromError(error)
-    : GithubAuthProvider.credentialFromError(error);
+    ? kit.GoogleAuthProvider.credentialFromError(error)
+    : kit.GithubAuthProvider.credentialFromError(error);
 }
 
 // ── Account linking ───────────────────────────────────────────────────────────
@@ -94,6 +99,8 @@ interface PendingLink {
   credential: OAuthCredential;
 }
 
+type StashedLink = Omit<PendingLink, 'credential'> & { credential: object };
+
 type LinkError = { kind: 'mismatch'; actual: string } | { kind: 'failed' };
 
 // Both survive a redirect sign-in (popup blocked), which reloads the page.
@@ -109,17 +116,22 @@ function stashLink(link: PendingLink) {
   } catch { /* private mode: linking still works on the popup path */ }
 }
 
-function takeLink(): PendingLink | null {
+/** The parked link, as stored: turning it back into a credential needs Firebase. */
+function takeLink(): StashedLink | null {
   try {
     const raw = sessionStorage.getItem(LINK_KEY);
     if (!raw) return null;
     sessionStorage.removeItem(LINK_KEY);
-    const parsed = JSON.parse(raw);
-    const credential = OAuthCredential.fromJSON(parsed.credential);
-    return credential ? { ...parsed, credential } : null;
+    return JSON.parse(raw) as StashedLink;
   } catch {
     return null;
   }
+}
+
+function restoreLink(kit: FirebaseKit, stashed: StashedLink | null): PendingLink | null {
+  if (!stashed) return null;
+  const credential = kit.OAuthCredential.fromJSON(stashed.credential);
+  return credential ? { ...stashed, credential } : null;
 }
 
 function clearLink() {
@@ -136,9 +148,9 @@ function takeRedirectProvider(): SignInProvider | null {
   }
 }
 
-async function redirectTo(provider: SignInProvider, email?: string | null) {
+async function redirectTo(kit: FirebaseKit, provider: SignInProvider, email?: string | null) {
   try { sessionStorage.setItem(REDIRECT_KEY, provider); } catch { /* ignore */ }
-  await signInWithRedirect(getFirebaseAuth(), makeProvider(provider, email), popupRedirectResolver);
+  await kit.signInWithRedirect(kit.auth, makeProvider(kit, provider, email), kit.popupRedirectResolver);
 }
 
 function isQuietCancel(code: string | undefined) {
@@ -151,6 +163,11 @@ function isQuietCancel(code: string | undefined) {
  * withholds children while Firebase boots: mayorana is a public site and every
  * page must render (and be crawlable) whether or not anyone is signed in.
  * Components that need the user read `loading` and decide for themselves.
+ *
+ * Firebase is loaded only when it can matter (src/lib/firebase.ts): at page
+ * start for someone who has signed in here before or is back from a redirect
+ * sign-in, otherwise on an intent to sign in (`prepare`) or on signIn itself.
+ * Until then `user` is null and, once that is known, `loading` is false.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -158,7 +175,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [link, setLink] = useState<PendingLink | null>(null);
   const [linkBusy, setLinkBusy] = useState(false);
   const [linkError, setLinkError] = useState<LinkError | null>(null);
-  const redirectHandled = useRef(false);
+  const started = useRef(false);
+  const watching = useRef(false);
   // Settles the signIn() call that opened the link dialog, if one is waiting.
   const linkSettled = useRef<((outcome: SignInOutcome) => void) | null>(null);
 
@@ -167,16 +185,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     linkSettled.current = null;
   };
 
-  useEffect(() => {
-    if (!isAuthConfigured) return;
-    return onAuthStateChanged(getFirebaseAuth(), (u) => {
+  /** Follows the session once Firebase is loaded, whoever loaded it. */
+  const watch = useCallback((kit: FirebaseKit) => {
+    if (watching.current) return;
+    watching.current = true;
+    // Restoring the session reads IndexedDB, which can hang (a stuck delete,
+    // some private modes). Show Sign in after a while rather than a blank
+    // space for good; a session that turns up later still replaces it.
+    const giveUp = setTimeout(() => setLoading(false), 5000);
+    kit.onAuthStateChanged(kit.auth, (u) => {
+      clearTimeout(giveUp);
       setUser(u);
       setLoading(false);
+      rememberSignedIn(Boolean(u));
     });
   }, []);
 
-  const openLink = (added: SignInProvider, error: AuthError): boolean => {
-    const credential = credentialFromError(added, error);
+  const prepare = useCallback(() => {
+    if (!isAuthConfigured) return;
+    loadFirebase().then(watch).catch(() => { /* retried on signIn */ });
+  }, [watch]);
+
+  const openLink = (kit: FirebaseKit, added: SignInProvider, error: AuthError): boolean => {
+    const credential = credentialFromError(kit, added, error);
     if (!credential) return false;
     const pending: PendingLink = {
       email: (error.customData?.email as string | undefined) ?? null,
@@ -191,19 +222,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   /** Signed in with the existing provider: attach the parked credential. */
-  const finishLink = async (signedIn: User, pending: PendingLink) => {
+  const finishLink = async (kit: FirebaseKit, signedIn: User, pending: PendingLink) => {
     const actual = signedIn.email ?? '';
     if (pending.email && actual.toLowerCase() !== pending.email.toLowerCase()) {
       // They picked a different account in the chooser. Linking would attach
       // this GitHub/Google login to someone else's account; sign back out.
-      await getFirebaseAuth().signOut();
+      await kit.auth.signOut();
       stashLink(pending);
       setLink(pending);
       setLinkError({ kind: 'mismatch', actual });
       return;
     }
     try {
-      await linkWithCredential(signedIn, pending.credential);
+      await kit.linkWithCredential(signedIn, pending.credential);
     } catch (error) {
       // Already linked (a second tab got there first) is the outcome we wanted.
       if ((error as AuthError).code !== 'auth/provider-already-linked') {
@@ -216,46 +247,77 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     settleLink('signed-in');
   };
 
-  // Back from a redirect sign-in: either a normal sign-in, the existing-provider
-  // half of a link, or a sign-in that hit an existing account and needs one.
+  // Page start: load Firebase only for a session that may need restoring, or
+  // a redirect sign-in coming back — either a normal sign-in, the
+  // existing-provider half of a link, or a sign-in that hit an existing
+  // account and needs one. Anyone else is signed out, and knows it at once.
   useEffect(() => {
-    if (!isAuthConfigured || redirectHandled.current) return;
-    redirectHandled.current = true;
+    if (!isAuthConfigured || started.current) return;
+    started.current = true;
     const redirected = takeRedirectProvider();
-    const pending = takeLink();
-    // Only after a redirect sign-in: asking costs the sign-in iframe, which
-    // every other page load now skips (see src/lib/firebase.ts).
-    if (!redirected) return;
-    getRedirectResult(getFirebaseAuth(), popupRedirectResolver)
-      .then(async (result) => {
-        if (!result || !pending) return;
-        if (result.providerId === PROVIDER_IDS[pending.existing]) {
-          await finishLink(result.user, pending);
-        }
-      })
-      .catch((error: AuthError) => {
-        if (error.code === 'auth/account-exists-with-different-credential' && redirected) {
-          openLink(redirected, error);
-        } else {
-          console.error('Error completing sign-in:', error);
-        }
-      });
+    const stashed = takeLink();
+    void (async () => {
+      if (!redirected && !(await hasSessionHint())) {
+        // Unless an intent to sign in got Firebase going meanwhile.
+        if (!loadedFirebase()) setLoading(false);
+        return;
+      }
+      let kit: FirebaseKit;
+      try {
+        kit = await loadFirebase();
+      } catch {
+        setLoading(false);
+        return;
+      }
+      watch(kit);
+      // Only after a redirect sign-in: asking costs the sign-in iframe.
+      if (!redirected) return;
+      const pending = restoreLink(kit, stashed);
+      kit
+        .getRedirectResult(kit.auth, kit.popupRedirectResolver)
+        .then(async (result) => {
+          if (!result || !pending) return;
+          if (result.providerId === PROVIDER_IDS[pending.existing]) {
+            await finishLink(kit, result.user, pending);
+          }
+        })
+        .catch((error: AuthError) => {
+          if (error.code === 'auth/account-exists-with-different-credential') {
+            openLink(kit, redirected, error);
+          } else {
+            console.error('Error completing sign-in:', error);
+          }
+        });
+    })();
     // Runs once on mount; the helpers it calls only touch refs and setters.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const signIn = async (provider: SignInProvider): Promise<SignInOutcome> => {
+    let kit: FirebaseKit;
     try {
-      await signInWithPopup(getFirebaseAuth(), makeProvider(provider), popupRedirectResolver);
+      kit = await loadFirebase();
+    } catch (error) {
+      console.error('Could not load sign-in:', error);
+      return 'failed';
+    }
+    watch(kit);
+    try {
+      await kit.signInWithPopup(kit.auth, makeProvider(kit, provider), kit.popupRedirectResolver);
       return 'signed-in';
     } catch (error) {
       const code = (error as AuthError).code;
       if (code === 'auth/popup-blocked') {
-        await redirectTo(provider);
-        return 'redirecting';
+        try {
+          await redirectTo(kit, provider);
+          return 'redirecting';
+        } catch (redirectError) {
+          console.error(`Error signing in with ${PROVIDER_NAMES[provider]} (redirect):`, redirectError);
+          return 'failed';
+        }
       }
       if (code === 'auth/account-exists-with-different-credential') {
-        if (!openLink(provider, error as AuthError)) return 'failed';
+        if (!openLink(kit, provider, error as AuthError)) return 'failed';
         return new Promise<SignInOutcome>((resolve) => { linkSettled.current = resolve; });
       }
       if (isQuietCancel(code)) return 'cancelled';
@@ -268,19 +330,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!link) return;
     setLinkBusy(true);
     setLinkError(null);
+    let kit: FirebaseKit | null = null;
     try {
-      const result = await signInWithPopup(
-        getFirebaseAuth(),
-        makeProvider(link.existing, link.email),
-        popupRedirectResolver,
+      kit = await loadFirebase();
+      const result = await kit.signInWithPopup(
+        kit.auth,
+        makeProvider(kit, link.existing, link.email),
+        kit.popupRedirectResolver,
       );
-      await finishLink(result.user, link);
+      await finishLink(kit, result.user, link);
     } catch (error) {
       const code = (error as AuthError).code;
-      if (code === 'auth/popup-blocked') {
+      if (code === 'auth/popup-blocked' && kit) {
         // The parked link is already in sessionStorage; the mount effect
         // finishes it when the redirect comes back.
-        await redirectTo(link.existing, link.email);
+        await redirectTo(kit, link.existing, link.email);
         return;
       }
       if (!isQuietCancel(code)) {
@@ -301,15 +365,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    // Not loaded means nobody is signed in.
+    const kit = loadedFirebase();
+    if (!kit) return;
     try {
-      await getFirebaseAuth().signOut();
+      await kit.auth.signOut();
     } catch (error) {
       console.error('Error signing out:', error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ enabled: isAuthConfigured, user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ enabled: isAuthConfigured, user, loading, signIn, signOut, prepare }}>
       {children}
       {link && (
         <LinkAccountsDialog

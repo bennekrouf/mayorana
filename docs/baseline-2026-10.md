@@ -338,6 +338,84 @@ SEO.
     licence the palette has no Ask row and the route answers 404. A real
     Haiku answer is untested until the licence exists.
 
+## Live, after deploy — 28 October 2026
+
+`yarn perf-budget https://mayorana.ch`: all 18 runs (9 pages × light and
+dark) within budget, every score 100.
+
+| Page (mobile) | Baseline this morning | Live now |
+|---|---|---|
+| /en | 100, LCP 1.4 s, JS 398 KB | 100, LCP 1.2 s, JS 224 KB |
+| /en/apps/gitagent | 100, a11y 93, JS 356 KB | 100, a11y 100, JS 258 KB |
+| /en/blog | 99, SEO 92, JS 399 KB | 100, SEO 100, JS 243 KB |
+| /en/blog/(post) | 78, LCP 6.1 s | 100, LCP 1.2 s |
+| /en/pricing | 79, CLS 0.469 | 100, CLS 0 |
+| /en/contact | 81, LCP 5.1 s | 100, LCP 1.1 s |
+
+## Search Console baseline — last 3 months, to 28 October 2026
+
+Domain property `mayorana.ch`, verified by DNS TXT at OVH on 28 October
+2026; sitemap submitted the same day.
+
+| Clicks | Impressions | CTR | Average position |
+|---|---|---|---|
+| 55 | 8,800 | 0.6 % | 9.6 |
+
+| Country | Clicks | Impressions | CTR | Position |
+|---|---|---|---|---|
+| United States | 7 | 2,290 | 0.3 % | 9.8 |
+| France | 6 | 671 | 0.9 % | 7.7 |
+| Poland | 5 | 178 | 2.8 % | 7.0 |
+| Germany | 4 | 469 | 0.9 % | 7.5 |
+| United Kingdom | 4 | 417 | 1 % | 7.8 |
+
+| Top pages | Clicks | Impressions | CTR | Position |
+|---|---|---|---|---|
+| /en/blog/box-slice-vs-vec-differences | 14 | 1,288 | 1.1 % | 7.0 |
+| /en/blog/vec-drain-vs-truncate-clear | 7 | 1,613 | 0.4 % | 9.0 |
+| /en/blog/vec-new-vs-with-capacity | 5 | 941 | 0.5 % | 7.6 |
+| /fr/blog/clamp-rust | 3 | 193 | 1.6 % | 8.1 |
+| /en/blog/branch-prediction-rust | 3 | 139 | 2.2 % | 10.0 |
+
+Reading: the site is found (8,800 impressions, almost all on the Rust
+posts) and ranks on page 1 (average 9.6), but few people click: 0.6 %, where
+positions 7–10 usually see 1–3 %. The titles and descriptions shown in the
+results are the lever, starting with the posts that have the most
+impressions. Re-read these numbers in a month to see the effect of the
+fixes deployed today (prerendered pages, hreflang, JSON-LD, markdown twins).
+
+Done the same day for the five posts above: `seo_title` and
+`meta_description` front matter, written for the query (e.g. "Rust Vec:
+drain() vs truncate() vs clear()"), now used for the page's `<title>`,
+description and social cards; the visible heading is unchanged. Other posts
+fall back to their title and excerpt. Compare each page's CTR in a month.
+
+## Follow-ups — 28 October 2026
+
+- **Server components.** Privacy, terms, about, Azure Tools and AI Agents
+  render on the server (still prerendered); only their interactive pieces
+  ship JS. Saving is small (3–5 KB a page): most JS is shared. The legal
+  pages lost their fade-in, which held their LCP at 3 s.
+- **Lint clean.** `useFromCvenom` (pricing) reads sessionStorage through
+  `useSyncExternalStore`; `eslint src` reports no errors.
+- **Firebase on demand.** `src/lib/firebase-kit.ts` is the only module that
+  imports Firebase, a chunk of its own (32 KB gz) loaded by `loadFirebase()`
+  in `src/lib/firebase.ts`:
+  - at page start only for a browser that may hold a session — our
+    `mayorana.auth.signedIn` flag, Firebase's own IndexedDB store (covers
+    people signed in before this change), or a redirect sign-in coming back;
+  - otherwise on an intent to sign in (`prepare()` from `useAuth()`):
+    pointing at, focusing or pressing a Sign in button, or the download
+    panel, plan sign-in dialog or learning-path chooser opening.
+  First-time visitors download 31–33 KB less JS on every page (home 222 →
+  189 KB). Tested on clean origins: nothing loads on a first visit; hover on
+  Sign in and the download panel load it; a returning visitor gets it at
+  page start and the session check completes. Hardening: if restoring the
+  session hangs (IndexedDB), Sign in shows after 5 s; a failing redirect
+  fallback reports `failed` instead of an unhandled rejection. Not tested
+  end to end: a real sign-in (needs a person) — try Google and GitHub once
+  after deploying, on desktop and on a phone.
+
 ## Analytics
 
 Plausible was removed on 28 October 2026 (script, event calls, and the

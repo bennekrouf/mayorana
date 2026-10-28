@@ -56,6 +56,7 @@
     "my_subscription": "My subscription"
   },
   "home": {
+    "api0_use_cases_link": "Use cases for your company",
     "hero_title": "AI Tools That Actually Work",
     "hero_subtitle": "Rust 🦀 builds what doesn't break. AI makes it human.",
     "hero_tagline": "We build what agencies pitch. See our live tools above.",
@@ -71,9 +72,9 @@
     "work_subtitle": "2 live tools + 1 MVP. api0 powers them all.",
     "ready_elevate": "Ready to build your AI edge with Rust?",
     "cta_description": "Get in touch to see how our proven AI tools can power your business",
-    "hero_eyebrow": "Swiss-made · Built in Rust",
-    "hero_h1": "Your software, in every chat.",
-    "hero_lead": "We build api0: your existing software, usable from Teams, WhatsApp, Telegram and Claude. Every action runs as the person asking.",
+    "hero_eyebrow": "Built in Rust",
+    "hero_h1": "Your AI hub, connected to your software.",
+    "hero_lead": "Your existing software, usable from Teams, WhatsApp, Telegram and Claude. Every action runs as the person asking.",
     "cta_try_api0": "Try api0.ai",
     "solution_azure_cta": "Explore the Azure suite",
     "api0_diagram_aria": "A Teams, WhatsApp or Claude chat request goes through the API0.AI gateway, which calls a travel agency booking backend",
@@ -82,7 +83,7 @@
     "api0_diagram_target": "Travel agency",
     "api0_diagram_target_sub": "booking backend",
     "api0_diagram_caption": "“Book me a flight to Lisbon” → a real API call",
-    "why_heading": "Rust and Swiss-made, by design",
+    "why_heading": "Rust, by design",
     "why_body": "Agents that touch real systems need software that doesn’t break. Everything we ship is written in Rust and built in Switzerland, from the api0 gateway to our desktop tools.",
     "selected_tools_view_all": "View all tools",
     "api0_eyebrow": "Our product",
@@ -337,6 +338,8 @@
     "api0_cta": "Explore api0.ai"
   },
   "solutions_ai_agents": {
+    "more_body": "The same Rust stack runs our desktop apps: Git, Azure, video and job-search tools that work on your machine.",
+    "more_link": "See the apps",
     "hero_eyebrow": "AI action gateway · Built in Rust",
     "hero_title": "Put your existing software into the chat your team uses",
     "hero_subtitle": "api0 is a Rust-powered MCP gateway that turns your existing REST APIs into tools for Claude and other MCP-compatible clients. Connect Claude to your backend in under five minutes.",

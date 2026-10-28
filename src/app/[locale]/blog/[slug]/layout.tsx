@@ -36,8 +36,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildMetadata({
     locale,
     path: `/blog/${slug}`,
-    title: post.title,
-    description: post.excerpt,
+    // What search results show: the post's seo_title and meta_description
+    // front matter when it has them (written for the query people type),
+    // else its title and excerpt. scripts/generate-blog-data.js fills seo.
+    title: post.seo?.title || post.title,
+    description: post.seo?.description || post.excerpt,
     ogType: 'article',
     crossLocale: false,
     alternatePaths,
