@@ -221,4 +221,4 @@ Write predictable locking code and test interleavings using tools like `loom`
 
 Two threads locking the same pair of `Mutex<T>`s in opposite orders will eventually hang,
 and Rust will compile it without complaint. That's the boundary of what the type system
-buys you: it rules out data races, not deadlocks.
+buys you: it rules out [data races](/en/blog/ownership-safety-rust), not deadlocks.

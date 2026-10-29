@@ -14,6 +14,7 @@ tags:
   - memory
   - performance
   - cache
+seo_title: "repr en Rust : optimiser la mémoire des structs"
 ---
 
 # Rust repr : Optimiser la Mémoire des Structs pour l'Efficacité Cache
@@ -80,7 +81,7 @@ L'attribut `repr` contrôle le layout mémoire des structs, ce qui est critique 
 </div>
 
 ## Comment ils fonctionnent
-**`repr(C)`** : Impose un layout compatible C avec des champs ordonnés séquentiellement comme déclarés, ajoutant du padding pour aligner chaque champ à son alignement naturel (ex : `u32` s'aligne sur 4 octets). Assure une interopérabilité prévisible et s'aligne typiquement bien avec les lignes de cache CPU (souvent 64 octets).
+**`repr(C)`** : Impose un layout compatible C avec des champs ordonnés séquentiellement comme déclarés, ajoutant du padding pour aligner chaque champ à son alignement naturel (ex : `u32` s'aligne sur 4 octets). Assure une interopérabilité prévisible et s'aligne typiquement bien avec les [lignes de cache](/fr/blog/cache-line-awareness-optimization) CPU (souvent 64 octets).
 
 **`repr(packed)`** : Supprime tout padding, empaquetant les champs étroitement ensemble indépendamment de l'alignement. Minimise l'usage mémoire mais peut mener à des accès mémoire non-alignés, qui sont plus lents sur la plupart des architectures.
 

@@ -135,7 +135,7 @@ assert!(vec.is_empty());
 
 ## Memory Behavior
 
-- All three methods retain the Vec's capacity (no reallocation if elements are re-added).
+- All three methods retain the Vec's capacity (no [reallocation](/en/blog/vec-push-vs-with-capacity-performance) if elements are re-added).
 - `drain()` is lazy: Elements are only dropped when the iterator is consumed.
 
 That laziness means the interesting work is spread over the lifetime of the `Drain` guard, not concentrated in the `drain()` call:

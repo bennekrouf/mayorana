@@ -104,11 +104,11 @@ impl FnOnce<(i32,)> for AnonymousClosure {
 
 Quand les closures sont des trait objects (ex: `Box<dyn Fn(i32) -> i32>`), Rust utilise des vtables pour le dynamic dispatch :
 - **Vtable** : Une lookup table stockant des function pointers, permettant le polymorphisme runtime
-- **Overhead** : Appels de fonction indirects (~2–3x plus lent que le static dispatch)
+- **Overhead** : Appels de fonction indirects (~2–3x plus lent que le [static dispatch](/fr/blog/dispatch-performance-rust))
 
 ## En choisir une
 Utilise les **Functions** quand :
-- Tu as besoin de zero-cost abstractions (ex : opérations mathématiques)
+- Tu as besoin de [zero-cost abstractions](/fr/blog/zero-cost-abstractions-rust) (ex : opérations mathématiques)
 - Aucune capture d'environnement n'est requise
 
 ```rust
@@ -208,9 +208,9 @@ fn dynamic_call(f: &dyn Fn(i32) -> i32, x: i32) -> i32 {
 ## La différence en une ligne
 **Functions** : Performance prévisible, pas de captures  
 **Closures** : Flexibles, capturent l'environnement, mais peuvent impliquer des vtables  
-Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de trait objects
+Préfére le static dispatch (`impl Fn`) sauf si tu as besoin de [trait objects](/fr/blog/object-safety-rust)
 
-Capture une référence mutable puis appelle la closure deux fois : le borrow checker refuse.
+Capture une référence mutable puis appelle la closure deux fois : le [borrow checker](/fr/blog/borrowing-rules-rust-fr) refuse.
 Le premier appel détient encore l'accès exclusif au moment où le second commence.
 
 ## Aller plus loin

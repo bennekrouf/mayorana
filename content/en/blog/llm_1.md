@@ -15,6 +15,7 @@ tags:
   - rust
   - attention
   - transformers
+meta_description: "Behind Transformers and attention sit four simple operations: matrix multiplication, transposition, scaling and softmax. Here they are, in Rust."
 ---
 
 # Episode 1: Attention Is Just 4 Mathematical Operations
@@ -40,7 +41,7 @@ Example: in "The bank closed its doors", the word "bank" doesn't mean the same t
 
 Attention is 4 small operations chained together. Let's go through them one by one, each with its code.
 
-Here, a matrix is simply a table of numbers: a list of rows, where each row is one word's vector. To start simple, we use the embeddings as they are for Q, K and V: we copy them 3 times.
+Here, a matrix is simply a table of numbers: a list of rows, where each row is one word's vector. To start simple, we use the [embeddings](/en/blog/embeddings-absolute-vs-contextual) as they are for Q, K and V: we copy them 3 times.
 
 ### 1. Matrix multiplication: compare each word with every other word
 

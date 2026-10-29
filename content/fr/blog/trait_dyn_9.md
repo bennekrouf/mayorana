@@ -16,6 +16,8 @@ tags:
   - traits
   - library-design
 date: '2025-12-05'
+seo_title: "Blanket implementations en Rust et règles de cohérence"
+meta_description: "Les blanket implementations en Rust réduisent la duplication de code. Comment éviter les pièges de cohérence des traits dans une bibliothèque."
 ---
 
 # Les blanket implementations : une seule impl pour tous les types qui qualifient
@@ -187,7 +189,7 @@ La cohérence de trait assure qu'aucune implémentation de trait conflictuelle n
 </svg>
 </div>
 
-**Atténuation** : Rendre `Stats` un trait scellé (non-public ou avec un supertrait privé) pour empêcher les implémentations externes :
+**Atténuation** : Rendre `Stats` un trait scellé (non-public ou avec un [supertrait](/fr/blog/supertraits-bounds-optimization) privé) pour empêcher les implémentations externes :
 
 ```rust
 mod private {
@@ -218,7 +220,7 @@ Seuls les types que je marque explicitement avec `Sealed` obtiennent la blanket 
 
 **Problème** : La blanket impl fait la monomorphization de `mean` pour chaque `T`, potentiellement augmentant la taille du code.
 
-**Atténuation** : Profiler avec `size target/release/lib` et considérer `dyn Stats` pour le dispatch dynamique si la taille du code croît excessivement, bien que cela ajoute un overhead de vtable.
+**Atténuation** : Profiler avec `size target/release/lib` et considérer `dyn Stats` pour le [dispatch dynamique](/fr/blog/dispatch-performance-rust) si la taille du code croît excessivement, bien que cela ajoute un overhead de vtable.
 
 ## Améliorer la conception
 

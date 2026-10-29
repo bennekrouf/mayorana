@@ -44,9 +44,27 @@ function getRateLimit(ip: string, limit: number): boolean {
     return rateLimitData.count > limit;
 }
 
+// A redirect chosen by Accept-Language. Temporary, because a reader with the
+// other language would be sent elsewhere, and marked as varying on the header
+// so no cache in between serves one reader's language to the next.
+function languageRedirect(url: URL): NextResponse {
+    const response = NextResponse.redirect(url, 307);
+    response.headers.set('Vary', 'Accept-Language');
+    return response;
+}
+
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+
+    // www.mayorana.ch and www.swissrust.ch answered 200 with the same pages as
+    // the bare domains: one site under two hosts. nginx sends both names here,
+    // so the move to the bare domain happens here, permanently. request.url is
+    // the upstream address behind nginx, so the URL is built from the host.
+    const host = request.headers.get('host') || '';
+    if (host.startsWith('www.')) {
+        return NextResponse.redirect(`https://${host.slice(4)}${pathname}${request.nextUrl.search}`, 301);
+    }
 
     // Block admin routes entirely at the application level (defense in depth)
     // nginx also blocks these, but this protects against direct access to the Node process
@@ -163,7 +181,7 @@ export function middleware(request: NextRequest) {
         if (pathname === '/' || pathname === '') {
             const acceptLanguage = request.headers.get('accept-language') || '';
             const targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
-            return NextResponse.redirect(new URL(`/${targetLocale}`, request.url));
+            return languageRedirect(new URL(`/${targetLocale}`, request.url));
         }
 
         // Non-locale prefixed paths: redirect to locale version
@@ -171,7 +189,7 @@ export function middleware(request: NextRequest) {
             const acceptLanguage = request.headers.get('accept-language') || '';
             const targetLocale = acceptLanguage.toLowerCase().includes('fr') ? 'fr' : 'en';
             // Keeps the query: Stripe returns subscribers to /pricing?checkout=success&session_id=…
-            return NextResponse.redirect(new URL(`/${targetLocale}${pathname}${request.nextUrl.search}`, request.url));
+            return languageRedirect(new URL(`/${targetLocale}${pathname}${request.nextUrl.search}`, request.url));
         }
     }
 

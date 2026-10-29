@@ -13,6 +13,7 @@ tags:
   - iterators
   - collections
   - ownership
+seo_title: "into_iter(), iter() et iter_mut() en Rust : différences"
 ---
 
 # Quelles sont les différences entre into_iter(), iter() et iter_mut() ?
@@ -128,7 +129,7 @@ println!("{:?}", vec);       // [2, 4, 6]
 ```
 
 **Quand l'utiliser** :
-- Quand tu as besoin de modifier les éléments sans réallocation.
+- Quand tu as besoin de modifier les éléments sans [réallocation](/fr/blog/vec-push-vs-with-capacity-performance).
 - Pour des mises à jour en masse (ex: appliquer des transformations).
 
 ## Résumé des différences clés
@@ -230,7 +231,7 @@ Le second cas surprend, car rien ne *semble* encore emprunter. L'emprunt mutable
 
 ## Notes de performance
 
-- `iter()` et `iter_mut()` sont des zero-cost abstractions (juste des pointeurs).
+- `iter()` et `iter_mut()` sont des [zero-cost abstractions](/fr/blog/zero-cost-abstractions-rust) (juste des pointeurs).
 - `into_iter()` peut impliquer des déplacements (mais optimisés pour les primitives comme `i32`).
 
 `Copy` n'a rien à voir ici : `iter_mut()` donne des `&mut T` dans tous les cas, donc

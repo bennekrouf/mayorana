@@ -15,6 +15,7 @@ tags:
   - c
   - concurrence
   - deadlock
+meta_description: "Le compilateur Rust n'empêche pas les deadlocks, mais ses garanties les rendent plus rares qu'en C. Comparaison détaillée des deux approches."
 ---
 
 # Deadlocks en C vs Rust : Que garantit vraiment Rust ?
@@ -220,4 +221,4 @@ Structure tes locks proprement, et teste avec des outils comme `loom`
 
 Deux threads qui verrouillent la même paire de `Mutex<T>` dans l'ordre inverse finiront par se
 bloquer, et Rust compilera ça sans broncher. C'est la limite de ce que le système de types
-t'achète : il exclut les data races, pas les deadlocks.
+t'achète : il exclut les [data races](/fr/blog/ownership-safety-rust-fr), pas les deadlocks.

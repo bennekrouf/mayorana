@@ -12,6 +12,7 @@ tags:
   - optimization
   - advanced
 date: '2025-11-03'
+seo_title: "Inline Assembly in Rust: When and How to Use asm!"
 ---
 
 # Mastering Inline Assembly in Rust: When and How to Optimize Safely
@@ -253,7 +254,7 @@ Because inline assembly bypasses Rust's usual safety checks, rigorous testing is
 As a final note, resist the temptation to reach for `asm!` when:
 
 - The compiler already generates optimal code (check with `cargo asm` or [Compiler Explorer](https://godbolt.org)).
-- A safe intrinsic or SIMD abstraction exists (`std::simd`, `packed_simd`, `core::arch::*`).
+- A safe intrinsic or [SIMD](/en/blog/simd-matrix-mult-rust) abstraction exists (`std::simd`, `packed_simd`, `core::arch::*`).
 - Portability matters more than a micro-optimization.
 - You're writing library code for public consumption without extensive CI across multiple targets.
 

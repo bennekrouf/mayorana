@@ -177,7 +177,7 @@ impl IoDriver for SpiDriver {
 
 ### Performance
 
-**Associated Types**: Static dispatch with one implementation per driver. `write` and `read` inline directly to hardware ops (e.g., `mov` to a register), no conversion or dispatch overhead.
+**Associated Types**: [Static dispatch](/en/blog/dispatch-performance-rust) with one implementation per driver. `write` and `read` inline directly to hardware ops (e.g., `mov` to a register), no conversion or dispatch overhead.
 
 **Generics**: Monomorphizes for each `T` used, increasing code size (e.g., `write<u8>`, `write<i32>`), even if the driver only supports one type. Bounds like `T: Into<u8>` add runtime calls.
 

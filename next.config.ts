@@ -17,6 +17,9 @@ const nextConfig = {
 
   // Fixed image configuration - use remotePatterns instead of domains
   images: {
+    // AVIF first for browsers that take it (smaller than WebP at the same
+    // quality), WebP for the rest. Next picks per request from Accept.
+    formats: ['image/avif' as const, 'image/webp' as const],
     remotePatterns: [
       {
         protocol: 'https' as const,
@@ -78,6 +81,14 @@ const nextConfig = {
       { source: '/fr/blog/flatten-vec-iterators-performance-fr', destination: '/fr/blog/flatten-vec-iterators-performance', permanent: true },
       { source: '/en/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/en/blog/vec-push-vs-with-capacity-performance', permanent: true },
       { source: '/fr/blog/vec-push-vs-with-capacity-performance-duplicate', destination: '/fr/blog/vec-push-vs-with-capacity-performance', permanent: true },
+      // Renamed posts. An unknown post slug is a 404, so every slug that was
+      // once live and changed needs its line here.
+      { source: '/fr/blog/reborrow-rust-fr', destination: '/fr/blog/reborrow-rust', permanent: true },
+      // The English copy of this post was removed; the French one remains.
+      { source: '/en/blog/dyn-mot-cle-rust-fr', destination: '/fr/blog/dyn-mot-cle-rust-fr', permanent: true },
+      // Episode 5 of the LLM series (transfer learning vocabulary) was folded
+      // into episode 4; the two were short halves of one subject.
+      { source: '/:locale(en|fr)/blog/transfer-learning-key-concepts', destination: '/:locale/blog/transfer-learning-reusing-knowledge', permanent: true },
       // The Services page is retired: the company now leads with its products.
       { source: '/:locale(en|fr)/services', destination: '/:locale', permanent: true },
       // Renamed apps. The old ids are still the licence ids, so the gateway's

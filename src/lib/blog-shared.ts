@@ -10,6 +10,8 @@ export interface BlogPost {
   title: string;
   slug: string;
   date: string;
+  /** Front matter `updated`: when the post was last substantially revised. */
+  updated?: string;
   author: string;
   excerpt: string;
   /** Raw markdown. Not emitted into blog-posts-*.json — read the .md file if you need it. */
@@ -49,6 +51,16 @@ export interface BlogPost {
   /** The subject the post's path section belongs to (rust, azure, ...).
    *  Suggestions stay within it. Absent exactly when `step` is. */
   track?: string;
+}
+
+/** A post as a listing card shows it. Client components get this rather than
+ *  the BlogPost: the listing used to send every post's whole body to the
+ *  browser in the page's RSC payload, which put the rust tag pages at over
+ *  1 MB of HTML, near the 2 MB Googlebot reads of a page. */
+export type PostCard = Pick<BlogPost, 'slug' | 'title' | 'excerpt' | 'date' | 'tags' | 'step' | 'locale' | 'counterpart'>;
+
+export function toPostCard({ slug, title, excerpt, date, tags, step, locale, counterpart }: BlogPost): PostCard {
+  return { slug, title, excerpt, date, tags, step, locale, counterpart };
 }
 
 /** A post as the "read next" suggestion needs it: enough for a card, without

@@ -15,6 +15,7 @@ tags:
   - rust
   - closures
 date: '2025-07-12'
+seo_title: "Returning Closures in Rust: Lifetimes and Captures"
 ---
 
 # How do you handle lifetimes when returning a closure that captures variables from its environment?

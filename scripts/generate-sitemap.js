@@ -9,6 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const matter = require('gray-matter');
 
 const BASE_URL = 'https://mayorana.ch';
@@ -17,22 +18,47 @@ const DEFAULT_LOCALE = 'en';
 
 // Non-blog routes below the locale segment, listed here so adding a page is a
 // one-line change. '' is the locale home page.
+const PAGE_DIR = 'src/app/[locale]';
+// `sources` date the page's <lastmod>: the last commit touching them.
 const STATIC_PAGES = [
-  { path: '', changefreq: 'weekly', priority: '1.0' },
-  { path: '/solutions/azure', changefreq: 'weekly', priority: '0.9' },
-  { path: '/solutions/ai-agents', changefreq: 'weekly', priority: '0.9' },
-  { path: '/apps', changefreq: 'weekly', priority: '0.9' },
-  { path: '/pricing', changefreq: 'monthly', priority: '0.8' },
-  { path: '/founding', changefreq: 'monthly', priority: '0.6' },
-  { path: '/about', changefreq: 'monthly', priority: '0.7' },
-  { path: '/contact', changefreq: 'monthly', priority: '0.7' },
-  { path: '/blog', changefreq: 'daily', priority: '0.9' },
-  { path: '/learn', changefreq: 'weekly', priority: '0.8' },
-  { path: '/privacy', changefreq: 'yearly', priority: '0.3' },
-  { path: '/terms', changefreq: 'yearly', priority: '0.3' },
+  { path: '', changefreq: 'weekly', priority: '1.0', sources: [`${PAGE_DIR}/page.tsx`, 'src/components/home'] },
+  { path: '/solutions/azure', changefreq: 'weekly', priority: '0.9', sources: [`${PAGE_DIR}/solutions/azure`] },
+  { path: '/solutions/ai-agents', changefreq: 'weekly', priority: '0.9', sources: [`${PAGE_DIR}/solutions/ai-agents`] },
+  { path: '/apps', changefreq: 'weekly', priority: '0.9', sources: [`${PAGE_DIR}/apps/page.tsx`, 'src/data/tools.ts'] },
+  { path: '/pricing', changefreq: 'monthly', priority: '0.8', sources: [`${PAGE_DIR}/pricing`, 'src/components/pricing'] },
+  { path: '/founding', changefreq: 'monthly', priority: '0.6', sources: [`${PAGE_DIR}/founding`] },
+  { path: '/about', changefreq: 'monthly', priority: '0.7', sources: [`${PAGE_DIR}/about`] },
+  { path: '/contact', changefreq: 'monthly', priority: '0.7', sources: [`${PAGE_DIR}/contact`] },
+  // The listing changes when a post does: dated by the newest post instead.
+  { path: '/blog', changefreq: 'daily', priority: '0.9', newestPost: true },
+  { path: '/learn', changefreq: 'weekly', priority: '0.8', newestPost: true },
+  { path: '/privacy', changefreq: 'yearly', priority: '0.3', sources: [`${PAGE_DIR}/privacy`] },
+  { path: '/terms', changefreq: 'yearly', priority: '0.3', sources: [`${PAGE_DIR}/terms`] },
 ];
 
-const today = new Date().toISOString().split('T')[0];
+// Fewest posts a tag page needs to be indexed: MIN_POSTS_TO_INDEX_TAG in
+// src/lib/blog.ts, where the page's noindex is decided. Keep the two equal.
+const MIN_POSTS_TO_INDEX_TAG = 3;
+
+// The day the given files last changed in git, or undefined when there is no
+// history to ask (a tarball build). An absent <lastmod> is better than the
+// build date: stamping every URL with the day of each deploy told crawlers
+// everything had changed, until they stopped trusting the field at all,
+// including on the posts where it is accurate.
+function gitDate(sources) {
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...sources], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    return out || undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+const postDate = (post) => String(post.updated || post.date || '').split('T')[0] || undefined;
+const newest = (posts) => posts.map(postDate).filter(Boolean).sort().pop();
 
 // Read the per-tool page slugs straight out of the catalogue, so a tool added
 // to src/data/tools.ts appears in the sitemap without a second edit here.
@@ -127,9 +153,6 @@ function scanContentDirectory(locale) {
 const tagSlug = (tag) =>
   encodeURIComponent(String(tag).toLowerCase().replace(/\s+/g, '-'));
 
-// <lastmod> is what tells a crawler a URL is worth revisiting. Posts carry a
-// real date; everything else uses the build date, which is when the deployed
-// content last changed.
 // hreflang for one URL. `alternates` maps locale -> URL and is only ever built
 // from pages proven to exist in both locales, because an hreflang pointing at a
 // 404 is worse than emitting none. x-default goes to the default locale.
@@ -150,8 +173,8 @@ function alternateLinks(alternates) {
 function urlEntry({ loc, changefreq, priority, lastmod, alternates }) {
   return `
   <url>
-    <loc>${loc}</loc>
-    <lastmod>${lastmod || today}</lastmod>
+    <loc>${loc}</loc>${lastmod ? `
+    <lastmod>${lastmod}</lastmod>` : ''}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>${alternateLinks(alternates)}
   </url>`;
@@ -192,15 +215,24 @@ async function generateSitemap() {
   const postPairs = pairPosts(postsByLocale);
   // A tag page exists in a locale only if some post there carries the tag, so
   // pair tags on an exact slug match across the two tag sets.
-  const tagsByLocale = Object.fromEntries(
-    LOCALES.map((locale) => [
-      locale,
-      new Set((postsByLocale[locale] || []).flatMap((p) => (p.tags || []).map(tagSlug))),
-    ]),
-  );
+  // Only tags with enough posts to be indexed; the rest are noindex pages.
+  const postsByTag = (locale) => {
+    const byTag = new Map();
+    for (const post of postsByLocale[locale] || []) {
+      for (const tag of new Set((post.tags || []).map(tagSlug))) {
+        byTag.set(tag, [...(byTag.get(tag) || []), post]);
+      }
+    }
+    return new Map([...byTag].filter(([, posts]) => posts.length >= MIN_POSTS_TO_INDEX_TAG));
+  };
+  const tagsByLocale = Object.fromEntries(LOCALES.map((locale) => [locale, postsByTag(locale)]));
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
+
+  const staticDates = new Map(
+    STATIC_PAGES.filter((p) => p.sources).map((p) => [p.path, gitDate(p.sources)]),
+  );
 
   const counts = { static: 0, tools: 0, releases: 0, posts: 0, tags: 0, tracks: 0 };
 
@@ -228,6 +260,7 @@ async function generateSitemap() {
         loc: `${prefix}${page.path}`,
         changefreq: page.changefreq,
         priority: page.priority,
+        lastmod: page.newestPost ? newest(postsByLocale[locale] || []) : staticDates.get(page.path),
         alternates: sameInEveryLocale(page.path),
       });
       counts.static++;
@@ -240,6 +273,7 @@ async function generateSitemap() {
         loc: `${prefix}/apps/${slug}`,
         changefreq: 'weekly',
         priority: '0.9',
+        lastmod: releaseDates[slug],
         alternates: sameInEveryLocale(`/apps/${slug}`),
       });
       counts.tools++;
@@ -266,6 +300,7 @@ async function generateSitemap() {
         loc: `${prefix}/learn/${track}`,
         changefreq: 'weekly',
         priority: '0.8',
+        lastmod: newest((postsByLocale[locale] || []).filter((p) => p.track === track)),
         alternates: Object.keys(alternates).length > 1 ? alternates : undefined,
       });
       counts.tracks++;
@@ -281,7 +316,7 @@ async function generateSitemap() {
         loc: `${prefix}/blog/${post.slug}`,
         changefreq: 'monthly',
         priority: '0.8',
-        lastmod: post.date ? String(post.date).split('T')[0] : undefined,
+        lastmod: postDate(post),
         alternates: postPairs.get(`${locale}:${post.slug}`),
       });
       counts.posts++;
@@ -289,12 +324,13 @@ async function generateSitemap() {
 
     sitemap += `
   <!-- ${locale}: tag pages -->`;
-    for (const tag of tags) {
+    for (const [tag, tagPosts] of tags) {
       const inEveryLocale = LOCALES.every((l) => tagsByLocale[l].has(tag));
       sitemap += urlEntry({
         loc: `${prefix}/blog/tag/${tag}`,
         changefreq: 'weekly',
         priority: '0.5',
+        lastmod: newest(tagPosts),
         alternates: inEveryLocale ? sameInEveryLocale(`/blog/tag/${tag}`) : undefined,
       });
       counts.tags++;

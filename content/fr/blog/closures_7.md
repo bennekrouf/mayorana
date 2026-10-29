@@ -18,6 +18,8 @@ tags:
   - move
   - references
 date: '2025-11-09'
+seo_title: "Retourner une closure en Rust : lifetimes et captures"
+meta_description: "Retourner une closure qui capture des variables en Rust : transfert d'ownership, annotations de lifetime, et éviter les références pendantes."
 ---
 
 # Comment gérer les lifetimes lors du retour d'une closure qui capture des variables de son environnement ?
@@ -743,4 +745,4 @@ fn main() {
 
 ---
 
-**Conclusion :** La gestion des lifetimes avec les closures requiert une compréhension claire de l'ownership et des annotations de lifetime. Utilise `move` pour transférer l'ownership, annote les lifetimes pour les références, et Evite les dangling references pour écrire du code Rust sûr et expressif !
+**Conclusion :** La gestion des lifetimes avec les closures requiert une compréhension claire de l'ownership et des annotations de lifetime. Utilise `move` pour transférer l'ownership, annote les lifetimes pour les références, et Evite les [dangling references](/fr/blog/dangling-pointer-rust-fr) pour écrire du code Rust sûr et expressif !

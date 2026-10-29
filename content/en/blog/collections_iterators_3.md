@@ -12,6 +12,7 @@ tags:
   - iterators
   - collections
 date: '2025-07-16'
+seo_title: "Rust collect(): Iterators into Vec, HashMap and String"
 ---
 
 # Rust's collect() Magic: Turning Iterators into Vecs, HashMaps, and Strings!
@@ -205,13 +206,13 @@ let nums = MyCollection::from_iter(1..=3); // MyCollection([1, 2, 3])
 
 ## Performance Notes
 
-- **Pre-allocated Collections**: Use `with_capacity` + `extend()` if size is known:
+- **[Pre-allocated](/en/blog/vec-new-vs-with-capacity) Collections**: Use `with_capacity` + `extend()` if size is known:
   ```rust
   let mut vec = Vec::with_capacity(100);
   vec.extend(1..=100);  // Faster than collect() for large iterables
   ```
 
-- **Zero-Cost Abstractions**: `collect()` is optimized (e.g., `Vec` from ranges avoids bounds checks).
+- **[Zero-Cost Abstractions](/en/blog/zero-cost-abstractions-rust)**: `collect()` is optimized (e.g., `Vec` from ranges avoids bounds checks).
 
 ## Common Pitfalls
 

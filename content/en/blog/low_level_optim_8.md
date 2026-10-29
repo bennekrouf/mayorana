@@ -96,7 +96,7 @@ fn parse_stream(data: &[u32]) -> u32 {
 ## Downsides of Overuse
 
 ### Code Size Increase
-- Inlining duplicates the function body everywhere it's called. For a larger function (e.g., 20 instructions) called 100 times, the binary grows by 2,000 instructions, bloating the instruction cache (I-cache).
+- Inlining [duplicates](/en/blog/efficient-duplicate-removal-vec) the function body everywhere it's called. For a larger function (e.g., 20 instructions) called 100 times, the binary grows by 2,000 instructions, bloating the instruction cache (I-cache).
 - **Impact**: More I-cache misses, slowing execution despite fewer calls.
 
 ### Compile Time
@@ -171,7 +171,7 @@ fn parse_stream(data: &[u32]) -> u32 {
 - Run `size target/release/myapp` before and after. If the `.text` section balloons (e.g., 10KB to 100KB), reconsider inlining larger functions.
 
 ### Alternatives
-- Loop unrolling or iterator fusion (Rust's zero-cost abstractions) can achieve similar gains without forced inlining.
+- Loop unrolling or iterator fusion (Rust's [zero-cost abstractions](/en/blog/zero-cost-abstractions-rust)) can achieve similar gains without forced inlining.
 - **Example**: Rewrite `parse_stream` with `fold` to let the compiler inline implicitly.
 
 ## Checking the result

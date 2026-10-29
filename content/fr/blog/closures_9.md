@@ -19,7 +19,7 @@ date: '2025-11-11'
 
 # Comment stocker une closure dans une struct ?
 
-Stocker une closure dans une struct nécessite de spécifier des trait bounds (`Fn`, `FnMut`, `FnOnce`) et potentiellement des lifetimes si la closure capture des références. Voici comment faire :
+Stocker une closure dans une struct nécessite de spécifier des [trait bounds](/fr/blog/trait-bounds-rust) (`Fn`, `FnMut`, `FnOnce`) et potentiellement des lifetimes si la closure capture des références. Voici comment faire :
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl9-fig" viewBox="0 0 800 280" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Trois façons de stocker une closure dans une struct : dispatch statique générique, dispatch dynamique boxé, ou références liées à une lifetime">
@@ -134,7 +134,7 @@ fn main() {
 ### Points clés
 - **Annotation de lifetime** : Requise si la closure capture des références (ex : `Box<dyn Fn() -> &str + 'a>`).
 - **Flexibilité** : Peut stocker n'importe quelle closure correspondant au trait.
-- **Overhead** : Vtable lookup (dynamic dispatch).
+- **Overhead** : Vtable lookup ([dynamic dispatch](/fr/blog/dispatch-performance-rust)).
 
 ## 3. Exemples avancés de Storage
 
@@ -801,7 +801,7 @@ fn mutable_example() {
 ## Points clés
 
 **Structs génériques : Meilleures pour performance et static dispatch.**  
-**Trait objects : Utilise quand tu stockes des closures hétérogènes.**  
+**[Trait objects](/fr/blog/object-safety-rust) : Utilise quand tu stockes des closures hétérogènes.**  
 **Lifetimes : Requis si la closure capture des références.**
 
 ### Règles pratiques

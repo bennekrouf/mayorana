@@ -11,6 +11,7 @@ tags:
   - rust
   - closures
 date: '2025-07-09'
+seo_title: "impl Fn vs Box<dyn Fn> in Rust: Closure Dispatch"
 ---
 
 # impl Fn() vs. Box<dyn Fn()>: Rust's Closure Dispatch Showdown
@@ -78,7 +79,7 @@ Rust’s closure system offers two ways to handle function-like behavior: `impl 
 - **Use When**:
   - The closure type is fixed and known at compile time.
   - Performance is critical (e.g., hot loops, embedded systems).
-  - Zero-cost abstractions are desired.
+  - [Zero-cost abstractions](/en/blog/zero-cost-abstractions-rust) are desired.
 - **Why**: The compiler generates a unique function for each closure type via monomorphization, enabling inlining and no runtime overhead.
 
 **Example**:

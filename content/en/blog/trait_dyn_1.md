@@ -12,6 +12,7 @@ excerpt: >-
 tags:
   - rust
   - traits
+seo_title: "Rust Traits vs Java and C# Interfaces"
 ---
 
 # Rust Traits vs. Java/C# Interfaces: Shared Behavior Done Right
@@ -74,7 +75,7 @@ Rust traits and interfaces both define shared behavior, but differ fundamentally
 
 ## Implementation and Dispatch
 
-**Rust Traits**: Support static dispatch via generics where the compiler monomorphizes code for each type, inlining calls for zero runtime overhead. Dynamic dispatch (`dyn Trait`) uses vtables but is opt-in.
+**Rust Traits**: Support [static dispatch](/en/blog/dispatch-performance-rust) via generics where the compiler monomorphizes code for each type, inlining calls for zero runtime overhead. Dynamic dispatch (`dyn Trait`) uses vtables but is opt-in.
 
 **Java/C# Interfaces**: Rely on runtime polymorphism via vtables, incurring dispatch costs and preventing inlining across type boundaries.
 
@@ -128,12 +129,12 @@ let bytes = process_packets(&mut tcp, &packets); // Static dispatch
 ### Performance
 
 - **Static Dispatch**: `process_packets` monomorphizes for `TcpHandler` and `UdpHandler`, generating separate, inlined code paths. No vtable lookups, saving cycles in hot loops
-- **Inlining**: Compiler can inline `process` calls, fusing them with the loop, reducing branches and enabling SIMD optimizations
+- **Inlining**: Compiler can inline `process` calls, fusing them with the loop, reducing branches and enabling [SIMD](/en/blog/simd-matrix-mult-rust) optimizations
 - **Zero-Cost**: Trait abstraction adds no runtime overhead—equivalent to hand-writing `process_tcp` and `process_udp`
 
 ### Safety
 
-- **Type Safety**: Trait bound `H: PacketHandler` ensures only compatible types are passed, checked at compile time—no runtime casts like Java's `instanceof`
+- **Type Safety**: [Trait bound](/en/blog/trait-bounds-rust) `H: PacketHandler` ensures only compatible types are passed, checked at compile time—no runtime casts like Java's `instanceof`
 - **Encapsulation**: Each handler manages its state (`state` or `count`), with Rust's ownership enforcing mutation rules
 
 <div class="svg-container" style="margin:2rem 0;">
@@ -201,13 +202,13 @@ Every `process` call goes through a vtable, preventing loop fusion and adding in
 
 ## Advanced Considerations
 
-- **Associated Types**: Enable type-level constraints without runtime overhead
+- **[Associated Types](/en/blog/associated-types-io-driver-api)**: Enable type-level constraints without runtime overhead
 - **Default Implementations**: Reduce boilerplate while maintaining zero-cost
-- **Supertraits**: Compose behavior without inheritance complexity
+- **[Supertraits](/en/blog/supertraits-bounds-optimization)**: Compose behavior without inheritance complexity
 - **Dynamic Dispatch**: Use `Box<dyn PacketHandler>` when type erasure is needed
 
 ## Traits vs interfaces, in short
-**Rust traits**: Compile-time resolution, zero-cost abstraction, static dispatch by default  
+**Rust traits**: Compile-time resolution, [zero-cost abstraction](/en/blog/zero-cost-abstractions-rust), static dispatch by default  
 **Java/C# interfaces**: Runtime polymorphism, vtable overhead, dynamic by nature  
 Use traits for performance-critical code where static dispatch eliminates overhead
 

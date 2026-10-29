@@ -117,7 +117,6 @@
         "query-key-value-three-matrices",
         "embeddings-absolute-vs-contextual",
         "transfer-learning-reusing-knowledge",
-        "transfer-learning-key-concepts",
         "embeddings-vector-databases-rag"
       ]
     },

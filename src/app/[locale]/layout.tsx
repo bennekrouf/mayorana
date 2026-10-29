@@ -43,7 +43,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export function generateStaticParams() {
-  // console.log('🔍 generateStaticParams called with locales:', locales);
   return locales.map((locale) => ({ locale }));
 }
 
@@ -61,19 +60,14 @@ export default async function LocaleLayout({
   // mayorana.ch.
   const { locale } = await params;
 
-  // console.log('🔍 LocaleLayout - received locale:', locale);
-
   // Validate locale
   if (!locales.includes(locale as (typeof locales)[number])) {
-    console.log('❌ LocaleLayout - Invalid locale');
     notFound();
   }
 
   // Lets next-intl calls below that pass no locale find it without reading
   // the request, which would make the page dynamic.
   setRequestLocale(locale);
-
-  // console.log('✅ LocaleLayout - Valid locale confirmed:', locale);
 
   // MANUAL: Load messages for the specific locale from the route
   let messages;
@@ -83,7 +77,6 @@ export default async function LocaleLayout({
     } else {
       messages = (await import('../../../messages/en.json')).default;
     }
-    // console.log('✅ LocaleLayout - Messages loaded manually for:', locale);
   } catch (error) {
     console.error('❌ Error loading messages manually:', error);
     // Fallback to English
@@ -102,6 +95,7 @@ export default async function LocaleLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
+              '@id': 'https://mayorana.ch/#organization',
               name: 'Mayorana',
               alternateName: 'Mayorana Sàrl',
               url: 'https://mayorana.ch',
@@ -115,9 +109,9 @@ export default async function LocaleLayout({
                 },
               },
               // sameAs is for profiles on *other* sites — pointing it back at
-              // mayorana.ch told search engines nothing. The GitHub org hosts
-              // the source for every tool, which is a real entity link.
-              sameAs: ['https://github.com/bennekrouf'],
+              // mayorana.ch told search engines nothing. The company page on
+              // LinkedIn, and the GitHub account that hosts every tool's source.
+              sameAs: ['https://www.linkedin.com/company/mayorana', 'https://github.com/bennekrouf'],
             }),
           }}
         />

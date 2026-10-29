@@ -328,7 +328,7 @@ fn main() {
 
 ## Ownership (Propriété)
 
-L'ownership est la fonctionnalité la plus unique de Rust et permet la memory safety sans garbage collection. Les règles principales sont :
+L'ownership est la fonctionnalité la plus unique de Rust et permet la memory safety sans [garbage collection](/fr/blog/why-garbage-collector-fr). Les règles principales sont :
 
 1. **Chaque valeur en Rust a une variable qui en est le propriétaire**
 2. **Il ne peut y avoir qu'un seul propriétaire à la fois**

@@ -18,7 +18,7 @@ tags:
 
 # Mutable vs. immutable borrows: the two rules
 
-Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure memory safety and prevent data races without runtime overhead. These rules govern how data can be accessed via references, distinguishing between mutable (`&mut T`) and immutable (`&T`) borrows.
+Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure memory safety and prevent [data races](/en/blog/ownership-safety-rust) without runtime overhead. These rules govern how data can be accessed via references, distinguishing between mutable (`&mut T`) and immutable (`&T`) borrows.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm9-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Allowed borrow states are many immutable references or exactly one mutable reference to the same data; mixing a mutable and immutable borrow is rejected">
@@ -63,7 +63,7 @@ Rust’s borrowing rules, enforced by the borrow checker at compile time, ensure
      - **One mutable reference** (`&mut T`), OR
      - **Any number of immutable references** (`&T`).
    - Never both at the same time for the same data.
-2. **References Must Always Be Valid (No Dangling Pointers)**:
+2. **References Must Always Be Valid (No [Dangling Pointers](/en/blog/dangling-pointer-rust))**:
    - Borrowed references cannot outlive the data they point to, enforced by Rust’s lifetime system.
 
 ## Immutable Borrows (`&T`)

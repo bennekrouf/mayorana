@@ -14,6 +14,7 @@ tags:
   - performance
   - profiling
 date: '2025-11-17'
+seo_title: "Branch prediction en Rust : accélérer les boucles chaudes"
 ---
 
 # Booster les Boucles Chaudes Rust : Réduire les Branch Mispredictions
@@ -410,7 +411,7 @@ fn process_mixed_data_optimized(data: &[(i32, bool)]) -> Vec<i32> {
 
 ## Exploiter les Fonctionnalités de Rust
 
-Le modèle d'ownership de Rust et les abstractions zéro-coût (ex : fusion d'itérateurs) réduisent les branches implicites. Les itérateurs comme `filter` peuvent être inlinés et optimisés, et le système de types encourage des patterns propres et optimisables sans code unsafe.
+Le modèle d'ownership de Rust et les [abstractions zéro-coût](/fr/blog/zero-cost-abstractions-rust) (ex : fusion d'itérateurs) réduisent les branches implicites. Les itérateurs comme `filter` peuvent être inlinés et optimisés, et le système de types encourage des patterns propres et optimisables sans code unsafe.
 
 ### Techniques spécifiques à Rust
 ```rust

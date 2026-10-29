@@ -14,11 +14,12 @@ tags:
   - generics
   - performance
   - traits
+seo_title: "Dispatch statique ou dynamique en Rust : génériques ou dyn ?"
 ---
 
 # Borne de trait ou dyn Trait ? Dispatch statique et dynamique comparés
 
-En Rust, le **dispatch statique** (via les generics avec trait bounds) et le **dispatch dynamique** (via `dyn Trait`) offrent des profils de performance distincts, critiques pour des systèmes comme les processeurs de données temps réel. Le dispatch statique exploite la monomorphization pour la vitesse, tandis que le dispatch dynamique utilise des vtables pour la flexibilité. Ci-dessous, je compare les deux avec un exemple et expose quand choisir chacun basé sur la performance, flexibilité et maintenabilité.
+En Rust, le **dispatch statique** (via les generics avec [trait bounds](/fr/blog/trait-bounds-rust)) et le **dispatch dynamique** (via `dyn Trait`) offrent des profils de performance distincts, critiques pour des systèmes comme les processeurs de données temps réel. Le dispatch statique exploite la monomorphization pour la vitesse, tandis que le dispatch dynamique utilise des vtables pour la flexibilité. Ci-dessous, je compare les deux avec un exemple et expose quand choisir chacun basé sur la performance, flexibilité et maintenabilité.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="td3-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Séquence d'appel par événement pour process_static versus process_dynamic sur 1 million d'événements">

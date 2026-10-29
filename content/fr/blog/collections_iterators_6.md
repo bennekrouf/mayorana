@@ -16,6 +16,7 @@ tags:
   - memory
   - performance
 date: '2025-10-28'
+meta_description: "Vec porte un champ de capacité, Box<[T]> non. Surcoût mémoire, mutabilité, conversion : quand choisir l'un ou l'autre en Rust."
 ---
 
 # Quelle est la différence entre Box<[T]> et Vec<T> ?

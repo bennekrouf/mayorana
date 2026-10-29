@@ -299,7 +299,7 @@ if (error) {
 free(data);  // Easy to forget or double-free
 ```
 
-**Option 2: Garbage Collection**
+**Option 2: [Garbage Collection](/en/blog/why-garbage-collector)**
 - Add GC library like Boehm GC
 - Lose performance predictability
 - Still possible to have memory leaks

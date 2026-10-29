@@ -20,7 +20,7 @@ tags:
 
 ## The million-dollar question
 
-In the previous episode, we said that we "copy the embeddings 3 times". But is that **always** the case? And **why** 3 copies?
+In the previous episode, we said that we "copy the [embeddings](/en/blog/embeddings-absolute-vs-contextual) 3 times". But is that **always** the case? And **why** 3 copies?
 
 ## The short answer
 

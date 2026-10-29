@@ -15,11 +15,12 @@ tags:
   - borrowing
   - ownership
   - borrow-checker
+seo_title: "Rust Reborrowing (&mut *x): Why the Original Is Frozen"
 ---
 
 # What is &mut *x (reborrow) in Rust, and why does it freeze the original reference?
 
-In Rust, the expression `&mut *x` is called a **reborrow**. It lets you create a new mutable reference from an existing one without consuming it — something the borrow checker would normally block. Understanding reborrows is key to writing idiomatic Rust when dealing with mutable references across function boundaries.
+In Rust, the expression `&mut *x` is called a **reborrow**. It lets you create a new mutable reference from an existing one without consuming it — something the [borrow checker](/en/blog/borrowing-rules-rust) would normally block. Understanding reborrows is key to writing idiomatic Rust when dealing with mutable references across function boundaries.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm13-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Timeline of a reborrow: x is active, then y reborrows and x freezes, then y drops and x becomes active again">

@@ -2,8 +2,21 @@
   "name": "surfacewatch",
   "product": "SurfaceWatch",
   "page": "https://mayorana.ch/en/apps/surfacewatch",
-  "generated_at": "2026-10-28T14:21:58Z",
+  "generated_at": "2026-10-28T17:04:22Z",
   "releases": [
+    {
+      "version": "0.1.21",
+      "tag": "v0.1.21",
+      "date": "2026-10-28",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**Use from Claude**: SurfaceWatch can now be connected to Claude Desktop, Claude Code, Codex or any other MCP app, from the button at the top right. Ask about your engagements: what changed between two builds, which endpoints are flagged, which findings are still open, and the evidence behind them. Claude only reads: captures, retests and findings are still made in the app. On a machine with only the command line, `surfacewatch-cli mcp` serves the same tools."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.20",
       "tag": "v0.1.20",

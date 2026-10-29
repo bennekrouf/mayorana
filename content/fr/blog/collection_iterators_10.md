@@ -17,6 +17,7 @@ tags:
   - into-iter
   - collections
 date: '2025-08-21'
+seo_title: "into_iter() ou iter() sur un Vec en Rust : l'ownership"
 ---
 
 # Implications d'itérer sur un Vec avec .into_iter() au lieu de .iter()

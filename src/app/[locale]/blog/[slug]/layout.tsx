@@ -42,6 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.seo?.title || post.title,
     description: post.seo?.description || post.excerpt,
     ogType: 'article',
+    titleSuffix: false,
+    ogImagePath: `/blog/${slug}/opengraph-image`,
     crossLocale: false,
     alternatePaths,
     markdownUrl: `${SITE_URL}/${locale}/blog/${slug}.md`,

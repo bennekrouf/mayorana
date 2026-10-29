@@ -15,6 +15,7 @@ tags:
   - cow
   - string
   - copy-on-write
+seo_title: "Cow (Copy-on-Write) en Rust : fonctionnement et usages"
 ---
 
 # Comment fonctionne Cow<'a, B> (Copy-on-Write) en Rust ? Quand l'utiliser ?

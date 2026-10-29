@@ -15,6 +15,7 @@ tags:
   - string
   - str
   - ownership
+seo_title: "&str vs &String in Rust: Fixing the Type Mismatch"
 ---
 
 # Why &str Won't Fit &String in Rust: Fun Fixes for String Mismatches!

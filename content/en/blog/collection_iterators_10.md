@@ -13,6 +13,7 @@ tags:
   - iterators
   - collections
 date: '2025-07-14'
+seo_title: "Rust into_iter() vs iter() on a Vec: Ownership Explained"
 ---
 
 # Implications of iterating over a Vec with .into_iter() instead of .iter()

@@ -16,6 +16,7 @@ tags:
   - traits
   - library-design
 date: '2025-08-17'
+seo_title: "Rust Blanket Implementations and Coherence Rules"
 ---
 
 # Blanket implementations: one impl for every type that qualifies
@@ -195,7 +196,7 @@ Blanket implementations amplify coherence risks:
 </svg>
 </div>
 
-**Mitigation**: Make `Stats` a sealed trait (non-public or with a private supertrait) to prevent external implementations:
+**Mitigation**: Make `Stats` a sealed trait (non-public or with a private [supertrait](/en/blog/supertraits-bounds-optimization)) to prevent external implementations:
 
 ```rust
 mod private {
@@ -226,11 +227,11 @@ Only types I explicitly mark with `Sealed` get the blanket `Stats`.
 
 **Problem**: The blanket impl monomorphizes `mean` for each `T`, potentially increasing code size.
 
-**Mitigation**: Profile with `size target/release/lib` and consider `dyn Stats` for dynamic dispatch if code size grows excessively, though this adds vtable overhead.
+**Mitigation**: Profile with `size target/release/lib` and consider `dyn Stats` for [dynamic dispatch](/en/blog/dispatch-performance-rust) if code size grows excessively, though this adds vtable overhead.
 
 ## Enhancing the Design
 
-- **Flexibility**: Add associated types or methods to `Stats` for more stats (e.g., variance), reusing `Summable`'s sum.
+- **Flexibility**: Add [associated types](/en/blog/associated-types-io-driver-api) or methods to `Stats` for more stats (e.g., variance), reusing `Summable`'s sum.
 - **Generality**: Extend `Len` to other collections (e.g., `[T]`, `VecDeque<T>`).
 - **Safety**: Use where clauses to enforce invariants (e.g., non-empty collections).
 

@@ -15,6 +15,8 @@ tags:
   - service-bus
   - event-grid
   - integration
+seo_title: "Azure Logic Apps : un graphe que le portail ne montre pas"
+meta_description: "Passé une douzaine de workflows, Azure Logic Apps devient un graphe relié par Service Bus et Event Grid. Pourquoi le portail ne le montre pas."
 ---
 
 # Tes Logic Apps forment un graphe, et le portail Azure ne te montre qu'une liste
@@ -66,8 +68,8 @@ L'usage en lecture ne demande que le rôle Reader. La console de bureau peut aus
 
 ## Où cela se situe
 
-Surveiller un parc déployé est un problème. Développer localement contre lui en est un autre : pour cela, [AIS Runner](/fr/apps/ais-runner) exécute Logic Apps Standard sur ta machine sans déployer sur Azure.
+Surveiller un parc déployé est un problème. Développer localement contre lui en est un autre : pour cela, [AIS Runner](/fr/apps/ais-runner) exécute [Logic Apps Standard](/fr/blog/ais-runner-intro-fr) sur ta machine sans déployer sur Azure.
 
-Et quand la question n'est pas « quels workflows sont concernés » mais « jusqu'où cette commande est-elle allée », c'est un problème de traçage : [AIS Tracing](/fr/apps/ais-tracing) suit un identifiant de corrélation à travers tous les containers d'un compte Cosmos DB, et [AIS Analytics](/fr/apps/ais-analytics) fait de même sur un espace de travail Log Analytics.
+Et quand la question n'est pas « quels workflows sont concernés » mais « jusqu'où cette commande est-elle allée », c'est un problème de traçage : [AIS Tracing](/fr/apps/ais-tracing) suit un [identifiant de corrélation](/fr/blog/trace-correlation-id-log-analytics-fr) à travers tous les containers d'un compte Cosmos DB, et [AIS Analytics](/fr/apps/ais-analytics) fait de même sur un espace de travail Log Analytics.
 
 Toutes sont des apps de bureau natives écrites en Rust, à source disponible sur GitHub, et gratuites pour un usage personnel, éducatif et non lucratif — l'usage commercial requiert une licence.

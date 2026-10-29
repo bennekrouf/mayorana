@@ -17,11 +17,12 @@ tags:
   - optimization
   - traits
 date: '2025-08-14'
+meta_description: "Supertraits build behaviour hierarchies in Rust; combined with where clauses they keep complex generic algorithms fast and type-safe."
 ---
 
 # Supertraits: enforcing a hierarchy of behaviours
 
-In a Rust numerical computation library, I'd use supertraits to create a hierarchy of behaviors, ensuring that advanced operations build on basic ones, and combine them with where clauses to write a complex generic algorithm that's type-safe and performant. This approach organizes code logically, enforces correctness at compile time, and optimizes for efficiency through static dispatch.
+In a Rust numerical computation library, I'd use supertraits to create a hierarchy of behaviors, ensuring that advanced operations build on basic ones, and combine them with where clauses to write a complex generic algorithm that's type-safe and performant. This approach organizes code logically, enforces correctness at compile time, and optimizes for efficiency through [static dispatch](/en/blog/dispatch-performance-rust).
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="td5-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Layered supertrait hierarchy from Numeric up to AdvancedNumeric consumed by matrix_multiply">
@@ -220,7 +221,7 @@ matrix_multiply(&strings, &strings, 1, 1, 1); // Error: String lacks Numeric
 
 - **Clarity**: Move complex bounds (`T: AdvancedNumeric`, `T::Output: Into<f64>`) out of the function signature, improving readability.
 - **Flexibility**: Allow additional constraints without altering the trait hierarchy (e.g., adding `T: Debug` for logging).
-- **Optimization**: Enable the compiler to see all constraints upfront, aiding inlining and loop optimizations (e.g., SIMD for `f32` arrays).
+- **Optimization**: Enable the compiler to see all constraints upfront, aiding inlining and loop optimizations (e.g., [SIMD](/en/blog/simd-matrix-mult-rust) for `f32` arrays).
 
 ## Example Optimization
 

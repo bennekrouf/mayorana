@@ -101,7 +101,7 @@ for subvec in nested {
 
 ### Pre-allocation Advantage (Manual)
 
-You can pre-allocate the target Vec if total size is known:
+You can [pre-allocate](/en/blog/vec-new-vs-with-capacity) the target Vec if total size is known:
 
 ```rust
 let total_len: usize = nested.iter().map(|v| v.len()).sum();

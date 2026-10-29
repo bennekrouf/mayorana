@@ -92,7 +92,7 @@ This high-level code appears to involve multiple passes over the data, but Rust�
   }
   ```
   LLVM’s loop optimization pass combines the condition and transformation into one iteration.
-- **Iterator Size Hints**: Rust iterators provide `size_hint()` to estimate output length. Here, `collect()` uses this to pre-allocate the `Vec`, avoiding reallocations—a key efficiency win.
+- **Iterator Size Hints**: Rust iterators provide `size_hint()` to estimate output length. Here, `collect()` uses this to [pre-allocate](/en/blog/vec-new-vs-with-capacity) the `Vec`, avoiding [reallocations](/en/blog/vec-push-vs-with-capacity-performance)—a key efficiency win.
 - **Dead Code Elimination and Simplification**: Rust’s ownership and type system ensure no runtime reference counting or unnecessary bounds checks persist. LLVM further simplifies arithmetic or removes redundant branches (e.g., constant folding in complex closures).
 
 The result is a tight loop with no abstraction penalty, matching the performance of C-style code, as Rust’s type safety and iterator design give the compiler full visibility into the data flow.

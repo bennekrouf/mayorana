@@ -15,6 +15,8 @@ tags:
   - kql
   - observability
   - debugging
+seo_title: "Trace a Correlation ID in Log Analytics Without KQL"
+meta_description: "Where did your Azure integration flow stop? Follow one correlation ID across every Log Analytics table without writing a KQL query per table."
 ---
 
 # Following a Correlation ID Through Log Analytics Without Writing KQL
@@ -27,7 +29,7 @@ A workspace that has been running for a year has tables from everywhere: `AzureD
 
 Nobody has a complete mental model of it. The people who do have partial models each know a different third.
 
-So tracing one correlation id means: work out which tables could be relevant, work out what the correlating column is called in each of them, write a query per table, and hold the results in your head while comparing timestamps.
+So tracing one [correlation id](/en/blog/trace-correlation-id-cosmos-db) means: work out which tables could be relevant, work out what the correlating column is called in each of them, write a query per table, and hold the results in your head while comparing timestamps.
 
 ## KQL is not the hard part
 

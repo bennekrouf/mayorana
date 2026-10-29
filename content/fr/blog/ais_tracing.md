@@ -16,6 +16,8 @@ tags:
   - observability
   - integration
   - debugging
+seo_title: "Tracer un ID de corrélation dans Azure Cosmos DB"
+meta_description: "Une commande n'est jamais arrivée : tracer son identifiant de corrélation dans les containers Cosmos DB, et pourquoi les résultats vides comptent."
 ---
 
 # Jusqu'où cette commande est-elle allée ? Tracer un identifiant de corrélation dans Cosmos DB
@@ -66,7 +68,7 @@ Un outil qui masque ses résultats vides jette la moitié de ce que la trace te 
 
 La partie réellement pénible — le nom de champ qui diffère d'un container à l'autre — se résout sans configuration.
 
-Échantillonne un container. Regarde les valeurs à travers ses documents. Les champs qui relient les documents entre eux ont une signature reconnaissable : forte cardinalité, format constant, présence dans la plupart des documents et — surtout — valeurs partagées avec des champs d'autres containers. Un timestamp `createdAt` ne ressemble pas à cela. Un identifiant de corrélation, si.
+Échantillonne un container. Regarde les valeurs à travers ses documents. Les champs qui relient les documents entre eux ont une signature reconnaissable : forte cardinalité, format constant, présence dans la plupart des documents et — surtout — valeurs partagées avec des champs d'autres containers. Un timestamp `createdAt` ne ressemble pas à cela. Un [identifiant de corrélation](/fr/blog/trace-correlation-id-log-analytics-fr), si.
 
 Faire cette déduction depuis les données signifie que tu n'as jamais à décrire ton schéma à l'outil, et que cela continue de fonctionner quand quelqu'un ajoute un container le trimestre suivant avec encore un autre nom de champ.
 

@@ -162,13 +162,13 @@ fn main() {
 
 ## Ensuring Performance
 
-- **Static Dispatch**: The bounds enable static dispatch via generics. The compiler monomorphizes `dot_product` for each `T`, generating specialized code (e.g., one for `f32`, another for `i32`).
-- **Inlining**: Small operations like `+` and `*` (from `Add` and `Mul`) are inlined, reducing call overhead and enabling loop optimizations (e.g., unrolling or SIMD if `T` is a primitive).
+- **[Static Dispatch](/en/blog/dispatch-performance-rust)**: The bounds enable static dispatch via generics. The compiler monomorphizes `dot_product` for each `T`, generating specialized code (e.g., one for `f32`, another for `i32`).
+- **Inlining**: Small operations like `+` and `*` (from `Add` and `Mul`) are inlined, reducing call overhead and enabling loop optimizations (e.g., unrolling or [SIMD](/en/blog/simd-matrix-mult-rust) if `T` is a primitive).
 - **No Abstraction Overhead**: Unlike `dyn Trait`, there’s no vtable—pure machine code tailored to `T`.
 
 ## Impact on Monomorphization
 
-Monomorphization duplicates the generic function for each concrete type used:
+Monomorphization [duplicates](/en/blog/efficient-duplicate-removal-vec) the generic function for each concrete type used:
 
 - **For `f32`**:
   ```asm

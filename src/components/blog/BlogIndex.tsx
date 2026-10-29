@@ -17,6 +17,7 @@ import {
 } from '@/lib/blog';
 // import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
 
@@ -34,7 +35,7 @@ export async function blogIndexMetadata(
   isSwissRust: boolean,
 ): Promise<Metadata> {
   const { locale } = await params;
-  const page = parseInt((await searchParams).page as string) || 1;
+  const page = requestedPage(await searchParams, locale, isSwissRust);
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
   return buildMetadata({
@@ -42,7 +43,26 @@ export async function blogIndexMetadata(
     path: page > 1 ? `/blog?page=${page}` : '/blog',
     title: page > 1 ? `${t('blog_title')} — ${page}` : t('blog_title'),
     description: isSwissRust ? t('blog_description_swissrust') : t('blog_description'),
+    // The locales have different post counts, so page N in one may not exist
+    // in the other; only the first page is a sure pair.
+    crossLocale: page === 1,
   });
+}
+
+// The ?page= asked for, or a 404 for one past the last page. Clamping it
+// instead served the last page under every number, each an indexable URL
+// canonicalising to itself: an endless supply of duplicates for a crawler.
+function requestedPage(
+  searchParams: { [key: string]: string | string[] | undefined },
+  locale: string,
+  isSwissRust: boolean,
+): number {
+  const raw = searchParams.page;
+  if (raw === undefined) return 1;
+  const page = Number(raw);
+  if (!Number.isInteger(page) || page < 1) notFound();
+  if (page > getPaginatedPosts(1, locale, 'latest', !isSwissRust).totalPages) notFound();
+  return page;
 }
 
 export default async function BlogIndex({
@@ -52,7 +72,7 @@ export default async function BlogIndex({
 }: BlogIndexProps & { isSwissRust: boolean }) {
   const { locale } = await params;
   const searchParamsData = await searchParams;
-  const page = parseInt(searchParamsData.page as string) || 1;
+  const page = requestedPage(searchParamsData, locale, isSwissRust);
   // Newest first unless a signed-in reader chose the learning path; the
   // toggle sends anyone else back here. Metadata ignores it, so the path view
   // canonicalises to the default listing.

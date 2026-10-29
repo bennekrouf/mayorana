@@ -16,6 +16,7 @@ import matter from 'gray-matter';
 import { getTranslations } from 'next-intl/server';
 import { getAllPosts, getPostBySlug, type BlogPost } from './blog';
 import { SITE_URL } from './seo';
+import { getAuthor } from './authors';
 import {
   hasPowershellInstall,
   hasShellInstall,
@@ -103,7 +104,7 @@ export function postMarkdown(locale: string, slug: string): string | null {
       url: `${SITE_URL}/${locale}/blog/${slug}`,
       language: locale,
       date: post.date.slice(0, 10),
-      author: post.author,
+      author: getAuthor(post.author).name,
       tags: post.tags,
       ...(post.counterpart
         ? { [`${post.counterpart.locale}_version`]: postMarkdownUrl(post.counterpart.locale, post.counterpart.slug) }

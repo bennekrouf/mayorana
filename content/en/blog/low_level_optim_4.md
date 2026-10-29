@@ -260,7 +260,7 @@ Fewer loop-end branches improve pipeline flow.
 
 ## Leveraging Rust’s Features
 
-Rust’s ownership model and zero-cost abstractions (e.g., iterator fusion) reduce implicit branches. Iterators like `filter` can be inlined and optimized (see previous answers on iterator chains), and the type system encourages clean, optimizable patterns without unsafe code.
+Rust’s ownership model and [zero-cost abstractions](/en/blog/zero-cost-abstractions-rust) (e.g., iterator fusion) reduce implicit branches. Iterators like `filter` can be inlined and optimized (see previous answers on iterator chains), and the type system encourages clean, optimizable patterns without unsafe code.
 
 ## Profiling Tools and Verification
 

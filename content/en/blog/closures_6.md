@@ -15,7 +15,7 @@ date: '2025-07-12'
 
 # Rust's Higher-Order Functions: Powering Flexible Closures
 
-Higher-order functions (HOFs) in Rust—functions that accept or return other functions/closures—leverage Rust’s closure system, trait bounds (`Fn`, `FnMut`, `FnOnce`), and ownership model to enable powerful functional programming patterns like callbacks and decorators. I’ll explain how HOFs work in Rust, their mechanics, and practical use cases.
+Higher-order functions (HOFs) in Rust—functions that accept or return other functions/closures—leverage Rust’s closure system, [trait bounds](/en/blog/trait-bounds-rust) (`Fn`, `FnMut`, `FnOnce`), and ownership model to enable powerful functional programming patterns like callbacks and decorators. I’ll explain how HOFs work in Rust, their mechanics, and practical use cases.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl6-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="A higher-order function returns a closure that owns its captured data, via either static or dynamic dispatch">
@@ -107,7 +107,7 @@ fn main() {
 }
 ```
 
-This uses dynamic dispatch to handle varying closure types, ideal for plugin-like systems.
+This uses [dynamic dispatch](/en/blog/dispatch-performance-rust) to handle varying closure types, ideal for plugin-like systems.
 
 ## Use Cases for HOFs
 

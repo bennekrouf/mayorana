@@ -5,6 +5,7 @@ import { ArrowRight, Check, ExternalLink } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
+import { authorPageUrl, getAuthor } from '@/lib/authors';
 
 const API0_URL = 'https://api0.ai';
 const API0_ARCHITECTURE_URL = 'https://api0.ai/blog/how-api0-works';
@@ -20,6 +21,17 @@ type Props = { params: Promise<{ locale: string }> };
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'about' });
+  // The person every post's byline and JSON-LD author links to (#author).
+  const author = getAuthor('mayo');
+  const authorJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': authorPageUrl(locale),
+    name: author.name,
+    url: authorPageUrl(locale),
+    sameAs: author.sameAs,
+    worksFor: { '@type': 'Organization', name: 'Mayorana', url: 'https://mayorana.ch' },
+  };
 
   return (
     <LayoutTemplate>
@@ -61,6 +73,26 @@ export default async function AboutPage({ params }: Props) {
                 </div>
               ))}
             </dl>
+          </div>
+        </div>
+      </section>
+
+      {/* The author of the blog, linked from every post's byline. */}
+      <section id="author" className="pb-16 bg-background scroll-mt-24">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(authorJsonLd) }} />
+        <div className="container max-w-5xl">
+          <div className="rounded-2xl border border-border p-6 md:p-8 max-w-3xl">
+            <h2 className="text-2xl font-bold mb-3">{t('author_heading')}</h2>
+            <p className="text-lg mb-4">{t('author_bio')}</p>
+            <a
+              href={author.sameAs?.[0]}
+              rel="me noopener noreferrer"
+              target="_blank"
+              className="inline-flex items-center gap-1.5 font-medium text-primary hover:underline underline-offset-4"
+            >
+              {t('author_github')}
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </section>

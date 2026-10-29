@@ -16,11 +16,12 @@ tags:
   - optimization
   - traits
 date: '2025-12-02'
+meta_description: "Les supertraits créent des hiérarchies de comportements en Rust ; avec les clauses where, ils gardent les algorithmes génériques rapides et sûrs."
 ---
 
 # Les supertraits : imposer une hiérarchie de comportements
 
-Dans une bibliothèque de calcul numérique Rust, j'utiliserais les supertraits pour créer une hiérarchie de comportements, m'assurant que les opérations avancées s'appuient sur les basiques, et les combiner avec des clauses where pour écrire un algorithme générique complexe qui soit type-safe et performant. Cette approche organise le code logiquement, impose la justesse pendant la compilation, et optimise pour l'efficacité via le dispatch statique.
+Dans une bibliothèque de calcul numérique Rust, j'utiliserais les supertraits pour créer une hiérarchie de comportements, m'assurant que les opérations avancées s'appuient sur les basiques, et les combiner avec des clauses where pour écrire un algorithme générique complexe qui soit type-safe et performant. Cette approche organise le code logiquement, impose la justesse pendant la compilation, et optimise pour l'efficacité via le [dispatch statique](/fr/blog/dispatch-performance-rust).
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="td5-fig" viewBox="0 0 800 300" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Hiérarchie de supertraits en couches, de Numeric jusqu'à AdvancedNumeric consommée par matrix_multiply">
@@ -219,7 +220,7 @@ matrix_multiply(&strings, &strings, 1, 1, 1); // Erreur : String manque Numeric
 
 - **Clarté** : Sortent les bounds complexes (`T: AdvancedNumeric`, `T::Output: Into<f64>`) de la signature de fonction, améliorant la lisibilité.
 - **Flexibilité** : Permettent des contraintes supplémentaires sans altérer la hiérarchie de traits (ex : ajouter `T: Debug` pour le logging).
-- **Optimisation** : Permettent au compilateur de voir toutes les contraintes en amont, aidant l'inlining et les optimisations de boucle (ex : SIMD pour les tableaux `f32`).
+- **Optimisation** : Permettent au compilateur de voir toutes les contraintes en amont, aidant l'inlining et les optimisations de boucle (ex : [SIMD](/fr/blog/simd-matrix-mult-rust) pour les tableaux `f32`).
 
 ## Exemple d'Optimisation
 

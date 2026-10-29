@@ -17,6 +17,7 @@ tags:
   - string
   - str
   - ownership
+seo_title: "&str ou &String en Rust : corriger l'incompatibilité"
 ---
 
 # Pourquoi &str Ne Rentre Pas dans &String en Rust: Fixes Sympas pour les String Mismatches !

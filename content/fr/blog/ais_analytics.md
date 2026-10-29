@@ -15,6 +15,8 @@ tags:
   - kql
   - observability
   - debugging
+seo_title: "Tracer un ID de corrélation dans Log Analytics sans KQL"
+meta_description: "Où ton flux d'intégration Azure s'est-il arrêté ? Suis un identifiant de corrélation dans toutes les tables Log Analytics, sans écrire de KQL."
 ---
 
 # Suivre un identifiant de corrélation dans Log Analytics sans écrire de KQL
@@ -27,7 +29,7 @@ Un espace de travail en service depuis un an contient des tables venues de parto
 
 Personne n'en a un modèle mental complet. Ceux qui en ont un partiel en connaissent chacun un tiers différent.
 
-Tracer un identifiant de corrélation revient donc à : déterminer quelles tables peuvent être pertinentes, déterminer comment s'appelle la colonne de corrélation dans chacune, écrire une requête par table, et garder les résultats en tête pendant qu'on compare les timestamps.
+Tracer un [identifiant de corrélation](/fr/blog/trace-correlation-id-cosmos-db-fr) revient donc à : déterminer quelles tables peuvent être pertinentes, déterminer comment s'appelle la colonne de corrélation dans chacune, écrire une requête par table, et garder les résultats en tête pendant qu'on compare les timestamps.
 
 ## Le KQL n'est pas la difficulté
 

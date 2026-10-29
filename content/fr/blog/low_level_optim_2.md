@@ -14,6 +14,7 @@ tags:
   - iterators
   - zero-cost-abstractions
   - performance
+seo_title: "Abstractions zéro coût : Rust et les chaînes d'itérateurs"
 ---
 
 # Abstractions Zéro-Coût : Comment Rust Optimise les Chaînes d'Itérateurs
@@ -93,7 +94,7 @@ Ce code haut niveau semble impliquer plusieurs passes sur les données, mais le 
   }
   ```
   La passe d'optimisation de boucle LLVM combine la condition et la transformation en une itération.
-- **Size Hints d'Itérateur** : Les itérateurs Rust fournissent `size_hint()` pour estimer la longueur de sortie. Ici, `collect()` l'utilise pour pré-allouer le `Vec`, évitant les réallocations—un gain d'efficacité clé.
+- **Size Hints d'Itérateur** : Les itérateurs Rust fournissent `size_hint()` pour estimer la longueur de sortie. Ici, `collect()` l'utilise pour [pré-allouer](/fr/blog/vec-new-vs-with-capacity) le `Vec`, évitant les [réallocations](/fr/blog/vec-push-vs-with-capacity-performance)—un gain d'efficacité clé.
 - **Élimination de Code Mort et Simplification** : Le système d'ownership et de types de Rust assure qu'aucun reference counting à l'exécution ou vérifications de bounds inutiles ne persistent. LLVM simplifie davantage l'arithmétique ou supprime les branches redondantes (ex : constant folding dans des closures complexes).
 
 Le résultat est une boucle serrée sans pénalité d'abstraction, égalant les performances du code style C, car la sécurité de type et la conception d'itérateur de Rust donnent au compilateur une visibilité complète sur le flux de données.

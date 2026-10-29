@@ -14,11 +14,12 @@ tags:
   - traits
   - ownership
   - lifetimes
+seo_title: "Closure en paramètre ou en retour de fonction en Rust"
 ---
 
 # Comment spécifier une closure comme paramètre de function ou type de retour ?
 
-Les closures en Rust sont des types anonymes, donc tu dois utiliser des trait bounds (`Fn`, `FnMut`, `FnOnce`) pour définir leurs signatures. Voici comment travailler avec elles comme paramètres et types de retour.
+Les closures en Rust sont des types anonymes, donc tu dois utiliser des [trait bounds](/fr/blog/trait-bounds-rust) (`Fn`, `FnMut`, `FnOnce`) pour définir leurs signatures. Voici comment travailler avec elles comme paramètres et types de retour.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl3-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Retourner une closure : impl Fn reste sur la stack, Box de dyn Fn passe sur le heap">
@@ -527,7 +528,7 @@ fn benchmark_dispatch() {
 ## Choisir la signature
 **Paramètre** : Utilise les generics (`F: Fn(...)`) pour flexibilité et performance.  
 **Type de Retour** :  
-- `impl Fn` pour static dispatch (rapide, type fixe).  
+- `impl Fn` pour [static dispatch](/fr/blog/dispatch-performance-rust) (rapide, type fixe).  
 - `Box<dyn Fn>` pour dynamic dispatch (flexible, types multiples).  
 Préfére `impl Fn` sauf si tu as besoin de polymorphisme runtime.
 

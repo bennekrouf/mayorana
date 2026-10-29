@@ -16,6 +16,7 @@ tags:
   - type-safety
   - embedded
 date: '2025-12-04'
+meta_description: "Les types associés des traits Rust pour concevoir des API de drivers I/O flexibles et type-safe, comparés aux paramètres de type génériques."
 ---
 
 # Types associés ou génériques dans une API de driver I/O
@@ -176,7 +177,7 @@ impl IoDriver for SpiDriver {
 
 ### Performance
 
-**Types Associés** : Dispatch statique avec une implémentation par driver. `write` et `read` s'inlinent directement vers les ops matérielles (ex : `mov` vers un registre), pas de conversion ou overhead de dispatch.
+**Types Associés** : [Dispatch statique](/fr/blog/dispatch-performance-rust) avec une implémentation par driver. `write` et `read` s'inlinent directement vers les ops matérielles (ex : `mov` vers un registre), pas de conversion ou overhead de dispatch.
 
 **Generics** : Fait la monomorphization pour chaque `T` utilisé, augmentant la taille du code (ex : `write<u8>`, `write<i32>`), même si le driver ne supporte qu'un type. Les bounds comme `T: Into<u8>` ajoutent des appels à l'exécution.
 

@@ -13,6 +13,7 @@ tags:
   - optimization
   - cache
 date: '2025-11-02'
+seo_title: "Profiling Rust: L1 Cache Misses, perf and Flamegraph"
 ---
 
 # Profiling Rust: Tackling L1 Cache Misses with perf, Flamegraph, and Criterion
@@ -72,7 +73,7 @@ fn process_points(points: &mut [Point]) {
 }
 ```
 
-**Problem**: The Array-of-Structs (AoS) layout causes poor locality, as accessing only `x` pulls unnecessary `y` and `z` into the 64-byte L1 cache line, leading to excessive misses.
+**Problem**: The Array-of-Structs (AoS) layout causes poor locality, as accessing only `x` pulls unnecessary `y` and `z` into the 64-byte L1 [cache line](/en/blog/cache-line-awareness-optimization), leading to excessive misses.
 
 ## Workflow to Optimize L1 Cache Misses
 

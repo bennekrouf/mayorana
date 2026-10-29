@@ -13,6 +13,8 @@ excerpt: >-
 tags:
   - rust
   - gc
+seo_title: "GC Pauses and Latency: The Hidden Cost of Garbage Collection"
+meta_description: "Java, Python and JavaScript trade control for convenience: garbage collection adds unpredictable pauses. How runtime memory management costs latency."
 ---
 
 ## Garbage Collectors: Convenient but Costly

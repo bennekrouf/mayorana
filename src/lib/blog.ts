@@ -205,6 +205,14 @@ export function getPostsByTag(tagSlug: string, locale: string = 'en'): BlogPost[
   );
 }
 
+// Fewest posts a tag page needs to be indexed and listed in the sitemap.
+// scripts/generate-sitemap.js carries the same number; change both together.
+export const MIN_POSTS_TO_INDEX_TAG = 3;
+
+export function isTagIndexed(tagSlug: string, locale: string = 'en'): boolean {
+  return getPostsByTag(tagSlug, locale).length >= MIN_POSTS_TO_INDEX_TAG;
+}
+
 // Get a single post by slug for a specific locale only
 export function getPostBySlug(slug: string, locale: string = 'en'): BlogPost | null {
   const posts = getAllPosts(locale);

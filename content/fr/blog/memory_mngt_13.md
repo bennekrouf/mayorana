@@ -15,11 +15,12 @@ tags:
   - borrowing
   - ownership
   - borrow-checker
+seo_title: "Réemprunt en Rust (&mut *x) : pourquoi l'original est gelé"
 ---
 
 # Qu'est-ce que &mut *x (réemprunt) en Rust, et pourquoi gèle-t-il la référence originale ?
 
-En Rust, l'expression `&mut *x` correspond à ce qu'on appelle un **réemprunt** (*reborrow* en anglais). Elle permet de créer une nouvelle référence mutable à partir d'une référence existante sans la consommer — quelque chose que le borrow checker interdirait normalement. Comprendre les réemprunts est essentiel pour écrire du Rust idiomatique lorsqu'on manipule des références mutables à travers des frontières de fonctions.
+En Rust, l'expression `&mut *x` correspond à ce qu'on appelle un **réemprunt** (*reborrow* en anglais). Elle permet de créer une nouvelle référence mutable à partir d'une référence existante sans la consommer — quelque chose que le [borrow checker](/fr/blog/borrowing-rules-rust-fr) interdirait normalement. Comprendre les réemprunts est essentiel pour écrire du Rust idiomatique lorsqu'on manipule des références mutables à travers des frontières de fonctions.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm13-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Chronologie d'un réemprunt : x est actif, puis y réemprunte et x gèle, puis y est abandonné et x redevient actif">

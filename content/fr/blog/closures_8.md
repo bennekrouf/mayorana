@@ -22,7 +22,7 @@ date: '2025-11-10'
 
 ## Overhead de performance
 
-Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâce au static dispatch et aux optimisations du compilateur. Cependant, des scénarios spécifiques peuvent introduire des coûts :
+Les closures en Rust ont un overhead runtime zéro dans la plupart des cas grâce au [static dispatch](/fr/blog/dispatch-performance-rust) et aux optimisations du compilateur. Cependant, des scénarios spécifiques peuvent introduire des coûts :
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl8-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Comparaison du coût d'appel : impl Fn est inliné à coût quasi nul, Box de dyn Fn paie un vtable lookup">

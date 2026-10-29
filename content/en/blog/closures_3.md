@@ -11,11 +11,12 @@ excerpt: >-
 tags:
   - rust
   - closures
+seo_title: "Rust Closures as Function Parameters and Return Types"
 ---
 
 # How do you specify a closure as a function parameter or return type?
 
-Closures in Rust are anonymous types, so you must use trait bounds (`Fn`, `FnMut`, `FnOnce`) to define their signatures. Here’s how to work with them as parameters and return types.
+Closures in Rust are anonymous types, so you must use [trait bounds](/en/blog/trait-bounds-rust) (`Fn`, `FnMut`, `FnOnce`) to define their signatures. Here’s how to work with them as parameters and return types.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl3-fig" viewBox="0 0 800 290" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Returning a closure: impl Fn keeps it on the stack, Box of dyn Fn moves it to the heap">
@@ -225,7 +226,7 @@ fn main() {
 ## Choosing the signature
 **Parameter**: Use generics (`F: Fn(...)`) for flexibility and performance.  
 **Return Type**:  
-- `impl Fn` for static dispatch (fast, fixed type).  
+- `impl Fn` for [static dispatch](/en/blog/dispatch-performance-rust) (fast, fixed type).  
 - `Box<dyn Fn>` for dynamic dispatch (flexible, multiple types).  
 Prefer `impl Fn` unless you need runtime polymorphism.
 

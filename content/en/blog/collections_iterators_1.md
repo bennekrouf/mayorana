@@ -15,7 +15,7 @@ tags:
   - collections
   - iterators
 seo_title: 'Rust Vec::new() vs with_capacity(): When to Use'
-meta_description: 'Vec::new() starts empty and reallocates as it grows; with_capacity(n) allocates once. When pre-allocating pays off, with a benchmark of the difference.'
+meta_description: "Vec::new() or Vec::with_capacity(n)? Which constructor to call, decided at the call site: allocation behaviour, the rule of thumb, and a quick benchmark."
 ---
 
 # Rust Vec::new() vs. with_capacity(): When to Use Each
@@ -98,7 +98,7 @@ v.push(1);
 
 Use `Vec::with_capacity(n)` when:
 - You know the exact or maximum number of elements upfront
-- Optimizing for performance (avoids reallocations)
+- Optimizing for performance (avoids [reallocations](/en/blog/vec-push-vs-with-capacity-performance))
 
 ```rust
 let mut v = Vec::with_capacity(1000); // Pre-allocate for 1000 items

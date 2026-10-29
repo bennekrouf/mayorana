@@ -1,6 +1,7 @@
 // File: src/app/[locale]/blog/tag/[slug]/layout.tsx
 import { Metadata } from 'next';
-import { getTagBySlug } from '@/lib/blog';
+import { getTranslations } from 'next-intl/server';
+import { getPostsByTag, getTagBySlug, isTagIndexed } from '@/lib/blog';
 import { buildMetadata } from '@/lib/seo';
 
 type Props = {
@@ -29,25 +30,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // A tag page only exists in a locale if some post there carries the tag, and
   // the tag vocabularies are not the same: 'polymorphisme' and
-  // 'pointeurs-intelligents' are French-only, 'operators' English-only. Left at
-  // the default crossLocale, every tag page advertised a counterpart in the
-  // other locale and 42 of them pointed hreflang straight at a 404. Same rule
-  // as scripts/generate-sitemap.js, which pairs tag URLs only when the tag
-  // appears in both locales.
+  // 'pointeurs-intelligents' are French-only, 'operators' English-only. So the
+  // hreflang pair is emitted only when the tag is indexed in both locales — an
+  // alternate pointing at a 404 or a noindex page is worse than none. Same rule
+  // as scripts/generate-sitemap.js.
   const otherLocale = locale === 'en' ? 'fr' : 'en';
-  const existsInBothLocales = Boolean(getTagBySlug(tagSlug, otherLocale));
+  const indexed = isTagIndexed(tagSlug, locale);
+  const pairedIndexed = indexed && isTagIndexed(tagSlug, otherLocale);
 
-  // Tag pages outnumber posts (188 across both locales for 139 posts), so many
-  // list a single post and largely duplicate it. `noindex: true` is the usual
-  // remedy and buildMetadata supports it — but these are deliberately left
-  // indexed: the pages already exist and rank on their own, and dropping live
-  // URLs out of the index costs weeks to undo if they were earning anything.
+  // Most tags carry one or two posts (140 of 212 across both locales had a
+  // single one), and such a page is a near copy of the post it lists. Those
+  // stay reachable for readers but out of the index; see isTagIndexed.
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+  const count = getPostsByTag(tagSlug, locale).length;
   return buildMetadata({
     locale,
     path: `/blog/tag/${slug}`,
-    title: `${tag} - Blog`,
-    description: `Articles about ${tag}`,
-    crossLocale: existsInBothLocales,
+    title: t('tag_title', { tag }),
+    description: t('tag_description', { tag, count }),
+    crossLocale: pairedIndexed,
+    noindex: !indexed,
   });
 }
 

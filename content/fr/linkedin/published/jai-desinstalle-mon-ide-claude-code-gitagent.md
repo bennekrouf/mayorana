@@ -1,7 +1,6 @@
 ---
 topic: "J'ai désinstallé mon IDE — Claude Code + GitAgent"
-date: "2026-10-16"
-publish_at: "2026-10-16T09:00"
+date: "2026-10-16T09:00"
 lang: "fr"
 status: "published"
 ---

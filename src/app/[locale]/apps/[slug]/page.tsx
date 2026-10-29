@@ -13,7 +13,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { ToolDetailContent, loadContent, loadToolDetail } from '@/components/apps/ToolDetailContent';
-import { getToolBySlug, LICENCE_URL, toolSlugs } from '@/data/tools';
+import { getToolBySlug, LICENCE_URL, toolSlugs, toolsForPlanProducts } from '@/data/tools';
+import { fetchPlans } from '@/lib/plans';
 import { buildMetadata, SITE_URL } from '@/lib/seo';
 import { locales } from '../../../../../i18n';
 
@@ -35,6 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: `/apps/${slug}`,
     title: seoTitle,
     description: seoDescription,
+    // The product name leads every app title; the site name would only push
+    // the description of what it does past what a search result shows.
+    titleSuffix: false,
     ogImagePath: `/apps/${slug}/opengraph-image`,
     markdownUrl: `${SITE_URL}/${locale}/apps/${slug}.md`,
   });
@@ -48,6 +52,28 @@ export default async function ToolDetailPage({ params }: Props) {
   const { tool, content, latest } = detail;
   const { tagline, seoDescription, requirements, faq } = content;
   const pageUrl = `${SITE_URL}/${locale}/apps/${slug}`;
+  // The plans on sale, for the offers below; revalidated hourly, as on the
+  // pricing page. Without them the page still states the free offer.
+  const plans = (await fetchPlans({ next: { revalidate: 3600 } }).catch(() => null))?.plans ?? [];
+  const paidOffers = plans
+    .filter((plan) => toolsForPlanProducts(plan.products).some((t) => t.id === tool.id))
+    .map((plan) => {
+      const price = (plan.price_cents / 100).toFixed(2);
+      const priceCurrency = plan.currency.toUpperCase();
+      return {
+        '@type': 'Offer',
+        name: `${plan.name} plan: ${tool.name} Pro, monthly`,
+        price,
+        priceCurrency,
+        url: `${SITE_URL}/${locale}/pricing`,
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price,
+          priceCurrency,
+          billingDuration: 'P1M',
+        },
+      };
+    });
 
   // The three schema blocks worth emitting here: what the product is, where the
   // page sits in the site, and the questions it answers. Google no longer draws
@@ -77,11 +103,20 @@ export default async function ToolDetailPage({ params }: Props) {
             releaseNotes: `${pageUrl}/releases`,
           }
         : {}),
-      // No `offers` block. These are dual-licensed: free for personal and
-      // non-profit use, paid for commercial use. Declaring price 0 would be a
-      // false claim to the majority of the people searching for them, and
-      // there is no schema.org shape that says "free unless you are a company"
-      // without picking one of the two and misrepresenting the other.
+      // Both ways to get it, each said for what it is: free under the
+      // non-commercial licence, and the monthly plans that unlock its Pro
+      // edition. A single price-0 offer would have been false for companies;
+      // stating none left search engines unable to tell it is free at all.
+      offers: [
+        {
+          '@type': 'Offer',
+          name: 'Free for personal, educational and non-profit use',
+          price: '0',
+          priceCurrency: paidOffers[0]?.priceCurrency ?? 'CHF',
+          url: pageUrl,
+        },
+        ...paidOffers,
+      ],
       license: LICENCE_URL,
       publisher: {
         '@type': 'Organization',

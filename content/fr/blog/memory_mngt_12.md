@@ -17,11 +17,12 @@ tags:
   - concurrency
   - ownership
   - borrowing
+seo_title: "Concurrence sûre en Rust : ownership et borrowing"
 ---
 
 # Comment les mécanismes d'Ownership et de Borrowing Assurent une Concurrence Sûre
 
-Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowing pour garantir la thread safety au moment de la compilation, éliminant les data races sans nécessiter un garbage collector. Cette approche assure un parallélisme sûr et haute performance avec un overhead runtime minimal.
+Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowing pour garantir la thread safety au moment de la compilation, éliminant les [data races](/fr/blog/ownership-safety-rust-fr) sans nécessiter un [garbage collector](/fr/blog/why-garbage-collector-fr). Cette approche assure un parallélisme sûr et haute performance avec un overhead runtime minimal.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm12-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Plusieurs threads détiennent chacun un Arc cloné pointant vers les mêmes données protégées par un Mutex, mais le Mutex n'autorise qu'un seul thread à la fois en accès exclusif">
@@ -69,7 +70,7 @@ Le modèle de concurrence de Rust exploite ses règles d'ownership et de borrowi
 Rust utilise les mécanismes suivants pour gérer la concurrence :
 - **Ownership** : Assure l'accès mutable exclusif aux données.
 - **Borrowing** : Gouverne comment les données sont accédées via des références.
-- **Lifetimes** : Préviennent les dangling references entre threads.
+- **Lifetimes** : Préviennent les [dangling references](/fr/blog/dangling-pointer-rust-fr) entre threads.
 - **Traits Send/Sync** : Définissent quels types sont sûrs pour le threading.
 
 ## Comment l'Ownership et le Borrowing Préviennent les Data Races
@@ -83,7 +84,7 @@ Les règles de Rust rendent les data races impossibles dans le code safe :
 
 ### 1. Mutabilité exclusive (`&mut T`)
 
-- Seule une référence mutable (`&mut T`) peut exister à la fois, appliquée par le borrow checker.
+- Seule une référence mutable (`&mut T`) peut exister à la fois, appliquée par le [borrow checker](/fr/blog/borrowing-rules-rust-fr).
 - Ceci prévient plusieurs threads d'écrire aux mêmes données simultanément.
 
 **Exemple** :

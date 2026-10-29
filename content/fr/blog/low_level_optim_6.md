@@ -16,6 +16,8 @@ tags:
   - optimization
   - collections
 date: '2025-11-19'
+seo_title: "Coût des réallocations de Vec::push en Rust : benchmarks"
+meta_description: "Ce que coûte vraiment Vec::push() dans une boucle : stratégie de croissance, nombre de réallocations, benchmarks, et la place d'extend()."
 ---
 
 # Vec::push() dans une boucle vs. pré-allouer avec Vec::with_capacity() ?
@@ -714,7 +716,7 @@ fn process_stream<T>(stream: impl Iterator<Item = T>) -> Vec<T> {
 
 ## Impact monde réel
 
-Dans la crate regex, la pré-allocation est utilisée pour les groupes de capture pour éviter les réallocations pendant le pattern matching. Dans serde_json, les buffers de sérialisation sont pré-alloués basés sur la taille estimée du JSON de sortie.
+Dans la crate regex, la [pré-allocation](/fr/blog/vec-new-vs-with-capacity) est utilisée pour les groupes de capture pour éviter les réallocations pendant le pattern matching. Dans serde_json, les buffers de sérialisation sont pré-alloués basés sur la taille estimée du JSON de sortie.
 
 Sur-réserver a un coût aussi. `with_capacity(1000)` pour dix éléments retient tout le bloc
 jusqu'au drop du `Vec` ; `shrink_to_fit()` le rend, au prix d'une copie supplémentaire.

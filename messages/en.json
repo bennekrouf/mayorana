@@ -1,7 +1,7 @@
 {
   "metadata": {
     "site_title": "Your software in Teams, WhatsApp and Claude",
-    "site_description": "Mayorana builds api0, which puts your existing software into Teams, WhatsApp, Telegram and Claude, acting as the person asking. Plus native Rust tools for Azure Integration Services. Swiss-made.",
+    "site_description": "Mayorana builds api0: your existing software in Teams, WhatsApp, Telegram and Claude, acting as the person asking. Plus native Rust tools for Azure.",
     "about_title": "About",
     "about_description": "Mayorana is a Swiss software company building api0, the Rust MCP gateway that lets AI agents act on your existing APIs, plus native Rust developer tools.",
     "blog_title": "Blog",
@@ -12,7 +12,7 @@
     "azure_title": "Azure Integration Tools",
     "azure_description": "Develop, monitor and trace Azure Logic Apps locally. Four native Rust desktop tools for Azure Integration Services: AIS Runner, Monitor, Tracing and Analytics.",
     "ai_agents_title": "AI Agent Infrastructure",
-    "ai_agents_description": "api0 is a Rust MCP gateway that turns your existing REST APIs into secure tools for Claude and other MCP-compatible clients. Connect Claude to your backend in under five minutes.",
+    "ai_agents_description": "api0 is a Rust MCP gateway that turns your existing REST APIs into secure tools for Claude and other MCP clients. Connect your backend in minutes.",
     "founding_title": "Founding users",
     "founding_description": "Mayorana's desktop tools are free for individuals. Sign in, answer two questions, and they stay free for you for good.",
     "pricing_title": "Pricing",
@@ -22,7 +22,9 @@
     "privacy_title": "Privacy Policy",
     "privacy_description": "How Mayorana collects, uses and protects your personal information.",
     "terms_title": "Terms of Service",
-    "terms_description": "The terms for using the Mayorana website and the software downloaded from it."
+    "terms_description": "The terms for using the Mayorana website and the software downloaded from it.",
+    "tag_title": "{tag}: articles and guides",
+    "tag_description": "Every Mayorana article tagged {tag}, newest first: {count, plural, one {# post} other {# posts}} with explanations and working examples."
   },
   "navigation": {
     "home": "Home",
@@ -414,7 +416,10 @@
     "cta_heading": "See it on your own APIs",
     "cta_body": "Sign in with Google, import a spec, and call your own API from Claude.",
     "cta_primary": "Try api0.ai",
-    "cta_secondary": "Or get in touch"
+    "cta_secondary": "Or get in touch",
+    "author_heading": "Who writes the blog",
+    "author_bio": "Mohamed Bennekrouf founded Mayorana and writes the articles here: Rust, AI agents and Azure integration, from building api0 and the desktop apps.",
+    "author_github": "GitHub profile"
   },
   "contact": {
     "from_app": "Sent from {app}. Ideas, bugs, questions: we read every message.",
@@ -511,7 +516,9 @@
     "leave_path": "Back to latest articles",
     "featured_series": "AI agents & integration",
     "api0_blog_callout": "Connecting Claude to your own APIs? The api0 blog covers the gateway, OAuth and MCP setup in detail.",
-    "api0_blog_link": "Read the api0 blog"
+    "api0_blog_link": "Read the api0 blog",
+    "tag_count": "{count, plural, one {# article} other {# articles}} about {tag}",
+    "updated": "Updated"
   },
   "footer": {
     "description": "Your software, in every chat.",
@@ -579,7 +586,7 @@
     "apps": {
       "ais_runner": {
         "seo_title": "AIS Runner — Run Azure Logic Apps Locally",
-        "seo_description": "Desktop app for local Azure Logic Apps Standard development. One-click Azurite and Functions Core Tools, live run history, Liquid template testing and workflow chain graphs — without deploying to Azure.",
+        "seo_description": "Desktop app for local Azure Logic Apps Standard development: one-click Azurite and Functions Core Tools, live run history, Liquid tests. No deploy.",
         "overview": [
           "Developing Azure Logic Apps Standard normally means a slow loop: change a workflow, deploy it, trigger it, dig through the Azure portal to find out what happened, repeat. AIS Runner collapses that loop onto your own machine.",
           "It starts the local stack for you — Azurite for storage emulation, Azure Functions Core Tools to host the workflow runtime — and then gives you the views the portal makes you hunt for: run history as it happens, how your workflows chain together, and what is sitting in your Service Bus queues.",
@@ -717,7 +724,7 @@
       },
       "ais_monitor": {
         "seo_title": "AIS Monitor — Azure Logic Apps Workflow Chain Explorer",
-        "seo_description": "An operational console for Azure Logic Apps Standard workflow chains: chain graph, run history, config drift, RBAC and live diagnostics — as a desktop app and as a terminal companion for SSH sessions.",
+        "seo_description": "Desktop console for Azure Logic Apps Standard workflow chains: chain graph, run history, config drift, RBAC and live diagnostics, also over SSH.",
         "overview": [
           "A Logic Apps estate of any size stops being a list of workflows and becomes a graph: this workflow drops a message on a queue, that one picks it up, a third reacts to an Event Grid topic. The Azure portal shows you the workflows. It does not show you the graph.",
           "AIS Monitor builds that graph from your deployed workflows and lets you walk it — pick a chain, see every run that flowed through it, drill into a run's action timeline, and trigger the entry point yourself with a payload you saved earlier.",
@@ -851,7 +858,7 @@
       },
       "ais_tracing": {
         "seo_title": "AIS Tracing — Correlation ID Tracer for Azure Cosmos DB",
-        "seo_description": "Follow one correlation id or order reference through every container in an Azure Cosmos DB account and see exactly where it stopped. Automatic link-field detection, timeline view, missing steps shown as gaps.",
+        "seo_description": "Follow a correlation ID or order reference through every container of an Azure Cosmos DB account and see exactly where it stopped.",
         "overview": [
           "Something did not arrive. You have a correlation id, an order reference, or a customer number, and a Cosmos DB account with more containers than anyone remembers the shape of. The question is simple — how far did this value get? — and answering it usually means writing a query per container.",
           "AIS Tracing answers it in one step. It samples your containers, works out on its own which field links documents to each other, then follows your value across all of them and draws each step on a timeline.",
@@ -955,8 +962,8 @@
         }
       },
       "ais_analytics": {
-        "seo_title": "AIS Analytics — Correlation ID Tracer for Azure Log Analytics",
-        "seo_description": "Paste a correlation id and see every step it touched across an Azure Log Analytics workspace. Works out the linking column from the data itself, then draws where the value got to and where it did not.",
+        "seo_title": "AIS Analytics — Correlation ID Tracer for Log Analytics",
+        "seo_description": "Paste a correlation ID and see every step it touched in an Azure Log Analytics workspace, and where it stopped. No KQL to write.",
         "overview": [
           "The same problem as tracing through Cosmos DB, in the place most Azure integration telemetry actually lands: a Log Analytics workspace with more tables than anyone queries regularly.",
           "Paste a correlation id. AIS Analytics works out from the data which column ties the steps of one flow together, then follows that value across the workspace and lays the result out as a timeline.",
@@ -1043,8 +1050,8 @@
         }
       },
       "gitagent": {
-        "seo_title": "GitAgent — AI Commit Messages and Pull Requests, Gated by You",
-        "seo_description": "Turns a dirty working tree into an open pull request one approved step at a time. Drafts commit messages and PR descriptions with a local ollama model or Mistral — nothing touches git history or the remote without your explicit approval.",
+        "seo_title": "GitAgent — AI Commit Messages and PRs, Gated by You",
+        "seo_description": "From a dirty working tree to an open pull request, one approved step at a time. AI-drafted commits and PRs; nothing reaches git without your OK.",
         "overview": [
           "Most AI git tooling has the same problem: it is either a text generator that hands you a commit message to paste, or an agent that runs commands on your repository and tells you afterwards. Neither is what you want on a repo you care about.",
           "GitAgent models the work as a graph of steps — scan the tree, draft the commit message, commit, push, draft the PR description, open the PR — and stops at each one. You see what it proposes and what command it will run before it runs.",
@@ -1148,7 +1155,7 @@
       },
       "publishkit": {
         "seo_title": "PublishKit — Desktop Blog Manager with AI Drafting",
-        "seo_description": "Write, generate and schedule blog posts from a native desktop app. AI drafting via Mistral or Claude, markdown editor with live preview, queue-to-publish flow and weekly auto-publish in French and English.",
+        "seo_description": "Write, generate and schedule blog posts from a native desktop app: AI drafting with Mistral or Claude, live markdown preview, auto-publish in FR and EN.",
         "overview": [
           "A blog that publishes on a schedule needs two things a text editor does not give you: somewhere for finished-but-unpublished posts to wait, and something that publishes them when the day comes.",
           "PublishKit is a native desktop app built around that queue. You draft in markdown with a live preview, optionally with an AI model doing the first pass, then move posts into a queue that publishes on its own schedule.",
@@ -1241,8 +1248,8 @@
         "screenshot_alt": "PublishKit's Blog view: published posts on the left and the form that generates a new one"
       },
       "shipscreen": {
-        "seo_title": "ShipScreen — iOS and Android Build, Screenshot and Publish Assistant",
-        "seo_description": "Build and run iOS and Android apps locally, then package release artifacts for the App Store and Google Play. Handles bundle IDs, signing, version bumps, store screenshots in every required size and device-frame marketing assets.",
+        "seo_title": "ShipScreen — Build, Screenshot and Publish iOS/Android Apps",
+        "seo_description": "Build iOS and Android apps locally and package releases for the App Store and Google Play: signing, version bumps, store screenshots in every size.",
         "overview": [
           "Shipping a mobile app release is a long list of small, exacting steps: bump the version, get the signing config right, produce a screenshot in each size the store demands, wrap them in device frames so the listing does not look amateur, then package the artifact the store will accept.",
           "ShipScreen does that list from one native desktop app, for both platforms, without the usual pile of shell scripts and half-remembered Xcode settings.",
@@ -1359,7 +1366,7 @@
       },
       "trackcut": {
         "seo_title": "TrackCut — Split Long MP3 and WAV Recordings into Tracks",
-        "seo_description": "Keyboard-driven desktop app to split live sets, DJ mixes and long recordings into tracks. Silence detection, split-by-split review, gapless MP3 export without re-encoding, FLAC/WAV, EBU R128 loudness and ReplayGain.",
+        "seo_description": "Split live sets, DJ mixes and long recordings into tracks from the keyboard: silence detection, gapless MP3 export without re-encoding, FLAC and WAV.",
         "overview": [
           "A two-hour recording is one file, and what you want is twenty. Doing it in a waveform editor means scrolling, zooming, selecting and exporting by hand, twenty times, and hoping each cut landed in the gap and not on the first note.",
           "TrackCut reads the whole file once, suggests a split in every quiet stretch, then walks you through them: Tab plays three seconds either side of the next split, Enter keeps it, Backspace drops it. Most recordings are reviewed without touching the mouse.",
@@ -1478,8 +1485,8 @@
         "screenshot_alt": "TrackCut splitting a long recording: the waveform with split markers, the track list and the keyboard shortcuts"
       },
       "spreadradar": {
-        "seo_title": "SpreadRadar — Crypto Spreads, Lead/Lag and New Listings Across Exchanges",
-        "seo_description": "Desktop app that quotes any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once: cross-venue edges net of fees, which venue's price lags, and new Gate and MEXC listings Binance does not have yet.",
+        "seo_title": "SpreadRadar — Crypto Spreads and New Listings, All Exchanges",
+        "seo_description": "Quote any crypto asset on Binance, Bybit, OKX, MEXC, Gate and Jupiter at once: cross-venue edges net of fees, lagging venues, new listings.",
         "overview": [
           "The same token trades on a dozen venues at slightly different prices, and the gap moves every second. Watching it means five exchange tabs, a DEX aggregator and a spreadsheet, and by the time the numbers are side by side they are stale.",
           "SpreadRadar streams the order books of Binance, Bybit, OKX, MEXC and Gate, and polls Jupiter for Solana tokens, into one window. It shows the best buy-here, sell-there route in basis points, gross and net of the taker fee on both legs, and measures which venue's price tends to move last.",
@@ -1590,8 +1597,8 @@
         "screenshot_alt": "SpreadRadar watching SOL/USDT on five exchanges and Jupiter, with the best cross-venue edges"
       },
       "polishcast": {
-        "seo_title": "PolishCast — Screen Recorder with a Smooth Cursor and Auto-Zoom",
-        "seo_description": "Desktop screen recorder for macOS and Windows: redrawn smooth cursor, automatic zoom on clicks, background and rounded corners, pauses cut out, MP4 export from 1080p to 4K.",
+        "seo_title": "PolishCast — Screen Recorder, Smooth Cursor and Auto-Zoom",
+        "seo_description": "Screen recorder for macOS and Windows: redrawn smooth cursor, automatic zoom on clicks, rounded frame, pauses cut out, MP4 export up to 4K.",
         "overview": [
           "A raw screen recording is hard to watch: the cursor jumps around, the text is tiny, and every pause where you were thinking is still in it.",
           "PolishCast records the screen without the cursor and notes where the pointer goes. It then redraws a smooth cursor, zooms in where you clicked, and frames the video with a background, padding and rounded corners.",
@@ -1686,8 +1693,8 @@
         "screenshot_alt": "PolishCast editing a recording: the clip on a gradient background, zooms on the timeline and the style panel"
       },
       "jobscout": {
-        "seo_title": "JobScout — Job Search Across LinkedIn and Local Boards, Scored Against Your Profile",
-        "seo_description": "Desktop app that collects job posts from LinkedIn and the local boards of nine countries, from jobs.ch to StepStone, keeps them on your computer, and scores each one against your profile with Mistral or a local ollama model.",
+        "seo_title": "JobScout — LinkedIn and Local Job Boards, Scored for You",
+        "seo_description": "Collects job posts from LinkedIn and local boards in nine countries, from jobs.ch to StepStone, and scores each against your profile, on your machine.",
         "overview": [
           "Looking for a job means the same search on three or four sites, the same post seen twice under different titles, and a browser full of tabs you meant to come back to. Deciding which posts are worth an application takes longer than finding them.",
           "JobScout searches LinkedIn's public pages, without logging in, and the main local boards for one country at a time, in any of nine: Switzerland (jobs.ch, jobup.ch), Singapore (MyCareersFuture, JobStreet), Germany (Arbeitsagentur, StepStone), France (France Travail), the United Kingdom (Totaljobs, Reed), the United Arab Emirates (Bayt), Ireland (IrishJobs), Belgium and Austria (StepStone). Every job lands in one list on your computer, once, with a status you set: New, Saved, Applied or Hidden.",
@@ -1742,8 +1749,8 @@
         "screenshot_alt": "JobScout's job list for Switzerland: the search form on the left, 1,170 jobs from LinkedIn, jobs.ch and jobup.ch in the middle"
       },
       "surfacewatch": {
-        "seo_title": "SurfaceWatch — Client-Side Attack Surface Monitoring for Web Pentests",
-        "seo_description": "Desktop app and CLI that captures web apps with REA, maps their client-side attack surface and shows what changed between two builds, with evidence-backed findings and retests. Runs fully local.",
+        "seo_title": "SurfaceWatch — Client-Side Attack Surface for Web Pentests",
+        "seo_description": "Desktop app and CLI that maps a web app's client-side attack surface with REA and shows what changed between builds, with evidence. Fully local.",
         "overview": [
           "A web app under test changes every sprint. Comparing two builds by hand means wading through renamed script chunks, images and timing differences to find the one new endpoint that matters, and remembering which findings were fixed since the last visit.",
           "SurfaceWatch captures each target of an engagement with REA and turns the traffic into a surface: every endpoint with its parameters and statuses, the security headers, the scripts and the third parties the page talks to. Entries worth a look, such as server errors, admin paths that answer without a login or pages without a Content-Security-Policy, are flagged first.",
@@ -1839,7 +1846,7 @@
   },
   "app_releases": {
     "breadcrumb": "Release notes",
-    "seo_title": "{name} release notes — every version, and what changed",
+    "seo_title": "{name} release notes: every version and what changed",
     "seo_description": "Release notes for {name}, version {version} ({date}). All {count} releases, newest first, with the fix or feature each one shipped.",
     "seo_description_empty": "Release notes for {name}: every version, newest first.",
     "h1": "{name} release notes",
