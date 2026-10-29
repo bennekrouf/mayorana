@@ -16,6 +16,7 @@ tags:
   - string
   - str
   - allocation
+seo_title: "Les string literals (&str) en Rust : où vivent-elles ?"
 ---
 
 # Comment Rust gère-t-il les string literals (&str) en termes d'allocation mémoire ? Où vivent-elles ?
@@ -128,7 +129,7 @@ name.push_str(" and Bob");      // Mutabilité possible
 
 ## Le problème : risque de Dangling Pointer
 
-Retourner une référence (`&str`) vers un `String` local crée un dangling pointer, car le `String` est droppé quand la fonction se termine.
+Retourner une référence (`&str`) vers un `String` local crée un [dangling pointer](/fr/blog/dangling-pointer-rust-fr), car le `String` est droppé quand la fonction se termine.
 
 **Exemple : Code qui Échoue à Compiler** :
 ```rust

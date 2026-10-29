@@ -15,6 +15,8 @@ tags:
   - rust
   - attention
   - transformers
+seo_title: "L'attention, c'est 4 opérations mathématiques (épisode 1)"
+meta_description: "Derrière les Transformers et l'attention, quatre opérations simples : multiplication matricielle, transposition, scaling et softmax. En Rust."
 ---
 
 # Épisode 1 : L'Attention, c'est juste 4 opérations mathématiques
@@ -40,7 +42,7 @@ Exemple : dans "La banque a fermé ses portes", le mot "banque" n'a pas le même
 
 L'attention, ce sont 4 petites opérations qu'on enchaîne. On les voit une par une, chacune avec son code.
 
-Ici, une matrice est simplement un tableau de nombres : une liste de lignes, et chaque ligne est le vecteur d'un mot. Pour commencer simplement, on utilise les embeddings tels quels pour Q, K et V : on les copie 3 fois.
+Ici, une matrice est simplement un tableau de nombres : une liste de lignes, et chaque ligne est le vecteur d'un mot. Pour commencer simplement, on utilise les [embeddings](/fr/blog/embeddings-absolute-vs-contextual) tels quels pour Q, K et V : on les copie 3 fois.
 
 ### 1. Multiplication matricielle : comparer chaque mot avec tous les autres
 

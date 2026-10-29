@@ -47,6 +47,12 @@ type BuildMetadataArgs = {
   /** 'article' for blog posts; everything else on the site is a 'website'. */
   ogType?: 'website' | 'article';
   /**
+   * Append ' | Mayorana' to the title. Off for blog posts: a search result
+   * shows about 60 characters, most post titles needed all of them, and the
+   * site name already appears in the result above the title.
+   */
+  titleSuffix?: boolean;
+  /**
    * Whether the same path exists in every locale. True for the fixed pages,
    * where /en/apps and /fr/apps are the same page. False for blog posts: the
    * French posts carry their own slugs with no reliable mapping back to the
@@ -121,6 +127,7 @@ export function buildMetadata({
   noindex = false,
   ogImagePath = '/opengraph-image',
   ogType = 'website',
+  titleSuffix = true,
   crossLocale = true,
   alternatePaths,
   markdownUrl,
@@ -132,11 +139,12 @@ export function buildMetadata({
   // template never reaches og:title in any case. Setting the full string with
   // `absolute` makes every page's title identical in <title> and in the
   // social cards, whatever its depth.
-  const fullTitle = `${title} | ${SITE_NAME}`;
+  const fullTitle = titleSuffix ? `${title} | ${SITE_NAME}` : title;
   const ogImage = `${SITE_URL}/${locale}${ogImagePath}`;
 
   return {
     metadataBase: new URL(SITE_URL),
+    manifest: '/site.webmanifest',
     title: { absolute: fullTitle },
     description,
     alternates: {

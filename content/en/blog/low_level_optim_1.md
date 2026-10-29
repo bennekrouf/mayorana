@@ -80,7 +80,7 @@ The `repr` attribute controls struct memory layout, which is critical for low-le
 
 ## How They Work
 
-**`repr(C)`**: Enforces C-compatible layout with fields ordered sequentially as declared, adding padding to align each field to its natural alignment (e.g., `u32` aligns to 4 bytes). Ensures predictable interoperability and typically aligns well with CPU cache lines (often 64 bytes).
+**`repr(C)`**: Enforces C-compatible layout with fields ordered sequentially as declared, adding padding to align each field to its natural alignment (e.g., `u32` aligns to 4 bytes). Ensures predictable interoperability and typically aligns well with CPU [cache lines](/en/blog/cache-line-awareness-optimization) (often 64 bytes).
 
 **`repr(packed)`**: Removes all padding, packing fields tightly together regardless of alignment. Minimizes memory usage but can lead to unaligned memory accesses, which are slower on most architectures.
 

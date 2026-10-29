@@ -14,8 +14,6 @@ export default function NotFound() {
   const t = useTranslations('common');
   const locale = useLocale() as SupportedLocale;
 
-  console.log('🔍 404 Page - Current locale:', locale);
-
   return (
     <LayoutTemplate>
       <div className="min-h-[50vh] flex flex-col items-center justify-center py-20">

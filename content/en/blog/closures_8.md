@@ -19,7 +19,7 @@ date: '2025-07-12'
 
 ## Performance Overhead
 
-Closures in Rust have zero runtime overhead in most cases due to static dispatch and compiler optimizations. However, specific scenarios can introduce costs:
+Closures in Rust have zero runtime overhead in most cases due to [static dispatch](/en/blog/dispatch-performance-rust) and compiler optimizations. However, specific scenarios can introduce costs:
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl8-fig" viewBox="0 0 800 220" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Call overhead comparison: impl Fn is inlined at near zero cost, Box of dyn Fn pays a vtable lookup">

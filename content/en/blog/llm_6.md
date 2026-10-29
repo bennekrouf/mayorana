@@ -1,6 +1,6 @@
 ---
 id: embeddings-vector-databases-rag
-title: 'Episode 6: Embeddings and Vector Databases'
+title: 'Episode 5: Embeddings and Vector Databases'
 slug: embeddings-vector-databases-rag
 locale: en
 date: '2026-09-27'
@@ -15,15 +15,16 @@ tags:
   - embeddings
   - vector-database
   - rag
+meta_description: "From keywords to meaning: how embeddings and cosine similarity search by proximity, why you need a vector database, and how it becomes a RAG."
 ---
 
-# Episode 6: Embeddings and Vector Databases
+# Episode 5: Embeddings and Vector Databases
 
 ## Where does the need come from?
 
 For a long time, searching a text meant searching for **exact words**. "Car" didn't find "automobile". **Keyword search** is fast but **dumb**: it doesn't understand meaning.
 
-That's where **embeddings** come in.
+That's where **[embeddings](/en/blog/embeddings-absolute-vs-contextual)** come in.
 
 ## Why do embeddings change everything?
 
@@ -53,7 +54,7 @@ Attention compares words **within a sentence**. A vector database compares **who
 
 ## The link with transfer learning
 
-Embeddings come from a **pre-trained** model. It's transfer learning in its purest form: you reuse a model that learned the meaning of language from billions of sentences.
+Embeddings come from a **pre-trained** model. It's [transfer learning](/en/blog/transfer-learning-reusing-knowledge) in its purest form: you reuse a model that learned the meaning of language from billions of sentences.
 
 ## The full pipeline
 

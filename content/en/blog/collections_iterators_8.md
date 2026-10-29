@@ -242,4 +242,4 @@ Both methods preserve the relative order of retained elements (stable filtering)
 - **filter().collect()**: Transforming API response data into a filtered subset.
 
 A `retain()` whose predicate keeps everything costs one pass and nothing else — no removals,
-no reallocation, capacity untouched.
+no [reallocation](/en/blog/vec-push-vs-with-capacity-performance), capacity untouched.

@@ -2,8 +2,41 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-28T14:28:44Z",
+  "generated_at": "2026-10-29T14:02:50Z",
   "releases": [
+    {
+      "version": "0.1.36",
+      "tag": "v0.1.36",
+      "date": "2026-10-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "\"Reduce background noise\" in the editor takes the steady hum, hiss or fan noise out of your voice when you export, so a take recorded in a noisy room still sounds clean. A Strength slider sets how much is taken out. Music you added is left as it is, and the preview still plays the sound as recorded. Claude, Codex and other MCP apps can turn it on too."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.35",
+      "tag": "v0.1.35",
+      "date": "2026-10-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Claude, Codex and other MCP apps can now record a take themselves, so they can make a whole demo video with nobody touching the menu bar: start recording, use the app being shown, stop, add the zooms and export. They can record the whole screen, one display, one window or a region, with or without the microphone and the Mac's sound. To keep them from recording, turn off \"Let Claude or Codex record the screen\" in the MCP window.",
+            "A recording started this way counts down in the menu bar first, then shows who started it next to the time. Stop Recording there stops it at any time, and it stops by itself after 10 minutes unless a longer length was asked for."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Recording by Claude, Codex and other MCP apps is on as soon as PolishCast is installed, so they can make a demo video right away. Turn off \"Let Claude or Codex record the screen\" in the MCP window if you'd rather they never record."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.34",
       "tag": "v0.1.34",

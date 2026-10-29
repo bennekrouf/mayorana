@@ -10,6 +10,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useHostContext } from '@/providers/HostProvider';
 import { useTrackReading } from '@/providers/ReadProgressProvider';
 import { progressKey } from '@/lib/read-progress';
+import { authorPageUrl, getAuthor } from '@/lib/authors';
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -39,6 +40,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
   const bodyRef = useRef<HTMLDivElement>(null);
   const { isSwissRust } = useHostContext();
   const locale = useLocale();
+  const author = getAuthor(post.author);
 
   // Marks this post's place in the reader's progress as they scroll.
   useTrackReading(progressKey(post));
@@ -54,7 +56,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
   // Share on X (Twitter)
   const shareOnTwitter = () => {
     const url = getPostUrl();
-    const text = `${post.title} by ${post.author}`;
+    const text = `${post.title} by ${getAuthor(post.author).name}`;
     const hashtags = post.tags?.slice(0, 3).join(',') || 'rust,programming';
 
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`;
@@ -118,7 +120,15 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
           )}
 
           <div className="flex items-center text-sm text-muted-foreground">
-            <span>{formatDate(post.date, locale)}</span>
+            <time dateTime={post.date.slice(0, 10)}>{formatDate(post.date, locale)}</time>
+            {post.updated && post.updated > post.date.slice(0, 10) && (
+              <>
+                <span className="mx-2">•</span>
+                <span>
+                  {t('updated')} <time dateTime={post.updated}>{formatDate(post.updated, locale)}</time>
+                </span>
+              </>
+            )}
             {post.readingTime && (
               <>
                 <span className="mx-2">•</span>
@@ -144,9 +154,14 @@ const BlogPost: React.FC<BlogPostProps> = ({ post, path }) => {
 
         <div className="flex items-center mb-8">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-            <span className="text-primary font-medium">{post.author.charAt(0)}</span>
+            <span className="text-primary font-medium">{author.name.charAt(0)}</span>
           </div>
-          <span className="font-medium">{post.author}</span>
+          {/* A named, linked author: who wrote it is part of what search
+              engines weigh in a technical article. The About page is on
+              mayorana.ch, so the link is absolute for swissrust.ch. */}
+          <a href={authorPageUrl(locale)} rel="author" className="font-medium hover:text-primary transition-colors">
+            {author.name}
+          </a>
         </div>
       </div>
 

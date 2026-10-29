@@ -146,7 +146,7 @@ let big_data = Box::new([0u8; 1_000_000]); // Array heap-allocated
 
 ### 3. Trait Objects (dyn Trait)
 
-Stocker des types hétérogènes derrière une interface trait pour dynamic dispatch.
+Stocker des types hétérogènes derrière une interface trait pour [dynamic dispatch](/fr/blog/dispatch-performance-rust).
 
 ```rust
 trait Animal { fn speak(&self); }
@@ -198,7 +198,7 @@ let arr = Box::new([0u8; 10_000_000]); // Sûr
 ## Quand sortir `Box`
 **Utilise `Box<T>` quand tu as besoin** :
 - D'allocation heap pour données larges ou récursives.
-- De trait objects (`dyn Trait`).
+- De [trait objects](/fr/blog/object-safety-rust) (`dyn Trait`).
 - D'ownership explicite avec pointeur taille fixe.
 
 **Évite si** :

@@ -15,11 +15,12 @@ tags:
   - generics
   - performance
   - traits
+seo_title: "Static vs Dynamic Dispatch in Rust: Generics or dyn Trait?"
 ---
 
 # Trait bounds or dyn Trait? Static and dynamic dispatch compared
 
-In Rust, **static dispatch** (via generics with trait bounds) and **dynamic dispatch** (via `dyn Trait`) offer distinct performance profiles, critical for systems like real-time data processors. Static dispatch leverages monomorphization for speed, while dynamic dispatch uses vtables for flexibility. Below, I compare the two with an example and outline when to choose each based on performance, flexibility, and maintainability.
+In Rust, **static dispatch** (via generics with [trait bounds](/en/blog/trait-bounds-rust)) and **dynamic dispatch** (via `dyn Trait`) offer distinct performance profiles, critical for systems like real-time data processors. Static dispatch leverages monomorphization for speed, while dynamic dispatch uses vtables for flexibility. Below, I compare the two with an example and outline when to choose each based on performance, flexibility, and maintainability.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="td3-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Per-event call sequence for process_static versus process_dynamic over 1 million events">
@@ -242,7 +243,7 @@ fn main() {
 ### Choose Static Dispatch
 
 - **Scenario**: Hot loops in a real-time data processor (e.g., audio filtering, packet routing) where every cycle counts.
-- **Why**: Zero overhead, inlining, and optimization potential. In `process_static`, the compiler can unroll or SIMD-ify the loop for `f32` events.
+- **Why**: Zero overhead, inlining, and optimization potential. In `process_static`, the compiler can unroll or [SIMD](/en/blog/simd-matrix-mult-rust)-ify the loop for `f32` events.
 - **Trade-Off**: Larger binary, but acceptable for a known, small set of processors (e.g., 2-5 types).
 - **Maintainability**: Less flexible—adding a new processor requires recompilation.
 

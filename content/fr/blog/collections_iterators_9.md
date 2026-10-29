@@ -104,7 +104,7 @@ for subvec in nested {
 
 ### Avantage de la pré-allocation (Manuel)
 
-Tu peux pré-allouer le Vec cible si la taille totale est connue :
+Tu peux [pré-allouer](/fr/blog/vec-new-vs-with-capacity) le Vec cible si la taille totale est connue :
 
 ```rust
 let total_len: usize = nested.iter().map(|v| v.len()).sum();

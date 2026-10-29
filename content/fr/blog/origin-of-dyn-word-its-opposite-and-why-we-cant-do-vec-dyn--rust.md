@@ -47,7 +47,7 @@ Cette évolution a permis de distinguer clairement le polymorphisme statique (g�
 
 ### Pourquoi "dyn" ?
 
-Le choix de `dyn` reflète la nature du **dispatch dynamique** (dynamic dispatch). Contrairement au polymorphisme statique où la méthode à appeler est déterminée à la compilation, avec `dyn`, la résolution se fait à l'exécution via une table de fonctions virtuelles (vtable).
+Le choix de `dyn` reflète la nature du **[dispatch dynamique](/fr/blog/dispatch-performance-rust)** (dynamic dispatch). Contrairement au polymorphisme statique où la méthode à appeler est déterminée à la compilation, avec `dyn`, la résolution se fait à l'exécution via une table de fonctions virtuelles (vtable).
 
 ```rust
 trait Animal {

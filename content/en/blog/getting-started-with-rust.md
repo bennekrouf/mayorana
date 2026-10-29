@@ -139,7 +139,7 @@ y = 6; // This works fine
 
 ### Ownership
 
-Ownership is Rust's most unique feature and enables memory safety without garbage collection. The main rules are:
+Ownership is Rust's most unique feature and enables memory safety without [garbage collection](/en/blog/why-garbage-collector). The main rules are:
 
 1. Each value in Rust has a variable that's its owner.
 2. There can only be one owner at a time.

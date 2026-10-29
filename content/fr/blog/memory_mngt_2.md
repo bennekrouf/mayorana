@@ -15,9 +15,11 @@ tags:
   - borrowing
   - lifetimes
 date: '2025-07-31'
+seo_title: "Sécurité mémoire en Rust : ownership, emprunt, lifetimes"
+meta_description: "La mécanique de la sécurité mémoire en Rust : les trois règles d'ownership, l'emprunt et les lifetimes, vérifiés à la compilation, sans garbage collector."
 ---
 # Comment Rust assure la sécurité mémoire sans garbage collector ?
-Rust garantit la sécurité mémoire à la compilation avec trois mécanismes : ownership, borrowing et lifetimes. Ça évite les fuites mémoire, les data races et les pointeurs pendants sans avoir besoin d'un garbage collector.
+Rust garantit la sécurité mémoire à la compilation avec trois mécanismes : ownership, borrowing et lifetimes. Ça évite les fuites mémoire, les [data races](/fr/blog/ownership-safety-rust-fr) et les [pointeurs pendants](/fr/blog/dangling-pointer-rust-fr) sans avoir besoin d'un [garbage collector](/fr/blog/why-rust-memory-safe-fr).
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm2-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Ownership, borrowing et lifetimes convergent pour garantir la sécurité mémoire à la compilation sans garbage collector">

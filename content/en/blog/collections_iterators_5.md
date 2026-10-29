@@ -11,6 +11,7 @@ tags:
   - rust
   - collections
 date: '2025-07-21'
+seo_title: "Removing Duplicates from a Rust Vec<T> Efficiently"
 ---
 
 # How do you remove duplicates from a Vec<T> where T: Eq + Hash?

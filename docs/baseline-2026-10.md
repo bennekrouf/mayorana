@@ -415,6 +415,16 @@ fall back to their title and excerpt. Compare each page's CTR in a month.
   fallback reports `failed` instead of an unhandled rejection. Not tested
   end to end: a real sign-in (needs a person) — try Google and GitHub once
   after deploying, on desktop and on a phone.
+- **4.7 closed (29 October).** Images: `formats: ['image/avif', 'image/webp']`
+  in next.config.ts — the GitAgent screenshot is 26 KB as AVIF against 31 KB
+  as WebP (324 KB original). Debug logging removed from the blog post page,
+  the locale layout and the 404 page; the build log went from 728 lines to
+  140.
+- **GitHub sign-in** needs the GitHub OAuth app's Authorization callback URL
+  set to `https://mayorana.ch/__/auth/handler`, as Google's client did (the
+  custom auth domain, #116). GitHub allows a single callback URL.
+  Done 29 October; GitHub sign-in confirmed working on the live site, with
+  Firebase loading on demand.
 
 ## Analytics
 

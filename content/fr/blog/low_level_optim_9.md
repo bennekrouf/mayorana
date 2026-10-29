@@ -13,6 +13,7 @@ tags:
   - optimization
   - advanced
 date: '2025-11-22'
+meta_description: "Aligner les structures de données sur les lignes de cache en Rust multi-threadé pour éviter le faux partage sur de grands volumes de données."
 ---
 
 # Aligner les structures de données aux lignes de cache

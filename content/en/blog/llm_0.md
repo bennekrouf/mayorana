@@ -30,9 +30,9 @@ Because reading articles is not enough. It's like cooking: watching a recipe doe
 
 - How a word "looks at" the other words (attention)
 - Why Q, K and V are kept separate (specialization)
-- How meaning is turned into geometry (embeddings)
-- How to reuse an existing model (transfer learning)
-- How it all comes together to build a RAG
+- How meaning is turned into geometry ([embeddings](/en/blog/embeddings-absolute-vs-contextual))
+- How to reuse an existing model ([transfer learning](/en/blog/transfer-learning-reusing-knowledge))
+- How it all comes together to build a [RAG](/en/blog/embeddings-vector-databases-rag)
 
 ## Who is this series for?
 

@@ -18,7 +18,7 @@ tags:
 
 # Emprunts mutables et immutables : les deux règles
 
-Les règles de borrowing de Rust, appliquées par le borrow checker au moment de la compilation, assurent la memory safety et préviennent les data races sans overhead runtime. Ces règles gouvernent comment les données peuvent être accédées via des références, distinguant entre emprunts mutables (`&mut T`) et immutables (`&T`).
+Les règles de borrowing de Rust, appliquées par le borrow checker au moment de la compilation, assurent la memory safety et préviennent les [data races](/fr/blog/ownership-safety-rust-fr) sans overhead runtime. Ces règles gouvernent comment les données peuvent être accédées via des références, distinguant entre emprunts mutables (`&mut T`) et immutables (`&T`).
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm9-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Les états d'emprunt autorisés sont plusieurs références immutables ou exactement une référence mutable vers les mêmes données ; mélanger un emprunt mutable et immutable est rejeté">
@@ -64,7 +64,7 @@ Les règles de borrowing de Rust, appliquées par le borrow checker au moment de
      - **N'importe quel nombre de références immutables** (`&T`).
    - Jamais les deux en même temps pour les mêmes données.
 
-2. **Les Références Doivent Toujours Être Valides (Pas de Dangling Pointers)** :
+2. **Les Références Doivent Toujours Être Valides (Pas de [Dangling Pointers](/fr/blog/dangling-pointer-rust-fr))** :
    - Les références empruntées ne peuvent pas survivre aux données qu'elles pointent, appliqué par le système de lifetime de Rust.
 
 ## Emprunts immutables (`&T`)

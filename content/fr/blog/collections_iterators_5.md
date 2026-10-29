@@ -16,6 +16,7 @@ tags:
   - hashset
   - performance
 date: '2025-10-28'
+seo_title: "Supprimer les doublons d'un Vec<T> en Rust efficacement"
 ---
 
 # Comment supprimer efficacement les doublons d'un Vec<T> où T: Eq + Hash ?

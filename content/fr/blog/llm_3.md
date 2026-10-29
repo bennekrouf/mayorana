@@ -15,6 +15,8 @@ tags:
   - embeddings
   - attention
   - transformers
+seo_title: "Embeddings absolus ou contextuels ? (épisode 3)"
+meta_description: "Un embedding, c'est le mot seul ou en contexte ? Les deux, à des moments différents. Plus l'attention multi-head, le masking et le position encoding."
 ---
 
 # Épisode 3 : Embeddings — Absolus au départ, contextuels à l'arrivée
@@ -56,7 +58,7 @@ Au lieu d'une seule attention, on en fait plusieurs en parallèle (ex : 12 tête
 
 ### 2. Masking
 
-En génération, on interdit au modèle de regarder les mots futurs. On met des `-infini` dans les scores pour que le Softmax donne 0%.
+En génération, on interdit au modèle de regarder les mots futurs. On met des `-infini` dans les scores pour que le [Softmax](/fr/blog/attention-four-operations) donne 0%.
 
 ### 3. Position Encoding
 

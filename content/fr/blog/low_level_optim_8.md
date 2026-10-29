@@ -13,6 +13,7 @@ tags:
   - optimization
   - advanced
 date: '2025-11-21'
+meta_description: "Quand l'attribut #[inline(always)] de Rust accélère vraiment le code, les bons cas d'usage, et les risques de l'utiliser partout."
 ---
 
 # Optimisation au niveau des instructions : #[inline(always)]

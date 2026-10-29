@@ -16,11 +16,12 @@ tags:
   - heap-allocation
   - optimization
 date: '2025-11-20'
+meta_description: "Tableaux de taille fixe, Option et autres outils stack-based de Rust pour supprimer les allocations heap du code temps réel et garder une latence stable."
 ---
 
 # Éviter l'allocation heap sur un chemin temps réel
 
-Dans un système temps réel, les allocations heap via Box, Vec, ou autres structures dynamiques introduisent de la latence due à l'overhead de gestion mémoire et aux pauses potentielles de garbage collection (bien que Rust évite le GC, allocation/désallocation varie encore). J'utiliserais les fonctionnalités stack-based de Rust comme les tableaux de taille fixe, Option, et structs custom pour éliminer celles-ci dans un chemin critique en performance, assurant une exécution prévisible et faible latence.
+Dans un système temps réel, les allocations heap via Box, Vec, ou autres structures dynamiques introduisent de la latence due à l'overhead de gestion mémoire et aux pauses potentielles de [garbage collection](/fr/blog/why-garbage-collector-fr) (bien que Rust évite le GC, allocation/désallocation varie encore). J'utiliserais les fonctionnalités stack-based de Rust comme les tableaux de taille fixe, Option, et structs custom pour éliminer celles-ci dans un chemin critique en performance, assurant une exécution prévisible et faible latence.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="lo7-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Un tableau de taille fixe sur la stack avec un index d'écriture circulaire remplace un Vec sur le heap qui risque réallocation et décalage">
@@ -77,7 +78,7 @@ impl AudioProcessor {
 }
 ```
 
-Cela fonctionne mais risque des pics de latence dus aux réallocations ou déplacements d'éléments.
+Cela fonctionne mais risque des pics de latence dus aux [réallocations](/fr/blog/vec-push-vs-with-capacity-performance) ou déplacements d'éléments.
 
 ## Alternative Stack-Based
 
@@ -568,7 +569,7 @@ impl OptimizedProcessor {
 ## Assurer la sécurité
 
 - **Sécurité des Bounds** : L'opération modulo (`% 64`) assure que l'index reste dans [0, 63]. L'indexation de tableau de Rust panic sur out-of-bounds en mode debug, attrapant les erreurs tôt.
-- **Contrôle de Lifetime** : L'allocation stack lie la lifetime du buffer à AudioProcessor, évitant les références pendantes.
+- **Contrôle de Lifetime** : L'allocation stack lie la lifetime du buffer à AudioProcessor, évitant les [références pendantes](/fr/blog/dangling-pointer-rust-fr).
 - **Pas d'Overflow** : Pour des petits tableaux (256 octets ici), le stack overflow est improbable sur des stacks de thread typiques de 1MB. Pour des tailles plus larges, je vérifierais contre la limite stack de la cible (ex : `ulimit -s`).
 
 ## Maintenir les performances
@@ -691,7 +692,7 @@ fn measure_stack_usage() {
 
 ## Compromis et Améliorations
 
-- **Capacité Fixe** : Si 64 échantillons ne suffisent pas, j'ajusterais la taille (ex : `[f32; 128]`) au coût de plus d'espace stack, ou utiliserais une approche hybride avec un `Box<[f32]>` pré-alloué si les limites stack sont une préoccupation.
+- **Capacité Fixe** : Si 64 échantillons ne suffisent pas, j'ajusterais la taille (ex : `[f32; 128]`) au coût de plus d'espace stack, ou utiliserais une approche hybride avec un `Box<[f32]>` [pré-alloué](/fr/blog/vec-new-vs-with-capacity) si les limites stack sont une préoccupation.
 - **Perte de Flexibilité** : Pas de redimensionnement, mais les systèmes temps réel privilégient souvent la prévisibilité sur l'adaptabilité.
 - **Structures Stack Custom** : Pour des besoins complexes (ex : une queue allouée stack), j'utiliserais une struct avec tableaux et indices, évitant l'usage heap de VecDeque.
 

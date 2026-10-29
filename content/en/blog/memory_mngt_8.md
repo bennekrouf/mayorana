@@ -126,7 +126,7 @@ name.push_str(" and Bob");      // Mutability possible
 
 ## The Problem: Dangling Pointer Risk
 
-Returning a reference (`&str`) to a local `String` creates a dangling pointer, as the `String` is dropped when the function ends.
+Returning a reference (`&str`) to a local `String` creates a [dangling pointer](/en/blog/dangling-pointer-rust), as the `String` is dropped when the function ends.
 
 **Example: Code That Fails to Compile**:
 ```rust

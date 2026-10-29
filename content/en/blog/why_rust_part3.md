@@ -12,6 +12,8 @@ excerpt: >-
 tags:
   - rust
   - ownership
+seo_title: "Why Rust: Memory and Thread Safety, With Real-World Wins"
+meta_description: "Why teams pick Rust: C-level speed with memory and thread safety at compile time, compared with C and Java, and what Dropbox, Discord and Firefox gained."
 ---
 
 # Rust: Memory Safety Without Garbage Collection
@@ -22,7 +24,7 @@ Rust doesn't have a GC. It doesn't need one.
 let msg = String::from("hello");
 ```
 
-This allocates memory—but Rust tracks ownership statically.
+This allocates memory—but Rust tracks [ownership](/en/blog/memory-safety-rust) statically.
 
 ## The Ownership Revolution
 
@@ -96,8 +98,8 @@ fn main() {
 ```
 
 **Rust's borrowing rules prevent:**
-- Data races at compile time
-- Dangling pointers
+- [Data races](/en/blog/ownership-safety-rust) at compile time
+- [Dangling pointers](/en/blog/dangling-pointer-rust)
 - Iterator invalidation
 - Thread safety issues
 

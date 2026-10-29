@@ -17,6 +17,8 @@ tags:
   - cache
   - performance
 date: '2025-11-14'
+seo_title: "Profiler Rust : cache misses L1, perf et Flamegraph"
+meta_description: "Profiler du code Rust pour trouver et corriger les goulots d'étranglement comme les cache misses L1, avec perf, Flamegraph et Criterion."
 ---
 
 # Profiling Rust : Résoudre les L1 Cache Misses avec perf, Flamegraph et Criterion
@@ -76,7 +78,7 @@ fn process_points(points: &mut [Point]) {
 }
 ```
 
-**Problème** : Le layout Array-of-Structs (AoS) cause une mauvaise localité, car accéder seulement à `x` tire les `y` et `z` inutiles dans la ligne de cache L1 de 64 octets, menant à des misses excessifs.
+**Problème** : Le layout Array-of-Structs (AoS) cause une mauvaise localité, car accéder seulement à `x` tire les `y` et `z` inutiles dans la [ligne de cache](/fr/blog/cache-line-awareness-optimization) L1 de 64 octets, menant à des misses excessifs.
 
 ## Workflow pour optimiser les L1 Cache Misses
 
@@ -367,7 +369,7 @@ fn process_optimized() { /* Fallback générique */ }
 - **IPC (Instructions Per Cycle)** : >2.0 indique une bonne utilisation CPU
 - **Cache Miss Rate** : <2% pour L1, <10% pour L2
 - **Memory Bandwidth** : % d'utilisation de la bande passante théorique
-- **Branch Misprediction Rate** : <5%
+- **[Branch Misprediction](/fr/blog/branch-prediction-rust) Rate** : <5%
 
 ### Outils de mesure avancés
 ```bash

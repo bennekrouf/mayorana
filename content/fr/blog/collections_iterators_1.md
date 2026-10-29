@@ -96,7 +96,7 @@ v.push(1);
 
 Utilise `Vec::with_capacity(n)` quand :
 - Tu connais le nombre exact ou maximum d'éléments à l'avance
-- Tu optimises pour la performance (évite les réallocations)
+- Tu optimises pour la performance (évite les [réallocations](/fr/blog/vec-push-vs-with-capacity-performance))
 
 ```rust
 let mut v = Vec::with_capacity(1000); // Pré-alloue pour 1000 éléments

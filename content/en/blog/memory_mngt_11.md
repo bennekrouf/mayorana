@@ -16,7 +16,7 @@ tags:
 
 # Understanding the Drop Trait in Rust
 
-The `Drop` trait in Rust enables custom cleanup logic when a value goes out of scope, providing deterministic resource management similar to C++’s RAII (Resource Acquisition Is Initialization). It ensures memory safety and proper resource deallocation without a garbage collector.
+The `Drop` trait in Rust enables custom cleanup logic when a value goes out of scope, providing deterministic resource management similar to C++’s RAII (Resource Acquisition Is Initialization). It ensures memory safety and proper resource deallocation without a [garbage collector](/en/blog/why-garbage-collector).
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm11-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Values are declared res1 then res2, and dropped in reverse LIFO order: res2 first, then res1, when the scope ends">

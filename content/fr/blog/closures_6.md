@@ -14,11 +14,12 @@ tags:
   - traits
   - lifetimes
 date: '2025-11-08'
+seo_title: "Fonctions d'ordre supérieur en Rust et closures"
 ---
 
 # Higher-Order Functions de Rust: Alimenter des Closures Flexibles
 
-Les higher-order functions (HOFs) en Rust—fonctions qui acceptent ou retournent d'autres functions/closures—exploitent le système de closures de Rust, les trait bounds (`Fn`, `FnMut`, `FnOnce`), et le modèle d'ownership pour permettre des patterns puissants de programmation fonctionnelle comme les callbacks et decorators. Je vais expliquer comment les HOFs fonctionnent en Rust, leurs mécaniques, et cas d'usage pratiques.
+Les higher-order functions (HOFs) en Rust—fonctions qui acceptent ou retournent d'autres functions/closures—exploitent le système de closures de Rust, les [trait bounds](/fr/blog/trait-bounds-rust) (`Fn`, `FnMut`, `FnOnce`), et le modèle d'ownership pour permettre des patterns puissants de programmation fonctionnelle comme les callbacks et decorators. Je vais expliquer comment les HOFs fonctionnent en Rust, leurs mécaniques, et cas d'usage pratiques.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl6-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Une higher-order function retourne une closure qui possède ses données capturées, via dispatch statique ou dynamique">
@@ -117,7 +118,7 @@ fn main() {
 }
 ```
 
-Ceci utilise le dynamic dispatch pour gérer des types de closures variés, idéal pour des systèmes de type plugin.
+Ceci utilise le [dynamic dispatch](/fr/blog/dispatch-performance-rust) pour gérer des types de closures variés, idéal pour des systèmes de type plugin.
 
 ## Exemples avancés de HOFs
 

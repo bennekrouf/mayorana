@@ -15,11 +15,12 @@ tags:
   - dynamic-dispatch
   - traits
   - plugins
+seo_title: "Object-Safe Traits in Rust: dyn Trait for Plugin Systems"
 ---
 
 # Making Traits Object-Safe for Rust's dyn Trait in Plugin Systems
 
-Rust requires traits to be **object-safe** to use with `dyn Trait` for dynamic dispatch, as this ensures a consistent vtable (virtual table) for runtime method calls. Non-object-safe traits, such as those with generic methods or static requirements, cannot be used with `dyn Trait`, but they can be refactored for plugin systems needing runtime polymorphism. I’ll explain why object safety is necessary and demonstrate how to refactor a non-object-safe trait for a plugin system.
+Rust requires traits to be **object-safe** to use with `dyn Trait` for [dynamic dispatch](/en/blog/dispatch-performance-rust), as this ensures a consistent vtable (virtual table) for runtime method calls. Non-object-safe traits, such as those with generic methods or static requirements, cannot be used with `dyn Trait`, but they can be refactored for plugin systems needing runtime polymorphism. I’ll explain why object safety is necessary and demonstrate how to refactor a non-object-safe trait for a plugin system.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="td4-fig" viewBox="0 0 800 320" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Refactoring a non-object-safe Transformer trait into an object-safe one that produces a Box dyn Transformer fat pointer">

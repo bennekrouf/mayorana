@@ -15,9 +15,11 @@ tags:
   - borrowing
   - lifetimes
 date: '2025-07-31'
+seo_title: "Rust Memory Safety: Ownership, Borrowing and Lifetimes"
+meta_description: "The mechanics behind Rust's memory safety: the three ownership rules, borrowing and lifetimes, checked at compile time with no garbage collector."
 ---
 # How does Rust ensure memory safety without a garbage collector?
-Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, data races, or dangling pointers without the need for a garbage collector.
+Rust guarantees memory safety at compile time using three key mechanisms: ownership, borrowing, and lifetimes. These ensure no memory leaks, [data races](/en/blog/ownership-safety-rust), or [dangling pointers](/en/blog/dangling-pointer-rust) without the need for a [garbage collector](/en/blog/why-rust-memory-safe).
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm2-fig" viewBox="0 0 800 260" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Ownership, borrowing, and lifetimes converge to guarantee compile-time memory safety without a garbage collector">
@@ -219,7 +221,7 @@ fn main() {
 </div>
 
 ## Why No Garbage Collector (GC)?
-- **Zero-cost abstractions**: No runtime overhead.
+- **[Zero-cost abstractions](/en/blog/zero-cost-abstractions-rust)**: No runtime overhead.
 - **Predictable performance**: Memory is freed deterministically.
 - **No runtime pauses**: Unlike GC-based languages (Java, Go).
 

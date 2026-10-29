@@ -1,5 +1,6 @@
-// File: src/app/blog/tag/[slug]/page.tsx
+// File: src/app/[locale]/blog/tag/[slug]/page.tsx
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import BlogList from '@/components/blog/BlogList';
 import TagFilter from '@/components/blog/TagFilter';
@@ -57,6 +58,7 @@ export default async function TagPage({ params }: Props) {
 
   const posts = getPostsByTag(tagSlug, locale);
   const tags = getAllTags(locale);
+  const t = await getTranslations({ locale, namespace: 'blog' });
 
   // The JSX below is deliberately outside any try/catch. React renders the
   // returned element after this function has finished, so a catch here never
@@ -73,7 +75,7 @@ export default async function TagPage({ params }: Props) {
               #{currentTag}
             </h1>
             <p className="text-xl text-muted-foreground">
-              {posts.length} article{posts.length !== 1 ? 's' : ''} about {currentTag}
+              {t('tag_count', { count: posts.length, tag: currentTag })}
             </p>
           </div>
         </div>

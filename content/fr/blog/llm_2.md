@@ -15,13 +15,14 @@ tags:
   - rust
   - attention
   - transformers
+meta_description: "Query, Key, Value : pourquoi les modèles projettent chaque mot dans trois espaces, et comment cette séparation rend l'attention plus fine."
 ---
 
 # Épisode 2 : Q, K, V — Pourquoi 3 matrices et pas une seule ?
 
 ## La question qui tue
 
-Dans l'épisode précédent, on a dit qu'on "copie 3 fois les embeddings". Mais est-ce **toujours** le cas ? Et **pourquoi** 3 copies ?
+Dans l'épisode précédent, on a dit qu'on "copie 3 fois les [embeddings](/fr/blog/embeddings-absolute-vs-contextual)". Mais est-ce **toujours** le cas ? Et **pourquoi** 3 copies ?
 
 ## La réponse courte
 

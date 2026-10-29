@@ -143,6 +143,10 @@ async function generateBlogDataForLocale(locale) {
           slug,
           title: data.title,
           date: data.date || new Date().toISOString().split('T')[0],
+          // Set by hand when a post is substantially revised. Feeds the
+          // article's dateModified and the sitemap's <lastmod>; absent, both
+          // use the publication date.
+          ...(data.updated ? { updated: String(data.updated).split('T')[0] } : {}),
           excerpt: data.excerpt || '',
           // Raw markdown is deliberately NOT emitted: only `contentHtml` is
           // rendered, and the admin editor reads the .md files from disk via
@@ -195,7 +199,8 @@ async function generateBlogDataForLocale(locale) {
  * Link each post to its counterpart in the other locale, in place.
  *
  * This is the single definition of the pairing rule: French posts either reuse
- * the English id/slug or suffix it with '-fr'. It used to be written out twice
+ * the English id/slug or suffix it with '-fr'. The id is enough, so a French
+ * post can carry a French slug as long as its id matches (docs/blog-seo.md). It used to be written out twice
  * — once in src/lib/blog.ts for the page's hreflang, once in
  * scripts/generate-sitemap.js for the sitemap's — and the two agreeing was a
  * matter of keeping them in step by hand. Both now read `counterpart` from the

@@ -247,4 +247,4 @@ Les deux méthodes préservent l'ordre relatif des éléments conservés (filtra
 - **filter().collect()** : Transformer les données de réponse d'API en un sous-ensemble filtré.
 
 Un `retain()` dont le prédicat garde tout coûte un parcours et rien d'autre — aucune suppression,
-aucune réallocation, capacité inchangée.
+aucune [réallocation](/fr/blog/vec-push-vs-with-capacity-performance), capacité inchangée.

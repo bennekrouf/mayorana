@@ -138,7 +138,7 @@ assert!(vec.is_empty());
 
 ## Comportement mémoire
 
-- Les trois méthodes conservent la capacité du Vec (pas de réallocation si des éléments sont rajoutés).
+- Les trois méthodes conservent la capacité du Vec (pas de [réallocation](/fr/blog/vec-push-vs-with-capacity-performance) si des éléments sont rajoutés).
 - `drain()` est paresseux : les éléments ne sont libérés que lorsque l'itérateur est consommé.
 
 Cette paresse signifie que le travail intéressant s'étale sur la durée de vie de la garde `Drain`, et non dans l'appel à `drain()` :

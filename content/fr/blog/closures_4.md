@@ -16,6 +16,7 @@ tags:
   - ownership
   - traits
   - lifetimes
+seo_title: "Les move closures en Rust : quand et pourquoi"
 ---
 
 # Que sont les move closures (move || { ... }) ? Quand sont-elles nécessaires et comment interagissent-elles avec l'ownership ?
@@ -157,7 +158,7 @@ Le trait d'une `move` closure (`Fn`, `FnMut`, `FnOnce`) dépend de comment les v
 
 ### 1. Closures qui Survivent à leur environnement
 
-Quand une closure est utilisée dans un scope différent (ex : thread ou tâche async), elle doit posséder ses données pour éviter les dangling references :
+Quand une closure est utilisée dans un scope différent (ex : thread ou tâche async), elle doit posséder ses données pour éviter les [dangling references](/fr/blog/dangling-pointer-rust-fr) :
 
 ```rust
 use std::thread;
@@ -580,7 +581,7 @@ fn closure_sizes() {
 ## Quand `move` est la réponse
 **Utilise `move` closures quand** :
 - La closure survit à son environnement (ex : threads).
-- Tu as besoin d'ownership explicite pour éviter les problèmes du borrow checker.
+- Tu as besoin d'ownership explicite pour éviter les problèmes du [borrow checker](/fr/blog/borrowing-rules-rust-fr).
 - Tu veux découpler la closure de son environnement d'origine.
 
 **Evite `move` pour** :

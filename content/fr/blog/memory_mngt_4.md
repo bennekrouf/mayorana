@@ -14,11 +14,12 @@ tags:
   - ownership
   - borrowing
   - data-races
+seo_title: "Ownership en Rust : fin des fuites mémoire et data races"
 ---
 
 # Comment l'ownership prévient-il les memory leaks et data races ?
 
-L'ownership est le système central de gestion mémoire de Rust, appliquant des règles strictes au moment de la compilation pour assurer la sécurité sans garbage collector. Il prévient les memory leaks et data races à travers une combinaison de règles d'ownership, move semantics, et borrowing.
+L'ownership est le système central de gestion mémoire de Rust, appliquant des règles strictes au moment de la compilation pour assurer la sécurité sans [garbage collector](/fr/blog/why-garbage-collector-fr). Il prévient les memory leaks et data races à travers une combinaison de règles d'ownership, move semantics, et borrowing.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm4-fig" viewBox="0 0 800 240" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Déplacer un String de s1 vers s2 transfère l'ownership des données heap et invalide s1">
@@ -178,7 +179,7 @@ println!("{:?}, {:?}", r1, r2);
 
 ## Points clés
 **L'ownership assure** :
-- Pas de dangling pointers (via lifetimes).
+- Pas de [dangling pointers](/fr/blog/dangling-pointer-rust-fr) (via lifetimes).
 - Pas de memory leaks (via `Drop`).
 - Pas de data races (via règles de borrowing).
 

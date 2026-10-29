@@ -15,6 +15,7 @@ tags:
   - developer-tools
   - rust
   - llm
+meta_description: "AI git tools either hand you text to copy or run commands and tell you later. A third way keeps every commit and push behind your approval."
 ---
 
 # AI Commit Messages Without Handing Over Your Git History

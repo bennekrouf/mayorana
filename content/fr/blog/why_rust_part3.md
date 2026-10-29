@@ -13,6 +13,8 @@ tags:
   - ownership
   - memory-safety
   - systems-programming
+seo_title: "Pourquoi Rust : sécurité mémoire et threads, cas réels"
+meta_description: "Pourquoi choisir Rust : la vitesse du C, la sécurité mémoire et des threads à la compilation, et ce qu'y ont gagné Dropbox, Discord et Firefox."
 ---
 
 # Partie 3 : Rust: Memory safety sans garabe collector
@@ -23,8 +25,8 @@ Rust n'a pas de GC. Il n'en a pas besoin.
 let msg = String::from("hello");
 ```
 
-L’allocation mémoire est gérée automatiquement — mais pas par un garbage collector.
-Grâce au système d’ownership, Rust vérifie à la compilation que chaque valeur a un seul propriétaire, et que la mémoire est libérée au bon moment.
+L’allocation mémoire est gérée automatiquement — mais pas par un [garbage collector](/fr/blog/why-garbage-collector-fr).
+Grâce au système d’[ownership](/fr/blog/memory-safety-rust), Rust vérifie à la compilation que chaque valeur a un seul propriétaire, et que la mémoire est libérée au bon moment.
 Zéro coût. Zéro surprise. Zéro fuite.
 
 ## La révolution « ownership »
@@ -98,8 +100,8 @@ fn main() {
 ```
 
 **Les règles de borrowing préviennent :**
-- Data races au moment de la compilation
-- Dangling pointers
+- [Data races](/fr/blog/ownership-safety-rust-fr) au moment de la compilation
+- [Dangling pointers](/fr/blog/dangling-pointer-rust-fr)
 - Iterator invalidation
 - Problèmes de thread safety
 
@@ -423,7 +425,7 @@ Compilateur intelligent → Système ownership → Code rapide + sûr
 
 > "Tu n'as pas besoin d'un runtime pour être sûr — juste d'un compilateur intelligent."
 
-**Le Résultat :** Sécurité màmoire et "zero-cost abstraction". Le saint graal de la programmation système.
+**Le Résultat :** Sécurité màmoire et "[zero-cost abstraction](/fr/blog/zero-cost-abstractions-rust)". Le saint graal de la programmation système.
 
 ---
 

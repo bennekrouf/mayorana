@@ -14,6 +14,7 @@ tags:
   - performance
   - traits
 date: '2025-11-05'
+seo_title: "impl Fn ou Box<dyn Fn> en Rust : le dispatch des closures"
 ---
 
 # impl Fn() vs. Box<dyn Fn()>: Le Duel du Dispatch des Closures en Rust
@@ -80,7 +81,7 @@ Le système de closures de Rust offre deux façons de gérer un comportement fun
 - **Utilise Quand** :
   - Le type de closure est fixe et connu au moment de la compilation.
   - La performance est critique (ex : hot loops, systèmes embarqués).
-  - Les zero-cost abstractions sont désirées.
+  - Les [zero-cost abstractions](/fr/blog/zero-cost-abstractions-rust) sont désirées.
 - **Pourquoi** : Le compilateur génère une fonction unique pour chaque type de closure via monomorphization, permettant l'inlining et aucun overhead runtime.
 
 **Exemple** :

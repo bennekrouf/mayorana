@@ -15,6 +15,8 @@ tags:
   - observability
   - integration
   - debugging
+seo_title: "Tracing a Correlation ID Across Azure Cosmos DB"
+meta_description: "An order never arrived and you have a correlation ID. How to trace it across Azure Cosmos DB containers, and why the empty results matter most."
 ---
 
 # How Far Did That Order Get? Tracing a Correlation ID Across Cosmos DB
@@ -65,7 +67,7 @@ A tool that hides its empty results throws away half of what the trace tells you
 
 The one genuinely awkward part — the field name differing per container — turns out to be solvable without configuration.
 
-Sample a container. Look at the values across its documents. Fields that correlate documents to each other have a recognisable signature: high cardinality, consistent format, appearing across most documents, and — critically — sharing values with fields in other containers. A `createdAt` timestamp does not look like that. A correlation id does.
+Sample a container. Look at the values across its documents. Fields that correlate documents to each other have a recognisable signature: high cardinality, consistent format, appearing across most documents, and — critically — sharing values with fields in other containers. A `createdAt` timestamp does not look like that. A [correlation id](/en/blog/trace-correlation-id-log-analytics) does.
 
 Doing that inference from the data means you never have to describe your schema to the tool, and it keeps working when someone adds a container next quarter with yet another field name.
 

@@ -16,7 +16,7 @@ tags:
 
 # How Rust's Ownership and Borrowing Ensure Safe Concurrency
 
-Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating data races without requiring a garbage collector. This approach ensures safe, high-performance parallelism with minimal runtime overhead.
+Rust’s concurrency model leverages its ownership and borrowing rules to guarantee thread safety at compile time, eliminating [data races](/en/blog/ownership-safety-rust) without requiring a [garbage collector](/en/blog/why-garbage-collector). This approach ensures safe, high-performance parallelism with minimal runtime overhead.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="mm12-fig" viewBox="0 0 800 250" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Multiple threads each hold a cloned Arc pointing to the same Mutex-protected data, but the Mutex allows only one thread exclusive access at a time">
@@ -64,7 +64,7 @@ Rust’s concurrency model leverages its ownership and borrowing rules to guaran
 Rust uses the following mechanisms to manage concurrency:
 - **Ownership**: Ensures exclusive mutable access to data.
 - **Borrowing**: Governs how data is accessed via references.
-- **Lifetimes**: Prevent dangling references across threads.
+- **Lifetimes**: Prevent [dangling references](/en/blog/dangling-pointer-rust) across threads.
 - **Send/Sync Traits**: Define which types are safe for threading.
 
 ## How Ownership and Borrowing Prevent Data Races
@@ -77,7 +77,7 @@ A **data race** occurs when:
 Rust’s rules make data races impossible in safe code:
 
 ### 1. Exclusive Mutability (`&mut T`)
-- Only one mutable reference (`&mut T`) can exist at a time, enforced by the borrow checker.
+- Only one mutable reference (`&mut T`) can exist at a time, enforced by the [borrow checker](/en/blog/borrowing-rules-rust).
 - This prevents multiple threads from writing to the same data simultaneously.
 
 **Example**:

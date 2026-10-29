@@ -17,6 +17,8 @@ tags:
   - traits
   - generics
 date: '2025-08-15'
+seo_title: "?Sized in Rust: One Function for Sized and Unsized Types"
+meta_description: "What ?Sized means in Rust trait bounds, and how to write one function that accepts both sized types and unsized ones like str and [T]."
 ---
 
 # ?Sized: writing one function for both sized and unsized types
@@ -122,12 +124,12 @@ With `T: ?Sized`, it accepts:
 - **Unsized**: `[u8]` (size known only at runtime via length).
 
 ### Unified API
-One function handles both fixed arrays (`[u8; 16]`) and slices (`[u8]`), plus trait objects (`dyn Checksum`) if needed. This reduces code duplication in a serialization library processing diverse inputs.
+One function handles both fixed arrays (`[u8; 16]`) and slices (`[u8]`), plus [trait objects](/en/blog/object-safety-rust) (`dyn Checksum`) if needed. This reduces code duplication in a serialization library processing diverse inputs.
 
 ## Maintaining Efficiency
 
 - **Reference-Based**: Using `&T` avoids owning `T` or requiring `Box<T>`. For unsized types, this leverages their inherent indirection (e.g., `&[u8]` is a fat pointer: data + length), adding no extra cost.
-- **Static Dispatch**: `T: ?Sized + Checksum` ensures monomorphization for each `T`. `checksum` calls are inlined:
+- **[Static Dispatch](/en/blog/dispatch-performance-rust)**: `T: ?Sized + Checksum` ensures monomorphization for each `T`. `checksum` calls are inlined:
   - For `FixedBuffer`: Direct array access, unrolled if small.
   - For `[u8]`: Slice iteration, potentially vectorized by LLVM.
 - **No Overhead**: The `?Sized` bound itself adds no runtime cost—it's a compile-time relaxation. The vtable (if `dyn Checksum`) is only used if explicitly chosen, not here.
@@ -187,7 +189,7 @@ One function handles both fixed arrays (`[u8; 16]`) and slices (`[u8]`), plus tr
 
 ## Implementation Details
 
-- **Trait Bound**: `Checksum` defines the behavior, implemented for both sized (`FixedBuffer`) and unsized (`[u8]`) types. `?Sized` lets `compute_checksum` bridge them.
+- **[Trait Bound](/en/blog/trait-bounds-rust)**: `Checksum` defines the behavior, implemented for both sized (`FixedBuffer`) and unsized (`[u8]`) types. `?Sized` lets `compute_checksum` bridge them.
 - **Safety**: `&T` ensures borrow semantics, preventing ownership issues with unsized types (which can't be moved directly).
 
 ## Trade-Offs

@@ -13,6 +13,7 @@ tags:
   - javascript
   - typescript
 date: '2025-11-12'
+seo_title: "Move closures en Rust, expliquées aux développeurs JS"
 ---
 
 # Comprendre les Move Closures en Rust : Guide pour les Développeurs JavaScript
@@ -313,7 +314,7 @@ fn create_handler() -> impl FnMut() -> i32 {
 }
 ```
 
-Cela empêche les data races et les use-after-free au moment de la compilation—des garanties que JavaScript ne peut pas offrir.
+Cela empêche les [data races](/fr/blog/ownership-safety-rust-fr) et les use-after-free au moment de la compilation—des garanties que JavaScript ne peut pas offrir.
 
 ## Résumé
 | Scénario | Utiliser `move` | Raison |
@@ -323,6 +324,6 @@ Cela empêche les data races et les use-after-free au moment de la compilation�
 | Tâches async | Souvent | La tâche a besoin d'une durée de vie 'static |
 | Usage local | Non | L'emprunt est suffisant |
 
-**Principe fondamental :** Si une closure survit à son environnement ou doit être `Send`, utilise `move`. Sinon, laisse le borrow checker choisir le mode de capture minimal.
+**Principe fondamental :** Si une closure survit à son environnement ou doit être `Send`, utilise `move`. Sinon, laisse le [borrow checker](/fr/blog/borrowing-rules-rust-fr) choisir le mode de capture minimal.
 
-Le mot-clé `move` est la façon de Rust de dire : "Cette closure possède maintenant ces variables." Ce n'est pas juste de la syntaxe—c'est un contrat appliqué au moment de la compilation, éliminant des classes entières d'erreurs runtime qui affectent les langages avec garbage collection.
+Le mot-clé `move` est la façon de Rust de dire : "Cette closure possède maintenant ces variables." Ce n'est pas juste de la syntaxe—c'est un contrat appliqué au moment de la compilation, éliminant des classes entières d'erreurs runtime qui affectent les langages avec [garbage collection](/fr/blog/why-garbage-collector-fr).

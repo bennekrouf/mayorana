@@ -1,6 +1,6 @@
 ---
 id: embeddings-vector-databases-rag
-title: 'Épisode 6 : Embeddings et bases vectorielles'
+title: 'Épisode 5 : Embeddings et bases vectorielles'
 slug: embeddings-vector-databases-rag
 locale: fr
 date: '2026-09-27'
@@ -15,15 +15,16 @@ tags:
   - embeddings
   - vector-database
   - rag
+meta_description: "Des mots-clés au sens : embeddings et similarité cosinus pour chercher par proximité, pourquoi une base vectorielle, et comment on arrive au RAG."
 ---
 
-# Épisode 6 : Embeddings et bases vectorielles
+# Épisode 5 : Embeddings et bases vectorielles
 
 ## D'où vient le besoin ?
 
 Pendant longtemps, chercher dans un texte, c'était chercher des **mots exacts**. "Voiture" ne trouvait pas "automobile". La **recherche par mot-clé** est rapide mais **bête** : elle ne comprend pas le sens.
 
-C'est là qu'interviennent les **embeddings**.
+C'est là qu'interviennent les **[embeddings](/fr/blog/embeddings-absolute-vs-contextual)**.
 
 ## Pourquoi les embeddings changent tout ?
 
@@ -53,7 +54,7 @@ L'attention compare des mots **dans une phrase**. Une base vectorielle compare d
 
 ## Le lien avec le transfer learning
 
-Les embeddings viennent d'un modèle **pré-entraîné**. C'est du transfer learning pur : on réutilise un modèle qui a appris le sens du langage sur des milliards de phrases.
+Les embeddings viennent d'un modèle **pré-entraîné**. C'est du [transfer learning](/fr/blog/transfer-learning-reusing-knowledge) pur : on réutilise un modèle qui a appris le sens du langage sur des milliards de phrases.
 
 ## Le pipeline complet
 

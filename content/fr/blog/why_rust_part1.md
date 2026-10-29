@@ -15,6 +15,7 @@ tags:
   - python
   - gc
   - memory
+seo_title: "Pauses du GC et latence : le coût caché du garbage collector"
 ---
 
 # Partie 1 : GC Pauses et Latence: Le coût caché des langages de haut niveau

@@ -13,6 +13,7 @@ tags:
   - javascript
   - typescript
 date: '2025-11-02'
+seo_title: "Rust Move Closures Explained for JavaScript Developers"
 ---
 
 # Understanding Rust Move Closures: A Guide for JavaScript Developers
@@ -315,7 +316,7 @@ fn create_handler() -> impl FnMut() -> i32 {
 }
 ```
 
-This prevents data races and use-after-free at compile time—guarantees JavaScript can't make.
+This prevents [data races](/en/blog/ownership-safety-rust) and use-after-free at compile time—guarantees JavaScript can't make.
 
 ## Summary
 | Scenario | Use `move` | Reason |
@@ -325,6 +326,6 @@ This prevents data races and use-after-free at compile time—guarantees JavaScr
 | Async tasks | Often | Task needs 'static lifetime |
 | Local use | No | Borrowing is sufficient |
 
-**Core principle:** If a closure outlives its environment or needs to be `Send`, use `move`. Otherwise, let the borrow checker choose the minimal capture mode.
+**Core principle:** If a closure outlives its environment or needs to be `Send`, use `move`. Otherwise, let the [borrow checker](/en/blog/borrowing-rules-rust) choose the minimal capture mode.
 
-The `move` keyword is Rust's way of saying: "This closure now owns these variables." It's not just syntax—it's a contract enforced at compile time, eliminating entire classes of runtime errors that plague languages with garbage collection.
+The `move` keyword is Rust's way of saying: "This closure now owns these variables." It's not just syntax—it's a contract enforced at compile time, eliminating entire classes of runtime errors that plague languages with [garbage collection](/en/blog/why-garbage-collector).

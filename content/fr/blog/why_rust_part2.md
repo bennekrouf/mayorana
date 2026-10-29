@@ -15,6 +15,7 @@ tags:
   - memory
   - dangling-pointer
   - undefined-behavior
+seo_title: "C, C++, Zig : le prix du contrôle manuel de la mémoire"
 ---
 
 # Partie 2 : Les langages comme C/C++ ou Zig permettent de contrôler la mémoire mais à quel prix ?
@@ -304,7 +305,7 @@ if (error) {
 free(data);  // Facile d'oublier ou de double-free
 ```
 
-**Option 2 : Garbage collector**
+**Option 2 : [Garbage collector](/fr/blog/why-garbage-collector-fr)**
 - Ajouter une librairie GC comme Boehm GC
 - Perdre la prévisibilité des performances
 - Toujours possible d'avoir des fuites mémoires

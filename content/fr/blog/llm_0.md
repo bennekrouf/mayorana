@@ -14,6 +14,7 @@ tags:
   - ai
   - rust
   - machine-learning
+meta_description: "Comprendre les LLM sans doctorat en maths : la promesse de la série, ce que tu vas apprendre et l'idée qui relie tous les épisodes."
 ---
 
 # Épisode 0 : Pourquoi coder les LLM from scratch
@@ -30,9 +31,9 @@ Parce que lire des articles ne suffit pas. C'est comme la cuisine : regarder une
 
 - Comment un mot "regarde" les autres mots (attention)
 - Pourquoi on sépare Q, K et V (spécialisation)
-- Comment le sens est transformé en géométrie (embeddings)
-- Comment réutiliser un modèle existant (transfer learning)
-- Comment tout ça s'assemble pour créer un RAG
+- Comment le sens est transformé en géométrie ([embeddings](/fr/blog/embeddings-absolute-vs-contextual))
+- Comment réutiliser un modèle existant ([transfer learning](/fr/blog/transfer-learning-reusing-knowledge))
+- Comment tout ça s'assemble pour créer un [RAG](/fr/blog/embeddings-vector-databases-rag)
 
 ## À qui s'adresse cette série ?
 

@@ -15,6 +15,8 @@ tags:
   - service-bus
   - event-grid
   - integration
+seo_title: "Azure Logic Apps as a Graph: What the Portal Can't Show"
+meta_description: "Past a dozen workflows, Azure Logic Apps become a graph joined by Service Bus and Event Grid. Why the portal can't show it, and what to do."
 ---
 
 # Your Logic Apps Are a Graph, and the Azure Portal Only Shows You a List
@@ -66,8 +68,8 @@ Read-only use needs only the Reader role. The desktop console can also change Az
 
 ## Where this sits
 
-Monitoring a deployed estate is one problem. Developing against it locally is a different one — for that, [AIS Runner](/en/apps/ais-runner) runs Logic Apps Standard on your own machine without deploying to Azure.
+Monitoring a deployed estate is one problem. Developing against it locally is a different one — for that, [AIS Runner](/en/apps/ais-runner) runs [Logic Apps Standard](/en/blog/ais-runner-intro) on your own machine without deploying to Azure.
 
-And when the question is not "which workflows are involved" but "how far did this specific order get", that is a tracing problem: [AIS Tracing](/en/apps/ais-tracing) follows one correlation id across every container of a Cosmos DB account, and [AIS Analytics](/en/apps/ais-analytics) does the same against a Log Analytics workspace.
+And when the question is not "which workflows are involved" but "how far did this specific order get", that is a tracing problem: [AIS Tracing](/en/apps/ais-tracing) follows one [correlation id](/en/blog/trace-correlation-id-log-analytics) across every container of a Cosmos DB account, and [AIS Analytics](/en/apps/ais-analytics) does the same against a Log Analytics workspace.
 
 All of them are native desktop apps built in Rust, source-available on GitHub, and free for personal, educational and non-profit use — commercial use requires a licence.

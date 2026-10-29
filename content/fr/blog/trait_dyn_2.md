@@ -161,8 +161,8 @@ fn main() {
 
 ## Assurer les performances
 
-- **Dispatch statique** : Les bounds activent le dispatch statique via les generics. Le compilateur fait la monomorphization de `dot_product` pour chaque `T`, générant du code spécialisé (ex : un pour `f32`, un autre pour `i32`).
-- **Inlining** : Les petites opérations comme `+` et `*` (de `Add` et `Mul`) sont inlined, réduisant l'overhead d'appel et activant les optimisations de boucle (ex : unrolling ou SIMD si `T` est une primitive).
+- **[Dispatch statique](/fr/blog/dispatch-performance-rust)** : Les bounds activent le dispatch statique via les generics. Le compilateur fait la monomorphization de `dot_product` pour chaque `T`, générant du code spécialisé (ex : un pour `f32`, un autre pour `i32`).
+- **Inlining** : Les petites opérations comme `+` et `*` (de `Add` et `Mul`) sont inlined, réduisant l'overhead d'appel et activant les optimisations de boucle (ex : unrolling ou [SIMD](/fr/blog/simd-matrix-mult-rust) si `T` est une primitive).
 - **Pas d'overhead d'abstraction** : Contrairement à `dyn Trait`, il n'y a pas de vtable—du code machine pur adapté à `T`.
 
 ## Impact sur la Monomorphization

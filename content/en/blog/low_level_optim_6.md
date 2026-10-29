@@ -15,6 +15,8 @@ tags:
   - advanced
   - collections
 date: '2025-08-27'
+seo_title: "Vec::push Reallocation Cost in Rust: Benchmarks, extend()"
+meta_description: "What Vec::push() in a loop really costs: Rust's growth strategy, reallocation counts, benchmark results, and where extend() fits in."
 ---
 
 # Vec::push() in a loop vs. pre-allocating with Vec::with_capacity()?
@@ -213,7 +215,7 @@ v.extend(0..n);  // Optimized for iterators (avoids bounds checks)
 
 ## Real-World Impact
 
-In the regex crate, pre-allocation is used for capture groups to avoid reallocations during pattern matching.
+In the regex crate, [pre-allocation](/en/blog/vec-new-vs-with-capacity) is used for capture groups to avoid reallocations during pattern matching.
 
 Over-reserving has a cost too. `with_capacity(1000)` for ten elements holds the whole block
 until the `Vec` drops; `shrink_to_fit()` gives it back, at the price of one more copy.

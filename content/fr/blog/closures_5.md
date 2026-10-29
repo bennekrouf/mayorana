@@ -12,6 +12,7 @@ tags:
   - fnmut
   - lifetimes
 date: '2025-11-08'
+seo_title: "Closures avec état en Rust : muter entre plusieurs appels"
 ---
 
 # Closures avec État en Rust: Passer et Muter à Travers Plusieurs Appels
@@ -91,7 +92,7 @@ fn main() {
 
 - **État Mutable** : La closure capture `counter` via un mutable borrow (`&mut i32`). La closure elle-même est déclarée `mut` pour permettre la mutation.
 - **Signature de Function** : `fn call_repeatedly<F: FnMut() -> i32>(f: &mut F)` assure que la closure peut être appelée plusieurs fois avec accès mutable.
-- **Sécurité des Lifetimes** : La closure emprunte `counter`, donc elle ne peut pas outlive `counter`, appliqué par le borrow checker de Rust.
+- **Sécurité des Lifetimes** : La closure emprunte `counter`, donc elle ne peut pas outlive `counter`, appliqué par le [borrow checker](/fr/blog/borrowing-rules-rust-fr) de Rust.
 
 ## Alternative: Encapsuler l'État dans une Struct
 

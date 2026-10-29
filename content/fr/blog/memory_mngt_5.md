@@ -18,6 +18,7 @@ tags:
   - dangling-pointer
   - ownership
   - lifetimes
+seo_title: "Dangling pointers : Rust les bloque dès la compilation"
 ---
 
 # Qu'est-ce qu'un dangling pointer, et comment Rust le prévient-il au moment de la compilation ?
@@ -141,7 +142,7 @@ Rust utilise deux mécanismes clés pour prévenir les dangling pointers :
 ### 1. Règles d'Ownership + Borrowing
 
 - **Règle** : Les références (`&T` ou `&mut T`) ne doivent pas survivre aux données qu'elles pointent.
-- **Appliqué par** : Le borrow checker, qui track les scopes de variables et assure que les références restent valides.
+- **Appliqué par** : Le [borrow checker](/fr/blog/borrowing-rules-rust-fr), qui track les scopes de variables et assure que les références restent valides.
 
 **Exemple : Rejeté au Compile Time** :
 ```rust

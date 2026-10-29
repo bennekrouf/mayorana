@@ -15,7 +15,7 @@ date: '2025-07-14'
 
 # How do you store a closure in a struct?
 
-Storing a closure in a struct requires specifying trait bounds (Fn, FnMut, FnOnce) and potentially lifetimes if the closure captures references. Here's how to do it:
+Storing a closure in a struct requires specifying [trait bounds](/en/blog/trait-bounds-rust) (Fn, FnMut, FnOnce) and potentially lifetimes if the closure captures references. Here's how to do it:
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="cl9-fig" viewBox="0 0 800 280" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="Three ways to store a closure in a struct: generic static dispatch, boxed dynamic dispatch, or lifetime-bound references">
@@ -130,7 +130,7 @@ fn main() {
 ### Key Points
 - **Lifetime annotation**: Required if the closure captures references (e.g., Box<dyn Fn() -> &str + 'a>).
 - **Flexibility**: Can store any closure matching the trait.
-- **Overhead**: Vtable lookup (dynamic dispatch).
+- **Overhead**: Vtable lookup ([dynamic dispatch](/en/blog/dispatch-performance-rust)).
 
 ## 3. Capturing References (Lifetimes)
 
@@ -236,7 +236,7 @@ Choosing `Fn`, `FnMut` or `FnOnce` for the stored field is not a local decision 
 ## Key Takeaways
 
 Generic structs: Best for performance and static dispatch.
-Trait objects: Use when storing heterogeneous closures.
+[Trait objects](/en/blog/object-safety-rust): Use when storing heterogeneous closures.
 Lifetimes: Required if the closure captures references.
 
 Store a closure that captured `&mut` in a struct and the mutability propagates outward: the

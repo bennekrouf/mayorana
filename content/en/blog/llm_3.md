@@ -15,6 +15,8 @@ tags:
   - embeddings
   - attention
   - transformers
+seo_title: "Absolute vs Contextual Embeddings, Explained (Episode 3)"
+meta_description: "Is an embedding the word alone or the word in context? Both, at different moments. Plus multi-head attention, masking and position encoding."
 ---
 
 # Episode 3: Embeddings — Absolute at the Start, Contextual at the End
@@ -56,7 +58,7 @@ Instead of a single attention, several run in parallel (e.g. 12 heads). Each hea
 
 ### 2. Masking
 
-During generation, the model is not allowed to look at future words. We put `-infinity` in their scores so that Softmax gives them 0%.
+During generation, the model is not allowed to look at future words. We put `-infinity` in their scores so that [Softmax](/en/blog/attention-four-operations) gives them 0%.
 
 ### 3. Position Encoding
 

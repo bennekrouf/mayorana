@@ -10,6 +10,7 @@ tags:
   - closures
   - fnmut
 date: '2025-07-10'
+seo_title: "Stateful Closures in Rust: Mutating State Across Calls"
 ---
 
 # Rust's Stateful Closures: Passing and Mutating Across Multiple Calls
@@ -88,7 +89,7 @@ fn main() {
 ### Key Mechanics
 - **Mutable State**: The closure captures `counter` via a mutable borrow (`&mut i32`). The closure itself is declared `mut` to allow mutation.
 - **Function Signature**: `fn call_repeatedly<F: FnMut() -> i32>(f: &mut F)` ensures the closure can be called multiple times with mutable access.
-- **Lifetime Safety**: The closure borrows `counter`, so it cannot outlive `counter`, enforced by Rust’s borrow checker.
+- **Lifetime Safety**: The closure borrows `counter`, so it cannot outlive `counter`, enforced by Rust’s [borrow checker](/en/blog/borrowing-rules-rust).
 
 ## Alternative: Encapsulate State in a Struct
 
@@ -194,7 +195,7 @@ The trait you get is not something you pick — the compiler derives it from how
   call_repeatedly(&mut closure);
   ```
   The closure and parameter must be `mut` to implement `FnMut`.
-- **Dangling References**: Ensure captured variables live as long as the closure. For example:
+- **[Dangling References](/en/blog/dangling-pointer-rust)**: Ensure captured variables live as long as the closure. For example:
   ```rust
   fn bad() -> impl FnMut() -> i32 {
       let counter = 0;

@@ -139,7 +139,7 @@ Rust uses two key mechanisms to prevent dangling pointers:
 ### 1. Ownership + Borrowing Rules
 
 - **Rule**: References (`&T` or `&mut T`) must not outlive the data they point to.
-- **Enforced by**: The borrow checker, which tracks variable scopes and ensures references remain valid.
+- **Enforced by**: The [borrow checker](/en/blog/borrowing-rules-rust), which tracks variable scopes and ensures references remain valid.
 
 **Example: Rejected at Compile Time**:
 ```rust

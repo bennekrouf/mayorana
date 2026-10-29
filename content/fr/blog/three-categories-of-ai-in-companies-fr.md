@@ -7,7 +7,7 @@ category: ai
 tags: ["ai", "ai-agents", "mcp", "strategy"]
 excerpt: "La plupart des projets d'IA générative et agentique entrent dans trois catégories : agents pour les clients, couche d'intégration pour les systèmes, copilotes pour les collaborateurs. Pourquoi ce prisme vaut mieux qu'une liste de cinquante cas d'usage."
 seo_title: "L'IA en entreprise : 3 catégories derrière 50 cas d'usage"
-meta_description: "La plupart des projets d'IA générative et d'agents tiennent en trois catégories : agents B2C, couche d'intégration type MCP, copilotes internes. Un prisme pour prioriser."
+meta_description: "Les projets d'IA générative tiennent en trois catégories : agents B2C, couche d'intégration type MCP, copilotes internes. Un prisme pour prioriser."
 keywords: ["cas d'usage IA", "agents IA", "MCP", "Model Context Protocol", "IA générative", "stratégie IA", "IA en entreprise"]
 ---
 

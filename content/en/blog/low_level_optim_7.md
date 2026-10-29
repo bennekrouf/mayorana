@@ -13,11 +13,12 @@ tags:
   - rust
   - performance
 date: '2025-08-27'
+meta_description: "Fixed-size arrays, Option and other stack-based Rust features that remove heap allocations from real-time code for predictable low latency."
 ---
 
 # Avoiding heap allocation on a real-time path
 
-In a real-time system, heap allocations via Box, Vec, or other dynamic structures introduce latency due to memory management overhead and potential garbage collection pauses (though Rust avoids GC, allocation/deallocation still varies). I'd use Rust's stack-based features like fixed-size arrays, Option, and custom structs to eliminate these in a performance-critical path, ensuring predictable, low-latency execution.
+In a real-time system, heap allocations via Box, Vec, or other dynamic structures introduce latency due to memory management overhead and potential [garbage collection](/en/blog/why-garbage-collector) pauses (though Rust avoids GC, allocation/deallocation still varies). I'd use Rust's stack-based features like fixed-size arrays, Option, and custom structs to eliminate these in a performance-critical path, ensuring predictable, low-latency execution.
 
 <div class="svg-container" style="margin:2rem 0;">
 <svg class="lo7-fig" viewBox="0 0 800 230" width="100%" style="height:auto;max-width:780px;display:block;margin:0 auto;" role="img" aria-label="A fixed-size stack array with a wrapping write index replaces a heap Vec that risks reallocation and shifting">
@@ -74,7 +75,7 @@ impl AudioProcessor {
 }
 ```
 
-This works but risks latency spikes from reallocation or shifting elements.
+This works but risks latency spikes from [reallocation](/en/blog/vec-push-vs-with-capacity-performance) or shifting elements.
 
 ## Stack-Based Alternative
 
@@ -179,7 +180,7 @@ impl AudioProcessor {
 ## Ensuring Safety
 
 - **Bounds Safety**: The modulo operation (`% 64`) ensures index stays within [0, 63]. Rust's array indexing panics on out-of-bounds in debug mode, catching errors early.
-- **Lifetime Control**: Stack allocation ties the buffer's lifetime to AudioProcessor, avoiding dangling references.
+- **Lifetime Control**: Stack allocation ties the buffer's lifetime to AudioProcessor, avoiding [dangling references](/en/blog/dangling-pointer-rust).
 - **No Overflow**: For small arrays (256 bytes here), stack overflow is unlikely on typical 1MB thread stacks. For larger sizes, I'd verify against the target's stack limit (e.g., `ulimit -s`).
 
 ## Maintaining Performance
@@ -190,7 +191,7 @@ impl AudioProcessor {
 
 ## Trade-Offs and Enhancements
 
-- **Fixed Capacity**: If 64 samples isn't enough, I'd adjust the size (e.g., `[f32; 128]`) at the cost of more stack space, or use a hybrid approach with a pre-allocated `Box<[f32]>` if stack limits are a concern.
+- **Fixed Capacity**: If 64 samples isn't enough, I'd adjust the size (e.g., `[f32; 128]`) at the cost of more stack space, or use a hybrid approach with a [pre-allocated](/en/blog/vec-new-vs-with-capacity) `Box<[f32]>` if stack limits are a concern.
 - **Flexibility Loss**: No resizing, but real-time systems often prioritize predictability over adaptability.
 - **Custom Stack Structures**: For complex needs (e.g., a stack-allocated queue), I'd use a struct with arrays and indices, avoiding VecDeque's heap use.
 

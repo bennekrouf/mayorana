@@ -15,6 +15,8 @@ tags:
   - performance
   - interfaces
   - dispatch
+seo_title: "Traits Rust vs interfaces Java et C#"
+meta_description: "Traits Rust et interfaces Java/C# comparés : mécanismes de dispatch, comportement à la compilation et impact sur les performances."
 ---
 
 # Rust Traits vs. Interfaces Java/C# : Comportement partagé bien fait
@@ -77,7 +79,7 @@ Les traits Rust et les interfaces définissent tous deux un comportement partag�
 
 ## Implémentation et Dispatch
 
-**Traits Rust** : Supportent le dispatch statique via les generics où le compilateur fait la monomorphization du code pour chaque type, inlinant les appels pour un overhead zéro à l'exécution. Le dispatch dynamique (`dyn Trait`) utilise des vtables mais est sur demande.
+**Traits Rust** : Supportent le [dispatch statique](/fr/blog/dispatch-performance-rust) via les generics où le compilateur fait la monomorphization du code pour chaque type, inlinant les appels pour un overhead zéro à l'exécution. Le dispatch dynamique (`dyn Trait`) utilise des vtables mais est sur demande.
 
 **Interfaces Java/C#** : S'appuient sur le polymorphisme à l'exécution via vtables, engendrant des coûts de dispatch et empêchant l'inlining à travers les frontières de types.
 
@@ -131,12 +133,12 @@ let bytes = process_packets(&mut tcp, &packets); // Dispatch statique
 ### Performance
 
 - **Dispatch statique** : `process_packets` fait la monomorphization pour `TcpHandler` et `UdpHandler`, générant des chemins de code séparés et inlinés. Pas de lookups vtable, économisant des cycles dans les boucles chaudes
-- **Inlining** : Le compilateur peut inliner les appels `process`, les fusionnant avec la boucle, réduisant les branches et activant les optimisations SIMD
+- **Inlining** : Le compilateur peut inliner les appels `process`, les fusionnant avec la boucle, réduisant les branches et activant les optimisations [SIMD](/fr/blog/simd-matrix-mult-rust)
 - **Coût zéro** : L'abstraction trait n'ajoute aucun overhead à l'exécution—équivalent à écrire à la main `process_tcp` et `process_udp`
 
 ### Sécurité
 
-- **Sécurité de type** : Le trait bound `H: PacketHandler` assure que seuls les types compatibles sont passés, vérifié pendant la compilation—pas de casts à l'exécution comme `instanceof` de Java
+- **Sécurité de type** : Le [trait bound](/fr/blog/trait-bounds-rust) `H: PacketHandler` assure que seuls les types compatibles sont passés, vérifié pendant la compilation—pas de casts à l'exécution comme `instanceof` de Java
 - **Encapsulation** : Chaque handler gère son état (`state` ou `count`), avec l'ownership de Rust qui fait respecter les règles de mutation
 
 <div class="svg-container" style="margin:2rem 0;">
@@ -204,9 +206,9 @@ Chaque appel `process` passe par une vtable, empêchant la fusion de boucle et a
 
 ## Considérations avancées
 
-- **Types associés** : Activent des contraintes au niveau type sans overhead à l'exécution
+- **[Types associés](/fr/blog/associated-types-io-driver-api)** : Activent des contraintes au niveau type sans overhead à l'exécution
 - **Implémentations par défaut** : Réduisent le boilerplate tout en maintenant le coût zéro
-- **Supertraits** : Composent le comportement sans complexité d'héritage
+- **[Supertraits](/fr/blog/supertraits-bounds-optimization)** : Composent le comportement sans complexité d'héritage
 - **Dispatch dynamique** : Utilise `Box<dyn PacketHandler>` quand l'effacement de type est nécessaire
 
 ## Traits et interfaces, en bref

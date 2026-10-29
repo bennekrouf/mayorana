@@ -13,6 +13,7 @@ excerpt: >-
 tags:
   - rust
   - closures
+seo_title: "Rust move Closures: When You Need Them and Why"
 ---
 
 # What are move closures (move || { ... })? When are they necessary, and how do they interact with ownership?
@@ -154,7 +155,7 @@ A `move` closure’s trait (`Fn`, `FnMut`, `FnOnce`) depends on how the captured
 
 ### 1. Closures Outliving Their Environment
 
-When a closure is used in a different scope (e.g., a thread or async task), it must own its data to avoid dangling references:
+When a closure is used in a different scope (e.g., a thread or async task), it must own its data to avoid [dangling references](/en/blog/dangling-pointer-rust):
 ```rust
 use std::thread;
 
@@ -228,7 +229,7 @@ println!("{}", count); // 0 (original unchanged)
 ## When `move` is the answer
 **Use `move` closures when**:
 - The closure outlives its environment (e.g., threads).
-- You need explicit ownership to avoid borrow checker issues.
+- You need explicit ownership to avoid [borrow checker](/en/blog/borrowing-rules-rust) issues.
 
 **Avoid `move` for**:
 - Local, short-lived closures that don’t escape their scope.

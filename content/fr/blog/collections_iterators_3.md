@@ -12,6 +12,7 @@ tags:
   - collections
   - ownership
 date: '2025-10-26'
+seo_title: "collect() en Rust : itérateurs vers Vec, HashMap et String"
 ---
 
 # La magie de collect() en Rust : Transformer des itérateurs en Vecs, HashMaps et Strings !
