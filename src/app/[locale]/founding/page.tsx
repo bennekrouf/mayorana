@@ -21,6 +21,7 @@ import { FaGithub } from 'react-icons/fa';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { useAuth } from '@/providers/AuthProvider';
 import { GATEWAY_URL, updateUserPrefs } from '@/lib/gateway';
+import { setEmailConsent } from '@/lib/email-consent';
 import { desktopToolsConfig } from '@/data/tools';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 
@@ -30,6 +31,7 @@ interface FormData {
   tool: string;
   use: string;
   pay: string;
+  emails: boolean;
 }
 
 // ?tool= is read with useQuery (src/lib/use-query.ts), not useSearchParams:
@@ -75,6 +77,7 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
     const message = [
       `Tool: ${toolName || '(not specified)'}`,
       `Signed in: ${user ? `yes (${user.email})` : 'no'}`,
+      `Product emails: ${data.emails ? 'yes' : 'no'}`,
       '',
       'What were you trying to do — and does it do it?',
       data.use,
@@ -104,6 +107,9 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
           feedback_at: new Date().toISOString(),
           feedback_tool: data.tool || null,
         }).catch(() => {});
+        // Only a yes is recorded: an unticked box must not undo a yes given on
+        // the pricing page.
+        if (data.emails) void setEmailConsent(true, 'founding', locale).catch(() => {});
       }
       setStatus('sent');
     } catch (error) {
@@ -276,6 +282,16 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
                     {errors.email && <p className="mt-1 text-xs text-red-600">Required</p>}
                   </div>
                 </div>
+
+                {/* Unticked: free users get product emails only if they ask. */}
+                <label className="flex items-start gap-3 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register('emails')}
+                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-primary"
+                  />
+                  <span className="text-muted-foreground">{t('emails_label')}</span>
+                </label>
 
                 {status === 'error' && (
                   <p className="text-sm text-red-600">{t('error')}</p>

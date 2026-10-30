@@ -11,7 +11,8 @@
 //                                  200 { licence }, or 202 while Stripe settles
 //
 // Signed in (the Firebase token, via gatewayFetch):
-//   POST /api/plans/checkout       { plan_id } → { url } of Stripe Checkout
+//   POST /api/plans/checkout       { plan_id, locale } → { url } of Stripe Checkout,
+//                                  in the site's language, as the plan's emails will be
 //   GET  /api/plans/subscription   their plan, licence and credits, or null
 //   POST /api/plans/portal         → { url } of Stripe's page for card and invoices
 //   POST /api/plans/cancel|resume  cancel at the end of the paid month, or take
@@ -152,11 +153,11 @@ export type CheckoutResult =
   | { kind: 'error'; message?: string };
 
 /** Needs a signed-in user: the plan goes to the email of their sign-in. */
-export async function startCheckout(planId: string): Promise<CheckoutResult> {
+export async function startCheckout(planId: string, locale: string): Promise<CheckoutResult> {
   try {
     const body = await gatewayFetch<{ url?: string }>('/api/plans/checkout', {
       method: 'POST',
-      body: JSON.stringify({ plan_id: planId }),
+      body: JSON.stringify({ plan_id: planId, locale }),
     });
     return typeof body.url === 'string' ? { kind: 'redirect', url: body.url } : { kind: 'error' };
   } catch (e) {

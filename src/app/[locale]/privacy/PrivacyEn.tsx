@@ -10,7 +10,7 @@ export default function PrivacyEn() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: 28 October 2026</p>
+            <p className="text-muted-foreground mb-8">Last updated: 29 October 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -43,6 +43,10 @@ export default function PrivacyEn() {
                   <li>
                     <strong>Purchases</strong> of a paid edition: your email address and the licence issued to you. Card
                     details are entered on Stripe&apos;s payment page and never reach us.
+                  </li>
+                  <li>
+                    <strong>Your email choice:</strong> whether you want product emails from us, when you said so, on which
+                    page, and the language of the site at the time.
                   </li>
                 </ul>
               </section>
@@ -88,12 +92,34 @@ export default function PrivacyEn() {
               </section>
 
               <section>
+                <h2 className="text-2xl font-semibold mb-4">Emails We Send</h2>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>
+                    <strong>Account emails</strong> go to everyone with a plan: your licence, receipts, payment problems,
+                    your monthly credits and a plan about to end. They are part of the service, so they come as long as
+                    you have a plan.
+                  </li>
+                  <li>
+                    <strong>Product emails</strong> are tips for the apps, reminders when your credits run low, and a
+                    monthly digest of new releases and articles, at most one a week. If you bought a plan, you get them
+                    unless you say no, as Swiss law allows for existing customers. Anyone else gets them only after
+                    ticking the box that asks for them, on the pricing page or the founding-user form.
+                  </li>
+                </ul>
+                <p className="mt-4">
+                  You can stop product emails at any time with the unsubscribe link in each one, with the same box on the
+                  pricing page when you are signed in, or by writing to contact@mayorana.ch. We keep a record of your
+                  choice, so a no stays a no. Product emails are sent in the language you were using on the site.
+                </p>
+              </section>
+
+              <section>
                 <h2 className="text-2xl font-semibold mb-4">How We Use Your Information</h2>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>To answer your messages and provide support</li>
                   <li>To issue and deliver licences you buy</li>
                   <li>To contact founding users about the tools they use, as described when you sign in</li>
-                  <li>To send you information about our products, only if you opt in</li>
+                  <li>To send you product emails: if you bought a plan, unless you say no; otherwise only if you ask for them</li>
                   <li>To understand which tools and pages are used, so we know what to improve</li>
                   <li>To comply with legal obligations</li>
                 </ul>
@@ -106,6 +132,7 @@ export default function PrivacyEn() {
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Google Firebase Authentication, and Google or GitHub, for sign-in</li>
                   <li>Stripe, for payments</li>
+                  <li>Brevo (Sendinblue SAS, France), to send the emails described above</li>
                   <li>
                     Anthropic, through the api0 gateway, when you ask a question in the site search (&quot;Ask
                     Mayorana&quot;): the question is sent with excerpts of our pages to Anthropic&apos;s Claude model to
@@ -139,6 +166,7 @@ export default function PrivacyEn() {
                 <h2 className="text-2xl font-semibold mb-4">Data Retention</h2>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Form messages: typically 2 years, unless you ask us to delete them sooner</li>
+                  <li>Your email choice: for as long as you keep your account, so we can show that you agreed or said no</li>
                   <li>Account data (downloads, reading progress): for as long as you keep your account, or until you ask us to delete it</li>
                   <li>Server logs: about two weeks</li>
                   <li>Purchase records: as long as the law requires us to keep them</li>
