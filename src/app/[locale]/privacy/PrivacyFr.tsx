@@ -10,7 +10,7 @@ export default function PrivacyFr() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Politique de confidentialité</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : 28 octobre 2026</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 29 octobre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -45,6 +45,10 @@ export default function PrivacyFr() {
                     <strong>Achats</strong> d&apos;une édition payante&nbsp;: votre adresse e-mail et la licence qui vous est
                     délivrée. Les données de carte sont saisies sur la page de paiement de Stripe et ne nous parviennent
                     jamais.
+                  </li>
+                  <li>
+                    <strong>Votre choix concernant les e-mails&nbsp;:</strong> si vous souhaitez recevoir nos e-mails
+                    produit, quand vous l&apos;avez indiqué, sur quelle page, et la langue du site à ce moment-là.
                   </li>
                 </ul>
               </section>
@@ -96,12 +100,36 @@ export default function PrivacyFr() {
               </section>
 
               <section>
+                <h2 className="text-2xl font-semibold mb-4">Les e-mails que nous envoyons</h2>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>
+                    <strong>Les e-mails de compte</strong> sont envoyés à toute personne ayant une formule&nbsp;: votre
+                    licence, les reçus, les problèmes de paiement, vos crédits mensuels et une formule sur le point de
+                    prendre fin. Ils font partie du service et arrivent tant que vous avez une formule.
+                  </li>
+                  <li>
+                    <strong>Les e-mails produit</strong> sont des conseils sur les apps, des rappels quand vos crédits
+                    s&apos;épuisent et un récapitulatif mensuel des nouvelles versions et articles, un par semaine au plus.
+                    Si vous avez acheté une formule, vous les recevez sauf si vous refusez, comme le droit suisse le permet
+                    pour les clients existants. Les autres personnes ne les reçoivent qu&apos;après avoir coché la case qui
+                    les demande, sur la page des tarifs ou dans le formulaire des utilisateurs fondateurs.
+                  </li>
+                </ul>
+                <p className="mt-4">
+                  Vous pouvez arrêter les e-mails produit à tout moment avec le lien de désabonnement présent dans chacun,
+                  avec la même case sur la page des tarifs lorsque vous êtes connecté, ou en écrivant à
+                  contact@mayorana.ch. Nous gardons une trace de votre choix, afin qu&apos;un refus reste un refus. Les
+                  e-mails produit sont envoyés dans la langue que vous utilisiez sur le site.
+                </p>
+              </section>
+
+              <section>
                 <h2 className="text-2xl font-semibold mb-4">Utilisation de vos informations</h2>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Répondre à vos messages et vous assister</li>
                   <li>Délivrer les licences que vous achetez</li>
                   <li>Contacter les utilisateurs fondateurs au sujet des outils qu&apos;ils utilisent, comme indiqué lors de la connexion</li>
-                  <li>Vous envoyer des informations sur nos produits, uniquement si vous y consentez</li>
+                  <li>Vous envoyer des e-mails produit&nbsp;: si vous avez acheté une formule, sauf si vous refusez&nbsp;; sinon, uniquement si vous les demandez</li>
                   <li>Comprendre quels outils et quelles pages sont utilisés, pour savoir quoi améliorer</li>
                   <li>Respecter nos obligations légales</li>
                 </ul>
@@ -117,6 +145,7 @@ export default function PrivacyFr() {
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Google Firebase Authentication, ainsi que Google ou GitHub, pour la connexion</li>
                   <li>Stripe, pour les paiements</li>
+                  <li>Brevo (Sendinblue SAS, France), pour envoyer les e-mails décrits ci-dessus</li>
                   <li>
                     Anthropic, via la passerelle api0, lorsque vous posez une question dans la recherche du site
                     («&nbsp;Demander à Mayorana&nbsp;»)&nbsp;: la question est envoyée avec des extraits de nos pages au
@@ -152,6 +181,7 @@ export default function PrivacyFr() {
                 <h2 className="text-2xl font-semibold mb-4">Conservation des données</h2>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Messages des formulaires&nbsp;: en général 2 ans, sauf demande de suppression anticipée</li>
+                  <li>Votre choix concernant les e-mails&nbsp;: tant que vous conservez votre compte, afin de pouvoir montrer que vous avez accepté ou refusé</li>
                   <li>Données de compte (téléchargements, progression de lecture)&nbsp;: tant que vous conservez votre compte, ou jusqu&apos;à ce que vous en demandiez la suppression</li>
                   <li>Journaux du serveur&nbsp;: environ deux semaines</li>
                   <li>Données d&apos;achat&nbsp;: aussi longtemps que la loi nous impose de les conserver</li>

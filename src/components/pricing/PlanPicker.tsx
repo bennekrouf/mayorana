@@ -14,6 +14,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Check, Loader2, Sparkles, Star } from 'lucide-react';
 import { appI18nKey, desktopToolsConfig, toolsForPlanProducts } from '@/data/tools';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
+import { EmailOptIn } from './EmailOptIn';
 import { ManageSubscription } from './ManageSubscription';
 import {
   creditUses,
@@ -104,7 +105,7 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
     }
     setBusyPlan(plan.id);
     setProblem(null);
-    const result = await startCheckout(plan.id);
+    const result = await startCheckout(plan.id, locale);
     if (result.kind === 'redirect') {
       // Stays busy: the page is being left.
       window.location.assign(result.url);
@@ -178,6 +179,8 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
       <p className={`text-sm text-muted-foreground max-w-2xl ${authLoading ? 'invisible' : ''}`}>
         {user ? t('signed_in_note', { email: user.email ?? '' }) : t('sign_in_note')}
       </p>
+
+      {uid && <EmailOptIn uid={uid} />}
 
       {signInFor && !user && (
         // Above the navbar; the account-linking dialog (z-70) can open on top of it.

@@ -161,7 +161,8 @@
     "thanks_title": "Thank you — you're in.",
     "thanks_body": "That's exactly what we needed. We'll read it ourselves and, if we have a follow-up question, we'll write once. Meanwhile, the tools are yours.",
     "thanks_apps": "Back to the tools",
-    "error": "That didn't go through. Please try again or email us directly at mb@mayorana.ch."
+    "error": "That didn't go through. Please try again or email us directly at mb@mayorana.ch.",
+    "emails_label": "Also send me product news: tips for the apps, new releases and a monthly digest. At most one email a week, and you can unsubscribe from any of them."
   },
   "pricing": {
     "eyebrow": "Plans",
@@ -173,7 +174,7 @@
     "sign_in_note": "Sign in with Google or GitHub. Your licence number unlocks every app in your plan, and your plan stays linked to that email — easy to check, easy to cancel, anytime.",
     "signed_in_note": "Signed in as {email}. Your plan and licence are kept under this email.",
     "sign_in_title": "Sign in to subscribe to {plan}",
-    "sign_in_body": "Your licence is sent to the email of your sign-in, and the same sign-in lets you see or cancel your plan later. You go on to payment right after.",
+    "sign_in_body": "Your licence is sent to the email of your sign-in, and the same sign-in lets you see or cancel your plan later. You go on to payment right after. Subscribers also get occasional product emails, which you can turn off on this page or from any email.",
     "most_popular": "Most popular",
     "per_month": "/ month",
     "credits": "{count, plural, one {# AI credit} other {# AI credits}} every month",
@@ -238,7 +239,12 @@
     "thanks_error": "Your licence number couldn't be shown right now. It has also been sent by email; if it doesn't arrive,",
     "thanks_contact": "contact us.",
     "back_to_cvenom": "Back to CVenom studio",
-    "from_cvenom_note": "Coming from CVenom? Sign in here with the same Google account you use in the studio: the plan’s monthly credits then count there too, spent before your own."
+    "from_cvenom_note": "Coming from CVenom? Sign in here with the same Google account you use in the studio: the plan’s monthly credits then count there too, spent before your own.",
+    "emails_label": "Product emails from Mayorana",
+    "emails_hint_subscriber": "Tips for the apps in your plan, a reminder when your credits run low, and a monthly digest of new releases, at most one email a week. On for subscribers: untick to stop. Licence and payment emails come either way.",
+    "emails_hint_default": "Tips for the apps, new releases and a monthly digest, at most one email a week. Off unless you tick it. If you subscribe to a plan, these come unless you untick this.",
+    "emails_hint_chosen": "Tips for the apps, credit reminders and a monthly digest, at most one email a week. Every email has an unsubscribe link.",
+    "emails_error": "Your choice couldn't be saved. Please try again in a moment."
   },
   "download_gate": {
     "title": "It's free. We'd just love your feedback.",
