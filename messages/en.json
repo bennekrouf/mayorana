@@ -1157,7 +1157,14 @@
             }
           ]
         },
-        "screenshot_alt": "GitAgent running Review → Merge on a pull request: the step graph, with the review fanning out to a second model and focused reviews"
+        "screenshot_alt": "GitAgent running Review → Merge on a pull request: the step graph, with the review fanning out to a second model and focused reviews",
+        "video_heading": "Drive it from Claude, in plain language",
+        "video_body": [
+          "One sentence to Claude Code: run the PR review and merge for #75 on gateway-api0, using the Europe model. Claude calls GitAgent through its MCP server, GitAgent runs its Review → Merge flow — the same graph of steps you watch light up in its window — and Claude comes back with what the reviews found and the exact command the merge will run.",
+          "The language model understands what you ask and writes the reviews; it never decides which git commands run. Every step is either code or a declared model call, in a flow defined ahead of time, so there is nothing for the model to make up: GitAgent runs the steps the flow names, or it stops. Here it stops at the merge, waiting for your approval in Claude, where the run was started."
+        ],
+        "video_label": "Claude Code driving GitAgent through its MCP server: a pull request reviewed by two models, then held at the merge for approval",
+        "video_caption": "Claude Code on the left, GitAgent on the right. 30 seconds, no sound."
       },
       "publishkit": {
         "seo_title": "PublishKit — Desktop Blog Manager with AI Drafting",
@@ -1839,6 +1846,14 @@
     "mcp_copy": "Copy",
     "mcp_copied": "Copied",
     "mcp_note": "The paths are where the installer puts {name}; on Linux, where you extracted the archive. Installed elsewhere? The MCP button in {name} gives the lines with its actual path, and the text for Claude Desktop. In PowerShell, write $env:LOCALAPPDATA instead of %LOCALAPPDATA%.",
+    "mcp_cost_heading": "What it costs your agent",
+    "mcp_cost_intro": "Connecting {name} to Claude Code, Claude Desktop or Codex costs tokens of the agent's own model, not AI credits of {name}: the server's instructions are in every conversation, the tool definitions once they are loaded, and every reply stays in the conversation and is read again on each later turn, mostly from the prompt cache at a tenth of the price.",
+    "mcp_cost_what": "What the agent reads",
+    "mcp_cost_tokens": "Tokens",
+    "mcp_cost_instructions": "Server instructions, in every conversation",
+    "mcp_cost_definitions": "Every tool definition (Claude Code loads one when it is first used; Claude Desktop, all of them in every chat)",
+    "mcp_cost_call": "Reply to",
+    "mcp_cost_note": "Measured on {name} {version}, {date}, on a typical project. Replies grow with what there is to report: a longer list, a bigger diff. Counts are estimates to about 15%.",
     "comparison_heading": "How {name} compares",
     "comparison_intro": "Only the things {name} is strong at are listed. The others do plenty it doesn't — this table is about why you would pick it.",
     "comparison_feature": "Feature",

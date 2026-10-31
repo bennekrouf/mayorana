@@ -1157,7 +1157,14 @@
             }
           ]
         },
-        "screenshot_alt": "GitAgent exécute Review → Merge sur une pull request : le graphe des étapes, avec la revue confiée à un second modèle et des revues ciblées"
+        "screenshot_alt": "GitAgent exécute Review → Merge sur une pull request : le graphe des étapes, avec la revue confiée à un second modèle et des revues ciblées",
+        "video_heading": "Le piloter depuis Claude, en langage naturel",
+        "video_body": [
+          "Une phrase à Claude Code : lancer la revue et le merge de la PR #75 sur gateway-api0, avec le modèle Europe. Claude appelle GitAgent par son serveur MCP, GitAgent déroule son flow Review → Merge — le même graphe d'étapes que l'on voit s'allumer dans sa fenêtre — et Claude revient avec ce que les revues ont trouvé et la commande exacte que lancera le merge.",
+          "Le modèle de langage comprend ce que vous demandez et rédige les revues ; il ne décide jamais quelles commandes git sont lancées. Chaque étape est soit du code, soit un appel de modèle déclaré, dans un flow défini à l'avance : le modèle n'a rien à inventer. GitAgent exécute les étapes que le flow nomme, ou il s'arrête. Ici, il s'arrête au merge et attend votre accord dans Claude, là où le run a été lancé."
+        ],
+        "video_label": "Claude Code pilote GitAgent par son serveur MCP : une pull request revue par deux modèles, puis retenue au merge en attente d'accord",
+        "video_caption": "Claude Code à gauche, GitAgent à droite. 30 secondes, sans son."
       },
       "publishkit": {
         "seo_title": "PublishKit — Gérer son blog depuis le bureau, avec l'IA",
@@ -1839,6 +1846,14 @@
     "mcp_copy": "Copier",
     "mcp_copied": "Copié",
     "mcp_note": "Les chemins sont ceux où l'installeur place {name} ; sous Linux, là où vous avez extrait l'archive. Installé ailleurs ? Le bouton MCP de {name} donne les lignes avec son vrai chemin, et le texte pour Claude Desktop. Dans PowerShell, écrivez $env:LOCALAPPDATA au lieu de %LOCALAPPDATA%.",
+    "mcp_cost_heading": "Ce qu'il coûte à votre agent",
+    "mcp_cost_intro": "Brancher {name} sur Claude Code, Claude Desktop ou Codex coûte des tokens du modèle de l'agent, pas des crédits IA de {name} : les instructions du serveur sont dans chaque conversation, les définitions des outils une fois chargées, et chaque réponse reste dans la conversation et se relit à chaque tour suivant, surtout depuis le cache de prompt, au dixième du prix.",
+    "mcp_cost_what": "Ce que l'agent lit",
+    "mcp_cost_tokens": "Tokens",
+    "mcp_cost_instructions": "Instructions du serveur, dans chaque conversation",
+    "mcp_cost_definitions": "Toutes les définitions d'outils (Claude Code en charge une à sa première utilisation ; Claude Desktop, toutes, dans chaque discussion)",
+    "mcp_cost_call": "Réponse à",
+    "mcp_cost_note": "Mesuré sur {name} {version}, le {date}, sur un projet type. Les réponses grandissent avec ce qu'il y a à dire : une liste plus longue, un diff plus gros. Les nombres sont des estimations à 15 % près environ.",
     "comparison_heading": "{name} face aux alternatives",
     "comparison_intro": "Seuls les points forts de {name} sont listés. Les autres font beaucoup de choses qu'il ne fait pas — ce tableau dit pourquoi le choisir.",
     "comparison_feature": "Fonctionnalité",

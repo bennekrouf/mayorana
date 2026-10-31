@@ -71,6 +71,28 @@ export interface DesktopToolConfig {
    * text is in the copy, under app_detail.apps.<key>.screenshot_alt.
    */
   screenshot?: { src: string; width: number; height: number };
+  /**
+   * A short screen recording of the tool at work, in public/, with a poster
+   * frame. The detail page gives it a section of its own whose heading, text
+   * and label are in the copy, under app_detail.apps.<key>.video_heading,
+   * video_body, video_label and video_caption.
+   */
+  video?: { src: string; poster: string; width: number; height: number };
+  /**
+   * What the tool's MCP server costs the agent that uses it, in tokens of the
+   * agent's own model (not the tool's AI credits), measured on `version`:
+   * the server instructions every conversation carries, every tool definition
+   * together, and the reply to each common call on a typical project. The
+   * detail page shows it as a table; the copy is shared, under
+   * app_detail.mcp_cost_*.
+   */
+  mcpCost?: {
+    version: string;
+    measured: string;
+    instructions: number;
+    definitions: number;
+    calls: { tool: string; tokens: number }[];
+  };
 }
 
 // Builds are served from mayorana.ch; `latest/` is overwritten by release CI,
@@ -181,6 +203,17 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/publishkit',
     name: 'PublishKit',
     screenshot: { src: '/image/apps/publishkit.png', width: 1920, height: 1248 },
+    mcpCost: {
+      version: '0.1.40',
+      measured: '2026-10-31',
+      instructions: 640,
+      definitions: 6350,
+      calls: [
+        { tool: 'project', tokens: 490 },
+        { tool: 'list_posts', tokens: 2300 },
+        { tool: 'get_post', tokens: 4200 },
+      ],
+    },
     tech: 'Rust · Dioxus · Mistral / Claude · Markdown',
     status: 'live',
     tags: ['blog'],
@@ -203,6 +236,16 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/shipscreen',
     name: 'ShipScreen',
     screenshot: { src: '/image/apps/shipscreen.png', width: 1920, height: 1679 },
+    mcpCost: {
+      version: '0.1.53',
+      measured: '2026-10-31',
+      instructions: 320,
+      definitions: 2600,
+      calls: [
+        { tool: 'list_projects', tokens: 140 },
+        { tool: 'get_project', tokens: 1100 },
+      ],
+    },
     tech: 'Rust · Dioxus · Xcode · Gradle · image · imageproc',
     status: 'live',
     tags: ['tools'],
@@ -224,6 +267,24 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/Bennekrouf/gitagent',
     name: 'GitAgent',
     screenshot: { src: '/image/apps/gitagent.png', width: 1921, height: 1028 },
+    video: {
+      src: '/video/apps/gitagent-mcp.mp4',
+      poster: '/video/apps/gitagent-mcp.jpg',
+      width: 1600,
+      height: 1034,
+    },
+    mcpCost: {
+      version: '0.1.140',
+      measured: '2026-10-31',
+      instructions: 680,
+      definitions: 2850,
+      calls: [
+        { tool: 'list_repos', tokens: 440 },
+        { tool: 'repo_insight', tokens: 290 },
+        { tool: 'list_flows', tokens: 720 },
+        { tool: 'run_flow', tokens: 990 },
+      ],
+    },
     tech: 'Rust · Dioxus · ollama / Mistral · git · gh',
     status: 'live',
     tags: ['git'],
@@ -245,6 +306,13 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/trackcut',
     name: 'TrackCut',
     screenshot: { src: '/image/apps/trackcut.png', width: 1920, height: 1278 },
+    mcpCost: {
+      version: '0.1.46',
+      measured: '2026-10-31',
+      instructions: 400,
+      definitions: 2600,
+      calls: [],
+    },
     tech: 'Rust · Dioxus · symphonia · LAME · FLAC · yt-dlp',
     status: 'live',
     tags: ['audio'],
@@ -267,6 +335,17 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/spreadradar',
     name: 'SpreadRadar',
     screenshot: { src: '/image/apps/spreadradar.png', width: 1920, height: 1314 },
+    mcpCost: {
+      version: '0.1.33',
+      measured: '2026-10-31',
+      instructions: 380,
+      definitions: 950,
+      calls: [
+        { tool: 'watchlist', tokens: 320 },
+        { tool: 'asset', tokens: 1400 },
+        { tool: 'new_listings', tokens: 4050 },
+      ],
+    },
     tech: 'Rust · Dioxus · WebSockets · Solana · Jupiter',
     status: 'live',
     tags: ['crypto'],
@@ -291,6 +370,15 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/polishcast',
     name: 'PolishCast',
     screenshot: { src: '/image/apps/polishcast.png', width: 1920, height: 1278 },
+    mcpCost: {
+      version: '0.1.42',
+      measured: '2026-10-31',
+      instructions: 530,
+      definitions: 4250,
+      calls: [
+        { tool: 'list_sources', tokens: 710 },
+      ],
+    },
     tech: 'Rust · Dioxus · ScreenCaptureKit · ffmpeg',
     status: 'live',
     tags: ['tools'],
@@ -312,6 +400,17 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/jobscout',
     name: 'JobScout',
     screenshot: { src: '/image/apps/jobscout.png', width: 1920, height: 1259 },
+    mcpCost: {
+      version: '0.1.31',
+      measured: '2026-10-31',
+      instructions: 790,
+      definitions: 5000,
+      calls: [
+        { tool: 'overview', tokens: 960 },
+        { tool: 'list_jobs', tokens: 2700 },
+        { tool: 'get_job', tokens: 1400 },
+      ],
+    },
     tech: 'Rust · Dioxus · Mistral / ollama · WebKit · Camoufox',
     status: 'live',
     tags: ['ai'],
@@ -336,6 +435,18 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     source: 'https://github.com/bennekrouf/surface-watch',
     name: 'SurfaceWatch',
     screenshot: { src: '/image/apps/surfacewatch.png', width: 1920, height: 1278 },
+    mcpCost: {
+      version: '0.1.25',
+      measured: '2026-10-31',
+      instructions: 430,
+      definitions: 1650,
+      calls: [
+        { tool: 'overview', tokens: 480 },
+        { tool: 'list_findings', tokens: 1000 },
+        { tool: 'get_surface', tokens: 2700 },
+        { tool: 'diff', tokens: 610 },
+      ],
+    },
     tech: 'Rust · Dioxus · REA · Node.js · Chrome',
     status: 'beta',
     tags: ['security'],

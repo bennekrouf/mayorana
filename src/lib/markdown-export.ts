@@ -141,6 +141,15 @@ export async function appMarkdown(locale: string, id: string): Promise<string | 
     `## ${t('overview_heading')}`,
     '',
     ...content.overview.flatMap((p) => [p, '']),
+    ...(tool.video
+      ? [
+          `## ${t(`apps.${appI18nKey[tool.id]}.video_heading`)}`,
+          '',
+          ...(t.raw(`apps.${appI18nKey[tool.id]}.video_body`) as string[]).flatMap((p) => [p, '']),
+          `[${t(`apps.${appI18nKey[tool.id]}.video_label`)}](${SITE_URL}${tool.video.src})`,
+          '',
+        ]
+      : []),
     `## ${t('features_heading')}`,
     '',
     ...content.features.flatMap((f) => [`### ${f.title}`, '', f.body, '']),
@@ -175,6 +184,24 @@ export async function appMarkdown(locale: string, id: string): Promise<string | 
         out.push(`${OS_LABEL[os]}:`, '', '```', command, '```', '');
       }
     }
+  }
+
+  if (tool.mcpCost) {
+    const cost = tool.mcpCost;
+    out.push(
+      `## ${t('mcp_cost_heading')}`,
+      '',
+      t('mcp_cost_intro', { name: tool.name }),
+      '',
+      `| ${t('mcp_cost_what')} | ${t('mcp_cost_tokens')} |`,
+      '| --- | ---: |',
+      `| ${t('mcp_cost_instructions')} | ≈ ${cost.instructions} |`,
+      `| ${t('mcp_cost_definitions')} | ≈ ${cost.definitions} |`,
+      ...cost.calls.map((c) => `| ${t('mcp_cost_call')} \`${c.tool}\` | ≈ ${c.tokens} |`),
+      '',
+      t('mcp_cost_note', { name: tool.name, version: cost.version, date: cost.measured }),
+      '',
+    );
   }
 
   out.push(`## ${t('faq_heading')}`, '', ...content.faq.flatMap((e) => [`### ${e.q}`, '', e.a, '']));
