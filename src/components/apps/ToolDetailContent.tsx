@@ -356,7 +356,44 @@ export async function ToolDetailContent({
         </section>
       )}
 
-      <section className={`${sectionY} bg-background${comparison ? ' border-t border-border' : ''}`}>
+      {/* The tool at work, ahead of the overview: what the copy below claims,
+          shown in thirty seconds. Muted and looping, so it can play on its own
+          without startling anyone. */}
+      {tool.video && (
+        <section className={`${sectionY} bg-secondary/30 border-t border-border`}>
+          <div className={box('max-w-4xl')}>
+            <h2 className="text-2xl font-bold mb-5">
+              {t(`apps.${appI18nKey[tool.id]}.video_heading`)}
+            </h2>
+            <div className="space-y-4 mb-8">
+              {(t.raw(`apps.${appI18nKey[tool.id]}.video_body`) as string[]).map((paragraph, i) => (
+                <p key={i} className="text-muted-foreground leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <video
+              src={tool.video.src}
+              poster={tool.video.poster}
+              width={tool.video.width}
+              height={tool.video.height}
+              aria-label={t(`apps.${appI18nKey[tool.id]}.video_label`)}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+              className="w-full h-auto rounded-xl border border-border shadow-lg bg-background"
+            />
+            <p className="text-xs text-muted-foreground mt-3">
+              {t(`apps.${appI18nKey[tool.id]}.video_caption`)}
+            </p>
+          </div>
+        </section>
+      )}
+
+      <section className={`${sectionY} bg-background${comparison || tool.video ? ' border-t border-border' : ''}`}>
         <div className={box('max-w-4xl')}>
           <h2 className="text-2xl font-bold mb-5">{t('overview_heading')}</h2>
           <div className="space-y-4">
@@ -382,6 +419,51 @@ export async function ToolDetailContent({
           </div>
         </div>
       </section>
+
+      {/* What connecting the tool to an agent costs in the agent's own
+          tokens: the question after "what does it do", for anyone paying
+          for Claude by usage or watching a context window fill. */}
+      {tool.mcpCost && (
+        <section className={`${sectionY} bg-background border-t border-border`}>
+          <div className={box('max-w-4xl')}>
+            <h2 className="text-2xl font-bold mb-5">{t('mcp_cost_heading')}</h2>
+            <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+              {t('mcp_cost_intro', { name: tool.name })}
+            </p>
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table className="w-full text-sm">
+                <thead className="bg-secondary/40 text-left">
+                  <tr>
+                    <th className="px-4 py-2 font-semibold">{t('mcp_cost_what')}</th>
+                    <th className="px-4 py-2 font-semibold text-right whitespace-nowrap">{t('mcp_cost_tokens')}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-t border-border">
+                    <td className="px-4 py-2">{t('mcp_cost_instructions')}</td>
+                    <td className="px-4 py-2 text-right tabular-nums whitespace-nowrap">≈ {tool.mcpCost.instructions.toLocaleString(locale)}</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-4 py-2">{t('mcp_cost_definitions')}</td>
+                    <td className="px-4 py-2 text-right tabular-nums whitespace-nowrap">≈ {tool.mcpCost.definitions.toLocaleString(locale)}</td>
+                  </tr>
+                  {tool.mcpCost.calls.map((call) => (
+                    <tr key={call.tool} className="border-t border-border">
+                      <td className="px-4 py-2">
+                        {t('mcp_cost_call')} <code className="text-xs">{call.tool}</code>
+                      </td>
+                      <td className="px-4 py-2 text-right tabular-nums whitespace-nowrap">≈ {call.tokens.toLocaleString(locale)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3 max-w-3xl">
+              {t('mcp_cost_note', { name: tool.name, version: tool.mcpCost.version, date: tool.mcpCost.measured })}
+            </p>
+          </div>
+        </section>
+      )}
 
       <section className={`${sectionY} bg-background border-t border-border`}>
         <div className={`${box('max-w-4xl')} grid ${twoCols} gap-10`}>
