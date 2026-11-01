@@ -2,8 +2,21 @@
   "name": "ais-tracing",
   "product": "AIS Tracing",
   "page": "https://mayorana.ch/en/apps/ais-tracing",
-  "generated_at": "2026-10-07T13:03:21Z",
+  "generated_at": "2026-10-31T13:51:00Z",
   "releases": [
+    {
+      "version": "0.1.31",
+      "tag": "v0.1.31",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The application now uses the static C runtime on Windows, which means it no longer requires the Visual C++ Redistributable to be installed. This reduces the size of the installer and ensures the application runs on any Windows PC."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.30",
       "tag": "v0.1.30",

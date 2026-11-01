@@ -2,8 +2,74 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-28T14:25:39Z",
+  "generated_at": "2026-10-31T21:51:40Z",
   "releases": [
+    {
+      "version": "0.1.32",
+      "tag": "v0.1.32",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When you use JobScout from Claude, Codex or another agent, the agent now reads the JobScout skill first if you have it installed, so it follows the skill's rules on what needs your yes and lays out its answers the way the skill describes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.31",
+      "tag": "v0.1.31",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "JobScout's answers to Claude and other agents are shorter, so a long session spends fewer tokens: empty fields are left out and nothing is padded with spacing.",
+            "A search now lists the first 20 new jobs it found instead of all of them, and says how many more it kept; the job list returns 20 jobs unless asked for more. Both leave out details only a single job needs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.30",
+      "tag": "v0.1.30",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.29",
+      "tag": "v0.1.29",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.28",
+      "tag": "v0.1.28",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.27",
       "tag": "v0.1.27",

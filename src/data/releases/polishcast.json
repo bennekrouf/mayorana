@@ -2,8 +2,116 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-29T14:02:50Z",
+  "generated_at": "2026-10-31T22:25:50Z",
   "releases": [
+    {
+      "version": "0.1.44",
+      "tag": "v0.1.44",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Transcript, in the editor: one click writes down what is said in a take, on your Mayorana licence's AI credits, with no app or account to set up. With your microphone and the computer's sound recorded apart, each line says whether it's you or the person you're talking to. Copy the text, or keep it for drafting.",
+            "Chapters, found in what you say: where you pause and change subject. Rename them, join two, or have AI title them. Exports move them to match your cuts and the playback speed.",
+            "Captions with an MP4: \"Caption files\" writes .srt and .vtt files ready for YouTube, LinkedIn or TikTok, and the chapters as a YouTube description lists them; \"Burned in + files\" also draws the captions into the video, for feeds that play without sound.",
+            "Send to PublishKit: after exporting with captions, one click opens PublishKit's Repurpose with the video and its transcript filled in, for a blog draft or outline, clips and social posts in your site's voice.",
+            "Claude and other agents can transcribe a take, read or change its chapters, export with captions and send the video to PublishKit."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.43",
+      "tag": "v0.1.43",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When you use PolishCast from Claude, Codex or another agent, the agent now reads the PolishCast skill first if you have it installed, so it follows the skill's rules on what needs your yes and lays out its answers the way the skill describes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.42",
+      "tag": "v0.1.42",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "PolishCast's answers to Claude and other agents are shorter, so a long session spends fewer tokens: empty fields are left out and nothing is padded with spacing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.41",
+      "tag": "v0.1.41",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Updated instructions and added trigger result JSON files for the PolishCast skill."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.40",
+      "tag": "v0.1.40",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Updated instructions and added trigger result JSON files for the PolishCast skill."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.39",
+      "tag": "v0.1.39",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.38",
+      "tag": "v0.1.38",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Claude and Codex can export an MP4 without sound. Ask for a muted export and the video leaves out both your recording's sound and the music, with \"muted\" in the file's name. A GIF stays silent as before."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.37",
+      "tag": "v0.1.37",
+      "date": "2026-10-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Cuts are smoother. Where blanks are cut or a clip is removed, the sound now crossfades into the next part instead of dipping to silence, so the room noise carries on and you no longer hear the join. The cursor and the zoom glide to where they are after the cut instead of jumping there, in the preview and in the export. When the screen changed during the cut, the exported video dissolves into it over a fifth of a second."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.36",
       "tag": "v0.1.36",

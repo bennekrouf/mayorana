@@ -2,8 +2,21 @@
   "name": "ais-monitor",
   "product": "AIS Monitor",
   "page": "https://mayorana.ch/en/apps/ais-monitor",
-  "generated_at": "2026-10-07T13:01:05Z",
+  "generated_at": "2026-10-31T13:50:41Z",
   "releases": [
+    {
+      "version": "0.3.45",
+      "tag": "v0.3.45",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "AIS Monitor no longer requires the Visual C++ Redistributable to run on Windows. This change ensures the application can start on any PC without additional dependencies."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.3.44",
       "tag": "v0.3.44",

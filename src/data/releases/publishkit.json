@@ -2,8 +2,140 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-10-29T12:14:53Z",
+  "generated_at": "2026-10-31T22:22:21Z",
   "releases": [
+    {
+      "version": "0.1.42",
+      "tag": "v0.1.42",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A video sent from PolishCast opens Repurpose by itself, with the recording and its captions already filled in."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.41",
+      "tag": "v0.1.41",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Instagram and TikTok tabs, beside LinkedIn and X. Write a caption, attach its photos or video, and the preview shows them first, cropped the way each feed shows them (4:5 on Instagram, 9:16 on TikTok). An Instagram carousel can mix photos and videos. PublishKit tells you when a post has no media yet, when a link in a caption won't be clickable, and when an Instagram caption has more than 5 hashtags, Instagram's limit since the end of 2025. As with LinkedIn and X, you post it yourself and mark it as posted.",
+            "A post's preview says when an image isn't the size or shape its network recommends: a tall photo Instagram will crop, a landscape one on TikTok, a small one that will look soft. Only a note: nothing stops you posting it.",
+            "No website? \"Just social posts\" on the first screen keeps your LinkedIn, X, Instagram and TikTok posts in a folder of their own (Documents/PublishKit, or one you pick), with no Blog or Board tab and none of a website's settings.",
+            "Settings → Tabs: turn the blog on or off for a folder, and hide the networks you don't post on. Their posts stay in the folder.",
+            "Claude can now queue Instagram and TikTok posts too, and knows when a folder holds social posts only.",
+            "Repurpose, in the top bar: pick a finished PolishCast video or TrackCut recording and its transcript, and PublishKit writes 3 to 8 short clips as TikTok drafts, each saying where to cut it and what to put on screen, an Instagram carousel with its slides, a LinkedIn and an X post, and a blog draft or outline in your site's voice. Subtitles (.srt or .vtt) give each clip its start and end; a transcript beside the recording by the same name is picked up by itself. Every text fits its network's length and hashtag limits, and everything waits as a draft for you to edit or delete. A repurposed draft shows the recording it came from, the clip's times and the carousel's slides, ready to copy. Claude can repurpose a recording too.",
+            "A video sent from PolishCast opens Repurpose by itself, with the recording and its captions already filled in."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "When you use PublishKit from Claude, Codex or another agent, the agent now reads the PublishKit skill first if you have it installed, so it follows the skill's rules on what needs your yes and lays out its answers the way the skill describes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.40",
+      "tag": "v0.1.40",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "PublishKit's answers to Claude and other agents are shorter, so a long session spends fewer tokens: empty fields are left out and nothing is padded with spacing.",
+            "Listing posts now gives every draft but only the 10 newest published posts per language, without their descriptions, and says how many older ones there are. A site with a long archive no longer fills an agent's whole conversation with one listing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.39",
+      "tag": "v0.1.39",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.38",
+      "tag": "v0.1.38",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.37",
+      "tag": "v0.1.37",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.36",
+      "tag": "v0.1.36",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "An **X** tab, next to LinkedIn: X posts have a queue and a posted list of their own, **Mark as posted…**, images (up to 4) or a video, and a place on the Calendar with an 𝕏 badge. With a Bluesky or Mastodon account set up, an X post can go there too, as it is.",
+            "**Share on LinkedIn…** and **Share on X…** on a blog post open that tab's form with the post's title and link filled in, to write about it there.",
+            "**or write it yourself** under the blog's new-post form saves the title and summary as a draft and opens it in the editor, with no model involved.",
+            "A LinkedIn or X post can be changed after saving: **Edit** in its preview.",
+            "Claude can save X posts too, and is told that you usually write LinkedIn and X posts yourself, so it keeps your text as you gave it.",
+            "Links in a LinkedIn or X post's preview are clickable and open in your browser. What you copy is still exactly the text of the post.",
+            "**✨ Draft with AI** takes an optional link. It goes into the post as it is, on a line of its own, the way LinkedIn and X make it clickable, with no markdown and no shortened address. **Share on LinkedIn…** and **Share on X…** fill it with the blog post's address. Claude can pass a link too.",
+            "A LinkedIn post with both a link and images or a video says that LinkedIn won't show a link preview card for it, though the link still works."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Blog, LinkedIn and X are now independent: start with whichever you like. A new blog post no longer writes LinkedIn and X teasers on its own; share it from its preview when you want to. Teasers older posts have are still shown.",
+            "LinkedIn and X posts start from a text box you write in, with a character count. **✨ Draft with AI** is there when you want the model to write a first version, which lands in the same box for you to change before saving.",
+            "PublishKit opens on the tab you used last, not always on Blog."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.35",
+      "tag": "v0.1.35",
+      "date": "2026-10-29",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The site format indicator in the top bar is now a folder button. Clicking it opens the Settings screen."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.34",
       "tag": "v0.1.34",
@@ -153,6 +285,7 @@
           "items": [
             "Installing PublishKit no longer needs admin rights anywhere. On macOS and Linux, the setup script puts Node.js in your home folder instead of installing Homebrew or asking for sudo; on Linux, the launcher goes into your own applications menu, and only a missing WebKitGTK asks for your password.",
             "On Windows, the Start menu, desktop shortcut and installer say PublishKit instead of Blog Manager. Shortcuts left from an earlier install under the old name are removed when you update.",
+            "The label beside the site switcher that said how PublishKit reads the site (PublishKit folders, Hugo, Jekyll…) is now a folder button the size of the other top-bar buttons. Hover it for the format; click it to change it in Settings.",
             "On Windows, PublishKit always installs for your user only, in `%LOCALAPPDATA%\\Programs`, without asking. An update no longer moves it to Program Files because an old Blog Manager was once installed there, which broke the PublishKit entry you had added to Claude Code."
           ]
         }

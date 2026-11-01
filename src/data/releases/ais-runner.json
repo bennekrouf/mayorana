@@ -2,8 +2,21 @@
   "name": "ais-runner",
   "product": "AIS Runner",
   "page": "https://mayorana.ch/en/apps/ais-runner",
-  "generated_at": "2026-10-14T09:05:12Z",
+  "generated_at": "2026-10-31T13:52:35Z",
   "releases": [
+    {
+      "version": "0.5.66",
+      "tag": "v0.5.66",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "An **MCP** button in the header shows how to connect AIS Runner to Claude: the text to paste into Claude Desktop and the one line to run for Claude Code, each with a Copy button and already pointing at the `ais-mcp` installed next to the app, so there is no path to look up."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.5.65",
       "tag": "v0.5.65",

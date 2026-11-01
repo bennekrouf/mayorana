@@ -2,8 +2,34 @@
   "name": "ais-analytics",
   "product": "AIS Analytics",
   "page": "https://mayorana.ch/en/apps/ais-analytics",
-  "generated_at": "2026-10-06T20:37:09Z",
+  "generated_at": "2026-10-31T13:51:19Z",
   "releases": [
+    {
+      "version": "0.1.37",
+      "tag": "v0.1.37",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The application now uses a static C runtime on Windows, which means it no longer requires the Visual C++ Redistributable to be installed. This change ensures the application runs smoothly on any Windows PC without additional dependencies."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.36",
+      "tag": "v0.1.36",
+      "date": "2026-10-07",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The company name and copyright information have been updated to reflect the new ownership. This change affects the application's metadata and installer files."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.35",
       "tag": "v0.1.35",

@@ -2,8 +2,86 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-28T13:42:39Z",
+  "generated_at": "2026-10-31T21:52:56Z",
   "releases": [
+    {
+      "version": "0.1.47",
+      "tag": "v0.1.47",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When you use TrackCut from Claude, Codex or another agent, the agent now reads the TrackCut skill first if you have it installed, so it follows the skill's rules on what needs your yes and lays out its answers the way the skill describes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.46",
+      "tag": "v0.1.46",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "TrackCut's answers to Claude and other agents are shorter, so a long session spends fewer tokens: empty fields are left out and nothing is padded with spacing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.45",
+      "tag": "v0.1.45",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added detailed documentation and trigger result files for the TrackCut skill, providing guidance on how to split long recordings into tracks and manage various audio processing tasks."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.44",
+      "tag": "v0.1.44",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added detailed documentation and trigger result files for the TrackCut skill, providing guidance on how to split long recordings into tracks and manage various audio processing tasks."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.43",
+      "tag": "v0.1.43",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.42",
+      "tag": "v0.1.42",
+      "date": "2026-10-29",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Reduce noise, in the export bar beside the loudness choice: light, medium or strong. It takes steady background noise (hiss, hum, room tone) out of the exported tracks. TrackCut learns the noise from the recording's quietest moments, so the music or voice over it keeps its level. A/B lets you hear the result before you export. A video's clips get it too. It needs a re-encoding format: Original copies the sound exactly as it is."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.41",
       "tag": "v0.1.41",

@@ -2,8 +2,86 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-29T13:39:03Z",
+  "generated_at": "2026-10-31T21:51:21Z",
   "releases": [
+    {
+      "version": "0.1.143",
+      "tag": "v0.1.143",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When you use GitAgent from Claude, Codex or another agent, the agent now reads the GitAgent skill first if you have it installed, so it follows the skill's rules on what needs your yes and lays out its answers the way the skill describes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.142",
+      "tag": "v0.1.142",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "**Push & open PR** works for commits made straight on the base branch. The run used to stop at Scan changes with \"nothing to commit\" and every step after it skipped, so the button looked as if it had started over. Those commits now go out on a branch of their own, with a pull request, and the base branch goes back to where origin has it. The Commit approval says so before anything moves."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.141",
+      "tag": "v0.1.141",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Reports now omit redundant information, such as duplicate summaries and irrelevant artifacts, making them cleaner and more focused."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.140",
+      "tag": "v0.1.140",
+      "date": "2026-10-31",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "GitAgent's answers to Claude and other agents are much shorter, so a long session spends fewer tokens. Empty fields and anything a run already said elsewhere in the same answer are left out, the diff shown for an approval is cut sooner (the full one is still in the GitAgent window), and flows a trusted run already finished come back as one line per step."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.139",
+      "tag": "v0.1.139",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The GitAgent skill for Claude now explains how to drive GitAgent from an agent through its MCP tools: what to run first, which steps wait for your approval, and what to do when the app isn't connected yet. It also comes with a guide to connecting GitAgent to Claude Desktop, Claude Code, Codex and Cursor."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.138",
+      "tag": "v0.1.138",
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.137",
       "tag": "v0.1.137",
