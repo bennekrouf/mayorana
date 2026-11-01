@@ -348,9 +348,9 @@
   "solutions_ai_agents": {
     "more_body": "La même base Rust fait tourner nos applications de bureau : outils Git, Azure, vidéo et recherche d’emploi qui travaillent sur votre machine.",
     "more_link": "Voir les applications",
-    "hero_eyebrow": "Passerelle d’actions IA · Écrite en Rust",
-    "hero_title": "Mettez votre logiciel existant dans le chat de votre équipe",
-    "hero_subtitle": "api0 est une passerelle MCP écrite en Rust qui transforme vos API REST existantes en outils pour Claude et les autres clients compatibles MCP. Connectez Claude à votre backend en moins de cinq minutes.",
+    "hero_eyebrow": "Passerelle d’actions IA",
+    "hero_title": "Parlez à vos apps",
+    "hero_subtitle": "api0 transforme vos API en outils MCP. Claude connecté à votre backend en moins de cinq minutes.",
     "hero_cta_primary": "Essayer api0.ai",
     "friction_heading": "Les frictions habituelles",
     "friction_1_problem": "Du code de liaison partout",
@@ -1917,10 +1917,6 @@
       "git": {
         "title": "Outils git",
         "intro": "Utiliser l'IA sur un dépôt qui compte sans lui confier votre historique git."
-      },
-      "ai": {
-        "title": "L'IA en entreprise",
-        "intro": "Où l'IA générative et agentique trouve vraiment sa place en entreprise, en trois catégories plutôt qu'en cinquante cas d'usage."
       }
     },
     "sections": {
@@ -1934,8 +1930,7 @@
       "performance": "Performance",
       "llm-from-scratch": "Un LLM, pièce par pièce",
       "azure-integration": "Tracer les flux d'intégration",
-      "git-tooling": "Git assisté par l'IA",
-      "ai-in-companies": "Trois catégories d'IA"
+      "git-tooling": "Git assisté par l'IA"
     }
   },
   "search": {

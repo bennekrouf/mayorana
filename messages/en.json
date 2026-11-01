@@ -348,9 +348,9 @@
   "solutions_ai_agents": {
     "more_body": "The same Rust stack runs our desktop apps: Git, Azure, video and job-search tools that work on your machine.",
     "more_link": "See the apps",
-    "hero_eyebrow": "AI action gateway · Built in Rust",
-    "hero_title": "Put your existing software into the chat your team uses",
-    "hero_subtitle": "api0 is a Rust-powered MCP gateway that turns your existing REST APIs into tools for Claude and other MCP-compatible clients. Connect Claude to your backend in under five minutes.",
+    "hero_eyebrow": "AI action gateway",
+    "hero_title": "Talk to your apps",
+    "hero_subtitle": "api0 turns your APIs into MCP tools. Claude, connected to your backend in under five minutes.",
     "hero_cta_primary": "Try api0.ai",
     "friction_heading": "The usual friction",
     "friction_1_problem": "Glue code everywhere",
@@ -1917,10 +1917,6 @@
       "git": {
         "title": "Git tooling",
         "intro": "Using AI on a repository you care about without handing it your git history."
-      },
-      "ai": {
-        "title": "AI in companies",
-        "intro": "Where generative and agentic AI actually fits in a company, in three categories rather than fifty use cases."
       }
     },
     "sections": {
@@ -1934,8 +1930,7 @@
       "performance": "Performance",
       "llm-from-scratch": "An LLM, piece by piece",
       "azure-integration": "Tracing integration flows",
-      "git-tooling": "AI-assisted git",
-      "ai-in-companies": "Three categories of AI"
+      "git-tooling": "AI-assisted git"
     }
   },
   "search": {

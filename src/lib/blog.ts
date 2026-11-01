@@ -41,8 +41,8 @@ function getBlogDataSync(locale: string): BlogPost[] {
 // Slugs of the featured "AI agents & integration" posts, per locale — the
 // topics the company leads with, shown above the "Why Rust?" series.
 const FEATURED_SLUGS: Record<string, string[]> = {
-  en: ['three-categories-of-ai-in-companies', 'logic-apps-workflow-chains', 'trace-correlation-id-cosmos-db'],
-  fr: ['three-categories-of-ai-in-companies-fr', 'logic-apps-workflow-chains-fr', 'trace-correlation-id-cosmos-db-fr'],
+  en: ['logic-apps-workflow-chains', 'trace-correlation-id-cosmos-db'],
+  fr: ['logic-apps-workflow-chains-fr', 'trace-correlation-id-cosmos-db-fr'],
 };
 
 // Get all blog posts for a specific locale (ONLY that locale)

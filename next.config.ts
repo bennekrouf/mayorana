@@ -89,6 +89,8 @@ const nextConfig = {
       // Episode 5 of the LLM series (transfer learning vocabulary) was folded
       // into episode 4; the two were short halves of one subject.
       { source: '/:locale(en|fr)/blog/transfer-learning-key-concepts', destination: '/:locale/blog/transfer-learning-reusing-knowledge', permanent: true },
+      // The three-categories-of-AI post moved to the api0 blog (English only).
+      { source: '/:locale(en|fr)/blog/three-categories-of-ai-in-companies{-fr}?', destination: 'https://api0.ai/blog/three-categories-of-ai-in-companies', permanent: true },
       // The Services page is retired: the company now leads with its products.
       { source: '/:locale(en|fr)/services', destination: '/:locale', permanent: true },
       // Renamed apps. The old ids are still the licence ids, so the gateway's
