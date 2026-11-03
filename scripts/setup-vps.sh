@@ -426,7 +426,9 @@ server {
         # ever being interpreted, and latest/ is revalidated via Last-Modified
         # rather than cached blind, since it is overwritten every release.
         default_type application/octet-stream;
-        add_header Content-Disposition "attachment" always;
+        # Not `always`: on a 404 an attachment header makes Chrome report
+        # ERR_INVALID_RESPONSE instead of showing the page that a file is missing.
+        add_header Content-Disposition "attachment";
         add_header X-Content-Type-Options "nosniff" always;
         add_header Cache-Control "public, must-revalidate" always;
     }
