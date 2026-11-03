@@ -2,8 +2,237 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-10-31T21:52:56Z",
+  "generated_at": "2026-11-02T21:30:44Z",
   "releases": [
+    {
+      "version": "0.1.64",
+      "tag": "v0.1.64",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.63",
+      "tag": "v0.1.63",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.62",
+      "tag": "v0.1.62",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.61",
+      "tag": "v0.1.61",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.60",
+      "tag": "v0.1.60",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.59",
+      "tag": "v0.1.59",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added a settings window and toolbar for easier access to app features."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.58",
+      "tag": "v0.1.58",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.57",
+      "tag": "v0.1.57",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Use TrackCut from Claude or Codex\" window now looks and reads the same as in the other Mayorana apps, with a copy button on every step, and Escape closes it.",
+            "Open… (⌘O) offers the recordings your other apps made, such as PolishCast videos and files you added to the library, so you don't have to find the folder they're in. Choosing one opens its folder with it selected. A file from the disk is a link at the bottom, and ⌘⇧O still opens a whole folder."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.56",
+      "tag": "v0.1.56",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.55",
+      "tag": "v0.1.55",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.54",
+      "tag": "v0.1.54",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.53",
+      "tag": "v0.1.53",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The sidebar edge now has a wider line with three dots mid-height for better visual feedback, making it easier to grab and resize."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.52",
+      "tag": "v0.1.52",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Install & restart, on the banner that says a new version is out: one click downloads it, checks it, puts it in place of the version you have and opens it again, on macOS, Windows and Linux. No disk image to open, drag and throw away, no setup to click through. If an update can't finish, TrackCut says why the next time it opens. Where it can't replace itself (an app in a folder you can't change), the banner offers the download instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.51",
+      "tag": "v0.1.51",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.50",
+      "tag": "v0.1.50",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Using TrackCut from Claude, Codex or another agent takes less of the agent's context on every message, including ones that have nothing to do with TrackCut: its instructions are a few lines, and what a setting every tool takes means is said once rather than in each tool."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.49",
+      "tag": "v0.1.49",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Plan ahead in the library: Plan… puts a video, audio or post you mean to make on the calendar, with its outline or script. Once it is made, Claude can hand the idea and its notes over to the take, recording or post.",
+            "Claude can now use the media library too: search it, read the calendar of any week, plan an idea, and set an item's status, tags or notes. The same in PolishCast, TrackCut and PublishKit."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Tracks exported and cuts made from Claude show in the library right away, even with TrackCut's window closed."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.48",
+      "tag": "v0.1.48",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Library and Calendar, beside your tracks: the media library PolishCast and PublishKit share. The recordings you work on show there by themselves, polishing while you cut them and ready once their tracks are exported. Takes from PolishCast and posts from PublishKit are there too. Set a status or tags by hand, search, or open anything in the app that made it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.47",
       "tag": "v0.1.47",

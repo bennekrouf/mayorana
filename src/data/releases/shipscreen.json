@@ -2,8 +2,151 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-10-31T21:53:40Z",
+  "generated_at": "2026-11-02T19:49:47Z",
   "releases": [
+    {
+      "version": "0.1.65",
+      "tag": "v0.1.65",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.64",
+      "tag": "v0.1.64",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.63",
+      "tag": "v0.1.63",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.62",
+      "tag": "v0.1.62",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.61",
+      "tag": "v0.1.61",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The settings popup now supports theme customization, allowing users to choose their preferred theme for the application interface."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.60",
+      "tag": "v0.1.60",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Use ShipScreen from Claude or Codex\" window now looks and reads the same as in the other Mayorana apps, with a copy button on every step, and Escape closes it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.59",
+      "tag": "v0.1.59",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.58",
+      "tag": "v0.1.58",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.57",
+      "tag": "v0.1.57",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Install & restart, on the banner that says a new version is out: one click downloads it, checks it, puts it in place of the version you have and opens it again, on macOS, Windows and Linux. No disk image to open, drag and throw away, no setup to click through. If an update can't finish, ShipScreen says why the next time it opens. Where it can't replace itself (an app in a folder you can't change), the banner offers the download instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.56",
+      "tag": "v0.1.56",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.55",
+      "tag": "v0.1.55",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Using ShipScreen from Claude, Codex or another agent takes less of the agent's context on every message, including ones that have nothing to do with ShipScreen: its instructions are a few lines, and what a setting every tool takes means is said once rather than in each tool."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.54",
       "tag": "v0.1.54",

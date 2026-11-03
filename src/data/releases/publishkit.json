@@ -2,8 +2,165 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-11-01T11:29:47Z",
+  "generated_at": "2026-11-02T21:10:36Z",
   "releases": [
+    {
+      "version": "0.1.55",
+      "tag": "v0.1.55",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The application now correctly handles file paths in test environments, ensuring compatibility across different operating systems. This fix prevents potential issues when running tests on Windows."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.54",
+      "tag": "v0.1.54",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.53",
+      "tag": "v0.1.53",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.52",
+      "tag": "v0.1.52",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.51",
+      "tag": "v0.1.51",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Use PublishKit from Claude or Codex\" window now looks and reads the same as in the other Mayorana apps, with a copy button on every step, and Escape closes it.",
+            "Add media…, Image… and Repurpose's Choose… now open a picker of what your other apps made instead of Finder: PolishCast clips and videos, TrackCut recordings, pictures you used before, the best fits first. Clips come first for TikTok and Instagram, and anything sharing words with the post rises to the top. Choosing a recording to repurpose fills in its subtitles too when PolishCast made them. The disk is still there, one link at the bottom, and hovering a file shows where it lives."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.50",
+      "tag": "v0.1.50",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.49",
+      "tag": "v0.1.49",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.48",
+      "tag": "v0.1.48",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The visual appearance of the panel resizer has been enhanced, making it easier to interact with and more visually appealing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.47",
+      "tag": "v0.1.47",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Install & restart, on the banner that says a new version is out: one click downloads it, checks it, puts it in place of the version you have and opens it again, on macOS, Windows and Linux. No disk image to open, drag and throw away, no setup to click through. If an update can't finish, PublishKit says why the next time it opens. Where it can't replace itself (an app in a folder you can't change), the banner offers the download instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.46",
+      "tag": "v0.1.46",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "PublishKit now wears the warm amber of its icon instead of violet, in both the dark and the light theme, so the window and the icon in your dock look like the same app. Buttons, the selected post and links keep text easy to read against the new colours."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.45",
+      "tag": "v0.1.45",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.44",
+      "tag": "v0.1.44",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Using PublishKit from Claude, Codex, or another agent now takes less of the agent's context on every message, including ones that have nothing to do with PublishKit. This makes the agent more efficient and responsive."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.43",
       "tag": "v0.1.43",
@@ -21,6 +178,12 @@
             "Post now, on a LinkedIn, X, Instagram or TikTok draft: copies its text, opens the network in your browser and shows the photo or video to drag in, selected in its folder. Mark as posted can keep the post's address.",
             "When a social draft's planned time comes, PublishKit says so, in the app and in a notification, since it doesn't post for you.",
             "Claude can post a draft for you in Chrome, in your own session: it fills in the text and attaches the files, then waits for your yes before posting, and records the post with its address."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Using PublishKit from Claude, Codex or another agent takes less of the agent's context on every message, including ones that have nothing to do with PublishKit: its instructions are a few lines, and what a setting every tool takes means is said once rather than in each tool."
           ]
         }
       ]

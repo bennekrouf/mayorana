@@ -2,8 +2,257 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-10-31T21:51:21Z",
+  "generated_at": "2026-11-02T21:32:20Z",
   "releases": [
+    {
+      "version": "0.1.161",
+      "tag": "v0.1.161",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A run Claude started no longer needs Claude to finish. When it waits on an approval, the repository shows **Approve** and **Reject** right there, and **Take over**, which ends Claude's run and starts the same flow in the window, so you answer it from then on. Taking over runs the flow again from the start, so a release drafts its notes again."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "A pull request is no longer merged while the repository has uncommitted changes. Those edits are usually the rest of the pull request, a fix for the review or for CI, and merging first shipped it without them, then left them stranded on a branch being deleted. The repository now asks for a commit first, and **Trust all** runs Commit → PR before Review → Merge. Started by hand, the merge step stops, lists the files and says to commit them first. New files git does not track yet do not count, since no commit takes them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.160",
+      "tag": "v0.1.160",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "**Trust all** now means not being asked again. With it on, runs approve release notes as drafted, run the release script, and merge pull requests whatever the analysis found or when no CI ran, so pressing **All** in the sidebar takes every repository through commit, review, merge and release on its own. A pull request whose checks are still running is waited for rather than stopped at. The one thing it still stops at is a merge whose CI failed, so a broken branch is never released; once you answer that, the run carries on without asking again. **Trusted run** on a single repository keeps its stricter rules."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A run Claude started and left waiting on an approval no longer leaves you stuck when you try to start something in that repository. The message that says it is in the way now offers **Show it**, which opens the run on its tab so you can answer the approval, and **Reject it**, which turns the step down and ends the run so the repository is free again. The message no longer offers to open Setup, which could not help."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.159",
+      "tag": "v0.1.159",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.158",
+      "tag": "v0.1.158",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.157",
+      "tag": "v0.1.157",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A release is no longer cut while the newest pull request merged since the last one failed its checks. GitAgent says which pull request and which checks, and runs the release once a pull request with passing checks has fixed it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.156",
+      "tag": "v0.1.156",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added an 'Approve All' button in the repository sidebar. This button allows users to approve all pending steps and start all due flows in a repository with a single click, streamlining the workflow."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.155",
+      "tag": "v0.1.155",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The settings panel now includes a setup button and theme handling. This allows users to easily access setup flows and customize the app's theme directly from the settings menu."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.154",
+      "tag": "v0.1.154",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.153",
+      "tag": "v0.1.153",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Use GitAgent from Claude or Codex\" window now looks and reads the same as in the other Mayorana apps, with a copy button on every step, and Escape closes it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.152",
+      "tag": "v0.1.152",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.151",
+      "tag": "v0.1.151",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.150",
+      "tag": "v0.1.150",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.149",
+      "tag": "v0.1.149",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Added visual cues for grabbable areas in dividers and run drawer grips, making it easier to identify where to drag.",
+            "Added support for answering MCP run approvals directly within the GitAgent window, allowing users to approve or reject runs without leaving the application."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.148",
+      "tag": "v0.1.148",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Install & restart, on the banner that says a new version is out: one click downloads it, checks it, puts it in place of the version you have and opens it again, on macOS, Windows and Linux. No disk image to open, drag and throw away, no setup to click through. If an update can't finish, GitAgent says why the next time it opens. Where it can't replace itself (an app in a folder you can't change), the banner offers the download instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.147",
+      "tag": "v0.1.147",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A repository is no longer held by a run that has already ended. A run cut short — the app quit or force quit part-way through, a crash, a Claude session closed while its run waited for your yes — could keep that repository to itself for up to a day, refusing anything you started next. A run now keeps saying it is still there while it works, one that goes quiet is let go within two minutes, and GitAgent clears what earlier runs left behind when it opens."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.146",
+      "tag": "v0.1.146",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "A branch whose pull request is behind your local commits now says so. After you finish a merge with the base branch in Preflight, the merge is committed but not pushed, and the pull request still showed its old conflict while the repository read as ready to merge. It now reads \"not pushed\", ahead of any decision on the pull request, and Commit → PR offers to push the commits — \"Push 2 commits to #50\" — to the pull request already open."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.145",
+      "tag": "v0.1.145",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The run view now says why Play will not start a flow. The reason — another run holding the repository, the Branches panel still working, a run Claude or a terminal is driving — was only ever a tooltip on a dimmed button, so pressing Play looked like pressing a button that does nothing.",
+            "A start refused in the run view now shows the same note the list view shows. A run refused because another GitAgent window, a Claude session or a terminal already holds that repository used to say nothing at all while the run view was open.",
+            "Starting a flow whose tab is still on screen after it was removed or renamed in Setup now says so instead of quietly doing nothing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.144",
+      "tag": "v0.1.144",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Using GitAgent from Claude, Codex or another agent takes less of the agent's context on every message, including ones that have nothing to do with GitAgent: its instructions are a few lines, with the details moved to the tools that need them."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.143",
       "tag": "v0.1.143",

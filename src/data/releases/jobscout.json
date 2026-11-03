@@ -2,8 +2,177 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-10-31T21:51:40Z",
+  "generated_at": "2026-11-02T18:31:11Z",
   "releases": [
+    {
+      "version": "0.1.45",
+      "tag": "v0.1.45",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.44",
+      "tag": "v0.1.44",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.43",
+      "tag": "v0.1.43",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.42",
+      "tag": "v0.1.42",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The profile and watches actions are now accessible from the Settings modal. The header has been updated to include a settings gear and model badge."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.41",
+      "tag": "v0.1.41",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Use JobScout from Claude or Codex\" window now looks and reads the same as in the other Mayorana apps, with a copy button on every step, and Escape closes it."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.40",
+      "tag": "v0.1.40",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.39",
+      "tag": "v0.1.39",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.38",
+      "tag": "v0.1.38",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.37",
+      "tag": "v0.1.37",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "A visual cue for the splitter handle has been added, making it easier to grab and adjust the split view."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.36",
+      "tag": "v0.1.36",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Install & restart, on the banner that says a new version is out: one click downloads it, checks it, puts it in place of the version you have and opens it again, on macOS, Windows and Linux. No disk image to open, drag and throw away, no setup to click through. If an update can't finish, JobScout says why the next time it opens. Where it can't replace itself (an app in a folder you can't change), the banner offers the download instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.35",
+      "tag": "v0.1.35",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.34",
+      "tag": "v0.1.34",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.33",
+      "tag": "v0.1.33",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Using JobScout from Claude, Codex or another agent takes less of the agent's context on every message, including ones that have nothing to do with JobScout: its instructions are a few lines, and what a setting every tool takes means is said once rather than in each tool."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.32",
       "tag": "v0.1.32",

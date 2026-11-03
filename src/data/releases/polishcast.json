@@ -2,8 +2,187 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-10-31T22:25:50Z",
+  "generated_at": "2026-11-02T18:48:51Z",
   "releases": [
+    {
+      "version": "0.1.57",
+      "tag": "v0.1.57",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.56",
+      "tag": "v0.1.56",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.55",
+      "tag": "v0.1.55",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.54",
+      "tag": "v0.1.54",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.53",
+      "tag": "v0.1.53",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The toolbar now includes a button to change the AI region settings, making it easier to manage transcription and chapter naming options."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.52",
+      "tag": "v0.1.52",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The \"Use PolishCast from Claude or Codex\" window now looks and reads the same as in the other Mayorana apps, with a copy button on every step, and Escape closes it.",
+            "+ Music opens a picker of the songs you already have: tracks cut in TrackCut and songs you used before, newest and unused first, instead of Finder. Choose from the disk with the link at the bottom; that song is then offered next time too."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.51",
+      "tag": "v0.1.51",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.50",
+      "tag": "v0.1.50",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "You can now edit takes through the MCP protocol, including zooms, clips, blanks, and style changes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.49",
+      "tag": "v0.1.49",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.48",
+      "tag": "v0.1.48",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.47",
+      "tag": "v0.1.47",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The sidebar now has a visual resizer, making it easier to adjust its width."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.46",
+      "tag": "v0.1.46",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Install & restart, on the banner that says a new version is out: one click downloads it, checks it, puts it in place of the version you have and opens it again, on macOS, Windows and Linux. No disk image to open, drag and throw away, no setup to click through. If an update can't finish, PolishCast says why the next time it opens. Where it can't replace itself (an app in a folder you can't change), the banner offers the download instead."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.45",
+      "tag": "v0.1.45",
+      "date": "2026-11-01",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Library and Calendar, beside your takes: the media library PublishKit and TrackCut share. Each take shows there by itself, recording while you record, polishing until you export it and ready once you have, with its exports and captions. PublishKit's posts and TrackCut's recordings are there too, so you see what is coming out and when. Set a status or tags by hand, search, or open anything in the app that made it; a click on a PublishKit draft opens it in PublishKit.",
+            "Clips for TikTok, Reels and Shorts, from Claude: one of the clips PublishKit's Repurpose suggests is exported as a vertical video with the captions drawn in, without changing your take's edit. Claude then attaches it to its draft in PublishKit, and the library links the take to it.",
+            "Plan ahead in the library: Plan… puts a video, audio or post you mean to make on the calendar, with its outline or script. Once it is made, Claude can hand the idea and its notes over to the take, recording or post.",
+            "Claude can now use the media library too: search it, read the calendar of any week, plan an idea, and set an item's status, tags or notes. The same in PolishCast, TrackCut and PublishKit."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Using PolishCast from Claude, Codex or another agent takes less of the agent's context on every message, including ones that have nothing to do with PolishCast: its instructions are a few lines, and what a setting every tool takes means is said once rather than in each tool."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.44",
       "tag": "v0.1.44",
