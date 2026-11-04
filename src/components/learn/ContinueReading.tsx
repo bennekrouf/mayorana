@@ -14,13 +14,18 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useReadProgress } from '@/providers/ReadProgressProvider';
 import { isRead, type ReadMap } from '@/lib/read-progress';
 import { loadSearchIndex, type SearchIndex, type SearchItem } from '@/lib/search-client';
+import { isRustTagged } from '@/lib/blog-shared';
+import { useHostContext } from '@/providers/HostProvider';
 
 const DISMISS_KEY = 'mayorana.continueDismissed';
 
 type Suggestion = { post: SearchItem; label: 'continue' | 'next'; pct: number };
 
-function pick(index: SearchIndex, progress: ReadMap): Suggestion | null {
-  const posts = index.items.filter((item) => item.type === 'post' && item.key);
+// On Swiss Rust only Rust posts count, so the next step of a track skips the
+// non-Rust ones (the LLM track's embeddings posts, say) like the site does.
+function pick(index: SearchIndex, progress: ReadMap, rustOnly: boolean): Suggestion | null {
+  const posts = index.items.filter((item) =>
+    item.type === 'post' && item.key && (!rustOnly || isRustTagged(item.tags)));
   const byKey = new Map(posts.map((post) => [post.key!, post]));
   const visits = Object.entries(progress)
     .filter(([key]) => byKey.has(key))
@@ -50,6 +55,7 @@ export function ContinueReading() {
   const t = useTranslations('learn');
   const locale = useLocale();
   const { progress } = useReadProgress();
+  const { isSwissRust } = useHostContext();
   const [index, setIndex] = useState<SearchIndex | null>(null);
   const [dismissed, setDismissed] = useState(false);
   const hasHistory = Object.keys(progress).length > 0;
@@ -66,7 +72,7 @@ export function ContinueReading() {
     return () => { cancelled = true; };
   }, [hasHistory, locale]);
 
-  const suggestion = index && !dismissed ? pick(index, progress) : null;
+  const suggestion = index && !dismissed ? pick(index, progress, isSwissRust) : null;
   if (!suggestion) return null;
   const { post, label, pct } = suggestion;
 

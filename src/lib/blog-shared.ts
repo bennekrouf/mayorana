@@ -99,3 +99,10 @@ export function formatDate(dateString: string, locale: string = 'en'): string {
     timeZone: 'UTC'
   });
 }
+
+/** Swiss Rust (swissrust.ch) shows only posts tagged `rust`. Shared by the
+ *  server-side lookups (rustOnly in ./blog) and client components that work
+ *  from the search index. */
+export function isRustTagged(tags: readonly string[] | undefined): boolean {
+  return (tags ?? []).some(tag => tag.toLowerCase() === 'rust');
+}

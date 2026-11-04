@@ -53,7 +53,13 @@ const Navbar: React.FC = () => {
 
           {/* Logo - exactly like live site */}
           <Link href={getLocalizedPath(locale, '/')} className="font-bold text-xl">
-            {isSwissRust ? "Swiss rust 🦀🇨🇭" : "Mayorana"}
+            {isSwissRust ? (
+              <span className="inline-flex items-center gap-2">
+                {/* eslint-disable-next-line @next/next/no-img-element -- a small static SVG */}
+                <img src="/image/swissrust-logo.svg" alt="" width={36} height={36} className="h-9 w-9" />
+                Swiss Rust
+              </span>
+            ) : "Mayorana"}
           </Link>
 
           {/* Desktop Navigation - exactly like live site layout */}
