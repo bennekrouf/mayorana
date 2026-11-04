@@ -61,7 +61,7 @@ function requestedPage(
   if (raw === undefined) return 1;
   const page = Number(raw);
   if (!Number.isInteger(page) || page < 1) notFound();
-  if (page > getPaginatedPosts(1, locale, 'latest', !isSwissRust).totalPages) notFound();
+  if (page > getPaginatedPosts(1, locale, 'latest', isSwissRust).totalPages) notFound();
   return page;
 }
 
@@ -78,8 +78,8 @@ export default async function BlogIndex({
   // canonicalises to the default listing.
   const view: BlogView = searchParamsData.view === 'path' ? 'path' : 'latest';
 
-  const paginatedData = getPaginatedPosts(page, locale, view, !isSwissRust);
-  const tags = getAllTags(locale);
+  const paginatedData = getPaginatedPosts(page, locale, view, isSwissRust);
+  const tags = getAllTags(locale, isSwissRust);
 
   // Use the locale directly with getTranslations (server components must pass locale explicitly)
   const t = await getTranslations({ locale, namespace: 'blog' });
