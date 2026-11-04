@@ -45,14 +45,22 @@ const FEATURED_SLUGS: Record<string, string[]> = {
   fr: ['logic-apps-workflow-chains-fr', 'trace-correlation-id-cosmos-db-fr'],
 };
 
+// Swiss Rust (swissrust.ch) is the Rust half of the blog: a post belongs there
+// when its front matter tags it `rust`. Every lookup below takes `rustOnly` so
+// the Swiss Rust pages see that half and nothing else.
+export function isRustPost(post: BlogPost): boolean {
+  return (post.tags ?? []).some(tag => tag.toLowerCase() === 'rust');
+}
+
 // Get all blog posts for a specific locale (ONLY that locale)
-export function getAllPosts(locale: string = 'en'): BlogPost[] {
-  return getBlogDataSync(locale);
+export function getAllPosts(locale: string = 'en', rustOnly: boolean = false): BlogPost[] {
+  const posts = getBlogDataSync(locale);
+  return rustOnly ? posts.filter(isRustPost) : posts;
 }
 
 // The posts behind a slug list, in the list's order; missing slugs are skipped.
-function postsBySlug(locale: string, lists: Record<string, string[]>): BlogPost[] {
-  const all = getAllPosts(locale);
+function postsBySlug(locale: string, lists: Record<string, string[]>, rustOnly: boolean = false): BlogPost[] {
+  const all = getAllPosts(locale, rustOnly);
   const slugs = lists[locale] ?? lists['en'];
   return slugs
     .map(slug => all.find(p => p.slug === slug))
@@ -60,13 +68,13 @@ function postsBySlug(locale: string, lists: Record<string, string[]>): BlogPost[
 }
 
 // Get the permanently pinned "Why Rust?" posts for a locale
-export function getPinnedPosts(locale: string = 'en'): BlogPost[] {
-  return postsBySlug(locale, PINNED_SLUGS);
+export function getPinnedPosts(locale: string = 'en', rustOnly: boolean = false): BlogPost[] {
+  return postsBySlug(locale, PINNED_SLUGS, rustOnly);
 }
 
 // Get the featured "AI agents & integration" posts for a locale
-export function getFeaturedPosts(locale: string = 'en'): BlogPost[] {
-  return postsBySlug(locale, FEATURED_SLUGS);
+export function getFeaturedPosts(locale: string = 'en', rustOnly: boolean = false): BlogPost[] {
+  return postsBySlug(locale, FEATURED_SLUGS, rustOnly);
 }
 
 // How the listing is ordered: newest first for everyone, or along the learning
@@ -82,10 +90,15 @@ function byPathOrder(posts: BlogPost[]): BlogPost[] {
 
 // One track of the learning path (the subject a post belongs to), in reading
 // order, trimmed to what a suggestion card shows so the post page does not
-// ship every article body to the browser.
-export function getLearningPath(track: string | undefined, locale: string = 'en'): PathEntry[] {
+// ship every article body to the browser. With rustOnly, the track's non-Rust
+// posts drop out, so "Read next" on Swiss Rust never links to a 404.
+export function getLearningPath(
+  track: string | undefined,
+  locale: string = 'en',
+  rustOnly: boolean = false,
+): PathEntry[] {
   if (!track) return [];
-  return byPathOrder(getAllPosts(locale))
+  return byPathOrder(getAllPosts(locale, rustOnly))
     .filter((post): post is BlogPost & { step: number; track: string } =>
       post.step !== undefined && post.track === track)
     .map(post => ({
@@ -145,13 +158,14 @@ export function getPaginatedPosts(
   page: number = 1,
   locale: string = 'en',
   view: BlogView = 'latest',
-  // Off for a site that does not show the featured row, so those posts stay
-  // in the regular listing instead of disappearing.
-  withFeatured: boolean = true
+  // Swiss Rust: only posts tagged `rust`. The featured AI posts are not, so
+  // the featured row comes back empty there.
+  rustOnly: boolean = false
 ): PaginatedPosts {
-  const allPosts = view === 'path' ? byPathOrder(getAllPosts(locale)) : getAllPosts(locale);
-  const featuredPosts = withFeatured ? getFeaturedPosts(locale) : [];
-  const pinnedPosts = getPinnedPosts(locale);
+  const posts = getAllPosts(locale, rustOnly);
+  const allPosts = view === 'path' ? byPathOrder(posts) : posts;
+  const featuredPosts = getFeaturedPosts(locale, rustOnly);
+  const pinnedPosts = getPinnedPosts(locale, rustOnly);
   const setAside = new Set([...featuredPosts, ...pinnedPosts].map(p => p.slug));
 
   const regularPosts = allPosts.filter(p => !setAside.has(p.slug));
@@ -161,10 +175,10 @@ export function getPaginatedPosts(
 
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const posts = regularPosts.slice(startIndex, endIndex);
+  const pagePosts = regularPosts.slice(startIndex, endIndex);
 
   return {
-    posts,
+    posts: pagePosts,
     featuredPosts,
     pinnedPosts,
     currentPage,
@@ -187,16 +201,16 @@ function normalizeTagSlug(tagSlug: string): string {
   }
 }
 
-export function getAllTags(locale: string = 'en'): string[] {
-  const posts = getAllPosts(locale);
+export function getAllTags(locale: string = 'en', rustOnly: boolean = false): string[] {
+  const posts = getAllPosts(locale, rustOnly);
   const allTags = posts.flatMap(post => post.tags || []);
   const uniqueTags = Array.from(new Set(allTags));
   return uniqueTags.sort();
 }
 
 // Get posts by tag for a specific locale only
-export function getPostsByTag(tagSlug: string, locale: string = 'en'): BlogPost[] {
-  const posts = getAllPosts(locale);
+export function getPostsByTag(tagSlug: string, locale: string = 'en', rustOnly: boolean = false): BlogPost[] {
+  const posts = getAllPosts(locale, rustOnly);
   const wanted = normalizeTagSlug(tagSlug);
   return posts.filter(post =>
     post.tags && post.tags.some(tag =>
@@ -214,8 +228,8 @@ export function isTagIndexed(tagSlug: string, locale: string = 'en'): boolean {
 }
 
 // Get a single post by slug for a specific locale only
-export function getPostBySlug(slug: string, locale: string = 'en'): BlogPost | null {
-  const posts = getAllPosts(locale);
+export function getPostBySlug(slug: string, locale: string = 'en', rustOnly: boolean = false): BlogPost | null {
+  const posts = getAllPosts(locale, rustOnly);
   return posts.find(post => post.slug === slug) || null;
 }
 
@@ -226,8 +240,8 @@ export function getRecentPosts(count: number = 3, locale: string = 'en'): BlogPo
 }
 
 // Get tag display name from slug for a specific locale only
-export function getTagBySlug(tagSlug: string, locale: string = 'en'): string | null {
-  const posts = getAllPosts(locale);
+export function getTagBySlug(tagSlug: string, locale: string = 'en', rustOnly: boolean = false): string | null {
+  const posts = getAllPosts(locale, rustOnly);
   const wanted = normalizeTagSlug(tagSlug);
   for (const post of posts) {
     if (post.tags) {
