@@ -2,8 +2,81 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-11-02T21:32:20Z",
+  "generated_at": "2026-11-03T17:00:25Z",
   "releases": [
+    {
+      "version": "0.1.165",
+      "tag": "v0.1.165",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The MCP button is on the first screen too, where you pick a folder, so you can connect GitAgent to Claude before opening any repositories."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "The header has no gear any more: the flag already opens Settings, so the gear beside it was a second button for the same window."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Esc closes Settings, and saves what you changed, just like the close button."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.164",
+      "tag": "v0.1.164",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**Resolve with AI** now comes first wherever a merge stops on conflicts. Your model proposes a merge of each conflict, with a sentence on what it kept and why, and flags the ones worth a closer look. Nothing is written until you save, any proposal can be undone to pick a side yourself, and once you have used it, each next file is proposed as it opens. Without a model set up, the button says how to turn it on."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.163",
+      "tag": "v0.1.163",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "**Review → Merge** no longer calls a pull request conflicted when GitHub is only holding it for checks still running or a review still missing. It used to offer to merge the base branch in, which restarts the checks being waited on, or to close the pull request. Now it says the pull request is clean and offers **Wait for the checks, then merge**, or to let GitHub merge it by itself once everything passes."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.162",
+      "tag": "v0.1.162",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "**All** in the repository list now checks every repository again before pressing anything, instead of trusting labels that could be minutes old. Where there are uncommitted files, it waits until none of them has changed for 20 seconds before committing, so a coding agent that is still writing never has half an edit committed. The row shows \"being edited\" with a countdown while it waits. If the files are still changing after two minutes, All leaves that repository alone and the row says \"still being edited\". The other repositories carry on either way.",
+            "**All** no longer approves a step if files changed after the step was proposed. It leaves the approval for you and says why: what the step lists may no longer match what is on disk."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A repository no longer says \"release due\" when every flow that could ship it is hidden there, as with a shared library you never release from GitAgent. The row shows the next thing it can act on, or nothing, and the count at the top of the list leaves it out. The home screen, the repository GitAgent opens on, and what it tells Claude now agree with the list.",
+            "When the tests fail in **Commit → PR**, the repository list now says so right away, instead of reading \"running\" while the commit message was still being drafted. The run no longer drafts a message once the commit it was for can't happen, so a model call isn't spent on nothing.",
+            "A repository whose run failed now shows which step failed, such as \"Run tests failed\", with a **See why** button. The button opens that step's output, where you can Retry or Skip it. The list used to offer to start the same flow again, which would only have failed at the same step. Once the repository needs something else, the row goes back to showing that."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.161",
       "tag": "v0.1.161",

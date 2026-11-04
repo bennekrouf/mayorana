@@ -2,8 +2,34 @@
   "name": "surfacewatch",
   "product": "SurfaceWatch",
   "page": "https://mayorana.ch/en/apps/surfacewatch",
-  "generated_at": "2026-11-02T21:43:34Z",
+  "generated_at": "2026-11-03T11:38:56Z",
   "releases": [
+    {
+      "version": "0.1.39",
+      "tag": "v0.1.39",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.38",
+      "tag": "v0.1.38",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.37",
       "tag": "v0.1.37",

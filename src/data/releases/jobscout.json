@@ -2,8 +2,40 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-11-02T18:31:11Z",
+  "generated_at": "2026-11-03T17:39:13Z",
   "releases": [
+    {
+      "version": "0.1.47",
+      "tag": "v0.1.47",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The header has no gear any more: the flag already opens Settings, so the gear beside it was a second button for the same window."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Esc closes Settings."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.46",
+      "tag": "v0.1.46",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.45",
       "tag": "v0.1.45",

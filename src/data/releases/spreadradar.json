@@ -2,8 +2,21 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-11-02T21:04:13Z",
+  "generated_at": "2026-11-03T11:41:29Z",
   "releases": [
+    {
+      "version": "0.1.47",
+      "tag": "v0.1.47",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.46",
       "tag": "v0.1.46",

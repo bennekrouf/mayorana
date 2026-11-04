@@ -2,8 +2,34 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-11-02T21:10:36Z",
+  "generated_at": "2026-11-03T13:55:08Z",
   "releases": [
+    {
+      "version": "0.1.57",
+      "tag": "v0.1.57",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Repurpose a recording no longer stops with \"the model's reply wasn't the JSON asked for\" when the model sends a caption, slide or post in a slightly different shape than asked, such as a caption with its hashtags listed separately. The text is now read as meant and your drafts are queued as usual."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.56",
+      "tag": "v0.1.56",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.55",
       "tag": "v0.1.55",
