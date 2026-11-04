@@ -59,7 +59,13 @@ export default function Footer() {
               href={getLocalizedPath(locale, '/')}
               className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
             >
-              {isSwissRust ? "Swiss rust 🦀🇨🇭" : "Mayorana"}
+              {isSwissRust ? (
+                <span className="inline-flex items-center gap-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- a small static SVG */}
+                  <img src="/image/swissrust-logo.svg" alt="" width={36} height={36} className="h-7 w-7" />
+                  Swiss Rust
+                </span>
+              ) : "Mayorana"}
             </Link>
             {!isSwissRust && (
               <>

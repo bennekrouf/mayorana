@@ -19,6 +19,9 @@ const MAX_REQUESTS_MCP = 120;
 // route also caps questions per visitor per day; this stops a burst.
 const MAX_REQUESTS_ASK = 6;
 
+// Root-level icon files that swissrust.ch serves from public/swissrust/.
+const SWISSRUST_ROOT_ICONS = new Set(['/favicon.ico', '/site.webmanifest', '/apple-touch-icon.png']);
+
 function getRateLimit(ip: string, limit: number): boolean {
     const now = Date.now();
 
@@ -131,6 +134,12 @@ export function middleware(request: NextRequest) {
     // Swissrust Domain Proxy Logic
     const hostname = request.headers.get('host') || '';
     if (hostname.includes('swissrust.ch')) {
+        // Swiss Rust has its own crab-and-knife icons (public/swissrust/).
+        // Browsers ask for these at the root whatever the page declares.
+        if (SWISSRUST_ROOT_ICONS.has(pathname)) {
+            return NextResponse.rewrite(new URL(`/swissrust${pathname}`, request.url));
+        }
+
         // Essential: Exclude Next.js static files, data requests, and API requests from being rewritten
         if (!pathname.startsWith('/_next') && !pathname.startsWith('/api') && !pathname.includes('.')) {
 
@@ -203,6 +212,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     // `__/` is Firebase's auth handler, proxied to firebaseapp.com by a rewrite
-    // in next.config.ts — it must not get the locale redirect.
-    matcher: ['/((?!_next/static|_next/image|favicon.ico|__/).*)'],
+    // in next.config.ts — it must not get the locale redirect. favicon.ico is
+    // matched so swissrust.ch can serve its own (SWISSRUST_ROOT_ICONS).
+    matcher: ['/((?!_next/static|_next/image|__/).*)'],
 }

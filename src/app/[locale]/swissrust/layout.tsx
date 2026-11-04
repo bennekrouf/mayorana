@@ -7,7 +7,17 @@
 // `rust` (rustOnly in src/lib/blog.ts): listing, posts and tags. Canonicals still
 // point at mayorana.ch, so the two sites never compete in search.
 
+import type { Metadata } from 'next';
 import { HostProvider } from '@/providers/HostProvider';
+
+// The crab-and-knife logo as the tab icon and home-screen icon. /favicon.ico
+// and /site.webmanifest are swapped for Swiss Rust's in src/middleware.ts.
+export const metadata: Metadata = {
+  icons: {
+    icon: [{ url: '/swissrust/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/swissrust/apple-touch-icon.png', sizes: '180x180' }],
+  },
+};
 
 export default function SwissRustLayout({ children }: { children: React.ReactNode }) {
   return <HostProvider isSwissRust>{children}</HostProvider>;

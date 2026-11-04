@@ -4,7 +4,7 @@
 import blogPostsEn from '../data/blog-posts-en.json';
 import blogPostsFr from '../data/blog-posts-fr.json';
 import learningPath from '../../content/learning-path.json';
-import type { BlogPost, PaginatedPosts, PathEntry } from './blog-shared';
+import { isRustTagged, type BlogPost, type PaginatedPosts, type PathEntry } from './blog-shared';
 import { progressKey } from './read-progress';
 
 // Types and data-free helpers live in ./blog-shared so that client components
@@ -49,7 +49,7 @@ const FEATURED_SLUGS: Record<string, string[]> = {
 // when its front matter tags it `rust`. Every lookup below takes `rustOnly` so
 // the Swiss Rust pages see that half and nothing else.
 export function isRustPost(post: BlogPost): boolean {
-  return (post.tags ?? []).some(tag => tag.toLowerCase() === 'rust');
+  return isRustTagged(post.tags);
 }
 
 // Get all blog posts for a specific locale (ONLY that locale)
