@@ -13,7 +13,6 @@ tags:
   - git
   - ai
   - developer-tools
-  - rust
   - llm
 seo_title: "Messages de commit par IA, sans perdre le contrôle de git"
 meta_description: "Les outils git à IA te donnent du texte à copier ou agissent sans demander. Une troisième voie garde chaque commit et chaque push sous ta validation."

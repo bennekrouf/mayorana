@@ -13,7 +13,6 @@ tags:
   - azure
   - logic-apps
   - dioxus
-  - rust
   - desktop
 seo_title: "AIS Runner: Local Azure Logic Apps Standard Development"
 meta_description: "AIS Runner is a desktop app for local Azure Logic Apps Standard development: manage, run, debug and compare workflows on your machine."
