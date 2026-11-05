@@ -14,9 +14,9 @@ import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
+import { FiMail } from 'react-icons/fi';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
-import { currentUser } from '@/lib/firebase';
-import { getUserPrefs, updateUserPrefs } from '@/lib/gateway';
+import { getUserPrefs, isSignedIn, updateUserPrefs } from '@/lib/gateway';
 
 const PENDING_KEY = 'mayorana.followPathPending';
 
@@ -113,7 +113,7 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
     // Popup path: finish here, so the effect above does not do it twice.
     // If the popup was closed without signing in, just drop the choice.
     const parked = takePending();
-    if (parked && currentUser()) await follow(true);
+    if (parked && isSignedIn()) await follow(true);
     setChoosing(false);
     setBusy(false);
   };
@@ -152,6 +152,15 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
           >
             <FaGithub className="h-4 w-4" aria-hidden />
             {tAuth('sign_in_github')}
+          </button>
+          <button
+            type="button"
+            onClick={() => onSignIn('email')}
+            disabled={busy}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm border border-border hover:bg-secondary disabled:opacity-60 transition-colors"
+          >
+            <FiMail className="h-4 w-4" aria-hidden />
+            {tAuth('sign_in_email')}
           </button>
         </div>
       )}

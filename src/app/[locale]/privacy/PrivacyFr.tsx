@@ -38,7 +38,8 @@ export default function PrivacyFr() {
                   </li>
                   <li>
                     <strong>Connexion facultative</strong> avec Google ou GitHub&nbsp;: votre adresse e-mail, votre nom et
-                    l&apos;identifiant de votre compte, tels que fournis par ce service. La connexion n&apos;est jamais requise pour
+                    l&apos;identifiant de votre compte, tels que fournis par ce service. Ou par un code envoyé à votre
+                    adresse e-mail&nbsp;: alors cette adresse seulement. La connexion n&apos;est jamais requise pour
                     télécharger un outil.
                   </li>
                   <li>
@@ -143,7 +144,7 @@ export default function PrivacyFr() {
                   de confidentialité&nbsp;:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Google Firebase Authentication, ainsi que Google ou GitHub, pour la connexion</li>
+                  <li>Google Firebase Authentication, ainsi que Google ou GitHub, pour la connexion avec ces comptes</li>
                   <li>Stripe, pour les paiements</li>
                   <li>Brevo (Sendinblue SAS, France), pour envoyer les e-mails décrits ci-dessus</li>
                   <li>

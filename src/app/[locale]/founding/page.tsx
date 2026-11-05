@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { useQuery, type Query } from '@/lib/use-query';
 import { useForm } from 'react-hook-form';
 import { useLocale, useTranslations } from 'next-intl';
-import { FiCheck, FiGift, FiMessageCircle, FiZap } from 'react-icons/fi';
+import { FiCheck, FiGift, FiMail, FiMessageCircle, FiZap } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { useAuth } from '@/providers/AuthProvider';
@@ -39,6 +39,7 @@ interface FormData {
 // all on hydration.
 function FoundingContent({ searchParams }: { searchParams: Query | null }) {
   const t = useTranslations('founding');
+  const tAuth = useTranslations('auth');
   const locale = useLocale();
   const { enabled, user, loading, signIn, prepare } = useAuth();
 
@@ -211,6 +212,14 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
                       >
                         <FaGithub className="w-5 h-5" aria-hidden />
                         {t('signin_button_github')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => signIn('email')}
+                        className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium border border-border hover:bg-secondary transition-colors"
+                      >
+                        <FiMail className="w-5 h-5" aria-hidden />
+                        {tAuth('sign_in_email')}
                       </button>
                     </div>
                   )}
