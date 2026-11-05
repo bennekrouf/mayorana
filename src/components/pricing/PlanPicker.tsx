@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
+import { FiMail } from 'react-icons/fi';
 import { Check, Loader2, Sparkles, Star } from 'lucide-react';
 import { appI18nKey, desktopToolsConfig, toolsForPlanProducts } from '@/data/tools';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
@@ -217,6 +218,14 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
                 >
                   <FaGithub className="h-5 w-5" />
                   {tAuth('sign_in_github')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => signInThenSubscribe('email')}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-border bg-background font-medium hover:bg-secondary transition-colors"
+                >
+                  <FiMail className="h-5 w-5" />
+                  {tAuth('sign_in_email')}
                 </button>
               </div>
             ) : (

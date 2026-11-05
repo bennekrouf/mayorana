@@ -38,7 +38,8 @@ export default function PrivacyEn() {
                   </li>
                   <li>
                     <strong>Optional sign-in</strong> with Google or GitHub: your email address, name and account
-                    identifier, as provided by that service. Sign-in is never required to download a tool.
+                    identifier, as provided by that service. Or with a code sent to your email address: then only that
+                    address. Sign-in is never required to download a tool.
                   </li>
                   <li>
                     <strong>Purchases</strong> of a paid edition: your email address and the licence issued to you. Card
@@ -130,7 +131,7 @@ export default function PrivacyEn() {
                 <h2 className="text-2xl font-semibold mb-4">Service Providers</h2>
                 <p className="mb-4">We rely on these providers, each of which processes data under its own privacy policy:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Google Firebase Authentication, and Google or GitHub, for sign-in</li>
+                  <li>Google Firebase Authentication, and Google or GitHub, for sign-in with those accounts</li>
                   <li>Stripe, for payments</li>
                   <li>Brevo (Sendinblue SAS, France), to send the emails described above</li>
                   <li>

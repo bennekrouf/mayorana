@@ -3,20 +3,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiCreditCard, FiLogIn, FiLogOut, FiUser } from 'react-icons/fi';
+import { FiCreditCard, FiLogIn, FiLogOut, FiMail, FiUser } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { useLocale, useTranslations } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
 
-const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_google' | 'sign_in_github' }[] = [
+const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_google' | 'sign_in_github' | 'sign_in_email' }[] = [
   { id: 'google', icon: <FcGoogle className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_google' },
   { id: 'github', icon: <FaGithub className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_github' },
+  { id: 'email', icon: <FiMail className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_email' },
 ];
 
 /**
- * Sign-in button with a Google/GitHub menu, or the signed-in user's avatar
+ * Sign-in button with a Google/GitHub/email menu, or the signed-in user's avatar
  * with a menu to their subscription and to sign out.
  * `compact` is the mobile-menu variant: a full-width row instead of an icon.
  */
