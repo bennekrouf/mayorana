@@ -4,7 +4,7 @@ author: mayo
 default_tags:
 - rust
 - programming
-system_prompt: |
+system_prompt: |-
   You are an expert technical writer specializing in Rust programming.
   You write comprehensive, engaging blog posts about Rust concepts, patterns, and best practices.
   Your tone is clear, pedagogical, and technically precise.
@@ -38,3 +38,5 @@ deploy_command: ''
 deploy_after_publish: false
 images_dir: ''
 images_url: ''
+blog: true
+hidden_networks: []
