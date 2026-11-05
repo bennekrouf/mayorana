@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import type { AuthError, OAuthCredential, User } from 'firebase/auth';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   hasSessionHint,
   isAuthConfigured,
@@ -11,8 +11,39 @@ import {
   rememberSignedIn,
   type FirebaseKit,
 } from '@/lib/firebase';
+import { GatewayError, gatewayFetch, startEmailSignIn, verifyEmailSignIn } from '@/lib/gateway';
+import {
+  clearEmailSession,
+  EMAIL_SESSION_ENDED,
+  readEmailSession,
+  saveEmailSession,
+  type EmailSession,
+} from '@/lib/email-session';
 
-export type SignInProvider = 'google' | 'github';
+/** The two sign-ins that go through Firebase. */
+type FirebaseProvider = 'google' | 'github';
+
+/**
+ * 'email' is a code sent by email and checked by the api0 gateway, with no
+ * Google service in the path: the way in from mainland China, where Firebase
+ * cannot be reached (src/lib/email-session.ts).
+ */
+export type SignInProvider = FirebaseProvider | 'email';
+
+/**
+ * Who is signed in, whichever way. A Firebase User has these fields too; an
+ * email sign-in has no name or photo, and its uid is derived from the email.
+ */
+export interface SiteUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+}
+
+function emailUser(session: EmailSession): SiteUser {
+  return { uid: `email:${session.email}`, email: session.email, displayName: null, photoURL: null };
+}
 
 /**
  * How a sign-in attempt ended. When the email already has an account under
@@ -25,7 +56,7 @@ export type SignInOutcome = 'signed-in' | 'cancelled' | 'redirecting' | 'failed'
 interface AuthContextType {
   /** False when Firebase keys are missing from the build; nothing auth-related renders. */
   enabled: boolean;
-  user: User | null;
+  user: SiteUser | null;
   /** True until Firebase has restored (or ruled out) a persisted session. */
   loading: boolean;
   signIn: (provider: SignInProvider) => Promise<SignInOutcome>;
@@ -53,10 +84,10 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-const PROVIDER_NAMES: Record<SignInProvider, string> = { google: 'Google', github: 'GitHub' };
-const PROVIDER_IDS: Record<SignInProvider, string> = { google: 'google.com', github: 'github.com' };
+const PROVIDER_NAMES: Record<FirebaseProvider, string> = { google: 'Google', github: 'GitHub' };
+const PROVIDER_IDS: Record<FirebaseProvider, string> = { google: 'google.com', github: 'github.com' };
 
-function makeProvider(kit: FirebaseKit, provider: SignInProvider, email?: string | null) {
+function makeProvider(kit: FirebaseKit, provider: FirebaseProvider, email?: string | null) {
   if (provider === 'google') {
     const google = new kit.GoogleAuthProvider();
     // Preselects the right account in Google's chooser when linking.
@@ -70,7 +101,7 @@ function makeProvider(kit: FirebaseKit, provider: SignInProvider, email?: string
   return github;
 }
 
-function credentialFromError(kit: FirebaseKit, provider: SignInProvider, error: AuthError) {
+function credentialFromError(kit: FirebaseKit, provider: FirebaseProvider, error: AuthError) {
   return provider === 'google'
     ? kit.GoogleAuthProvider.credentialFromError(error)
     : kit.GithubAuthProvider.credentialFromError(error);
@@ -93,9 +124,9 @@ function credentialFromError(kit: FirebaseKit, provider: SignInProvider, error: 
 interface PendingLink {
   email: string | null;
   /** The provider they just tried, whose credential is parked. */
-  added: SignInProvider;
+  added: FirebaseProvider;
   /** The provider the account already has; they sign in with this one. */
-  existing: SignInProvider;
+  existing: FirebaseProvider;
   credential: OAuthCredential;
 }
 
@@ -138,7 +169,7 @@ function clearLink() {
   try { sessionStorage.removeItem(LINK_KEY); } catch { /* ignore */ }
 }
 
-function takeRedirectProvider(): SignInProvider | null {
+function takeRedirectProvider(): FirebaseProvider | null {
   try {
     const value = sessionStorage.getItem(REDIRECT_KEY);
     sessionStorage.removeItem(REDIRECT_KEY);
@@ -148,9 +179,31 @@ function takeRedirectProvider(): SignInProvider | null {
   }
 }
 
-async function redirectTo(kit: FirebaseKit, provider: SignInProvider, email?: string | null) {
+async function redirectTo(kit: FirebaseKit, provider: FirebaseProvider, email?: string | null) {
   try { sessionStorage.setItem(REDIRECT_KEY, provider); } catch { /* ignore */ }
   await kit.signInWithRedirect(kit.auth, makeProvider(kit, provider, email), kit.popupRedirectResolver);
+}
+
+// ── The free allowance ────────────────────────────────────────────────────────
+//
+// Everyone signed in holds at least the free plan, whose licence the apps take.
+// Signing in here creates no api0 account, so the gateway gives that plan when
+// it is first asked for the person's subscription. Ask once per account per
+// browser, right after sign-in, so it exists whether or not they ever open the
+// pricing page. Remembered only once the gateway has answered, so a failed
+// read is tried again on the next page.
+
+const FREE_KEY = 'mayorana.freeAllowance';
+
+function claimFreeAllowance(uid: string) {
+  try {
+    if (localStorage.getItem(FREE_KEY) === uid) return;
+  } catch { /* private mode: ask every page, the gateway makes it once */ }
+  gatewayFetch('/api/plans/subscription')
+    .then(() => {
+      try { localStorage.setItem(FREE_KEY, uid); } catch { /* ignore */ }
+    })
+    .catch(() => { /* tried again on the next page */ });
 }
 
 function isQuietCancel(code: string | undefined) {
@@ -170,8 +223,11 @@ function isQuietCancel(code: string | undefined) {
  * Until then `user` is null and, once that is known, `loading` is false.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SiteUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [emailOpen, setEmailOpen] = useState(false);
+  // Settles the signIn('email') call that opened the email dialog.
+  const emailSettled = useRef<((outcome: SignInOutcome) => void) | null>(null);
   const [link, setLink] = useState<PendingLink | null>(null);
   const [linkBusy, setLinkBusy] = useState(false);
   const [linkError, setLinkError] = useState<LinkError | null>(null);
@@ -195,9 +251,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const giveUp = setTimeout(() => setLoading(false), 5000);
     kit.onAuthStateChanged(kit.auth, (u) => {
       clearTimeout(giveUp);
-      setUser(u);
+      if (u) {
+        // A Google or GitHub sign-in replaces an email one.
+        clearEmailSession();
+        setUser(u);
+      } else {
+        // No Firebase session: an email sign-in may still be there.
+        const session = readEmailSession();
+        setUser(session ? emailUser(session) : null);
+      }
       setLoading(false);
       rememberSignedIn(Boolean(u));
+      if (u) claimFreeAllowance(u.uid);
     });
   }, []);
 
@@ -206,7 +271,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadFirebase().then(watch).catch(() => { /* retried on signIn */ });
   }, [watch]);
 
-  const openLink = (kit: FirebaseKit, added: SignInProvider, error: AuthError): boolean => {
+  const openLink = (kit: FirebaseKit, added: FirebaseProvider, error: AuthError): boolean => {
     const credential = credentialFromError(kit, added, error);
     if (!credential) return false;
     const pending: PendingLink = {
@@ -256,6 +321,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     started.current = true;
     const redirected = takeRedirectProvider();
     const stashed = takeLink();
+    // Signed in by email code: no Firebase at all, unless a Google or GitHub
+    // sign-in is coming back from a redirect and takes over.
+    const session = readEmailSession();
+    if (session && !redirected) {
+      const signedIn = emailUser(session);
+      setUser(signedIn);
+      setLoading(false);
+      claimFreeAllowance(signedIn.uid);
+      return;
+    }
     void (async () => {
       if (!redirected && !(await hasSessionHint())) {
         // Unless an intent to sign in got Firebase going meanwhile.
@@ -293,7 +368,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // The gateway refused the email token (src/lib/gateway.ts): signed out.
+  useEffect(() => {
+    const ended = () => setUser((current) => (current?.uid.startsWith('email:') ? null : current));
+    window.addEventListener(EMAIL_SESSION_ENDED, ended);
+    return () => window.removeEventListener(EMAIL_SESSION_ENDED, ended);
+  }, []);
+
+  const settleEmail = (outcome: SignInOutcome) => {
+    emailSettled.current?.(outcome);
+    emailSettled.current = null;
+  };
+
+  const emailSignedIn = async (session: EmailSession) => {
+    saveEmailSession(session);
+    // One sign-in at a time: end a Firebase one, which would otherwise come
+    // back on the next page.
+    const kit = loadedFirebase();
+    if (kit?.auth.currentUser) {
+      try {
+        await kit.auth.signOut();
+      } catch (error) {
+        console.error('Error signing out of Firebase:', error);
+      }
+    }
+    rememberSignedIn(false);
+    const signedIn = emailUser(session);
+    setUser(signedIn);
+    setLoading(false);
+    claimFreeAllowance(signedIn.uid);
+    setEmailOpen(false);
+    settleEmail('signed-in');
+  };
+
+  const cancelEmail = () => {
+    setEmailOpen(false);
+    settleEmail('cancelled');
+  };
+
   const signIn = async (provider: SignInProvider): Promise<SignInOutcome> => {
+    if (provider === 'email') {
+      settleEmail('cancelled');
+      setEmailOpen(true);
+      return new Promise<SignInOutcome>((resolve) => { emailSettled.current = resolve; });
+    }
     let kit: FirebaseKit;
     try {
       kit = await loadFirebase();
@@ -365,14 +483,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
-    // Not loaded means nobody is signed in.
+    clearEmailSession();
+    // Not loaded means nobody is signed in with Firebase.
     const kit = loadedFirebase();
-    if (!kit) return;
-    try {
-      await kit.auth.signOut();
-    } catch (error) {
-      console.error('Error signing out:', error);
+    if (kit) {
+      try {
+        await kit.auth.signOut();
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
     }
+    setUser(null);
   };
 
   return (
@@ -387,6 +508,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           onCancel={cancelLinking}
         />
       )}
+      {emailOpen && <EmailSignInDialog onSignedIn={emailSignedIn} onCancel={cancelEmail} />}
     </AuthContext.Provider>
   );
 }
@@ -455,6 +577,177 @@ function LinkAccountsDialog({
             disabled={busy}
             className="text-xs text-muted-foreground/80 hover:text-foreground underline underline-offset-2 disabled:opacity-60 transition-colors"
           >
+            {t('link_cancel')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Sign-in by email code ─────────────────────────────────────────────────────
+
+type EmailProblem = 'invalid_email' | 'too_many' | 'send_failed' | 'wrong_code' | 'too_many_attempts' | 'failed';
+
+/**
+ * Two steps: the address, then the 6-digit code emailed to it. Opened by
+ * signIn('email') from any sign-in button, and above the download panel like
+ * the link dialog.
+ */
+function EmailSignInDialog({
+  onSignedIn,
+  onCancel,
+}: {
+  onSignedIn: (session: EmailSession) => void;
+  onCancel: () => void;
+}) {
+  const t = useTranslations('auth');
+  const locale = useLocale();
+  const [step, setStep] = useState<'email' | 'code'>('email');
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [problem, setProblem] = useState<EmailProblem | null>(null);
+  const [resent, setResent] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && !busy) onCancel(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onCancel, busy]);
+
+  const send = async (again: boolean) => {
+    setBusy(true);
+    setProblem(null);
+    setResent(false);
+    try {
+      await startEmailSignIn(email.trim(), locale);
+      setStep('code');
+      setCode('');
+      setResent(again);
+    } catch (error) {
+      const status = error instanceof GatewayError ? error.status : 0;
+      setProblem(status === 400 ? 'invalid_email' : status === 429 ? 'too_many' : 'send_failed');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const verify = async () => {
+    setBusy(true);
+    setProblem(null);
+    setResent(false);
+    try {
+      onSignedIn(await verifyEmailSignIn(email.trim(), code.trim()));
+    } catch (error) {
+      const status = error instanceof GatewayError ? error.status : 0;
+      if (status === 429) {
+        // That code is spent: a new one is the only way on.
+        setProblem('too_many_attempts');
+        setCode('');
+      } else {
+        setProblem(status === 400 ? 'wrong_code' : 'failed');
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const inputClass =
+    'w-full px-3 py-2.5 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50';
+  const primaryClass =
+    'w-full px-4 py-3 rounded-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-colors';
+  const quietClass =
+    'text-xs text-muted-foreground/80 hover:text-foreground underline underline-offset-2 disabled:opacity-60 transition-colors';
+
+  return (
+    <div
+      className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+      onClick={() => { if (!busy) onCancel(); }}
+      role="presentation"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="email-sign-in-title"
+        className="w-full max-w-md rounded-2xl border border-border bg-background shadow-2xl p-6 sm:p-8"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 id="email-sign-in-title" className="text-xl font-bold leading-tight mb-3">
+          {step === 'email' ? t('email_title') : t('email_code_title')}
+        </h2>
+
+        {step === 'email' ? (
+          <form
+            onSubmit={(e) => { e.preventDefault(); if (email.trim()) void send(false); }}
+            className="space-y-4"
+          >
+            <p className="text-sm text-muted-foreground leading-relaxed">{t('email_body')}</p>
+            <label className="block">
+              <span className="sr-only">{t('email_label')}</span>
+              <input
+                type="email"
+                autoComplete="email"
+                autoFocus
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t('email_placeholder')}
+                className={inputClass}
+              />
+            </label>
+            {problem && <p className="text-sm text-red-600 dark:text-red-400" role="alert">{t(`email_problem_${problem}`)}</p>}
+            <button type="submit" disabled={busy || !email.trim()} className={primaryClass}>
+              {busy ? t('email_sending') : t('email_send')}
+            </button>
+          </form>
+        ) : (
+          <form
+            onSubmit={(e) => { e.preventDefault(); if (code.trim().length === 6) void verify(); }}
+            className="space-y-4"
+          >
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {t('email_code_body', { email: email.trim() })}
+            </p>
+            <label className="block">
+              <span className="sr-only">{t('email_code_label')}</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                autoFocus
+                pattern="[0-9]{6}"
+                maxLength={6}
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                placeholder="123456"
+                className={`${inputClass} text-center text-2xl tracking-[0.4em] font-mono`}
+              />
+            </label>
+            {problem && <p className="text-sm text-red-600 dark:text-red-400" role="alert">{t(`email_problem_${problem}`)}</p>}
+            {resent && !problem && <p className="text-sm text-muted-foreground" role="status">{t('email_resent')}</p>}
+            <button type="submit" disabled={busy || code.trim().length !== 6} className={primaryClass}>
+              {busy ? t('email_checking') : t('email_verify')}
+            </button>
+            <p className="text-xs text-muted-foreground leading-relaxed">{t('email_spam_hint')}</p>
+            <div className="flex items-center justify-between gap-4">
+              <button type="button" onClick={() => void send(true)} disabled={busy} className={quietClass}>
+                {t('email_resend')}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setStep('email'); setProblem(null); setResent(false); }}
+                disabled={busy}
+                className={quietClass}
+              >
+                {t('email_change')}
+              </button>
+            </div>
+          </form>
+        )}
+
+        <div className="mt-5 text-center">
+          <button onClick={onCancel} disabled={busy} className={quietClass}>
             {t('link_cancel')}
           </button>
         </div>

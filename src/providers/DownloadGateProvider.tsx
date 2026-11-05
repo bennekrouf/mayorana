@@ -24,12 +24,11 @@ import React, {
 } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { FiArrowRight, FiX } from 'react-icons/fi';
+import { FiArrowRight, FiMail, FiX } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
-import { currentUser } from '@/lib/firebase';
-import { getUserPrefs, updateUserPrefs } from '@/lib/gateway';
+import { getUserPrefs, isSignedIn, updateUserPrefs } from '@/lib/gateway';
 import { capture as captureAttribution, withAttribution } from '@/lib/attribution';
 import type { OS } from '@/data/tools';
 
@@ -180,8 +179,7 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
     stashPending(pending);
     setBusy(true);
     const outcome = await signIn(provider);
-    const signedIn = currentUser();
-    if (outcome === 'signed-in' && signedIn) {
+    if (outcome === 'signed-in' && isSignedIn()) {
       // Popup path: the session is in place. The parked copy is consumed
       // here so the subscription above does not deliver it a second time.
       takePending();
@@ -229,6 +227,7 @@ function DownloadGatePanel({
   onClose: () => void;
 }) {
   const t = useTranslations('download_gate');
+  const tAuth = useTranslations('auth');
   const locale = useLocale();
 
   useEffect(() => {
@@ -293,6 +292,14 @@ function DownloadGatePanel({
         >
           <FaGithub className="w-5 h-5" aria-hidden />
           {t('signin_github')}
+        </button>
+        <button
+          onClick={() => onSignIn('email')}
+          disabled={busy}
+          className="w-full mt-3 flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium border border-border hover:bg-secondary disabled:opacity-60 transition-colors"
+        >
+          <FiMail className="w-5 h-5" aria-hidden />
+          {tAuth('sign_in_email')}
         </button>
 
         <div className="mt-5 text-center">
