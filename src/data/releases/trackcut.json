@@ -2,8 +2,21 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-11-03T15:53:49Z",
+  "generated_at": "2026-11-05T08:39:09Z",
   "releases": [
+    {
+      "version": "0.1.66",
+      "tag": "v0.1.66",
+      "date": "2026-11-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On the Calendar, drag a recording or a planned idea to another day to move it: the card follows the pointer and the day it will land on is outlined. Or hover it and click ✎ (or right-click it) to type the new date and time. Posts keep their date from PublishKit, so move them there."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.65",
       "tag": "v0.1.65",
