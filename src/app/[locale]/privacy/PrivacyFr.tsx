@@ -10,7 +10,7 @@ export default function PrivacyFr() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Politique de confidentialité</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : 29 octobre 2026</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 8 novembre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -37,7 +37,7 @@ export default function PrivacyFr() {
                     e-mail, votre entreprise (facultatif), le sujet choisi et votre message.
                   </li>
                   <li>
-                    <strong>Connexion facultative</strong> avec Google ou GitHub&nbsp;: votre adresse e-mail, votre nom et
+                    <strong>Connexion facultative</strong> avec Google, Microsoft ou GitHub&nbsp;: votre adresse e-mail, votre nom et
                     l&apos;identifiant de votre compte, tels que fournis par ce service. Ou par un code envoyé à votre
                     adresse e-mail&nbsp;: alors cette adresse seulement. La connexion n&apos;est jamais requise pour
                     télécharger un outil.
@@ -144,7 +144,7 @@ export default function PrivacyFr() {
                   de confidentialité&nbsp;:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Google Firebase Authentication, ainsi que Google ou GitHub, pour la connexion avec ces comptes</li>
+                  <li>Google Firebase Authentication, ainsi que Google, Microsoft ou GitHub, pour la connexion avec ces comptes</li>
                   <li>Stripe, pour les paiements</li>
                   <li>Brevo (Sendinblue SAS, France), pour envoyer les e-mails décrits ci-dessus</li>
                   <li>
@@ -218,7 +218,7 @@ export default function PrivacyFr() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Transferts internationaux</h2>
                 <p>
-                  Nous sommes basés en Suisse. Certains des prestataires ci-dessus, comme Google, GitHub et Stripe, peuvent
+                  Nous sommes basés en Suisse. Certains des prestataires ci-dessus, comme Google, Microsoft, GitHub et Stripe, peuvent
                   traiter des données hors de Suisse, y compris aux États-Unis. Ces transferts reposent sur les garanties que
                   ces prestataires offrent au titre du droit applicable en matière de protection des données.
                 </p>

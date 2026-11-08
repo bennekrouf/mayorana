@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { useLocale, useTranslations } from 'next-intl';
 import { FiCheck, FiGift, FiMail, FiMessageCircle, FiZap } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
+import { MicrosoftIcon } from '@/components/auth/ProviderIcon';
 import LayoutTemplate from '@/components/layout/LayoutTemplate';
 import { useAuth } from '@/providers/AuthProvider';
 import { GATEWAY_URL, updateUserPrefs } from '@/lib/gateway';
@@ -203,6 +204,15 @@ function FoundingContent({ searchParams }: { searchParams: Query | null }) {
                           <path fill="currentColor" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
                         </svg>
                         {t('signin_button')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => signIn('microsoft')}
+                        {...{ onPointerEnter: prepare, onFocus: prepare, onPointerDown: prepare }}
+                        className="inline-flex items-center gap-3 px-5 py-3 rounded-lg font-medium border border-border hover:bg-secondary transition-colors"
+                      >
+                        <MicrosoftIcon className="w-5 h-5" />
+                        {tAuth('sign_in_microsoft')}
                       </button>
                       <button
                         type="button"

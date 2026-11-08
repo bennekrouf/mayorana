@@ -1,4 +1,5 @@
-// A sign-in by a code sent by email, kept in this browser.
+// A sign-in by a code sent by email, kept in this browser. A Microsoft
+// sign-in ends in the same kind of session (src/lib/gateway.ts).
 //
 // Google and GitHub sign-in go through Firebase, whose endpoints are Google's
 // and are blocked in mainland China. The email code is checked by the api0
@@ -20,6 +21,8 @@ export const EMAIL_SESSION_ENDED = 'mayorana:email-session-ended';
 export interface EmailSession {
   token: string;
   email: string;
+  /** From a Microsoft sign-in, which also ends in this kind of session. */
+  name?: string | null;
   /** Unix seconds. */
   expiresAt: number;
 }

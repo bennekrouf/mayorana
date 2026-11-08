@@ -10,7 +10,7 @@ export default function PrivacyEn() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: 29 October 2026</p>
+            <p className="text-muted-foreground mb-8">Last updated: 8 November 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -37,7 +37,7 @@ export default function PrivacyEn() {
                     topic you chose and your message.
                   </li>
                   <li>
-                    <strong>Optional sign-in</strong> with Google or GitHub: your email address, name and account
+                    <strong>Optional sign-in</strong> with Google, Microsoft or GitHub: your email address, name and account
                     identifier, as provided by that service. Or with a code sent to your email address: then only that
                     address. Sign-in is never required to download a tool.
                   </li>
@@ -131,7 +131,7 @@ export default function PrivacyEn() {
                 <h2 className="text-2xl font-semibold mb-4">Service Providers</h2>
                 <p className="mb-4">We rely on these providers, each of which processes data under its own privacy policy:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Google Firebase Authentication, and Google or GitHub, for sign-in with those accounts</li>
+                  <li>Google Firebase Authentication, and Google, Microsoft or GitHub, for sign-in with those accounts</li>
                   <li>Stripe, for payments</li>
                   <li>Brevo (Sendinblue SAS, France), to send the emails described above</li>
                   <li>
@@ -203,7 +203,7 @@ export default function PrivacyEn() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">International Data Transfers</h2>
                 <p>
-                  We are based in Switzerland. Some of the providers above, such as Google, GitHub and Stripe, may process
+                  We are based in Switzerland. Some of the providers above, such as Google, Microsoft, GitHub and Stripe, may process
                   data outside Switzerland, including in the United States. Such transfers rely on the safeguards those
                   providers offer under applicable data protection law.
                 </p>
