@@ -9,15 +9,21 @@ import { FcGoogle } from 'react-icons/fc';
 import { useLocale, useTranslations } from 'next-intl';
 import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
+import { MicrosoftIcon } from '@/components/auth/ProviderIcon';
 
-const PROVIDERS: { id: SignInProvider; icon: React.ReactNode; label: 'sign_in_google' | 'sign_in_github' | 'sign_in_email' }[] = [
+const PROVIDERS: {
+  id: SignInProvider;
+  icon: React.ReactNode;
+  label: 'sign_in_google' | 'sign_in_github' | 'sign_in_microsoft' | 'sign_in_email';
+}[] = [
   { id: 'google', icon: <FcGoogle className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_google' },
+  { id: 'microsoft', icon: <MicrosoftIcon className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_microsoft' },
   { id: 'github', icon: <FaGithub className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_github' },
   { id: 'email', icon: <FiMail className="h-4 w-4 mr-2 flex-shrink-0" />, label: 'sign_in_email' },
 ];
 
 /**
- * Sign-in button with a Google/GitHub/email menu, or the signed-in user's avatar
+ * Sign-in button with a Google/Microsoft/GitHub/email menu, or the signed-in user's avatar
  * with a menu to their subscription and to sign out.
  * `compact` is the mobile-menu variant: a full-width row instead of an icon.
  */

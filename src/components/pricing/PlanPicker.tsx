@@ -10,6 +10,7 @@ import { Fragment, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { FaGithub } from 'react-icons/fa';
+import { MicrosoftIcon } from '@/components/auth/ProviderIcon';
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail } from 'react-icons/fi';
 import { Check, Loader2, Sparkles, Star } from 'lucide-react';
@@ -210,6 +211,14 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
                 >
                   <FcGoogle className="h-5 w-5" />
                   {tAuth('sign_in_google')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => signInThenSubscribe('microsoft')}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-border bg-background font-medium hover:bg-secondary transition-colors"
+                >
+                  <MicrosoftIcon className="h-5 w-5" />
+                  {tAuth('sign_in_microsoft')}
                 </button>
                 <button
                   type="button"

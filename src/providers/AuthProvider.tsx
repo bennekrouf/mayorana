@@ -11,7 +11,15 @@ import {
   rememberSignedIn,
   type FirebaseKit,
 } from '@/lib/firebase';
-import { GatewayError, gatewayFetch, startEmailSignIn, verifyEmailSignIn } from '@/lib/gateway';
+import {
+  finishMicrosoftSignIn,
+  GatewayError,
+  gatewayFetch,
+  startEmailSignIn,
+  startMicrosoftSignIn,
+  takeMicrosoftResult,
+  verifyEmailSignIn,
+} from '@/lib/gateway';
 import {
   clearEmailSession,
   EMAIL_SESSION_ENDED,
@@ -19,16 +27,34 @@ import {
   saveEmailSession,
   type EmailSession,
 } from '@/lib/email-session';
+import { ProviderIcon } from '@/components/auth/ProviderIcon';
 
-/** The two sign-ins that go through Firebase. */
-type FirebaseProvider = 'google' | 'github';
+/** The sign-ins that go through Firebase. */
+const FIREBASE_PROVIDERS = ['google', 'github'] as const;
+type FirebaseProvider = (typeof FIREBASE_PROVIDERS)[number];
+
+function isFirebaseProvider(value: unknown): value is FirebaseProvider {
+  return FIREBASE_PROVIDERS.includes(value as FirebaseProvider);
+}
 
 /**
  * 'email' is a code sent by email and checked by the api0 gateway, with no
  * Google service in the path: the way in from mainland China, where Firebase
  * cannot be reached (src/lib/email-session.ts).
+ *
+ * 'microsoft' is checked by the gateway too, not Firebase: personal accounts,
+ * and work or school accounts whose tenant has verified the email's domain —
+ * Firebase cannot tell those from an address an admin typed in. It ends in the
+ * same session as an email code (startMicrosoftSignIn in src/lib/gateway.ts).
  */
-export type SignInProvider = FirebaseProvider | 'email';
+export type SignInProvider = FirebaseProvider | 'microsoft' | 'email';
+
+/** Why a Microsoft sign-in came back without one, as the gateway names it. */
+type MicrosoftProblem = 'cancelled' | 'unverified_email' | 'unavailable' | 'failed';
+
+function microsoftProblem(reason: string): MicrosoftProblem {
+  return reason === 'cancelled' || reason === 'unverified_email' || reason === 'unavailable' ? reason : 'failed';
+}
 
 /**
  * Who is signed in, whichever way. A Firebase User has these fields too; an
@@ -42,12 +68,12 @@ export interface SiteUser {
 }
 
 function emailUser(session: EmailSession): SiteUser {
-  return { uid: `email:${session.email}`, email: session.email, displayName: null, photoURL: null };
+  return { uid: `email:${session.email}`, email: session.email, displayName: session.name ?? null, photoURL: null };
 }
 
 /**
  * How a sign-in attempt ended. When the email already has an account under
- * the other provider, signIn() waits on the link dialog and reports how that
+ * another provider, signIn() waits on the link dialog and reports how that
  * ended; a link that falls back to a redirect leaves the page and never
  * resolves.
  */
@@ -110,29 +136,36 @@ function credentialFromError(kit: FirebaseKit, provider: FirebaseProvider, error
 // ── Account linking ───────────────────────────────────────────────────────────
 //
 // Firebase keeps one account per email. Signing in with GitHub under an email
-// that already signed in with Google (or the reverse) fails with
+// that already signed in with Google (or any other pair) fails with
 // auth/account-exists-with-different-credential, carrying the new provider's
-// credential. We park that credential, have the person sign in once with the
+// credential. We park that credential, have the person sign in once with a
 // provider they already used, and attach the parked one to that account with
 // linkWithCredential — from then on either provider signs in to the same user,
 // so the gateway sees the same email and the same prefs.
 //
-// With two providers the one they already used is always the other one, which
-// is why nothing asks Firebase which it was (fetchSignInMethodsForEmail is off
-// anyway under email-enumeration protection).
+// Nothing can ask Firebase which provider the account has
+// (fetchSignInMethodsForEmail is off under email-enumeration protection), so
+// the dialog offers every other one and the person picks. Picking one the
+// account does not have fails with the same error, which says so.
 
 interface PendingLink {
   email: string | null;
   /** The provider they just tried, whose credential is parked. */
   added: FirebaseProvider;
-  /** The provider the account already has; they sign in with this one. */
-  existing: FirebaseProvider;
   credential: OAuthCredential;
 }
 
 type StashedLink = Omit<PendingLink, 'credential'> & { credential: object };
 
-type LinkError = { kind: 'mismatch'; actual: string } | { kind: 'failed' };
+type LinkError =
+  | { kind: 'mismatch'; actual: string; tried: FirebaseProvider }
+  | { kind: 'wrong_provider'; tried: FirebaseProvider }
+  | { kind: 'failed' };
+
+/** The providers an account that refused `added` may already have. */
+function otherProviders(added: FirebaseProvider): FirebaseProvider[] {
+  return FIREBASE_PROVIDERS.filter((p) => p !== added);
+}
 
 // Both survive a redirect sign-in (popup blocked), which reloads the page.
 const LINK_KEY = 'mayorana.auth.pendingLink';
@@ -142,7 +175,7 @@ function stashLink(link: PendingLink) {
   try {
     sessionStorage.setItem(
       LINK_KEY,
-      JSON.stringify({ email: link.email, added: link.added, existing: link.existing, credential: link.credential.toJSON() }),
+      JSON.stringify({ email: link.email, added: link.added, credential: link.credential.toJSON() }),
     );
   } catch { /* private mode: linking still works on the popup path */ }
 }
@@ -160,7 +193,7 @@ function takeLink(): StashedLink | null {
 }
 
 function restoreLink(kit: FirebaseKit, stashed: StashedLink | null): PendingLink | null {
-  if (!stashed) return null;
+  if (!stashed || !isFirebaseProvider(stashed.added)) return null;
   const credential = kit.OAuthCredential.fromJSON(stashed.credential);
   return credential ? { ...stashed, credential } : null;
 }
@@ -173,7 +206,7 @@ function takeRedirectProvider(): FirebaseProvider | null {
   try {
     const value = sessionStorage.getItem(REDIRECT_KEY);
     sessionStorage.removeItem(REDIRECT_KEY);
-    return value === 'google' || value === 'github' ? value : null;
+    return isFirebaseProvider(value) ? value : null;
   } catch {
     return null;
   }
@@ -226,6 +259,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<SiteUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [emailOpen, setEmailOpen] = useState(false);
+  const [microsoftTrouble, setMicrosoftTrouble] = useState<MicrosoftProblem | null>(null);
   // Settles the signIn('email') call that opened the email dialog.
   const emailSettled = useRef<((outcome: SignInOutcome) => void) | null>(null);
   const [link, setLink] = useState<PendingLink | null>(null);
@@ -252,7 +286,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     kit.onAuthStateChanged(kit.auth, (u) => {
       clearTimeout(giveUp);
       if (u) {
-        // A Google or GitHub sign-in replaces an email one.
+        // A Google, GitHub or Microsoft sign-in replaces an email one.
         clearEmailSession();
         setUser(u);
       } else {
@@ -277,7 +311,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const pending: PendingLink = {
       email: (error.customData?.email as string | undefined) ?? null,
       added,
-      existing: added === 'google' ? 'github' : 'google',
       credential,
     };
     stashLink(pending);
@@ -286,16 +319,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return true;
   };
 
-  /** Signed in with the existing provider: attach the parked credential. */
-  const finishLink = async (kit: FirebaseKit, signedIn: User, pending: PendingLink) => {
+  /** Back to the link dialog with a problem to show; the parked credential stays. */
+  const reopenLink = (pending: PendingLink, problem: LinkError) => {
+    stashLink(pending);
+    setLink(pending);
+    setLinkError(problem);
+  };
+
+  /** Signed in with a provider the account already has: attach the parked credential. */
+  const finishLink = async (kit: FirebaseKit, signedIn: User, pending: PendingLink, tried: FirebaseProvider) => {
     const actual = signedIn.email ?? '';
     if (pending.email && actual.toLowerCase() !== pending.email.toLowerCase()) {
       // They picked a different account in the chooser. Linking would attach
-      // this GitHub/Google login to someone else's account; sign back out.
+      // the new login to someone else's account; sign back out.
       await kit.auth.signOut();
-      stashLink(pending);
-      setLink(pending);
-      setLinkError({ kind: 'mismatch', actual });
+      reopenLink(pending, { kind: 'mismatch', actual, tried });
       return;
     }
     try {
@@ -316,13 +354,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // a redirect sign-in coming back — either a normal sign-in, the
   // existing-provider half of a link, or a sign-in that hit an existing
   // account and needs one. Anyone else is signed out, and knows it at once.
+  // A Microsoft sign-in coming back (#ms_code=…) is finished first, and the
+  // rest only runs if it fails.
   useEffect(() => {
     if (!isAuthConfigured || started.current) return;
     started.current = true;
+    const microsoft = takeMicrosoftResult();
+    if (microsoft && 'code' in microsoft) {
+      void (async () => {
+        try {
+          const session = await finishMicrosoftSignIn(microsoft.code);
+          // A Firebase session left in this browser would come back the next
+          // time Firebase loads and take over; end it now.
+          if (await hasSessionHint()) {
+            try {
+              await (await loadFirebase()).auth.signOut();
+            } catch { /* emailSignedIn tries again if it loaded */ }
+          }
+          await emailSignedIn(session);
+        } catch (error) {
+          console.error('Error completing Microsoft sign-in:', error);
+          setMicrosoftTrouble('failed');
+          restore();
+        }
+      })();
+      return;
+    }
+    if (microsoft) setMicrosoftTrouble(microsoftProblem(microsoft.error));
+    restore();
+    // Runs once on mount; the helpers it calls only touch refs and setters.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /** The session this browser already had, if any. */
+  const restore = () => {
     const redirected = takeRedirectProvider();
     const stashed = takeLink();
-    // Signed in by email code: no Firebase at all, unless a Google or GitHub
-    // sign-in is coming back from a redirect and takes over.
+    // Signed in by email code: no Firebase at all, unless a Firebase sign-in
+    // is coming back from a redirect and takes over.
     const session = readEmailSession();
     if (session && !redirected) {
       const signedIn = emailUser(session);
@@ -352,21 +421,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .getRedirectResult(kit.auth, kit.popupRedirectResolver)
         .then(async (result) => {
           if (!result || !pending) return;
-          if (result.providerId === PROVIDER_IDS[pending.existing]) {
-            await finishLink(kit, result.user, pending);
+          if (result.providerId !== PROVIDER_IDS[pending.added]) {
+            await finishLink(kit, result.user, pending, redirected);
           }
         })
         .catch((error: AuthError) => {
           if (error.code === 'auth/account-exists-with-different-credential') {
-            openLink(kit, redirected, error);
+            if (pending && redirected !== pending.added) {
+              // The half of a link, with a provider the account does not have.
+              reopenLink(pending, { kind: 'wrong_provider', tried: redirected });
+            } else {
+              openLink(kit, redirected, error);
+            }
           } else {
             console.error('Error completing sign-in:', error);
           }
         });
     })();
-    // Runs once on mount; the helpers it calls only touch refs and setters.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   // The gateway refused the email token (src/lib/gateway.ts): signed out.
   useEffect(() => {
@@ -412,6 +484,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setEmailOpen(true);
       return new Promise<SignInOutcome>((resolve) => { emailSettled.current = resolve; });
     }
+    if (provider === 'microsoft') {
+      try {
+        if (await startMicrosoftSignIn()) return 'redirecting';
+      } catch (error) {
+        console.error('Could not start Microsoft sign-in:', error);
+      }
+      setMicrosoftTrouble('failed');
+      return 'failed';
+    }
     let kit: FirebaseKit;
     try {
       kit = await loadFirebase();
@@ -444,7 +525,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const continueLinking = async () => {
+  const continueLinking = async (existing: FirebaseProvider) => {
     if (!link) return;
     setLinkBusy(true);
     setLinkError(null);
@@ -453,19 +534,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       kit = await loadFirebase();
       const result = await kit.signInWithPopup(
         kit.auth,
-        makeProvider(kit, link.existing, link.email),
+        makeProvider(kit, existing, link.email),
         kit.popupRedirectResolver,
       );
-      await finishLink(kit, result.user, link);
+      await finishLink(kit, result.user, link, existing);
     } catch (error) {
       const code = (error as AuthError).code;
       if (code === 'auth/popup-blocked' && kit) {
         // The parked link is already in sessionStorage; the mount effect
         // finishes it when the redirect comes back.
-        await redirectTo(kit, link.existing, link.email);
+        await redirectTo(kit, existing, link.email);
         return;
       }
-      if (!isQuietCancel(code)) {
+      if (code === 'auth/account-exists-with-different-credential') {
+        setLinkError({ kind: 'wrong_provider', tried: existing });
+      } else if (!isQuietCancel(code)) {
         console.error('Error signing in to link accounts:', error);
         setLinkError({ kind: 'failed' });
       }
@@ -509,6 +592,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         />
       )}
       {emailOpen && <EmailSignInDialog onSignedIn={emailSignedIn} onCancel={cancelEmail} />}
+      {microsoftTrouble && !emailOpen && (
+        <MicrosoftProblemDialog
+          problem={microsoftTrouble}
+          onEmail={() => { setMicrosoftTrouble(null); void signIn('email'); }}
+          onClose={() => setMicrosoftTrouble(null)}
+        />
+      )}
     </AuthContext.Provider>
   );
 }
@@ -523,11 +613,11 @@ function LinkAccountsDialog({
   link: PendingLink;
   busy: boolean;
   error: LinkError | null;
-  onContinue: () => void;
+  onContinue: (existing: FirebaseProvider) => void;
   onCancel: () => void;
 }) {
   const t = useTranslations('auth');
-  const names = { existing: PROVIDER_NAMES[link.existing], added: PROVIDER_NAMES[link.added] };
+  const added = PROVIDER_NAMES[link.added];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onCancel(); };
@@ -554,23 +644,31 @@ function LinkAccountsDialog({
         </h2>
         <p className="text-sm text-muted-foreground leading-relaxed mb-6">
           {link.email
-            ? t('link_body', { email: link.email, ...names })
-            : t('link_body_no_email', names)}
+            ? t('link_body', { email: link.email, added })
+            : t('link_body_no_email', { added })}
         </p>
         {error && (
           <p className="text-sm text-red-600 dark:text-red-400 mb-4" role="alert">
             {error.kind === 'mismatch'
-              ? t('link_mismatch', { actual: error.actual, email: link.email ?? '', existing: names.existing })
-              : t('link_failed')}
+              ? t('link_mismatch', { actual: error.actual, email: link.email ?? '', existing: PROVIDER_NAMES[error.tried] })
+              : error.kind === 'wrong_provider'
+                ? t('link_wrong_provider', { tried: PROVIDER_NAMES[error.tried] })
+                : t('link_failed')}
           </p>
         )}
-        <button
-          onClick={onContinue}
-          disabled={busy}
-          className="w-full px-4 py-3 rounded-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-colors"
-        >
-          {t('link_continue', names)}
-        </button>
+        <div className="flex flex-col gap-3">
+          {otherProviders(link.added).map((existing) => (
+            <button
+              key={existing}
+              onClick={() => onContinue(existing)}
+              disabled={busy}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium border border-border bg-background hover:bg-secondary disabled:opacity-60 transition-colors"
+            >
+              <ProviderIcon provider={existing} className="h-5 w-5" />
+              {t('link_continue', { existing: PROVIDER_NAMES[existing] })}
+            </button>
+          ))}
+        </div>
         <div className="mt-5 text-center">
           <button
             onClick={onCancel}
@@ -578,6 +676,64 @@ function LinkAccountsDialog({
             className="text-xs text-muted-foreground/80 hover:text-foreground underline underline-offset-2 disabled:opacity-60 transition-colors"
           >
             {t('link_cancel')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * A Microsoft sign-in came back without a session. The email code is offered
+ * every time: it works for any address, which is the way in for a work
+ * account whose organisation never verified its email domain.
+ */
+function MicrosoftProblemDialog({
+  problem,
+  onEmail,
+  onClose,
+}: {
+  problem: MicrosoftProblem;
+  onEmail: () => void;
+  onClose: () => void;
+}) {
+  const t = useTranslations('auth');
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="microsoft-problem-title"
+        className="w-full max-w-md rounded-2xl border border-border bg-background shadow-2xl p-6 sm:p-8"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 id="microsoft-problem-title" className="text-xl font-bold leading-tight mb-3">
+          {t('microsoft_problem_title')}
+        </h2>
+        <p className="text-sm text-muted-foreground leading-relaxed mb-6">{t(`microsoft_problem_${problem}`)}</p>
+        <button
+          onClick={onEmail}
+          className="w-full px-4 py-3 rounded-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+        >
+          {t('sign_in_email')}
+        </button>
+        <div className="mt-5 text-center">
+          <button
+            onClick={onClose}
+            className="text-xs text-muted-foreground/80 hover:text-foreground underline underline-offset-2 transition-colors"
+          >
+            {t('microsoft_problem_close')}
           </button>
         </div>
       </div>

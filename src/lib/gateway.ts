@@ -121,3 +121,65 @@ export async function verifyEmailSignIn(email: string, code: string): Promise<Em
   });
   return { token: res.token, email: res.email, expiresAt: res.expires_at };
 }
+
+// ── Sign-in with Microsoft ────────────────────────────────────────────────────
+//
+// Checked by the gateway, not Firebase: it accepts work and school accounts
+// only when their tenant has verified the email's domain, which Firebase
+// cannot tell (gateway src/auth/microsoft_login.rs). The page leaves for
+// Microsoft and comes back with #ms_code=… (or #ms_error=…); the code is
+// redeemed with a verifier only this tab holds, so a code minted for someone
+// else's account is useless here. The result is the same session as an email
+// code.
+
+const MS_VERIFIER_KEY = 'mayorana.auth.msVerifier';
+
+function base64url(bytes: Uint8Array): string {
+  let binary = '';
+  bytes.forEach((b) => { binary += String.fromCharCode(b); });
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/**
+ * Leaves for Microsoft. Returns false when it cannot start (sessionStorage
+ * blocked, so the verifier would not survive the round trip).
+ */
+export async function startMicrosoftSignIn(): Promise<boolean> {
+  const verifier = base64url(crypto.getRandomValues(new Uint8Array(32)));
+  try {
+    sessionStorage.setItem(MS_VERIFIER_KEY, verifier);
+  } catch {
+    return false;
+  }
+  const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
+  const returnTo = window.location.href.split('#')[0];
+  const params = new URLSearchParams({ app: firebaseConfig.projectId, return_to: returnTo, challenge });
+  window.location.assign(`${GATEWAY_URL}/api/auth/microsoft/start?${params}`);
+  return true;
+}
+
+/** What the gateway sent back in the fragment, if anything; removes it from the address. */
+export function takeMicrosoftResult(): { code: string } | { error: string } | null {
+  if (typeof window === 'undefined') return null;
+  const hash = new URLSearchParams(window.location.hash.slice(1));
+  const code = hash.get('ms_code');
+  const error = hash.get('ms_error');
+  if (!code && !error) return null;
+  window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
+  return code ? { code } : { error: error ?? 'failed' };
+}
+
+/** Trades the code from the fragment for a session. Throws when it cannot. */
+export async function finishMicrosoftSignIn(code: string): Promise<EmailSession> {
+  let verifier: string | null = null;
+  try {
+    verifier = sessionStorage.getItem(MS_VERIFIER_KEY);
+    sessionStorage.removeItem(MS_VERIFIER_KEY);
+  } catch { /* falls through to the error below */ }
+  if (!verifier) throw new GatewayError(400, 'This sign-in was not started in this tab');
+  const res = await gatewayFetch<{ token: string; email: string; name: string | null; expires_at: number }>(
+    '/api/auth/microsoft/redeem',
+    { method: 'POST', body: JSON.stringify({ code, verifier }) },
+  );
+  return { token: res.token, email: res.email, name: res.name, expiresAt: res.expires_at };
+}
