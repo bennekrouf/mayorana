@@ -318,6 +318,8 @@
     "jobscout_description": "Rassemblez les offres d'emploi de LinkedIn et des principaux sites locaux de neuf pays — Suisse, Singapour, Allemagne, France, Royaume-Uni, Émirats arabes unis, Irlande, Belgique et Autriche — dans une seule liste sur votre ordinateur. Lisez chaque description dans l'app, évaluez chaque offre selon votre profil avec Mistral ou un modèle ollama local, et laissez vos recherches enregistrées tourner seules et vous signaler les bonnes offres.",
     "surfacewatch_tagline": "Suivez l'évolution de la surface d'attaque côté client d'une app web d'un build à l'autre",
     "surfacewatch_description": "Capturez chaque cible d'une mission de pentest avec REA et voyez sa surface d'attaque : endpoints, paramètres, statuts, en-têtes de sécurité et tiers. Comparez deux builds sans le bruit des chunks renommés ni des temps de réponse, transformez ce qui compte en findings appuyés par des preuves, et relancez un test pour savoir si chacun est corrigé. Tout tourne en local, avec une ligne de commande pour les surveillances planifiées.",
+    "minicrm_tagline": "Un cockpit hebdomadaire pour qui lance son activité seul : objectifs, actions, signaux et contacts",
+    "minicrm_description": "Quatre tableaux répondent aux questions de la semaine : ce que vous vouliez faire, ce que vous avez vraiment fait, ce que vous avez remarqué et ce qu'il faut éclaircir. À côté, vos contacts de Lead à Client et tous ceux à relancer avant dimanche. Les billets publiés depuis PublishKit s'inscrivent d'eux-mêmes, et Claude peut lire et mettre à jour le cockpit.",
     "gitagent_tagline": "Graphe agentique pour les workflows de commit et de déploiement",
     "gitagent_description": "Transforme un répertoire de travail modifié en pull request ouverte, une étape validée à la fois. Scanne votre dépôt, rédige un message de commit et une description de PR via un modèle ollama local ou Mistral, puis commit, push et ouvre la PR — mais rien ne touche l'historique git ni le remote sans un accord explicite à chaque étape validée.",
     "trackcut_tagline": "Découpez de longs enregistrements MP3/WAV en pistes, au clavier",
@@ -1847,6 +1849,59 @@
         "pro_licence_body": "Source disponible sous la licence PolyForm Noncommercial 1.0.0 : gratuit pour un usage personnel, l'apprentissage, la recherche et les projets de loisir, ainsi que pour les associations, écoles, universités et institutions publiques, avec une mission et toutes les fonctionnalités. L'usage commercial, y compris un consultant sur une mission client et un employé qui l'utilise dans son travail, nécessite SurfaceWatch Pro, qui garde aussi un nombre illimité de missions. Pro est la licence commerciale : il n'y a rien d'autre à acheter.",
         "pro_how": "Ouvrez SurfaceWatch, cliquez sur Get Pro… à côté du nom de l'app et collez le numéro de licence, ou lancez surfacewatch-cli licence suivi du numéro.",
         "screenshot_alt": "SurfaceWatch compare deux captures d'OWASP Juice Shop : endpoints supprimés, paramètres modifiés et origines tierces"
+      },
+      "minicrm": {
+        "seo_title": "MiniCRM — Cockpit hebdomadaire et CRM pour solopreneurs",
+        "seo_description": "App de bureau pour planifier la semaine, noter chaque action et contact, et voir qui relancer avant dimanche. Import CSV LinkedIn, fonctionne avec Claude.",
+        "overview": [
+          "Lancer son activité seul, c'est faire le travail, le faire connaître et garder la trace des deux. Les objectifs sont dans une note, les messages envoyés dans une autre, les personnes rencontrées dans un tableur, et le bilan de la semaine n'a jamais vraiment lieu faute de tout avoir au même endroit.",
+          "MiniCRM est un cockpit hebdomadaire à quatre tableaux, chacun répondant à une question : Weekly goals (que voulais-je faire ?), Field progress (qu'ai-je vraiment fait ?), Weak signals (qu'ai-je remarqué ?) et Open questions (que dois-je éclaircir maintenant ?). À côté, Contacts garde qui est chaque personne, où vous l'avez trouvée et son étape, de Lead à Client, et Follow-ups liste tous ceux à relancer avant dimanche, les retards en premier.",
+          "Il se place à côté de PolishCast, TrackCut et PublishKit, qui produisent et publient le contenu : un billet publié depuis PublishKit s'inscrit de lui-même dans Field progress, et le bilan de la semaine réunit le contenu et les personnes qu'il a touchées."
+        ],
+        "features": [
+          {
+            "title": "Quatre questions, un tableau chacune",
+            "body": "Weekly goals, Field progress, Weak signals et Open questions. How it works, la page d'accueil, explique la routine en quatre étapes et compte les priorités terminées, en cours et bloquées."
+          },
+          {
+            "title": "Contacts et relances",
+            "body": "Chaque action nomme la personne concernée, et la fiche d'un contact liste tout ce que vous avez fait avec lui. Fixez une date de relance et la page Follow-ups montre qui recontacter avant dimanche ; la barre latérale passe au rouge en cas de retard."
+          },
+          {
+            "title": "Votre contenu, inscrit tout seul",
+            "body": "Les billets publiés depuis PublishKit apparaissent dans Field progress le jour de leur sortie. Un objectif ou une action peut renvoyer à une vidéo ou un billet de PolishCast, TrackCut ou PublishKit et l'ouvrir dans l'app qui l'a produit."
+          },
+          {
+            "title": "Import depuis LinkedIn, un tableur ou Notion",
+            "body": "Import CSV fait correspondre les en-têtes du fichier aux colonnes du tableau, export des relations LinkedIn compris, sans ajouter deux fois un contact. Export CSV enregistre n'importe quel tableau."
+          },
+          {
+            "title": "Depuis Claude ou Codex",
+            "body": "Le serveur MCP de MiniCRM permet à Claude de lire votre semaine, mettre à jour les contacts, noter ce que vous avez fait avec quelqu'un et fixer des relances. Il demande avant toute suppression, et une fenêtre ouverte affiche ses changements."
+          }
+        ],
+        "requirements": [
+          "macOS (Apple Silicon ou Intel), Windows 10 ou 11 avec le runtime WebView2, ou Linux x86_64",
+          "Rien d'autre : ni compte ni serveur. Le cockpit est un fichier sur votre ordinateur",
+          "L'interface de l'app est en anglais",
+          "Pour le serveur MCP : Claude Desktop, Claude Code ou Codex"
+        ],
+        "faq": [
+          {
+            "q": "Où sont gardées mes données ?",
+            "a": "Dans un seul fichier, cockpit.json, dans le dossier de données de MiniCRM sur votre ordinateur. Settings indique où il se trouve. Tout est enregistré au fil de la frappe, et copier le fichier duplique le cockpit."
+          },
+          {
+            "q": "Faut-il PolishCast ou PublishKit ?",
+            "a": "Non. Les tableaux, les contacts et les relances fonctionnent seuls. Les autres apps ne font qu'ajouter leurs vidéos et billets aux actions et objectifs qui les mentionnent."
+          },
+          {
+            "q": "Puis-je importer mes contacts LinkedIn ?",
+            "a": "Oui. Exportez vos relations depuis LinkedIn et ouvrez le fichier avec Import CSV dans Contacts. Les tableurs et exports Notion fonctionnent de la même façon, et un contact déjà présent n'est pas ajouté deux fois."
+          }
+        ],
+        "article_slug": "",
+        "screenshot_alt": "La page How it works de MiniCRM : la routine hebdomadaire en quatre étapes, les priorités terminées, en cours et bloquées, et les contacts à chaque étape"
       }
     },
     "article_heading": "Pour aller plus loin",

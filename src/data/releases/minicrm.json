@@ -1,0 +1,36 @@
+{
+  "name": "minicrm",
+  "product": "MiniCRM",
+  "page": "https://mayorana.ch/en/apps/minicrm",
+  "generated_at": "2026-11-14T21:24:30Z",
+  "releases": [
+    {
+      "version": "0.1.1",
+      "tag": "v0.1.1",
+      "date": "2026-11-14",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "The cockpit: four tables to fill in each week, Weekly goals, Field progress, Weak signals and Open questions, each answering one question about how the project is going.",
+            "How it works, the page MiniCRM opens on: what the cockpit is for, the weekly routine in four steps, and how many priorities are done, under way and blocked.",
+            "Example lines in every table on a first launch, from a made-up project, so no page starts blank. Change them or delete them.",
+            "An editor beside the table for the line you select. Statuses are one click and coloured; everything is saved as you type.",
+            "A filter on each table's status, type or importance, a search across every column, and sorting by any column heading.",
+            "Duplicate and delete for a line, with a confirmation before deleting.",
+            "Settings shows the file the cockpit is kept in: copy it to duplicate the cockpit.",
+            "Contacts, a table of the people you talk to: who they are, where you found them, their profile and email, and the stage they are at, from Lead to Client. The guide counts how many are at each stage; a click shows them.",
+            "A contact on each line of Field progress, so every message, call and interview is tied to the person it was with. A contact's editor lists what you did with them, and logs the next action in one click.",
+            "Follow-up dates on contacts and on actions, and a Follow-ups page with everyone to get back to before Sunday, the late ones first. Push one back a week or mark it done from there; the sidebar shows how many are due, in red when one is late.",
+            "Import CSV and Export CSV on every table. Bring contacts over from a spreadsheet, Notion or LinkedIn's connections export; contacts already in the cockpit are not added twice. Files with semicolons, as Excel writes them in some countries, are read too.",
+            "Use MiniCRM from Claude or Codex: the button in the header shows how to connect them. Claude can then read your week, list and update contacts, log what you did with someone, set or clear follow-ups, and import or export a table as CSV. It asks you before deleting anything, and the window shows its changes within moments.",
+            "Posts you publish from PublishKit show up in Field progress on their own, on the day they went out, so your weekly review counts your content too. Each is logged once; write down what came of it. Posts from before you started using this aren't added.",
+            "A \"Video or post\" field on each action, to say which video or post from PolishCast, TrackCut or PublishKit it was about, such as a demo you made for a client. It shows where that piece stands and opens it in the app that made it, and a contact's history shows it next to the action.",
+            "Claude sees this week's videos and posts too, planned, scheduled or out, and can tie an action to one of them.",
+            "A \"Video or post\" field on each weekly goal too, so a priority like \"Publish the demo\" points at the video planned for it. Once PolishCast records it or PublishKit writes the post, the goal follows, and shows whether it is ready or out."
+          ]
+        }
+      ]
+    }
+  ]
+}

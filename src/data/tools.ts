@@ -116,6 +116,7 @@ const spreadradarDl = 'https://mayorana.ch/downloads/spreadradar/latest';
 const polishcastDl = 'https://mayorana.ch/downloads/polishcast/latest';
 const jobscoutDl = 'https://mayorana.ch/downloads/jobscout/latest';
 const surfacewatchDl = 'https://mayorana.ch/downloads/surfacewatch/latest';
+const minicrmDl = 'https://mayorana.ch/downloads/minicrm/latest';
 
 export const cosmosSource: DataSource = {
   id: 'cosmos',
@@ -457,6 +458,28 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
       { os: 'windows', label: 'Windows', href: `${surfacewatchDl}/surfacewatch-setup.exe` },
     ],
   },
+  {
+    id: 'minicrm',
+    source: 'https://github.com/bennekrouf/minicrm',
+    name: 'MiniCRM',
+    screenshot: { src: '/image/apps/minicrm.png', width: 1920, height: 1297 },
+    tech: 'Rust · Dioxus · JSON · CSV',
+    status: 'beta',
+    tags: ['tools'],
+    applicationCategory: 'BusinessApplication',
+    downloads: [
+      // One universal DMG: Apple Silicon and Intel.
+      { os: 'mac', label: 'macOS (Apple Silicon & Intel)', href: `${minicrmDl}/minicrm-macos.dmg` },
+      { os: 'linux', label: 'Linux x86_64', href: `${minicrmDl}/minicrm-linux-x86_64.tar.gz` },
+      { os: 'windows', label: 'Windows', href: `${minicrmDl}/minicrm-setup.exe` },
+    ],
+    mcp: {
+      mac: '/Applications/MiniCRM.app/Contents/MacOS/minicrm',
+      windows: '%LOCALAPPDATA%\\Programs\\MiniCRM\\minicrm.exe',
+      linux: '$HOME/minicrm-linux-x86_64/minicrm',
+      args: 'mcp',
+    },
+  },
 ];
 
 // Map tool id → translation key prefix in messages/{en,fr}.json "apps".
@@ -486,6 +509,7 @@ export const appI18nKey: Record<string, string> = {
   polishcast: 'polishcast',
   jobscout: 'jobscout',
   surfacewatch: 'surfacewatch',
+  minicrm: 'minicrm',
 };
 
 // The Azure Integration Suite, in the order the Solutions page presents them:
@@ -539,6 +563,7 @@ export const releaseNotesTools: string[] = [
   'polishcast',
   'jobscout',
   'surfacewatch',
+  'minicrm',
 ];
 
 export type McpClient = 'claude' | 'codex';
