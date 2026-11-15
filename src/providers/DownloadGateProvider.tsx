@@ -40,6 +40,8 @@ export interface DownloadRequest {
   appName: string;
   os: OS;
   href: string;
+  /** No skip link: the tool's `signinRequired` in src/data/tools.ts. */
+  signinRequired?: boolean;
 }
 
 interface DownloadGateContextType {
@@ -230,6 +232,36 @@ function DownloadGatePanel({
   const t = useTranslations('download_gate');
   const tAuth = useTranslations('auth');
   const locale = useLocale();
+  // A required sign-in is for an Azure tool, whose users already have a work
+  // Microsoft account: that one leads, and there is no skip link.
+  const required = request.signinRequired === true;
+  const primary = 'bg-primary text-primary-foreground hover:bg-primary/90';
+  const secondary = 'border border-border hover:bg-secondary';
+  const googleButton = (
+    <button
+      key="google"
+      onClick={() => onSignIn('google')}
+      disabled={busy}
+      className={`w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium disabled:opacity-60 transition-colors ${required ? secondary : primary}`}
+    >
+      <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden>
+        <path fill="#EA4335" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
+      </svg>
+      {busy && !required ? t('downloading') : t('signin')}
+    </button>
+  );
+  const microsoftButton = (
+    <button
+      key="microsoft"
+      onClick={() => onSignIn('microsoft')}
+      disabled={busy}
+      className={`w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium disabled:opacity-60 transition-colors ${required ? primary : secondary}`}
+    >
+      <MicrosoftIcon className="w-5 h-5" />
+      {required ? (busy ? t('downloading') : t('signin_microsoft')) : tAuth('sign_in_microsoft')}
+    </button>
+  );
+  const leading = required ? [microsoftButton, googleButton] : [googleButton, microsoftButton];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -252,7 +284,7 @@ function DownloadGatePanel({
       >
         <div className="flex items-start justify-between gap-4 mb-3">
           <h2 id="download-gate-title" className="text-xl font-bold leading-tight">
-            {t('title')}
+            {required ? t('required_title', { app: request.appName }) : t('title')}
           </h2>
           <button
             onClick={onClose}
@@ -265,7 +297,7 @@ function DownloadGatePanel({
         </div>
 
         <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-          {t('body', { app: request.appName })}
+          {t(required ? 'required_body' : 'body', { app: request.appName })}
         </p>
         {/* The offer in full, with the tool carried along so the page's
             first question is already answered. */}
@@ -276,24 +308,7 @@ function DownloadGatePanel({
           {t('learn_more')} <FiArrowRight className="h-3.5 w-3.5" />
         </Link>
 
-        <button
-          onClick={() => onSignIn('google')}
-          disabled={busy}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60 transition-colors"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden>
-            <path fill="#EA4335" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
-          </svg>
-          {busy ? t('downloading') : t('signin')}
-        </button>
-        <button
-          onClick={() => onSignIn('microsoft')}
-          disabled={busy}
-          className="w-full mt-3 flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium border border-border hover:bg-secondary disabled:opacity-60 transition-colors"
-        >
-          <MicrosoftIcon className="w-5 h-5" />
-          {tAuth('sign_in_microsoft')}
-        </button>
+        <div className="flex flex-col gap-3">{leading}</div>
         <button
           onClick={() => onSignIn('github')}
           disabled={busy}
@@ -311,15 +326,17 @@ function DownloadGatePanel({
           {tAuth('sign_in_email')}
         </button>
 
-        <div className="mt-5 text-center">
-          <button
-            onClick={onSkip}
-            disabled={busy}
-            className="text-xs text-muted-foreground/80 hover:text-foreground underline underline-offset-2 disabled:opacity-60 transition-colors"
-          >
-            {t('skip')}
-          </button>
-        </div>
+        {!required && (
+          <div className="mt-5 text-center">
+            <button
+              onClick={onSkip}
+              disabled={busy}
+              className="text-xs text-muted-foreground/80 hover:text-foreground underline underline-offset-2 disabled:opacity-60 transition-colors"
+            >
+              {t('skip')}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
