@@ -32,6 +32,7 @@ import publishKit from '@/data/releases/publishkit.json';
 import polishcast from '@/data/releases/polishcast.json';
 import jobscout from '@/data/releases/jobscout.json';
 import surfacewatch from '@/data/releases/surfacewatch.json';
+import minicrm from '@/data/releases/minicrm.json';
 
 /** One "### Added" block and its bullets. */
 export interface ReleaseSection {
@@ -68,6 +69,7 @@ const snapshots: Record<string, ReleaseFeed> = {
   'polishcast': polishcast as ReleaseFeed,
   jobscout: jobscout as ReleaseFeed,
   surfacewatch: surfacewatch as ReleaseFeed,
+  minicrm: minicrm as ReleaseFeed,
 };
 
 // The two halves of "this tool has release notes" — the id list the client

@@ -69,6 +69,7 @@ const DEVELOPER_ORDER: string[] = [
   'publishkit',
   'trackcut',
   'polishcast',
+  'minicrm',
   'spreadradar',
   'jobscout',
   'surfacewatch',
