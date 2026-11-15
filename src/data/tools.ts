@@ -56,6 +56,14 @@ export interface DesktopToolConfig {
    */
   claudeSkill?: string;
   /**
+   * The download gate gives no "just download" link for this tool: a click
+   * from someone not signed in has to sign in first (see
+   * DownloadGateProvider). Only on the website — the build URLs themselves
+   * stay public, so this decides who we can follow up with, not who can get
+   * the build.
+   */
+  signinRequired?: boolean;
+  /**
    * The tool's MCP server, where each installer puts it, so the detail page
    * can give the one line that adds it to Claude Code. Same paths the apps'
    * own MCP windows show, for a default install: /Applications on macOS, the
@@ -162,6 +170,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Azure CLI · ais-chain · D3.js',
     status: 'live',
     tags: ['azure'],
+    signinRequired: true,
     downloads: [
       { os: 'mac', label: 'macOS (Apple Silicon)', href: `${monitorDl}/ais-monitor-macos-arm64.dmg` },
       { os: 'linux', label: 'Linux x86_64', href: `${monitorDl}/ais-monitor-linux-x86_64.tar.gz` },

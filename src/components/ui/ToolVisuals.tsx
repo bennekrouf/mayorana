@@ -6,6 +6,7 @@ import { Database, BarChart3 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useDownloadGate } from '@/providers/DownloadGateProvider';
 import {
+  getToolBySlug,
   osColors,
   statusBadge,
   statusLabel,
@@ -68,11 +69,12 @@ export interface DownloadButtonsProps {
 
 function useGatedClick(app: string, appName: string) {
   const { requestDownload } = useDownloadGate();
+  const signinRequired = getToolBySlug(app)?.signinRequired ?? false;
   return (dl: DownloadLink) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Modifier clicks (open in new tab, etc.) keep the browser's behaviour.
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
-    requestDownload({ app, appName, os: dl.os, href: dl.href });
+    requestDownload({ app, appName, os: dl.os, href: dl.href, signinRequired });
   };
 }
 
