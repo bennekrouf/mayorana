@@ -279,14 +279,15 @@ async function generateSitemap() {
       counts.tools++;
 
       // Only tools that actually publish notes: the route 404s for the others,
-      // and a sitemap must not list a URL the site will not serve.
-      if (releaseDates[slug]) {
+      // and a sitemap must not list a URL the site will not serve. English
+      // only: the notes are written in English, so the French page is a
+      // noindex near-duplicate (see the releases page's generateMetadata).
+      if (releaseDates[slug] && locale === DEFAULT_LOCALE) {
         sitemap += urlEntry({
           loc: `${prefix}/apps/${slug}/releases`,
           changefreq: 'weekly',
           priority: '0.7',
           lastmod: releaseDates[slug],
-          alternates: sameInEveryLocale(`/apps/${slug}/releases`),
         });
         counts.releases++;
       }
