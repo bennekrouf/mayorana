@@ -31,7 +31,7 @@ import {
   type ReleaseFeed,
 } from '@/lib/releases';
 import { buildMetadata, SITE_URL } from '@/lib/seo';
-import { locales } from '../../../../../../i18n';
+import { defaultLocale, locales } from '../../../../../../i18n';
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -72,12 +72,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const feed = await getReleaseFeed(slug);
   const { seoTitle, seoDescription } = await summary(locale, tool, feed);
 
+  // The notes are published in English only, so the French page is the English
+  // notes under a French header: a near-duplicate that cost crawl budget without
+  // adding a page worth ranking. It stays up for French readers but is kept out
+  // of the index (and out of the sitemap), and the English page lists no French
+  // alternate, since an hreflang pointing at a noindex page is contradictory.
+  const isDefaultLocale = locale === defaultLocale;
+
   return buildMetadata({
     locale,
     path: `/apps/${slug}/releases`,
     title: seoTitle,
     description: seoDescription,
     ogImagePath: `/apps/${slug}/opengraph-image`,
+    noindex: !isDefaultLocale,
+    crossLocale: false,
   });
 }
 
