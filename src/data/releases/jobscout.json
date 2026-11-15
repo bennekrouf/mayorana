@@ -2,8 +2,62 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-11-03T17:39:13Z",
+  "generated_at": "2026-11-10T20:28:49Z",
   "releases": [
+    {
+      "version": "0.1.51",
+      "tag": "v0.1.51",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "When the model can't be reached, the error message now includes the full cause and specifies whether it was a timeout, a proxy issue, a certificate problem, or a name resolution error. This helps users understand and address the issue more effectively."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.50",
+      "tag": "v0.1.50",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Ollama can no longer be picked on a computer where it isn't installed or running: its button is greyed out and says \"not detected\".",
+            "An open region no longer reads \"unavailable\" when its price couldn't be fetched. It stays selectable and says \"price unknown\".",
+            "When api0 or your model can't be reached, the error gives the full cause and says whether it was a timeout, a proxy, a certificate or a name that couldn't be resolved."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.49",
+      "tag": "v0.1.49",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Disabled regions are now grayed out and unselectable in the UI, preventing users from selecting unavailable options."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.48",
+      "tag": "v0.1.48",
+      "date": "2026-11-06",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.47",
       "tag": "v0.1.47",

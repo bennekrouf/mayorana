@@ -2,8 +2,34 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-11-05T08:39:09Z",
+  "generated_at": "2026-11-14T21:54:29Z",
   "releases": [
+    {
+      "version": "0.1.68",
+      "tag": "v0.1.68",
+      "date": "2026-11-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A recording you make for an idea planned on the calendar now remembers that idea, so a weekly goal in MiniCRM that pointed at the plan follows it to what you made."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.67",
+      "tag": "v0.1.67",
+      "date": "2026-11-06",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.66",
       "tag": "v0.1.66",

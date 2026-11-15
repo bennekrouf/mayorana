@@ -2,8 +2,92 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-11-05T07:10:07Z",
+  "generated_at": "2026-11-14T21:53:06Z",
   "releases": [
+    {
+      "version": "0.1.66",
+      "tag": "v0.1.66",
+      "date": "2026-11-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A video or post you make for an idea planned on the calendar now remembers that idea, so a weekly goal in MiniCRM that pointed at the plan follows it to what you made."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.65",
+      "tag": "v0.1.65",
+      "date": "2026-11-13",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Every video you export now goes in its take's folder, with the recording, instead of loose beside the take folders. Videos exported earlier are moved into their take's folder the first time PolishCast opens, so Movies/PolishCast holds only one folder per take. Moving a take to the Trash now moves its exported videos there too, and you can restore them from the Trash."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The recordings list shows your newest take at the top. Takes you named used to sort by name above the newer ones named after their date, so a take you had just recorded could appear far down the list."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.64",
+      "tag": "v0.1.64",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**+ Hide** (or H) covers part of the screen in the video, for a password, a client's name or a number that shouldn't be seen. Drag the box over it on the preview, choose a solid box or a blur, and set when it starts and ends. It stays on what it covers through your zooms, and every MP4, GIF and clip you export has it. The box stays still on the screen, so if what it hides scrolls, add another one. Your recording stays as it was in the take's folder, and what you say and the captions aren't hidden."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.63",
+      "tag": "v0.1.63",
+      "date": "2026-11-08",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "**Import video…** in the Recordings panel turns an MP4 or MOV made elsewhere into a take. It gets the same background, frame shape, cuts, speed, music and export as a recording, and Send to PublishKit works on it too. There is no cursor to redraw or clicks to zoom on, so zooms are set by hand."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.62",
+      "tag": "v0.1.62",
+      "date": "2026-11-07",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.62",
+      "tag": "v0.1.62",
+      "date": "2026-11-07",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.61",
       "tag": "v0.1.61",
@@ -13,6 +97,38 @@
           "heading": "Added",
           "items": [
             "On the Calendar, drag a recording or a planned idea to another day to move it: the card follows the pointer and the day it will land on is outlined. Or hover it and click ✎ (or right-click it) to type the new date and time. Posts keep their date from PublishKit, so move them there."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.61",
+      "tag": "v0.1.61",
+      "date": "2026-11-05",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On the Calendar, drag a recording or a planned idea to another day to move it: the card follows the pointer and the day it will land on is outlined. Or hover it and click ✎ (or right-click it) to type the new date and time. Posts keep their date from PublishKit, so move them there."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.60",
+      "tag": "v0.1.60",
+      "date": "2026-11-04",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The header has no gear any more: the flag already opens Settings, so the gear beside it was a second button for the same window."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Esc closes Settings even after a click on its text, not only right after it opens."
           ]
         }
       ]
@@ -50,6 +166,19 @@
       ]
     },
     {
+      "version": "0.1.58",
+      "tag": "v0.1.58",
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
       "version": "0.1.57",
       "tag": "v0.1.57",
       "date": "2026-11-02",
@@ -61,6 +190,25 @@
           ]
         }
       ]
+    },
+    {
+      "version": "0.1.57",
+      "tag": "v0.1.57",
+      "date": "2026-11-02",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.56",
+      "tag": "v0.1.56",
+      "date": "2026-11-02",
+      "sections": []
     },
     {
       "version": "0.1.56",

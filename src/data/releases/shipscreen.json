@@ -2,8 +2,21 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-11-04T08:26:15Z",
+  "generated_at": "2026-11-06T09:41:13Z",
   "releases": [
+    {
+      "version": "0.1.68",
+      "tag": "v0.1.68",
+      "date": "2026-11-06",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.67",
       "tag": "v0.1.67",

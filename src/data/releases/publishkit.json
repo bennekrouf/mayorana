@@ -2,8 +2,79 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-11-04T10:59:49Z",
+  "generated_at": "2026-11-14T21:52:01Z",
   "releases": [
+    {
+      "version": "0.1.63",
+      "tag": "v0.1.63",
+      "date": "2026-11-14",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A video or post you make for an idea planned on the calendar now remembers that idea, so a weekly goal in MiniCRM that pointed at the plan follows it to what you made."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.62",
+      "tag": "v0.1.62",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "When api0 or your model can't be reached, the error gives the full cause and says whether it was a timeout, a proxy, a certificate or a name that couldn't be resolved."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.61",
+      "tag": "v0.1.61",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "An open region no longer reads \"unavailable\" when its price couldn't be fetched. It stays selectable and says \"price unknown\"."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.60",
+      "tag": "v0.1.60",
+      "date": "2026-11-10",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Region buttons now have a disabled state for regions that are coming soon. These buttons are grayed out and unclickable, with a tooltip indicating that the region is not yet available."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.59",
+      "tag": "v0.1.59",
+      "date": "2026-11-06",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "On the Calendar, drag a post or a recording to another day to move it: the card follows the pointer and the day it will land on is outlined. Or hover it and click ✎ (or right-click it) to type the new date and time. A published post gets the new date in its file; a scheduled one is planned for then. A scheduled blog draft can't be moved into the past, where it would be published right away."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Deploy now asks first, in a small dialog of its own: which site folder goes online, the exact command it runs (once, now, on this computer) and whether it also runs by itself after each publish, with a switch for that right there. With no command set yet, the dialog asks for one, with examples such as git push or vercel --prod, instead of opening the whole Settings window. Everything else is a click away under All settings…."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.58",
       "tag": "v0.1.58",
