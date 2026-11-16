@@ -2,8 +2,88 @@
   "name": "gitagent",
   "product": "GitAgent",
   "page": "https://mayorana.ch/en/apps/gitagent",
-  "generated_at": "2026-11-14T12:38:56Z",
+  "generated_at": "2026-11-16T14:24:23Z",
   "releases": [
+    {
+      "version": "0.1.188",
+      "tag": "v0.1.188",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Review → Merge no longer turns red when the pull request's required checks are still running: the run stops green and says so, with Merge automatically still there to hand the merge to GitHub. With Trust all on, it also asks GitHub to merge the pull request the moment the checks pass, so nothing is left for you to click. Checks that already failed still stop the run in red with their fixes."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "**Finish the merge** now shows why it refused, such as a file that still has conflict markers or a pull request about to lose its changes. The button used to come back as Run with the reason gone, so a click looked like it did nothing.",
+            "**Undo the local release, pull, and release again** treats the tag's name as a name. Git allows characters such as `;` and `$` in tag names, and the button used to hand the name to the shell, which would have run anything written after them."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "tag": "v0.1.188",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "When Claude runs Commit → PR as the fix for a refused merge, its replies now say what the run view says: that Review → Merge follows once the commit is done, that it has started, or that it did not and you start it yourself."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "The run view no longer says **went on to Review → Merge** when the merge never started because another run or the Branches panel had the repository: it says **did not start**, and why, so you know to start the merge yourself. A commit you reject now says the merge **will not follow**, where it used to still promise it, and the note no longer squeezes the step count onto two lines.",
+            "A repository no longer stays locked with **Commit → PR is already running in this repository … in a GitAgent window** when nothing is running there: a run that was cancelled or cleared before it let go of the repository now frees it, so Start, Trusted run and the other flows work again without quitting GitAgent."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "tag": "v0.1.187",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The run view now shows detailed status for each flow, indicating where a fix goes next, whether it started successfully, or why it did not. This helps users understand the progress and outcomes of automated processes more clearly."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.186",
+      "tag": "v0.1.186",
+      "date": "2026-11-16",
+      "sections": []
+    },
+    {
+      "version": "0.1.185",
+      "tag": "v0.1.185",
+      "date": "2026-11-15",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "A merge refused because the repository has uncommitted changes now offers **Start** on Commit → PR, instead of saying there is no automatic fix. It commits those changes, then goes straight back to Review → Merge on the same pull request: on its branch they join the pull request, elsewhere they get one of their own. A commit that fails or that you reject stops there, and each step still asks for your approval unless **Trust all** is on.",
+            "Claude does the same: when it runs Review → Merge and the merge is refused over uncommitted changes, it can run Commit → PR as the fix, and the merge follows on its own once the commit is done, still with your approval at each step.",
+            "The run view says where such a fix goes next: **then Review → Merge #145** beside the step count while Commit → PR runs, **went on to** once the merge has started, or **will not follow** when the commit stopped short. It shows for a fix Claude is running as well."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "After Claude or `gitagent run` in a terminal finishes a flow, the repository list now reads that repository again, as it does after a run started in the window. A Release published this way used to leave **Release** offered beside the repository, as if nothing had been released, until you pressed Refresh."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.184",
       "tag": "v0.1.184",

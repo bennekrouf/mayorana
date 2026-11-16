@@ -2,8 +2,41 @@
   "name": "polishcast",
   "product": "PolishCast",
   "page": "https://mayorana.ch/en/apps/polishcast",
-  "generated_at": "2026-11-14T21:53:06Z",
+  "generated_at": "2026-11-16T09:43:47Z",
   "releases": [
+    {
+      "version": "0.1.68",
+      "tag": "v0.1.68",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "ffmpeg is now pinned: each PolishCast release names the exact build it downloads and the checksum that file must have, and refuses any other file. Until now PolishCast took whatever build was newest, checked against a checksum from the same server, so a server serving something else would have been believed. The first export after this update fetches the pinned build once, replacing the ffmpeg already installed."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Export and compacting could not set up ffmpeg on Macs with Apple silicon: the download site's link to its newest build had stopped working.",
+            "The local connections the editor and a second launch use, which any program on the computer can reach, no longer read a request without limit: such a program could make PolishCast use more and more memory."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.67",
+      "tag": "v0.1.67",
+      "date": "2026-11-15",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Each take in the recordings list now shows when it was recorded, so the order is plain to see even for takes you renamed: the newest is always at the top."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.66",
       "tag": "v0.1.66",

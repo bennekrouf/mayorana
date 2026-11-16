@@ -2,8 +2,22 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-11-10T20:28:49Z",
+  "generated_at": "2026-11-16T09:46:26Z",
   "releases": [
+    {
+      "version": "0.1.52",
+      "tag": "v0.1.52",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "The key names in Settings (for the AI model, Reed and France Travail) must now be environment variable names: letters, digits and `_`. Anything else is refused with a message saying so, instead of being handed to your shell, which would have run what it said.",
+            "A key found in your shell profile is kept for the session without changing JobScout's own environment, which other parts of the app read at the same time."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.51",
       "tag": "v0.1.51",

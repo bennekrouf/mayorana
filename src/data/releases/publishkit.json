@@ -2,8 +2,21 @@
   "name": "publishkit",
   "product": "PublishKit",
   "page": "https://mayorana.ch/en/apps/publishkit",
-  "generated_at": "2026-11-14T21:52:01Z",
+  "generated_at": "2026-11-16T10:29:02Z",
   "releases": [
+    {
+      "version": "0.1.64",
+      "tag": "v0.1.64",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows, opening a post's picture or video from its preview works when the file's name holds `&`. The name used to go through the command prompt, which read what came after `&` as another command to run."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.63",
       "tag": "v0.1.63",
