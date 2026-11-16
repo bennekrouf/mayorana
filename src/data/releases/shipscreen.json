@@ -2,8 +2,21 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-11-06T09:41:13Z",
+  "generated_at": "2026-11-16T10:38:36Z",
   "releases": [
+    {
+      "version": "0.1.69",
+      "tag": "v0.1.69",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The encrypted backup of your signing keys is now an age file (age-encryption.org) instead of an openssl one. The password is stretched far harder, and the backup is checked as it is opened: one that was changed or cut short is refused rather than unpacked. Restore it with `age -d FILE | tar xz` (install age with `brew install age`). Backups made before this update still open with the openssl command they were made with."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.68",
       "tag": "v0.1.68",
