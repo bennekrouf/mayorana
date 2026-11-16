@@ -2,8 +2,57 @@
   "name": "minicrm",
   "product": "MiniCRM",
   "page": "https://mayorana.ch/en/apps/minicrm",
-  "generated_at": "2026-11-15T11:32:40Z",
+  "generated_at": "2026-11-16T09:34:46Z",
   "releases": [
+    {
+      "version": "0.1.6",
+      "tag": "v0.1.6",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Archive a line instead of deleting it: a contact set to Not now, last month's goals, a question cleared up. Archive and Restore sit next to Duplicate in the line's editor. An archived line keeps everything, a contact what you did with them too, but leaves the table, the counts in the sidebar and the guide, and Follow-ups. Each table shows an Archived chip beside its filters once something is in it.",
+            "Claude can now archive and restore lines too, several at once, and read a long table page after page, newest first if you like. A list of contacts no longer stops at the first 200."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.5",
+      "tag": "v0.1.5",
+      "date": "2026-11-15",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Logging an action with no follow-up date no longer clears the follow-up the contact had due: it stays on Follow-ups until you mark it done or change it yourself. An action with a follow-up date still becomes the contact's next follow-up."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.4",
+      "tag": "v0.1.4",
+      "date": "2026-11-15",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "MiniCRM fits a smaller window. Once the table no longer has room for its columns, every table shows its lines as cards instead, one per line, with its name first: a contact's card gives their next step, follow-up date and stage. Click a card to open it, as you would a row.",
+            "In a narrow window the editor opens over the table instead of squeezing it; click beside it or press Esc to close it. The sidebar shrinks to its icons, each page's name showing when you point at it.",
+            "Logging an action with a contact now updates the contact too, so you no longer type it twice. A message sent makes a lead Contacted, and a call or an interview puts them In conversation; a contact never moves back, and Proposal sent, Client and Not now stay yours to set. The action's follow-up date and what to do then become the contact's next follow-up and next step, and Follow-ups lists it once, under their name. Log an action with no follow-up date and the follow-up they had due is marked done."
+          ]
+        },
+        {
+          "heading": "Changed",
+          "items": [
+            "Contacts reads name first, then the next step, the next follow-up and the stage, so what to do next with each person is the first thing you see. The next step also stays in the table while a contact is open in the editor, and CSV exports list the columns in this order.",
+            "Columns in every table keep room for about twenty characters, so a name or a sentence is no longer broken every few letters; a table with more columns than the window holds scrolls sideways instead. In Contacts and Open questions the first column stays in place as you scroll, as a frozen column does in a spreadsheet."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.3",
       "tag": "v0.1.3",
