@@ -473,7 +473,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     name: 'MiniCRM',
     screenshot: { src: '/image/apps/minicrm.png', width: 1920, height: 1297 },
     tech: 'Rust · Dioxus · JSON · CSV',
-    status: 'beta',
+    status: 'live',
     tags: ['tools'],
     applicationCategory: 'BusinessApplication',
     downloads: [

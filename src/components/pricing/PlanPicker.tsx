@@ -26,6 +26,7 @@ import {
   CVENOM_CV_CREDITS,
   onStripe,
   openPortal,
+  NO_CREDIT_TOOLS,
   PLAN_GROUPS,
   planLogo,
   TRANSLATED_PLAN_DESCRIPTIONS,
@@ -323,7 +324,7 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
                     <AppRow
                       key={id}
                       toolId={id}
-                      included={tools.some((tool) => tool.id === id) || id === 'publishkit' || id === 'cvenom'}
+                      included={tools.some((tool) => tool.id === id) || NO_CREDIT_TOOLS.includes(id) || id === 'cvenom'}
                       searches={desktopToolsConfig.find((tool) => tool.id === id)?.pro?.monthlySearches?.[plan.id]}
                       uses={id === 'cvenom' ? Math.floor(plan.monthly_credits / CVENOM_CV_CREDITS) : uses.get(id)}
                     />
@@ -359,7 +360,7 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
 
 /**
  * One app on a plan card: what the plan gives in it. JobScout's searches are
- * set by the plan; PublishKit spends no credits; for the others, roughly what
+ * set by the plan; PublishKit and MiniCRM spend no credits; for the others, roughly what
  * a month's credits buy when spent on that app alone.
  */
 function AppRow({
@@ -388,8 +389,8 @@ function AppRow({
   const [mark, text] =
     searches !== undefined
       ? [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('uses.jobscout', { count: searches })]
-      : toolId === 'publishkit'
-        ? [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('uses.publishkit')]
+      : NO_CREDIT_TOOLS.includes(toolId)
+        ? [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t(`uses.${appI18nKey[toolId]}`)]
         : uses !== undefined
           ? [<span key="m" className="w-4 shrink-0 text-center text-primary">~</span>, t(`uses.${appI18nKey[toolId]}`, { count: uses })]
           : [<Check key="m" className="w-4 h-4 mt-0.5 shrink-0 text-primary" />, t('app_included', { name: tool!.name })];

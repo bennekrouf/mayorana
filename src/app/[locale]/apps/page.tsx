@@ -54,29 +54,22 @@ interface Tool {
 
 const API0_URL = 'https://api0.ai';
 
-// Display order by tool id, split into the two sections the page renders.
-// Anything built below but missing from both lists simply wouldn't render —
-// every id from desktopToolsConfig/webTools except api0 and the AIS tools must appear
-// exactly once across the two.
-
-// api0 is not in either list: it has its own band above the grid. Neither
-// is the Azure Integration Suite: it has its own tab, /solutions/azure.
-
-// The developer tools: the desktop apps, downloaded from this page.
-const DEVELOPER_ORDER: string[] = [
-  'gitagent',
-  'shipscreen',
-  'publishkit',
-  'trackcut',
-  'polishcast',
-  'minicrm',
-  'spreadradar',
-  'jobscout',
-  'surfacewatch',
+// The page in themed sections, each in display order by tool id. Desktop
+// apps and web products sit side by side: a theme is what the tool is for, and
+// the card's own action says whether it downloads or opens a site. Every id
+// from desktopToolsConfig/webTools except api0 and the AIS tools must appear
+// exactly once across the themes, or it simply won't render.
+//
+// api0 is not in a theme: it has its own band above the grid. Neither is the
+// Azure Integration Suite: it has its own tab, /solutions/azure.
+//
+// The keys name the copy, under apps.themes.<key>.
+const THEMES: { key: string; tools: string[] }[] = [
+  { key: 'build', tools: ['gitagent', 'shipscreen', 'surfacewatch'] },
+  { key: 'create', tools: ['polishcast', 'trackcut', 'publishkit'] },
+  { key: 'grow', tools: ['minicrm', 'jobscout', 'cvenom'] },
+  { key: 'markets', tools: ['spreadradar', 'solanize'] },
 ];
-
-// The cloud solutions: hosted products, used on their own sites.
-const CLOUD_ORDER: string[] = ['cvenom', 'solanize'];
 
 // Display order and label for each filter chip. A tool can carry tags outside
 // this list — they just won't get a chip of their own or be filterable — but
@@ -271,7 +264,7 @@ export default function AppsPage() {
     setActiveTags((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]));
   };
 
-  const tools = useMemo<{ developer: Tool[]; cloud: Tool[] }>(() => {
+  const themes = useMemo<{ key: string; tools: Tool[] }[]>(() => {
     const desktopTools: Tool[] = desktopToolsConfig.map((app) => ({
       id: app.id,
       name: app.name,
@@ -318,20 +311,22 @@ export default function AppsPage() {
         .map((id) => all.find((t) => t.id === id))
         .filter((t): t is Tool => t !== undefined);
 
-    return { developer: inOrder(DEVELOPER_ORDER), cloud: inOrder(CLOUD_ORDER) };
+    return THEMES.map((theme) => ({ key: theme.key, tools: inOrder(theme.tools) }));
   }, [tApps, tPortfolio, locale]);
 
-  // Filters apply across both sections; a section with no matches is hidden
+  // Filters apply across every theme; a theme with no matches is hidden
   // rather than left as an empty heading.
   const visible = useMemo(() => {
     const match = (list: Tool[]) =>
       activeTags.length === 0
         ? list
         : list.filter((tool) => tool.tags.some((t) => activeTags.includes(t)));
-    return { developer: match(tools.developer), cloud: match(tools.cloud) };
-  }, [tools, activeTags]);
+    return themes
+      .map((theme) => ({ key: theme.key, tools: match(theme.tools) }))
+      .filter((theme) => theme.tools.length > 0);
+  }, [themes, activeTags]);
 
-  const nothingMatches = visible.developer.length === 0 && visible.cloud.length === 0;
+  const nothingMatches = visible.length === 0;
 
   return (
     <LayoutTemplate>
@@ -409,33 +404,30 @@ export default function AppsPage() {
         </div>
       </section>
 
-      {/* Developer tools — the desktop apps */}
-      {visible.developer.length > 0 && (
-        <section className="py-12 bg-background">
-          <div className="container max-w-6xl">
-            <h2 className="text-2xl font-bold mb-8">{tApps('developer_heading')}</h2>
+      {/* The tools, one section per theme. The first sits right under the
+          filters; each one after it is set off by a rule. */}
+      {visible.map((theme, t) => (
+        <section
+          key={theme.key}
+          id={`theme-${theme.key}`}
+          aria-labelledby={`theme-${theme.key}-heading`}
+          className="bg-background scroll-mt-24"
+        >
+          <div className={`container max-w-6xl ${t === 0 ? 'pt-8' : 'pt-4'} pb-12`}>
+            <div className={`mb-8 ${t === 0 ? '' : 'border-t border-border pt-12'}`}>
+              <h2 id={`theme-${theme.key}-heading`} className="text-2xl font-bold">
+                {tApps(`themes.${theme.key}.title`)}
+              </h2>
+              <p className="mt-2 text-muted-foreground max-w-3xl">{tApps(`themes.${theme.key}.body`)}</p>
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visible.developer.map((tool, i) => (
+              {theme.tools.map((tool, i) => (
                 <ToolCard key={tool.id} tool={tool} index={i} />
               ))}
             </div>
           </div>
         </section>
-      )}
-
-      {/* Cloud solutions — the hosted products */}
-      {visible.cloud.length > 0 && (
-        <section className="py-12 bg-secondary/30 border-t border-border">
-          <div className="container max-w-6xl">
-            <h2 className="text-2xl font-bold mb-8">{tApps('cloud_heading')}</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visible.cloud.map((tool, i) => (
-                <ToolCard key={tool.id} tool={tool} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      ))}
 
       {/* The site's own MCP server (src/app/mcp): the catalogue, for an agent. */}
       <section className="py-12 bg-background border-t border-border">
