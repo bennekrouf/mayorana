@@ -139,7 +139,7 @@
   },
   "portfolio": {
     "solanize_description": "Votre phrase → Action Solana",
-    "solanize_tech": "Parlez, Solana exécute ✨",
+    "solanize_tech": "MVP en plein développement",
     "solanize_cta": "VOIR LE MVP",
     "solanize_diagram_aria": "Un message de chat va à Solanize, qui prépare une transaction que vous validez dans Phantom avant son exécution sur Solana",
     "solanize_diagram_prompt": "« Échange 1 SOL en USDC »",
@@ -330,17 +330,17 @@
     "trackcut_description": "Chargez un live, une émission de radio ou une cassette numérisée et obtenez un fichier par morceau. La détection des silences propose les coupures, vous confirmez ou ajustez chacune à l'oreille, puis vous exportez : MP3 sans réencodage, ou MP3/FLAC/WAV avec normalisation du volume et tags ReplayGain. Récupère aussi l'audio d'un lien YouTube.",
     "intro": "Les applications de bureau se téléchargent directement depuis cette page, pour macOS, Linux et Windows. Elles sont gratuites pour un usage personnel, éducatif et non lucratif, et les entreprises achètent une licence. Chaque page d’outil donne ses notes de version, son code source et, pour la plupart, un skill Claude.",
     "themes": {
+      "network": {
+        "title": "Développez votre réseau",
+        "body": "Suivez vos contacts et relances semaine après semaine, enregistrez et peaufinez des vidéos de démo, découpez de longs enregistrements en pistes et publiez les billets et posts qui les accompagnent."
+      },
+      "job": {
+        "title": "Trouvez un emploi",
+        "body": "Rassemblez les offres de LinkedIn et des sites d’emploi nationaux, notez-les selon votre profil et adaptez votre CV à chacune."
+      },
       "build": {
-        "title": "Créer des apps",
+        "title": "Pour les développeurs",
         "body": "Committez et publiez votre code, livrez vos apps mobiles sur les stores et surveillez ce que chaque build expose."
-      },
-      "create": {
-        "title": "Réseaux sociaux",
-        "body": "Enregistrez et peaufinez des vidéos de démo, découpez de longs enregistrements en pistes et publiez les billets et posts qui les accompagnent."
-      },
-      "grow": {
-        "title": "Croissance",
-        "body": "Pilotez une activité en solo semaine après semaine : vos contacts et relances, le prochain poste ou client, et un CV adapté à chacun."
       },
       "markets": {
         "title": "Crypto",

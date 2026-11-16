@@ -17,8 +17,6 @@ import {
 } from '@/data/tools';
 import { DataSourceBadge, DownloadButtons, StatusBadge } from '@/components/ui/ToolVisuals';
 import { Api0FlowDiagram } from '@/components/diagrams/Api0FlowDiagram';
-import { CvenomFlowDiagram } from '@/components/diagrams/CvenomFlowDiagram';
-import { SolanizeFlowDiagram } from '@/components/diagrams/SolanizeFlowDiagram';
 
 // What the card's action area renders. One shape per kind, so a desktop tool
 // gets its per-OS download buttons and a hosted product gets a single link —
@@ -33,11 +31,6 @@ interface Tool {
   id: string;
   name: string;
   tagline?: string;
-  /**
-   * Only for the web products: they have no tagline and no page here. A
-   * desktop tool's card stops at its tagline; the detail page has the rest.
-   */
-  description?: string;
   tech: string;
   status: Status;
   tags: string[];
@@ -65,9 +58,9 @@ const API0_URL = 'https://api0.ai';
 //
 // The keys name the copy, under apps.themes.<key>.
 const THEMES: { key: string; tools: string[] }[] = [
+  { key: 'network', tools: ['minicrm', 'publishkit', 'trackcut', 'polishcast'] },
+  { key: 'job', tools: ['jobscout', 'cvenom'] },
   { key: 'build', tools: ['gitagent', 'shipscreen', 'surfacewatch'] },
-  { key: 'create', tools: ['polishcast', 'trackcut', 'publishkit'] },
-  { key: 'grow', tools: ['minicrm', 'jobscout', 'cvenom'] },
   { key: 'markets', tools: ['spreadradar', 'solanize'] },
 ];
 
@@ -208,7 +201,6 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
       </div>
 
       {tool.tagline && <p className="text-sm font-medium mb-1">{tool.tagline}</p>}
-      {tool.description && <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>}
       <p className="text-xs text-muted-foreground/70 font-mono mb-3">{tool.tech}</p>
 
       <div className="mb-4">
@@ -284,23 +276,21 @@ export default function AppsPage() {
       {
         id: 'cvenom',
         name: 'CVENOM',
-        description: tPortfolio('cvenom_description'),
+        tagline: tPortfolio('cvenom_description'),
         tech: tPortfolio('cvenom_tech'),
         status: 'live',
         tags: ['ai'],
         icon: <Shield className="w-5 h-5" />,
-        visual: <CvenomFlowDiagram />,
         action: { kind: 'external', href: 'https://cvenom.com', label: tPortfolio('cvenom_cta') },
       },
       {
         id: 'solanize',
         name: 'SOLANIZE',
-        description: tPortfolio('solanize_description'),
+        tagline: tPortfolio('solanize_description'),
         tech: tPortfolio('solanize_tech'),
         status: 'mvp',
         tags: ['crypto'],
         icon: <Zap className="w-5 h-5" />,
-        visual: <SolanizeFlowDiagram />,
         action: { kind: 'external', href: 'https://ribh.io', label: tPortfolio('solanize_cta') },
       },
     ];
