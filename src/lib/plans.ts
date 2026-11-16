@@ -110,8 +110,15 @@ export const PLAN_GROUPS = [
   // CVenom is a web app, not a desktop one: it spends the same plan's credits
   // when its account has the plan's email. Next to JobScout, which finds the jobs
   // it tailors CVs for.
-  { key: 'track', tools: ['jobscout', 'cvenom', 'spreadradar'] },
+  // MiniCRM keeps the contacts that JobScout and CVenom prospect for.
+  { key: 'track', tools: ['minicrm', 'jobscout', 'cvenom', 'spreadradar'] },
 ] as const;
+
+/**
+ * Apps with no Pro edition and no AI to pay for: every plan includes them,
+ * with no limit, so their row reads the same on every card.
+ */
+export const NO_CREDIT_TOOLS: readonly string[] = ['publishkit', 'minicrm'];
 
 /** What a tailored CV costs in CVenom (backend-cvenom's cv_generation). */
 export const CVENOM_CV_CREDITS = 20;

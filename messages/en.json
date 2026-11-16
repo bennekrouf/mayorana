@@ -229,7 +229,8 @@
       "surfacewatch": "{count, plural, one {# app} other {# apps}} to pentest with SurfaceWatch",
       "jobscout": "{count, plural, one {# search} other {# searches}} a month with JobScout, in every country",
       "cvenom": "{count, plural, one {# tailored CV} other {# tailored CVs}} with CVenom, on the web",
-      "publishkit": "PublishKit, with no limit and no credits needed"
+      "publishkit": "PublishKit, with no limit and no credits needed",
+      "minicrm": "MiniCRM, with no limit and no credits needed"
     },
     "uses_note": "~ is roughly what a month's credits buy if they all go to that one app: the credits are shared by every app, and by CVenom on the web when you sign in there with the same email.",
     "subscribe": "Subscribe",
@@ -328,8 +329,24 @@
     "trackcut_tagline": "Split long MP3/WAV recordings into tracks, from the keyboard",
     "trackcut_description": "Load a live set, a radio show or a digitised tape and get one file per track. Silence detection proposes the splits, you confirm or nudge each one by ear, then export: MP3 without re-encoding, or MP3/FLAC/WAV with loudness normalisation and ReplayGain tags. Can also pull the audio of a YouTube link.",
     "intro": "The desktop apps download straight from this page for macOS, Linux and Windows. They are free for personal, educational and non-profit use, and companies buy a licence. Each tool page has its release notes, its source and, for most, a Claude skill.",
-    "developer_heading": "Developer tools",
-    "cloud_heading": "Cloud solutions",
+    "themes": {
+      "build": {
+        "title": "Build apps",
+        "body": "Commit and release your code, ship mobile apps to the stores, and watch what each build exposes."
+      },
+      "create": {
+        "title": "Social networks",
+        "body": "Record and polish demo videos, cut long recordings into tracks, and publish the blog and social posts around them."
+      },
+      "grow": {
+        "title": "Grow",
+        "body": "Run a one-person business week by week: keep your contacts and follow-ups, find the next job or client, and tailor your CV to it."
+      },
+      "markets": {
+        "title": "Crypto",
+        "body": "Follow price gaps across exchanges and Solana, and swap tokens from a chat."
+      }
+    },
     "no_matching_tools": "No tools match the selected filters.",
     "promo_details": "See details",
     "api0_tagline": "Your software in Teams, WhatsApp, Telegram and Claude",
