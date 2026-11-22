@@ -10,15 +10,15 @@ export default function PrivacyEn() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: 8 November 2026</p>
+            <p className="text-muted-foreground mb-8">Last updated: 22 November 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
                 <p>
                   Mayorana (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is a Swiss software company. This policy explains what
-                  personal data we collect when you use the website mayorana.ch and the desktop tools downloaded from it,
-                  why we collect it, and what you can ask us to do with it.
+                  personal data we collect when you use the website mayorana.ch, the desktop tools downloaded from it and
+                  the scan2fil phone app, why we collect it, and what you can ask us to do with it.
                 </p>
                 <p className="mt-4">
                   api0, our MCP gateway, is covered by its own{' '}
@@ -89,6 +89,46 @@ export default function PrivacyEn() {
                 <p>
                   Each tool&apos;s Claude skill can draft a bug report for you. You review it and send it yourself; nothing
                   is sent automatically.
+                </p>
+              </section>
+
+              <section id="scan2fil">
+                <h2 className="text-2xl font-semibold mb-4">scan2fil Phone App</h2>
+                <p className="mb-4">
+                  scan2fil, for iPhone and Android, reads a photo of a form or a letter and asks you the questions needed to
+                  fill it in.
+                </p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>
+                    <strong>The photo.</strong> When you ask scan2fil to read a document, the photo, made smaller, is sent
+                    through api0 to the AI model api0 uses in the region you chose in the app: Europe unless you change it,
+                    or China. It is read to list the questions, then discarded; it is not kept on a server. Your answers,
+                    the filled-in form and its PDF are made on your phone and stay there until you share them yourself.
+                  </li>
+                  <li>
+                    <strong>Camera and photos.</strong> The app uses the camera or your photo library only when you tap
+                    Take a photo or Choose from photos, and only for the photo you take or pick.
+                  </li>
+                  <li>
+                    <strong>Sign-in</strong> with Google or Microsoft: the service tells api0 your email address, which
+                    identifies your account and its AI credits. The app keeps your email address, your licence and your
+                    remaining credits on your phone.
+                  </li>
+                  <li>
+                    <strong>The free try.</strong> Without an account you can read one document. To count it, the app
+                    creates a random identifier for your phone and sends it with that read. On an iPhone it is kept in the
+                    Keychain, so it stays when the app is deleted and installed again.
+                  </li>
+                  <li>
+                    <strong>Your signature</strong>, if you draw one, is kept only on your phone and is put on a form only
+                    when you choose to.
+                  </li>
+                </ul>
+                <p className="mt-4">
+                  The app shows no advertising and sends no usage statistics. api0 records the use of your credits, as its
+                  privacy policy describes. Deleting the app deletes what it keeps on your phone, except the iPhone
+                  identifier above. To have your account and its data deleted, write to contact@mayorana.ch from the
+                  address you sign in with.
                 </p>
               </section>
 
@@ -205,7 +245,8 @@ export default function PrivacyEn() {
                 <p>
                   We are based in Switzerland. Some of the providers above, such as Google, Microsoft, GitHub and Stripe, may process
                   data outside Switzerland, including in the United States. Such transfers rely on the safeguards those
-                  providers offer under applicable data protection law.
+                  providers offer under applicable data protection law. If you choose the China region in scan2fil, the
+                  photos you have read are processed in China.
                 </p>
               </section>
 
