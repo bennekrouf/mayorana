@@ -10,15 +10,16 @@ export default function PrivacyFr() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Politique de confidentialité</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : 8 novembre 2026</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 22 novembre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
                 <p>
                   Mayorana («&nbsp;nous&nbsp;») est une entreprise suisse de logiciels. Cette politique explique quelles
-                  données personnelles nous collectons lorsque vous utilisez le site mayorana.ch et les outils de bureau qui
-                  y sont téléchargés, pourquoi nous les collectons, et ce que vous pouvez nous demander d&apos;en faire.
+                  données personnelles nous collectons lorsque vous utilisez le site mayorana.ch, les outils de bureau qui
+                  y sont téléchargés et l&apos;application mobile scan2fil, pourquoi nous les collectons, et ce que vous
+                  pouvez nous demander d&apos;en faire.
                 </p>
                 <p className="mt-4">
                   api0, notre passerelle MCP, est couverte par sa propre{' '}
@@ -97,6 +98,50 @@ export default function PrivacyFr() {
                 <p>
                   Le skill Claude de chaque outil peut rédiger un rapport de bug pour vous. Vous le relisez et l&apos;envoyez
                   vous-même&nbsp;; rien n&apos;est envoyé automatiquement.
+                </p>
+              </section>
+
+              <section id="scan2fil">
+                <h2 className="text-2xl font-semibold mb-4">L&apos;application mobile scan2fil</h2>
+                <p className="mb-4">
+                  scan2fil, pour iPhone et Android, lit la photo d&apos;un formulaire ou d&apos;une lettre et vous pose les
+                  questions nécessaires pour le remplir.
+                </p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>
+                    <strong>La photo.</strong> Lorsque vous demandez à scan2fil de lire un document, la photo, réduite, est
+                    envoyée via api0 au modèle d&apos;IA qu&apos;api0 utilise dans la région choisie dans l&apos;application&nbsp;:
+                    l&apos;Europe sauf si vous la changez, ou la Chine. Elle est lue pour établir la liste des questions,
+                    puis supprimée&nbsp;; elle n&apos;est conservée sur aucun serveur. Vos réponses, le formulaire rempli et son
+                    PDF sont créés sur votre téléphone et y restent jusqu&apos;à ce que vous les partagiez vous-même.
+                  </li>
+                  <li>
+                    <strong>Appareil photo et photos.</strong> L&apos;application n&apos;utilise l&apos;appareil photo ou votre
+                    photothèque que lorsque vous touchez «&nbsp;Take a photo&nbsp;» ou «&nbsp;Choose from photos&nbsp;», et seulement pour
+                    la photo que vous prenez ou choisissez.
+                  </li>
+                  <li>
+                    <strong>Connexion</strong> avec Google ou Microsoft&nbsp;: le service communique à api0 votre adresse
+                    e-mail, qui identifie votre compte et ses crédits d&apos;IA. L&apos;application conserve votre adresse
+                    e-mail, votre licence et vos crédits restants sur votre téléphone.
+                  </li>
+                  <li>
+                    <strong>L&apos;essai gratuit.</strong> Sans compte, vous pouvez lire un document. Pour le compter,
+                    l&apos;application crée un identifiant aléatoire pour votre téléphone et l&apos;envoie avec cette lecture.
+                    Sur iPhone, il est conservé dans le trousseau (Keychain)&nbsp;: il reste lorsque l&apos;application est
+                    supprimée puis réinstallée.
+                  </li>
+                  <li>
+                    <strong>Votre signature</strong>, si vous en dessinez une, est conservée uniquement sur votre téléphone
+                    et n&apos;est apposée sur un formulaire que lorsque vous le choisissez.
+                  </li>
+                </ul>
+                <p className="mt-4">
+                  L&apos;application n&apos;affiche aucune publicité et n&apos;envoie aucune statistique d&apos;utilisation. api0
+                  enregistre l&apos;utilisation de vos crédits, comme le décrit sa politique de confidentialité. Supprimer
+                  l&apos;application supprime ce qu&apos;elle conserve sur votre téléphone, sauf l&apos;identifiant iPhone
+                  mentionné ci-dessus. Pour faire supprimer votre compte et ses données, écrivez à contact@mayorana.ch
+                  depuis l&apos;adresse avec laquelle vous vous connectez.
                 </p>
               </section>
 
@@ -220,7 +265,8 @@ export default function PrivacyFr() {
                 <p>
                   Nous sommes basés en Suisse. Certains des prestataires ci-dessus, comme Google, Microsoft, GitHub et Stripe, peuvent
                   traiter des données hors de Suisse, y compris aux États-Unis. Ces transferts reposent sur les garanties que
-                  ces prestataires offrent au titre du droit applicable en matière de protection des données.
+                  ces prestataires offrent au titre du droit applicable en matière de protection des données. Si vous
+                  choisissez la région Chine dans scan2fil, les photos que vous faites lire sont traitées en Chine.
                 </p>
               </section>
 
