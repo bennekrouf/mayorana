@@ -10,7 +10,7 @@ export default function PrivacyEn() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Last updated: 22 November 2026</p>
+            <p className="text-muted-foreground mb-8">Last updated: 24 November 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -37,9 +37,9 @@ export default function PrivacyEn() {
                     topic you chose and your message.
                   </li>
                   <li>
-                    <strong>Optional sign-in</strong> with Google, Microsoft or GitHub: your email address, name and account
+                    <strong>Sign-in</strong> with Google, Microsoft or GitHub: your email address, name and account
                     identifier, as provided by that service. Or with a code sent to your email address: then only that
-                    address. Sign-in is never required to download a tool.
+                    address. The site&apos;s download buttons require it for some tools; for the others it is optional.
                   </li>
                   <li>
                     <strong>Purchases</strong> of a paid edition: your email address and the licence issued to you. Card

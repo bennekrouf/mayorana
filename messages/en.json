@@ -285,6 +285,7 @@
     "signin_microsoft": "Sign in with Microsoft and download",
     "required_title": "Sign in to download {app}",
     "required_body": "{app} is free for personal use; companies need a licence. Sign in with your work account so we can reach you once and ask how it's going — and, if your team uses it, talk about the licence that fits.",
+    "required_body_personal": "{app} is free for individuals — no trial, no card. Sign in to download it, so we can reach you once and ask how it's going. That makes you a founding user, and it stays free for you whatever comes next.",
     "learn_more": "Why sign in? Read about founding users",
     "skip": "No thanks, just download",
     "signed_in_as": "Signed in as {email}",
@@ -633,6 +634,7 @@
     "requirements_heading": "Requirements",
     "tech_heading": "Built with",
     "download_heading": "Download",
+    "download_signin": "Downloading {name} requires a sign-in, on its page:",
     "download_intro": "Free for personal, educational and non-profit use. Commercial use — including a solo consultant on client work — requires a licence. Every build is produced by release CI and served from mayorana.ch.",
     "faq_heading": "Questions",
     "related_heading": "Related tools",
@@ -1902,7 +1904,7 @@
         ],
         "requirements": [
           "macOS (Apple Silicon or Intel), Windows 10 or 11 with the WebView2 Runtime, or Linux x86_64",
-          "Nothing else: no account and no server. The cockpit is a file on your computer",
+          "Nothing else: the app itself needs no account and no server. The cockpit is a file on your computer",
           "For the MCP server: Claude Desktop, Claude Code or Codex"
         ],
         "faq": [
