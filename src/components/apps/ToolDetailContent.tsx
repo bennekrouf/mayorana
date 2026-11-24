@@ -17,6 +17,7 @@ import {
   powershellInstallUrl,
   shellInstallCommand,
   shellInstallUrl,
+  showsInstallCommands,
 } from '@/lib/install-scripts';
 import { ComparisonTable, type Comparison } from '@/components/ui/ComparisonTable';
 import {
@@ -123,14 +124,14 @@ export async function ToolDetailContent({
   const hasMac = tool.downloads.some((d) => d.os === 'mac');
   const hasLinux = tool.downloads.some((d) => d.os === 'linux');
   const installRows: InstallRow[] = [
-    ...(hasShellInstall(tool)
+    ...(showsInstallCommands(tool) && hasShellInstall(tool)
       ? [{
           label: t(hasMac && hasLinux ? 'install_unix' : hasMac ? 'install_mac' : 'install_linux'),
           command: shellInstallCommand(tool.id),
           scriptUrl: shellInstallUrl(tool.id),
         }]
       : []),
-    ...(hasPowershellInstall(tool)
+    ...(showsInstallCommands(tool) && hasPowershellInstall(tool)
       ? [{
           label: t('install_windows'),
           command: powershellInstallCommand(tool.id),
