@@ -64,7 +64,9 @@ export default function PrivacyEn() {
                   <li>
                     <strong>Where you came from.</strong> On your first visit, the site stores in your browser the site or
                     campaign that brought you (for example a utm_source tag). It is added to download links, so a download
-                    can be counted against the channel that found you. It contains nothing about you.
+                    can be counted against the channel that found you. It contains nothing about you. When you sign in,
+                    it is sent with your sign-in, and we keep it with your email, together with the sites and apps
+                    you sign in on and when you last did.
                   </li>
                   <li>
                     <strong>When you are signed in</strong>, we record which tools you downloaded, for which operating
