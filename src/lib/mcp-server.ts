@@ -66,7 +66,7 @@ const TOOLS = [
   {
     name: 'get_app',
     title: 'Read an app page',
-    description: 'The full page for one app, as markdown: overview, features, requirements, downloads, one-line install, MCP setup, FAQ.',
+    description: 'The full page for one app, as markdown: overview, features, requirements, downloads, one-line install (neither for an app whose downloads need a sign-in), MCP setup, FAQ.',
     inputSchema: {
       type: 'object',
       properties: { id: { type: 'string', description: 'App id from list_apps, e.g. "gitagent".' }, locale: localeProp },

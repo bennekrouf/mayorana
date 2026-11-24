@@ -10,7 +10,7 @@ export default function PrivacyFr() {
         <div className="container max-w-4xl mx-auto">
           <div>
             <h1 className="text-4xl font-bold mb-6">Politique de confidentialité</h1>
-            <p className="text-muted-foreground mb-8">Dernière mise à jour : 22 novembre 2026</p>
+            <p className="text-muted-foreground mb-8">Dernière mise à jour : 24 novembre 2026</p>
 
             <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
               <section>
@@ -38,10 +38,10 @@ export default function PrivacyFr() {
                     e-mail, votre entreprise (facultatif), le sujet choisi et votre message.
                   </li>
                   <li>
-                    <strong>Connexion facultative</strong> avec Google, Microsoft ou GitHub&nbsp;: votre adresse e-mail, votre nom et
+                    <strong>Connexion</strong> avec Google, Microsoft ou GitHub&nbsp;: votre adresse e-mail, votre nom et
                     l&apos;identifiant de votre compte, tels que fournis par ce service. Ou par un code envoyé à votre
-                    adresse e-mail&nbsp;: alors cette adresse seulement. La connexion n&apos;est jamais requise pour
-                    télécharger un outil.
+                    adresse e-mail&nbsp;: alors cette adresse seulement. Les boutons de téléchargement du site
+                    l&apos;exigent pour certains outils&nbsp;; pour les autres, elle est facultative.
                   </li>
                   <li>
                     <strong>Achats</strong> d&apos;une édition payante&nbsp;: votre adresse e-mail et la licence qui vous est

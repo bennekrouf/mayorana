@@ -9,9 +9,10 @@
 // a Google or GitHub sign-in; a download by someone signed in is recorded
 // against their account (which apps, which OS, when) and goes straight through.
 //
-// Signing in is optional. The link to skip it is there, and it is honest — no
-// delay, no trick — but it is deliberately the quiet option: the one thing on
-// the panel that looks like a button is the sign-in.
+// Signing in is optional, except for the tools marked `signinRequired`. The link
+// to skip it is there, and it is honest — no delay, no trick — but it is
+// deliberately the quiet option: the one thing on the panel that looks like a
+// button is the sign-in.
 
 import React, {
   createContext,
@@ -42,6 +43,8 @@ export interface DownloadRequest {
   href: string;
   /** No skip link: the tool's `signinRequired` in src/data/tools.ts. */
   signinRequired?: boolean;
+  /** An Azure tool: its users have a work Microsoft account to sign in with. */
+  workAccount?: boolean;
 }
 
 interface DownloadGateContextType {
@@ -232,9 +235,10 @@ function DownloadGatePanel({
   const t = useTranslations('download_gate');
   const tAuth = useTranslations('auth');
   const locale = useLocale();
-  // A required sign-in is for an Azure tool, whose users already have a work
-  // Microsoft account: that one leads, and there is no skip link.
+  // A required sign-in has no skip link. For an Azure tool, whose users already
+  // have a work Microsoft account, that one leads and the copy asks for it.
   const required = request.signinRequired === true;
+  const work = required && request.workAccount === true;
   const primary = 'bg-primary text-primary-foreground hover:bg-primary/90';
   const secondary = 'border border-border hover:bg-secondary';
   const googleButton = (
@@ -242,12 +246,12 @@ function DownloadGatePanel({
       key="google"
       onClick={() => onSignIn('google')}
       disabled={busy}
-      className={`w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium disabled:opacity-60 transition-colors ${required ? secondary : primary}`}
+      className={`w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium disabled:opacity-60 transition-colors ${work ? secondary : primary}`}
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden>
         <path fill="#EA4335" d="M12 10.2v3.9h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.3 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" />
       </svg>
-      {busy && !required ? t('downloading') : t('signin')}
+      {busy && !work ? t('downloading') : t('signin')}
     </button>
   );
   const microsoftButton = (
@@ -255,13 +259,13 @@ function DownloadGatePanel({
       key="microsoft"
       onClick={() => onSignIn('microsoft')}
       disabled={busy}
-      className={`w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium disabled:opacity-60 transition-colors ${required ? primary : secondary}`}
+      className={`w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg font-medium disabled:opacity-60 transition-colors ${work ? primary : secondary}`}
     >
       <MicrosoftIcon className="w-5 h-5" />
-      {required ? (busy ? t('downloading') : t('signin_microsoft')) : tAuth('sign_in_microsoft')}
+      {work ? (busy ? t('downloading') : t('signin_microsoft')) : tAuth('sign_in_microsoft')}
     </button>
   );
-  const leading = required ? [microsoftButton, googleButton] : [googleButton, microsoftButton];
+  const leading = work ? [microsoftButton, googleButton] : [googleButton, microsoftButton];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -297,7 +301,7 @@ function DownloadGatePanel({
         </div>
 
         <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-          {t(required ? 'required_body' : 'body', { app: request.appName })}
+          {t(work ? 'required_body' : required ? 'required_body_personal' : 'body', { app: request.appName })}
         </p>
         {/* The offer in full, with the tool carried along so the page's
             first question is already answered. */}

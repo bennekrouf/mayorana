@@ -285,6 +285,7 @@
     "signin_microsoft": "Se connecter avec Microsoft et télécharger",
     "required_title": "Connectez-vous pour télécharger {app}",
     "required_body": "{app} est gratuit pour un usage personnel ; les entreprises ont besoin d'une licence. Connectez-vous avec votre compte professionnel, pour qu'on puisse vous écrire une fois et vous demander comment ça se passe — et, si votre équipe l'utilise, parler de la licence qui lui convient.",
+    "required_body_personal": "{app} est gratuit pour les particuliers — pas d'essai, pas de carte. Connectez-vous pour le télécharger, afin qu'on puisse vous écrire une fois et vous demander comment ça se passe. Vous devenez un utilisateur fondateur, et ça reste gratuit pour vous quoi qu'il arrive ensuite.",
     "learn_more": "Pourquoi se connecter ? Les utilisateurs fondateurs",
     "skip": "Non merci, juste télécharger",
     "signed_in_as": "Connecté en tant que {email}",
@@ -633,6 +634,7 @@
     "requirements_heading": "Prérequis",
     "tech_heading": "Conçu avec",
     "download_heading": "Télécharger",
+    "download_signin": "Télécharger {name} demande une connexion, sur sa page :",
     "download_intro": "Gratuit pour un usage personnel, éducatif et non lucratif. L'usage commercial — y compris un consultant indépendant en mission — requiert une licence. Chaque build est produit par la CI de release et servi depuis mayorana.ch.",
     "faq_heading": "Questions",
     "related_heading": "Outils liés",
@@ -1902,7 +1904,7 @@
         ],
         "requirements": [
           "macOS (Apple Silicon ou Intel), Windows 10 ou 11 avec le runtime WebView2, ou Linux x86_64",
-          "Rien d'autre : ni compte ni serveur. Le cockpit est un fichier sur votre ordinateur",
+          "Rien d'autre : l'app elle-même ne demande ni compte ni serveur. Le cockpit est un fichier sur votre ordinateur",
           "L'interface de l'app est en anglais",
           "Pour le serveur MCP : Claude Desktop, Claude Code ou Codex"
         ],

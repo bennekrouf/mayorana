@@ -41,6 +41,11 @@ export const powershellInstallCommand = (id: string) => `irm ${powershellInstall
 export const hasShellInstall = (tool: DesktopToolConfig) => Boolean(href(tool, 'mac') || href(tool, 'linux'));
 export const hasPowershellInstall = (tool: DesktopToolConfig) => Boolean(href(tool, 'windows'));
 
+/** Whether the site shows the commands. Not for a tool whose downloads ask for
+ *  a sign-in, which they would go around; its scripts are still served, so a
+ *  command someone already has keeps working. */
+export const showsInstallCommands = (tool: DesktopToolConfig) => !tool.signinRequired;
+
 export function shellScript(tool: DesktopToolConfig): string {
   const mac = href(tool, 'mac');
   const linux = href(tool, 'linux');

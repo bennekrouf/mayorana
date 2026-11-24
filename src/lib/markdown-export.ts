@@ -22,6 +22,7 @@ import {
   hasShellInstall,
   powershellInstallCommand,
   shellInstallCommand,
+  showsInstallCommands,
 } from './install-scripts';
 import { loadToolDetail } from '@/components/apps/ToolDetailContent';
 import { appI18nKey, desktopToolsConfig, LICENCE_URL, mcpInstallCommands, type OS } from '@/data/tools';
@@ -159,11 +160,15 @@ export async function appMarkdown(locale: string, id: string): Promise<string | 
     '',
     `## ${t('download_heading')}`,
     '',
-    ...tool.downloads.map((d) => `- [${d.label}](${d.href})`),
+    // No build links for a tool whose downloads ask for a sign-in: they would
+    // go around it. The page has the buttons.
+    ...(tool.signinRequired
+      ? [`${t('download_signin', { name: tool.name })} ${pageUrl}`]
+      : tool.downloads.map((d) => `- [${d.label}](${d.href})`)),
     '',
   ];
 
-  if (hasShellInstall(tool) || hasPowershellInstall(tool)) {
+  if (showsInstallCommands(tool) && (hasShellInstall(tool) || hasPowershellInstall(tool))) {
     out.push(`### ${t('install_heading')}`, '');
     if (hasShellInstall(tool)) {
       const mac = tool.downloads.some((d) => d.os === 'mac');

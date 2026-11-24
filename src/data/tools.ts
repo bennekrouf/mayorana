@@ -424,6 +424,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · Mistral / ollama · WebKit · Camoufox',
     status: 'live',
     tags: ['ai'],
+    signinRequired: true,
     applicationCategory: 'BusinessApplication',
     downloads: [
       // One universal DMG: Apple Silicon and Intel.
@@ -475,6 +476,7 @@ export const desktopToolsConfig: DesktopToolConfig[] = [
     tech: 'Rust · Dioxus · JSON · CSV',
     status: 'live',
     tags: ['tools'],
+    signinRequired: true,
     applicationCategory: 'BusinessApplication',
     downloads: [
       // One universal DMG: Apple Silicon and Intel.
