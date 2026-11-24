@@ -69,7 +69,9 @@ export default function PrivacyFr() {
                     <strong>D&apos;où vous venez.</strong> Lors de votre première visite, le site enregistre dans votre
                     navigateur le site ou la campagne qui vous a amené (par exemple une balise utm_source). Cette information
                     est ajoutée aux liens de téléchargement, afin qu&apos;un téléchargement soit attribué au canal qui vous a
-                    fait connaître le site. Elle ne contient rien sur vous.
+                    fait connaître le site. Elle ne contient rien sur vous. Lorsque vous vous connectez, elle est envoyée
+                    avec votre connexion, et nous la conservons avec votre e-mail, ainsi que les sites et applications
+                    sur lesquels vous vous connectez et la date de votre dernière connexion.
                   </li>
                   <li>
                     <strong>Lorsque vous êtes connecté</strong>, nous enregistrons quels outils vous avez téléchargés, pour

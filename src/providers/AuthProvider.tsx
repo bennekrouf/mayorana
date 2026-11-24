@@ -28,6 +28,7 @@ import {
   type EmailSession,
 } from '@/lib/email-session';
 import { ProviderIcon } from '@/components/auth/ProviderIcon';
+import { reportSignIn } from '@/lib/sign-in-source';
 
 /** The sign-ins that go through Firebase. */
 const FIREBASE_PROVIDERS = ['google', 'github'] as const;
@@ -229,12 +230,19 @@ async function redirectTo(kit: FirebaseKit, provider: FirebaseProvider, email?: 
 const FREE_KEY = 'mayorana.freeAllowance';
 
 function claimFreeAllowance(uid: string) {
+  let claimed = false;
   try {
-    if (localStorage.getItem(FREE_KEY) === uid) return;
+    claimed = localStorage.getItem(FREE_KEY) === uid;
   } catch { /* private mode: ask every page, the gateway makes it once */ }
+  if (claimed) {
+    reportSignIn(uid);
+    return;
+  }
+  // The sign-in is reported after the plan exists, so a newcomer counts as new.
   gatewayFetch('/api/plans/subscription')
     .then(() => {
       try { localStorage.setItem(FREE_KEY, uid); } catch { /* ignore */ }
+      reportSignIn(uid);
     })
     .catch(() => { /* tried again on the next page */ });
 }
