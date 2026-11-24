@@ -2,8 +2,35 @@
   "name": "spreadradar",
   "product": "SpreadRadar",
   "page": "https://mayorana.ch/en/apps/spreadradar",
-  "generated_at": "2026-11-16T19:34:57Z",
+  "generated_at": "2026-11-24T08:51:36Z",
   "releases": [
+    {
+      "version": "0.1.53",
+      "tag": "v0.1.53",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The MCP window now connects SpreadRadar for you. For Claude Desktop, Claude Code, Codex and VS Code it shows whether SpreadRadar is installed there and running, with Install, Update and Uninstall buttons, and a Test that starts the server and counts its tools. Before, you copied commands and edited Claude's config file yourself; those steps are still there, under By hand.",
+            "Claude Desktop undoes a change made to its settings while it is open: SpreadRadar waits for you to quit it, then installs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.52",
+      "tag": "v0.1.52",
+      "date": "2026-11-17",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.51",
       "tag": "v0.1.51",

@@ -2,8 +2,70 @@
   "name": "minicrm",
   "product": "MiniCRM",
   "page": "https://mayorana.ch/en/apps/minicrm",
-  "generated_at": "2026-11-16T18:46:20Z",
+  "generated_at": "2026-11-24T08:32:41Z",
   "releases": [
+    {
+      "version": "0.1.11",
+      "tag": "v0.1.11",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "Actions can now be planned rather than done. A planned action leaves its contact's stage, next step and follow-up alone, shows in Follow-ups on its own day, and does its usual work only once you mark it Done (from Follow-ups, it then takes today's date). Actions from before read as done.",
+            "Claude can plan a whole cadence of messages for a contact at once, such as emails on days 0, 3, 7, 12 and 18. Each step waits as a planned action, and marking one done makes the next step their follow-up. A reply, logged as the new Reply received type, or moving the contact past Contacted cancels the steps left.",
+            "Actions have a Message or notes field, for the text of a planned message.",
+            "When Claude reads an action, it also sees the next follow-up of the contact it was with."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "A contact needs a name or an email: Claude can no longer add one with neither, or clear both, and an import skips such lines. A contact added in the window and closed before anything was typed in it is removed instead of showing up in the pipeline counts."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.10",
+      "tag": "v0.1.10",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The MCP window now connects MiniCRM for you. For Claude Desktop, Claude Code, Codex and VS Code it shows whether MiniCRM is installed there and running, with Install, Update and Uninstall buttons, and a Test that starts the server and counts its tools. Before, you copied commands and edited Claude's config file yourself; those steps are still there, under By hand.",
+            "Claude Desktop undoes a change made to its settings while it is open: MiniCRM waits for you to quit it, then installs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.9",
+      "tag": "v0.1.9",
+      "date": "2026-11-22",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Importing contacts now also leaves out people whose email you already have, not only those with the same name. Someone who changed their name, or who appears as \"Bob\" in one file and \"Robert Smith\" in another, is no longer added twice."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.8",
+      "tag": "v0.1.8",
+      "date": "2026-11-17",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.7",
       "tag": "v0.1.7",

@@ -2,8 +2,35 @@
   "name": "trackcut",
   "product": "TrackCut",
   "page": "https://mayorana.ch/en/apps/trackcut",
-  "generated_at": "2026-11-16T19:53:57Z",
+  "generated_at": "2026-11-24T10:27:19Z",
   "releases": [
+    {
+      "version": "0.1.72",
+      "tag": "v0.1.72",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The MCP window now connects TrackCut for you. For Claude Desktop, Claude Code, Codex and VS Code it shows whether TrackCut is installed there and running, with Install, Update and Uninstall buttons, and a Test that starts the server and counts its tools. Before, you copied commands and edited Claude's config file yourself; those steps are still there, under By hand.",
+            "Claude Desktop undoes a change made to its settings while it is open: TrackCut waits for you to quit it, then installs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.71",
+      "tag": "v0.1.71",
+      "date": "2026-11-17",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.70",
       "tag": "v0.1.70",

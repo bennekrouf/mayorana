@@ -2,8 +2,112 @@
   "name": "shipscreen",
   "product": "ShipScreen",
   "page": "https://mayorana.ch/en/apps/shipscreen",
-  "generated_at": "2026-11-16T10:38:36Z",
+  "generated_at": "2026-11-24T11:42:38Z",
   "releases": [
+    {
+      "version": "0.1.75",
+      "tag": "v0.1.75",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The MCP window now connects ShipScreen for you. For Claude Desktop, Claude Code, Codex and VS Code it shows whether ShipScreen is installed there and running, with Install, Update and Uninstall buttons, and a Test that starts the server and counts its tools. Before, you copied commands and edited Claude's config file yourself; those steps are still there, under By hand.",
+            "Claude Desktop undoes a change made to its settings while it is open: ShipScreen waits for you to quit it, then installs.",
+            "A missing App Store Connect or Google Play key on the Accounts step no longer shows only red \"… is not set\" rows. The rows now say the key is not set up yet, and a short note above the setup form says what the key is for and points you to the form below it: reuse a key this Mac already has, or follow the steps to make one, and ShipScreen saves it in the project's `.env`.",
+            "A Google Play release made with the status Draft now says so plainly: it is not live and testers can't see it yet. A note under the Release stage tells you where in Play Console to roll it out and, for an app that was never published, that you only need to do this once.",
+            "The Google Play release name now uses the version inside the AAB, and the release log warns if it differs from the one in the Version step."
+          ]
+        },
+        {
+          "heading": "Added",
+          "items": [
+            "Releasing with the same Version as the last release now warns you first, on the Submit step for both Google Play and the App Store: \"Still 1.0, the same as the last release\". One click raises it (1.0 → 1.1) and reminds you to rebuild; you can also keep it and release anyway. Before, builds 1.0 (5), 1.0 (6), 1.0 (7) all looked the same to testers.",
+            "An optional label for Google Play releases, next to Release AAB. It is added to the release name in Play Console, as in \"1.0 (6) · Document scanner\", so the release list is easier to read. Left empty, the name is as before."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.74",
+      "tag": "v0.1.74",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": []
+        }
+      ]
+    },
+    {
+      "version": "0.1.73",
+      "tag": "v0.1.73",
+      "date": "2026-11-22",
+      "sections": [
+        {
+          "heading": "Fixed",
+          "items": [
+            "Releasing to Google Play no longer refuses a good bundle with \"This AAB's versionCode 1 isn't higher than…\". The versionCode, package, version and target API are now read from the AAB itself, not from a build file that any later APK build or `dx serve` overwrites, so the check before uploading and the AAB checks in the Build step describe the bundle you are about to send.",
+            "Android builds now give your app its own launcher icon even if you never made an Android icon set: the icons for every screen density are made from your app's icon (the logo set in ShipScreen, or `[bundle] icon` in `Dioxus.toml`). A hand-made set in `manual_assets/android_icons` is still used first. With no icon at all, the build keeps the default icons instead of failing (APK) or shipping with none (AAB). `build_apk.sh`, `build_android.sh` and `build_android_release.sh` all work the same way now.",
+            "The APK build no longer fails at signing, after several minutes, on a Mac where Android Studio has never built anything. The debug key Android uses (`~/.android/debug.keystore`) is created before the build starts if it is missing."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.72",
+      "tag": "v0.1.72",
+      "date": "2026-11-22",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "When the Dioxus CLI (`dx`) doesn't match the Dioxus version your project uses, the Doctor now offers a second fix: install the matching `dx` into the project's `.tools` folder, so other projects keep the `dx` they use. Moving the project to your installed `dx` is still offered, and `.tools` is added to your `.gitignore`."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "Projects that keep their own `dx` in `.tools/bin` (installed with `cargo install dioxus-cli --version <v> --locked --root .tools`) now build: the iOS, APK and AAB builds and the Doctor use that `dx` before the one on your PATH, instead of stopping with \"dx is 0.7.10 but this project uses dioxus 0.8…\".",
+            "`build_apk.sh` and `build_android.sh` now check that `dx` matches the project's Dioxus version before building, as `build_android_release.sh` already did, so a mismatch stops with a clear message and both ways to fix it rather than failing halfway through the build."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.71",
+      "tag": "v0.1.71",
+      "date": "2026-11-17",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.70",
+      "tag": "v0.1.70",
+      "date": "2026-11-16",
+      "sections": [
+        {
+          "heading": "Added",
+          "items": [
+            "ShipScreen is now also published as an .msi for IT departments, to deploy with Intune, Group Policy or SCCM: `msiexec /i shipscreen.msi ALLUSERS=1 /qn` installs it for every user. Double-clicked, it installs for you alone with no admin prompt, and it replaces an install made with the setup .exe.",
+            "IT departments can manage ShipScreen on Windows with Group Policy or Intune: turn off the update check, self-update or usage statistics, and set the licence number for every user, under `HKLM\\SOFTWARE\\Policies\\Mayorana\\ShipScreen`."
+          ]
+        },
+        {
+          "heading": "Fixed",
+          "items": [
+            "On Windows, fixing a Doctor item (Rust targets, Dioxus version) and backing up signing files no longer flash a command window.",
+            "Installing over an existing ShipScreen on Windows no longer gets stuck on \"Setup was unable to automatically close all applications\". Setup now closes ShipScreen and its helper processes itself before replacing it."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.69",
       "tag": "v0.1.69",

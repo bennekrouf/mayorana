@@ -2,8 +2,35 @@
   "name": "jobscout",
   "product": "JobScout",
   "page": "https://mayorana.ch/en/apps/jobscout",
-  "generated_at": "2026-11-16T18:46:33Z",
+  "generated_at": "2026-11-24T08:51:41Z",
   "releases": [
+    {
+      "version": "0.1.55",
+      "tag": "v0.1.55",
+      "date": "2026-11-24",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "The MCP window now connects JobScout for you. For Claude Desktop, Claude Code, Codex and VS Code it shows whether JobScout is installed there and running, with Install, Update and Uninstall buttons, and a Test that starts the server and counts its tools. Before, you copied commands and edited Claude's config file yourself; those steps are still there, under By hand.",
+            "Claude Desktop undoes a change made to its settings while it is open: JobScout waits for you to quit it, then installs."
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.1.54",
+      "tag": "v0.1.54",
+      "date": "2026-11-17",
+      "sections": [
+        {
+          "heading": "Changed",
+          "items": [
+            "Build and packaging only — no user-visible change."
+          ]
+        }
+      ]
+    },
     {
       "version": "0.1.53",
       "tag": "v0.1.53",
