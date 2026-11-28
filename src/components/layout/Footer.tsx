@@ -10,42 +10,28 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('footer');
   const tNav = useTranslations('navigation');
-  const tApps = useTranslations('apps');
-  const tCommon = useTranslations('common');
   const locale = useLocale();
 
-  // The products the company leads with: api0 first, then the desktop tools.
-  // Side projects stay on the Apps page. `badge` renders next to the name.
+  // At most three links per column, each destination once. The header already
+  // carries the main pages; what is here is the leading products, the pages the
+  // header leaves out, and one way to write to us per channel.
+
+  // `badge` renders next to the name.
   const portfolioLinks: { name: string; url: string; external: boolean; badge?: string }[] = [
     { name: t('footer_api0'), url: 'https://api0.ai', external: true },
     { name: 'AIS Runner', url: getLocalizedPath(locale, '/apps/ais-runner'), external: false },
-    // Directly under the app it belongs to: the notes page is otherwise three
-    // clicks deep and signposted nowhere a visitor would think to look.
-    {
-      name: tApps('releases_link'),
-      url: getLocalizedPath(locale, '/apps/ais-runner/releases'),
-      external: false,
-    },
-    { name: 'AIS Monitor', url: getLocalizedPath(locale, '/apps/ais-monitor'), external: false },
     { name: 'GitAgent', url: getLocalizedPath(locale, '/apps/gitagent'), external: false },
+  ];
+
+  const navigationLinks = isSwissRust ? [] : [
+    { name: 'Apps', url: getLocalizedPath(locale, '/apps') },
+    { name: tNav('learn'), url: getLocalizedPath(locale, '/learn') },
+    { name: tNav('about'), url: getLocalizedPath(locale, '/about') }
   ];
 
   const actionLinks = [
     { name: t('footer_book_call'), url: getLocalizedPath(locale, '/contact'), external: false },
     { name: t('footer_whatsapp'), url: 'https://wa.me/41764837540', external: true }
-  ];
-
-  // Mirrors the header nav (src/components/layout/Navbar.tsx) so the two stay
-  // consistent, plus About which the header does not carry.
-  const navigationLinks = isSwissRust ? [] : [
-    { name: tNav('home'), url: getLocalizedPath(locale, '/') },
-    { name: tNav('azure_tools'), url: getLocalizedPath(locale, '/solutions/azure') },
-    { name: tNav('ai_agents'), url: getLocalizedPath(locale, '/solutions/ai-agents') },
-    { name: 'Apps', url: getLocalizedPath(locale, '/apps') },
-    { name: tNav('blog'), url: getLocalizedPath(locale, '/blog') },
-    { name: tNav('learn'), url: getLocalizedPath(locale, '/learn') },
-    { name: tNav('contact'), url: getLocalizedPath(locale, '/contact') },
-    { name: tNav('about'), url: getLocalizedPath(locale, '/about') }
   ];
 
   return (
@@ -155,16 +141,6 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-
-            {/* CTA Button */}
-            <div className="mt-6">
-              <Link
-                href={getLocalizedPath(locale, '/contact')}
-                className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm"
-              >
-                {tCommon('cta_button')}
-              </Link>
-            </div>
           </div>
         </div>
 

@@ -5,9 +5,9 @@
 // signed-in readers. Choosing the path is remembered in the user's prefs
 // document, so a follower lands on it from any browser.
 //
-// Signing in happens on the click, like the download gate: the choice is
-// parked in sessionStorage first in case the popup is blocked and sign-in
-// falls back to a redirect, which leaves this page before the click finishes.
+// Signing in happens on the click, like the download gate: the choice is parked
+// first (src/lib/parked.ts), in case signing in leaves this page before the
+// click finishes.
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -17,22 +17,12 @@ import { FcGoogle } from 'react-icons/fc';
 import { FiMail } from 'react-icons/fi';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
 import { getUserPrefs, isSignedIn, updateUserPrefs } from '@/lib/gateway';
+import { park, takeParked } from '@/lib/parked';
 
 const PENDING_KEY = 'mayorana.followPathPending';
 
-function stashPending(): void {
-  try { sessionStorage.setItem(PENDING_KEY, '1'); } catch { /* the redirect path just won't resume */ }
-}
-
-function takePending(): boolean {
-  try {
-    const parked = sessionStorage.getItem(PENDING_KEY) === '1';
-    sessionStorage.removeItem(PENDING_KEY);
-    return parked;
-  } catch {
-    return false;
-  }
-}
+const stashPending = () => park(PENDING_KEY, true);
+const takePending = () => takeParked<boolean>(PENDING_KEY) === true;
 
 interface LearningPathToggleProps {
   /** Whether the listing is currently in path order. */
@@ -53,6 +43,8 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
     if (choosing) prepare();
   }, [choosing, prepare]);
   const checkedPrefsFor = useRef<string | null>(null);
+  /** A sign-in started here is under way. */
+  const signingIn = useRef(false);
 
   const blogUrl = `/${locale}/blog`;
   const pathUrl = `${blogUrl}?view=path`;
@@ -94,6 +86,19 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
     if (active && (!enabled || (!loading && !user))) router.replace(blogUrl);
   }, [active, enabled, loading, user, router, blogUrl]);
 
+  // Back from the sign-in page with the browser's Back button, which can bring
+  // this page back as it was left, waiting. Nobody signed in: forget the choice.
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (!e.persisted || !signingIn.current) return;
+      signingIn.current = false;
+      takePending();
+      setBusy(false);
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, []);
+
   if (!enabled) return null;
 
   const onClick = async () => {
@@ -109,7 +114,12 @@ const LearningPathToggle: React.FC<LearningPathToggleProps> = ({ active }) => {
   const onSignIn = async (provider: SignInProvider) => {
     setBusy(true);
     stashPending();
-    await signIn(provider);
+    signingIn.current = true;
+    const outcome = await signIn(provider);
+    // Leaving the page, which takes a moment: the parked choice has to be there
+    // on the way back.
+    if (outcome === 'redirecting') return;
+    signingIn.current = false;
     // Popup path: finish here, so the effect above does not do it twice.
     // If the popup was closed without signing in, just drop the choice.
     const parked = takePending();
