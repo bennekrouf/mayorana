@@ -32,6 +32,7 @@ import { getLocalizedPath } from '@/lib/i18n-utils';
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
 import { getUserPrefs, isSignedIn, updateUserPrefs } from '@/lib/gateway';
 import { capture as captureAttribution, withAttribution } from '@/lib/attribution';
+import { park, takeParked } from '@/lib/parked';
 import type { OS } from '@/data/tools';
 
 export interface DownloadRequest {
@@ -62,25 +63,12 @@ export function useDownloadGate() {
   return useContext(DownloadGateContext);
 }
 
-// A sign-in that fell back to a full-page redirect loses the React state, so
-// the download that triggered it is parked here and resumed once the person
-// is back and signed in.
+// The download a sign-in was for, across one that leaves the page: see
+// src/lib/parked.ts.
 const PENDING_KEY = 'mayorana.pendingDownload';
 
-function stashPending(request: DownloadRequest) {
-  try { sessionStorage.setItem(PENDING_KEY, JSON.stringify(request)); } catch { /* private mode */ }
-}
-
-function takePending(): DownloadRequest | null {
-  try {
-    const raw = sessionStorage.getItem(PENDING_KEY);
-    if (!raw) return null;
-    sessionStorage.removeItem(PENDING_KEY);
-    return JSON.parse(raw) as DownloadRequest;
-  } catch {
-    return null;
-  }
-}
+const stashPending = (request: DownloadRequest) => park(PENDING_KEY, request);
+const takePending = () => takeParked<DownloadRequest>(PENDING_KEY);
 
 /** Start the browser download. `src=member` marks it in the access log as a
  *  download we can follow up on; the stats script counts the split. The utm_*
@@ -165,9 +153,8 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
   }, [enabled, user, deliver]);
 
   // Back from a redirect sign-in: React state is gone, but the download that
-  // started it is parked in sessionStorage. AuthProvider restores the session
-  // (a redirect coming back always loads Firebase); finish the download once
-  // the user appears.
+  // started it is parked in sessionStorage. AuthProvider restores the session;
+  // finish the download once the user appears.
   useEffect(() => {
     // Also turns true when the popup sign-in completes; with the panel still
     // open that download is handleSignIn's to finish.
@@ -178,10 +165,22 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
     if (parked) void Promise.resolve().then(() => deliver(parked, true));
   }, [user, deliver]);
 
+  // Back from the sign-in page with the browser's Back button, which can bring
+  // this page back as it was left: the panel open and waiting. Nobody signed
+  // in, so hand it back.
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (!e.persisted || !panelOpen.current) return;
+      takePending();
+      setBusy(false);
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, []);
+
   const handleSignIn = async (provider: SignInProvider) => {
     if (!pending) return;
-    // Parked in case the popup is blocked and sign-in falls back to a
-    // redirect, which leaves this page before the next line runs.
+    // Parked in case signing in leaves this page.
     stashPending(pending);
     setBusy(true);
     const outcome = await signIn(provider);
@@ -191,6 +190,9 @@ export function DownloadGateProvider({ children }: { children: ReactNode }) {
       takePending();
       resumed.current = true;
       await deliver(pending, true);
+    } else if (outcome === 'redirecting') {
+      // Leaving the page, which takes a moment during which this still runs:
+      // the parked copy has to be there on the way back. The panel stays busy.
     } else {
       // Popup (or link dialog) closed without signing in: back to the panel.
       takePending();

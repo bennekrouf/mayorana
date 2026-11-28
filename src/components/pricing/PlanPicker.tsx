@@ -4,9 +4,9 @@
 // sign-in: the plan is kept under that sign-in's email, which is where the
 // licence goes and how the subscriber later sees and cancels it, in the panel
 // above the plans. A signed-out Subscribe asks them to sign in first, then
-// carries on to Checkout.
+// carries on to Checkout — also when the sign-in leaves this page and comes back.
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { FaGithub } from 'react-icons/fa';
@@ -18,6 +18,7 @@ import { appI18nKey, desktopToolsConfig, toolsForPlanProducts } from '@/data/too
 import { useAuth, type SignInProvider } from '@/providers/AuthProvider';
 import { EmailOptIn } from './EmailOptIn';
 import { ManageSubscription } from './ManageSubscription';
+import { park, takeParked } from '@/lib/parked';
 import {
   creditUses,
   fetchPlans,
@@ -40,6 +41,9 @@ type Load = { kind: 'loading' } | ({ kind: 'ready' } & PlanCatalogue) | { kind: 
 type SubLoad = { kind: 'loading' } | { kind: 'ready'; sub: Subscription | null } | { kind: 'error' };
 type Problem = 'error' | null;
 
+/** The id of the plan a sign-in was for, across one that leaves the page. */
+const PENDING_KEY = 'mayorana.pendingPlan';
+
 /**
  * `initial` is the catalogue the server fetched for the static HTML. Without
  * it (the gateway was down at build time) the plans are fetched here instead.
@@ -55,6 +59,8 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
   const [problem, setProblem] = useState<Problem>(null);
   /** The plan a signed-out visitor chose: they sign in, then it goes to Checkout. */
   const [signInFor, setSignInFor] = useState<Plan | null>(null);
+  /** A sign-in started here is under way, and carries on to Checkout itself. */
+  const signingIn = useRef(false);
 
   useEffect(() => {
     if (initial) return;
@@ -106,6 +112,12 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
       setSignInFor(plan);
       return;
     }
+    await checkout(plan);
+  }
+
+  // Apart from subscribe(): right after a sign-in, the `user` of the render
+  // that started it still says signed out.
+  async function checkout(plan: Plan) {
     setBusyPlan(plan.id);
     setProblem(null);
     const result = await startCheckout(plan.id, locale);
@@ -130,9 +142,22 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
   async function signInThenSubscribe(provider: SignInProvider) {
     const plan = signInFor;
     if (!plan) return;
+    // Parked in case signing in leaves this page.
+    park(PENDING_KEY, plan.id);
+    signingIn.current = true;
     const outcome = await signIn(provider);
+    // Leaving the page, which takes a moment: the parked plan has to be there
+    // on the way back.
+    if (outcome === 'redirecting') return;
+    takeParked(PENDING_KEY);
+    signingIn.current = false;
     if (outcome !== 'signed-in') return;
     setSignInFor(null);
+    await subscribeSignedIn(plan);
+  }
+
+  async function subscribeSignedIn(plan: Plan) {
+    setBusyPlan(plan.id);
     // Already on a Stripe plan under this sign-in: switch on the portal rather than a refused Checkout.
     const current = await fetchSubscription().catch(() => null);
     if (current && current.live && onStripe(current)) {
@@ -140,8 +165,33 @@ export function PlanPicker({ initial = null }: { initial?: PlanCatalogue | null 
       await switchPlan(plan);
       return;
     }
-    await subscribe(plan);
+    await checkout(plan);
   }
+
+  // Back from a sign-in that left the page: carry on with the plan it was for,
+  // once the plans are there. A sign-in still under way here carries on itself.
+  const plans = load.kind === 'ready' ? load.plans : null;
+  useEffect(() => {
+    if (!uid || !plans || signingIn.current) return;
+    const planId = takeParked<string>(PENDING_KEY);
+    const plan = plans.find((p) => p.id === planId);
+    // A reaction to the session arriving, run after this render settles.
+    if (plan) void Promise.resolve().then(() => subscribeSignedIn(plan));
+    // subscribeSignedIn reads nothing that changes while the plan is parked.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid, plans]);
+
+  // Back from the sign-in page with the browser's Back button, which can bring
+  // this page back as it was left. Nobody signed in: forget the plan.
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (!e.persisted || !signingIn.current) return;
+      signingIn.current = false;
+      takeParked(PENDING_KEY);
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
+  }, []);
 
   async function switchPlan(plan: Plan) {
     setBusyPlan(plan.id);
